@@ -21,8 +21,10 @@ captures/
 /.idea/caches/build_file_checksums.ser
 /.idea/modules.xml
 
+
 # User-specific configurations
 .idea/libraries/
+.idea/fileTemplates/
 .idea/.name
 .idea/compiler.xml
 .idea/copyright/profiles_settings.xml
