@@ -1,0 +1,81 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply from: "$project.rootDir/config/dependencies.gradle"
+apply from: "$project.rootDir/config/app-version.gradle"
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId appApplicationId
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
+        versionCode appVersionCode
+        versionName appVersionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+        }
+
+        buildTypes.each {
+            /**
+             * Staging BaseURL
+             */
+            it.buildConfigField("String", "PANTAU_BASE_URL_STAG", PANTAU_BASE_URL_STAG)
+
+            /**
+             * Production BaseURL
+             */
+            it.buildConfigField("String", "PANTAU_BASE_URL_PROD", PANTAU_BASE_URL_PROD)
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+
+}
+
+dependencies {
+    implementation project(':instant')
+    implementation project(':base')
+
+    implementation supportLibs
+    implementation networkLibs
+    implementation firebaseLibs
+    implementation rxJavaLibs
+    implementation multidex
+    implementation easyPermission
+    implementation timber
+    implementation glide
+
+    implementation dagger
+    kapt daggerCompiler
+
+    testImplementation unitTestLibs
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+//TODO : INSERT FIREBASE JSON FILE
+//apply plugin: 'com.google.gms.google-services'

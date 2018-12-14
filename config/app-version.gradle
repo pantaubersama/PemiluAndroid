@@ -1,0 +1,22 @@
+ext {
+    majorVersion = 1
+    minorVersion = 0
+    patchVersion = 0
+    preRelease = null
+
+    appApplicationId = "com.pantaubersama"
+    appVersionCode = generateVersionCode()
+    appVersionName = generateVersionName()
+}
+
+private Integer generateVersionCode() {
+    return androidMinSdkVersion * 10000000 + majorVersion * 10000 + minorVersion * 100 + patchVersion
+}
+
+private String generateVersionName() {
+    String versionName = "${majorVersion}.${minorVersion}.${patchVersion}"
+    if (preRelease != null && !preRelease.isEmpty()) {
+        versionName = versionName + "-" + preRelease
+    }
+    return versionName
+}

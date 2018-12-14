@@ -1,0 +1,1 @@
+include ':instant', ':app', ':base', ':instantapp'
