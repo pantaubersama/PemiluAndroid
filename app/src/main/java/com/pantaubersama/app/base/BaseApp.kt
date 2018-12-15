@@ -1,4 +1,4 @@
-package com.pantaubersama.app
+package com.pantaubersama.app.base
 
 import android.support.multidex.MultiDexApplication
 
