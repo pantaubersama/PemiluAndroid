@@ -6,6 +6,7 @@ stages:
 before_script:
   - export ANDROID_HOME="/home/gitlab-runner/android-sdk"
   - export GRADLE_USER_HOME=$(pwd)/.gradle
+  - export ANDROID_APK_PATH=$PWD/app/build/outputs/apk
 
 # .build_template: &build_template_def
 #   stage: build
@@ -24,7 +25,7 @@ build_debug:
       - web
     script:
       - ./gradlew assembleDebug
-    #   - "curl --request POST --header \"Content-Type: multipart/form-data;\" --form \"token=$SLACK_TOKEN\" --form \"channels=$SLACK_CHANNELS\" --form \"content=$SLACK_CONTENT\" --form \"file=@$CI_PROJECT_DIR/$APK_PATH\" --form \"title=TestCIapk : $CI_COMMIT_REF_SLUG || $CI_COMMIT_SHA\" https://slack.com/api/files.upload"
+      - "curl --request POST --header \"Content-Type: multipart/form-data;\" --form \"token=$SLACK_TOKEN\" --form \"channels=$SLACK_CHANNELS\" --form \"content=$SLACK_CONTENT\" --form \"file=@$ANDROID_APK_PATH/debug/app-debug*.apk\" --form \"title=TestCI\" https://slack.com/api/files.upload"
     artifacts:
       paths:
         - app/build/outputs/
