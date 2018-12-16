@@ -7,7 +7,7 @@ import com.pantaubersama.app.ui.home.HomePresenter
 import com.pantaubersama.app.ui.home.HomeView
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : BaseActivity<HomePresenter>(), HomeView  {
+class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     override fun statusBarColor(): Int {
         return R.color.colorPrimaryDark
     }
@@ -51,7 +51,6 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView  {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
-
 
     override fun setLayout(): Int {
         return R.layout.activity_home
