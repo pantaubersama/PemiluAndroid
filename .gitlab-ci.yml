@@ -8,29 +8,24 @@ before_script:
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - export ANDROID_APK_PATH=$PWD/app/build/outputs/apk
 
-# .build_template: &build_template_def
-#   stage: build
-#   artifacts:
-#     expire_in: 2 weeks
-#     paths:
-#       - app/build/outputs/
-#       - .android/
+.build_template: &build_template_def
+  stage: build
+  artifacts:
+    expire_in: 2 weeks
+    paths:
+      - app/build/outputs/
+      - .android/
 
 build_debug:
-    # <<: *build_template_def
+    <<: *build_template_def
     stage: build
     only:
-#        - develop
+      - develop
       - schedules
       - web
     script:
       - ./gradlew assembleDebug
-      - curl -F file=@$ANDROID_APK_PATH/debug/app-debug.apk -F channels=$SLACK_CHANNELS -F token=$SLACK_TOKEN https://slack.com/api/files.upload
-    #   - "curl --request POST --header \"Content-Type: multipart/form-data;\" --form \"token=$SLACK_TOKEN\" --form \"channels=$SLACK_CHANNELS\" --form \"content=$SLACK_CONTENT\" --form \"file=@$ANDROID_APK_PATH/debug/app-debug*.apk\" --form \"title=TestCI\" https://slack.com/api/files.upload"
-    
-    artifacts:
-      paths:
-        - app/build/outputs/
+      - curl -F file=@$ANDROID_APK_PATH/debug/app-debug.apk -F channels=SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
 
 # build_staging:
 #     <<: *build_template_def
