@@ -5,7 +5,7 @@ repositories {
 }
 
 ext {
-    androidMinSdkVersion = 19
+    androidMinSdkVersion = 21
     androidTargetSdkVersion = 28
     androidCompileSdkVersion = 28
 
