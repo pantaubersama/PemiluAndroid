@@ -14,8 +14,9 @@
             android:value="1" />
 
         <activity
-            android:name=".ui.MainActivity"
-            android:label="@string/title_activity_main">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.HomeActivity"
+            android:label="@string/title_activity_home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
