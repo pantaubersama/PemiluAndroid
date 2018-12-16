@@ -5,6 +5,6 @@ import android.support.multidex.MultiDexApplication
 /**
  * @author edityomurti on 14/12/2018 14:55
  */
-class BaseApp: MultiDexApplication() {
-
+class BaseApp : MultiDexApplication() {
+    // TODO create BaseApp fun
 }

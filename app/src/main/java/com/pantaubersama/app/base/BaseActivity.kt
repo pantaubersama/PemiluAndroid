@@ -1,7 +1,6 @@
 package com.pantaubersama.app.base
 
 import android.app.ProgressDialog
-import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.annotation.DrawableRes
@@ -18,12 +17,12 @@ import java.lang.RuntimeException
  * @author edityomurti on 14/12/2018 17:33
  */
 
-abstract class BaseActivity<P : BasePresenter<BaseView>>: AppCompatActivity() {
+abstract class BaseActivity<P : BasePresenter<BaseView>> : AppCompatActivity() {
     protected var progressDialog: ProgressDialog? = null
     protected var presenter: P? = null
     protected var toolbar: Toolbar? = null
 
-    override  fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
         setContentView(setLayout())
         fetchIntentExtra()

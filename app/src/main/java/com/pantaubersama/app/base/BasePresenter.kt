@@ -6,11 +6,10 @@ import io.reactivex.disposables.CompositeDisposable
  * @author edityomurti on 14/12/2018 17:35
  */
 abstract class BasePresenter<V : BaseView> {
-    val view : V? = null
+    val view: V? = null
     val disposable: CompositeDisposable? = null
 
     fun attach() {
-
     }
 
     fun detach() {
@@ -18,5 +17,4 @@ abstract class BasePresenter<V : BaseView> {
             disposable.dispose()
         }
     }
-
 }

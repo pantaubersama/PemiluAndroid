@@ -5,6 +5,6 @@ package com.pantaubersama.app.utils
  */
 class PantauConstants {
     companion object {
-
+        // TODO add constants
     }
 }
