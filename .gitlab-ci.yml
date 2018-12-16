@@ -25,7 +25,8 @@ build_debug:
       - web
     script:
       - ./gradlew assembleDebug
-      - curl -F file=@$ANDROID_APK_PATH/debug/app-debug.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
+      - mv $ANDROID_APK_PATH/debug/app-debug*.apk $ANDROID_APK_PATH/debug/app-debug-${CI_COMMIT_SHA}.apk
+      - curl -F file=@$ANDROID_APK_PATH/debug/app-debug-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
 
 # build_staging:
 #     <<: *build_template_def
