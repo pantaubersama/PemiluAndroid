@@ -7,23 +7,27 @@ before_script:
   - export ANDROID_HOME="/home/gitlab-runner/android-sdk"
   - export GRADLE_USER_HOME=$(pwd)/.gradle
 
-.build_template: &build_template_def
-  stage: build
-  artifacts:
-    expire_in: 2 weeks
-    paths:
-      - app/build/outputs/
-      - .android/
+# .build_template: &build_template_def
+#   stage: build
+#   artifacts:
+#     expire_in: 2 weeks
+#     paths:
+#       - app/build/outputs/
+#       - .android/
 
 build_debug:
-    <<: *build_template_def
+    # <<: *build_template_def
+    stage: build
     only:
 #        - develop
       - schedules
       - web
     script:
       - ./gradlew assembleDebug
-      - "curl --request POST --header \"Content-Type: multipart/form-data;\" --form \"token=$SLACK_TOKEN\" --form \"channels=$SLACK_CHANNELS\" --form \"content=$SLACK_CONTENT\" --form \"file=@$CI_PROJECT_DIR/$APK_PATH\" --form \"title=TestCIapk : $CI_COMMIT_REF_SLUG || $CI_COMMIT_SHA\" https://slack.com/api/files.upload"
+    #   - "curl --request POST --header \"Content-Type: multipart/form-data;\" --form \"token=$SLACK_TOKEN\" --form \"channels=$SLACK_CHANNELS\" --form \"content=$SLACK_CONTENT\" --form \"file=@$CI_PROJECT_DIR/$APK_PATH\" --form \"title=TestCIapk : $CI_COMMIT_REF_SLUG || $CI_COMMIT_SHA\" https://slack.com/api/files.upload"
+    artifacts:
+      paths:
+        - app/build/outputs/
 
 # build_staging:
 #     <<: *build_template_def
