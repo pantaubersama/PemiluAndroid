@@ -33,7 +33,9 @@ ext {
             glide                   : "4.8.0",
 
             dagger                  : "2.12",
-            daggerCompiler          : "2.12"
+            daggerCompiler          : "2.12",
+
+            roundedImageView       : "2.3.0"
     ]
 
 
@@ -82,4 +84,6 @@ ext {
 
     dagger = "com.google.dagger:dagger:$versions.dagger"
     daggerCompiler = "com.google.dagger:dagger-compiler:$versions.daggerCompiler"
+
+    roundedImageView = "com.makeramen:roundedimageview:$versions.roundedImageView"
 }

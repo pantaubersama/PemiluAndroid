@@ -1,8 +1,10 @@
 <resources>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_navbar_linimasa">Linimasa</string>
+    <string name="title_navbar_penpol">Penpol</string>
+    <string name="title_navbar_wordstadium">Wordstadium</string>
+    <string name="title_navbar_lapor">Lapor</string>
+    <string name="title_navbar_rekap">Rekap</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="txt_mohon_tunggu">Mohon tunggu...</string>
+    <string name="txt_cari">Cari</string>
 </resources>

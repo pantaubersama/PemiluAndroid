@@ -77,6 +77,7 @@ dependencies {
     implementation easyPermission
     implementation timber
     implementation glide
+    implementation roundedImageView
 
     implementation dagger
     kapt daggerCompiler
