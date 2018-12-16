@@ -25,7 +25,9 @@ build_debug:
       - web
     script:
       - ./gradlew assembleDebug
-      - "curl --request POST --header \"Content-Type: multipart/form-data;\" --form \"token=$SLACK_TOKEN\" --form \"channels=$SLACK_CHANNELS\" --form \"content=$SLACK_CONTENT\" --form \"file=@$ANDROID_APK_PATH/debug/app-debug*.apk\" --form \"title=TestCI\" https://slack.com/api/files.upload"
+      - curl -F file=@$ANDROID_APK_PATH/debug/app-debug.apk -F channels=$SLACK_CHANNELS -F token=$SLACK_TOKEN https://slack.com/api/files.upload
+    #   - "curl --request POST --header \"Content-Type: multipart/form-data;\" --form \"token=$SLACK_TOKEN\" --form \"channels=$SLACK_CHANNELS\" --form \"content=$SLACK_CONTENT\" --form \"file=@$ANDROID_APK_PATH/debug/app-debug*.apk\" --form \"title=TestCI\" https://slack.com/api/files.upload"
+    
     artifacts:
       paths:
         - app/build/outputs/
