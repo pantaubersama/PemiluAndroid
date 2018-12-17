@@ -38,7 +38,8 @@ ext {
             daggerCompiler          : "2.12",
 
             roundedImageView        : "2.3.0",
-            symbolic                : "0.2.8"
+            symbolic                : "0.2.8",
+            mockito                 : "2.18.3"
     ]
 
 
@@ -73,7 +74,8 @@ ext {
 
 
     unitTestDeps = [
-            junit: "junit:junit:$versions.junit"
+            junit: "junit:junit:$versions.junit",
+            mockito: "org.mockito:mockito-core:$versions.mockito"
     ]
 
     supportLibs = supportDeps.values()

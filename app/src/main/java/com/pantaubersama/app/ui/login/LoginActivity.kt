@@ -14,7 +14,7 @@ import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
-class LoginActivity : BaseActivity<LoginPresenter>() {
+class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     @Inject
     lateinit var rxSchedulers: RxSchedulers
     private var symbolicScope: MutableList<String>? = null
@@ -49,7 +49,7 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
             }
 
             override fun success(result: Result<AuthToken>) {
-                // token exchange
+                presenter?.exchangeToken(result.data.accessToken, "")
             }
         })
     }
@@ -65,5 +65,17 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
 
     override fun initPresenter(): LoginPresenter? {
         return LoginPresenter(rxSchedulers)
+    }
+
+    override fun showLoading() {
+        showProgressDialog("Logging in")
+    }
+
+    override fun dismissLoading() {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showError(throwable: Throwable) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
