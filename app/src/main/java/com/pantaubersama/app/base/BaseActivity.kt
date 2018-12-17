@@ -24,6 +24,7 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(setLayout())
+        initInjection()
         fetchIntentExtra()
         if (setFragment() != null) {
             supportFragmentManager.beginTransaction()
@@ -41,6 +42,8 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = resources.getColor(statusBarColor())
     }
+
+    protected open fun initInjection() {}
 
     override fun onDestroy() {
         if (presenter != null) {

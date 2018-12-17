@@ -20,9 +20,13 @@
             android:value="1" />
 
         <activity
-            android:theme="@style/AppTheme.NoActionBar"
-            android:name=".ui.HomeActivity"
-            android:label="@string/title_activity_home">
+            android:name=".ui.home.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".ui.login.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

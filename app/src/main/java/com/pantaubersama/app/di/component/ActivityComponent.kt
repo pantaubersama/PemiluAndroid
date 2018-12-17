@@ -2,6 +2,7 @@ package com.pantaubersama.app.di.component
 
 import com.pantaubersama.app.di.module.ActivityModule
 import com.pantaubersama.app.di.scope.ActivityScope
+import com.pantaubersama.app.ui.login.LoginActivity
 import dagger.Subcomponent
 
 /**
@@ -10,5 +11,5 @@ import dagger.Subcomponent
 @ActivityScope
 @Subcomponent(modules = [ActivityModule::class])
 interface ActivityComponent {
-    // injection
+    fun inject(loginActivity: LoginActivity)
 }

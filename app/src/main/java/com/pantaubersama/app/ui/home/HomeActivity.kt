@@ -1,10 +1,8 @@
-package com.pantaubersama.app.ui
+package com.pantaubersama.app.ui.home
 
 import android.support.design.widget.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.ui.home.HomePresenter
-import com.pantaubersama.app.ui.home.HomeView
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity<HomePresenter>(), HomeView {

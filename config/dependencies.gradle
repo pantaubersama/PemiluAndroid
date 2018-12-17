@@ -37,7 +37,8 @@ ext {
             dagger                  : "2.12",
             daggerCompiler          : "2.12",
 
-            roundedImageView       : "2.3.0"
+            roundedImageView        : "2.3.0",
+            symbolic                : "0.2.7"
     ]
 
 
@@ -90,4 +91,6 @@ ext {
     daggerCompiler = "com.google.dagger:dagger-compiler:$versions.daggerCompiler"
 
     roundedImageView = "com.makeramen:roundedimageview:$versions.roundedImageView"
+
+    symbolic = "com.github.extrainteger:android-identitas-client:$versions.symbolic"
 }
