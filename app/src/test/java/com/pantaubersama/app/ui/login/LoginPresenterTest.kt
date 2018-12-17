@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.login
 
+import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.utils.RxSchedulers
 import org.junit.Before
 import org.junit.Test
@@ -24,7 +25,7 @@ class LoginPresenterTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         presenter = spy(LoginPresenter(rxSchedulers))
-        presenter?.attach()
+        presenter?.attach(view as BaseView)
     }
 
     @Test

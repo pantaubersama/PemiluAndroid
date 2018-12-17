@@ -10,13 +10,14 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.WindowManager
 import com.pantaubersama.app.R
+import timber.log.Timber
 import java.lang.RuntimeException
 
 /**
  * @author edityomurti on 14/12/2018 17:33
  */
 
-abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity() {
+abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseView {
     protected var progressDialog: ProgressDialog? = null
     protected var presenter: P? = null
     protected var toolbar: Toolbar? = null
@@ -33,7 +34,7 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity() {
         } else {
             presenter = initPresenter()
             if (presenter != null) {
-                presenter!!.attach()
+                presenter!!.attach(this)
             }
         }
         initProgressDialog()
@@ -130,5 +131,9 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity() {
         if (progressDialog!!.isShowing) {
             progressDialog!!.dismiss()
         }
+    }
+
+    override fun showError(throwable: Throwable) {
+        Timber.e(throwable)
     }
 }

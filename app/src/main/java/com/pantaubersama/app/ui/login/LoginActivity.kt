@@ -14,7 +14,7 @@ import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
-class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
+class LoginActivity : BaseActivity<LoginPresenter>() {
     @Inject
     lateinit var rxSchedulers: RxSchedulers
     private var symbolicScope: MutableList<String>? = null
