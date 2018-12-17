@@ -5,10 +5,10 @@ package com.pantaubersama.app.utils
  */
 class PantauConstants {
     companion object {
-
+        // direct access
     }
 
-    object Networking{
+    object Networking {
         val AUTHORIZATION = "Authorization"
         val GRANT_TYPE = "refresh_token"
         val ACCESS_TOKEN_FIELD = "client_token"

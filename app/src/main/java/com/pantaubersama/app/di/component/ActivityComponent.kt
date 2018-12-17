@@ -9,6 +9,6 @@ import dagger.Subcomponent
  */
 @ActivityScope
 @Subcomponent(modules = [ActivityModule::class])
-interface ActivityComponent{
-
+interface ActivityComponent {
+    // injection
 }

@@ -17,10 +17,10 @@ import java.util.concurrent.TimeUnit
  * Created by ali on 02/10/17.
  */
 @Module(includes = [(AppModule::class)])
-class NetworkModule{
+class NetworkModule {
 
     @Provides
-    fun provideAuthenticator(sharedPreferences: SharedPreferences, rxSchedulers: RxSchedulers): CustomAuthenticator{
+    fun provideAuthenticator(sharedPreferences: SharedPreferences, rxSchedulers: RxSchedulers): CustomAuthenticator {
         return CustomAuthenticator(sharedPreferences, rxSchedulers)
     }
 

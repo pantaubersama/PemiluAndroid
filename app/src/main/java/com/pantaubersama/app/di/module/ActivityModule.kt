@@ -13,7 +13,7 @@ import dagger.Provides
     NetworkModule::class,
     RxSchedulersModule::class,
     SharedPreferenceModule::class])
-class ActivityModule(val activity: Activity?){
+class ActivityModule(val activity: Activity?) {
     @Provides
     @ActivityScope
     fun provideActivity() = activity
