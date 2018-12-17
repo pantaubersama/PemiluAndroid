@@ -81,8 +81,10 @@ dependencies {
     implementation timber
     implementation glide
     implementation roundedImageView
+    implementation symbolic
 
     implementation dagger
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     kapt daggerCompiler
 
     testImplementation unitTestLibs
@@ -102,3 +104,4 @@ task ktlint(type: JavaExec, group: "verification") {
 }
 //TODO : INSERT FIREBASE JSON FILE
 //apply plugin: 'com.google.gms.google-services'
+
