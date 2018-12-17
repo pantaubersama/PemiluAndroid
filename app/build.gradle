@@ -24,21 +24,24 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_PROD)
         }
         debug {
             minifyEnabled false
+            it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_STAG)
         }
 
         buildTypes.each {
             /**
              * Staging BaseURL
              */
-            it.buildConfigField("String", "PANTAU_BASE_URL_STAG", PANTAU_BASE_URL_STAG)
-
-            /**
-             * Production BaseURL
-             */
-            it.buildConfigField("String", "PANTAU_BASE_URL_PROD", PANTAU_BASE_URL_PROD)
+            it.buildConfigField("String", "CLIENT_ID", CLIENT_ID)
+            it.buildConfigField("String", "CLIENT_SECRET", CLIENT_SECRET)
+//
+//            /**
+//             * Production BaseURL
+//             */
+//            it.buildConfigField("String", "PANTAU_BASE_URL_PROD", PANTAU_BASE_URL_PROD)
         }
     }
 
