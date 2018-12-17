@@ -58,7 +58,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showLoading(message: String) {
+    override fun showLoading() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

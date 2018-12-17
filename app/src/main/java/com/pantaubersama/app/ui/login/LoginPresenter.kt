@@ -4,5 +4,9 @@ import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.utils.RxSchedulers
 
 class LoginPresenter(private val rxSchedulers: RxSchedulers?) : BasePresenter<LoginView>() {
-    // token exchange
+
+    fun exchangeToken(oAuthToken: String?, registrationId: String?) {
+        view?.showLoading()
+        // invoke data manager
+    }
 }
