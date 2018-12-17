@@ -81,13 +81,13 @@ package_staging:
     only:
         - develop
     script:
-        - mv $ANDROID_APK_PATH/debug/app-staging-debug*.apk $ANDROID_APK_PATH/debug/app-debug-${CI_COMMIT_SHA}.apk
+        - mv $ANDROID_APK_PATH/staging/debug/app-staging-debug*.apk $ANDROID_APK_PATH/staging/debug/app-debug-${CI_COMMIT_SHA}.apk
     artifacts:
         expire_in: 4 days
         paths:
             - app/build/outputs/
     after_script:
-        - curl -F file=@$ANDROID_APK_PATH/debug/app-debug-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
+        - curl -F file=@$ANDROID_APK_PATH/staging/debug/app-debug-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
         
 package_release:
     <<: *package_template_def
@@ -96,10 +96,10 @@ package_release:
     only:
         - master
     script:
-        - mv $ANDROID_APK_PATH/release/app-production-release*.apk $ANDROID_APK_PATH/release/app-release-${CI_COMMIT_SHA}.apk
+        - mv $ANDROID_APK_PATH/production/release/app-production-release*.apk $ANDROID_APK_PATH/production/release/app-release-${CI_COMMIT_SHA}.apk
     artifacts:
         expire_in: 4 days
         paths:
             - app/build/outputs/
     after_script:
-        - curl -F file=@$ANDROID_APK_PATH/release/app-release-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
+        - curl -F file=@$ANDROID_APK_PATH/production/release/app-release-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload

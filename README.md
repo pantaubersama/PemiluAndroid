@@ -7,7 +7,7 @@
 
 ### Code Style
 
-You can check code style using `./gradlew ktlint` and you get the report.
+You can check code style using [`./gradlew ktlint`](https://ktlint.github.io/).
 
 ### Branching
 
