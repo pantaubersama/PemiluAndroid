@@ -7,7 +7,7 @@
 
 ### Code Style
 
-You can check code style using `./gradlew check` and you get the report in report directory inside `build` directory.
+You can check code style using `./gradlew ktlint` and you get the report.
 
 ### Branching
 

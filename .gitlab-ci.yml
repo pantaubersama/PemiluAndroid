@@ -2,21 +2,24 @@ image: azabost/android-sdk-28:latest
 
 stages:
   - build
+  - quality
+  - package
 
 before_script:
   - export ANDROID_HOME="/home/gitlab-runner/android-sdk"
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - export ANDROID_APK_PATH=$PWD/app/build/outputs/apk
 
+#### BUILD ####
+
 .build_template: &build_template_def
   stage: build
   artifacts:
     expire_in: 2 weeks
     paths:
-      - app/build/outputs/
       - .android/
 
-build_debug:
+build_staging:
     <<: *build_template_def
     stage: build
     only:
@@ -28,24 +31,76 @@ build_debug:
       - mv $ANDROID_APK_PATH/debug/app-debug*.apk $ANDROID_APK_PATH/debug/app-debug-${CI_COMMIT_SHA}.apk
       - curl -F file=@$ANDROID_APK_PATH/debug/app-debug-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
 
-# build_staging:
-#     <<: *build_template_def
-#     only:
-# #        - develop
-#       - schedules
-#       - web
-#     script:
-#       - ./gradlew assembleStaging
-#       - "curl --request POST --header \"Content-Type: multipart/form-data;\" --form \"token=$SLACK_TOKEN\" --form \"channels=$SLACK_CHANNELS\" --form \"content=$SLACK_CONTENT\" --form \"file=@$CI_PROJECT_DIR/$APK_PATH\" --form \"title=$SLACK_TITLE : $CI_COMMIT_REF_SLUG || $CI_COMMIT_SHA\" https://slack.com/api/files.upload"
 
-# build_production:
-#     stage: build
-#     artifacts:
-#       paths:
-#           - app/build/outputs/
-#           - .android/
-#     only:
-#         - master
-#     script:
-#       - ./gradlew assembleProduction
-#       - "curl --request POST --header \"Content-Type: multipart/form-data;\" --form \"token=$SLACK_TOKEN\" --form \"channels=$SLACK_CHANNELS\" --form \"content=$SLACK_CONTENT_PRODUCTION\" --form \"file=@$CI_PROJECT_DIR/$APK_PATH_PRODUCTION\" --form \"title=$SLACK_TITLE_PRODUCTION : $CI_COMMIT_REF_SLUG || $CI_COMMIT_SHA\" https://slack.com/api/files.upload"
+build_release:
+    <<: *build_template_def
+    stage: build
+    only:
+      - master
+      - schedules
+      - web
+    script:
+      - ./gradlew assembleRelease
+      
+     
+
+
+#### QUALITY ####
+
+quality_check:
+    stage: quality
+    only:
+        - master
+        - develop
+
+    script:
+        - ./gradlew ktlint
+    
+    artifacts:
+        name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
+        when: on_failure
+        expire_in: 4 days
+        paths:
+            - app/build/reports/
+            
+#### PACKAGE ####
+
+.package_template: &package_template_def
+    before_script:
+        - mkdir -p deliverables
+        - touch ./deliverables/info.txt
+        - echo "Build date $(date)" >> ./deliverables/info.txt
+        - echo "Git branch ${CI_COMMIT_REF_NAME}" >> ./deliverables/info.txt
+        - echo "Git commit ${CI_COMMIT_SHA}" >> ./deliverables/info.txt
+        - echo "Gitlab pipeline ${CI_PIPELINE_ID}" >> ./deliverables/info.txt
+        - export ANDROID_APK_PATH=$PWD/app/build/outputs/apk
+
+package_staging:
+    <<: *package_template_def
+    stage: package
+    environment: Development
+    only:
+        - develop
+    script:
+        - mv $ANDROID_APK_PATH/debug/app-debug*.apk $ANDROID_APK_PATH/debug/app-debug-${CI_COMMIT_SHA}.apk
+    artifacts:
+        expire_in: 4 days
+        paths:
+            - app/build/outputs/
+    after_script:
+        - curl -F file=@$ANDROID_APK_PATH/debug/app-debug-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
+        
+package_release:
+    <<: *package_template_def
+    stage: package
+    environment: Release
+    only:
+        - master
+    script:
+        - mv $ANDROID_APK_PATH/release/app-release*.apk $ANDROID_APK_PATH/release/app-release-${CI_COMMIT_SHA}.apk
+    artifacts:
+        expire_in: 4 days
+        paths:
+            - app/build/outputs/
+    after_script:
+        - curl -F file=@$ANDROID_APK_PATH/release/app-release-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload

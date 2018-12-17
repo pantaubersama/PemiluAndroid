@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply from: "$project.rootDir/config/dependencies.gradle"
 apply from: "$project.rootDir/config/app-version.gradle"
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 28
@@ -14,6 +15,7 @@ android {
         targetSdkVersion androidTargetSdkVersion
         versionCode appVersionCode
         versionName appVersionName
+        flavorDimensions "default"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -24,21 +26,25 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_PROD)
         }
         debug {
+            applicationIdSuffix ".staging"
             minifyEnabled false
+            debuggable true
+            it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_STAG)
         }
 
         buildTypes.each {
-            /**
-             * Staging BaseURL
-             */
-            it.buildConfigField("String", "PANTAU_BASE_URL_STAG", PANTAU_BASE_URL_STAG)
+            it.buildConfigField("String", "CLIENT_ID", CLIENT_ID)
+            it.buildConfigField("String", "CLIENT_SECRET", CLIENT_SECRET)
+        }
+    }
 
-            /**
-             * Production BaseURL
-             */
-            it.buildConfigField("String", "PANTAU_BASE_URL_PROD", PANTAU_BASE_URL_PROD)
+    productFlavors {
+        production {
+        }
+        staging {
         }
     }
 
@@ -78,8 +84,10 @@ dependencies {
     implementation timber
     implementation glide
     implementation roundedImageView
+    implementation symbolic
 
     implementation dagger
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     kapt daggerCompiler
 
     testImplementation unitTestLibs
@@ -97,5 +105,4 @@ task ktlint(type: JavaExec, group: "verification") {
     args "src/**/*.kt"
     // args "--reporter=checkstyle, output=${buildDir}/ktlint.xml
 }
-//TODO : INSERT FIREBASE JSON FILE
-//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'
