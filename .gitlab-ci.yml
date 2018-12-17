@@ -27,9 +27,7 @@ build_staging:
       - schedules
       - web
     script:
-      - ./gradlew assembleDebug
-      - mv $ANDROID_APK_PATH/debug/app-debug*.apk $ANDROID_APK_PATH/debug/app-debug-${CI_COMMIT_SHA}.apk
-      - curl -F file=@$ANDROID_APK_PATH/debug/app-debug-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
+      - ./gradlew assembleStagingDebug
 
 
 build_release:
@@ -40,7 +38,7 @@ build_release:
       - schedules
       - web
     script:
-      - ./gradlew assembleRelease
+      - ./gradlew assembleProductionRelease
       
      
 
