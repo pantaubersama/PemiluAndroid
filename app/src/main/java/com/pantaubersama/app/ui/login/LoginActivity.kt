@@ -2,9 +2,9 @@ package com.pantaubersama.app.ui.login
 
 import android.content.Intent
 import com.extrainteger.identitaslogin.Callback
-import com.extrainteger.identitaslogin.IdentitasConfig
-import com.extrainteger.identitaslogin.IdentitasException
 import com.extrainteger.identitaslogin.Result
+import com.extrainteger.identitaslogin.SymbolicConfig
+import com.extrainteger.identitaslogin.SymbolicException
 import com.extrainteger.identitaslogin.models.AuthToken
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -34,7 +34,7 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
     override fun setupUI() {
         symbolicScope = ArrayList()
         symbolic_login_button.configure(
-            IdentitasConfig(
+            SymbolicConfig(
                 this@LoginActivity,
                 "https://identitas.extrainteger.com",
                 "ad68192bfcfe8085492dc82af35e26c8ca92a8d08db9e9d7820e054a849d5add",
@@ -44,7 +44,7 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
                 )
         )
         symbolic_login_button.setCallback(object : Callback<AuthToken>() {
-            override fun failure(exception: IdentitasException) {
+            override fun failure(exception: SymbolicException) {
                 ToastUtil.show(this@LoginActivity, "Failed to login using Symbolic")
             }
 
