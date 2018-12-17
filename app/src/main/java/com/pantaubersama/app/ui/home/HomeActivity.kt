@@ -1,11 +1,19 @@
 package com.pantaubersama.app.ui.home
 
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.ui.home.linimasa.LinimasaFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
+
+    private val linimasaFragment = LinimasaFragment()
+    private val otherFrag = Fragment() // dummy
+
+    private lateinit var activeFragment: Fragment
+
     override fun statusBarColor(): Int {
         return R.color.colorPrimaryDark
     }
@@ -21,33 +29,49 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     override fun setupUI() {
         setSupportActionBar(toolbar_home)
 
+        supportFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, linimasaFragment)
+                .commit()
+
+        activeFragment = linimasaFragment
+
         val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_linimasa -> {
-                    message.setText(R.string.title_navbar_linimasa)
+                    activeFragment = linimasaFragment
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_penpol -> {
-                    message.setText(R.string.title_navbar_penpol)
+                    activeFragment = otherFrag
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_wordstadium -> {
-                    message.setText(R.string.title_navbar_wordstadium)
+                    activeFragment = otherFrag
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_lapor -> {
-                    message.setText(R.string.title_navbar_lapor)
+                    activeFragment = otherFrag
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_rekap -> {
-                    message.setText(R.string.title_navbar_rekap)
+                    activeFragment = otherFrag
                     return@OnNavigationItemSelectedListener true
                 }
             }
-            false
+
+            showActiveFragment()
+
+            return@OnNavigationItemSelectedListener false
         }
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+    }
+
+    private fun showActiveFragment() {
+        supportFragmentManager.beginTransaction()
+                .hide(linimasaFragment)
+                .show(activeFragment)
+                .commit()
     }
 
     override fun setLayout(): Int {

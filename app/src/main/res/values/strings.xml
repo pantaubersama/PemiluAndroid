@@ -7,4 +7,9 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="txt_mohon_tunggu">Mohon tunggu...</string>
     <string name="txt_cari">Cari</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_tab_pilpres">Pilpres</string>
+    <string name="txt_tab_janji_politik">Janji Politik</string>
 </resources>
