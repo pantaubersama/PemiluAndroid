@@ -14,6 +14,7 @@ android {
         targetSdkVersion androidTargetSdkVersion
         versionCode appVersionCode
         versionName appVersionName
+        flavorDimensions "default"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -27,7 +28,9 @@ android {
             it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_PROD)
         }
         debug {
+            applicationIdSuffix ".staging"
             minifyEnabled false
+            debuggable true
             it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_STAG)
         }
 
@@ -42,6 +45,13 @@ android {
 //             * Production BaseURL
 //             */
 //            it.buildConfigField("String", "PANTAU_BASE_URL_PROD", PANTAU_BASE_URL_PROD)
+        }
+    }
+
+    productFlavors {
+        production {
+        }
+        staging {
         }
     }
 
@@ -100,5 +110,5 @@ task ktlint(type: JavaExec, group: "verification") {
     args "src/**/*.kt"
     // args "--reporter=checkstyle, output=${buildDir}/ktlint.xml
 }
-//TODO : INSERT FIREBASE JSON FILE
-//apply plugin: 'com.google.gms.google-services'
+
+apply plugin: 'com.google.gms.google-services'
