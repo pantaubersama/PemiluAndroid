@@ -17,7 +17,8 @@ before_script:
   artifacts:
     expire_in: 2 weeks
     paths:
-      - .android/
+        - app/build/outputs/
+        - .android/
 
 build_staging:
     <<: *build_template_def
