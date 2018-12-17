@@ -12,15 +12,15 @@ class RxSchedulers {
         return Schedulers.io()
     }
 
-    fun newThread(): Scheduler{
+    fun newThread(): Scheduler {
         return Schedulers.newThread()
     }
 
-    fun computation(): Scheduler{
+    fun computation(): Scheduler {
         return Schedulers.computation()
     }
 
-    //foreground
+    // foreground
     fun mainThread(): Scheduler {
         return AndroidSchedulers.mainThread()
     }

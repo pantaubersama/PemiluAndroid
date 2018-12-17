@@ -12,8 +12,10 @@ import retrofit2.http.POST
 interface RestAPI {
     @FormUrlEncoded
     @POST("oauth/token")
-    fun refreshToken(@Field("grant_type") grantType: String,
-                     @Field("client_id") client_id: String,
-                     @Field("client_secret") client_secret: String?,
-                     @Field("refresh_token") refresh_token: String?): Single<Token>
+    fun refreshToken(
+        @Field("grant_type") grantType: String,
+        @Field("client_id") client_id: String,
+        @Field("client_secret") client_secret: String?,
+        @Field("refresh_token") refresh_token: String?
+    ): Single<Token>
 }

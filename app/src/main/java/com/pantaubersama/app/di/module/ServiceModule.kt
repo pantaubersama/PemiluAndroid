@@ -13,7 +13,7 @@ import dagger.Provides
     NetworkModule::class,
     RxSchedulersModule::class,
     SharedPreferenceModule::class])
-class ServiceModule(val context: Context?){
+class ServiceModule(val context: Context?) {
     @Provides
     @ServiceScope
     fun provideContext() = context

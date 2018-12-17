@@ -9,6 +9,6 @@ import dagger.Subcomponent
  */
 @ServiceScope
 @Subcomponent(modules = [ServiceModule::class])
-interface ServiceComponent{
-//    fun inject(myFirebaseMessagingService: MyFirebaseMessagingService)
+interface ServiceComponent {
+    // injection
 }

@@ -7,7 +7,7 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.di.component.AppComponent
 import com.pantaubersama.app.di.component.DaggerAppComponent
 import com.pantaubersama.app.di.component.ServiceComponent
-import com.pantaubersama.app.di.module.*
+import com.pantaubersama.app.di.module.* // ktlint-disable
 
 /**
  * @author edityomurti on 14/12/2018 14:55
@@ -25,7 +25,7 @@ class BaseApp : MultiDexApplication() {
                 .build()
     }
 
-    fun createActivityComponent(activity: Activity?): ActivityComponent?{
+    fun createActivityComponent(activity: Activity?): ActivityComponent? {
         activityComponent = appComponent?.withActivityComponent(
                 ActivityModule(activity!!),
                 NetworkModule(),
@@ -36,11 +36,11 @@ class BaseApp : MultiDexApplication() {
         return activityComponent
     }
 
-    fun releaseActivityComponent(){
+    fun releaseActivityComponent() {
         activityComponent = null
     }
 
-    fun createServiceComponent(context: Context?): ServiceComponent?{
+    fun createServiceComponent(context: Context?): ServiceComponent? {
         serviceComponent = appComponent?.withServiceComponent(
                 ServiceModule(context),
                 NetworkModule(),
@@ -51,7 +51,7 @@ class BaseApp : MultiDexApplication() {
         return serviceComponent
     }
 
-    fun releaseServiceComponent(){
+    fun releaseServiceComponent() {
         serviceComponent = null
     }
 }
