@@ -38,7 +38,7 @@ ext {
             daggerCompiler          : "2.12",
 
             roundedImageView        : "2.3.0",
-            symbolic                : "0.2.7"
+            symbolic                : "0.2.8"
     ]
 
 
