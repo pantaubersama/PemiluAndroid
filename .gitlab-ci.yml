@@ -81,7 +81,7 @@ package_staging:
     only:
         - develop
     script:
-        - mv $ANDROID_APK_PATH/debug/app-debug*.apk $ANDROID_APK_PATH/debug/app-debug-${CI_COMMIT_SHA}.apk
+        - mv $ANDROID_APK_PATH/debug/app-staging-debug*.apk $ANDROID_APK_PATH/debug/app-debug-${CI_COMMIT_SHA}.apk
     artifacts:
         expire_in: 4 days
         paths:
@@ -96,7 +96,7 @@ package_release:
     only:
         - master
     script:
-        - mv $ANDROID_APK_PATH/release/app-release*.apk $ANDROID_APK_PATH/release/app-release-${CI_COMMIT_SHA}.apk
+        - mv $ANDROID_APK_PATH/release/app-production-release*.apk $ANDROID_APK_PATH/release/app-release-${CI_COMMIT_SHA}.apk
     artifacts:
         expire_in: 4 days
         paths:
