@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginActivity">
 
-    <com.extrainteger.identitaslogin.ui.IdentitasLoginButton
+    <com.extrainteger.identitaslogin.ui.SymbolicLoginButton
         android:id="@+id/symbolic_login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
