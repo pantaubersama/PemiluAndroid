@@ -19,6 +19,7 @@ ext {
             playService             : "12.0.1",
             firebaseCore            : "16.0.6",
             firebaseMessaging       : "17.3.4",
+            crashlytic              : "2.9.7",
 
             rxJava                  : "2.1.5",
             rxJavaAndroid           : "2.0.1",
@@ -59,8 +60,9 @@ ext {
     ]
 
     firebase = [
-            firebaseCore       : "com.google.firebase:firebase-core:$versions.playService",
-            firebaseMessaging  : "com.google.firebase:firebase-messaging:$versions.playService"
+            firebaseCore        : "com.google.firebase:firebase-core:$versions.playService",
+            firebaseMessaging   : "com.google.firebase:firebase-messaging:$versions.playService",
+            crashlytic          : "com.crashlytics.sdk.android:crashlytics:$versions.crashlytic"
     ]
 
     rxJava = [
