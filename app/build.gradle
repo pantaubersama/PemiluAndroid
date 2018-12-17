@@ -8,14 +8,14 @@ apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 28
-
+    buildToolsVersion '28.0.3'
+    flavorDimensions "default"
     defaultConfig {
         applicationId appApplicationId
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
         versionCode appVersionCode
         versionName appVersionName
-        flavorDimensions "default"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
