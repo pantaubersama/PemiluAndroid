@@ -43,7 +43,7 @@ abstract class BaseFragment<P : BasePresenter<*>> : Fragment(), BaseView {
     protected abstract fun setLayout(): Int
 
     fun setupToolbar(isBackButtonEnable: Boolean, title: String, @DrawableRes color: Int, elevation: Float) {
-        toolbar = mView?.findViewById(R.id.toolbar)
+        toolbar = mView?.findViewById(R.id.toolbar_layout)
 
         if (toolbar != null) {
             toolbar!!.setNavigationOnClickListener { v -> Objects.requireNonNull(activity)?.onBackPressed() }

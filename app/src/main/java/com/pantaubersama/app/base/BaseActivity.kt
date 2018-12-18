@@ -95,7 +95,8 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
     protected abstract fun setLayout(): Int
 
     fun setupToolbar(isBackButtonEnable: Boolean, title: String, @DrawableRes color: Int, elevation: Float) {
-        toolbar = findViewById(R.id.toolbar)
+
+        toolbar = findViewById(R.id.toolbar_layout)
 
         if (toolbar != null) {
             toolbar!!.setNavigationOnClickListener { view -> onBackPressed() }
