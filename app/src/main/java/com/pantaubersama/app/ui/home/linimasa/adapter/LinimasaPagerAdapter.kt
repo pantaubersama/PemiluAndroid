@@ -28,5 +28,4 @@ class LinimasaPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
     override fun getCount(): Int {
         return tabCount!!
     }
-
 }

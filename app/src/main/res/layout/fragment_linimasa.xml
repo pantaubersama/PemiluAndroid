@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,6 +6,7 @@
     tools:context="com.pantaubersama.app.ui.home.linimasa.LinimasaFragment">
 
     <RelativeLayout
+        android:id="@+id/rl_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
@@ -14,22 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:tabMode="scrollable"
-            app:tabTextColor="@color/gray"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
             app:tabIndicatorColor="@color/white"
             app:tabIndicatorHeight="3dp">
-
-            <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/txt_tab_pilpres"/>
-
-            <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/txt_tab_janji_politik"
-                />
 
         </android.support.design.widget.TabLayout>
 
@@ -43,5 +30,13 @@
     </RelativeLayout>
 
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_tab_layout"
+        android:background="@color/white">
 
-</FrameLayout>
+    </android.support.v4.view.ViewPager>
+
+</RelativeLayout>

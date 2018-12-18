@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.home.linimasa.pilpres
 
-import android.os.Bundle
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
@@ -9,7 +8,7 @@ import com.pantaubersama.app.base.BasePresenter
 class PilpresFragment : BaseFragment<BasePresenter<*>>() {
 
     companion object {
-//        val ARGS1 = "ARGS1"
+//        TODO : val ARGS1 = "ARGS1"
 //
 //        fun newInstance(var1: String): PilpresFragment {
 //            val fragment = PilpresFragment()
@@ -43,5 +42,4 @@ class PilpresFragment : BaseFragment<BasePresenter<*>>() {
     override fun showError(throwable: Throwable) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
 }

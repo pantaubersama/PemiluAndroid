@@ -2,9 +2,11 @@ package com.pantaubersama.app.ui.home
 
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
+import android.support.v7.widget.Toolbar
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.ui.home.linimasa.LinimasaFragment
+import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
@@ -27,7 +29,19 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     }
 
     override fun setupUI() {
-        setSupportActionBar(toolbar_home)
+//        setSupportActionBar(toolbar_home)
+        var toolbarL = findViewById<Toolbar>(R.id.toolbar)
+
+        if (toolbarL != null) {
+            setSupportActionBar(toolbarL)
+
+            if (supportActionBar != null) {
+//                supportActionBar!!.setDisplayHomeAsUpEnabled(isBackButtonEnable)
+//                supportActionBar!!.setHomeAsUpIndicator(resources.getDrawable(R.drawable.ic_))
+            }
+        } else {
+            ToastUtil.show(this, "OMG")
+        }
 
         supportFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, linimasaFragment)
