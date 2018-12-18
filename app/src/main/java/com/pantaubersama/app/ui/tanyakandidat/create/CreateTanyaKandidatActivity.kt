@@ -1,11 +1,20 @@
 package com.pantaubersama.app.ui.tanyakandidat.create
 
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.base.BaseApp
+import com.pantaubersama.app.utils.RxSchedulers
 import kotlinx.android.synthetic.main.activity_create_tanya_kandidat.*
+import javax.inject.Inject
 
 class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>() {
+    @Inject
+    lateinit var rxScheduler: RxSchedulers
 
     override fun statusBarColor(): Int {
         return 0
@@ -15,8 +24,25 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun initInjection() {
+        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    }
+
     override fun setupUI() {
         setupToolbar(true, getString(R.string.create_question), R.color.white, 4f)
+        question?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onTextChanged(string: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                question_length.text = string?.length.toString()
+            }
+        })
     }
 
     override fun setLayout(): Int {
@@ -33,5 +59,17 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 
     override fun dismissLoading() {
         page_loading.visibility = View.GONE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_done, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.done_action -> presenter?.submitQuestion(question.text.toString())
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

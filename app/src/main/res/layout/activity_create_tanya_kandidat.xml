@@ -112,7 +112,9 @@
                             android:background="@color/white"
                             android:gravity="top"
                             android:textSize="20sp"
-                            android:fontFamily="@font/bw_modelica_bold"/>
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:maxLength="260"
+                            android:inputType="textMultiLine"/>
 
                     </LinearLayout>
 

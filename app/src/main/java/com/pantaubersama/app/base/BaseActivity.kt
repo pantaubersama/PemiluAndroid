@@ -40,7 +40,7 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
         initProgressDialog()
         setupUI()
 
-        if (statusBarColor()!=0){
+        if (statusBarColor() != 0) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = resources.getColor(statusBarColor()!!)
         }
