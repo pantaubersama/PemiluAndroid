@@ -47,27 +47,21 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 view_pager.currentItem = tab!!.position
             }
-
         })
-
     }
 
     fun setupViewPager() {
         val linimasaPagerAdapter = LinimasaPagerAdapter(activity?.supportFragmentManager, tab_layout.tabCount)
         view_pager.addOnPageChangeListener(object : TabLayout.TabLayoutOnPageChangeListener(tab_layout) {})
         view_pager.adapter = linimasaPagerAdapter
-
     }
 
     override fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun dismissLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showError(throwable: Throwable) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

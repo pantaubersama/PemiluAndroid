@@ -8,7 +8,7 @@ import com.pantaubersama.app.base.BasePresenter
 class JanjiPolitikFragment : BaseFragment<BasePresenter<*>>() {
 
     companion object {
-
+        // TODO : newInstance
     }
 
     override fun initPresenter(): BasePresenter<*>? {

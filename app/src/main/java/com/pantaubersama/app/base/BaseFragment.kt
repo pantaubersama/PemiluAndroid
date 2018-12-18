@@ -11,7 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pantaubersama.app.R
-import java.util.*
+import java.util.Objects
 
 /**
  * @author edityomurti on 18/12/2018 01:03
