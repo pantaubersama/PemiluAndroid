@@ -12,7 +12,7 @@ import com.pantaubersama.app.utils.RxSchedulers
 import kotlinx.android.synthetic.main.activity_create_tanya_kandidat.*
 import javax.inject.Inject
 
-class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>() {
+class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>(), CreateTanyaKandidatView {
     @Inject
     lateinit var rxScheduler: RxSchedulers
 
@@ -71,5 +71,9 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
             R.id.done_action -> presenter?.submitQuestion(question.text.toString())
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun showEmptyQuestionAlert() {
+        question.error = getString(R.string.empty_question_alert)
     }
 }

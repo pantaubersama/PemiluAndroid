@@ -114,7 +114,8 @@
                             android:textSize="20sp"
                             android:fontFamily="@font/bw_modelica_bold"
                             android:maxLength="260"
-                            android:inputType="textMultiLine"/>
+                            android:inputType="textMultiLine"
+                            android:hint="@string/question_simple_hint"/>
 
                     </LinearLayout>
 

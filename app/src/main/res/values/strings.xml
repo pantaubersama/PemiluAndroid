@@ -15,4 +15,6 @@
     <string name="create_question">Buat Pertanyaan</string>
     <string name="question_hint">Buat pertanyaan singkat untuk pasangan calon presiden periode 2019-2024. Pertanyaan terpilih akan disampaikan kepada kedua tim pasangan calon Presiden. Gunakan tata bahasa yang sopan.</string>
     <string name="done_action">Done</string>
+    <string name="empty_question_alert">Cannot submit data. Question is empty!</string>
+    <string name="question_simple_hint">Ayo tanya sekarang</string>
 </resources>

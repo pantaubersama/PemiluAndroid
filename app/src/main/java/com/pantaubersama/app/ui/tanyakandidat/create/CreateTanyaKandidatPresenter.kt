@@ -4,6 +4,10 @@ import com.pantaubersama.app.base.BasePresenter
 
 class CreateTanyaKandidatPresenter : BasePresenter<CreateTanyaKandidatView>() {
     fun submitQuestion(question: String?) {
-        // implementation
+        if (question != "") {
+            // procced question
+        } else {
+            view?.showEmptyQuestionAlert()
+        }
     }
 }
