@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_create_tanya_kandidat.*
 class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>() {
 
     override fun statusBarColor(): Int {
-        return R.color.white
+        return 0
     }
 
     override fun fetchIntentExtra() {
