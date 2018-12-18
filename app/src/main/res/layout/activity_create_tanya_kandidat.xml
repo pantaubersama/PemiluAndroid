@@ -31,7 +31,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/question_hint"/>
+                android:text="@string/question_hint"
+                android:fontFamily="@font/lato_regular"/>
 
         </LinearLayout>
 
@@ -72,7 +73,8 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginStart="12dp"
                     android:textSize="11sp"
-                    android:text="Budi Santoso"/>
+                    android:text="Budi Santoso"
+                    android:fontFamily="@font/lato_bold"/>
 
             </LinearLayout>
 
@@ -117,7 +119,8 @@
                     android:id="@+id/question_length"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"/>
+                    android:text="0"
+                    android:fontFamily="@font/lato_medium"/>
 
                 <TextView
                     android:id="@+id/question_length_separator"
@@ -125,7 +128,8 @@
                     android:layout_height="wrap_content"
                     android:text="/"
                     android:layout_marginLeft="4dp"
-                    android:layout_marginStart="4dp"/>
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/lato_medium"/>
 
                 <TextView
                     android:id="@+id/question_max_length"
@@ -133,7 +137,8 @@
                     android:layout_height="wrap_content"
                     android:text="260"
                     android:layout_marginLeft="4dp"
-                    android:layout_marginStart="4dp"/>
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/lato_medium"/>
 
             </LinearLayout>
 
