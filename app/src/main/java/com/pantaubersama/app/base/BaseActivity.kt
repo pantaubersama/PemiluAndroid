@@ -11,15 +11,14 @@ import android.view.MenuItem
 import android.view.WindowManager
 import com.pantaubersama.app.R
 import timber.log.Timber
-import java.lang.RuntimeException
 
 /**
  * @author edityomurti on 14/12/2018 17:33
  */
 
-abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseView {
+abstract class BaseActivity : AppCompatActivity(), BaseView {
     protected var progressDialog: ProgressDialog? = null
-    protected var presenter: P? = null
+//    protected var presenter: P? = null
     protected var toolbar: Toolbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,10 +31,10 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
                     .replace(setFragmentContainerId(), setFragment()!!)
                     .commit()
         } else {
-            presenter = initPresenter()
-            if (presenter != null) {
-                presenter!!.attach(this)
-            }
+//            presenter = initPresenter()
+//            if (presenter != null) {
+//                presenter!!.attach(this)
+//            }
         }
         initProgressDialog()
         setupUI()
@@ -49,9 +48,9 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
     protected open fun initInjection() {}
 
     override fun onDestroy() {
-        if (presenter != null) {
-            presenter!!.detach()
-        }
+//        if (presenter != null) {
+//            presenter!!.detach()
+//        }
 
         if (progressDialog!!.isShowing) {
             dismissProgressDialog()
@@ -75,13 +74,13 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
      *
      * @return view presenter
      */
-    protected open fun initPresenter(): P? {
-        if (setFragment() != null) {
-            return null
-        } else {
-            throw RuntimeException("need to override initPresenter()")
-        }
-    }
+//    protected open fun initPresenter(): P? {
+//        if (setFragment() != null) {
+//            return null
+//        } else {
+//            throw RuntimeException("need to override initPresenter()")
+//        }
+//    }
 
     protected abstract fun setupUI()
 

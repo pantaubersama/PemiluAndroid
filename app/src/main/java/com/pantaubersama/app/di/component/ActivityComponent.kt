@@ -4,6 +4,7 @@ import com.pantaubersama.app.di.module.ActivityModule
 import com.pantaubersama.app.di.scope.ActivityScope
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
+import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import dagger.Subcomponent
 
 /**
@@ -14,4 +15,5 @@ import dagger.Subcomponent
 interface ActivityComponent {
     fun inject(loginActivity: LoginActivity)
     fun inject(createTanyaKandidatActivity: CreateTanyaKandidatActivity)
+    fun inject(splashScreenActivity: SplashScreenActivity)
 }

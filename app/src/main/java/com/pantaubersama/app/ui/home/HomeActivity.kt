@@ -8,7 +8,7 @@ import com.pantaubersama.app.ui.home.linimasa.LinimasaFragment
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
+class HomeActivity : BaseActivity(), HomeView {
 
     private val linimasaFragment = LinimasaFragment()
     private val penPolFragment = PenPolFragment.newInstance()
@@ -24,9 +24,9 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initPresenter(): HomePresenter {
-        return HomePresenter()
-    }
+//    override fun initPresenter(): HomePresenter {
+//        return HomePresenter()
+//    }
 
     override fun setupUI() {
         setSupportActionBar(toolbar_home)

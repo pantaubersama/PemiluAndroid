@@ -5,7 +5,7 @@ package com.pantaubersama.app.utils
  */
 class PantauConstants {
     companion object {
-        // direct access
+        val IS_USER_LOGGED_IN = "is_user_logged_in"
     }
 
     object Networking {
