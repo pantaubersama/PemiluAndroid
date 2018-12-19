@@ -17,4 +17,6 @@
     <string name="done_action">Done</string>
     <string name="empty_question_alert">Cannot submit data. Question is empty!</string>
     <string name="question_simple_hint">Ayo tanya sekarang</string>
+    <string name="tanya_kandidat_label">Tanya Kandidat</string>
+    <string name="kuis_label">Kuis</string>
 </resources>

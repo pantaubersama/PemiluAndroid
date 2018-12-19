@@ -2,17 +2,17 @@ package com.pantaubersama.app.ui.home
 
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
-import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.ui.home.linimasa.LinimasaFragment
-import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.ui.penpol.PenPolFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
+class HomeActivity : BaseActivity<HomePresenter>(), HomeView, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val linimasaFragment = LinimasaFragment()
-    private val otherFrag = Fragment() // dummy
+    private val penPolFragment = PenPolFragment.newInstance()
 
     private lateinit var activeFragment: Fragment
 
@@ -29,63 +29,59 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     }
 
     override fun setupUI() {
-//        setSupportActionBar(toolbar_home)
-        var toolbarL = findViewById<Toolbar>(R.id.toolbar)
-
-        if (toolbarL != null) {
-            setSupportActionBar(toolbarL)
-
-            if (supportActionBar != null) {
-//                supportActionBar!!.setDisplayHomeAsUpEnabled(isBackButtonEnable)
-//                supportActionBar!!.setHomeAsUpIndicator(resources.getDrawable(R.drawable.ic_))
-            }
-        } else {
-            ToastUtil.show(this, "OMG")
-        }
+        setSupportActionBar(toolbar_home)
 
         supportFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, linimasaFragment)
+                .add(R.id.fragment_container, penPolFragment)
                 .commit()
 
         activeFragment = linimasaFragment
 
-        val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_linimasa -> {
-                    activeFragment = linimasaFragment
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.navigation_penpol -> {
-                    activeFragment = otherFrag
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.navigation_wordstadium -> {
-                    activeFragment = otherFrag
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.navigation_lapor -> {
-                    activeFragment = otherFrag
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.navigation_rekap -> {
-                    activeFragment = otherFrag
-                    return@OnNavigationItemSelectedListener true
-                }
+        navigation.setOnNavigationItemSelectedListener(this)
+
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.navigation_linimasa -> run {
+                activeFragment = linimasaFragment
+                return@run
             }
-
-            showActiveFragment()
-
-            return@OnNavigationItemSelectedListener false
+            R.id.navigation_penpol -> run {
+                activeFragment = penPolFragment
+                return@run
+            }
+            R.id.navigation_wordstadium -> run {
+                activeFragment = penPolFragment
+                return@run
+            }
+            R.id.navigation_lapor -> run {
+                activeFragment = penPolFragment
+                return@run
+            }
+            R.id.navigation_rekap -> run {
+                activeFragment = penPolFragment
+                return@run
+            }
         }
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        showActiveFragment()
+
+        return true
     }
 
     private fun showActiveFragment() {
         supportFragmentManager.beginTransaction()
                 .hide(linimasaFragment)
+                .hide(penPolFragment)
                 .show(activeFragment)
                 .commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showActiveFragment()
     }
 
     override fun setLayout(): Int {
