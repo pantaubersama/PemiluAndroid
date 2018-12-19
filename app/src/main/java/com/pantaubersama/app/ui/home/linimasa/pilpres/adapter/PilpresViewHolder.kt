@@ -13,7 +13,7 @@ import com.pantaubersama.app.data.model.tweet.PilpresTweet
  */
 class PilpresViewHolder : BaseViewHolder<PilpresTweet> {
 
-    private var  tvTweetContent: TextView
+    private var tvTweetContent: TextView
 
     constructor(itemView: View, itemClickListener: OnItemClickListener?, itemLongClickListener: OnItemLongClickListener?): super(itemView, itemClickListener, itemLongClickListener) {
         tvTweetContent = itemView.findViewById(R.id.tv_tweet_content)
@@ -22,5 +22,4 @@ class PilpresViewHolder : BaseViewHolder<PilpresTweet> {
     override fun bind(item: PilpresTweet) {
         tvTweetContent.text = item.tweetContent
     }
-
 }

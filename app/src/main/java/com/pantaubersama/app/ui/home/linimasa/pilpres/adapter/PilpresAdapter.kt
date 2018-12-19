@@ -18,5 +18,4 @@ class PilpresAdapter(context: Context) : BaseAdapter<PilpresTweet, PilpresViewHo
     override fun setItemView(viewType: Int): Int {
         return R.layout.item_pilpres_tweet
     }
-
 }

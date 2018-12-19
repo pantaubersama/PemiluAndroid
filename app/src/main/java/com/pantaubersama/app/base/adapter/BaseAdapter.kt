@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.base.listener.OnItemLongClickListener
 import com.pantaubersama.app.base.viewholder.BaseViewHolder

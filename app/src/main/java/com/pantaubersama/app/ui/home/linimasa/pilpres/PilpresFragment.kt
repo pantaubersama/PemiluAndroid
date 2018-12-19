@@ -44,7 +44,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         adapter = PilpresAdapter(context!!)
         mView.recycler_view.layoutManager = layoutManager
         mView.recycler_view.adapter = adapter
-        adapter.setOnItemClickListener( object : OnItemClickListener {
+        adapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 ToastUtil.show(context!!, "clicked!")
             }
