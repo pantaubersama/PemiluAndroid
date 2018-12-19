@@ -27,6 +27,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_PROD)
+            it.buildConfigField("String", "PANTAU_OAUTH_URL", PANTAU_OAUTH_URL_PROD)
             it.buildConfigField("String", "WORD_STADIUM_BASE_URL", WORD_STADIUM_BASE_URL_PROD)
         }
         debug {
@@ -34,6 +35,7 @@ android {
             minifyEnabled false
             debuggable true
             it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_STAG)
+            it.buildConfigField("String", "PANTAU_OAUTH_URL", PANTAU_OAUTH_URL_STAG)
             it.buildConfigField("String", "WORD_STADIUM_BASE_URL", WORD_STADIUM_BASE_URL_STAG)
         }
 

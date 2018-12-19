@@ -9,14 +9,14 @@ import com.extrainteger.identitaslogin.models.AuthToken
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.utils.RxSchedulers
+import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
-class LoginActivity : BaseActivity<LoginPresenter>() {
+class LoginActivity : BaseActivity(), LoginView {
     @Inject
-    lateinit var rxSchedulers: RxSchedulers
+    lateinit var presenter: LoginPresenter
     private var symbolicScope: MutableList<String>? = null
 
     override fun statusBarColor(): Int {
@@ -32,6 +32,7 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
     }
 
     override fun setupUI() {
+        presenter.attach(this)
         symbolicScope = ArrayList()
         symbolic_login_button.configure(
             SymbolicConfig(
@@ -49,7 +50,7 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
             }
 
             override fun success(result: Result<AuthToken>) {
-                presenter?.exchangeToken(result.data.accessToken, "")
+                presenter.exchangeToken(result.data.accessToken, "")
             }
         })
     }
@@ -63,19 +64,30 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
         return R.layout.activity_login
     }
 
-    override fun initPresenter(): LoginPresenter? {
-        return LoginPresenter(rxSchedulers)
-    }
-
     override fun showLoading() {
         showProgressDialog("Logging in")
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        dismissProgressDialog()
     }
 
     override fun showError(throwable: Throwable) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun openHomeActivity() {
+        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun showLoginFailedAlert() {
+        ToastUtil.show(this@LoginActivity, getString(R.string.login_failed_alert))
+    }
+
+    override fun onDestroy() {
+        presenter.detach()
+        (application as BaseApp).releaseActivityComponent()
+        super.onDestroy()
     }
 }
