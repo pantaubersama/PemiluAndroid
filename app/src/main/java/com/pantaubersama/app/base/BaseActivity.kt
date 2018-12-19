@@ -99,7 +99,7 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
         toolbar = findViewById(R.id.toolbar_layout)
 
         if (toolbar != null) {
-            toolbar!!.setNavigationOnClickListener { view -> onBackPressed() }
+            toolbar!!.setNavigationOnClickListener { onBackPressed() }
             toolbar!!.title = title
             toolbar!!.background = resources.getDrawable(color)
             toolbar!!.elevation = elevation

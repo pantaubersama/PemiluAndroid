@@ -46,7 +46,7 @@ abstract class BaseFragment<P : BasePresenter<*>> : Fragment(), BaseView {
         toolbar = mView?.findViewById(R.id.toolbar_layout)
 
         if (toolbar != null) {
-            toolbar!!.setNavigationOnClickListener { v -> Objects.requireNonNull(activity)?.onBackPressed() }
+            toolbar!!.setNavigationOnClickListener { Objects.requireNonNull(activity)?.onBackPressed() }
             toolbar!!.title = title
             toolbar!!.background = resources.getDrawable(color)
             (activity as AppCompatActivity).setSupportActionBar(toolbar)

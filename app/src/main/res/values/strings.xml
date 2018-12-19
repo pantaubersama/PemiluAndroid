@@ -14,4 +14,6 @@
     <string name="txt_tab_janji_politik">Janji Politik</string>
     <string name="create_question">Buat Pertanyaan</string>
     <string name="question_hint">Buat pertanyaan singkat untuk pasangan calon presiden periode 2019-2024. Pertanyaan terpilih akan disampaikan kepada kedua tim pasangan calon Presiden. Gunakan tata bahasa yang sopan.</string>
+    <string name="txt_empty_state">Oops.. data kosong</string>
+    <string name="txt_disematkan_dari">Disematkan dari Team Pemenangan</string>
 </resources>

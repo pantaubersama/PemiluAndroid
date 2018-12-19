@@ -29,19 +29,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     }
 
     override fun setupUI() {
-//        setSupportActionBar(toolbar_home)
-        var toolbarL = findViewById<Toolbar>(R.id.toolbar_layout)
-
-        if (toolbarL != null) {
-            setSupportActionBar(toolbarL)
-
-            if (supportActionBar != null) {
-//                supportActionBar!!.setDisplayHomeAsUpEnabled(isBackButtonEnable)
-//                supportActionBar!!.setHomeAsUpIndicator(resources.getDrawable(R.drawable.ic_))
-            }
-        } else {
-            ToastUtil.show(this, "OMG")
-        }
+        setSupportActionBar(toolbar_home)
 
         supportFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, linimasaFragment)
@@ -51,34 +39,36 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
         val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_linimasa -> {
+                R.id.navigation_linimasa -> run {
                     activeFragment = linimasaFragment
-                    return@OnNavigationItemSelectedListener true
+                    return@run
                 }
-                R.id.navigation_penpol -> {
+                R.id.navigation_penpol -> run {
                     activeFragment = otherFrag
-                    return@OnNavigationItemSelectedListener true
+                    return@run
                 }
-                R.id.navigation_wordstadium -> {
+                R.id.navigation_wordstadium -> run {
                     activeFragment = otherFrag
-                    return@OnNavigationItemSelectedListener true
+                    return@run
                 }
-                R.id.navigation_lapor -> {
+                R.id.navigation_lapor -> run {
                     activeFragment = otherFrag
-                    return@OnNavigationItemSelectedListener true
+                    return@run
                 }
-                R.id.navigation_rekap -> {
+                R.id.navigation_rekap -> run {
                     activeFragment = otherFrag
-                    return@OnNavigationItemSelectedListener true
+                    return@run
                 }
             }
 
             showActiveFragment()
 
-            return@OnNavigationItemSelectedListener false
+            return@OnNavigationItemSelectedListener true
         }
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        navigation.selectedItemId = R.id.navigation_linimasa
     }
 
     private fun showActiveFragment() {
