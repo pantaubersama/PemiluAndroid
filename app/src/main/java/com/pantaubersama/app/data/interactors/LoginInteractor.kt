@@ -24,4 +24,8 @@ class LoginInteractor @Inject constructor(
         sharedPreferences?.edit()?.putString(PantauConstants.Networking.REFRESH_TOKEN_FIELD, token?.refreshToken)?.apply()
         sharedPreferences?.edit()?.putBoolean(PantauConstants.IS_USER_LOGGED_IN, true)?.apply()
     }
+
+    fun getLoginState(): Boolean? {
+        return sharedPreferences?.getBoolean(PantauConstants.IS_USER_LOGGED_IN, false)
+    }
 }
