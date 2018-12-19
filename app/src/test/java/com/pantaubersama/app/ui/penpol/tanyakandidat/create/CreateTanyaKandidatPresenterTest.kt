@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.tanyakandidat.create
+package com.pantaubersama.app.ui.penpol.tanyakandidat.create
 
 import com.pantaubersama.app.base.BaseView
 import org.junit.After

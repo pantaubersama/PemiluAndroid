@@ -2,16 +2,16 @@ package com.pantaubersama.app.ui.home
 
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
-import android.support.v7.widget.Toolbar
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.ui.home.linimasa.LinimasaFragment
-import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.ui.penpol.PenPolFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
     private val linimasaFragment = LinimasaFragment()
+    private val penPolFragment = PenPolFragment.newInstance()
     private val otherFrag = Fragment() // dummy
 
     private lateinit var activeFragment: Fragment
@@ -33,6 +33,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
         supportFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, linimasaFragment)
+                .add(R.id.fragment_container, penPolFragment)
                 .commit()
 
         activeFragment = linimasaFragment
@@ -44,7 +45,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
                     return@run
                 }
                 R.id.navigation_penpol -> run {
-                    activeFragment = otherFrag
+                    activeFragment = penPolFragment
                     return@run
                 }
                 R.id.navigation_wordstadium -> run {
@@ -74,6 +75,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     private fun showActiveFragment() {
         supportFragmentManager.beginTransaction()
                 .hide(linimasaFragment)
+                .hide(penPolFragment)
                 .show(activeFragment)
                 .commit()
     }
