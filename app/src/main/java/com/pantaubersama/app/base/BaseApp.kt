@@ -36,7 +36,6 @@ class BaseApp : MultiDexApplication() {
     fun createActivityComponent(activity: Activity?): ActivityComponent? {
         activityComponent = appComponent?.withActivityComponent(
                 ActivityModule(activity!!),
-                NetworkModule(),
                 ApiModule(),
                 ConnectionModule(this),
                 SharedPreferenceModule(this),
@@ -51,7 +50,6 @@ class BaseApp : MultiDexApplication() {
     fun createServiceComponent(context: Context?): ServiceComponent? {
         serviceComponent = appComponent?.withServiceComponent(
                 ServiceModule(context),
-                NetworkModule(),
                 ApiModule(),
                 ConnectionModule(this),
                 SharedPreferenceModule(this),

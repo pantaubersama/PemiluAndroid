@@ -12,7 +12,6 @@ import javax.inject.Singleton
 interface AppComponent {
     fun withActivityComponent(
         activityModule: ActivityModule,
-        networkModule: NetworkModule,
         apiModule: ApiModule,
         connectionModule: ConnectionModule,
         sharedPreferenceModule: SharedPreferenceModule,
@@ -21,7 +20,6 @@ interface AppComponent {
 
     fun withServiceComponent(
         serviceModule: ServiceModule,
-        networkModule: NetworkModule,
         apiModule: ApiModule,
         connectionModule: ConnectionModule,
         sharedPreferenceModule: SharedPreferenceModule,
