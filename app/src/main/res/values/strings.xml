@@ -19,6 +19,9 @@
     <string name="done_action">Done</string>
     <string name="empty_question_alert">Cannot submit data. Question is empty!</string>
     <string name="question_simple_hint">Ayo tanya sekarang</string>
-
     <string name="dummy_tweet_content">#SahabatBawaslu, Sentra  Gakkumdu berkomitmen untuk tidak memunculkan sikap ego sektoral antar personil, baik dari pihak Bawaslu,  Kepolisian,  maupun Kejaksaan dalam menegakkan hukum Pemilu dalam Rapat Koordinasi Nasional Sentra Gakkumdu,  di Jakarta, Rabu,  (5/12/2018).</string>
+=======
+    <string name="tanya_kandidat_label">Tanya Kandidat</string>
+    <string name="kuis_label">Kuis</string>
+>>>>>>> 0bfca6815167d3ea042db04ff21ff1fb12bb0950
 </resources>

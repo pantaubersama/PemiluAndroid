@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.tanyakandidat.create
+package com.pantaubersama.app.ui.penpol.tanyakandidat.create
 
 import android.text.Editable
 import android.text.TextWatcher
