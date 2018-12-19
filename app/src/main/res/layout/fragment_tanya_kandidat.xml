@@ -4,10 +4,8 @@
     android:layout_height="match_parent"
     tools:context="com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <include
+        android:id="@+id/layout_banner_tanya_kandidat"
+        layout="@layout/layout_banner_tanya_kandidat_list"/>
 
 </FrameLayout>
