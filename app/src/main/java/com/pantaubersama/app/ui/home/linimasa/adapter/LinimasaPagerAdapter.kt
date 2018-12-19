@@ -19,7 +19,7 @@ class LinimasaPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment? {
         return when (position) {
-            0 -> PilpresFragment()
+            0 -> PilpresFragment.newInstance()
             1 -> JanjiPolitikFragment()
             else -> null
         }

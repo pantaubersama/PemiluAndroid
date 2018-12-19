@@ -26,12 +26,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_banner_pilpres"/>
 
-        <View
-            android:id="@+id/view_center_guide"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_centerVertical="true"/>
-
         <ImageView
             android:id="@+id/iv_banner_close"
             android:layout_width="30dp"
@@ -55,6 +49,5 @@
             android:text="Halaman ini berisikan informasi dari channel Resmi twitter Jokowi - Makruf dan Prabowo - Sandi yang terdaftar di Bawaslu Read more..."/>
 
     </RelativeLayout>
-
 
 </RelativeLayout>

@@ -2,11 +2,9 @@ package com.pantaubersama.app.ui.home
 
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
-import android.support.v7.widget.Toolbar
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.ui.home.linimasa.LinimasaFragment
-import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
