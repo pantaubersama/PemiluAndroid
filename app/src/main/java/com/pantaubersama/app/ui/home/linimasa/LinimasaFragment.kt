@@ -2,11 +2,14 @@ package com.pantaubersama.app.ui.home.linimasa
 
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentPagerAdapter
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BasePresenter
-import com.pantaubersama.app.ui.home.linimasa.adapter.LinimasaPagerAdapter
+import com.pantaubersama.app.ui.home.linimasa.janjipolitik.JanjiPolitikFragment
+import com.pantaubersama.app.ui.home.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.widget.TabView
 import kotlinx.android.synthetic.main.fragment_linimasa.*
 
@@ -50,9 +53,20 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
     }
 
     fun setupViewPager() {
-        val linimasaPagerAdapter = LinimasaPagerAdapter(childFragmentManager, tab_layout.tabCount)
         view_pager.addOnPageChangeListener(object : TabLayout.TabLayoutOnPageChangeListener(tab_layout) {})
-        view_pager.adapter = linimasaPagerAdapter
+        view_pager.adapter = object : FragmentPagerAdapter(childFragmentManager) {
+            override fun getItem(position: Int): Fragment {
+                return when (position) {
+                    0 -> PilpresFragment.newInstance()
+                    1 -> JanjiPolitikFragment()
+                    else -> Fragment()
+                }
+            }
+
+            override fun getCount(): Int {
+                return tab_layout.tabCount
+            }
+        }
     }
 
     override fun showLoading() {
