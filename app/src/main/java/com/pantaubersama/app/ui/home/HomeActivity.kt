@@ -2,17 +2,17 @@ package com.pantaubersama.app.ui.home
 
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
-import android.view.MenuItem
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.ui.home.linimasa.LinimasaFragment
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : BaseActivity<HomePresenter>(), HomeView, BottomNavigationView.OnNavigationItemSelectedListener {
+class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
     private val linimasaFragment = LinimasaFragment()
     private val penPolFragment = PenPolFragment.newInstance()
+    private val otherFrag = Fragment() // dummy
 
     private lateinit var activeFragment: Fragment
 
@@ -38,37 +38,38 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView, BottomNavigationVi
 
         activeFragment = linimasaFragment
 
-        navigation.setOnNavigationItemSelectedListener(this)
+        val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_linimasa -> run {
+                    activeFragment = linimasaFragment
+                    return@run
+                }
+                R.id.navigation_penpol -> run {
+                    activeFragment = penPolFragment
+                    return@run
+                }
+                R.id.navigation_wordstadium -> run {
+                    activeFragment = otherFrag
+                    return@run
+                }
+                R.id.navigation_lapor -> run {
+                    activeFragment = otherFrag
+                    return@run
+                }
+                R.id.navigation_rekap -> run {
+                    activeFragment = otherFrag
+                    return@run
+                }
+            }
 
-    }
+            showActiveFragment()
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.navigation_linimasa -> run {
-                activeFragment = linimasaFragment
-                return@run
-            }
-            R.id.navigation_penpol -> run {
-                activeFragment = penPolFragment
-                return@run
-            }
-            R.id.navigation_wordstadium -> run {
-                activeFragment = penPolFragment
-                return@run
-            }
-            R.id.navigation_lapor -> run {
-                activeFragment = penPolFragment
-                return@run
-            }
-            R.id.navigation_rekap -> run {
-                activeFragment = penPolFragment
-                return@run
-            }
+            return@OnNavigationItemSelectedListener true
         }
 
-        showActiveFragment()
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        return true
+        navigation.selectedItemId = R.id.navigation_linimasa
     }
 
     private fun showActiveFragment() {
@@ -77,11 +78,6 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView, BottomNavigationVi
                 .hide(penPolFragment)
                 .show(activeFragment)
                 .commit()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        showActiveFragment()
     }
 
     override fun setLayout(): Int {

@@ -3,11 +3,13 @@ package com.pantaubersama.app.ui.penpol
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentPagerAdapter
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BasePresenter
-import com.pantaubersama.app.ui.penpol.tanyakandidat.PenPolPagerAdapter
+import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
+import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.ui.widget.TabView
 import kotlinx.android.synthetic.main.fragment_pen_pol.*
 
@@ -69,13 +71,24 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
     }
 
     fun setupViewPager() {
-        val penpolAdapter = PenPolPagerAdapter(childFragmentManager, tab_layout.tabCount)
         view_pager.addOnPageChangeListener(object : TabLayout.TabLayoutOnPageChangeListener(tab_layout) {})
-        view_pager.adapter = penpolAdapter
+        view_pager.adapter = object : FragmentPagerAdapter(childFragmentManager) {
+            override fun getItem(position: Int): Fragment {
+                return when (position) {
+                    0 -> TanyaKandidatFragment.newInstance()
+                    1 -> KuisFragment.newInstance()
+                    else -> Fragment()
+                }
+            }
+
+            override fun getCount(): Int {
+                return tab_layout.tabCount
+            }
+        }
     }
 
     companion object {
-        fun newInstance(): PenPolFragment{
+        fun newInstance(): PenPolFragment {
             return PenPolFragment()
         }
     }

@@ -1,11 +1,7 @@
 package com.pantaubersama.app.ui.penpol.kuis.list
 
-
-import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BasePresenter
@@ -38,5 +34,11 @@ class KuisFragment : BaseFragment<BasePresenter<*>>() {
 
     override fun showError(throwable: Throwable) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    companion object {
+        fun newInstance(): KuisFragment {
+            return KuisFragment()
+        }
     }
 }

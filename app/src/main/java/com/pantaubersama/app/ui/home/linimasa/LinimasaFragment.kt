@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.fragment_linimasa.*
 
 class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
     override fun initView(view: View) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun initPresenter(): BasePresenter<*>? {
@@ -51,7 +50,7 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
     }
 
     fun setupViewPager() {
-        val linimasaPagerAdapter = LinimasaPagerAdapter(activity?.supportFragmentManager, tab_layout.tabCount)
+        val linimasaPagerAdapter = LinimasaPagerAdapter(childFragmentManager, tab_layout.tabCount)
         view_pager.addOnPageChangeListener(object : TabLayout.TabLayoutOnPageChangeListener(tab_layout) {})
         view_pager.adapter = linimasaPagerAdapter
     }
