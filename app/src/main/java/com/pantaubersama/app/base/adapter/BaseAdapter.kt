@@ -15,7 +15,7 @@ import timber.log.Timber
 /**
  * @author edityomurti on 16/12/2018 02:12
  */
-abstract class BaseAdapter<T, V : BaseViewHolder<*>>(context: Context) : RecyclerView.Adapter<V>() {
+abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : RecyclerView.Adapter<V>() {
     protected var data = ArrayList<T>()
     protected var context: Context? = null
     protected var itemClickListener: OnItemClickListener? = null
@@ -181,7 +181,7 @@ abstract class BaseAdapter<T, V : BaseViewHolder<*>>(context: Context) : Recycle
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): V {
-        var view = LayoutInflater.from(parent.context).inflate(setItemView(viewType), parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(setItemView(viewType), parent, false)
         return initViewHolder(view, viewType)
     }
 

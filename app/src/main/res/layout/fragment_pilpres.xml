@@ -1,35 +1,14 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.pantaubersama.app.ui.home.linimasa.pilpres.PilpresFragment">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/rl_pilpres"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/layout_banner"/>
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </android.support.v7.widget.RecyclerView>
-
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-    </LinearLayout>
-
     <include
-        android:id="@+id/view_empty_state"
-        layout="@layout/layout_empty_state"
-        android:visibility="gone"/>
+        android:id="@+id/layout_banner_pilpres"
+        layout="@layout/layout_banner"/>
 
-</FrameLayout>
+    <include layout="@layout/layout_common_recyclerview"/>
+
+</LinearLayout>

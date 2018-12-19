@@ -5,7 +5,7 @@
     <string name="title_navbar_lapor">Lapor</string>
     <string name="title_navbar_rekap">Rekap</string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="txt_mohon_tunggu">Mohon tunggu...</string>
+    <string name="txt_mohon_tunggu">Mohon tunggu…</string>
     <string name="txt_cari">Cari</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -13,12 +13,13 @@
     <string name="txt_tab_pilpres">Pilpres</string>
     <string name="txt_tab_janji_politik">Janji Politik</string>
     <string name="create_question">Buat Pertanyaan</string>
-    <string name="question_hint">Buat pertanyaan singkat untuk pasangan calon presiden periode 2019-2024. Pertanyaan terpilih akan disampaikan kepada kedua tim pasangan calon Presiden. Gunakan tata bahasa yang sopan.</string>
+    <string name="question_hint">Buat pertanyaan singkat untuk pasangan calon presiden periode 2019–2024. Pertanyaan terpilih akan disampaikan kepada kedua tim pasangan calon Presiden. Gunakan tata bahasa yang sopan.</string>
     <string name="txt_empty_state">Oops.. data kosong</string>
     <string name="txt_disematkan_dari">Disematkan dari Team Pemenangan</string>
     <string name="done_action">Done</string>
     <string name="empty_question_alert">Cannot submit data. Question is empty!</string>
     <string name="question_simple_hint">Ayo tanya sekarang</string>
+    <string name="dummy_tweet_content">#SahabatBawaslu, Sentra  Gakkumdu berkomitmen untuk tidak memunculkan sikap ego sektoral antar personil, baik dari pihak Bawaslu,  Kepolisian,  maupun Kejaksaan dalam menegakkan hukum Pemilu dalam Rapat Koordinasi Nasional Sentra Gakkumdu,  di Jakarta, Rabu,  (5/12/2018).</string>
     <string name="tanya_kandidat_label">Tanya Kandidat</string>
     <string name="kuis_label">Kuis</string>
     <string name="login_failed_alert">Failed to login with symbolic</string>

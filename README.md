@@ -14,7 +14,7 @@ You can check code style using [`./gradlew ktlint`](https://ktlint.github.io/).
 * **master** -> for release app
 * **develop** -> for next-release built
 * **onprogress** -> for development
-* **onprogress/feature** -> for feature branch in development
+* **onprogress/feature/<feature_name>** -> for feature branch in development
 
 ### Ask to
 
