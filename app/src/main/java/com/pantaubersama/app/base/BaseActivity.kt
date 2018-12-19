@@ -40,8 +40,10 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
         initProgressDialog()
         setupUI()
 
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = resources.getColor(statusBarColor())
+        if (statusBarColor() != 0) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = resources.getColor(statusBarColor()!!)
+        }
     }
 
     protected open fun initInjection() {}
@@ -57,7 +59,7 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
         super.onDestroy()
     }
 
-    protected abstract fun statusBarColor(): Int
+    protected abstract fun statusBarColor(): Int?
 
     protected abstract fun fetchIntentExtra()
 
@@ -96,7 +98,7 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
 
     fun setupToolbar(isBackButtonEnable: Boolean, title: String, @DrawableRes color: Int, elevation: Float) {
 
-        toolbar = findViewById(R.id.toolbar_layout)
+        toolbar = findViewById(R.id.toolbar)
 
         if (toolbar != null) {
             toolbar!!.setNavigationOnClickListener { onBackPressed() }

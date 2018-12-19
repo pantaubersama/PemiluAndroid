@@ -32,7 +32,10 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ui.tanyakandidat.create.CreateTanyaKandidatActivity"></activity>
+        <activity android:name=".ui.tanyakandidat.create.CreateTanyaKandidatActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

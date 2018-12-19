@@ -1,99 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.pantaubersama.app.ui.tanyakandidat.create.CreateTanyaKandidatActivity">
 
-    <RelativeLayout
-        android:id="@+id/container"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/white">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <View
-            android:id="@+id/top_line"
-            android:layout_width="match_parent"
-            android:layout_height="6dp"
-            android:background="@color/gray_3"
-            android:layout_alignParentTop="true"/>
+        <include layout="@layout/layout_toolbar_light"/>
 
-        <LinearLayout
-            android:id="@+id/question_hint_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/gray_2"
-            android:padding="16dp"
-            android:layout_below="@id/top_line">
+    </android.support.design.widget.AppBarLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/question_hint"
-                android:fontFamily="@font/lato_regular"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/question_container"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/white"
-            android:padding="16dp"
-            android:layout_above="@id/question_info_container"
-            android:layout_below="@id/question_hint_container">
+            android:fillViewport="true"
+            android:layout_alignParentTop="true"
+            android:layout_above="@id/question_info_container">
 
-            <LinearLayout
-                android:id="@+id/user_container"
+            <RelativeLayout
+                android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="16dp"
-                android:gravity="center_vertical">
+                android:orientation="vertical"
+                android:background="@color/white">
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/user_avatar"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:scaleType="centerCrop"
-                    app:riv_border_color="@color/white"
-                    app:riv_oval="true"
-                    android:src="@drawable/dummy_avatar"/>
+                <View
+                    android:id="@+id/top_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:background="@color/gray_3"
+                    android:layout_alignParentTop="true"/>
 
-                <TextView
-                    android:id="@+id/user_name"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/question_hint_container"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginStart="12dp"
-                    android:textSize="11sp"
-                    android:text="Budi Santoso"
-                    android:fontFamily="@font/lato_bold"/>
+                    android:background="@color/gray_2"
+                    android:padding="16dp"
+                    android:layout_below="@id/top_line">
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/question_hint"
+                        android:fontFamily="@font/lato_regular"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="16dp">
+                </LinearLayout>
 
-                <EditText
-                    android:id="@+id/question"
+                <LinearLayout
+                    android:id="@+id/question_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:orientation="vertical"
                     android:background="@color/white"
-                    android:inputType="text"
-                    android:gravity="top"/>
+                    android:padding="16dp"
+                    android:layout_below="@id/question_hint_container">
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/user_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center_vertical">
 
-        </LinearLayout>
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/user_avatar"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:scaleType="centerCrop"
+                            app:riv_border_color="@color/white"
+                            app:riv_oval="true"
+                            android:src="@drawable/dummy_avatar"/>
+
+                        <TextView
+                            android:id="@+id/user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:lines="1"
+                            android:ellipsize="end"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginStart="12dp"
+                            android:textSize="11sp"
+                            android:text="Budi Santoso"
+                            android:fontFamily="@font/lato_bold"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="16dp">
+
+                        <EditText
+                            android:id="@+id/question"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white"
+                            android:gravity="top"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:maxLength="260"
+                            android:inputType="textMultiLine"
+                            android:hint="@string/question_simple_hint"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/question_info_container"
@@ -160,4 +190,4 @@
 
     </RelativeLayout>
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

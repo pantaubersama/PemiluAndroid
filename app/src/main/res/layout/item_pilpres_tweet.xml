@@ -122,7 +122,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/"
+                android:id="@+id/tv_tweet_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"/>

@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.login
 
 import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.utils.RxSchedulers
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
@@ -34,5 +35,10 @@ class LoginPresenterTest {
         val registrationId = ""
         presenter?.exchangeToken(oAuthToken, registrationId)
         verify(view, times(1))?.showLoading()
+    }
+
+    @After
+    fun tearDown() {
+        presenter?.detach()
     }
 }
