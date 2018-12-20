@@ -7,7 +7,6 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
 
 class FilterTanyaKandidatActivity : BaseActivity<BasePresenter<*>>() {
-
     override fun statusBarColor(): Int? {
         return 0
     }
