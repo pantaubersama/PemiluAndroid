@@ -28,4 +28,12 @@
     <string name="question_dummy_text">Kapan realisasi sistem tenaga kerja alih daya diterapkan seutuhnya? Kita ini insan bukan seekor sapi.</string>
     <string name="question_time_dummy_text">8 days ago</string>
     <string name="read_more_action">Read more…</string>
+    <string name="apply_filter_action">Terapkan</string>
+    <string name="user_label">User</string>
+    <string name="filter_all_label">Semua</string>
+    <string name="filter_unverified_label">Belum Verifikasi</string>
+    <string name="filter_verified_label">Terverifikasi</string>
+    <string name="filter_order_label">Urutan</string>
+    <string name="filter_latest_label">Paling Baru</string>
+    <string name="filter_most_voted_label">Paling Banyak Divating</string>
 </resources>

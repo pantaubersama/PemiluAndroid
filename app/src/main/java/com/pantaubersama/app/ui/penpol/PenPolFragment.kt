@@ -10,6 +10,7 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
+import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.ui.widget.TabView
 import kotlinx.android.synthetic.main.fragment_pen_pol.view.*
@@ -68,11 +69,16 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab!!.position==0){
+                if (tab!!.position == 0) {
                     mView?.create_new_tanya_kandidat_button?.visibility = View.VISIBLE
-                }
-                else if (tab.position==1){
+                    mView?.filter_pertanyaan_button?.setOnClickListener {
+                        val intent = Intent(context, FilterTanyaKandidatActivity::class.java)
+                        startActivity(intent)
+                    }
+                } else if (tab.position == 1) {
                     mView?.create_new_tanya_kandidat_button?.visibility = View.GONE
+                    mView?.filter_pertanyaan_button?.setOnClickListener {
+                    }
                 }
                 mView?.view_pager?.currentItem = tab.position
             }
