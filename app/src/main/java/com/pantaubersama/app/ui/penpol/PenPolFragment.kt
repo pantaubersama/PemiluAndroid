@@ -68,7 +68,13 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                mView?.view_pager?.currentItem = tab!!.position
+                if (tab!!.position==0){
+                    mView?.create_new_tanya_kandidat_button?.visibility = View.VISIBLE
+                }
+                else if (tab.position==1){
+                    mView?.create_new_tanya_kandidat_button?.visibility = View.GONE
+                }
+                mView?.view_pager?.currentItem = tab.position
             }
         })
     }
@@ -77,17 +83,11 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
         mView?.view_pager?.addOnPageChangeListener(object : TabLayout.TabLayoutOnPageChangeListener(mView?.tab_layout) {})
         mView?.view_pager?.adapter = object : FragmentPagerAdapter(childFragmentManager) {
             override fun getItem(position: Int): Fragment {
-                when (position) {
-                    0 -> {
-                        mView?.create_new_tanya_kandidat_button?.visibility = View.VISIBLE
-                        return TanyaKandidatFragment.newInstance()
-                    }
-                    1 -> {
-                        mView?.create_new_tanya_kandidat_button?.visibility = View.GONE
-                        return KuisFragment.newInstance()
-                    }
+                return when (position) {
+                    0 -> TanyaKandidatFragment.newInstance()
+                    1 -> KuisFragment.newInstance()
+                    else -> Fragment()
                 }
-                return Fragment()
             }
 
             override fun getCount(): Int {
