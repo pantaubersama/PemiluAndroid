@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.penpol.kuis.list
 
-import android.support.v4.app.Fragment
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment

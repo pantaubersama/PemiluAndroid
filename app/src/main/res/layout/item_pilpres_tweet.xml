@@ -126,7 +126,7 @@
                         android:id="@+id/iv_option"
                         android:layout_width="30dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_more_horiz_24_px"/>
+                        android:src="@drawable/ic_more_horiz"/>
                 </LinearLayout>
 
                 <TextView

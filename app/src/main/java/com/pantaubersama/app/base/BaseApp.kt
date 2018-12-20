@@ -2,7 +2,7 @@ package com.pantaubersama.app.base
 
 import android.app.Activity
 import android.content.Context
-import android.support.multidex.MultiDexApplication
+import androidx.multidex.MultiDexApplication
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.di.component.AppComponent
