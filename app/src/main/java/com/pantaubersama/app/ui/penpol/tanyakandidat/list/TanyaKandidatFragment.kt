@@ -14,10 +14,6 @@ import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.view.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.view.*
 
-/**
- * A simple [Fragment] subclass.
- *
- */
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
 
     private lateinit var adapter: TanyaKandidatAdapter
@@ -38,6 +34,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             startActivity(intent)
         }
         setupTanyaKandidatList()
+        presenter?.attach(this) // temporary
         presenter?.getTanyaKandidatList()
     }
 
