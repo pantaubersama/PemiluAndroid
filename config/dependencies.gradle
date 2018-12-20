@@ -34,8 +34,8 @@ ext {
 
             glide                   : "4.8.0",
 
-            dagger                  : "2.12",
-            daggerCompiler          : "2.12",
+            dagger                  : "2.19",
+            daggerCompiler          : "2.19",
 
             roundedImageView        : "2.3.0",
             symbolic                : "0.2.8",
