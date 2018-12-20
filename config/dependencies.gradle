@@ -33,6 +33,7 @@ ext {
             timber                  : "4.7.1",
 
             glide                   : "4.8.0",
+            glideCompiler           : "4.8.0",
 
             dagger                  : "2.19",
             daggerCompiler          : "2.19",
@@ -41,7 +42,8 @@ ext {
             symbolic                : "0.2.8",
             mockito                 : "2.18.3",
             flexbox                 : "1.1.0",
-            lottie                  : "2.8.0"
+            lottie                  : "2.8.0",
+            chromeCustomTab         : "23.3.0"
     ]
 
 
@@ -90,6 +92,7 @@ ext {
     easyPermission = "pub.devrel:easypermissions:$versions.easyPermission"
     timber = "com.jakewharton.timber:timber:$versions.timber"
     glide = "com.github.bumptech.glide:glide:$versions.glide"
+    glideCompiler = "com.github.bumptech.glide:compiler:$versions.glideCompiler"
 
     dagger = "com.google.dagger:dagger:$versions.dagger"
     daggerCompiler = "com.google.dagger:dagger-compiler:$versions.daggerCompiler"
@@ -101,4 +104,6 @@ ext {
     flexbox = "com.google.android:flexbox:$versions.flexbox"
 
     lottie = "com.airbnb.android:lottie:$versions.lottie"
+
+    chromeCustomTab = "com.android.support:customtabs:$versions.chromeCustomTab"
 }

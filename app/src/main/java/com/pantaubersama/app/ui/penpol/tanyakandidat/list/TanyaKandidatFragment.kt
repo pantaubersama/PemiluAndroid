@@ -9,9 +9,11 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
+import com.pantaubersama.app.ui.penpol.tanyakandidat.tanyakandidatinfo.TanyaKandidatBannerActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.view.*
+import kotlinx.android.synthetic.main.layout_banner_tanya_kandidat_list.view.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.view.*
 
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
@@ -31,6 +33,10 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         mView = view
         view.question_section.setOnClickListener {
             val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
+            startActivity(intent)
+        }
+        view.read_more_action.setOnClickListener {
+            val intent = Intent(context, TanyaKandidatBannerActivity::class.java)
             startActivity(intent)
         }
         setupTanyaKandidatList()
