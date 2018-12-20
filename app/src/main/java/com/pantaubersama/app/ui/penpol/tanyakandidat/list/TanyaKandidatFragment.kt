@@ -38,13 +38,12 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             startActivity(intent)
         }
         setupTanyaKandidatList()
-        presenter?.getDataKandidatList()
+        presenter?.getTanyaKandidatList()
     }
 
     private fun setupTanyaKandidatList() {
-        val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         adapter = TanyaKandidatAdapter(context!!)
-        mView?.recycler_view?.layoutManager = layoutManager
+        mView?.recycler_view?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         mView?.recycler_view?.adapter = adapter
         adapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
@@ -53,7 +52,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         })
         mView?.swipe_refresh?.setOnRefreshListener {
             mView?.swipe_refresh?.isRefreshing = false
-            presenter?.getDataKandidatList()
+            presenter?.getTanyaKandidatList()
         }
     }
 

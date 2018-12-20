@@ -5,7 +5,7 @@ import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
 import javax.inject.Inject
 
 class TanyaKandidatPresenter @Inject constructor() : BasePresenter<TanyaKandidatView>() {
-    fun getDataKandidatList() {
+    fun getTanyaKandidatList() {
         view?.showLoading()
         val tanyaKandidatList: MutableList<TanyaKandidat> = ArrayList()
 
