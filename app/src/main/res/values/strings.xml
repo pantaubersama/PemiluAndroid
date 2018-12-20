@@ -36,4 +36,5 @@
     <string name="filter_order_label">Urutan</string>
     <string name="filter_latest_label">Paling Baru</string>
     <string name="filter_most_voted_label">Paling Banyak Divating</string>
+    <string name="reset_action">Reset</string>
 </resources>

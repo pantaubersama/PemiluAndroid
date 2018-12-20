@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,116 +8,133 @@
     android:background="@color/white"
     tools:context="com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <include layout="@layout/layout_toolbar_light"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/apply_filter_button"
-        android:orientation="vertical">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:layout_height="match_parent"
+            android:layout_above="@id/apply_filter_button"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/user_label"
-                android:fontFamily="@font/bw_modelica_bold"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:padding="16dp"
+                android:orientation="vertical">
 
-            <RadioGroup
-                android:id="@+id/user_filter"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_label"
+                    android:fontFamily="@font/bw_modelica_bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+
+                <RadioGroup
+                    android:id="@+id/user_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <RadioButton
+                        android:id="@+id/filter_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filter_all_label"
+                        android:checked="true" />
+
+                    <RadioButton
+                        android:id="@+id/filter_unverified"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filter_unverified_label" />
+
+                    <RadioButton
+                        android:id="@+id/filter_verified"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filter_verified_label" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_3"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <RadioButton
-                    android:id="@+id/filter_all"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/filter_all_label"
-                    android:checked="true" />
+                    android:text="@string/filter_order_label"
+                    android:fontFamily="@font/bw_modelica_bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
-                <RadioButton
-                    android:id="@+id/filter_unverified"
+                <RadioGroup
+                    android:id="@+id/order_filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/filter_unverified_label" />
+                    android:layout_marginTop="10dp">
 
-                <RadioButton
-                    android:id="@+id/filter_verified"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/filter_verified_label" />
+                    <RadioButton
+                        android:id="@+id/filter_latest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filter_latest_label"
+                        android:checked="true" />
 
-            </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/filter_most_voted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filter_most_voted_label" />
+
+                </RadioGroup>
+
+            </LinearLayout>
 
         </LinearLayout>
-        
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_3"/>
 
         <LinearLayout
+            android:id="@+id/apply_filter_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
             android:padding="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/filter_order_label"
-                android:fontFamily="@font/bw_modelica_bold"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
-
-            <RadioGroup
-                android:id="@+id/order_filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <RadioButton
-                    android:id="@+id/filter_latest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/filter_latest_label"
-                    android:checked="true" />
-
-                <RadioButton
-                    android:id="@+id/filter_most_voted"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/filter_most_voted_label" />
-
-            </RadioGroup>
+                android:text="@string/apply_filter_action"
+                android:textColor="@color/white"
+                android:fontFamily="@font/lato_regular"/>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/apply_filter_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/colorPrimary"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:padding="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/apply_filter_action"
-            android:textColor="@color/white"
-            android:fontFamily="@font/lato_regular"/>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
