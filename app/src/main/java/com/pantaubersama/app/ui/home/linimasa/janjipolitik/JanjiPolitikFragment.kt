@@ -5,15 +5,15 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BasePresenter
 
-class JanjiPolitikFragment : BaseFragment() {
+class JanjiPolitikFragment : BaseFragment<BasePresenter<*>>() {
 
     companion object {
         // TODO : newInstance
     }
 
-//    override fun initPresenter(): BasePresenter<*>? {
-//        return null
-//    }
+    override fun initPresenter(): BasePresenter<*>? {
+        return null
+    }
 
     override fun initView(view: View) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

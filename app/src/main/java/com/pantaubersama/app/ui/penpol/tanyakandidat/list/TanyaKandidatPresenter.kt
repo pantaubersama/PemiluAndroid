@@ -19,8 +19,12 @@ class TanyaKandidatPresenter @Inject constructor() : BasePresenter<TanyaKandidat
             tanyaKandidatList.add(data)
         }
 
-        view?.dismissLoading()
-        view?.bindDataTanyaKandidat(tanyaKandidatList)
+        if (tanyaKandidatList.size != 0) {
+            view?.dismissLoading()
+            view?.bindDataTanyaKandidat(tanyaKandidatList)
+        } else {
+            view?.dismissLoading()
+            view?.showEmptyDataAlert()
+        }
     }
-
 }

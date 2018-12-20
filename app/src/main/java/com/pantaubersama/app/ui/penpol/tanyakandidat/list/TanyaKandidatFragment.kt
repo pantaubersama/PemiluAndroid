@@ -13,15 +13,13 @@ import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatA
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.view.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.view.*
-import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  *
  */
-class TanyaKandidatFragment : BaseFragment(), TanyaKandidatView {
-    @Inject
-    lateinit var presenter: TanyaKandidatPresenter
+class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
+
     private lateinit var adapter: TanyaKandidatAdapter
     private var mView: View? = null
 
@@ -29,18 +27,21 @@ class TanyaKandidatFragment : BaseFragment(), TanyaKandidatView {
         (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
     }
 
+    override fun initPresenter(): TanyaKandidatPresenter? {
+        return TanyaKandidatPresenter()
+    }
+
     override fun initView(view: View) {
         mView = view
-        presenter.attach(this)
         view.question_section.setOnClickListener {
             val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
             startActivity(intent)
         }
         setupTanyaKandidatList()
-        presenter.getDataKandidatList()
+        presenter?.getDataKandidatList()
     }
 
-    private fun setupTanyaKandidatList(){
+    private fun setupTanyaKandidatList() {
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         adapter = TanyaKandidatAdapter(context!!)
         mView?.recycler_view?.layoutManager = layoutManager
@@ -52,7 +53,7 @@ class TanyaKandidatFragment : BaseFragment(), TanyaKandidatView {
         })
         mView?.swipe_refresh?.setOnRefreshListener {
             mView?.swipe_refresh?.isRefreshing = false
-            presenter.getDataKandidatList()
+            presenter?.getDataKandidatList()
         }
     }
 
@@ -61,20 +62,22 @@ class TanyaKandidatFragment : BaseFragment(), TanyaKandidatView {
         adapter.replaceData(tanyaKandidatList?.toList()!!)
     }
 
+    override fun showEmptyDataAlert() {
+        mView?.view_empty_state?.visibility = View.VISIBLE
+    }
+
     override fun setLayout(): Int {
         return R.layout.fragment_tanya_kandidat
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mView?.view_empty_state?.visibility = View.GONE
+        mView?.recycler_view?.visibility = View.INVISIBLE
+        mView?.progress_bar?.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
         mView?.progress_bar?.visibility = View.GONE
-    }
-
-    override fun showError(throwable: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     companion object {
@@ -84,7 +87,6 @@ class TanyaKandidatFragment : BaseFragment(), TanyaKandidatView {
     }
 
     override fun onDestroy() {
-        presenter.detach()
         (activity?.application as BaseApp).releaseActivityComponent()
         super.onDestroy()
     }

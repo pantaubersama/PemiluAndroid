@@ -5,5 +5,5 @@ import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
 
 interface TanyaKandidatView : BaseView {
     fun bindDataTanyaKandidat(tanyaKandidatList: MutableList<TanyaKandidat>?)
-
+    fun showEmptyDataAlert()
 }

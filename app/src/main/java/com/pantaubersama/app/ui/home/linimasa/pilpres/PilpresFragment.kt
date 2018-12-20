@@ -12,10 +12,8 @@ import com.pantaubersama.app.ui.home.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.layout_common_recyclerview.view.*
 
-class PilpresFragment : BaseFragment(), PilpresView {
+class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     val TAG = PilpresFragment::class.java.simpleName
-
-    private var presenter: PilpresPresenter? = null
 
     private lateinit var mView: View
 
@@ -33,9 +31,11 @@ class PilpresFragment : BaseFragment(), PilpresView {
         }
     }
 
+    override fun initPresenter(): PilpresPresenter? {
+        return PilpresPresenter()
+    }
+
     override fun initView(view: View) {
-        presenter = PilpresPresenter(this)
-        presenter?.attach(this)
         this.mView = view
         setupRecyclerPilpres()
     }
@@ -79,9 +79,5 @@ class PilpresFragment : BaseFragment(), PilpresView {
     override fun dismissLoading() {
         mView.recycler_view.visibility = View.GONE
         mView.progress_bar.visibility = View.GONE
-    }
-
-    override fun showError(throwable: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

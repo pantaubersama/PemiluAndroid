@@ -9,11 +9,11 @@ import com.pantaubersama.app.base.BasePresenter
  * A simple [Fragment] subclass.
  *
  */
-class KuisFragment : BaseFragment() {
+class KuisFragment : BaseFragment<BasePresenter<*>>() {
 
-//    override fun initPresenter(): BasePresenter<*>? {
-//        return null
-//    }
+    override fun initPresenter(): BasePresenter<*>? {
+        return null
+    }
 
     override fun initView(view: View) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

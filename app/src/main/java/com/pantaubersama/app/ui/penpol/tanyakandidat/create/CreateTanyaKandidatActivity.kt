@@ -9,11 +9,8 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import kotlinx.android.synthetic.main.activity_create_tanya_kandidat.*
-import javax.inject.Inject
 
-class CreateTanyaKandidatActivity : BaseActivity(), CreateTanyaKandidatView {
-    @Inject
-    lateinit var presenter: CreateTanyaKandidatPresenter
+class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>(), CreateTanyaKandidatView {
 
     override fun statusBarColor(): Int {
         return 0
@@ -27,8 +24,11 @@ class CreateTanyaKandidatActivity : BaseActivity(), CreateTanyaKandidatView {
         (application as BaseApp).createActivityComponent(this)?.inject(this)
     }
 
+    override fun initPresenter(): CreateTanyaKandidatPresenter? {
+        return CreateTanyaKandidatPresenter()
+    }
+
     override fun setupUI() {
-        presenter.attach(this)
         setupToolbar(true, getString(R.string.create_question), R.color.white, 4f)
         question?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -64,7 +64,7 @@ class CreateTanyaKandidatActivity : BaseActivity(), CreateTanyaKandidatView {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.done_action -> presenter.submitQuestion(question.text.toString())
+            R.id.done_action -> presenter?.submitQuestion(question.text.toString())
         }
         return super.onOptionsItemSelected(item)
     }
@@ -74,7 +74,6 @@ class CreateTanyaKandidatActivity : BaseActivity(), CreateTanyaKandidatView {
     }
 
     override fun onDestroy() {
-        presenter.detach()
         (application as BaseApp).releaseActivityComponent()
         super.onDestroy()
     }

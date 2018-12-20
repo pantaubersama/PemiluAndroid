@@ -11,14 +11,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
+import timber.log.Timber
 import java.util.Objects
 
 /**
  * @author edityomurti on 18/12/2018 01:03
  */
-abstract class BaseFragment : Fragment(), BaseView {
+abstract class BaseFragment<P : BasePresenter<*>> : Fragment(), BaseView {
     protected var progressDialog: ProgressDialog? = null
-//    protected var presenter: P? = null
+    protected var presenter: P? = null
     protected var toolbar: Toolbar? = null
     private var mView: View? = null
 
@@ -26,12 +27,12 @@ abstract class BaseFragment : Fragment(), BaseView {
         mView = inflater.inflate(setLayout(), container, false)
         initInjection()
         initProgressDialog()
-//        presenter = initPresenter()
+        presenter = initPresenter()
         initView(mView!!)
         return mView
     }
 
-//    protected abstract fun initPresenter(): P?
+    protected abstract fun initPresenter(): P?
 
     protected open fun initInjection() {}
 
@@ -62,17 +63,21 @@ abstract class BaseFragment : Fragment(), BaseView {
         }
     }
 
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        if (presenter != null) {
-//            presenter?.attach(this)
-//        }
-//    }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (presenter != null) {
+            presenter?.attach(this)
+        }
+    }
 
-//    override fun onDestroy() {
-//        if (presenter != null) {
-//            presenter?.detach()
-//        }
-//        super.onDestroy()
-//    }
+    override fun onDestroy() {
+        if (presenter != null) {
+            presenter?.detach()
+        }
+        super.onDestroy()
+    }
+
+    override fun showError(throwable: Throwable) {
+        Timber.e(throwable)
+    }
 }
