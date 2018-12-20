@@ -9,14 +9,15 @@ import com.extrainteger.identitaslogin.models.AuthToken
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
+import com.pantaubersama.app.data.interactors.LoginInteractor
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
-class LoginActivity : BaseActivity(), LoginView {
+class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     @Inject
-    lateinit var presenter: LoginPresenter
+    lateinit var interactor: LoginInteractor
     private var symbolicScope: MutableList<String>? = null
 
     override fun statusBarColor(): Int {
@@ -31,8 +32,11 @@ class LoginActivity : BaseActivity(), LoginView {
         (application as BaseApp).createActivityComponent(this)?.inject(this)
     }
 
+    override fun initPresenter(): LoginPresenter? {
+        return LoginPresenter(interactor)
+    }
+
     override fun setupUI() {
-        presenter.attach(this)
         symbolicScope = ArrayList()
         symbolic_login_button.configure(
             SymbolicConfig(
@@ -50,7 +54,7 @@ class LoginActivity : BaseActivity(), LoginView {
             }
 
             override fun success(result: Result<AuthToken>) {
-                presenter.exchangeToken(result.data.accessToken, "")
+                presenter?.exchangeToken(result.data.accessToken, "")
             }
         })
     }
@@ -86,7 +90,6 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
     override fun onDestroy() {
-        presenter.detach()
         (application as BaseApp).releaseActivityComponent()
         super.onDestroy()
     }

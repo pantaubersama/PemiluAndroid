@@ -10,13 +10,14 @@ import com.pantaubersama.app.base.viewholder.BaseViewHolder
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
 import kotlinx.android.synthetic.main.item_tanya_kandidat.view.*
 
-class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaKandidatAdapter.TanyaKandidatViewHolder>(context){
+class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaKandidatAdapter.TanyaKandidatViewHolder>(context) {
 
     class TanyaKandidatViewHolder(
         view: View,
         clickListener: OnItemClickListener?,
-        longClickListener: OnItemLongClickListener?): BaseViewHolder<TanyaKandidat>(
-        view, clickListener, longClickListener){
+        longClickListener: OnItemLongClickListener?
+    ) : BaseViewHolder<TanyaKandidat>(
+        view, clickListener, longClickListener) {
         override fun bind(item: TanyaKandidat) {
             itemView.user_name.text = item.user?.name
             itemView.question_time.text = item.createdAt

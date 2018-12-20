@@ -2,10 +2,9 @@ package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
-import javax.inject.Inject
 
-class TanyaKandidatPresenter @Inject constructor() : BasePresenter<TanyaKandidatView>() {
-    fun getDataKandidatList() {
+class TanyaKandidatPresenter : BasePresenter<TanyaKandidatView>() {
+    fun getTanyaKandidatList() {
         view?.showLoading()
         val tanyaKandidatList: MutableList<TanyaKandidat> = ArrayList()
 
@@ -19,8 +18,12 @@ class TanyaKandidatPresenter @Inject constructor() : BasePresenter<TanyaKandidat
             tanyaKandidatList.add(data)
         }
 
-        view?.dismissLoading()
-        view?.bindDataTanyaKandidat(tanyaKandidatList)
+        if (tanyaKandidatList.size != 0) {
+            view?.dismissLoading()
+            view?.bindDataTanyaKandidat(tanyaKandidatList)
+        } else {
+            view?.dismissLoading()
+            view?.showEmptyDataAlert()
+        }
     }
-
 }

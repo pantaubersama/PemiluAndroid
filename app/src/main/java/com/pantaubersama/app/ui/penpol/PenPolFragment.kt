@@ -20,11 +20,11 @@ import kotlinx.android.synthetic.main.fragment_pen_pol.view.*
  * A simple [Fragment] subclass.
  *
  */
-class PenPolFragment : BaseFragment() {
+class PenPolFragment : BaseFragment<BasePresenter<*>>() {
 
-//    override fun initPresenter(): BasePresenter<*>? {
-//        return null
-//    }
+    override fun initPresenter(): BasePresenter<*>? {
+        return null
+    }
 
     override fun initView(view: View) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
