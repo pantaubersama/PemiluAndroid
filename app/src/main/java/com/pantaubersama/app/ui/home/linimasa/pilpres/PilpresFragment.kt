@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.home.linimasa.pilpres
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.listener.OnItemClickListener
@@ -11,8 +12,10 @@ import com.pantaubersama.app.ui.home.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.layout_common_recyclerview.view.*
 
-class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
+class PilpresFragment : BaseFragment(), PilpresView {
     val TAG = PilpresFragment::class.java.simpleName
+
+    private var presenter: PilpresPresenter? = null
 
     private lateinit var mView: View
 
@@ -30,17 +33,15 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         }
     }
 
-    override fun initPresenter(): PilpresPresenter? {
-        return PilpresPresenter(this)
-    }
-
     override fun initView(view: View) {
+        presenter = PilpresPresenter(this)
+        presenter?.attach(this)
         this.mView = view
         setupRecyclerPilpres()
     }
 
     private fun setupRecyclerPilpres() {
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         adapter = PilpresAdapter(context!!)
         mView.recycler_view.layoutManager = layoutManager
         mView.recycler_view.adapter = adapter

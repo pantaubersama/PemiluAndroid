@@ -16,21 +16,24 @@ import java.util.Objects
 /**
  * @author edityomurti on 18/12/2018 01:03
  */
-abstract class BaseFragment<P : BasePresenter<*>> : Fragment(), BaseView {
+abstract class BaseFragment : Fragment(), BaseView {
     protected var progressDialog: ProgressDialog? = null
-    protected var presenter: P? = null
+//    protected var presenter: P? = null
     protected var toolbar: Toolbar? = null
     private var mView: View? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(setLayout(), container, false)
+        initInjection()
         initProgressDialog()
-        presenter = initPresenter()
+//        presenter = initPresenter()
         initView(mView!!)
         return mView
     }
 
-    protected abstract fun initPresenter(): P?
+//    protected abstract fun initPresenter(): P?
+
+    protected open fun initInjection() {}
 
     private fun initProgressDialog() {
         progressDialog = ProgressDialog(activity)
@@ -59,17 +62,17 @@ abstract class BaseFragment<P : BasePresenter<*>> : Fragment(), BaseView {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if (presenter != null) {
-            presenter?.attach(this)
-        }
-    }
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
+//        if (presenter != null) {
+//            presenter?.attach(this)
+//        }
+//    }
 
-    override fun onDestroy() {
-        if (presenter != null) {
-            presenter?.detach()
-        }
-        super.onDestroy()
-    }
+//    override fun onDestroy() {
+//        if (presenter != null) {
+//            presenter?.detach()
+//        }
+//        super.onDestroy()
+//    }
 }

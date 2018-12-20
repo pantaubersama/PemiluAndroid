@@ -8,12 +8,9 @@ import com.pantaubersama.app.base.listener.OnItemLongClickListener
 /**
  * @author edityomurti on 16/12/2018 01:42
  */
-abstract class BaseViewHolder<T>(itemView: View, itemClickListener: OnItemClickListener?, itemLongClickListener: OnItemLongClickListener?) : RecyclerView.ViewHolder(itemView),
+abstract class BaseViewHolder<T>(itemView: View, private var itemClickListener: OnItemClickListener?, private var itemLongClickListener: OnItemLongClickListener?) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener,
         View.OnLongClickListener {
-
-    private var itemClickListener: OnItemClickListener? = itemClickListener
-    private var itemLongClickListener: OnItemLongClickListener? = itemLongClickListener
 
     init {
         itemView.setOnClickListener(this)

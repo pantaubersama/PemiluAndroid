@@ -13,13 +13,13 @@ import com.pantaubersama.app.ui.home.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.widget.TabView
 import kotlinx.android.synthetic.main.fragment_linimasa.*
 
-class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
+class LinimasaFragment : BaseFragment() {
     override fun initView(view: View) {
     }
 
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
-    }
+//    override fun initPresenter(): BasePresenter<*>? {
+//        return null
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupTabLayout()

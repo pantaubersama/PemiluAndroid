@@ -2,27 +2,63 @@ package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import android.content.Intent
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
+import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.base.listener.OnItemClickListener
+import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
+import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.view.*
+import kotlinx.android.synthetic.main.layout_common_recyclerview.view.*
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  *
  */
-class TanyaKandidatFragment : BaseFragment<BasePresenter<*>>() {
+class TanyaKandidatFragment : BaseFragment(), TanyaKandidatView {
+    @Inject
+    lateinit var presenter: TanyaKandidatPresenter
+    private lateinit var adapter: TanyaKandidatAdapter
+    private var mView: View? = null
 
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
+    override fun initInjection() {
+        (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
     }
 
     override fun initView(view: View) {
+        mView = view
+        presenter.attach(this)
         view.question_section.setOnClickListener {
             val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
             startActivity(intent)
         }
+        setupTanyaKandidatList()
+        presenter.getDataKandidatList()
+    }
+
+    private fun setupTanyaKandidatList(){
+        val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        adapter = TanyaKandidatAdapter(context!!)
+        mView?.recycler_view?.layoutManager = layoutManager
+        mView?.recycler_view?.adapter = adapter
+        adapter.setOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                ToastUtil.show(context!!, "clicked!")
+            }
+        })
+        mView?.swipe_refresh?.setOnRefreshListener {
+            mView?.swipe_refresh?.isRefreshing = false
+            presenter.getDataKandidatList()
+        }
+    }
+
+    override fun bindDataTanyaKandidat(tanyaKandidatList: MutableList<TanyaKandidat>?) {
+        mView?.recycler_view?.visibility = View.VISIBLE
+        adapter.replaceData(tanyaKandidatList?.toList()!!)
     }
 
     override fun setLayout(): Int {
@@ -34,7 +70,7 @@ class TanyaKandidatFragment : BaseFragment<BasePresenter<*>>() {
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mView?.progress_bar?.visibility = View.GONE
     }
 
     override fun showError(throwable: Throwable) {
@@ -45,5 +81,11 @@ class TanyaKandidatFragment : BaseFragment<BasePresenter<*>>() {
         fun newInstance(): TanyaKandidatFragment {
             return TanyaKandidatFragment()
         }
+    }
+
+    override fun onDestroy() {
+        presenter.detach()
+        (activity?.application as BaseApp).releaseActivityComponent()
+        super.onDestroy()
     }
 }

@@ -63,4 +63,6 @@
         android:layout_height="1dp"
         android:background="@color/gray_3"/>
 
+    <include layout="@layout/layout_common_recyclerview"/>
+
 </LinearLayout>
