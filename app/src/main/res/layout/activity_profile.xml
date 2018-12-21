@@ -198,9 +198,10 @@
                         android:layout_centerVertical="true"/>
 
                     <ImageView
+                        android:id="@+id/cluster_options_action"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_more_horiz"
+                        android:src="@drawable/ic_more_vertical"
                         android:layout_gravity="end"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
