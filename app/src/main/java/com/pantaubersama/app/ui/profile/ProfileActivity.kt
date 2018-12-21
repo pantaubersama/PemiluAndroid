@@ -3,7 +3,11 @@ package com.pantaubersama.app.ui.profile
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.view.* // ktlint-disable
+import android.view.Gravity
+import android.view.KeyEvent
+import android.view.Menu
+import android.view.WindowManager
+import android.view.MenuItem
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_profile.*
@@ -26,8 +30,21 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     override fun setupUI() {
         setupToolbar(true, "", R.color.white, 4f)
         setupClusterLayout()
+        setupBiodataLayout()
         cluster_options_action.setOnClickListener {
             showClusterOptionsDialog()
+        }
+    }
+
+    private fun setupBiodataLayout() {
+        biodata_expandable.collapse()
+        biodata_expandable_button.setOnClickListener {
+            biodata_expandable.toggle()
+            if (biodata_expandable.isExpanded) {
+                biodata_expandable_image.animate().rotation(0F).start()
+            } else {
+                biodata_expandable_image.animate().rotation(180F).start()
+            }
         }
     }
 
