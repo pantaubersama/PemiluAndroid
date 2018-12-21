@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pantaubersama.app.ui.home.FilterPilpresActivity">
+
+    <include layout="@layout/layout_toolbar_light"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:padding="22dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_sumber_dari"
+            android:fontFamily="@font/bw_modelica_bold"
+            android:textColor="@color/black_3"
+            android:textSize="16sp"/>
+
+        <RadioGroup
+            android:id="@+id/radio_group_pilpres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+            <RadioButton
+                android:id="@+id/radbtn_semua"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_semua"
+                android:textSize="14sp"
+                android:fontFamily="@font/lato_regular"
+                android:paddingStart="12dp"
+                android:textColor="@color/black_1"
+                android:buttonTint="@color/colorPrimary"/>
+            <RadioButton
+                android:id="@+id/radbtn_jokowi"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_team_jokowi"
+                android:textSize="14sp"
+                android:fontFamily="@font/lato_regular"
+                android:paddingStart="12dp"
+                android:textColor="@color/black_1"
+                android:buttonTint="@color/colorPrimary"/>
+            <RadioButton
+                android:id="@+id/radbtn_prabowo"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_team_probowo"
+                android:textSize="14sp"
+                android:fontFamily="@font/lato_regular"
+                android:paddingStart="12dp"
+                android:textColor="@color/black_1"
+                android:buttonTint="@color/colorPrimary"/>
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_button_terapkan_filter"/>
+
+</RelativeLayout>

@@ -7,5 +7,6 @@
     <style name="AppTheme.Toolbar.Light" parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:textColorPrimary">@color/black_3</item>
         <item name="android:textColorSecondary">@color/black_3</item>
+        <item name="android:actionMenuTextColor">@color/colorPrimary</item>
     </style>
 </resources>
