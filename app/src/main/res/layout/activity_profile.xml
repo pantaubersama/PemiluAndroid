@@ -69,6 +69,7 @@
                 android:textSize="18sp"/>
 
             <LinearLayout
+                android:id="@+id/verified_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -87,11 +88,13 @@
                 android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/verified_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_verified"/>
 
                 <TextView
+                    android:id="@+id/verified_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
