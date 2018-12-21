@@ -9,7 +9,7 @@ class PantauConstants {
     }
 
     object Extra {
-        const val SELECTED_FILTER = "EXTRA_SELECTED_FILTER"
+        const val SELECTED_FILTER_PILPRES = "EXTRA_SELECTED_FILTER"
     }
 
     object RequestCode {

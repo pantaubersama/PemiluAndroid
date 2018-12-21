@@ -89,7 +89,7 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
             Activity.RESULT_OK -> {
                 when (requestCode) {
                     PantauConstants.RequestCode.FILTER_PILPRES -> {
-                        ToastUtil.show(context!!, data?.getIntExtra(PantauConstants.Extra.SELECTED_FILTER, 666).toString())
+                        ToastUtil.show(context!!, data?.getIntExtra(PantauConstants.Extra.SELECTED_FILTER_PILPRES, 666).toString())
                     }
                 }
             }
