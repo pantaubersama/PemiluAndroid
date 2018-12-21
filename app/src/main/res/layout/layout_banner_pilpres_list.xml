@@ -45,6 +45,7 @@
             android:textColor="#7c7c7c"
             android:lineSpacingExtra="2sp"
             android:layout_marginEnd="4dp"
+            android:fontFamily="@font/lato_medium"
             android:layout_toStartOf="@id/iv_banner_close"
             android:text="Halaman ini berisikan informasi dari channel Resmi twitter Jokowi - Makruf dan Prabowo - Sandi yang terdaftar di Bawaslu Read more..."/>
 

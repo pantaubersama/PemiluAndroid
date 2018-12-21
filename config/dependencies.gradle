@@ -34,12 +34,14 @@ ext {
 
             glide                   : "4.8.0",
 
-            dagger                  : "2.12",
-            daggerCompiler          : "2.12",
+            dagger                  : "2.19",
+            daggerCompiler          : "2.19",
 
             roundedImageView        : "2.3.0",
             symbolic                : "0.2.8",
-            mockito                 : "2.18.3"
+            mockito                 : "2.18.3",
+            flexbox                 : "1.1.0",
+            lottie                  : "2.8.0"
     ]
 
 
@@ -95,4 +97,8 @@ ext {
     roundedImageView = "com.makeramen:roundedimageview:$versions.roundedImageView"
 
     symbolic = "com.github.extrainteger:android-identitas-client:$versions.symbolic"
+
+    flexbox = "com.google.android:flexbox:$versions.flexbox"
+
+    lottie = "com.airbnb.android:lottie:$versions.lottie"
 }

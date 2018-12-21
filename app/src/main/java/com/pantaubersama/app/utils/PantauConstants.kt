@@ -5,14 +5,23 @@ package com.pantaubersama.app.utils
  */
 class PantauConstants {
     companion object {
-        // direct access
+        const val IS_USER_LOGGED_IN = "is_user_logged_in"
+
+    }
+
+    object Extra {
+        const val SELECTED_FILTER = "EXTRA_SELECTED_FILTER"
+    }
+
+    object RequestCode {
+        const val FILTER_PILPRES = 1001
     }
 
     object Networking {
-        val AUTHORIZATION = "Authorization"
-        val GRANT_TYPE = "refresh_token"
-        val ACCESS_TOKEN_FIELD = "client_token"
-        val REFRESH_TOKEN_FIELD = "client_refresh_token"
-        val OAUTH_ACCESS_TOKEN_FIELD = "access_token"
+        const val AUTHORIZATION = "Authorization"
+        const val GRANT_TYPE = "refresh_token"
+        const val ACCESS_TOKEN_FIELD = "client_token"
+        const val REFRESH_TOKEN_FIELD = "client_refresh_token"
+        const val OAUTH_ACCESS_TOKEN_FIELD = "access_token"
     }
 }

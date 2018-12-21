@@ -16,7 +16,7 @@ android {
         targetSdkVersion androidTargetSdkVersion
         versionCode appVersionCode
         versionName appVersionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
@@ -27,12 +27,16 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_PROD)
+            it.buildConfigField("String", "PANTAU_OAUTH_URL", PANTAU_OAUTH_URL_PROD)
+            it.buildConfigField("String", "WORD_STADIUM_BASE_URL", WORD_STADIUM_BASE_URL_PROD)
         }
         debug {
             applicationIdSuffix ".staging"
             minifyEnabled false
             debuggable true
             it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_STAG)
+            it.buildConfigField("String", "PANTAU_OAUTH_URL", PANTAU_OAUTH_URL_STAG)
+            it.buildConfigField("String", "WORD_STADIUM_BASE_URL", WORD_STADIUM_BASE_URL_STAG)
         }
 
         buildTypes.each {
@@ -79,16 +83,17 @@ dependencies {
     implementation networkLibs
     implementation firebaseLibs
     implementation rxJavaLibs
-    implementation multidex
+    implementation 'androidx.multidex:multidex:2.0.1'
     implementation easyPermission
     implementation timber
     implementation glide
     implementation roundedImageView
     implementation symbolic
-
+    implementation flexbox
     implementation dagger
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'com.android.support:support-v4:28.0.0'
+    implementation lottie
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt daggerCompiler
 
     testImplementation unitTestLibs

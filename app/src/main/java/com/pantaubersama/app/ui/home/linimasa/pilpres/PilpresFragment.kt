@@ -1,8 +1,9 @@
 package com.pantaubersama.app.ui.home.linimasa.pilpres
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.listener.OnItemClickListener
@@ -31,7 +32,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun initPresenter(): PilpresPresenter? {
-        return PilpresPresenter(this)
+        return PilpresPresenter()
     }
 
     override fun initView(view: View) {
@@ -40,7 +41,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     private fun setupRecyclerPilpres() {
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         adapter = PilpresAdapter(context!!)
         mView.recycler_view.layoutManager = layoutManager
         mView.recycler_view.adapter = adapter
@@ -78,9 +79,5 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     override fun dismissLoading() {
         mView.recycler_view.visibility = View.GONE
         mView.progress_bar.visibility = View.GONE
-    }
-
-    override fun showError(throwable: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

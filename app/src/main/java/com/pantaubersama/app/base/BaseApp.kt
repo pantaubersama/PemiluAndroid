@@ -2,7 +2,7 @@ package com.pantaubersama.app.base
 
 import android.app.Activity
 import android.content.Context
-import android.support.multidex.MultiDexApplication
+import androidx.multidex.MultiDexApplication
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.di.component.AppComponent
@@ -36,7 +36,6 @@ class BaseApp : MultiDexApplication() {
     fun createActivityComponent(activity: Activity?): ActivityComponent? {
         activityComponent = appComponent?.withActivityComponent(
                 ActivityModule(activity!!),
-                NetworkModule(),
                 ApiModule(),
                 ConnectionModule(this),
                 SharedPreferenceModule(this),
@@ -51,7 +50,6 @@ class BaseApp : MultiDexApplication() {
     fun createServiceComponent(context: Context?): ServiceComponent? {
         serviceComponent = appComponent?.withServiceComponent(
                 ServiceModule(context),
-                NetworkModule(),
                 ApiModule(),
                 ConnectionModule(this),
                 SharedPreferenceModule(this),

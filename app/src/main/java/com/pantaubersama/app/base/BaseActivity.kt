@@ -1,17 +1,20 @@
 package com.pantaubersama.app.base
 
 import android.app.ProgressDialog
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
-import android.support.annotation.DrawableRes
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
+import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
 import timber.log.Timber
-import java.lang.RuntimeException
 
 /**
  * @author edityomurti on 14/12/2018 17:33
@@ -42,7 +45,13 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
 
         if (statusBarColor() != 0) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = resources.getColor(statusBarColor()!!)
+            window.statusBarColor = ContextCompat.getColor(this, statusBarColor()!!)
+        } else if (toolbar != null){
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = (toolbar?.background as ColorDrawable).color
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            };
         }
     }
 

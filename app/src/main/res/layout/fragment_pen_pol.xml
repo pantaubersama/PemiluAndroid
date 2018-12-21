@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -18,9 +18,20 @@
             app:tabIndicatorColor="@color/white"
             app:tabIndicatorHeight="3dp">
 
-        </android.support.design.widget.TabLayout>
+        </com.google.android.material.tabs.TabLayout>
 
         <ImageView
+            android:id="@+id/create_new_tanya_kandidat_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_add"
+            android:layout_marginEnd="16dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/filter_pertanyaan_button"
+            android:layout_toStartOf="@id/filter_pertanyaan_button"/>
+
+        <ImageView
+            android:id="@+id/filter_pertanyaan_button"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_filter"
@@ -30,13 +41,13 @@
     </RelativeLayout>
 
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/rl_tab_layout"
         android:background="@color/white">
 
-    </android.support.v4.view.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 
 </RelativeLayout>

@@ -7,7 +7,7 @@ import com.pantaubersama.app.data.model.tweet.PilpresTweet
 /**
  * @author edityomurti on 19/12/2018 14:45
  */
-class PilpresPresenter(view: PilpresView) : BasePresenter<PilpresView>() {
+class PilpresPresenter : BasePresenter<PilpresView>() {
     fun getPilpresTweet() {
         view?.showLoading()
         var tweetList: MutableList<PilpresTweet> = ArrayList()

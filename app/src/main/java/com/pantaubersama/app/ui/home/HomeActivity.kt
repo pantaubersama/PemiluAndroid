@@ -1,7 +1,7 @@
 package com.pantaubersama.app.ui.home
 
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.ui.home.linimasa.LinimasaFragment

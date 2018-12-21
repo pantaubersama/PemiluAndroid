@@ -8,13 +8,9 @@ import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.utils.RxSchedulers
 import kotlinx.android.synthetic.main.activity_create_tanya_kandidat.*
-import javax.inject.Inject
 
 class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>(), CreateTanyaKandidatView {
-    @Inject
-    lateinit var rxScheduler: RxSchedulers
 
     override fun statusBarColor(): Int {
         return 0
@@ -26,6 +22,10 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 
     override fun initInjection() {
         (application as BaseApp).createActivityComponent(this)?.inject(this)
+    }
+
+    override fun initPresenter(): CreateTanyaKandidatPresenter? {
+        return CreateTanyaKandidatPresenter()
     }
 
     override fun setupUI() {
@@ -47,10 +47,6 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 
     override fun setLayout(): Int {
         return R.layout.activity_create_tanya_kandidat
-    }
-
-    override fun initPresenter(): CreateTanyaKandidatPresenter? {
-        return CreateTanyaKandidatPresenter()
     }
 
     override fun showLoading() {
@@ -75,5 +71,10 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 
     override fun showEmptyQuestionAlert() {
         question.error = getString(R.string.empty_question_alert)
+    }
+
+    override fun onDestroy() {
+        (application as BaseApp).releaseActivityComponent()
+        super.onDestroy()
     }
 }

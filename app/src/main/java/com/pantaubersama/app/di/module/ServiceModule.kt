@@ -10,7 +10,6 @@ import dagger.Provides
  */
 @Module(includes = [ApiModule::class,
     ConnectionModule::class,
-    NetworkModule::class,
     RxSchedulersModule::class,
     SharedPreferenceModule::class])
 class ServiceModule(val context: Context?) {

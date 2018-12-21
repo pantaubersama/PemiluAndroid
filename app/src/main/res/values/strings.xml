@@ -5,7 +5,7 @@
     <string name="title_navbar_lapor">Lapor</string>
     <string name="title_navbar_rekap">Rekap</string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="txt_mohon_tunggu">Mohon tunggu...</string>
+    <string name="txt_mohon_tunggu">Mohon tunggu…</string>
     <string name="txt_cari">Cari</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -13,15 +13,24 @@
     <string name="txt_tab_pilpres">Pilpres</string>
     <string name="txt_tab_janji_politik">Janji Politik</string>
     <string name="create_question">Buat Pertanyaan</string>
-    <string name="question_hint">Buat pertanyaan singkat untuk pasangan calon presiden periode 2019-2024. Pertanyaan terpilih akan disampaikan kepada kedua tim pasangan calon Presiden. Gunakan tata bahasa yang sopan.</string>
+    <string name="question_hint">Buat pertanyaan singkat untuk pasangan calon presiden periode 2019–2024. Pertanyaan terpilih akan disampaikan kepada kedua tim pasangan calon Presiden. Gunakan tata bahasa yang sopan.</string>
     <string name="txt_empty_state">Oops.. data kosong</string>
     <string name="txt_disematkan_dari">Disematkan dari Team Pemenangan</string>
     <string name="done_action">Done</string>
     <string name="empty_question_alert">Cannot submit data. Question is empty!</string>
     <string name="question_simple_hint">Ayo tanya sekarang</string>
     <string name="dummy_tweet_content">#SahabatBawaslu, Sentra  Gakkumdu berkomitmen untuk tidak memunculkan sikap ego sektoral antar personil, baik dari pihak Bawaslu,  Kepolisian,  maupun Kejaksaan dalam menegakkan hukum Pemilu dalam Rapat Koordinasi Nasional Sentra Gakkumdu,  di Jakarta, Rabu,  (5/12/2018).</string>
-    =======
     <string name="tanya_kandidat_label">Tanya Kandidat</string>
     <string name="kuis_label">Kuis</string>
-    >>>>>>> 0bfca6815167d3ea042db04ff21ff1fb12bb0950
+    <string name="login_failed_alert">Failed to login with symbolic</string>
+    <string name="tanya_kandidat_hint">Apa yang ingin kamu tanyakan kepada Capres &amp; Cawapres Jokowi-Ma\'ruf dan Prabowo-Sandi</string>
+    <string name="question_short_hint">Apa pertanyaanmu buat Capres Indonesia?</string>
+    <string name="question_dummy_text">Kapan realisasi sistem tenaga kerja alih daya diterapkan seutuhnya? Kita ini insan bukan seekor sapi.</string>
+    <string name="question_time_dummy_text">8 days ago</string>
+    <string name="txt_sumber_dari">Sumber dari</string>
+    <string name="txt_semua">Semua</string>
+    <string name="txt_team_jokowi">Team Jokowi - Makruf</string>
+    <string name="txt_team_probowo">Team Prabowo - Sandi</string>
+    <string name="txt_filter">Filter</string>
+    <string name="txt_reset">RESET</string>
 </resources>

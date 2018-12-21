@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="24dp"
+            android:background="@color/gray_1"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/upvote_button"
+                android:scaleType="centerCrop"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:lottie_fileName="upvote.json"/>
+
+            <TextView
+                android:id="@+id/upvote_count_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textSize="16sp"
+                android:fontFamily="@font/lato_medium"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/user_avatar"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:scaleType="centerCrop"
+                    app:riv_border_color="@color/white"
+                    app:riv_oval="true"
+                    android:src="@drawable/dummy_avatar"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/user_avatar"
+                    android:layout_toRightOf="@id/user_avatar">
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Budi Santoso"
+                        android:fontFamily="@font/lato_bold"
+                        android:maxLines="1"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/black_2"/>
+
+                    <TextView
+                        android:id="@+id/user_bio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_regular"
+                        android:text="Kapan kemana Indonesia?"
+                        android:textSize="11sp"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/gray_dark_3"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/question_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/question_time_dummy_text"
+                    android:fontFamily="@font/lato_regular"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/user_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/question_dummy_text"
+                android:fontFamily="@font/bw_modelica_bold"
+                android:textSize="16sp"
+                android:textColor="@color/black_1"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"/>
+
+            <include layout="@layout/post_action_layout"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_3"/>
+
+</LinearLayout>

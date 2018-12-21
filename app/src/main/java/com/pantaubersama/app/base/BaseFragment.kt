@@ -2,15 +2,16 @@ package com.pantaubersama.app.base
 
 import android.app.ProgressDialog
 import android.os.Bundle
-import android.support.annotation.DrawableRes
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
+import timber.log.Timber
 import java.util.Objects
 
 /**
@@ -24,6 +25,7 @@ abstract class BaseFragment<P : BasePresenter<*>> : Fragment(), BaseView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(setLayout(), container, false)
+        initInjection()
         initProgressDialog()
         presenter = initPresenter()
         initView(mView!!)
@@ -31,6 +33,8 @@ abstract class BaseFragment<P : BasePresenter<*>> : Fragment(), BaseView {
     }
 
     protected abstract fun initPresenter(): P?
+
+    protected open fun initInjection() {}
 
     private fun initProgressDialog() {
         progressDialog = ProgressDialog(activity)
@@ -71,5 +75,9 @@ abstract class BaseFragment<P : BasePresenter<*>> : Fragment(), BaseView {
             presenter?.detach()
         }
         super.onDestroy()
+    }
+
+    override fun showError(throwable: Throwable) {
+        Timber.e(throwable)
     }
 }
