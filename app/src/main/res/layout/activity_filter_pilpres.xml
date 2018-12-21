@@ -39,22 +39,22 @@
                 android:textColor="@color/black_1"
                 android:buttonTint="@color/colorPrimary"/>
             <RadioButton
-                android:id="@+id/radbtn_jokowi"
+                android:id="@+id/radbtn_capres1"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/txt_team_jokowi"
+                android:text="@string/txt_team_capres1"
                 android:textSize="14sp"
                 android:fontFamily="@font/lato_regular"
                 android:paddingStart="12dp"
                 android:textColor="@color/black_1"
                 android:buttonTint="@color/colorPrimary"/>
             <RadioButton
-                android:id="@+id/radbtn_prabowo"
+                android:id="@+id/radbtn_capres2"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/txt_team_probowo"
+                android:text="@string/txt_team_capres2"
                 android:textSize="14sp"
                 android:fontFamily="@font/lato_regular"
                 android:paddingStart="12dp"

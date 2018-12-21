@@ -22,7 +22,7 @@ class FilterPilpresActivity : BaseActivity<BasePresenter<*>>() {
 
     fun setIntent(context: Context, selectedFilter: Int): Intent {
         val intent = Intent(context, FilterPilpresActivity::class.java)
-        intent.putExtra(PantauConstants.Extra.SELECTED_FILTER, selectedFilter)
+        intent.putExtra(PantauConstants.Extra.SELECTED_FILTER_PILPRES, selectedFilter)
         return intent
     }
 
@@ -31,23 +31,23 @@ class FilterPilpresActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun fetchIntentExtra() {
-        this.selectedFilter = intent.getIntExtra(PantauConstants.Extra.SELECTED_FILTER, 0)
+        this.selectedFilter = intent.getIntExtra(PantauConstants.Extra.SELECTED_FILTER_PILPRES, 0)
     }
 
     override fun setupUI() {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
         radio_group_pilpres.check(when (selectedFilter) {
             0 -> R.id.radbtn_semua
-            1 -> R.id.radbtn_jokowi
-            2 -> R.id.radbtn_prabowo
-            else -> R.id.radbtn_prabowo
+            1 -> R.id.radbtn_capres1
+            2 -> R.id.radbtn_capres2
+            else -> R.id.radbtn_capres2
         })
 
         radio_group_pilpres.setOnCheckedChangeListener { view, checkedId ->
             selectedFilter = when (checkedId) {
                 R.id.radbtn_semua -> 0
-                R.id.radbtn_jokowi -> 1
-                R.id.radbtn_prabowo -> 2
+                R.id.radbtn_capres1 -> 1
+                R.id.radbtn_capres2 -> 2
                 else -> 666
             }
         }
@@ -55,7 +55,7 @@ class FilterPilpresActivity : BaseActivity<BasePresenter<*>>() {
         btn_terapkan.setOnClickListener {
             val intent = Intent()
             with(intent) {
-                putExtra(PantauConstants.Extra.SELECTED_FILTER, selectedFilter)
+                putExtra(PantauConstants.Extra.SELECTED_FILTER_PILPRES, selectedFilter)
             }
             setResult(Activity.RESULT_OK, intent)
             finish()
