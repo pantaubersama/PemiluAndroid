@@ -12,12 +12,13 @@ import javax.inject.Inject
 class PilpresPresenter @Inject constructor(private val pilpresInteractor: PilpresInteractor?) : BasePresenter<PilpresView>() {
     fun getPilpresTweet() {
         view?.showLoading()
+        val selectedFilter = pilpresInteractor?.getPilpresFilter()
 
-        var tweetList: MutableList<PilpresTweet> = ArrayList()
+        val tweetList: MutableList<PilpresTweet> = ArrayList()
 
         for (i in 1..25) {
-            var tweet = PilpresTweet()
-            tweet.tweetContent = "tweet $i"
+            val tweet = PilpresTweet()
+            tweet.tweetContent = "tweet $i, filter = $selectedFilter "
             tweetList.add(tweet)
         }
         Handler().postDelayed({
