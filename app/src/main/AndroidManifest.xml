@@ -31,11 +31,9 @@
         <activity
             android:name=".ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.home.FilterPilpresActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.splashscreen.SplashScreenActivity"
+        <activity android:name=".ui.home.linimasa.filter.FilterPilpresActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.splashscreen.SplashScreenActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

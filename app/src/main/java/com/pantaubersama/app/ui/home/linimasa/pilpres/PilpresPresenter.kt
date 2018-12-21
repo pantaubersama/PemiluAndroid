@@ -12,6 +12,7 @@ import javax.inject.Inject
 class PilpresPresenter @Inject constructor(private val pilpresInteractor: PilpresInteractor?) : BasePresenter<PilpresView>() {
     fun getPilpresTweet() {
         view?.showLoading()
+
         var tweetList: MutableList<PilpresTweet> = ArrayList()
 
         for (i in 1..25) {
@@ -22,9 +23,5 @@ class PilpresPresenter @Inject constructor(private val pilpresInteractor: Pilpre
         Handler().postDelayed({
             view?.dismissLoading()
             view?.showPilpresTweet(tweetList) }, 2000)
-    }
-
-    fun getPilpresFilter(): Int {
-        return pilpresInteractor?.getPilpresFilter()!!
     }
 }
