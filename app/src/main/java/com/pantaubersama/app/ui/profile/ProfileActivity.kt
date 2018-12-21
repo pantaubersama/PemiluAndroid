@@ -8,15 +8,15 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.ui.profile.linimasa.ProfileLiniMasaFragment
-import com.pantaubersama.app.ui.profile.penpol.ProfilePenPolFragment
+import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
+import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.cluster_options_layout.*
 
 class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     private lateinit var activeFragment: Fragment
-    private var pLinimasaFragment: ProfileLiniMasaFragment? = null
-    private var pPenPolFragment: ProfilePenPolFragment? = null
+    private var pLinimasaFragment: ProfileJanjiPolitikFragment? = null
+    private var pTanyaKandidatFragment: ProfileTanyaKandidatFragment? = null
     private var otherFrag: Fragment? = null // dummy
 
     override fun initPresenter(): ProfilePresenter? {
@@ -45,15 +45,15 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     private fun initFragment() {
-        pLinimasaFragment = ProfileLiniMasaFragment.newInstance()
-        pPenPolFragment = ProfilePenPolFragment.newInstance()
+        pLinimasaFragment = ProfileJanjiPolitikFragment.newInstance()
+        pTanyaKandidatFragment = ProfileTanyaKandidatFragment.newInstance()
         otherFrag = Fragment()
     }
 
     private fun setupNavigation() {
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, pLinimasaFragment!!)
-            .add(R.id.fragment_container, pPenPolFragment!!)
+            .add(R.id.fragment_container, pTanyaKandidatFragment!!)
             .commit()
 
         activeFragment = pLinimasaFragment!!
@@ -65,7 +65,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                     return@run
                 }
                 R.id.navigation_penpol -> run {
-                    activeFragment = pPenPolFragment!!
+                    activeFragment = pTanyaKandidatFragment!!
                     return@run
                 }
                 R.id.navigation_wordstadium -> run {
@@ -95,7 +95,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     private fun showActiveFragment() {
         supportFragmentManager.beginTransaction()
             .hide(pLinimasaFragment!!)
-            .hide(pPenPolFragment!!)
+            .hide(pTanyaKandidatFragment!!)
             .show(activeFragment)
             .commit()
     }
@@ -110,7 +110,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     private fun setupBadgeLayout() {
-        badge_expandable.collapse()
         badge_expandable_button.setOnClickListener {
             badge_expandable.toggle()
             if (badge_expandable.isExpanded) {
@@ -122,7 +121,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     private fun setupBiodataLayout() {
-        biodata_expandable.collapse()
         biodata_expandable_button.setOnClickListener {
             biodata_expandable.toggle()
             if (biodata_expandable.isExpanded) {
@@ -134,7 +132,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     private fun setupClusterLayout() {
-        cluster_expandable.collapse()
         cluster_expandable_button.setOnClickListener {
             cluster_expandable.toggle()
             if (cluster_expandable.isExpanded) {

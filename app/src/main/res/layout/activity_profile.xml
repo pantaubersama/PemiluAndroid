@@ -171,6 +171,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:ael_duration="300"
+                        app:ael_expanded="true"
                         app:ael_orientation="vertical">
 
                         <RelativeLayout
@@ -268,6 +269,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:ael_duration="300"
+                        app:ael_expanded="true"
                         app:ael_orientation="vertical">
 
                         <LinearLayout
@@ -421,6 +423,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:ael_duration="300"
+                        app:ael_expanded="true"
                         app:ael_orientation="vertical">
 
                         <RelativeLayout
@@ -467,9 +470,10 @@
                     android:id="@+id/navigation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:background="@color/gray_1"
                     app:menu="@menu/navigation"
                     app:elevation="0dp"
+                    app:labelVisibilityMode="unlabeled"
                     app:itemIconTint="@drawable/selector_nav_bar_text_color"
                     app:itemTextColor="@drawable/selector_nav_bar_text_color"/>
 
