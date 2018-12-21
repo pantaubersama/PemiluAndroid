@@ -87,6 +87,7 @@ dependencies {
     implementation easyPermission
     implementation timber
     implementation glide
+    kapt glideCompiler
     implementation roundedImageView
     implementation symbolic
     implementation flexbox
@@ -94,6 +95,9 @@ dependencies {
     implementation lottie
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation chromeCustomTab
+    implementation expandableLayout
     kapt daggerCompiler
 
     testImplementation unitTestLibs

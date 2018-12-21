@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/open_cluster_action"
+        app:showAsAction="always"
+        android:title="Cluster"/>
+
+    <item
+        android:id="@+id/settings_action"
+        app:showAsAction="always"
+        android:title="@string/settings_action_label"
+        android:icon="@drawable/ic_settings"/>
+</menu>

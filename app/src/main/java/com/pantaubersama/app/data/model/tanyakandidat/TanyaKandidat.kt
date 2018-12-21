@@ -8,5 +8,6 @@ class TanyaKandidat(
     var user: User? = null,
     var createdAt: String? = null,
     var question: String? = null,
-    var upvoteCount: Int? = null
+    var upVoteCount: Int? = null,
+    var isUpvoted: Boolean? = false
 ) : Serializable

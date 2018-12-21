@@ -33,4 +33,23 @@
     <string name="txt_team_probowo">Team Prabowo - Sandi</string>
     <string name="txt_filter">Filter</string>
     <string name="txt_reset">RESET</string>
+    <string name="read_more_action">Read more…</string>
+    <string name="apply_filter_action">Terapkan</string>
+    <string name="user_label">User</string>
+    <string name="filter_all_label">Semua</string>
+    <string name="filter_unverified_label">Belum Verifikasi</string>
+    <string name="filter_verified_label">Terverifikasi</string>
+    <string name="filter_order_label">Urutan</string>
+    <string name="filter_latest_label">Paling Baru</string>
+    <string name="filter_most_voted_label">Paling Banyak Divating</string>
+    <string name="reset_action">Reset</string>
+    <string name="delete_action_label">Hapus</string>
+    <string name="copy_url_action_label">Salin Tautan</string>
+    <string name="share_action_label">Bagikan</string>
+    <string name="report_action_label">Laporkan</string>
+    <string name="dummy_username">\@haryono</string>
+    <string name="settings_action_label">Settings</string>
+    <string name="user_bio_dummy">An ordinary netizen who likes to talk a lot. Like, a lot. Who cares anyway!</string>
+    <string name="cluster_label">Cluster</string>
+    <string name="cluster_name_dummy">Mancing Mania Jogja</string>
 </resources>
