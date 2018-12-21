@@ -10,7 +10,7 @@ import com.google.android.material.tabs.TabLayout
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BasePresenter
-import com.pantaubersama.app.ui.home.FilterPilpresActivity
+import com.pantaubersama.app.ui.home.linimasa.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.home.linimasa.janjipolitik.JanjiPolitikFragment
 import com.pantaubersama.app.ui.home.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.widget.TabView
@@ -22,6 +22,9 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
 
     private var selectedTabs : Int = 0
 
+    private var pilpresFragment = PilpresFragment.newInstance()
+    private var janjiPolitikFragment = JanjiPolitikFragment()
+
     override fun initView(view: View) {
     }
 
@@ -32,7 +35,7 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         btn_filter.setOnClickListener{
             when (selectedTabs) {
-                0 -> startActivityForResult(FilterPilpresActivity().setIntent(context!!, 2), PantauConstants.RequestCode.FILTER_PILPRES)
+                0 -> startActivityForResult(Intent(context, FilterPilpresActivity::class.java), PantauConstants.RequestCode.FILTER_PILPRES)
             }
         }
         setupTabLayout()
@@ -71,8 +74,8 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
         view_pager.adapter = object : FragmentPagerAdapter(childFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
-                    0 -> PilpresFragment.newInstance()
-                    1 -> JanjiPolitikFragment()
+                    0 -> pilpresFragment
+                    1 -> janjiPolitikFragment
                     else -> Fragment()
                 }
             }
@@ -89,7 +92,7 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
             Activity.RESULT_OK -> {
                 when (requestCode) {
                     PantauConstants.RequestCode.FILTER_PILPRES -> {
-                        ToastUtil.show(context!!, data?.getIntExtra(PantauConstants.Extra.SELECTED_FILTER_PILPRES, 666).toString())
+                        pilpresFragment.getPilpresTweet()
                     }
                 }
             }

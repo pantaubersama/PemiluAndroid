@@ -5,6 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
+import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.data.interactors.PilpresInteractor
@@ -36,6 +37,10 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         }
     }
 
+    override fun initInjection() {
+        (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
+    }
+
     override fun initPresenter(): PilpresPresenter? {
         return PilpresPresenter(interactor)
     }
@@ -57,8 +62,12 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         })
         mView.swipe_refresh.setOnRefreshListener {
             mView.swipe_refresh.isRefreshing = false
-            presenter?.getPilpresTweet()
+            getPilpresTweet()
         }
+        getPilpresTweet()
+    }
+
+    fun getPilpresTweet() {
         presenter?.getPilpresTweet()
     }
 

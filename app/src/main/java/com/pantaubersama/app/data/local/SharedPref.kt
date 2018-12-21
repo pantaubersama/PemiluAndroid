@@ -27,7 +27,7 @@ abstract class SharedPref(var context: Context) {
     }
 
     protected fun putInt(key: String, value: Int) {
-        edit().putInt(key, value)
+        edit().putInt(key, value).apply()
     }
 
     protected fun getInt(key: String): Int {
@@ -35,7 +35,7 @@ abstract class SharedPref(var context: Context) {
     }
 
     protected fun putLong(key: String, value: Long) {
-        edit().putLong(key, value)
+        edit().putLong(key, value).apply()
     }
 
     protected fun getLong(key: String): Long {
@@ -43,7 +43,7 @@ abstract class SharedPref(var context: Context) {
     }
 
     protected fun putBoolean(key: String, value: Boolean) {
-        edit().putBoolean(key, value)
+        edit().putBoolean(key, value).apply()
     }
 
     protected fun getBoolean(key: String): Boolean {
@@ -51,7 +51,7 @@ abstract class SharedPref(var context: Context) {
     }
 
     protected fun putFloat(key: String, value: Float) {
-        edit().putFloat(key, value)
+        edit().putFloat(key, value).apply()
     }
 
     protected fun getFloat(key: String): Float {
