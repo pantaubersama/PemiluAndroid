@@ -79,7 +79,7 @@ class FilterPilpresActivity : BaseActivity<BasePresenter<*>>() {
                 return true
             }
             R.id.action_reset -> {
-
+                // reset
             }
         }
         return super.onOptionsItemSelected(item)

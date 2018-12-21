@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_linimasa.*
 
 class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
 
-    private var selectedTabs : Int = 0
+    private var selectedTabs: Int = 0
 
     override fun initView(view: View) {
     }
@@ -30,7 +30,7 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        btn_filter.setOnClickListener{
+        btn_filter.setOnClickListener {
             when (selectedTabs) {
                 0 -> startActivityForResult(FilterPilpresActivity().setIntent(context!!, 2), PantauConstants.RequestCode.FILTER_PILPRES)
             }

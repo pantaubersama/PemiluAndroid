@@ -46,12 +46,12 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
         if (statusBarColor() != 0) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = ContextCompat.getColor(this, statusBarColor()!!)
-        } else if (toolbar != null){
+        } else if (toolbar != null) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = (toolbar?.background as ColorDrawable).color
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            };
+            }
         }
     }
 

@@ -4,12 +4,20 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.* // ktlint-disable
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.ui.profile.linimasa.ProfileLiniMasaFragment
+import com.pantaubersama.app.ui.profile.penpol.ProfilePenPolFragment
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.cluster_options_layout.*
 
 class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
+    private lateinit var activeFragment: Fragment
+    private var pLinimasaFragment: ProfileLiniMasaFragment? = null
+    private var pPenPolFragment: ProfilePenPolFragment? = null
+    private var otherFrag: Fragment? = null // dummy
 
     override fun initPresenter(): ProfilePresenter? {
         return ProfilePresenter()
@@ -32,6 +40,64 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         cluster_options_action.setOnClickListener {
             showClusterOptionsDialog()
         }
+        initFragment()
+        setupNavigation()
+    }
+
+    private fun initFragment() {
+        pLinimasaFragment = ProfileLiniMasaFragment.newInstance()
+        pPenPolFragment = ProfilePenPolFragment.newInstance()
+        otherFrag = Fragment()
+    }
+
+    private fun setupNavigation() {
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, pLinimasaFragment!!)
+            .add(R.id.fragment_container, pPenPolFragment!!)
+            .commit()
+
+        activeFragment = pLinimasaFragment!!
+
+        val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_linimasa -> run {
+                    activeFragment = pLinimasaFragment!!
+                    return@run
+                }
+                R.id.navigation_penpol -> run {
+                    activeFragment = pPenPolFragment!!
+                    return@run
+                }
+                R.id.navigation_wordstadium -> run {
+                    activeFragment = otherFrag!!
+                    return@run
+                }
+                R.id.navigation_lapor -> run {
+                    activeFragment = otherFrag!!
+                    return@run
+                }
+                R.id.navigation_rekap -> run {
+                    activeFragment = otherFrag!!
+                    return@run
+                }
+            }
+
+            showActiveFragment()
+
+            return@OnNavigationItemSelectedListener true
+        }
+
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        navigation.selectedItemId = R.id.navigation_linimasa
+    }
+
+    private fun showActiveFragment() {
+        supportFragmentManager.beginTransaction()
+            .hide(pLinimasaFragment!!)
+            .hide(pPenPolFragment!!)
+            .show(activeFragment)
+            .commit()
     }
 
     private fun addBadgeItemLayout() {
