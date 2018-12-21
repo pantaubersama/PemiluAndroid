@@ -9,6 +9,7 @@
     android:textColor="@color/red"
     android:letterSpacing="0.1"
     android:lineSpacingExtra="3sp"
+    android:foreground="?selectableItemBackground"
     tools:text="@string/txt_reset">
 
 </TextView>
