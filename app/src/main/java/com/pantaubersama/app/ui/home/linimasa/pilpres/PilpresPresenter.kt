@@ -21,6 +21,7 @@ class PilpresPresenter @Inject constructor(private val pilpresInteractor: Pilpre
             tweet.tweetContent = "tweet $i, filter = $selectedFilter "
             tweetList.add(tweet)
         }
+
         Handler().postDelayed({
             view?.dismissLoading()
             view?.showPilpresTweet(tweetList) }, 2000)

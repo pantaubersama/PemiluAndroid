@@ -24,16 +24,19 @@
             app:tabMode="scrollable" />
 
         <ImageView
-            android:id="@+id/create_new_tanya_kandidat_button"
+            android:id="@+id/btn_create"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_toStartOf="@id/btn_filter"
             android:src="@drawable/ic_add"
             tools:ignore="ContentDescription" />
+        />
 
         <ImageView
-            android:id="@+id/filter_pertanyaan_button"
+            android:id="@+id/btn_filter"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="16dp"
