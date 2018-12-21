@@ -3,11 +3,7 @@ package com.pantaubersama.app.ui.profile
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.view.Gravity
-import android.view.KeyEvent
-import android.view.Menu
-import android.view.WindowManager
-import android.view.MenuItem
+import android.view.* // ktlint-disable
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_profile.*
@@ -31,8 +27,31 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         setupToolbar(true, "", R.color.white, 4f)
         setupClusterLayout()
         setupBiodataLayout()
+        setupBadgeLayout()
+        addBadgeItemLayout()
         cluster_options_action.setOnClickListener {
             showClusterOptionsDialog()
+        }
+    }
+
+    private fun addBadgeItemLayout() {
+        badge_container.removeAllViews()
+        val inflater = LayoutInflater.from(this@ProfileActivity)
+        for (i in 1..3) {
+            val view = inflater.inflate(R.layout.badge_item_layout, null, false)
+            badge_container.addView(view)
+        }
+    }
+
+    private fun setupBadgeLayout() {
+        badge_expandable.collapse()
+        badge_expandable_button.setOnClickListener {
+            badge_expandable.toggle()
+            if (badge_expandable.isExpanded) {
+                badge_expandable_image.animate().rotation(0F).start()
+            } else {
+                badge_expandable_image.animate().rotation(180F).start()
+            }
         }
     }
 
