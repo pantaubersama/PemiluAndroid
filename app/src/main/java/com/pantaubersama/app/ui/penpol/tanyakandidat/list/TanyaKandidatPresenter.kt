@@ -14,7 +14,7 @@ class TanyaKandidatPresenter : BasePresenter<TanyaKandidatView>() {
             data.user?.name = "Andi $i ?"
             data.user?.bio = "I love Indonesia"
             data.createdAt = "A seconds ago"
-            data.upvoteCount = 100
+            data.upVoteCount = 100
             tanyaKandidatList.add(data)
         }
 

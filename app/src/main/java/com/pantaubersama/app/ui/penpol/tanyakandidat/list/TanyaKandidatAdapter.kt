@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
+import android.animation.ValueAnimator
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -29,10 +30,33 @@ class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaK
         override fun bind(item: TanyaKandidat) {
             itemView.user_name.text = item.user?.name
             itemView.question_time.text = item.createdAt
-            itemView.upvote_count_text.text = item.upvoteCount.toString()
+            itemView.upvote_count_text.text = item.upVoteCount.toString()
             itemView.user_question.text = item.question
             itemView.options_button.setOnClickListener {
                 showOptionsDialog(itemView)
+            }
+            itemView.upvote_button.setOnClickListener {
+                setUpvoted(item)
+            }
+        }
+
+        private fun setUpvoted(item: TanyaKandidat?) {
+            val upVoted = item?.isUpvoted
+            item?.isUpvoted = !item?.isUpvoted!!
+            val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
+            if (upVoted!!) {
+                val upVoteCount = item.upVoteCount!! - 1
+                item.upVoteCount = upVoteCount
+                itemView.upvote_count_text.text = item.upVoteCount.toString()
+                itemView.upvote_button.progress = 0.0f
+            } else {
+                val loveCount = item.upVoteCount!! + 1
+                item.upVoteCount = loveCount
+                animator.addUpdateListener {
+                    animation -> itemView.upvote_button.progress = animation.animatedValue as Float
+                    itemView.upvote_count_text.text = item.upVoteCount.toString()
+                }
+                animator.start()
             }
         }
 
