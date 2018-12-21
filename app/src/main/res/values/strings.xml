@@ -46,4 +46,5 @@
     <string name="user_bio_dummy">An ordinary netizen who likes to talk a lot. Like, a lot. Who cares anyway!</string>
     <string name="cluster_label">Cluster</string>
     <string name="cluster_name_dummy">Mancing Mania Jogja</string>
+    <string name="biodata_label">Biodata</string>
 </resources>

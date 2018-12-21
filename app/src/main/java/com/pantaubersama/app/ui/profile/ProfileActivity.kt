@@ -26,8 +26,44 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     override fun setupUI() {
         setupToolbar(true, "", R.color.white, 4f)
         setupClusterLayout()
+        setupBiodataLayout()
+        setupBadgeLayout()
+        addBadgeItemLayout()
         cluster_options_action.setOnClickListener {
             showClusterOptionsDialog()
+        }
+    }
+
+    private fun addBadgeItemLayout() {
+        badge_container.removeAllViews()
+        val inflater = LayoutInflater.from(this@ProfileActivity)
+        for (i in 1..3) {
+            val view = inflater.inflate(R.layout.badge_item_layout, null, false)
+            badge_container.addView(view)
+        }
+    }
+
+    private fun setupBadgeLayout() {
+        badge_expandable.collapse()
+        badge_expandable_button.setOnClickListener {
+            badge_expandable.toggle()
+            if (badge_expandable.isExpanded) {
+                badge_expandable_image.animate().rotation(0F).start()
+            } else {
+                badge_expandable_image.animate().rotation(180F).start()
+            }
+        }
+    }
+
+    private fun setupBiodataLayout() {
+        biodata_expandable.collapse()
+        biodata_expandable_button.setOnClickListener {
+            biodata_expandable.toggle()
+            if (biodata_expandable.isExpanded) {
+                biodata_expandable_image.animate().rotation(0F).start()
+            } else {
+                biodata_expandable_image.animate().rotation(180F).start()
+            }
         }
     }
 
