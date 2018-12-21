@@ -43,7 +43,8 @@ ext {
             mockito                 : "2.18.3",
             flexbox                 : "1.1.0",
             lottie                  : "2.8.0",
-            chromeCustomTab         : "23.3.0"
+            chromeCustomTab         : "23.3.0",
+            expandableLayout        : "1.6.0@aar"
     ]
 
 
@@ -106,4 +107,6 @@ ext {
     lottie = "com.airbnb.android:lottie:$versions.lottie"
 
     chromeCustomTab = "com.android.support:customtabs:$versions.chromeCustomTab"
+
+    expandableLayout = "com.github.aakira:expandable-layout:$versions.expandableLayout"
 }

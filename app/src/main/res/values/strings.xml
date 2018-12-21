@@ -41,4 +41,9 @@
     <string name="copy_url_action_label">Salin Tautan</string>
     <string name="share_action_label">Bagikan</string>
     <string name="report_action_label">Laporkan</string>
+    <string name="dummy_username">\@haryono</string>
+    <string name="settings_action_label">Settings</string>
+    <string name="user_bio_dummy">An ordinary netizen who likes to talk a lot. Like, a lot. Who cares anyway!</string>
+    <string name="cluster_label">Cluster</string>
+    <string name="cluster_name_dummy">Mancing Mania Jogja</string>
 </resources>

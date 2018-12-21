@@ -1,11 +1,13 @@
 package com.pantaubersama.app.ui.home
 
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.ui.home.linimasa.LinimasaFragment
 import com.pantaubersama.app.ui.penpol.PenPolFragment
+import com.pantaubersama.app.ui.profile.ProfileActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
@@ -30,7 +32,10 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
     override fun setupUI() {
         setSupportActionBar(toolbar_home)
-
+        user_avatar.setOnClickListener {
+            val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
+            startActivity(intent)
+        }
         supportFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, linimasaFragment)
                 .add(R.id.fragment_container, penPolFragment)

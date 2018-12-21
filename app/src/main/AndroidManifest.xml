@@ -41,7 +41,10 @@
         <activity
             android:name=".ui.penpol.tanyakandidat.tanyakandidatinfo.TanyaKandidatBannerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity"
+        <activity
+            android:name=".ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.profile.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

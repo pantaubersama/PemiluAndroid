@@ -97,6 +97,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation chromeCustomTab
+    implementation expandableLayout
     kapt daggerCompiler
 
     testImplementation unitTestLibs
