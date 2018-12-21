@@ -30,7 +30,7 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
         mView = view
         setupTabLayout()
         setupViewPager()
-        view.create_new_tanya_kandidat_button.setOnClickListener {
+        view.btn_create.setOnClickListener {
             val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
             startActivity(intent)
         }
@@ -70,14 +70,14 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab!!.position == 0) {
-                    mView?.create_new_tanya_kandidat_button?.visibility = View.VISIBLE
-                    mView?.filter_pertanyaan_button?.setOnClickListener {
+                    mView?.btn_create?.visibility = View.VISIBLE
+                    mView?.btn_filter?.setOnClickListener {
                         val intent = Intent(context, FilterTanyaKandidatActivity::class.java)
                         startActivity(intent)
                     }
                 } else if (tab.position == 1) {
-                    mView?.create_new_tanya_kandidat_button?.visibility = View.GONE
-                    mView?.filter_pertanyaan_button?.setOnClickListener {
+                    mView?.btn_create?.visibility = View.GONE
+                    mView?.btn_filter?.setOnClickListener {
                     }
                 }
                 mView?.view_pager?.currentItem = tab.position
