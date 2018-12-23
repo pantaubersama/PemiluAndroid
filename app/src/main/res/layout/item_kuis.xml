@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_dummy_kuis_item"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_kuis_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/bw_modelica_bold"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        tools:text="Quiz Minggu ke-1" />
+
+    <TextView
+        android:id="@+id/tv_kuis_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bw_modelica_regular"
+        android:text="7 Pertanyaan"
+        android:textColor="#000000"
+        android:textSize="12sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_kuis_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minWidth="72dp"
+            android:minHeight="28dp"
+            android:text="IKUTI >>"
+            android:textSize="12sp"
+            app:backgroundTint="#f2771d" />
+
+        <ImageButton
+            android:id="@+id/btn_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="4dp"
+            android:src="@drawable/ic_share"
+            tools:ignore="ContentDescription,RelativeOverlap" />
+
+    </RelativeLayout>
+
+</LinearLayout>

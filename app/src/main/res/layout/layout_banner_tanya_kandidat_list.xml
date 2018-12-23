@@ -38,6 +38,7 @@
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_toEndOf="@id/iv_banner_image"
             android:layout_toStartOf="@id/iv_banner_close"
             app:alignItems="center"
