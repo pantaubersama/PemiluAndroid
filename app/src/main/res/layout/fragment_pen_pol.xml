@@ -1,53 +1,51 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context="com.pantaubersama.app.ui.penpol.PenPolFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rl_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical">
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
             app:tabIndicatorColor="@color/white"
-            app:tabIndicatorHeight="3dp">
-
-        </com.google.android.material.tabs.TabLayout>
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="scrollable" />
 
         <ImageView
             android:id="@+id/create_new_tanya_kandidat_button"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_add"
+            android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/filter_pertanyaan_button"
-            android:layout_toStartOf="@id/filter_pertanyaan_button"/>
+            android:src="@drawable/ic_add"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/filter_pertanyaan_button"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
             android:src="@drawable/ic_filter"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="16dp"/>
-    </RelativeLayout>
+            tools:ignore="ContentDescription" />
 
+    </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rl_tab_layout"
-        android:background="@color/white">
+        android:background="@color/white" />
 
-    </androidx.viewpager.widget.ViewPager>
-
-</RelativeLayout>
+</LinearLayout>
