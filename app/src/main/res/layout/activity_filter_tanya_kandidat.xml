@@ -32,7 +32,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:padding="22dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -54,19 +54,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_all_label"
-                        android:checked="true" />
+                        android:checked="true"
+                        android:theme="@style/RadioButtonStyle"/>
 
                     <RadioButton
                         android:id="@+id/filter_unverified"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/filter_unverified_label" />
+                        android:text="@string/filter_unverified_label"
+                        android:theme="@style/RadioButtonStyle" />
 
                     <RadioButton
                         android:id="@+id/filter_verified"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/filter_verified_label" />
+                        android:text="@string/filter_verified_label"
+                        android:theme="@style/RadioButtonStyle" />
 
                 </RadioGroup>
 
@@ -81,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="22dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -102,13 +105,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_latest_label"
-                        android:checked="true" />
+                        android:checked="true"
+                        android:theme="@style/RadioButtonStyle"/>
 
                     <RadioButton
                         android:id="@+id/filter_most_voted"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/filter_most_voted_label" />
+                        android:text="@string/filter_most_voted_label"
+                        android:theme="@style/RadioButtonStyle"/>
 
                 </RadioGroup>
 
