@@ -91,6 +91,7 @@ dependencies {
     implementation easyPermission
     implementation timber
     implementation glide
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     kapt glideCompiler
     implementation roundedImageView
     implementation symbolic
