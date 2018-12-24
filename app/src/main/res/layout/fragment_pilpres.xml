@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/layout_banner_pilpres"
-        layout="@layout/layout_banner_pilpres_list"/>
+        layout="@layout/layout_banner_container"/>
 
     <include layout="@layout/layout_common_recyclerview"/>
 

@@ -14,13 +14,12 @@ import com.pantaubersama.app.ui.penpol.tanyakandidat.tanyakandidatinfo.TanyaKand
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
-import kotlinx.android.synthetic.main.layout_banner_tanya_kandidat_list.*
+import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
 
     private lateinit var adapter: TanyaKandidatAdapter
-    private var mView: View? = null
 
     override fun initInjection() {
         (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
@@ -31,11 +30,6 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun initView(view: View) {
-        mView = view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         question_section.setOnClickListener {
             val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
             startActivity(intent)

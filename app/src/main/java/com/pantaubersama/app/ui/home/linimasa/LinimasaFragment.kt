@@ -18,22 +18,12 @@ import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.fragment_linimasa.*
 
 class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
-    private var mView: View? = null
-
     private var selectedTabs: Int = 0
 
     private var pilpresFragment = PilpresFragment.newInstance()
     private var janjiPolitikFragment = JanjiPolitikFragment()
 
     override fun initView(view: View) {
-        mView = view
-    }
-
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         btn_filter.setOnClickListener {
             when (selectedTabs) {
                 0 -> startActivityForResult(Intent(context, FilterPilpresActivity::class.java), PantauConstants.RequestCode.FILTER_PILPRES)
@@ -41,6 +31,10 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
         }
         setupTabLayout()
         setupViewPager()
+    }
+
+    override fun initPresenter(): BasePresenter<*>? {
+        return null
     }
 
     override fun setLayout(): Int {

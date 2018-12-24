@@ -13,7 +13,6 @@ import com.pantaubersama.app.data.model.tweet.PilpresTweet
 import com.pantaubersama.app.ui.home.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
-import kotlinx.android.synthetic.main.layout_common_recyclerview.view.*
 import javax.inject.Inject
 
 class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
@@ -21,8 +20,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     @Inject
     lateinit var interactor: PilpresInteractor
-
-    private lateinit var mView: View
 
     private lateinit var adapter: PilpresAdapter
 
@@ -47,11 +44,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun initView(view: View) {
-        this.mView = view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         setupRecyclerPilpres()
     }
 

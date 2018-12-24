@@ -15,7 +15,7 @@ import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.dip
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_kuis.*
-import kotlinx.android.synthetic.main.layout_banner_tanya_kandidat_list.*
+import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 
 class KuisFragment : BaseFragment<BasePresenter<*>>() {
@@ -24,11 +24,20 @@ class KuisFragment : BaseFragment<BasePresenter<*>>() {
 
     override fun setLayout(): Int = R.layout.fragment_kuis
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun setupData() {
+        adapter.data = listOf(
+                KuisListItem.Result(70, "Jokowi - Makruf"),
+                KuisListItem.Item(1, 7, KuisState.NOT_TAKEN),
+                KuisListItem.Item(2, 7, KuisState.COMPLETED),
+                KuisListItem.Item(3, 7, KuisState.INCOMPLETE)
+        )
+    }
 
+    override fun initPresenter(): BasePresenter<*>? = null
+
+    override fun initView(view: View) {
         tv_banner_text.text = "Ikuti quiz pilih jawaban tanpa kamu tahu itu jawaban siapa, " +
-                "kemudian tunggu kejutannya dan lihat hasil dari quiz ini"
+            "kemudian tunggu kejutannya dan lihat hasil dari quiz ini"
 
         read_more_action.setOnClickListener {
             val intent = Intent(context, KuisInfoActivity::class.java)
@@ -53,18 +62,6 @@ class KuisFragment : BaseFragment<BasePresenter<*>>() {
 
         setupData()
     }
-
-    private fun setupData() {
-        adapter.data = listOf(
-                KuisListItem.Result(70, "Jokowi - Makruf"),
-                KuisListItem.Item(1, 7, KuisState.NOT_TAKEN),
-                KuisListItem.Item(2, 7, KuisState.COMPLETED),
-                KuisListItem.Item(3, 7, KuisState.INCOMPLETE)
-        )
-    }
-
-    override fun initPresenter(): BasePresenter<*>? = null
-    override fun initView(view: View) {}
     override fun showLoading() {}
     override fun dismissLoading() {}
     override fun showError(throwable: Throwable) {}

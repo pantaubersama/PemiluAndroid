@@ -52,10 +52,6 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     override fun setLayout(): Int {
         return R.layout.fragment_pen_pol
     }

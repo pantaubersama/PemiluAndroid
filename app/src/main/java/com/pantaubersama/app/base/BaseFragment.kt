@@ -35,8 +35,12 @@ abstract class BaseFragment<P : BasePresenter<*>> : Fragment(), BaseView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(setLayout(), container, false)
         initProgressDialog()
-        initView(mView!!)
         return mView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView(view)
     }
 
     protected abstract fun initPresenter(): P?
