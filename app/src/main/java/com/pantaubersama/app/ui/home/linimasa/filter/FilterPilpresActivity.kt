@@ -35,7 +35,7 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
     }
 
     override fun statusBarColor(): Int? {
-        return 0
+        return R.color.white
     }
 
     override fun fetchIntentExtra() {

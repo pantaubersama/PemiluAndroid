@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
 
 class BottomCloseButton : LinearLayout {
@@ -21,9 +22,14 @@ class BottomCloseButton : LinearLayout {
         val backImageParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         backImageParams.gravity = Gravity.CENTER
         backImage.layoutParams = backImageParams
+        var typedValue = TypedValue()
+        context.theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, typedValue, true)
+        backImage.setBackgroundResource(typedValue.resourceId)
         setBackgroundResource(R.drawable.close_button_background)
         addView(backImage)
         isClickable = true
+
+
     }
 
     private fun Float.toDp(): Int {

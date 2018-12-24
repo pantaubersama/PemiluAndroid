@@ -24,25 +24,23 @@
             app:tabMode="scrollable" />
 
         <ImageView
-            android:foreground="?selectableItemBackground"
             android:id="@+id/btn_create"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_toStartOf="@id/btn_filter"
+            android:background="?selectableItemBackgroundBorderless"
             android:src="@drawable/ic_add"
             tools:ignore="ContentDescription" />
         />
 
         <ImageView
-            android:foreground="?selectableItemBackground"
             android:id="@+id/btn_filter"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_filter"
+            android:background="?selectableItemBackgroundBorderless"
             tools:ignore="ContentDescription" />
 
     </LinearLayout>

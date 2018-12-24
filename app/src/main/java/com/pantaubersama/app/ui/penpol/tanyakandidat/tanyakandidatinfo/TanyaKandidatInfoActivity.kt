@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_tanya_kandidat_info.*
 class TanyaKandidatInfoActivity : BaseActivity<BasePresenter<*>>() {
 
     override fun statusBarColor(): Int? {
-        return 0
+        return R.color.white
     }
 
     override fun fetchIntentExtra() {
