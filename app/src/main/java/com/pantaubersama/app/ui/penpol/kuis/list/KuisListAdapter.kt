@@ -52,7 +52,16 @@ class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             btn_kuis_open.text = "$buttonText >>"
             btn_kuis_open.setBackgroundTint(buttonColor)
             btn_kuis_open.setOnClickListener {
-                listener?.onClick(item)
+                if (item.state == KuisState.NOT_TAKEN) {
+                    listener?.onClickIkuti(item)
+                } else if (item.state == KuisState.INCOMPLETE) {
+                    // go to incomplete quiz
+                } else if (item.state == KuisState.COMPLETED) {
+                    // go to result
+                }
+            }
+            btn_share.setOnClickListener {
+                listener?.onClickShare(item)
             }
         }
     }
@@ -71,6 +80,7 @@ class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     interface AdapterListener {
-        fun onClick(item: KuisListItem.Item)
+        fun onClickIkuti(item: KuisListItem.Item)
+        fun onClickShare(item: KuisListItem.Item)
     }
 }

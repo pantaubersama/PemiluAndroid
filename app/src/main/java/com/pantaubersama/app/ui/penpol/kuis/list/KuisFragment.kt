@@ -39,11 +39,15 @@ class KuisFragment : BaseFragment<BasePresenter<*>>() {
         iv_banner_image.setImageResource(R.drawable.ic_banner_kuis)
 
         adapter = KuisListAdapter()
-        adapter.listener = object : KuisListAdapter.AdapterListener{
-            override fun onClick(item: KuisListItem.Item) {
+        adapter.listener = object : KuisListAdapter.AdapterListener {
+            override fun onClickIkuti(item: KuisListItem.Item) {
                 val intent = Intent(context, IkutiKuisActivity::class.java)
                 intent.putExtra(PantauConstants.Quiz.QUIZ_DATA, item.id)
                 startActivity(intent)
+            }
+
+            override fun onClickShare(item: KuisListItem.Item) {
+                shareKuis(item)
             }
         }
         recycler_view.layoutManager = LinearLayoutManager(requireContext())
@@ -62,12 +66,34 @@ class KuisFragment : BaseFragment<BasePresenter<*>>() {
         setupData()
     }
 
+    private fun shareKuis(item: KuisListItem.Item) {
+        val targetedShareIntents: MutableList<Intent> = ArrayList()
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        val resInfo = activity?.packageManager?.queryIntentActivities(shareIntent, 0)
+        if (!resInfo!!.isEmpty()) {
+            for (resolveInfo in resInfo) {
+                val sendIntent = Intent(Intent.ACTION_SEND)
+                sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Pantau")
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "pantau.co.id" + "share/q/" + item.id)
+                sendIntent.type = "text/plain"
+                if (!resolveInfo.activityInfo.packageName.contains("pantaubersama")) {
+                    sendIntent.`package` = resolveInfo.activityInfo.packageName
+                    targetedShareIntents.add(sendIntent)
+                }
+            }
+            val chooserIntent = Intent.createChooser(targetedShareIntents.removeAt(0), "Bagikan dengan")
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
+            startActivity(chooserIntent)
+        }
+    }
+
     private fun setupData() {
         adapter.data = listOf(
-                KuisListItem.Result(70, "Jokowi - Makruf"),
-                KuisListItem.Item(1, 1, 7, KuisState.NOT_TAKEN),
-                KuisListItem.Item(2,2, 7, KuisState.COMPLETED),
-                KuisListItem.Item(3,3, 7, KuisState.INCOMPLETE)
+            KuisListItem.Result(70, "Jokowi - Makruf"),
+            KuisListItem.Item(1, 1, 7, KuisState.NOT_TAKEN),
+            KuisListItem.Item(2, 2, 7, KuisState.COMPLETED),
+            KuisListItem.Item(3, 3, 7, KuisState.INCOMPLETE)
         )
     }
 

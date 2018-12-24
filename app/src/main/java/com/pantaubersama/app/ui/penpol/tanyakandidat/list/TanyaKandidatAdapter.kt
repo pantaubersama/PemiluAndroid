@@ -21,8 +21,9 @@ import kotlinx.android.synthetic.main.post_action_layout.*
 import kotlinx.android.synthetic.main.tanya_kandidat_options_layout.*
 
 class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaKandidatAdapter.TanyaKandidatViewHolder>(context) {
+    var listener: TanyaKandidatAdapter.AdapterListener? = null
 
-    class TanyaKandidatViewHolder(
+    inner class TanyaKandidatViewHolder(
         override val containerView: View?,
         clickListener: OnItemClickListener?,
         longClickListener: OnItemLongClickListener?
@@ -38,6 +39,9 @@ class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaK
             }
             upvote_button.setOnClickListener {
                 setUpvoted(item)
+            }
+            share_button.setOnClickListener {
+                listener?.onClickShare(item)
             }
         }
 
@@ -104,5 +108,9 @@ class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaK
 
     override fun setItemView(viewType: Int): Int {
         return R.layout.item_tanya_kandidat
+    }
+
+    interface AdapterListener {
+        fun onClickShare(item: TanyaKandidat)
     }
 }

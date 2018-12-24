@@ -19,7 +19,7 @@ class IkutiKuisActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun setupUI() {
-
+        // setup
     }
 
     override fun setLayout(): Int {

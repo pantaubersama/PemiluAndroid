@@ -43,6 +43,11 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     private fun setupTanyaKandidatList() {
         adapter = TanyaKandidatAdapter(context!!)
+        adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
+            override fun onClickShare(item: TanyaKandidat) {
+                shareTanyaKandidat(item)
+            }
+        }
         recycler_view?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         recycler_view?.adapter = adapter
         adapter.setOnItemClickListener(object : OnItemClickListener {
@@ -53,6 +58,28 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         swipe_refresh?.setOnRefreshListener {
             swipe_refresh?.isRefreshing = false
             presenter?.getTanyaKandidatList()
+        }
+    }
+
+    private fun shareTanyaKandidat(item: TanyaKandidat) {
+        val targetedShareIntents: MutableList<Intent> = ArrayList()
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        val resInfo = activity?.packageManager?.queryIntentActivities(shareIntent, 0)
+        if (!resInfo!!.isEmpty()) {
+            for (resolveInfo in resInfo) {
+                val sendIntent = Intent(Intent.ACTION_SEND)
+                sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Pantau")
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "pantau.co.id" + "share/tk/" + item.id)
+                sendIntent.type = "text/plain"
+                if (!resolveInfo.activityInfo.packageName.contains("pantaubersama")) {
+                    sendIntent.`package` = resolveInfo.activityInfo.packageName
+                    targetedShareIntents.add(sendIntent)
+                }
+            }
+            val chooserIntent = Intent.createChooser(targetedShareIntents.removeAt(0), "Bagikan dengan")
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
+            startActivity(chooserIntent)
         }
     }
 
