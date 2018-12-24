@@ -20,6 +20,8 @@ class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             notifyDataSetChanged()
         }
 
+    var listener: KuisListAdapter.AdapterListener? = null
+
     override fun getItemCount(): Int = data.size
 
     override fun getItemViewType(position: Int): Int {
@@ -36,7 +38,7 @@ class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         (holder as? ResultViewHolder)?.bind(data[position] as KuisListItem.Result)
     }
 
-    class ItemViewHolder(override val containerView: View)
+    inner class ItemViewHolder(override val containerView: View)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(item: KuisListItem.Item) {
@@ -49,6 +51,9 @@ class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             tv_kuis_count.text = "${item.count} Pertanyaan"
             btn_kuis_open.text = "$buttonText >>"
             btn_kuis_open.setBackgroundTint(buttonColor)
+            btn_kuis_open.setOnClickListener {
+                listener?.onClick(item)
+            }
         }
     }
 
@@ -63,5 +68,9 @@ class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val TYPE_RESULT = 0
         private const val TYPE_ITEM = 1
+    }
+
+    interface AdapterListener {
+        fun onClick(item: KuisListItem.Item)
     }
 }

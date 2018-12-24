@@ -18,4 +18,8 @@ class PantauConstants {
         const val GRANT_TYPE = "refresh_token"
         const val OAUTH_ACCESS_TOKEN_FIELD = "access_token"
     }
+
+    object Quiz {
+        const val QUIZ_DATA = "quiz_data"
+    }
 }
