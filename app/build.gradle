@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply from: "$project.rootDir/config/dependencies.gradle"
 apply from: "$project.rootDir/config/app-version.gradle"
 apply plugin: 'io.fabric'
@@ -67,6 +67,10 @@ android {
 
 }
 
+androidExtensions {
+    experimental = true
+}
+
 repositories {
     jcenter()
 }
@@ -79,7 +83,7 @@ dependencies {
     implementation project(':instant')
     implementation project(':base')
 
-    implementation supportLibs
+    implementation designLibs
     implementation networkLibs
     implementation firebaseLibs
     implementation rxJavaLibs
@@ -93,7 +97,6 @@ dependencies {
     implementation flexbox
     implementation dagger
     implementation lottie
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation chromeCustomTab
