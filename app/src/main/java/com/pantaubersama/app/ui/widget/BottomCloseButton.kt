@@ -7,7 +7,6 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
 
 class BottomCloseButton : LinearLayout {
@@ -28,8 +27,6 @@ class BottomCloseButton : LinearLayout {
         setBackgroundResource(R.drawable.close_button_background)
         addView(backImage)
         isClickable = true
-
-
     }
 
     private fun Float.toDp(): Int {

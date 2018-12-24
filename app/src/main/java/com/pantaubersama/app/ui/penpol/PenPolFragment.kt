@@ -1,7 +1,6 @@
 package com.pantaubersama.app.ui.penpol
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter

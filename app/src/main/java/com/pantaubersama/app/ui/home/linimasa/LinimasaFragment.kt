@@ -2,7 +2,6 @@ package com.pantaubersama.app.ui.home.linimasa
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
