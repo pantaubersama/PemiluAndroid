@@ -8,8 +8,8 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.model.kuis.KuisListItem
 import com.pantaubersama.app.data.model.kuis.KuisState
+import com.pantaubersama.app.ui.infobanner.BannerInfoActivity
 import com.pantaubersama.app.ui.penpol.kuis.ikutikuis.IkutiKuisActivity
-import com.pantaubersama.app.ui.penpol.kuis.kuisinfo.KuisInfoActivity
 import com.pantaubersama.app.utils.LineDividerItemDecoration
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.color
@@ -28,15 +28,7 @@ class KuisFragment : BaseFragment<BasePresenter<*>>() {
     override fun initPresenter(): BasePresenter<*>? = null
 
     override fun initView(view: View) {
-        tv_banner_text.text = "Ikuti quiz pilih jawaban tanpa kamu tahu itu jawaban siapa, " +
-            "kemudian tunggu kejutannya dan lihat hasil dari quiz ini"
-
-        read_more_action.setOnClickListener {
-            val intent = Intent(context, KuisInfoActivity::class.java)
-            startActivity(intent)
-        }
-
-        iv_banner_image.setImageResource(R.drawable.ic_banner_kuis)
+        setupBanner()
 
         adapter = KuisListAdapter()
         adapter.listener = object : KuisListAdapter.AdapterListener {
@@ -64,6 +56,16 @@ class KuisFragment : BaseFragment<BasePresenter<*>>() {
         progress_bar.visibleIf(false)
 
         setupData()
+    }
+
+    private fun setupBanner() {
+        tv_banner_text.text = getString(R.string.kuis_banner_text)
+        iv_banner_image.setImageResource(R.drawable.ic_banner_kuis)
+
+        fl_banner.setOnClickListener {
+            val intent = BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_KUIS)
+            startActivity(intent)
+        }
     }
 
     private fun shareKuis(item: KuisListItem.Item) {

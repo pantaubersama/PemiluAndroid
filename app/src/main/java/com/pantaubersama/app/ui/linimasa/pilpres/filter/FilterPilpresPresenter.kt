@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.home.linimasa.filter
+package com.pantaubersama.app.ui.linimasa.pilpres.filter
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.FilterPilpresInteractor

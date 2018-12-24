@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingBottom="14dp"
         android:paddingLeft="28dp"
         android:paddingRight="20dp">
 
@@ -58,7 +58,7 @@
                 android:lineSpacingExtra="2sp"
                 android:layout_marginEnd="4dp"
                 android:fontFamily="@font/lato_medium"
-                android:text="@string/tanya_kandidat_hint"
+                android:text="@string/tanya_kandidat_banner_text"
                 app:layout_alignSelf="baseline"/>
 
             <TextView

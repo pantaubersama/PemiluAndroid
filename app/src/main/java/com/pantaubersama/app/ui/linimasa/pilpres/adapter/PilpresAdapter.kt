@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.home.linimasa.pilpres.adapter
+package com.pantaubersama.app.ui.linimasa.pilpres.adapter
 
 import android.content.Context
 import android.view.View
