@@ -1,17 +1,23 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.tanyakandidatinfo
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.text.Html
 import com.pantaubersama.app.R
+import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.utils.HtmlTagHandler
 import kotlinx.android.synthetic.main.activity_tanya_kandidat_banner.*
 
-class TanyaKandidatBannerActivity : AppCompatActivity() {
+class TanyaKandidatBannerActivity : BaseActivity<BasePresenter<*>>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tanya_kandidat_banner)
+    override fun statusBarColor(): Int? {
+        return 0
+    }
+
+    override fun fetchIntentExtra() {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setupUI() {
         close_button.setOnClickListener {
             finish()
         }
@@ -28,5 +34,17 @@ class TanyaKandidatBannerActivity : AppCompatActivity() {
         } else {
             question_long_hint.text = Html.fromHtml(HtmlTagHandler.customizeListTags(str), null, HtmlTagHandler())
         }
+    }
+
+    override fun setLayout(): Int {
+        return R.layout.activity_tanya_kandidat_banner
+    }
+
+    override fun showLoading() {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun dismissLoading() {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
