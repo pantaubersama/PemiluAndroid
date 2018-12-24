@@ -17,5 +17,4 @@ class FilterPilpresPresenter @Inject constructor(private val filterPilpresIntera
         filterPilpresInteractor?.setPilpresFilter(selectedFilter)
         view?.onSuccessSetFilter()
     }
-
 }

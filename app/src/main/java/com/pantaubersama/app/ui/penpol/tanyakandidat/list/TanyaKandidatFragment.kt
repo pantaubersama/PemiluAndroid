@@ -46,7 +46,6 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         }
         setupTanyaKandidatList()
         presenter?.getTanyaKandidatList()
-
     }
 
     private fun setupTanyaKandidatList() {

@@ -1,7 +1,6 @@
 package com.pantaubersama.app.data.interactors
 
 import android.content.SharedPreferences
-import com.pantaubersama.app.data.remote.APIWrapper
 import javax.inject.Inject
 
 /**
@@ -10,4 +9,5 @@ import javax.inject.Inject
 class LinimasaInteractor @Inject constructor(
     private val sharedPreferences: SharedPreferences?
 ) {
+    // implement
 }

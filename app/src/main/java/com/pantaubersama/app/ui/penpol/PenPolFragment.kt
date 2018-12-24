@@ -47,10 +47,9 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
                     startActivity(intent)
                 }
                 else -> {
-
+                    // else
                 }
             }
-
         }
     }
 
@@ -100,8 +99,6 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
                 mView?.view_pager?.currentItem = tab.position
             }
         })
-
-
     }
 
     fun setupViewPager() {

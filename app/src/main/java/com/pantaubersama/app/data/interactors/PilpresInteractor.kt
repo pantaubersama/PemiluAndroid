@@ -1,6 +1,5 @@
 package com.pantaubersama.app.data.interactors
 
-import android.content.SharedPreferences
 import com.pantaubersama.app.data.local.cache.DataCache
 import javax.inject.Inject
 

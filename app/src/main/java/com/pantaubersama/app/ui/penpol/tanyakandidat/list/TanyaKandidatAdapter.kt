@@ -15,27 +15,28 @@ import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.base.listener.OnItemLongClickListener
 import com.pantaubersama.app.base.viewholder.BaseViewHolder
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
-import kotlinx.android.synthetic.main.item_tanya_kandidat.view.*
-import kotlinx.android.synthetic.main.post_action_layout.view.*
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_tanya_kandidat.*
+import kotlinx.android.synthetic.main.post_action_layout.*
 import kotlinx.android.synthetic.main.tanya_kandidat_options_layout.*
 
 class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaKandidatAdapter.TanyaKandidatViewHolder>(context) {
 
     class TanyaKandidatViewHolder(
-        view: View,
+        override val containerView: View?,
         clickListener: OnItemClickListener?,
         longClickListener: OnItemLongClickListener?
     ) : BaseViewHolder<TanyaKandidat>(
-        view, clickListener, longClickListener) {
+        containerView!!, clickListener, longClickListener), LayoutContainer {
         override fun bind(item: TanyaKandidat) {
-            itemView.user_name.text = item.user?.name
-            itemView.question_time.text = item.createdAt
-            itemView.upvote_count_text.text = item.upVoteCount.toString()
-            itemView.user_question.text = item.question
-            itemView.options_button.setOnClickListener {
+            user_name.text = item.user?.name
+            question_time.text = item.createdAt
+            upvote_count_text.text = item.upVoteCount.toString()
+            user_question.text = item.question
+            options_button.setOnClickListener {
                 showOptionsDialog(itemView)
             }
-            itemView.upvote_button.setOnClickListener {
+            upvote_button.setOnClickListener {
                 setUpvoted(item)
             }
         }
@@ -47,14 +48,14 @@ class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaK
             if (upVoted!!) {
                 val upVoteCount = item.upVoteCount!! - 1
                 item.upVoteCount = upVoteCount
-                itemView.upvote_count_text.text = item.upVoteCount.toString()
-                itemView.upvote_button.progress = 0.0f
+                upvote_count_text.text = item.upVoteCount.toString()
+                upvote_button.progress = 0.0f
             } else {
                 val loveCount = item.upVoteCount!! + 1
                 item.upVoteCount = loveCount
                 animator.addUpdateListener {
-                    animation -> itemView.upvote_button.progress = animation.animatedValue as Float
-                    itemView.upvote_count_text.text = item.upVoteCount.toString()
+                    animation -> upvote_button.progress = animation.animatedValue as Float
+                    upvote_count_text.text = item.upVoteCount.toString()
                 }
                 animator.start()
             }

@@ -5,11 +5,11 @@ import android.graphics.Paint
 import androidx.recyclerview.widget.RecyclerView
 
 class LineDividerItemDecoration(
-        private val color: Int,
-        private val height: Int,
-        private val paddingLeft: Int = 0,
-        private val paddingRight: Int = paddingLeft,
-        private val skipFirst: Boolean = false
+    private val color: Int,
+    private val height: Int,
+    private val paddingLeft: Int = 0,
+    private val paddingRight: Int = paddingLeft,
+    private val skipFirst: Boolean = false
 ) : RecyclerView.ItemDecoration() {
 
     private val paint: Paint = Paint()
