@@ -12,6 +12,7 @@ import com.pantaubersama.app.data.interactors.PilpresInteractor
 import com.pantaubersama.app.data.model.tweet.PilpresTweet
 import com.pantaubersama.app.ui.home.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.utils.ToastUtil
+import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.view.*
 import javax.inject.Inject
 
@@ -47,21 +48,25 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     override fun initView(view: View) {
         this.mView = view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupRecyclerPilpres()
     }
 
     private fun setupRecyclerPilpres() {
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         adapter = PilpresAdapter(context!!)
-        mView.recycler_view.layoutManager = layoutManager
-        mView.recycler_view.adapter = adapter
+        recycler_view.layoutManager = layoutManager
+        recycler_view.adapter = adapter
         adapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 ToastUtil.show(context!!, "clicked!")
             }
         })
-        mView.swipe_refresh.setOnRefreshListener {
-            mView.swipe_refresh.isRefreshing = false
+        swipe_refresh.setOnRefreshListener {
+            swipe_refresh.isRefreshing = false
             getPilpresTweet()
         }
         getPilpresTweet()
@@ -73,9 +78,9 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     override fun showPilpresTweet(tweetList: List<PilpresTweet>) {
         if (tweetList.isEmpty()) {
-            mView.view_empty_state.visibility = View.VISIBLE
+            view_empty_state.visibility = View.VISIBLE
         } else {
-            mView.recycler_view.visibility = View.VISIBLE
+            recycler_view.visibility = View.VISIBLE
             adapter.replaceData(tweetList)
         }
     }
@@ -85,13 +90,18 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun showLoading() {
-        mView.view_empty_state.visibility = View.GONE
-        mView.recycler_view.visibility = View.INVISIBLE
-        mView.progress_bar.visibility = View.VISIBLE
+        view_empty_state.visibility = View.GONE
+        recycler_view.visibility = View.INVISIBLE
+        progress_bar.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
-        mView.recycler_view.visibility = View.GONE
-        mView.progress_bar.visibility = View.GONE
+        recycler_view.visibility = View.GONE
+        progress_bar.visibility = View.GONE
+    }
+
+    override fun onDestroy() {
+        (activity?.application as BaseApp).releaseActivityComponent()
+        super.onDestroy()
     }
 }

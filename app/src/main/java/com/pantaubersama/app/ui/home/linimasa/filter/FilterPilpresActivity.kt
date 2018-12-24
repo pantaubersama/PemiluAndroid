@@ -107,4 +107,9 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
     override fun dismissLoading() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun onDestroy() {
+        (application as BaseApp).releaseActivityComponent()
+        super.onDestroy()
+    }
 }

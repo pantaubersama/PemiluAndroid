@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.penpol
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
@@ -22,6 +23,11 @@ import kotlinx.android.synthetic.main.fragment_pen_pol.view.*
 class PenPolFragment : BaseFragment<BasePresenter<*>>() {
     private var mView: View? = null
 
+    private var selectedTabs: Int = 0
+
+    private var tanyaKandidatFragment = TanyaKandidatFragment.newInstance()
+    private var kuisFragment = KuisFragment.newInstance()
+
     override fun initPresenter(): BasePresenter<*>? {
         return null
     }
@@ -34,6 +40,22 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
             val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
             startActivity(intent)
         }
+        view.btn_filter?.setOnClickListener {
+            when (selectedTabs) {
+                0 -> {
+                    val intent = Intent(context, FilterTanyaKandidatActivity::class.java)
+                    startActivity(intent)
+                }
+                else -> {
+
+                }
+            }
+
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun setLayout(): Int {
@@ -69,20 +91,17 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab!!.position == 0) {
+                selectedTabs = tab!!.position
+                if (tab.position == 0) {
                     mView?.btn_create?.visibility = View.VISIBLE
-                    mView?.btn_filter?.setOnClickListener {
-                        val intent = Intent(context, FilterTanyaKandidatActivity::class.java)
-                        startActivity(intent)
-                    }
                 } else if (tab.position == 1) {
                     mView?.btn_create?.visibility = View.GONE
-                    mView?.btn_filter?.setOnClickListener {
-                    }
                 }
                 mView?.view_pager?.currentItem = tab.position
             }
         })
+
+
     }
 
     fun setupViewPager() {
@@ -90,8 +109,8 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
         mView?.view_pager?.adapter = object : FragmentPagerAdapter(childFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
-                    0 -> TanyaKandidatFragment.newInstance()
-                    1 -> KuisFragment.newInstance()
+                    0 -> tanyaKandidatFragment
+                    1 -> kuisFragment
                     else -> Fragment()
                 }
             }
