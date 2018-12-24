@@ -22,7 +22,11 @@ class DataCache(context: Context) : SharedPref(context) {
 
         const val KEY_FILTER_PILPRES = "KEY_FILTER_PILPRES"
 
+        const val IS_USER_LOGGED_IN = "is_user_logged_in"
 
+        const val ACCESS_TOKEN_FIELD = "client_token"
+
+        const val REFRESH_TOKEN_FIELD = "client_refresh_token"
     }
 
     override fun prefId(): String {
@@ -35,5 +39,29 @@ class DataCache(context: Context) : SharedPref(context) {
 
     fun getFilterPilpres(): Int {
         return getInt(KEY_FILTER_PILPRES)
+    }
+
+    fun saveLoginState(isLogin: Boolean) {
+        putBoolean(IS_USER_LOGGED_IN, isLogin)
+    }
+
+    fun loadLoginState(): Boolean {
+        return getBoolean(IS_USER_LOGGED_IN)
+    }
+
+    fun saveToken(accessToken: String) {
+        putString(ACCESS_TOKEN_FIELD, accessToken)
+    }
+
+    fun saveRefreshToken(refreshToken: String) {
+        putString(REFRESH_TOKEN_FIELD, refreshToken)
+    }
+
+    fun loadToken(): String? {
+        return getString(ACCESS_TOKEN_FIELD)
+    }
+
+    fun loadRefreshToken(): String? {
+        return getString(REFRESH_TOKEN_FIELD)
     }
 }

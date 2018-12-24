@@ -15,7 +15,6 @@ import com.pantaubersama.app.ui.home.linimasa.janjipolitik.JanjiPolitikFragment
 import com.pantaubersama.app.ui.home.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.widget.TabView
 import com.pantaubersama.app.utils.PantauConstants
-import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_linimasa.*
 
 class LinimasaFragment : BaseFragment<BasePresenter<*>>() {

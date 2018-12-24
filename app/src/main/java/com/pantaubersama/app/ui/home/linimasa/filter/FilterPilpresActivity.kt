@@ -8,7 +8,6 @@ import android.view.MenuItem
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.FilterPilpresInteractor
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_filter_pilpres.*
@@ -70,12 +69,10 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
         })
     }
 
-
     override fun onSuccessSetFilter() {
         setResult(Activity.RESULT_OK)
         finish()
     }
-
 
     override fun setLayout(): Int {
         return R.layout.activity_filter_pilpres

@@ -1,9 +1,9 @@
 package com.pantaubersama.app.data.interactors
 
-import android.content.SharedPreferences
+import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.accesstoken.Token
+import com.pantaubersama.app.data.model.accesstoken.TokenResponse
 import com.pantaubersama.app.data.remote.APIWrapper
-import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Single
 import javax.inject.Inject
@@ -11,21 +11,21 @@ import javax.inject.Inject
 class LoginInteractor @Inject constructor(
     private val apiWrapper: APIWrapper?,
     private val rxSchedulers: RxSchedulers?,
-    private val sharedPreferences: SharedPreferences?
+    private val dataCache: DataCache?
 ) {
-    fun exchangeToken(oAuthToken: String?): Single<Token>? {
+    fun exchangeToken(oAuthToken: String?): Single<TokenResponse>? {
         return apiWrapper?.getPantauOAuthApi()?.exchangeToken(oAuthToken)
             ?.subscribeOn(rxSchedulers?.io())
             ?.observeOn(rxSchedulers?.mainThread())
     }
 
     fun saveLoginData(token: Token?) {
-        sharedPreferences?.edit()?.putString(PantauConstants.Networking.ACCESS_TOKEN_FIELD, token?.accessToken)?.apply()
-        sharedPreferences?.edit()?.putString(PantauConstants.Networking.REFRESH_TOKEN_FIELD, token?.refreshToken)?.apply()
-        sharedPreferences?.edit()?.putBoolean(PantauConstants.IS_USER_LOGGED_IN, true)?.apply()
+        dataCache?.saveToken(token?.accessToken!!)
+        dataCache?.saveRefreshToken(token?.refreshToken!!)
+        dataCache?.saveLoginState(true)
     }
 
     fun getLoginState(): Boolean? {
-        return sharedPreferences?.getBoolean(PantauConstants.IS_USER_LOGGED_IN, false)
+        return dataCache?.loadLoginState()
     }
 }

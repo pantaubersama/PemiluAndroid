@@ -1,10 +1,8 @@
 package com.pantaubersama.app.ui.home.linimasa.pilpres
 
-import android.os.Handler
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.PilpresInteractor
 import com.pantaubersama.app.data.model.tweet.PilpresTweet
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -25,9 +23,5 @@ class PilpresPresenter @Inject constructor(private val pilpresInteractor: Pilpre
 
         view?.dismissLoading()
         view?.showPilpresTweet(tweetList)
-
-        Handler().postDelayed({
-            Timber.d("view = $view")
-             }, 2000)
     }
 }

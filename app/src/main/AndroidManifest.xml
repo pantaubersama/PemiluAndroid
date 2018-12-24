@@ -30,9 +30,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ui.home.linimasa.filter.FilterPilpresActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.home.linimasa.filter.FilterPilpresActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -43,7 +44,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.penpol.tanyakandidat.tanyakandidatinfo.TanyaKandidatBannerActivity"
+            android:name=".ui.penpol.tanyakandidat.tanyakandidatinfo.TanyaKandidatInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity"
@@ -51,6 +52,8 @@
         <activity
             android:name=".ui.profile.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.penpol.kuis.kuisinfo.KuisInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
