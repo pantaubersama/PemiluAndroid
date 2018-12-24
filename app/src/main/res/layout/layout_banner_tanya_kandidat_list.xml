@@ -36,6 +36,7 @@
             android:src="@drawable/ic_delete_48_px"/>
 
         <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/fl_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -44,7 +45,8 @@
             app:alignItems="center"
             app:alignContent="center"
             app:flexDirection="row"
-            app:flexWrap="wrap">
+            app:flexWrap="wrap"
+            android:background="?selectableItemBackground">
 
             <TextView
                 android:id="@+id/tv_banner_text"

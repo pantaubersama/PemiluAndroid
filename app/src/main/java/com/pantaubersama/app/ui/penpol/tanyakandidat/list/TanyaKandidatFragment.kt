@@ -40,7 +40,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
             startActivity(intent)
         }
-        read_more_action.setOnClickListener {
+        fl_banner.setOnClickListener {
             val intent = Intent(context, TanyaKandidatBannerActivity::class.java)
             startActivity(intent)
         }
