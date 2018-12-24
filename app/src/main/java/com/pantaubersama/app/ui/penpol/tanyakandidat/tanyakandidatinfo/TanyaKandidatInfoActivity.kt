@@ -5,19 +5,20 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.utils.HtmlTagHandler
-import kotlinx.android.synthetic.main.activity_tanya_kandidat_banner.*
+import kotlinx.android.synthetic.main.activity_tanya_kandidat_info.*
 
-class TanyaKandidatBannerActivity : BaseActivity<BasePresenter<*>>() {
+class TanyaKandidatInfoActivity : BaseActivity<BasePresenter<*>>() {
+
     override fun statusBarColor(): Int? {
         return R.color.white
     }
 
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
-    }
-
     override fun fetchIntentExtra() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun initPresenter(): BasePresenter<*>? {
+        return null
     }
 
     override fun setupUI() {
@@ -40,7 +41,7 @@ class TanyaKandidatBannerActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun setLayout(): Int {
-        return R.layout.activity_tanya_kandidat_banner
+        return R.layout.activity_tanya_kandidat_info
     }
 
     override fun showLoading() {

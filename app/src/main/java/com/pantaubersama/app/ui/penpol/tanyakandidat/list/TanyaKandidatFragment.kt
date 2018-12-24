@@ -10,7 +10,7 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
-import com.pantaubersama.app.ui.penpol.tanyakandidat.tanyakandidatinfo.TanyaKandidatBannerActivity
+import com.pantaubersama.app.ui.penpol.tanyakandidat.tanyakandidatinfo.TanyaKandidatInfoActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
@@ -41,12 +41,11 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             startActivity(intent)
         }
         fl_banner.setOnClickListener {
-            val intent = Intent(context, TanyaKandidatBannerActivity::class.java)
+            val intent = Intent(context, TanyaKandidatInfoActivity::class.java)
             startActivity(intent)
         }
         setupTanyaKandidatList()
         presenter?.getTanyaKandidatList()
-
     }
 
     private fun setupTanyaKandidatList() {

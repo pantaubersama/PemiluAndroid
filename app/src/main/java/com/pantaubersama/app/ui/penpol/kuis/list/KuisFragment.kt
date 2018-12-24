@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.penpol.kuis.list
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,6 +9,7 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.model.kuis.KuisListItem
 import com.pantaubersama.app.data.model.kuis.KuisState
+import com.pantaubersama.app.ui.penpol.kuis.kuisinfo.KuisInfoActivity
 import com.pantaubersama.app.utils.LineDividerItemDecoration
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.dip
@@ -27,6 +29,12 @@ class KuisFragment : BaseFragment<BasePresenter<*>>() {
 
         tv_banner_text.text = "Ikuti quiz pilih jawaban tanpa kamu tahu itu jawaban siapa, " +
                 "kemudian tunggu kejutannya dan lihat hasil dari quiz ini"
+
+        read_more_action.setOnClickListener {
+            val intent = Intent(context, KuisInfoActivity::class.java)
+            startActivity(intent)
+        }
+
         iv_banner_image.setImageResource(R.drawable.ic_banner_kuis)
 
         adapter = KuisListAdapter()
