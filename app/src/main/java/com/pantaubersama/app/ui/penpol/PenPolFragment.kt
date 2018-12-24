@@ -15,7 +15,6 @@ import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatA
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.ui.widget.TabView
 import kotlinx.android.synthetic.main.fragment_pen_pol.view.*
-
 /**
  * A simple [Fragment] subclass.
  *
@@ -99,6 +98,8 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
                 mView?.view_pager?.currentItem = tab.position
             }
         })
+
+
     }
 
     fun setupViewPager() {
