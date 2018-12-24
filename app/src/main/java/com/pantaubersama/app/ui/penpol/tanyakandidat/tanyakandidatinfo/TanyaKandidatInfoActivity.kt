@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.tanyakandidatinfo
 
 import android.text.Html
+import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter

@@ -33,12 +33,18 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
             startActivity(intent)
         }
+        setupBanner()
+        setupTanyaKandidatList()
+        presenter?.getTanyaKandidatList()
+    }
+
+    private fun setupBanner() {
+        tv_banner_text.text = getString(R.string.tanya_kandidat_banner_text)
+        iv_banner_image.setImageResource(R.drawable.ic_banner_tanya_kandidat)
         fl_banner.setOnClickListener {
             val intent = Intent(context, TanyaKandidatInfoActivity::class.java)
             startActivity(intent)
         }
-        setupTanyaKandidatList()
-        presenter?.getTanyaKandidatList()
     }
 
     private fun setupTanyaKandidatList() {

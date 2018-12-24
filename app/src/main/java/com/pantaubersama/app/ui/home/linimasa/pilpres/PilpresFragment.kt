@@ -12,6 +12,7 @@ import com.pantaubersama.app.data.interactors.PilpresInteractor
 import com.pantaubersama.app.data.model.tweet.PilpresTweet
 import com.pantaubersama.app.ui.home.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.utils.ToastUtil
+import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject
 
@@ -44,7 +45,16 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun initView(view: View) {
+        setupBanner()
         setupRecyclerPilpres()
+    }
+
+    private fun setupBanner() {
+        tv_banner_text.text = getString(R.string.pilpres_banner_text)
+        iv_banner_image.setImageResource(R.drawable.ic_banner_pilpres)
+        fl_banner.setOnClickListener {
+
+        }
     }
 
     private fun setupRecyclerPilpres() {

@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.penpol.kuis.kuisinfo
 
 import android.text.Html
+import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
@@ -10,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_kuis_info.*
 class KuisInfoActivity : BaseActivity<BasePresenter<*>>() {
 
     override fun statusBarColor(): Int? {
-        return 0
+        return R.color.white
     }
 
     override fun fetchIntentExtra() {
