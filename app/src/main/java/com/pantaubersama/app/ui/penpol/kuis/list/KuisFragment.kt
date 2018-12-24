@@ -42,7 +42,7 @@ class KuisFragment : BaseFragment<BasePresenter<*>>() {
         adapter.listener = object : KuisListAdapter.AdapterListener {
             override fun onClickIkuti(item: KuisListItem.Item) {
                 val intent = Intent(context, IkutiKuisActivity::class.java)
-                intent.putExtra(PantauConstants.Quiz.QUIZ_DATA, item.id)
+                intent.putExtra(PantauConstants.Kuis.KUIS_ID, item.id)
                 startActivity(intent)
             }
 

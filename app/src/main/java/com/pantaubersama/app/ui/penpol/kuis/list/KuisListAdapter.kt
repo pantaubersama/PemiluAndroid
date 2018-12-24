@@ -47,7 +47,7 @@ class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 KuisState.COMPLETED -> "HASIL" to "#08bda8"
                 KuisState.INCOMPLETE -> "LANJUT" to "#eb3037"
             }
-            tv_kuis_title.text = "Quiz Minggu ke-${item.week}"
+            tv_kuis_title.text = "Kuis Minggu ke-${item.week}"
             tv_kuis_count.text = "${item.count} Pertanyaan"
             btn_kuis_open.text = "$buttonText >>"
             btn_kuis_open.setBackgroundTint(buttonColor)

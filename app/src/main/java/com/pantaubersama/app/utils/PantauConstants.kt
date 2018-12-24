@@ -19,7 +19,7 @@ class PantauConstants {
         const val OAUTH_ACCESS_TOKEN_FIELD = "access_token"
     }
 
-    object Quiz {
-        const val QUIZ_DATA = "quiz_data"
+    object Kuis {
+        const val KUIS_ID = "kuis_id"
     }
 }
