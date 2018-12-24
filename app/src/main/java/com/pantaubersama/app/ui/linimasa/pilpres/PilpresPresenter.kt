@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.home.linimasa.pilpres
+package com.pantaubersama.app.ui.linimasa.pilpres
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.PilpresInteractor

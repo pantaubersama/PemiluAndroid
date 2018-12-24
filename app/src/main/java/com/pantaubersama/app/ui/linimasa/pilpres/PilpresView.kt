@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.home.linimasa.pilpres
+package com.pantaubersama.app.ui.linimasa.pilpres
 
 import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.data.model.tweet.PilpresTweet

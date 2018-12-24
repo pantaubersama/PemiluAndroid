@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.home.linimasa.janjipolitik
+package com.pantaubersama.app.ui.linimasa.janjipolitik
 
 import android.view.View
 import com.pantaubersama.app.R

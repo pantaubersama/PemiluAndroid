@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pantaubersama.app.ui.home.linimasa.janjipolitik.JanjiPolitikFragment">
+    tools:context=".ui.linimasa.janjipolitik.JanjiPolitikFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

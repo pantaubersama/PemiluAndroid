@@ -9,8 +9,9 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
-import com.pantaubersama.app.ui.penpol.tanyakandidat.tanyakandidatinfo.TanyaKandidatInfoActivity
+import com.pantaubersama.app.ui.infobanner.BannerInfoActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_banner_container.*
@@ -42,7 +43,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         tv_banner_text.text = getString(R.string.tanya_kandidat_banner_text)
         iv_banner_image.setImageResource(R.drawable.ic_banner_tanya_kandidat)
         fl_banner.setOnClickListener {
-            val intent = Intent(context, TanyaKandidatInfoActivity::class.java)
+            val intent = BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_TANYA_KANDIDAT)
             startActivity(intent)
         }
     }

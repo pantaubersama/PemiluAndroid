@@ -57,4 +57,5 @@
     <string name="biodata_label">Biodata</string>
     <string name="pantau_bersama_tagline">Pantau Bersama\nuntuk Indonesia yang lebih baik</string>
     <string name="quiz_text_dummy">Pilihlah salah satu jawaban yang paling kamu sukai dari 2 pilihan yang ada. Ikuti kuis hingga selesai dan tunggu kejutan hasilnya</string>
+    <string name="txt_pilpres">Pilpres</string>
 </resources>

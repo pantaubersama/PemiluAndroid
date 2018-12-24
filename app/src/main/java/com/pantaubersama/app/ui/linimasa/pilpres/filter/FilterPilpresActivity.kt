@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.home.linimasa.filter
+package com.pantaubersama.app.ui.linimasa.pilpres.filter
 
 import android.app.Activity
 import android.content.Context
@@ -28,10 +28,12 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
 
     private var selectedFilter = 0
 
-    fun setIntent(context: Context, selectedFilter: Int): Intent {
-        val intent = Intent(context, FilterPilpresActivity::class.java)
+    companion object {
+        fun setIntent(context: Context, selectedFilter: Int): Intent {
+            val intent = Intent(context, FilterPilpresActivity::class.java)
 //        intent.putExtra(PantauConstants.Extra.SELECTED_FILTER_PILPRES, selectedFilter)
-        return intent
+            return intent
+        }
     }
 
     override fun statusBarColor(): Int? {

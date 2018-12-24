@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.home.linimasa
+package com.pantaubersama.app.ui.linimasa
 
 import android.app.Activity
 import android.content.Intent
@@ -9,9 +9,9 @@ import com.google.android.material.tabs.TabLayout
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BasePresenter
-import com.pantaubersama.app.ui.home.linimasa.filter.FilterPilpresActivity
-import com.pantaubersama.app.ui.home.linimasa.janjipolitik.JanjiPolitikFragment
-import com.pantaubersama.app.ui.home.linimasa.pilpres.PilpresFragment
+import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
+import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
+import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.widget.TabView
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.fragment_linimasa.*
