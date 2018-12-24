@@ -23,11 +23,18 @@ abstract class BaseFragment<P : BasePresenter<*>> : Fragment(), BaseView {
     protected var toolbar: Toolbar? = null
     private var mView: View? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initInjection()
+        presenter = initPresenter()
+        if (presenter != null) {
+            presenter?.attach(this)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(setLayout(), container, false)
-        initInjection()
         initProgressDialog()
-        presenter = initPresenter()
         initView(mView!!)
         return mView
     }
@@ -60,13 +67,6 @@ abstract class BaseFragment<P : BasePresenter<*>> : Fragment(), BaseView {
             }
 
             toolbar!!.elevation = elevation
-        }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if (presenter != null) {
-            presenter?.attach(this)
         }
     }
 

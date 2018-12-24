@@ -19,6 +19,7 @@ import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_linimasa.*
 
 class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
+    private var mView: View? = null
 
     private var selectedTabs: Int = 0
 
@@ -26,6 +27,7 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
     private var janjiPolitikFragment = JanjiPolitikFragment()
 
     override fun initView(view: View) {
+        mView = view
     }
 
     override fun initPresenter(): BasePresenter<*>? {
@@ -64,7 +66,12 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 selectedTabs = tab!!.position
-                view_pager.currentItem = tab!!.position
+                view_pager.currentItem = tab.position
+                if (tab.position == 0) {
+                    btn_create.visibility = View.GONE
+                } else {
+                    btn_create.visibility = View.VISIBLE
+                }
             }
         })
     }

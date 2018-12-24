@@ -24,6 +24,7 @@
             app:tabMode="scrollable" />
 
         <ImageView
+            android:foreground="?selectableItemBackground"
             android:id="@+id/btn_create"
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -36,6 +37,7 @@
         />
 
         <ImageView
+            android:foreground="?selectableItemBackground"
             android:id="@+id/btn_filter"
             android:layout_width="24dp"
             android:layout_height="24dp"

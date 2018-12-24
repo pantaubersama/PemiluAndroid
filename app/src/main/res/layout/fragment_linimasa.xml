@@ -22,6 +22,8 @@
         </com.google.android.material.tabs.TabLayout>
 
         <ImageView
+            android:foreground="?selectableItemBackground"
+            android:visibility="gone"
             android:id="@+id/btn_create"
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -31,6 +33,7 @@
             android:layout_toStartOf="@id/btn_filter"/>
 
         <ImageView
+            android:foreground="?selectableItemBackground"
             android:id="@+id/btn_filter"
             android:layout_width="24dp"
             android:layout_height="24dp"

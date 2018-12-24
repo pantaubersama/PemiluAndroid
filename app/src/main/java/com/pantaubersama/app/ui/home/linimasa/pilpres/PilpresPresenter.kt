@@ -4,6 +4,7 @@ import android.os.Handler
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.PilpresInteractor
 import com.pantaubersama.app.data.model.tweet.PilpresTweet
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -22,8 +23,11 @@ class PilpresPresenter @Inject constructor(private val pilpresInteractor: Pilpre
             tweetList.add(tweet)
         }
 
+        view?.dismissLoading()
+        view?.showPilpresTweet(tweetList)
+
         Handler().postDelayed({
-            view?.dismissLoading()
-            view?.showPilpresTweet(tweetList) }, 2000)
+            Timber.d("view = $view")
+             }, 2000)
     }
 }
