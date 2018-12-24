@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/kuis_large_banner"
         android:adjustViewBounds="true"
-        android:contentDescription="Tanya kandidat"
+        android:contentDescription="Kuis"
         android:layout_marginTop="24dp"/>
 
     <ScrollView

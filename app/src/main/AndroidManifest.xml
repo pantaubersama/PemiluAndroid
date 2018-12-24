@@ -52,7 +52,10 @@
         <activity
             android:name=".ui.profile.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.penpol.kuis.kuisinfo.KuisInfoActivity"
+        <activity
+            android:name=".ui.penpol.kuis.kuisinfo.KuisInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.penpol.kuis.ikutikuis.IkutiKuisActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
