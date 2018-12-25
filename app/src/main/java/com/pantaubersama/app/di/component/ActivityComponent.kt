@@ -2,6 +2,7 @@ package com.pantaubersama.app.di.component
 
 import com.pantaubersama.app.di.module.ActivityModule
 import com.pantaubersama.app.di.scope.ActivityScope
+import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
 import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.login.LoginActivity
@@ -22,4 +23,5 @@ interface ActivityComponent {
     fun inject(tanyaKandidatFragment: TanyaKandidatFragment)
     fun inject(pilpresFragment: PilpresFragment)
     fun inject(filterPilpresActivity: FilterPilpresActivity)
+    fun inject(janjiPolitikFragment: JanjiPolitikFragment)
 }

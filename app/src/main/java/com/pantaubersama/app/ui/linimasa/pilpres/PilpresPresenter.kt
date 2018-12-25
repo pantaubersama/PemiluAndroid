@@ -8,7 +8,9 @@ import javax.inject.Inject
 /**
  * @author edityomurti on 19/12/2018 14:45
  */
-class PilpresPresenter @Inject constructor(private val pilpresInteractor: PilpresInteractor?) : BasePresenter<PilpresView>() {
+class PilpresPresenter @Inject constructor(
+    private val pilpresInteractor: PilpresInteractor?
+) : BasePresenter<PilpresView>() {
     fun getPilpresTweet() {
         view?.showLoading()
         val selectedFilter = pilpresInteractor?.getPilpresFilter()

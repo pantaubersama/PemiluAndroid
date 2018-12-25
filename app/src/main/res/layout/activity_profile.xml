@@ -51,7 +51,7 @@
                         android:src="@drawable/dummy_avatar"/>
 
                     <TextView
-                        android:id="@+id/user_name"
+                        android:id="@+id/tv_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/user_avatar"
@@ -67,8 +67,8 @@
                         android:id="@+id/user_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/user_name"
-                        android:layout_toEndOf="@id/user_name"
+                        android:layout_toRightOf="@id/tv_user_name"
+                        android:layout_toEndOf="@id/tv_user_name"
                         android:layout_marginLeft="12dp"
                         android:layout_marginStart="12dp"
                         android:text="@string/dummy_username"
@@ -82,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:background="@drawable/rounded_outline_white"
-                        android:layout_below="@id/user_name"
+                        android:layout_below="@id/tv_user_name"
                         android:layout_toRightOf="@id/user_avatar"
                         android:layout_marginLeft="28dp"
                         android:layout_marginStart="28dp"

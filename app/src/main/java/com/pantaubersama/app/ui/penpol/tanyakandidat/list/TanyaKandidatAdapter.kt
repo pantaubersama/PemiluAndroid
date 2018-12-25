@@ -30,17 +30,17 @@ class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaK
     ) : BaseViewHolder<TanyaKandidat>(
         containerView!!, clickListener, longClickListener), LayoutContainer {
         override fun bind(item: TanyaKandidat) {
-            user_name.text = item.user?.name
+            tv_user_name.text = item.user?.name
             question_time.text = item.createdAt
             upvote_count_text.text = item.upVoteCount.toString()
             user_question.text = item.question
-            options_button.setOnClickListener {
+            iv_options_button.setOnClickListener {
                 showOptionsDialog(itemView)
             }
             upvote_button.setOnClickListener {
                 setUpvoted(item)
             }
-            share_button.setOnClickListener {
+            iv_share_button.setOnClickListener {
                 listener?.onClickShare(item)
             }
         }
