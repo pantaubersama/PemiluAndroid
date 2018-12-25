@@ -9,7 +9,9 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
+import com.pantaubersama.app.ui.infobanner.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.adapter.JanjiPolitikAdapter
+import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject
@@ -47,7 +49,9 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     private fun setupBanner() {
         tv_banner_text.text = getString(R.string.janpol_banner_text)
         iv_banner_image.setImageResource(R.drawable.ic_banner_janpol)
-        fl_banner.setOnClickListener {}
+        fl_banner.setOnClickListener {
+            startActivity(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_JANPOL))
+        }
     }
 
     private fun setupRecyclerJanpol() {
