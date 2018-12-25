@@ -17,8 +17,8 @@ import com.pantaubersama.app.base.viewholder.BaseViewHolder
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_tanya_kandidat.*
-import kotlinx.android.synthetic.main.post_action_layout.*
-import kotlinx.android.synthetic.main.tanya_kandidat_options_layout.*
+import kotlinx.android.synthetic.main.layout_action_post.*
+import kotlinx.android.synthetic.main.layout_option_dialog_tanya_kandidat.*
 
 class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaKandidatAdapter.TanyaKandidatViewHolder>(context) {
     var listener: TanyaKandidatAdapter.AdapterListener? = null
@@ -67,7 +67,7 @@ class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaK
 
         private fun showOptionsDialog(itemView: View?) {
             val dialog = Dialog(itemView?.context!!)
-            dialog.setContentView(R.layout.tanya_kandidat_options_layout)
+            dialog.setContentView(R.layout.layout_option_dialog_tanya_kandidat)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.setOnKeyListener { dialogInterface, i, keyEvent ->
                 if (i == KeyEvent.KEYCODE_BACK) {

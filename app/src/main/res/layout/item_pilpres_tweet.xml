@@ -77,8 +77,9 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical">
 
                         <TextView
                             android:fontFamily="@font/lato_bold"
@@ -125,16 +126,19 @@
                     <ImageView
                         android:id="@+id/iv_option"
                         android:layout_width="30dp"
-                        android:layout_height="20dp"
+                        android:layout_height="24dp"
+                        android:background="?selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_more_horiz"/>
                 </LinearLayout>
 
                 <TextView
+                    android:background="?selectableItemBackground"
                     android:fontFamily="@font/lato_medium"
                     android:id="@+id/tv_tweet_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="7"
+                    android:lines="3"
+                    android:maxLines="4"
                     android:textSize="12sp"
                     android:textColor="@color/black_1"
                     android:ellipsize="end"

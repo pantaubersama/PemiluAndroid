@@ -17,7 +17,9 @@ class PilpresPresenter @Inject constructor(private val pilpresInteractor: Pilpre
 
         for (i in 1..25) {
             val tweet = PilpresTweet()
-            tweet.tweetContent = "tweet $i, filter = $selectedFilter "
+            tweet.id = "666$i"
+            tweet.tweetContent = "tweet $i, filter = $selectedFilter"
+            tweet.tweetUrl = ""
             tweetList.add(tweet)
         }
 

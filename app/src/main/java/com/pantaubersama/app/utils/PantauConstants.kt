@@ -5,6 +5,10 @@ package com.pantaubersama.app.utils
  */
 class PantauConstants {
 
+    companion object {
+        const val LABEL_COPY = "LABEL_COPY"
+    }
+
     object Extra {
         const val SELECTED_FILTER_PILPRES = "EXTRA_SELECTED_FILTER"
         const val BANNER_INFO_TYPE = "EXTRA_BANNER_INFO_TYPE"

@@ -12,8 +12,9 @@ import com.pantaubersama.app.data.interactors.PilpresInteractor
 import com.pantaubersama.app.data.model.tweet.PilpresTweet
 import com.pantaubersama.app.ui.infobanner.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.adapter.PilpresAdapter
+import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
-import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.ShareUtil
 import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject
@@ -66,9 +67,18 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         recycler_view.adapter = adapter
         adapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
-                ToastUtil.show(context!!, "clicked!")
+
             }
         })
+        adapter.listener = object : PilpresAdapter.AdapterListener {
+            override fun onClickTweetContent(item: PilpresTweet) {
+                ChromeTabUtil(context!!).loadUrl("https://twitter.com/AndroidDev/status/1077232436164153345")
+            }
+
+            override fun onClickShare(item: PilpresTweet) {
+                shareTweet(item)
+            }
+        }
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
             getPilpresTweet()
@@ -87,6 +97,10 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
             recycler_view.visibility = View.VISIBLE
             adapter.replaceData(tweetList)
         }
+    }
+
+    private fun shareTweet(item: PilpresTweet) {
+        ShareUtil(context!!, item)
     }
 
     override fun setLayout(): Int {

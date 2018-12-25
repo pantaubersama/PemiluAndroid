@@ -117,7 +117,7 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"/>
 
-            <include layout="@layout/post_action_layout"/>
+            <include layout="@layout/layout_action_post"/>
 
         </LinearLayout>
 

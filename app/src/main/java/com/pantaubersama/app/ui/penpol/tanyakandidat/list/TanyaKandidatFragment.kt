@@ -12,6 +12,7 @@ import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
 import com.pantaubersama.app.ui.infobanner.BannerInfoActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_banner_container.*
@@ -69,25 +70,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     private fun shareTanyaKandidat(item: TanyaKandidat) {
-        val targetedShareIntents: MutableList<Intent> = ArrayList()
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "text/plain"
-        val resInfo = activity?.packageManager?.queryIntentActivities(shareIntent, 0)
-        if (!resInfo!!.isEmpty()) {
-            for (resolveInfo in resInfo) {
-                val sendIntent = Intent(Intent.ACTION_SEND)
-                sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Pantau")
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "pantau.co.id" + "share/tk/" + item.id)
-                sendIntent.type = "text/plain"
-                if (!resolveInfo.activityInfo.packageName.contains("pantaubersama")) {
-                    sendIntent.`package` = resolveInfo.activityInfo.packageName
-                    targetedShareIntents.add(sendIntent)
-                }
-            }
-            val chooserIntent = Intent.createChooser(targetedShareIntents.removeAt(0), "Bagikan dengan")
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
-            startActivity(chooserIntent)
-        }
+        ShareUtil(context!!, item)
     }
 
     override fun bindDataTanyaKandidat(tanyaKandidatList: MutableList<TanyaKandidat>?) {

@@ -19,7 +19,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     private lateinit var activeFragment: Fragment
 
     override fun statusBarColor(): Int {
-        return R.color.colorPrimaryDark
+        return R.color.white
     }
 
     override fun fetchIntentExtra() {
