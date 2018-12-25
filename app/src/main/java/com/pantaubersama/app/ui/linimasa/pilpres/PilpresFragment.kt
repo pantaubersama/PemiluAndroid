@@ -67,7 +67,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         recycler_view.adapter = adapter
         adapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
-
             }
         })
         adapter.listener = object : PilpresAdapter.AdapterListener {
