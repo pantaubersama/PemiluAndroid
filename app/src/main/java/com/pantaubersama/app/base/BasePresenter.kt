@@ -6,15 +6,17 @@ import io.reactivex.disposables.CompositeDisposable
  * @author edityomurti on 14/12/2018 17:35
  */
 abstract class BasePresenter<V : BaseView> {
-    val view: V? = null
-    val disposable: CompositeDisposable? = null
+    var view: V? = null
+    var disposables: CompositeDisposable? = null
 
-    fun attach() {
+    fun attach(view: BaseView) {
+        this.view = view as V
+        disposables = CompositeDisposable()
     }
 
     fun detach() {
-        if (disposable != null && !disposable.isDisposed) {
-            disposable.dispose()
+        if (disposables != null && !disposables?.isDisposed!!) {
+            disposables?.dispose()
         }
     }
 }

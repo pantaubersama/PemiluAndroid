@@ -1,22 +1,26 @@
 package com.pantaubersama.app.base
 
 import android.app.ProgressDialog
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
-import android.support.annotation.DrawableRes
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
+import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
-import java.lang.RuntimeException
+import timber.log.Timber
 
 /**
  * @author edityomurti on 14/12/2018 17:33
  */
 
-abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity() {
+abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseView {
     protected var progressDialog: ProgressDialog? = null
     protected var presenter: P? = null
     protected var toolbar: Toolbar? = null
@@ -33,14 +37,26 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity() {
         } else {
             presenter = initPresenter()
             if (presenter != null) {
-                presenter!!.attach()
+                presenter!!.attach(this)
             }
         }
         initProgressDialog()
         setupUI()
 
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = resources.getColor(statusBarColor())
+        if (statusBarColor() != 0) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = ContextCompat.getColor(this, statusBarColor()!!)
+            if (statusBarColor() == R.color.white && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
+        } else if (toolbar != null) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            var toolbarColor = (toolbar?.background as ColorDrawable).color
+            window.statusBarColor = toolbarColor
+            if (toolbarColor == -1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
+        }
     }
 
     protected open fun initInjection() {}
@@ -56,7 +72,7 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity() {
         super.onDestroy()
     }
 
-    protected abstract fun statusBarColor(): Int
+    protected abstract fun statusBarColor(): Int?
 
     protected abstract fun fetchIntentExtra()
 
@@ -94,10 +110,11 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity() {
     protected abstract fun setLayout(): Int
 
     fun setupToolbar(isBackButtonEnable: Boolean, title: String, @DrawableRes color: Int, elevation: Float) {
+
         toolbar = findViewById(R.id.toolbar)
 
         if (toolbar != null) {
-            toolbar!!.setNavigationOnClickListener { view -> onBackPressed() }
+            toolbar!!.setNavigationOnClickListener { onBackPressed() }
             toolbar!!.title = title
             toolbar!!.background = resources.getDrawable(color)
             toolbar!!.elevation = elevation
@@ -130,5 +147,9 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity() {
         if (progressDialog!!.isShowing) {
             progressDialog!!.dismiss()
         }
+    }
+
+    override fun showError(throwable: Throwable) {
+        Timber.e(throwable)
     }
 }

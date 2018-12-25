@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:scaleType="centerCrop"
+            app:riv_border_color="@color/white"
+            app:riv_oval="true"
+            android:src="@drawable/dummy_avatar"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp">
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Andri Susilo"
+                android:textSize="10sp"
+                android:fontFamily="@font/lato_bold"
+                android:maxLines="1"
+                android:lines="1"
+                android:ellipsize="end"
+                android:textColor="@color/black_2"/>
+
+            <TextView
+                android:id="@+id/tv_user_cluster"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_medium"
+                android:layout_toRightOf="@id/tv_user_name"
+                android:text=", Cluster Partai Pedang Panjang"
+                android:textSize="10sp"
+                android:lines="1"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/gray_dark_3"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_janpol_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/question_time_dummy_text"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="9sp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_janpol_content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?selectableItemBackground"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp">
+
+        <TextView
+            android:id="@+id/tv_janpol_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/question_dummy_text"
+            android:fontFamily="@font/bw_modelica_bold"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textSize="14sp"
+            android:textColor="@color/black_1"
+            android:paddingTop="10dp"
+            android:paddingBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_janpol_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/question_dummy_text"
+            android:fontFamily="@font/lato_medium"
+            android:textSize="12sp"
+            android:textColor="@color/black_1"
+            android:maxLines="6"
+            android:ellipsize="end"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="8dp">
+
+        <include layout="@layout/layout_action_post"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_3"/>
+
+</LinearLayout>

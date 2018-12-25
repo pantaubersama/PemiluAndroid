@@ -4,15 +4,31 @@ package com.pantaubersama.app.utils
  * @author edityomurti on 14/12/2018 14:54
  */
 class PantauConstants {
+
     companion object {
-        // direct access
+        const val LABEL_COPY = "LABEL_COPY"
+    }
+
+    object Extra {
+        const val SELECTED_FILTER_PILPRES = "EXTRA_SELECTED_FILTER"
+        const val BANNER_INFO_TYPE = "EXTRA_BANNER_INFO_TYPE"
+        const val TYPE_PILPRES = 0
+        const val TYPE_JANPOL = 1
+        const val TYPE_TANYA_KANDIDAT = 2
+        const val TYPE_KUIS = 3
+    }
+
+    object RequestCode {
+        const val FILTER_PILPRES = 1001
     }
 
     object Networking {
-        val AUTHORIZATION = "Authorization"
-        val GRANT_TYPE = "refresh_token"
-        val ACCESS_TOKEN_FIELD = "client_token"
-        val REFRESH_TOKEN_FIELD = "client_refresh_token"
-        val OAUTH_ACCESS_TOKEN_FIELD = "access_token"
+        const val AUTHORIZATION = "Authorization"
+        const val GRANT_TYPE = "refresh_token"
+        const val OAUTH_ACCESS_TOKEN_FIELD = "access_token"
+    }
+
+    object Kuis {
+        const val KUIS_ID = "kuis_id"
     }
 }

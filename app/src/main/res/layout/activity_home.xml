@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_home"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
@@ -29,6 +29,7 @@
             android:gravity="center_vertical">
 
             <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/user_avatar"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="12dp"
@@ -43,8 +44,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_marginTop="7dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_rounded_2dp_white"
                 android:drawableStart="@drawable/ic_search_inactive"
                 android:drawablePadding="10dp"
@@ -63,10 +64,10 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
 
-    <android.support.design.widget.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
