@@ -39,7 +39,6 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
             override fun onTextChanged(query: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 tv_current_length.text = query?.length.toString()
             }
-
         })
         setupEditor()
     }
