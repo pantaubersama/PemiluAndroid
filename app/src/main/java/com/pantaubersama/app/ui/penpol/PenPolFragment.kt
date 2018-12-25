@@ -13,14 +13,12 @@ import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatA
 import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.ui.widget.TabView
-import kotlinx.android.synthetic.main.fragment_pen_pol.view.*
+import kotlinx.android.synthetic.main.fragment_pen_pol.*
 /**
  * A simple [Fragment] subclass.
  *
  */
 class PenPolFragment : BaseFragment<BasePresenter<*>>() {
-    private var mView: View? = null
-
     private var selectedTabs: Int = 0
 
     private var tanyaKandidatFragment = TanyaKandidatFragment.newInstance()
@@ -31,14 +29,13 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
     }
 
     override fun initView(view: View) {
-        mView = view
         setupTabLayout()
         setupViewPager()
-        view.btn_create.setOnClickListener {
+        btn_create.setOnClickListener {
             val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
             startActivity(intent)
         }
-        view.btn_filter?.setOnClickListener {
+        btn_filter?.setOnClickListener {
             when (selectedTabs) {
                 0 -> {
                     val intent = Intent(context, FilterTanyaKandidatActivity::class.java)
@@ -73,10 +70,10 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
         val kuisTab = TabView(context)
         kuisTab.setTitleLabel(getString(R.string.kuis_label))
 
-        mView?.tab_layout?.addTab(mView?.tab_layout?.newTab()?.setCustomView(tanyaKandidatTab)!!)
-        mView?.tab_layout?.addTab(mView?.tab_layout?.newTab()?.setCustomView(kuisTab)!!)
+        tab_layout?.addTab(tab_layout?.newTab()?.setCustomView(tanyaKandidatTab)!!)
+        tab_layout?.addTab(tab_layout?.newTab()?.setCustomView(kuisTab)!!)
 
-        mView?.tab_layout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        tab_layout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(p0: TabLayout.Tab?) {
             }
 
@@ -86,18 +83,18 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 selectedTabs = tab!!.position
                 if (tab.position == 0) {
-                    mView?.btn_create?.visibility = View.VISIBLE
+                    btn_create?.visibility = View.VISIBLE
                 } else if (tab.position == 1) {
-                    mView?.btn_create?.visibility = View.GONE
+                    btn_create?.visibility = View.GONE
                 }
-                mView?.view_pager?.currentItem = tab.position
+                view_pager?.currentItem = tab.position
             }
         })
     }
 
     fun setupViewPager() {
-        mView?.view_pager?.addOnPageChangeListener(object : TabLayout.TabLayoutOnPageChangeListener(mView?.tab_layout) {})
-        mView?.view_pager?.adapter = object : FragmentPagerAdapter(childFragmentManager) {
+        view_pager?.addOnPageChangeListener(object : TabLayout.TabLayoutOnPageChangeListener(tab_layout) {})
+        view_pager?.adapter = object : FragmentPagerAdapter(childFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> tanyaKandidatFragment
@@ -107,7 +104,7 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
             }
 
             override fun getCount(): Int {
-                return mView?.tab_layout?.tabCount!!
+                return tab_layout?.tabCount!!
             }
         }
     }
