@@ -11,6 +11,7 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
+import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.widget.TabView
 import com.pantaubersama.app.utils.PantauConstants
@@ -30,6 +31,11 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
         }
         setupTabLayout()
         setupViewPager()
+
+        btn_create.setOnClickListener {
+            val intent = Intent(context, CreateJanjiPolitikActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun initPresenter(): BasePresenter<*>? {

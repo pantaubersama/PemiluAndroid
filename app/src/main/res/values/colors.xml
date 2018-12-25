@@ -18,4 +18,5 @@
     <color name="red">#bd081c</color>
     <color name="transparant">#00000000</color>
     <color name="purple">#4f339b</color>
+    <color name="pinkLight">#ffebef</color>
 </resources>
