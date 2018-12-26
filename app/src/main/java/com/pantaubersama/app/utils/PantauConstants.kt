@@ -35,6 +35,5 @@ class PantauConstants {
     object Camera {
         val ASK_PERMISSIONS_REQUEST_CODE = 123
         val BITMAP = "bitmap"
-
     }
 }

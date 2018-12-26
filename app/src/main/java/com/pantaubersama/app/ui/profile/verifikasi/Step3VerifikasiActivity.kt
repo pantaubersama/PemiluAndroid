@@ -1,16 +1,14 @@
 package com.pantaubersama.app.ui.profile.verifikasi
 
 import android.Manifest
-import android.content.ContentUris
 import android.content.Context
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.hardware.Camera
-import android.media.ExifInterface
 import android.os.Build
+import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
@@ -21,17 +19,6 @@ import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_step3_verifikasi.*
 import timber.log.Timber
 import java.io.IOException
-import android.net.Uri
-import android.os.Environment
-import android.provider.DocumentsContract
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import android.provider.MediaStore
-import android.view.Surface
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
-
 
 class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     private var permission =
@@ -70,7 +57,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     private fun setupCamera() {
-        if (checkCameraHardware(this@Step3VerifikasiActivity)){
+        if (checkCameraHardware(this@Step3VerifikasiActivity)) {
             mCamera = getCameraInstance()
             mCamera?.setDisplayOrientation(90)
             mPreview = mCamera?.let {
@@ -82,7 +69,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
             cameraCallback = Camera.PictureCallback { data, camera ->
                 val display = windowManager.defaultDisplay
                 var rotation = 0
-                when (display.getRotation()) {
+                when (display.rotation) {
                     Surface.ROTATION_0 -> rotation = -90
                     Surface.ROTATION_90 -> rotation = 0
                     Surface.ROTATION_180 -> rotation = 90
@@ -159,7 +146,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
 
     override fun onResume() {
         super.onResume()
-        if (checkCameraHardware(this@Step3VerifikasiActivity)){
+        if (checkCameraHardware(this@Step3VerifikasiActivity)) {
             setupCamera()
         }
     }
