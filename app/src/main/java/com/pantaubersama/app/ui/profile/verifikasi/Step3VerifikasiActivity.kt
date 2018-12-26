@@ -1,15 +1,16 @@
 package com.pantaubersama.app.ui.profile.verifikasi
 
 import android.Manifest
+import android.content.ContentUris
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.hardware.Camera
+import android.media.ExifInterface
 import android.os.Build
-import android.os.Bundle
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
@@ -20,9 +21,16 @@ import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_step3_verifikasi.*
 import timber.log.Timber
 import java.io.IOException
-import android.opengl.ETC1.getHeight
-import android.opengl.ETC1.getWidth
-
+import android.net.Uri
+import android.os.Environment
+import android.provider.DocumentsContract
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import android.provider.MediaStore
+import android.view.Surface
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
@@ -35,7 +43,6 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     private var mCamera: Camera? = null
     private var mPreview: CameraPreview? = null
     private var cameraCallback: Camera.PictureCallback? = null
-    var bitmap: Bitmap? = null
 
     override fun statusBarColor(): Int? {
         return 0
@@ -73,12 +80,19 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                 camera_preview.addView(it)
             }
             cameraCallback = Camera.PictureCallback { data, camera ->
-                bitmap = BitmapFactory.decodeByteArray(data, 0, data?.size!!)
-                val matrix = Matrix()
-                matrix.setRotate(-90f)
-                val newBitmap = Bitmap.createBitmap(bitmap!!, 0, 0, bitmap?.getWidth()!!, bitmap?.getHeight()!!, matrix, true)
+                val display = windowManager.defaultDisplay
+                var rotation = 0
+                when (display.getRotation()) {
+                    Surface.ROTATION_0 -> rotation = -90
+                    Surface.ROTATION_90 -> rotation = 0
+                    Surface.ROTATION_180 -> rotation = 90
+                    Surface.ROTATION_270 -> rotation = 180
+                }
+
+                var bitmap = BitmapTools.toBitmap(data)
+                bitmap = BitmapTools.rotate(bitmap, rotation)
                 image_preview_container.visibility = View.VISIBLE
-                image_preview.setImageBitmap(newBitmap)
+                image_preview.setImageBitmap(bitmap)
             }
             capture_button.setOnClickListener {
                 mCamera?.takePicture(null, null, cameraCallback)
@@ -86,6 +100,18 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
             close_camera_button.setOnClickListener {
                 finish()
             }
+        }
+    }
+
+    object BitmapTools {
+        fun toBitmap(data: ByteArray): Bitmap {
+            return BitmapFactory.decodeByteArray(data, 0, data.size)
+        }
+
+        fun rotate(`in`: Bitmap, angle: Int): Bitmap {
+            val mat = Matrix()
+            mat.postRotate(angle.toFloat())
+            return Bitmap.createBitmap(`in`, 0, 0, `in`.width, `in`.height, mat, true)
         }
     }
 
