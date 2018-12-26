@@ -21,6 +21,9 @@ class PantauConstants {
 
     object RequestCode {
         const val FILTER_PILPRES = 1001
+        const val FILTER_JANPOL = 1002
+        const val FILTER_TANYA_KANDIDAT = 1003
+        const val FILTER_KUIS = 1004
     }
 
     object Networking {

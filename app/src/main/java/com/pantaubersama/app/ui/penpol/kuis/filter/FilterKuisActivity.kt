@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.penpol.tanyakandidat.filter
+package com.pantaubersama.app.ui.penpol.kuis.filter
 
 import android.view.Menu
 import android.view.MenuItem
@@ -6,25 +6,25 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
 
-class FilterTanyaKandidatActivity : BaseActivity<BasePresenter<*>>() {
+class FilterKuisActivity : BaseActivity<BasePresenter<*>>() {
+    override fun initPresenter(): BasePresenter<*>? {
+        return null
+    }
+
     override fun statusBarColor(): Int? {
-        return 0
+        return R.color.white
     }
 
     override fun fetchIntentExtra() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
-    }
-
     override fun setupUI() {
-        setupToolbar(true, "Filter", R.color.white, 4f)
+        setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
     }
 
     override fun setLayout(): Int {
-        return R.layout.activity_filter_tanya_kandidat
+        return R.layout.activity_filter_kuis
     }
 
     override fun showLoading() {
@@ -36,18 +36,18 @@ class FilterTanyaKandidatActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu_filter, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.action_reset -> resetFilter()
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun resetFilter() {
-        // reset
     }
 }

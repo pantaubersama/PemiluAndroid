@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pantaubersama.app.ui.penpol.kuis.filter.FilterKuisActivity">
+
+    <include layout="@layout/layout_toolbar_light"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:padding="22dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quiz_label"
+            android:fontFamily="@font/bw_modelica_bold"
+            android:textColor="@color/black_3"
+            android:textSize="16sp"/>
+
+        <RadioGroup
+            android:id="@+id/radio_group_pilpres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+            <RadioButton
+                android:id="@+id/radbtn_semua"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_semua"
+                android:theme="@style/RadioButtonStyle"/>
+            <RadioButton
+                android:id="@+id/radbtn_belum_diikuti"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_belum_diikuti"
+                android:theme="@style/RadioButtonStyle"/>
+            <RadioButton
+                android:id="@+id/radbtn_belum_selesai"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_belum_selesai"
+                android:theme="@style/RadioButtonStyle"/>
+            <RadioButton
+                android:id="@+id/radbtn_selesai"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_selesai"
+                android:theme="@style/RadioButtonStyle"/>
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_button_terapkan_filter"/>
+
+
+</RelativeLayout>

@@ -48,7 +48,8 @@
             android:name=".ui.profile.verifikasi.Step1VerifikasiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.profile.verifikasi.Step2VerifikasiActivity" />
-        <activity android:name=".ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity"></activity>
+        <activity android:name=".ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity" />
+        <activity android:name=".ui.penpol.kuis.filter.FilterKuisActivity"></activity>
     </application>
 
 </manifest>

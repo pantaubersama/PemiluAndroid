@@ -24,17 +24,16 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
     private var janjiPolitikFragment = JanjiPolitikFragment()
 
     override fun initView(view: View) {
+        setupTabLayout()
+        setupViewPager()
+        btn_create.setOnClickListener {
+            val intent = Intent(context, CreateJanjiPolitikActivity::class.java)
+            startActivity(intent)
+        }
         btn_filter.setOnClickListener {
             when (selectedTabs) {
                 0 -> startActivityForResult(Intent(context, FilterPilpresActivity::class.java), PantauConstants.RequestCode.FILTER_PILPRES)
             }
-        }
-        setupTabLayout()
-        setupViewPager()
-
-        btn_create.setOnClickListener {
-            val intent = Intent(context, CreateJanjiPolitikActivity::class.java)
-            startActivity(intent)
         }
     }
 
