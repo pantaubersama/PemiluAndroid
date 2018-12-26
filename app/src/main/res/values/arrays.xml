@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="bg_kuis">
+        <item>@drawable/kuis_background_1</item>
+        <item>@drawable/kuis_background_2</item>
+    </integer-array>
+</resources>

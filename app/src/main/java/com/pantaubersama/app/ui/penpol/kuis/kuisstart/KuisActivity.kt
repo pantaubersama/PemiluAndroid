@@ -29,6 +29,11 @@ class KuisActivity : BaseActivity<BasePresenter<*>>() {
             finish()
         }
 
+        with(resources.obtainTypedArray(R.array.bg_kuis)) {
+            val bgResource = getResourceId(questionNumber - 1, R.drawable.kuis_background_1)
+            iv_background.setImageResource(bgResource)
+            recycle()
+        }
         number_of_question_info.text = getString(R.string.question_number_info, questionNumber, 10)
 
         val questionAnswerList = listOf(
