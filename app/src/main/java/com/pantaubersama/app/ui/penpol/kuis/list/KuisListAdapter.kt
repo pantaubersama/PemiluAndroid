@@ -55,9 +55,7 @@ class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 when {
                     item.state == KuisState.NOT_TAKEN -> listener?.onClickIkuti(item)
                     item.state == KuisState.INCOMPLETE -> listener?.onClickLanjut(item)
-                    item.state == KuisState.COMPLETED -> {
-                        // go to result
-                    }
+                    item.state == KuisState.COMPLETED -> listener?.onClickHasil(item)
                 }
             }
             btn_share.setOnClickListener {
@@ -82,6 +80,7 @@ class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     interface AdapterListener {
         fun onClickIkuti(item: KuisListItem.Item)
         fun onClickLanjut(item: KuisListItem.Item)
+        fun onClickHasil(item: KuisListItem.Item)
         fun onClickShare(item: KuisListItem.Item)
     }
 }

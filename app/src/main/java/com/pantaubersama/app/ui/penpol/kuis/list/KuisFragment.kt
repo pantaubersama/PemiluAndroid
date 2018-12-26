@@ -11,6 +11,7 @@ import com.pantaubersama.app.data.model.kuis.KuisState
 import com.pantaubersama.app.ui.infobanner.BannerInfoActivity
 import com.pantaubersama.app.ui.penpol.kuis.ikutikuis.IkutiKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
+import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
 import com.pantaubersama.app.utils.LineDividerItemDecoration
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.color
@@ -41,6 +42,10 @@ class KuisFragment : BaseFragment<BasePresenter<*>>() {
 
             override fun onClickLanjut(item: KuisListItem.Item) {
                 startActivity(KuisActivity.setIntent(requireContext(), item.id, 2))
+            }
+
+            override fun onClickHasil(item: KuisListItem.Item) {
+                startActivity(Intent(requireContext(), KuisResultActivity::class.java))
             }
 
             override fun onClickShare(item: KuisListItem.Item) {
