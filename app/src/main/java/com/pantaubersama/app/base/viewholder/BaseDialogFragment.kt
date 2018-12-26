@@ -49,5 +49,4 @@ abstract class BaseDialogFragment<P : BasePresenter<*>> : DialogFragment(), Base
         }
         super.onDestroy()
     }
-
 }

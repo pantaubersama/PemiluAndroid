@@ -58,7 +58,6 @@ class KuisActivity : BaseActivity<BasePresenter<*>>() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-
     companion object {
         fun setIntent(context: Context, kuisId: Int, questionNumber: Int): Intent {
             val intent = Intent(context, KuisActivity::class.java)

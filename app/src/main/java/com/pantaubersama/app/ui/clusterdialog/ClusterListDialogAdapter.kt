@@ -41,7 +41,6 @@ class ClusterListDialogAdapter(context: Context) : BaseAdapter<ClusterItem,
             tv_cluster_name.text = item.name
             tv_cluster_member_count.text = item.name
         }
-
     }
 
     override fun initViewHolder(view: View, viewType: Int): ClusterListViewHolder {
@@ -51,7 +50,6 @@ class ClusterListDialogAdapter(context: Context) : BaseAdapter<ClusterItem,
     override fun setItemView(viewType: Int): Int {
         return R.layout.item_cluster
     }
-
 
     override fun getFilter(): Filter {
         return object : Filter() {
@@ -76,8 +74,6 @@ class ClusterListDialogAdapter(context: Context) : BaseAdapter<ClusterItem,
                 data = results?.values as (ArrayList<ClusterItem>)
                 notifyDataSetChanged()
             }
-
         }
     }
-
 }

@@ -5,7 +5,11 @@ import android.graphics.Point
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.view.Gravity
+import android.view.Window
 import android.widget.RelativeLayout
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -75,10 +79,8 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
             override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 adapter?.filter?.filter(s)
             }
-
         })
     }
-
 
     override fun setLayout(): Int {
         return R.layout.layout_dialog_cluster_list
@@ -121,5 +123,4 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
         window?.setGravity(Gravity.CENTER)
         super.onResume()
     }
-
 }
