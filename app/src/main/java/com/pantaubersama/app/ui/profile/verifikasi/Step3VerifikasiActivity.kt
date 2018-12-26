@@ -130,34 +130,6 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
         return cameraId
     }
 
-//    private fun getOutputMediaFileUri(type: Int): Uri {
-//        return Uri.fromFile(getOutputMediaFile(type))
-//    }
-//
-//    private fun getOutputMediaFile(type: Int): File? {
-//        val mediaStorageDir = File(
-//            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-//            "PantauBersama"
-//        )
-//
-//        mediaStorageDir.apply {
-//            if (!exists()) {
-//                if (!mkdirs()) {
-//                    Timber.e("PantauBersama", "failed to create directory")
-//                    return null
-//                }
-//            }
-//        }
-//
-//        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-//        return when (type) {
-//            MEDIA_TYPE_IMAGE -> {
-//                File("${mediaStorageDir.path}${File.separator}IMG_$timeStamp.jpg")
-//            }
-//            else -> null
-//        }
-//    }
-
     private fun releaseCamera() {
         if (mCamera != null) {
             mCamera?.stopPreview()
@@ -218,6 +190,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun onDestroy() {
+        releaseCamera()
         super.onDestroy()
     }
 
