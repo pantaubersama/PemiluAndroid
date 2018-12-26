@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.location.gps" />
 
@@ -49,7 +50,10 @@
             android:name=".ui.profile.verifikasi.Step1VerifikasiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.profile.verifikasi.Step2VerifikasiActivity" />
-        <activity android:name=".ui.profile.verifikasi.Step3VerifikasiActivity"/>
+        <activity
+            android:name=".ui.profile.verifikasi.Step3VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.profile.verifikasi.CameraPreviewActivity"></activity>
     </application>
 
 </manifest>
