@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.penpol.kuis.ikutikuis
 
-import android.content.Intent
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
@@ -9,7 +8,7 @@ import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_ikuti_kuis.*
 
 class IkutiKuisActivity : BaseActivity<BasePresenter<*>>() {
-    private var kuisId: Int? = null
+    private var kuisId: Int = 0
 
     override fun statusBarColor(): Int? {
         return 0
@@ -25,8 +24,7 @@ class IkutiKuisActivity : BaseActivity<BasePresenter<*>>() {
 
     override fun setupUI() {
         start_quiz_action.setOnClickListener {
-            val intent = Intent(this@IkutiKuisActivity, KuisActivity::class.java)
-            intent.putExtra(PantauConstants.Kuis.KUIS_ID, kuisId)
+            val intent = KuisActivity.setIntent(this, kuisId, 1)
             startActivity(intent)
         }
     }
