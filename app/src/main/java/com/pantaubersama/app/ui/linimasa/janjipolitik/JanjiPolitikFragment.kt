@@ -11,6 +11,7 @@ import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.ui.infobanner.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.adapter.JanjiPolitikAdapter
+import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
@@ -61,7 +62,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         recycler_view.adapter = adapter
         adapter.listener = object : JanjiPolitikAdapter.AdapterListener {
             override fun onClickContent(item: JanjiPolitik) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                startActivity(DetailJanjiPolitikActivity.setIntent(context!!, item.id!!))
             }
         }
         getJanjiPolitikList()

@@ -16,6 +16,7 @@ class PantauConstants {
         const val TYPE_JANPOL = 1
         const val TYPE_TANYA_KANDIDAT = 2
         const val TYPE_KUIS = 3
+        const val JANPOL_ID = "JANPOL_ID"
     }
 
     object RequestCode {
@@ -30,6 +31,7 @@ class PantauConstants {
 
     object Kuis {
         const val KUIS_ID = "kuis_id"
+        const val KUIS_NUMBER = "kuis_number"
     }
 
     object Camera {

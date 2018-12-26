@@ -13,6 +13,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/iv_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/kuis_background_1"
@@ -20,14 +21,14 @@
             android:contentDescription="Tanya kandidat"/>
 
         <TextView
-            android:id="@+id/question"
+            android:id="@+id/tv_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Visi untuk Indonesia ke depannya?"
             android:fontFamily="@font/bw_modelica_bold"
             android:textColor="@color/white"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            tools:text="@string/question_1_dummy" />
 
     </FrameLayout>
 
@@ -60,10 +61,10 @@
                     android:id="@+id/answer_a"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/question_1_a_dummy"
                     android:gravity="center_horizontal"
                     android:fontFamily="@font/lato_medium"
-                    android:textColor="@color/black_3" />
+                    android:textColor="@color/black_3"
+                    tools:text="@string/question_1_a_dummy" />
 
             </RelativeLayout>
 
@@ -83,10 +84,10 @@
                     android:id="@+id/answer_b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/question_1_b_dummy"
                     android:gravity="center_horizontal"
                     android:fontFamily="@font/lato_medium"
-                    android:textColor="@color/black_3" />
+                    android:textColor="@color/black_3"
+                    tools:text="@string/question_1_b_dummy" />
 
             </RelativeLayout>
 
@@ -189,10 +190,10 @@
                 android:id="@+id/number_of_question_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pertanyaan no 1 dari 10 pertanyaan"
                 android:fontFamily="@font/lato_medium"
                 android:textColor="@color/white"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                tools:text="Pertanyaan no 1 dari 10 pertanyaan" />
 
         </LinearLayout>
 

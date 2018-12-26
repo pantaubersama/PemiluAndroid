@@ -42,6 +42,7 @@
         <activity android:name=".ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity" />
         <activity android:name=".ui.profile.ProfileActivity" />
         <activity android:name=".ui.penpol.kuis.ikutikuis.IkutiKuisActivity" />
+        <activity android:name=".ui.penpol.kuis.result.KuisResultActivity" />
         <activity
             android:name=".ui.penpol.kuis.kuisstart.KuisActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -53,7 +54,7 @@
         <activity
             android:name=".ui.profile.verifikasi.Step3VerifikasiActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.profile.verifikasi.CameraPreviewActivity"></activity>
+        <activity android:name=".ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity"/>
     </application>
 
 </manifest>
