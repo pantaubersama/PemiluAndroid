@@ -1,15 +1,21 @@
 package com.pantaubersama.app.ui.profile
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.view.* // ktlint-disable
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.user.User
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
+import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.cluster_options_layout.*
 
@@ -33,6 +39,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     override fun setupUI() {
         setupToolbar(true, "", R.color.white, 4f)
+        setProfileData()
         setupClusterLayout()
         setupBiodataLayout()
         setupBadgeLayout()
@@ -42,6 +49,37 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         }
         initFragment()
         setupNavigation()
+    }
+
+    private fun setProfileData() {
+        val user = User(1,
+            "Haryono Sugi",
+            "haryono",
+            "Lorem ipsum dolor sit amet",
+            false)
+        if (user.isVerified!!) {
+            setVerified()
+        } else {
+            setUnverified()
+        }
+    }
+
+    private fun setUnverified() {
+        verified_icon.colorFilter =
+            PorterDuffColorFilter(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1), PorterDuff.Mode.MULTIPLY)
+        verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1))
+        verified_button.setBackgroundResource(R.drawable.rounded_outline_gray)
+        verified_button.setOnClickListener {
+            val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun setVerified() {
+        verified_icon.colorFilter =
+            PorterDuffColorFilter(ContextCompat.getColor(this@ProfileActivity, R.color.colorAccent), PorterDuff.Mode.MULTIPLY)
+        verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.colorAccent))
+        verified_button.setBackgroundResource(R.drawable.rounded_outline_green)
     }
 
     private fun initFragment() {
@@ -146,7 +184,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         val dialog = Dialog(this@ProfileActivity)
         dialog.setContentView(R.layout.cluster_options_layout)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setOnKeyListener { dialogInterface, i, keyEvent ->
+        dialog.setOnKeyListener { _, i, _ ->
             if (i == KeyEvent.KEYCODE_BACK) {
                 dialog.dismiss()
                 true

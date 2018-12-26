@@ -65,4 +65,5 @@
     <string name="hint_create_janpol">Bagikan janji politik dari media Capres kepada user lain. Sertakan sumber bila memungkinkan seperti link, gambar, ucapan langsung dan lainnya. Gunakan tata Bahasa yang baik</string>
     <string name="hint_create_janpol_title">Judul Janji Politik</string>
     <string name="hint_create_janpol_content">Beri deskripsi detail lebih lanjut dari Judul</string>
+    <string name="verification_hint">Dengan diverifikasi kamu akan…. Mendapatkan manfaat dan is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
 </resources>
