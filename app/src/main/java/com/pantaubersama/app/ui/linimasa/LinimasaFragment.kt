@@ -12,6 +12,7 @@ import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
 import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity
+import com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.widget.TabView
 import com.pantaubersama.app.utils.PantauConstants
@@ -32,7 +33,12 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
         }
         btn_filter.setOnClickListener {
             when (selectedTabs) {
-                0 -> startActivityForResult(Intent(context, FilterPilpresActivity::class.java), PantauConstants.RequestCode.FILTER_PILPRES)
+                0 -> startActivityForResult(Intent(
+                    context, FilterPilpresActivity::class.java),
+                    PantauConstants.RequestCode.FILTER_PILPRES)
+                else -> startActivityForResult(Intent(
+                    context, FilterJanjiPolitikActivity::class.java),
+                    PantauConstants.RequestCode.FILTER_JANPOL)
             }
         }
     }

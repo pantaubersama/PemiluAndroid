@@ -77,4 +77,9 @@
     <string name="txt_belum_diikuti">Belum Diikuti</string>
     <string name="txt_belum_selesai">Belum Selesai</string>
     <string name="txt_selesai">Selesai</string>
+    <string name="txt_cluster">Cluster</string>
+    <string name="txt_user">User</string>
+    <string name="txt_belum_verifikasi">Belum Verifikasi</string>
+    <string name="txt_terverifikasi">Terverifikasi</string>
+    <string name="txt_pilih_cluster">Pilih Cluster</string>
 </resources>

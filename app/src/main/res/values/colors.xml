@@ -19,4 +19,5 @@
     <color name="transparant">#00000000</color>
     <color name="purple">#4f339b</color>
     <color name="pinkLight">#ffebef</color>
+    <color name="tosca">#6ccfc0</color>
 </resources>
