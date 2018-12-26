@@ -96,7 +96,7 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
         notifyItemInserted(position)
     }
 
-    fun add(items: List<T>) {
+    open fun add(items: List<T>) {
         for (item in items) {
             data.add(item)
         }

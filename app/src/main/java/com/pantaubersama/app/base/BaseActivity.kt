@@ -12,7 +12,6 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
 import timber.log.Timber
 
@@ -30,15 +29,9 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
         setContentView(setLayout())
         initInjection()
         fetchIntentExtra()
-        if (setFragment() != null) {
-            supportFragmentManager.beginTransaction()
-                    .replace(setFragmentContainerId(), setFragment()!!)
-                    .commit()
-        } else {
-            presenter = initPresenter()
-            if (presenter != null) {
-                presenter!!.attach(this)
-            }
+        presenter = initPresenter()
+        if (presenter != null) {
+            presenter!!.attach(this)
         }
         initProgressDialog()
         setupUI()
@@ -88,19 +81,9 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
      *
      * @return view presenter
      */
-    protected open fun initPresenter(): P? {
-        if (setFragment() != null) {
-            return null
-        } else {
-            throw RuntimeException("need to override initPresenter()")
-        }
-    }
+    protected abstract fun initPresenter(): P?
 
     protected abstract fun setupUI()
-
-    protected fun setFragment(): Fragment? {
-        return null
-    }
 
     protected fun setFragmentContainerId(): Int {
         return 0

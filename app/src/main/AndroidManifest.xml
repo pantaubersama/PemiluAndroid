@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.location.gps" />
+
     <application
         android:name=".base.BaseApp"
         android:allowBackup="true"
@@ -21,28 +24,66 @@
         <meta-data
             android:name="aia-compat-api-min-version"
             android:value="1" />
-
         <activity
-            android:name=".ui.home.HomeActivity"
-            android:label="@string/title_activity_home" />
-        <activity android:name=".ui.login.LoginActivity" />
-        <activity android:name=".ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity" />
-        <activity android:name=".ui.linimasa.pilpres.filter.FilterPilpresActivity" />
-        <activity android:name=".ui.splashscreen.SplashScreenActivity">
+            android:name=".ui.splashscreen.SplashScreenActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.infobanner.BannerInfoActivity" />
-        <activity android:name=".ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity" />
-        <activity android:name=".ui.profile.ProfileActivity" />
-        <activity android:name=".ui.penpol.kuis.ikutikuis.IkutiKuisActivity" />
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:label="@string/title_activity_home" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.linimasa.pilpres.filter.FilterPilpresActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.infobanner.BannerInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.kuis.ikutikuis.IkutiKuisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.kuis.result.KuisResultActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.penpol.kuis.kuisstart.KuisActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.Step1VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.Step2VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.kuis.filter.FilterKuisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.profile.verifikasi.Step3VerifikasiActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

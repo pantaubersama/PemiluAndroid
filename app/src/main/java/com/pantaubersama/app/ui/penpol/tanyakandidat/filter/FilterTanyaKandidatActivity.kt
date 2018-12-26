@@ -36,13 +36,13 @@ class FilterTanyaKandidatActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_reset, menu)
+        menuInflater.inflate(R.menu.menu_filter, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.done_action -> resetFilter()
+            R.id.action_reset -> resetFilter()
         }
         return super.onOptionsItemSelected(item)
     }
