@@ -43,8 +43,10 @@
             android:name=".ui.penpol.kuis.kuisstart.KuisActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity" />
-        <activity android:name=".ui.profile.verifikasi.Step1VerifikasiActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.profile.verifikasi.Step1VerifikasiActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.profile.verifikasi.Step2VerifikasiActivity"></activity>
     </application>
 
 </manifest>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity">
+    tools:context="com.pantaubersama.app.ui.profile.verifikasi.Step2VerifikasiActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -25,7 +25,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/ok_button"
+            android:layout_above="@id/next_button"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -99,25 +99,27 @@
                         android:focusableInTouchMode="true"
                         android:focusable="true">
 
-                        <ImageView
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/selfie_with_id_card_animation"
+                            android:scaleType="centerCrop"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_verified_48dp"/>
+                            app:lottie_fileName="selfie_with_id_card.json"
+                            app:lottie_autoPlay="true"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Kenapa Akunmu Perlu Diverifikasi?"
-                            android:layout_marginTop="16dp"
+                            android:text="Foto Diri Bersama Dengan KTP"
                             android:fontFamily="@font/bw_modelica_bold"
-                            android:textSize="22sp"
+                            android:textSize="18sp"
                             android:textColor="@color/black_3"
                             android:gravity="center_horizontal"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/verification_hint"
+                            android:text="@string/foto_dengan_ktp_hint"
                             android:gravity="center_horizontal"
                             android:layout_marginTop="12dp"
                             android:fontFamily="@font/lato_medium"
@@ -129,26 +131,10 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:fontFamily="@font/bw_modelica_bold"
-                            android:text="Masukkan No Identitas KTP"
+                            android:text="Siap?"
                             android:layout_marginTop="32dp"
-                            android:textColor="@color/black_3"
-                            android:textSize="18sp"/>
-
-                        <EditText
-                            android:id="@+id/ktp_number"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_outline_green"
-                            android:hint="123 1234 1111"
-                            android:fontFamily="@font/lato_bold"
-                            android:gravity="center_horizontal"
-                            android:layout_marginTop="12dp"
-                            android:padding="12dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginEnd="12dp"
-                            android:textColor="@color/black_3"/>
+                            android:textColor="@color/gray_dark_2"
+                            android:textSize="22sp"/>
 
                     </LinearLayout>
 
@@ -159,7 +145,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ok_button"
+            android:id="@+id/next_button"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:background="@color/colorPrimary"
@@ -175,7 +161,7 @@
                 android:textColor="@color/white"
                 android:letterSpacing="0.1"
                 android:lineSpacingExtra="3sp"
-                android:text="Oke"
+                android:text="Lanjut"
                 android:fontFamily="@font/lato_bold"
                 android:textAllCaps="true"/>
 
