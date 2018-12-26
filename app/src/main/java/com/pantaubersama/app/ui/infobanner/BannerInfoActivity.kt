@@ -35,7 +35,7 @@ class BannerInfoActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun setupUI() {
-        close_button.setOnClickListener {
+        btn_close.setOnClickListener {
             finish()
         }
 

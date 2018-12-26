@@ -39,10 +39,16 @@
         <activity android:name=".ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity" />
         <activity android:name=".ui.profile.ProfileActivity" />
         <activity android:name=".ui.penpol.kuis.ikutikuis.IkutiKuisActivity" />
+        <activity android:name=".ui.penpol.kuis.result.KuisResultActivity" />
         <activity
             android:name=".ui.penpol.kuis.kuisstart.KuisActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity"></activity>
+        <activity android:name=".ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity" />
+        <activity
+            android:name=".ui.profile.verifikasi.Step1VerifikasiActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.profile.verifikasi.Step2VerifikasiActivity" />
+        <activity android:name=".ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity"></activity>
     </application>
 
 </manifest>

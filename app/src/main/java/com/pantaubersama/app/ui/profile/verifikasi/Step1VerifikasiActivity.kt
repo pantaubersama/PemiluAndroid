@@ -1,21 +1,19 @@
-package com.pantaubersama.app.ui.penpol.kuis.ikutikuis
+package com.pantaubersama.app.ui.profile.verifikasi
 
+import android.content.Intent
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
-import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
-import com.pantaubersama.app.utils.PantauConstants
-import kotlinx.android.synthetic.main.activity_ikuti_kuis.*
+import kotlinx.android.synthetic.main.activity_step1_verifikasi.*
 
-class IkutiKuisActivity : BaseActivity<BasePresenter<*>>() {
-    private var kuisId: Int = 0
+class Step1VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
 
     override fun statusBarColor(): Int? {
         return 0
     }
 
     override fun fetchIntentExtra() {
-        kuisId = intent.getIntExtra(PantauConstants.Kuis.KUIS_ID, 0)
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun initPresenter(): BasePresenter<*>? {
@@ -23,14 +21,17 @@ class IkutiKuisActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun setupUI() {
-        start_quiz_action.setOnClickListener {
-            val intent = KuisActivity.setIntent(this, kuisId, 1)
+        setupToolbar(true, "", R.color.white, 4f)
+        verification_step_indicator.text = "0/3"
+        ok_button.setOnClickListener {
+            val intent = Intent(this@Step1VerifikasiActivity, Step2VerifikasiActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
     override fun setLayout(): Int {
-        return R.layout.activity_ikuti_kuis
+        return R.layout.activity_step1_verifikasi
     }
 
     override fun showLoading() {
