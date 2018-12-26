@@ -31,5 +31,6 @@ class PantauConstants {
 
     object Kuis {
         const val KUIS_ID = "kuis_id"
+        const val KUIS_NUMBER = "kuis_number"
     }
 }
