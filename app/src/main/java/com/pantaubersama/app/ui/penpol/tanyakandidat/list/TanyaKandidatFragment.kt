@@ -53,7 +53,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         adapter = TanyaKandidatAdapter(context!!)
         adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickShare(item: TanyaKandidat) {
-                shareTanyaKandidat(item)
+                ShareUtil(context!!, item)
             }
         }
         recycler_view?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -67,10 +67,6 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             swipe_refresh?.isRefreshing = false
             presenter?.getTanyaKandidatList()
         }
-    }
-
-    private fun shareTanyaKandidat(item: TanyaKandidat) {
-        ShareUtil(context!!, item)
     }
 
     override fun bindDataTanyaKandidat(tanyaKandidatList: MutableList<TanyaKandidat>?) {
