@@ -54,6 +54,14 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                 requestPermissions(permission, PantauConstants.Camera.ASK_PERMISSIONS_REQUEST_CODE)
             }
         }
+        next_button.setOnClickListener {
+            // next
+        }
+        retake_button.setOnClickListener {
+            image_preview_container.visibility = View.GONE
+            finish()
+            startActivity(intent)
+        }
     }
 
     private fun setupCamera() {
@@ -95,10 +103,10 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
             return BitmapFactory.decodeByteArray(data, 0, data.size)
         }
 
-        fun rotate(`in`: Bitmap, angle: Int): Bitmap {
+        fun rotate(bitmap: Bitmap, angle: Int): Bitmap {
             val mat = Matrix()
             mat.postRotate(angle.toFloat())
-            return Bitmap.createBitmap(`in`, 0, 0, `in`.width, `in`.height, mat, true)
+            return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, mat, true)
         }
     }
 

@@ -97,6 +97,66 @@
             android:adjustViewBounds="true"
             android:scaleType="fitXY"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:id="@+id/retake_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@color/colorPrimaryTransparent"
+                android:layout_height="47dp"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="0.5dp"
+                android:layout_marginEnd="0.5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:letterSpacing="0.1"
+                    android:lineSpacingExtra="3sp"
+                    android:text="Ambil ulang"
+                    android:fontFamily="@font/lato_bold"
+                    android:textAllCaps="true"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/next_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@color/colorPrimaryTransparent"
+                android:layout_height="47dp"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="0.5dp"
+                android:layout_marginLeft="0.5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:letterSpacing="0.1"
+                    android:lineSpacingExtra="3sp"
+                    android:text="Lanjut"
+                    android:fontFamily="@font/lato_bold"
+                    android:textAllCaps="true"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>
