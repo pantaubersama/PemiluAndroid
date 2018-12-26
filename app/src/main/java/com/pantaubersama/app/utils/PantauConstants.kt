@@ -31,4 +31,9 @@ class PantauConstants {
     object Kuis {
         const val KUIS_ID = "kuis_id"
     }
+
+    object Camera {
+        val ASK_PERMISSIONS_REQUEST_CODE = 123
+
+    }
 }
