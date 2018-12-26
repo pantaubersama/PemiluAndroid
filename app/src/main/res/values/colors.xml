@@ -16,7 +16,9 @@
     <color name="black_2">#212121</color>
     <color name="black_3">#111111</color>
     <color name="red">#bd081c</color>
+    <color name="red_2">#eb3037</color>
     <color name="transparant">#00000000</color>
     <color name="purple">#4f339b</color>
     <color name="pinkLight">#ffebef</color>
+    <color name="orange">#f2771d</color>
 </resources>
