@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.listener.OnItemClickListener
-import com.pantaubersama.app.base.viewholder.BaseDialogFragment
+import com.pantaubersama.app.base.BaseDialogFragment
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import kotlinx.android.synthetic.main.layout_dialog_cluster_list.*
 import timber.log.Timber

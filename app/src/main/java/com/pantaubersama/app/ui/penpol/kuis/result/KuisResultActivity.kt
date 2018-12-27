@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.penpol.kuis.result
 
+import android.content.Intent
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
@@ -24,6 +25,10 @@ class KuisResultActivity : BaseActivity<BasePresenter<*>>() {
             textColor(color(R.color.black_3)) { +"Roni Handoko" }
             +" lebih suka jawaban dari Paslon no 1"
         }.toCharSequence()
+
+        btn_see_answers.setOnClickListener {
+            startActivity(Intent(this, KuisAnswerKeyActivity::class.java))
+        }
     }
 
     override fun setLayout(): Int = R.layout.activity_kuis_result

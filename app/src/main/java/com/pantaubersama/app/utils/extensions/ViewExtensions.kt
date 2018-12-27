@@ -1,11 +1,11 @@
 package com.pantaubersama.app.utils.extensions
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
@@ -17,6 +17,6 @@ fun View.visibleIf(condition: Boolean, invisible: Boolean = false) {
     this.visibility = if (condition) View.VISIBLE else hide
 }
 
-fun Button.setBackgroundTint(color: String) {
-    backgroundTintList = ColorStateList.valueOf(Color.parseColor(color))
+fun Button.setBackgroundTint(@ColorRes color: Int) {
+    backgroundTintList = ColorStateList.valueOf(context.color(color))
 }
