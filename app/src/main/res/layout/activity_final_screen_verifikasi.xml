@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.pantaubersama.app.ui.profile.verifikasi.FinalScreenVerifikasiActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@id/next_button"
+        android:gravity="center"
+        android:layout_marginTop="-32dp">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/selfie_with_id_card_animation"
+            android:scaleType="centerCrop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:lottie_fileName="complete_verification_animation.json"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Yapp, Selamat \n Akunmu telah terverifikasi"
+            android:textSize="24sp"
+            android:fontFamily="@font/lato_bold"
+            android:textColor="@color/black_3"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/finish_button"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+        android:layout_height="47dp"
+        android:foreground="?selectableItemBackground"
+        android:gravity="center"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:letterSpacing="0.1"
+            android:lineSpacingExtra="3sp"
+            android:text="Oke"
+            android:fontFamily="@font/lato_bold"
+            android:textAllCaps="true"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -11,8 +11,6 @@ import android.graphics.Point
 import android.hardware.Camera
 import android.os.Build
 import android.view.Surface
-import android.view.SurfaceHolder
-import android.view.SurfaceView
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -20,8 +18,6 @@ import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.ui.widget.CameraPreview
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_step5_verifikasi.*
-import timber.log.Timber
-import java.io.IOException
 
 class Step5VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     private var permission =
