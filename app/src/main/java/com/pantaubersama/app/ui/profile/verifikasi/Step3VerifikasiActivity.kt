@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.graphics.Point
 import android.hardware.Camera
 import android.os.Build
 import android.view.Surface
@@ -30,6 +31,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     private var mCamera: Camera? = null
     private var mPreview: CameraPreview? = null
     private var cameraCallback: Camera.PictureCallback? = null
+    private var isPreview = false
 
     override fun statusBarColor(): Int? {
         return 0
@@ -59,15 +61,30 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
         }
         retake_button.setOnClickListener {
             image_preview_container.visibility = View.GONE
-            finish()
-            startActivity(intent)
+            restartActivity()
         }
+    }
+
+    private fun restartActivity() {
+        finish()
+        startActivity(intent)
     }
 
     private fun setupCamera() {
         if (checkCameraHardware(this@Step3VerifikasiActivity)) {
             mCamera = getCameraInstance()
             mCamera?.setDisplayOrientation(90)
+            val params = mCamera?.parameters
+
+            val sizeList = params?.supportedPictureSizes
+            val display = windowManager.defaultDisplay
+            val size = Point()
+            display.getSize(size)
+            val height = size.y
+            val chosenSize = getPictureSizeIndexForHeight(sizeList!!, height) // height from screen
+            params.setPictureSize(sizeList.get(chosenSize).width, sizeList[chosenSize].height)
+
+            mCamera?.parameters = params
             mPreview = mCamera?.let {
                 CameraPreview(this, it)
             }
@@ -75,7 +92,6 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                 camera_preview.addView(it)
             }
             cameraCallback = Camera.PictureCallback { data, camera ->
-                val display = windowManager.defaultDisplay
                 var rotation = 0
                 when (display.rotation) {
                     Surface.ROTATION_0 -> rotation = -90
@@ -88,6 +104,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                 bitmap = BitmapTools.rotate(bitmap, rotation)
                 image_preview_container.visibility = View.VISIBLE
                 image_preview.setImageBitmap(bitmap)
+                isPreview = true
             }
             capture_button.setOnClickListener {
                 mCamera?.takePicture(null, null, cameraCallback)
@@ -96,6 +113,19 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                 finish()
             }
         }
+    }
+
+    fun getPictureSizeIndexForHeight(sizeList: List<Camera.Size>, height: Int): Int {
+        var chosenHeight = -1
+        for (i in sizeList.indices) {
+            if (sizeList[i].height < height) {
+                chosenHeight = i - 1
+                if (chosenHeight == -1)
+                    chosenHeight = 0
+                break
+            }
+        }
+        return chosenHeight
     }
 
     object BitmapTools {
@@ -231,6 +261,14 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                     Timber.e("Error starting camera preview: ${e.message}")
                 }
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (isPreview) {
+            restartActivity()
+        } else {
+            super.onBackPressed()
         }
     }
 
