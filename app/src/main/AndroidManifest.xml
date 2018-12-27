@@ -85,8 +85,11 @@
         <activity
             android:name=".ui.profile.verifikasi.Step3VerifikasiActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.profile.verifikasi.Step4VerifikasiActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.profile.verifikasi.Step4VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.profile.verifikasi.Step5VerifikasiActivity" />
+        <activity android:name=".ui.profile.verifikasi.Step6VerifikasiActivity"></activity>
     </application>
 
 </manifest>

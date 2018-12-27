@@ -18,11 +18,11 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.utils.PantauConstants
-import kotlinx.android.synthetic.main.activity_step3_verifikasi.*
+import kotlinx.android.synthetic.main.activity_step5_verifikasi.*
 import timber.log.Timber
 import java.io.IOException
 
-class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
+class Step5VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     private var permission =
         arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -58,7 +58,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
             }
         }
         next_button.setOnClickListener {
-            val intent = Intent(this@Step3VerifikasiActivity, Step4VerifikasiActivity::class.java)
+            val intent = Intent(this@Step5VerifikasiActivity, Step6VerifikasiActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -74,7 +74,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     private fun setupCamera() {
-        if (checkCameraHardware(this@Step3VerifikasiActivity)) {
+        if (checkCameraHardware(this@Step5VerifikasiActivity)) {
             mCamera = getCameraInstance()
             mCamera?.setDisplayOrientation(90)
             val params = mCamera?.parameters
@@ -187,13 +187,13 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
 
     override fun onResume() {
         super.onResume()
-        if (checkCameraHardware(this@Step3VerifikasiActivity)) {
+        if (checkCameraHardware(this@Step5VerifikasiActivity)) {
             setupCamera()
         }
     }
 
     override fun setLayout(): Int {
-        return R.layout.activity_step3_verifikasi
+        return R.layout.activity_step5_verifikasi
     }
 
     override fun showLoading() {
