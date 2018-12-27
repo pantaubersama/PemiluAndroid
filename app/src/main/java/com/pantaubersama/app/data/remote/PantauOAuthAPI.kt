@@ -9,7 +9,7 @@ import retrofit2.http.* // ktlint-disable
  */
 interface PantauOAuthAPI {
     @FormUrlEncoded
-    @POST("/v1/oauth/token")
+    @POST("/oauth/token")
     fun refreshToken(
         @Field("grant_type") grantType: String,
         @Field("client_id") client_id: String,
