@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.graphics.Point
 import android.hardware.Camera
 import android.os.Build
 import android.view.Surface
@@ -20,8 +21,6 @@ import kotlinx.android.synthetic.main.activity_step3_verifikasi.*
 import timber.log.Timber
 import java.io.IOException
 
-
-
 class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     private var permission =
         arrayOf(
@@ -32,6 +31,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     private var mCamera: Camera? = null
     private var mPreview: CameraPreview? = null
     private var cameraCallback: Camera.PictureCallback? = null
+    private var isPreview = false
 
     override fun statusBarColor(): Int? {
         return 0
@@ -76,8 +76,12 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
             mCamera?.setDisplayOrientation(90)
             val params = mCamera?.parameters
 
-            val sizeList = params?.getSupportedPictureSizes()
-            val chosenSize = getPictureSizeIndexForHeight(sizeList!!, 700)
+            val sizeList = params?.supportedPictureSizes
+            val display = windowManager.defaultDisplay
+            val size = Point()
+            display.getSize(size)
+            val height = size.y
+            val chosenSize = getPictureSizeIndexForHeight(sizeList!!, height) // height from screen
             params.setPictureSize(sizeList.get(chosenSize).width, sizeList[chosenSize].height)
 
             mCamera?.parameters = params
@@ -88,7 +92,6 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                 camera_preview.addView(it)
             }
             cameraCallback = Camera.PictureCallback { data, camera ->
-                val display = windowManager.defaultDisplay
                 var rotation = 0
                 when (display.rotation) {
                     Surface.ROTATION_0 -> rotation = -90
@@ -101,6 +104,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                 bitmap = BitmapTools.rotate(bitmap, rotation)
                 image_preview_container.visibility = View.VISIBLE
                 image_preview.setImageBitmap(bitmap)
+                isPreview = true
             }
             capture_button.setOnClickListener {
                 mCamera?.takePicture(null, null, cameraCallback)
@@ -261,10 +265,9 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun onBackPressed() {
-        if (image_preview.visibility==View.VISIBLE){
+        if (isPreview) {
             restartActivity()
-        }
-        else{
+        } else {
             super.onBackPressed()
         }
     }
