@@ -73,4 +73,15 @@
     <string name="hint_create_janpol_content">Beri deskripsi detail lebih lanjut dari Judul</string>
     <string name="verification_hint">Dengan diverifikasi kamu akan…. Mendapatkan manfaat dan is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
     <string name="foto_dengan_ktp_hint">Pastikan seluruh bagian wajah dari KTP anda gerada dalam bingkai foto dan terlihat jelas. Pastikan foto yang anda kirim adalar foto asli tanpa editan</string>
+    <string name="quiz_label">Quiz</string>
+    <string name="txt_belum_diikuti">Belum Diikuti</string>
+    <string name="txt_belum_selesai">Belum Selesai</string>
+    <string name="txt_selesai">Selesai</string>
+    <string name="txt_cluster">Cluster</string>
+    <string name="txt_user">User</string>
+    <string name="txt_belum_verifikasi">Belum Verifikasi</string>
+    <string name="txt_terverifikasi">Terverifikasi</string>
+    <string name="txt_pilih_cluster">Pilih Cluster</string>
+    <string name="foto_ktp_hint">Pastikan seluruh bagian KTP anda breada dalam bingkai foto ( KTP asli dan bukan fotokopi KTP)</string>
+    <string name="foto_tanda_tangan_hint">Yakk, langkah terakhir foto tanda tanganmu diatas kertas putih dengan kameramu</string>
 </resources>

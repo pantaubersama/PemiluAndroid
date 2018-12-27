@@ -67,12 +67,11 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
+                android:layout_height="match_parent">
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="16dp">
 
                     <LinearLayout
@@ -105,7 +104,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:lottie_fileName="selfie_with_id_card.json"
-                            app:lottie_autoPlay="true"/>
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"/>
 
                         <TextView
                             android:layout_width="wrap_content"

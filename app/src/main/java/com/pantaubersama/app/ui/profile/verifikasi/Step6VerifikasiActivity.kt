@@ -1,12 +1,12 @@
-package com.pantaubersama.app.ui.penpol.tanyakandidat.filter
+package com.pantaubersama.app.ui.profile.verifikasi
 
-import android.view.Menu
-import android.view.MenuItem
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
+import kotlinx.android.synthetic.main.activity_step6_verifikasi.*
 
-class FilterTanyaKandidatActivity : BaseActivity<BasePresenter<*>>() {
+class Step6VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
+
     override fun statusBarColor(): Int? {
         return 0
     }
@@ -20,11 +20,17 @@ class FilterTanyaKandidatActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun setupUI() {
-        setupToolbar(true, "Filter", R.color.white, 4f)
+        setupToolbar(true, "", R.color.white, 4f)
+        verification_step_indicator.text = "3/3"
+        next_button.setOnClickListener {
+//            val intent = Intent(this@Step6VerifikasiActivity, Step3VerifikasiActivity::class.java)
+//            startActivity(intent)
+//            finish()
+        }
     }
 
     override fun setLayout(): Int {
-        return R.layout.activity_filter_tanya_kandidat
+        return R.layout.activity_step6_verifikasi
     }
 
     override fun showLoading() {
@@ -33,21 +39,5 @@ class FilterTanyaKandidatActivity : BaseActivity<BasePresenter<*>>() {
 
     override fun dismissLoading() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_filter, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.action_reset -> resetFilter()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun resetFilter() {
-        // reset
     }
 }

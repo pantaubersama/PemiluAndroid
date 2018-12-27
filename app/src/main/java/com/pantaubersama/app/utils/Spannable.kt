@@ -6,7 +6,6 @@ import android.text.Spanned
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import java.util.*
 
 fun spannable(init: SpanWithChildren.() -> Unit): SpanWithChildren {
     val spanWithChildren = SpanWithChildren()

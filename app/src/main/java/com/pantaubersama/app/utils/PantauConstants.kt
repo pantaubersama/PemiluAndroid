@@ -21,6 +21,9 @@ class PantauConstants {
 
     object RequestCode {
         const val FILTER_PILPRES = 1001
+        const val FILTER_JANPOL = 1002
+        const val FILTER_TANYA_KANDIDAT = 1003
+        const val FILTER_KUIS = 1004
     }
 
     object Networking {
@@ -32,5 +35,10 @@ class PantauConstants {
     object Kuis {
         const val KUIS_ID = "kuis_id"
         const val KUIS_NUMBER = "kuis_number"
+    }
+
+    object Camera {
+        val ASK_PERMISSIONS_REQUEST_CODE = 123
+        val BITMAP = "bitmap"
     }
 }

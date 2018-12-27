@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_cluster_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:gravity="center_vertical"
+    android:foreground="?selectableItemBackground">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iv_avatar_cluster"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/dummy_avatar"
+        android:scaleType="centerCrop"
+        app:riv_oval="true"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp">
+        <TextView
+            android:id="@+id/tv_cluster_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Partai Pedang Panjang"
+            android:textSize="10sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/lato_bold"/>
+        <TextView
+            android:id="@+id/tv_cluster_member_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10 anggota"
+            android:textSize="9sp"
+            android:textColor="@color/gray_4"
+            android:fontFamily="@font/lato_regular"/>
+    </LinearLayout>
+</LinearLayout>
