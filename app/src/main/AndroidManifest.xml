@@ -65,6 +65,9 @@
             android:name=".ui.penpol.kuis.kuisstart.KuisActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.penpol.kuis.result.KuisAnswerKeyActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity"
             android:screenOrientation="portrait" />
         <activity

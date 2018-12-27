@@ -43,9 +43,9 @@ class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         fun bind(item: KuisListItem.Item) {
             val (buttonText, buttonColor) = when (item.state) {
-                KuisState.NOT_TAKEN -> "IKUTI" to "#f2771d"
-                KuisState.COMPLETED -> "HASIL" to "#08bda8"
-                KuisState.INCOMPLETE -> "LANJUT" to "#eb3037"
+                KuisState.NOT_TAKEN -> "IKUTI" to R.color.orange
+                KuisState.COMPLETED -> "HASIL" to R.color.colorAccent
+                KuisState.INCOMPLETE -> "LANJUT" to R.color.red_2
             }
             tv_kuis_title.text = "Kuis Minggu ke-${item.week}"
             tv_kuis_count.text = "${item.count} Pertanyaan"
