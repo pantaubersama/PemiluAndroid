@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.activity_step3_verifikasi.*
 import timber.log.Timber
 import java.io.IOException
 
+
+
 class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     private var permission =
         arrayOf(
@@ -59,15 +61,26 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
         }
         retake_button.setOnClickListener {
             image_preview_container.visibility = View.GONE
-            finish()
-            startActivity(intent)
+            restartActivity()
         }
+    }
+
+    private fun restartActivity() {
+        finish()
+        startActivity(intent)
     }
 
     private fun setupCamera() {
         if (checkCameraHardware(this@Step3VerifikasiActivity)) {
             mCamera = getCameraInstance()
             mCamera?.setDisplayOrientation(90)
+            val params = mCamera?.parameters
+
+            val sizeList = params?.getSupportedPictureSizes()
+            val chosenSize = getPictureSizeIndexForHeight(sizeList!!, 700)
+            params.setPictureSize(sizeList.get(chosenSize).width, sizeList[chosenSize].height)
+
+            mCamera?.parameters = params
             mPreview = mCamera?.let {
                 CameraPreview(this, it)
             }
@@ -96,6 +109,19 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                 finish()
             }
         }
+    }
+
+    fun getPictureSizeIndexForHeight(sizeList: List<Camera.Size>, height: Int): Int {
+        var chosenHeight = -1
+        for (i in sizeList.indices) {
+            if (sizeList[i].height < height) {
+                chosenHeight = i - 1
+                if (chosenHeight == -1)
+                    chosenHeight = 0
+                break
+            }
+        }
+        return chosenHeight
     }
 
     object BitmapTools {
@@ -231,6 +257,15 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                     Timber.e("Error starting camera preview: ${e.message}")
                 }
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (image_preview.visibility==View.VISIBLE){
+            restartActivity()
+        }
+        else{
+            super.onBackPressed()
         }
     }
 
