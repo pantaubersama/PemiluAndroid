@@ -74,4 +74,13 @@
     <string name="verification_hint">Dengan diverifikasi kamu akan…. Mendapatkan manfaat dan is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
     <string name="foto_dengan_ktp_hint">Pastikan seluruh bagian wajah dari KTP anda gerada dalam bingkai foto dan terlihat jelas. Pastikan foto yang anda kirim adalar foto asli tanpa editan</string>
     <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="quiz_label">Quiz</string>
+    <string name="txt_belum_diikuti">Belum Diikuti</string>
+    <string name="txt_belum_selesai">Belum Selesai</string>
+    <string name="txt_selesai">Selesai</string>
+    <string name="txt_cluster">Cluster</string>
+    <string name="txt_user">User</string>
+    <string name="txt_belum_verifikasi">Belum Verifikasi</string>
+    <string name="txt_terverifikasi">Terverifikasi</string>
+    <string name="txt_pilih_cluster">Pilih Cluster</string>
 </resources>

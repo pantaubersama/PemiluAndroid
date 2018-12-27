@@ -8,11 +8,13 @@ import com.google.android.material.tabs.TabLayout
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.ui.penpol.kuis.filter.FilterKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.ui.widget.TabView
+import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.fragment_pen_pol.*
 /**
  * A simple [Fragment] subclass.
@@ -39,10 +41,11 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
             when (selectedTabs) {
                 0 -> {
                     val intent = Intent(context, FilterTanyaKandidatActivity::class.java)
-                    startActivity(intent)
+                    startActivityForResult(intent, PantauConstants.RequestCode.FILTER_JANPOL)
                 }
                 else -> {
-                    // else
+                    val intent = Intent(context, FilterKuisActivity::class.java)
+                    startActivityForResult(intent, PantauConstants.RequestCode.FILTER_KUIS)
                 }
             }
         }

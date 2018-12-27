@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity">
+
+    <include layout="@layout/layout_toolbar_light"/>
+
+    <LinearLayout
+        android:id="@+id/ll_cluster_container"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:padding="22dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_cluster"
+            android:fontFamily="@font/bw_modelica_bold"
+            android:textColor="@color/black_3"
+            android:textSize="16sp"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_cluster_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_tosca_outline"
+            android:foreground="?selectableItemBackground"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_cluster_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/txt_pilih_cluster"
+                android:textSize="14dp"
+                android:textColor="@color/black_1"
+                android:fontFamily="@font/lato_regular"/>
+
+
+            <include
+                android:id="@+id/layout_item_cluster"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/item_cluster"
+                android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+        
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_cluster_container"
+        android:padding="22dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_user"
+            android:fontFamily="@font/bw_modelica_bold"
+            android:textColor="@color/black_3"
+            android:textSize="16sp"/>
+
+        <RadioGroup
+            android:id="@+id/radio_group_pilpres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+            <RadioButton
+                android:id="@+id/radbtn_semua"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_semua"
+                android:theme="@style/RadioButtonStyle"/>
+            <RadioButton
+                android:id="@+id/radbtn_belum_verifikasi"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_belum_verifikasi"
+                android:theme="@style/RadioButtonStyle"/>
+            <RadioButton
+                android:id="@+id/radbtn_terverifikasi"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_terverifikasi"
+                android:theme="@style/RadioButtonStyle"/>
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_button_terapkan_filter"/>
+
+</RelativeLayout>
