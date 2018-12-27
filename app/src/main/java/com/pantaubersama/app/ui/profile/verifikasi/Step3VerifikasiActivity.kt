@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.profile.verifikasi
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -57,7 +58,9 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
             }
         }
         next_button.setOnClickListener {
-            // next
+            val intent = Intent(this@Step3VerifikasiActivity, Step4VerifikasiActivity::class.java)
+            startActivity(intent)
+            finish()
         }
         retake_button.setOnClickListener {
             image_preview_container.visibility = View.GONE
