@@ -24,6 +24,7 @@
         <meta-data
             android:name="aia-compat-api-min-version"
             android:value="1" />
+
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"
             android:screenOrientation="portrait">
@@ -38,7 +39,7 @@
             android:label="@string/title_activity_home" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity"
             android:screenOrientation="portrait" />
@@ -64,6 +65,9 @@
             android:name=".ui.penpol.kuis.kuisstart.KuisActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.penpol.kuis.result.KuisAnswerKeyActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -80,10 +84,17 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.verifikasi.Step3VerifikasiActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.Step4VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.profile.verifikasi.Step5VerifikasiActivity" />
+        <activity android:name=".ui.profile.verifikasi.Step6VerifikasiActivity" />
+        <activity android:name=".ui.profile.verifikasi.Step7VerifikasiActivity" />
+        <activity android:name=".ui.profile.verifikasi.FinalScreenVerifikasiActivity"></activity>
     </application>
 
 </manifest>
