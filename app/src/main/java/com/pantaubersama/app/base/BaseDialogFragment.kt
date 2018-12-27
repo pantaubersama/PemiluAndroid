@@ -1,4 +1,4 @@
-package com.pantaubersama.app.base.viewholder
+package com.pantaubersama.app.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
-import com.pantaubersama.app.base.BasePresenter
-import com.pantaubersama.app.base.BaseView
 
 /**
  * @author edityomurti on 27/12/2018 01:03
