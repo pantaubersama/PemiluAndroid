@@ -5,12 +5,12 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 class OffsetItemDecoration(
-        var left: Int,
-        var top: Int = left,
-        var right: Int = left,
-        var bottom: Int = left,
-        var orientation: Int = RecyclerView.VERTICAL)
-    : RecyclerView.ItemDecoration() {
+    var left: Int,
+    var top: Int = left,
+    var right: Int = left,
+    var bottom: Int = left,
+    var orientation: Int = RecyclerView.VERTICAL
+) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         val isFirstItem = parent.getChildAdapterPosition(view) == 0
