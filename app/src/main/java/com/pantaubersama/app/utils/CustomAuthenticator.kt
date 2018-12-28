@@ -3,7 +3,6 @@ package com.pantaubersama.app.utils
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.remote.PantauOAuthAPI
-import io.reactivex.disposables.Disposable
 import okhttp3.* // ktlint-disable
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,7 +13,6 @@ import java.io.IOException
 
 class CustomAuthenticator(
     private val dataCache: DataCache,
-    private val rxSchedulers: RxSchedulers,
     private val loggingInterceptor: HttpLoggingInterceptor
 ) : Authenticator {
     private var retrofit: Retrofit? = null
@@ -38,47 +36,31 @@ class CustomAuthenticator(
 
             oAuthApi = retrofit?.create<PantauOAuthAPI>(PantauOAuthAPI::class.java)
 
-            var refreshToken: Disposable? = null
-            refreshToken = oAuthApi?.refreshToken(
+            val refreshToken = oAuthApi?.refreshToken(
                 PantauConstants.Networking.GRANT_TYPE,
                 BuildConfig.PANTAU_CLIENT_ID,
                 BuildConfig.PANTAU_CLIENT_SECRET,
-                dataCache.loadRefreshToken())
-                ?.subscribeOn(rxSchedulers.io())
-                ?.observeOn(rxSchedulers.mainThread())
-                ?.subscribe(
-                    {
-                        dataCache.saveToken(it.token?.accessToken!!)
-                        dataCache.saveRefreshToken(it.token?.refreshToken!!)
-                        if (!refreshToken?.isDisposed!!) {
-                            refreshToken?.dispose()
-                        }
-                    }, {
-                        Timber.e(it)
-                        if (!refreshToken?.isDisposed!!) {
-                            refreshToken?.dispose()
-                        }
-                    }
-                )
+                dataCache.loadRefreshToken())?.execute()
 
-            val originalRequest = response.request()
-            val originalUrl = originalRequest.url()
+            if (refreshToken?.code() == 200) {
+                dataCache.saveToken(refreshToken.body()?.accessToken!!)
+                dataCache.saveRefreshToken(refreshToken.body()?.refreshToken!!)
+                val originalRequest = response.request()
+                val originalUrl = originalRequest.url()
 
-            val url = originalUrl
+                val url = originalUrl
                     .newBuilder()
+                    .setQueryParameter(PantauConstants.Networking.OAUTH_ACCESS_TOKEN_FIELD, dataCache.loadToken())
                     .build()
 
-            val headers = originalRequest
-                .headers()
-                .newBuilder()
-                .add(PantauConstants.Networking.AUTHORIZATION, PantauConstants.Networking.BEARER+dataCache.loadToken()!!)
-                .build()
-
-            return originalRequest
-                .newBuilder()
-                .url(url)
-                .headers(headers)
-                .build()
+                return originalRequest
+                    .newBuilder()
+                    .url(url)
+                    .build()
+            } else {
+                Timber.d("failed")
+                return null
+            }
         }
     }
 }

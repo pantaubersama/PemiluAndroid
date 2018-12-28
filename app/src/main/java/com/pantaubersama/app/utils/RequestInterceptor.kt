@@ -8,21 +8,18 @@ import java.io.IOException
 class RequestInterceptor(private val dataCache: DataCache) : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        var request = chain.request()
+        val original = chain.request()
+        val originalHttpUrl = original.url()
 
-        if (dataCache.loadLoginState()) {
-            if (dataCache.loadToken() != null) {
-                val headers = request
-                    .headers()
-                    .newBuilder()
-                    .add(PantauConstants.Networking.AUTHORIZATION, PantauConstants.Networking.BEARER+dataCache.loadToken()!!)
-                    .build()
-                request = request
-                    .newBuilder()
-                    .headers(headers)
-                    .build()
-            }
-        }
+        val url = originalHttpUrl.newBuilder()
+            .addQueryParameter(PantauConstants.Networking.OAUTH_ACCESS_TOKEN_FIELD, dataCache.loadToken())
+            .build()
+
+        val requestBuilder = original.newBuilder()
+            .url(url)
+
+        val request = requestBuilder.build()
+
         return chain.proceed(request)
     }
 }
