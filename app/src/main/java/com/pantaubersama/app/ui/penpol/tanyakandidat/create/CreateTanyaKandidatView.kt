@@ -7,5 +7,6 @@ interface CreateTanyaKandidatView : BaseView {
     fun showSuccessCreateTanyaKandidatAlert()
     fun finishActivity()
     fun showFailedCreateTanyaKandidatAlert()
+    fun hideActions()
     // method
 }

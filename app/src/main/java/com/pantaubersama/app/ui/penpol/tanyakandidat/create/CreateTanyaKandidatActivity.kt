@@ -16,6 +16,7 @@ import javax.inject.Inject
 class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>(), CreateTanyaKandidatView {
     @Inject
     lateinit var interactor: TanyaKandidateInteractor
+    private var isLoading = false
 
     override fun statusBarColor(): Int {
         return 0
@@ -64,6 +65,7 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_done, menu)
+        menu?.findItem(R.id.done_action)?.isVisible = !isLoading
         return true
     }
 
@@ -93,5 +95,12 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 
     override fun showFailedCreateTanyaKandidatAlert() {
         ToastUtil.show(this@CreateTanyaKandidatActivity, "Gagal mengirim pertanyaan")
+        isLoading = false
+        invalidateOptionsMenu()
+    }
+
+    override fun hideActions() {
+        isLoading = true
+        invalidateOptionsMenu()
     }
 }
