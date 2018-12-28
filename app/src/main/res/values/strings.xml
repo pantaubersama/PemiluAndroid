@@ -102,4 +102,13 @@
     <string name="label_berikan_nilai_kami">Berikan Nilai Kami</string>
     <string name="label_bagikan_aplikasi">Bagikan Aplikasi Pantau Bersama</string>
     <string name="label_log_out">Log Out</string>
+    <string name="submit">SUBMIT</string>
+    <string name="change_profile">Change Profile</string>
+    <string name="label_nama">Nama</string>
+    <string name="label_username">Username</string>
+    <string name="label_lokasi">Lokasi</string>
+    <string name="label_deskripi_tentang_kamu">Deskripsi Tentang Kamu</string>
+    <string name="label_pendidikan">Pendidikan</string>
+    <string name="label_pekerjaan">Pekerjaan</string>
+    <string name="title_edit_profile">Edit Profile</string>
 </resources>

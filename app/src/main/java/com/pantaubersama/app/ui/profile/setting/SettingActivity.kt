@@ -1,10 +1,20 @@
 package com.pantaubersama.app.ui.profile.setting
 
+import android.content.Intent
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 
 class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
+
+    companion object {
+        val EDIT_PROFILE = 1
+        val UBAH_SANDI = 2
+        val UBAH_DATA_LAPOR = 3
+        val VERIFIKASI = 4
+        val BADGE = 5
+    }
 
     override fun statusBarColor(): Int? {
         return 0
@@ -37,7 +47,8 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     fun onClickAction() {
         setting_ubah_profil.setOnClickListener {
-            // ubah profil
+            val intent = Intent(this@SettingActivity, EditProfileActivity::class.java)
+            startActivityForResult(intent, EDIT_PROFILE)
         }
         setting_ubah_sandi.setOnClickListener {
             // ubah sandi
