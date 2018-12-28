@@ -7,6 +7,7 @@ import com.pantaubersama.app.data.remote.PantauAPI
 import com.pantaubersama.app.data.remote.PantauOAuthAPI
 import com.pantaubersama.app.data.remote.WordStadiumAPI
 import com.pantaubersama.app.utils.CustomAuthenticator
+import com.pantaubersama.app.utils.RequestInterceptor
 import com.pantaubersama.app.utils.RxSchedulers
 import dagger.Module
 import dagger.Provides
@@ -20,10 +21,15 @@ import java.util.concurrent.TimeUnit
 @Module(includes = [SharedPreferenceModule::class])
 class ApiModule {
     @Provides
-    fun provideloggingInterceptor(): HttpLoggingInterceptor {
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
         return logging
+    }
+
+    @Provides
+    fun provideNetworkInterceptor(dataCache: DataCache): RequestInterceptor {
+        return RequestInterceptor(dataCache)
     }
 
     @Provides
@@ -32,11 +38,12 @@ class ApiModule {
     }
 
     @Provides
-    fun httpClient(loggingInterceptor: HttpLoggingInterceptor, customAuthenticator: CustomAuthenticator): OkHttpClient {
+    fun httpClient(loggingInterceptor: HttpLoggingInterceptor, requestInterceptor: RequestInterceptor, customAuthenticator: CustomAuthenticator): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(requestInterceptor)
             .authenticator(customAuthenticator)
             .build()
     }

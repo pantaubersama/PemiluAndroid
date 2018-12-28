@@ -30,6 +30,13 @@ class PantauConstants {
         const val AUTHORIZATION = "Authorization"
         const val GRANT_TYPE = "refresh_token"
         const val OAUTH_ACCESS_TOKEN_FIELD = "access_token"
+        val NON_TOKEN_URL = arrayOf(
+            "/v1/callback",
+            "/oauth/token"
+        )
+        val OPTIONAL_TOKEN_URL = arrayOf(
+            "/v1/profile"
+        )
     }
 
     object Kuis {
