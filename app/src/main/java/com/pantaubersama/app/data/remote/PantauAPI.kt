@@ -1,5 +1,6 @@
 package com.pantaubersama.app.data.remote
 
+import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import retrofit2.http.* // ktlint-disable
@@ -11,4 +12,13 @@ interface PantauAPI {
     @FormUrlEncoded
     @POST("pendidikan_politik/v1/questions")
     fun createTanyaKandidat(@Field("body") body: String?): Single<ResponseBody>
+
+    @GET("pendidikan_politik/v1/questions")
+    fun getTanyaKandidatList(
+        @Query("page") page: Int?,
+        @Query("per_page") perPage: Int?,
+        @Query("order_by") orderBy: String?,
+        @Query("direction") direction: String?,
+        @Query("filter_by") filterBy: String?
+    ): Single<TanyaKandidatResponse>
 }

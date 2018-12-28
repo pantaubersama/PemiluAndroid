@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.user.Avatar
 import com.pantaubersama.app.data.model.user.User
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
@@ -53,12 +54,15 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     private fun setProfileData() {
-        val user = User(1,
-                "Haryono Sugi",
+        val user = User(
+            "8787",
+            "haryonosugi@gmail.com",
+            "Haryono",
+            "Sugi",
                 "haryono",
-                "Lorem ipsum dolor sit amet",
+                Avatar(),
                 false)
-        if (user.isVerified!!) {
+        if (user.verified!!) {
             setVerified()
         } else {
             setUnverified()
