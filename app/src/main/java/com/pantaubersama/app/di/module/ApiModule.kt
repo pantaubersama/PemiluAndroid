@@ -8,7 +8,6 @@ import com.pantaubersama.app.data.remote.PantauOAuthAPI
 import com.pantaubersama.app.data.remote.WordStadiumAPI
 import com.pantaubersama.app.utils.CustomAuthenticator
 import com.pantaubersama.app.utils.RequestInterceptor
-import com.pantaubersama.app.utils.RxSchedulers
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -33,8 +32,8 @@ class ApiModule {
     }
 
     @Provides
-    fun provideCustomAuthenticator(dataCache: DataCache, rxSchedulers: RxSchedulers, loggingInterceptor: HttpLoggingInterceptor): CustomAuthenticator {
-        return CustomAuthenticator(dataCache, rxSchedulers, loggingInterceptor)
+    fun provideCustomAuthenticator(dataCache: DataCache, loggingInterceptor: HttpLoggingInterceptor): CustomAuthenticator {
+        return CustomAuthenticator(dataCache, loggingInterceptor)
     }
 
     @Provides
