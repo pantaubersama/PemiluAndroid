@@ -37,6 +37,7 @@ class PantauConstants {
         val OPTIONAL_TOKEN_URL = arrayOf(
             "/v1/profile"
         )
+        val BEARER = "bearer "
     }
 
     object Kuis {

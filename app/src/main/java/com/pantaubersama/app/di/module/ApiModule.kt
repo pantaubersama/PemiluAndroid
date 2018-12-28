@@ -33,8 +33,8 @@ class ApiModule {
     }
 
     @Provides
-    fun provideCustomAuthenticator(dataCache: DataCache, rxSchedulers: RxSchedulers): CustomAuthenticator {
-        return CustomAuthenticator(dataCache, rxSchedulers)
+    fun provideCustomAuthenticator(dataCache: DataCache, rxSchedulers: RxSchedulers, loggingInterceptor: HttpLoggingInterceptor): CustomAuthenticator {
+        return CustomAuthenticator(dataCache, rxSchedulers, loggingInterceptor)
     }
 
     @Provides

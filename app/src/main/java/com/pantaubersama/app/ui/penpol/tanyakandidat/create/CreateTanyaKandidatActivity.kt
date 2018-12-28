@@ -8,9 +8,14 @@ import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
+import com.pantaubersama.app.data.interactors.TanyaKandidateInteractor
+import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_create_tanya_kandidat.*
+import javax.inject.Inject
 
 class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>(), CreateTanyaKandidatView {
+    @Inject
+    lateinit var interactor: TanyaKandidateInteractor
 
     override fun statusBarColor(): Int {
         return 0
@@ -25,7 +30,7 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
     }
 
     override fun initPresenter(): CreateTanyaKandidatPresenter? {
-        return CreateTanyaKandidatPresenter()
+        return CreateTanyaKandidatPresenter(interactor)
     }
 
     override fun setupUI() {
@@ -76,5 +81,17 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
     override fun onDestroy() {
         (application as BaseApp).releaseActivityComponent()
         super.onDestroy()
+    }
+
+    override fun showSuccessCreateTanyaKandidatAlert() {
+        ToastUtil.show(this@CreateTanyaKandidatActivity, "Berhasil mengirim pertanyaan")
+    }
+
+    override fun finishActivity() {
+        finish()
+    }
+
+    override fun showFailedCreateTanyaKandidatAlert() {
+        ToastUtil.show(this@CreateTanyaKandidatActivity, "Gagal mengirim pertanyaan")
     }
 }
