@@ -8,7 +8,7 @@ import java.io.IOException
 class RequestInterceptor(private val dataCache: DataCache) : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request()
+        var request = chain.request()
 
         if (dataCache.loadLoginState()) {
             if (dataCache.loadToken() != null) {
@@ -17,7 +17,7 @@ class RequestInterceptor(private val dataCache: DataCache) : Interceptor {
                     .newBuilder()
                     .add(PantauConstants.Networking.AUTHORIZATION, PantauConstants.Networking.BEARER+dataCache.loadToken()!!)
                     .build()
-                request
+                request = request
                     .newBuilder()
                     .headers(headers)
                     .build()
