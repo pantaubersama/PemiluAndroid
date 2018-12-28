@@ -10,7 +10,7 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.data.interactors.PilpresInteractor
 import com.pantaubersama.app.data.model.tweet.PilpresTweet
-import com.pantaubersama.app.ui.infobanner.BannerInfoActivity
+import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants

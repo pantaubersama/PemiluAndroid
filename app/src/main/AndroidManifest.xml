@@ -47,7 +47,7 @@
             android:name=".ui.linimasa.pilpres.filter.FilterPilpresActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.infobanner.BannerInfoActivity"
+            android:name=".ui.bannerinfo.BannerInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity"

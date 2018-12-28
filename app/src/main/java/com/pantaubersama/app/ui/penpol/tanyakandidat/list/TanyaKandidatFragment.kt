@@ -9,7 +9,7 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
-import com.pantaubersama.app.ui.infobanner.BannerInfoActivity
+import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil

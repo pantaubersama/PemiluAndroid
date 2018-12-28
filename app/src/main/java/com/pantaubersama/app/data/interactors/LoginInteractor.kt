@@ -28,4 +28,6 @@ class LoginInteractor @Inject constructor(
     fun getLoginState(): Boolean? {
         return dataCache?.loadLoginState()
     }
+
+
 }
