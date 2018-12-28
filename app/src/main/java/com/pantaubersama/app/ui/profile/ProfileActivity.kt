@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.user.User
+import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
@@ -53,10 +54,10 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     private fun setProfileData() {
         val user = User(1,
-            "Haryono Sugi",
-            "haryono",
-            "Lorem ipsum dolor sit amet",
-            false)
+                "Haryono Sugi",
+                "haryono",
+                "Lorem ipsum dolor sit amet",
+                false)
         if (user.isVerified!!) {
             setVerified()
         } else {
@@ -66,7 +67,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     private fun setUnverified() {
         verified_icon.colorFilter =
-            PorterDuffColorFilter(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1), PorterDuff.Mode.MULTIPLY)
+                PorterDuffColorFilter(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1), PorterDuff.Mode.MULTIPLY)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_gray)
         verified_button.setOnClickListener {
@@ -77,7 +78,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     private fun setVerified() {
         verified_icon.colorFilter =
-            PorterDuffColorFilter(ContextCompat.getColor(this@ProfileActivity, R.color.colorAccent), PorterDuff.Mode.MULTIPLY)
+                PorterDuffColorFilter(ContextCompat.getColor(this@ProfileActivity, R.color.colorAccent), PorterDuff.Mode.MULTIPLY)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.colorAccent))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_green)
     }
@@ -90,9 +91,9 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     private fun setupNavigation() {
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, pLinimasaFragment!!)
-            .add(R.id.fragment_container, pTanyaKandidatFragment!!)
-            .commit()
+                .add(R.id.fragment_container, pLinimasaFragment!!)
+                .add(R.id.fragment_container, pTanyaKandidatFragment!!)
+                .commit()
 
         activeFragment = pLinimasaFragment!!
 
@@ -132,10 +133,10 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     private fun showActiveFragment() {
         supportFragmentManager.beginTransaction()
-            .hide(pLinimasaFragment!!)
-            .hide(pTanyaKandidatFragment!!)
-            .show(activeFragment)
-            .commit()
+                .hide(pLinimasaFragment!!)
+                .hide(pTanyaKandidatFragment!!)
+                .show(activeFragment)
+                .commit()
     }
 
     private fun addBadgeItemLayout() {
@@ -230,7 +231,8 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.settings_action -> {
-                // open settings
+                val intent = Intent(this@ProfileActivity, SettingActivity::class.java)
+                startActivity(intent)
             }
             R.id.open_cluster_action -> {
                 // open cluster

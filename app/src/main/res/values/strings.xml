@@ -85,4 +85,21 @@
     <string name="txt_pilih_cluster">Pilih Cluster</string>
     <string name="foto_ktp_hint">Pastikan seluruh bagian KTP anda breada dalam bingkai foto ( KTP asli dan bukan fotokopi KTP)</string>
     <string name="foto_tanda_tangan_hint">Yakk, langkah terakhir foto tanda tanganmu diatas kertas putih dengan kameramu</string>
+    <string name="title_setting">Setting</string>
+    <string name="label_ubah_profil">Ubah Profil</string>
+    <string name="label_ubah_sandi">Ubah Sandi</string>
+    <string name="label_ubah_data_lapor">Ubah Data Lapor</string>
+    <string name="label_verifikasi">Verifikasi</string>
+    <string name="label_badge">Badge</string>
+    <string name="label_click_connect_twitter">Click below to connect your Symbolic account with Twitter</string>
+    <string name="label_connect_with_twitter">CONNECT WITH TWITTER</string>
+    <string name="label_connected_as">Connected as :</string>
+    <string name="label_cluster">Cluster :</string>
+    <string name="label_support">SUPPORT :</string>
+    <string name="label_pusat_bantuan">Pusta Bantuan</string>
+    <string name="label_pedoman_komunitas">Pedoman Komunitas</string>
+    <string name="label_tentang_pantau_bersama">Tentang Pantau Bersama</string>
+    <string name="label_berikan_nilai_kami">Berikan Nilai Kami</string>
+    <string name="label_bagikan_aplikasi">Bagikan Aplikasi Pantau Bersama</string>
+    <string name="label_log_out">Log Out</string>
 </resources>

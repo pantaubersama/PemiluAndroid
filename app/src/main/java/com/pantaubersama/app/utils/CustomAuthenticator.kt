@@ -5,6 +5,7 @@ import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.remote.PantauOAuthAPI
 import io.reactivex.disposables.Disposable
 import okhttp3.* // ktlint-disable
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,7 +14,8 @@ import java.io.IOException
 
 class CustomAuthenticator(
     private val dataCache: DataCache,
-    private val rxSchedulers: RxSchedulers
+    private val rxSchedulers: RxSchedulers,
+    private val loggingInterceptor: HttpLoggingInterceptor
 ) : Authenticator {
     private var retrofit: Retrofit? = null
     private var oAuthApi: PantauOAuthAPI? = null
@@ -24,6 +26,7 @@ class CustomAuthenticator(
             return response.request()
         } else {
             val client = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
                 .build()
 
             retrofit = Retrofit.Builder()
@@ -63,13 +66,19 @@ class CustomAuthenticator(
 
             val url = originalUrl
                     .newBuilder()
-                    .setQueryParameter(PantauConstants.Networking.OAUTH_ACCESS_TOKEN_FIELD, dataCache.loadToken())
                     .build()
 
+            val headers = originalRequest
+                .headers()
+                .newBuilder()
+                .add(PantauConstants.Networking.AUTHORIZATION, PantauConstants.Networking.BEARER+dataCache.loadToken()!!)
+                .build()
+
             return originalRequest
-                    .newBuilder()
-                    .url(url)
-                    .build()
+                .newBuilder()
+                .url(url)
+                .headers(headers)
+                .build()
         }
     }
 }
