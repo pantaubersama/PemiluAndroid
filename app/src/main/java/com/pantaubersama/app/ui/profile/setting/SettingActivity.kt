@@ -4,6 +4,7 @@ import android.content.Intent
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
+import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 
 class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
@@ -51,7 +52,8 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             startActivityForResult(intent, EDIT_PROFILE)
         }
         setting_ubah_sandi.setOnClickListener {
-            // ubah sandi
+            val intent = Intent(this@SettingActivity, UbahSandiActivity::class.java)
+            startActivityForResult(intent, UBAH_SANDI)
         }
         setting_ubah_data_lapor.setOnClickListener {
             // ubah data lapor

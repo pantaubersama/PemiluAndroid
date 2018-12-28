@@ -111,4 +111,8 @@
     <string name="label_pendidikan">Pendidikan</string>
     <string name="label_pekerjaan">Pekerjaan</string>
     <string name="title_edit_profile">Edit Profile</string>
+    <string name="label_masukan_kata_sandi_lama">Masukan Kata Sandi Lama</string>
+    <string name="label_kata_sandi_baru">Kata Sandi Baru</string>
+    <string name="label_konfirmasi_kata_sandi_baru">Konfirmasi Kata Sandi Baru</string>
+    <string name="label_ubah">UBAH</string>
 </resources>
