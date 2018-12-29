@@ -1,10 +1,23 @@
 package com.pantaubersama.app.ui.profile.setting
 
+import android.content.Intent
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
+import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
+import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
+import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 
 class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
+
+    companion object {
+        val EDIT_PROFILE = 1
+        val UBAH_SANDI = 2
+        val UBAH_DATA_LAPOR = 3
+        val VERIFIKASI = 4
+        val BADGE = 5
+    }
 
     override fun statusBarColor(): Int? {
         return 0
@@ -37,16 +50,20 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     fun onClickAction() {
         setting_ubah_profil.setOnClickListener {
-            // ubah profil
+            val intent = Intent(this@SettingActivity, EditProfileActivity::class.java)
+            startActivityForResult(intent, EDIT_PROFILE)
         }
         setting_ubah_sandi.setOnClickListener {
-            // ubah sandi
+            val intent = Intent(this@SettingActivity, UbahSandiActivity::class.java)
+            startActivityForResult(intent, UBAH_SANDI)
         }
         setting_ubah_data_lapor.setOnClickListener {
-            // ubah data lapor
+            val intent = Intent(this@SettingActivity, UbahDataLaporActivity::class.java)
+            startActivityForResult(intent, UBAH_DATA_LAPOR)
         }
         setting_verifikasi.setOnClickListener {
-            // verifikasi
+            val intent = Intent(this@SettingActivity, Step1VerifikasiActivity::class.java)
+            startActivityForResult(intent, VERIFIKASI)
         }
         setting_badge.setOnClickListener {
             // badge
