@@ -23,11 +23,6 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     override fun setupUI() {
         setupToolbar(true, getString(R.string.title_edit_profile), R.color.white, 4f)
         setEditextDisable(edit_profile_nama)
-        setEditextDisable(edit_profile_username)
-        setEditextDisable(edit_profile_lokasi)
-        setEditextDisable(edit_profile_deskripsi)
-        setEditextDisable(edit_profile_pendidikan)
-        setEditextDisable(edit_profile_pekerjaan)
         onClickAction()
     }
 
@@ -57,23 +52,22 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             setEditextEnable(edit_profile_nama)
         }
         edit_profile_username.setOnClickListener {
-            setEditextEnable(edit_profile_username)
+            // ok
         }
         edit_profile_lokasi.setOnClickListener {
-            setEditextEnable(edit_profile_lokasi)
+            // ok
         }
         edit_profile_deskripsi.setOnClickListener {
-            setEditextEnable(edit_profile_deskripsi)
+            // ok
         }
         edit_profile_pendidikan.setOnClickListener {
-            setEditextEnable(edit_profile_pendidikan)
+            // ok
         }
         edit_profile_pekerjaan.setOnClickListener {
-            setEditextEnable(edit_profile_pekerjaan)
+            // ok
         }
     }
 
-    // belum optimal
     fun setEditextDisable(editext: EditText) {
         editext.tag = editext.keyListener
         editext.keyListener = null

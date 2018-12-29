@@ -97,7 +97,9 @@
         <activity android:name=".ui.profile.verifikasi.FinalScreenVerifikasiActivity" />
         <activity android:name=".ui.profile.setting.SettingActivity" />
         <activity android:name=".ui.profile.setting.editprofile.EditProfileActivity" />
-        <activity android:name=".ui.profile.setting.ubahsandi.UbahSandiActivity"></activity>
+        <activity android:name=".ui.profile.setting.ubahsandi.UbahSandiActivity" />
+        <activity android:name=".ui.profile.setting.ubahdatalapor.UbahDataLaporActivity" />
+        <activity android:name=".ui.profile.setting.verifikasi.VerifikasiActivity"></activity>
     </application>
 
 </manifest>

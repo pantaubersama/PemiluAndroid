@@ -19,7 +19,7 @@ class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
     }
 
     override fun setupUI() {
-        setupToolbar(true, getString(R.string.title_setting), R.color.white, 4f)
+        setupToolbar(true, getString(R.string.title_ubah_sandi), R.color.white, 4f)
         onClickAction()
     }
 

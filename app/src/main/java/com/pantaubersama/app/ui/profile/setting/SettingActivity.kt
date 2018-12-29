@@ -4,7 +4,9 @@ import android.content.Intent
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
+import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
 import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
+import com.pantaubersama.app.ui.profile.setting.verifikasi.VerifikasiActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 
 class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
@@ -56,10 +58,12 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             startActivityForResult(intent, UBAH_SANDI)
         }
         setting_ubah_data_lapor.setOnClickListener {
-            // ubah data lapor
+            val intent = Intent(this@SettingActivity, UbahDataLaporActivity::class.java)
+            startActivityForResult(intent, UBAH_DATA_LAPOR)
         }
         setting_verifikasi.setOnClickListener {
-            // verifikasi
+            val intent = Intent(this@SettingActivity, VerifikasiActivity::class.java)
+            startActivityForResult(intent, VERIFIKASI)
         }
         setting_badge.setOnClickListener {
             // badge

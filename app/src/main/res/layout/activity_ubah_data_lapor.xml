@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity">
+    tools:context="com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -19,7 +19,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/edit_profile_submit"
+        android:layout_above="@+id/ubah_data_lapor_submit"
         android:layout_below="@+id/appbar">
 
         <LinearLayout
@@ -32,37 +32,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/edit_profile_avatar"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/dummy_avatar"
-                    app:riv_border_color="@color/white"
-                    app:riv_oval="true" />
-
                 <TextView
-                    android:id="@+id/edit_profile_change_profile"
+                    android:id="@+id/ubah_data_lapor_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/lato_italic"
-                    android:lineSpacingExtra="3sp"
-                    android:text="@string/change_profile"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="14sp" />
+                    android:fontFamily="@font/lato_regular"
+                    android:lineSpacingExtra="2sp"
+                    android:textColor="@color/gray_5"
+                    android:textSize="10sp"
+                    android:text="@string/info_data_lapor" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="vertical">
 
@@ -76,20 +65,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_italic"
-                        android:text="@string/label_nama"
+                        android:text="@string/label_no_ktp"
                         android:textColor="@color/gray_4"
                         android:textSize="10sp" />
 
                     <EditText
-                        android:id="@+id/edit_profile_nama"
+                        android:id="@+id/ubah_data_lapor_no_ktp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:background="@color/transparant"
                         android:fontFamily="@font/lato_bold"
-                        android:hint="@string/label_nama"
+                        android:hint="@string/label_no_ktp"
                         android:inputType="text|textNoSuggestions"
-                        android:text="John Doe"
+                        android:text="1263 1181 172672"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
@@ -110,20 +99,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_italic"
-                        android:text="@string/label_username"
+                        android:text="@string/label_tempat_lahir"
                         android:textColor="@color/gray_4"
                         android:textSize="10sp" />
 
                     <EditText
-                        android:id="@+id/edit_profile_username"
+                        android:id="@+id/ubah_data_lapor_tempat_lahir"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:background="@color/transparant"
                         android:fontFamily="@font/lato_bold"
-                        android:hint="@string/label_username"
+                        android:hint="@string/label_tempat_lahir"
                         android:inputType="text|textNoSuggestions"
-                        android:text="jhon"
+                        android:text="Yogyakarta"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
@@ -144,20 +133,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_italic"
-                        android:text="@string/label_lokasi"
+                        android:text="@string/label_tanggal_lahir"
                         android:textColor="@color/gray_4"
                         android:textSize="10sp" />
 
                     <EditText
-                        android:id="@+id/edit_profile_lokasi"
+                        android:id="@+id/ubah_data_lapor_tanggal_lahir"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:background="@color/transparant"
                         android:fontFamily="@font/lato_bold"
-                        android:hint="@string/label_lokasi"
+                        android:hint="@string/label_tanggal_lahir"
                         android:inputType="text|textNoSuggestions"
-                        android:text="Bandung"
+                        android:text="11/12/1995"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
@@ -178,54 +167,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_italic"
-                        android:text="@string/label_deskripi_tentang_kamu"
+                        android:text="@string/label_jenis_kelamin"
                         android:textColor="@color/gray_4"
                         android:textSize="10sp" />
 
                     <EditText
-                        android:id="@+id/edit_profile_deskripsi"
+                        android:id="@+id/ubah_data_lapor_jenis_kelamin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:background="@color/transparant"
                         android:fontFamily="@font/lato_bold"
-                        android:hint="@string/label_deskripi_tentang_kamu"
+                        android:hint="@string/label_jenis_kelamin"
                         android:inputType="text|textNoSuggestions"
-                        android:text="An ordinary netizen who likes to talk a lot. Like, a lot."
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_3" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato_italic"
-                        android:text="@string/label_pendidikan"
-                        android:textColor="@color/gray_4"
-                        android:textSize="10sp" />
-
-                    <EditText
-                        android:id="@+id/edit_profile_pendidikan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/transparant"
-                        android:fontFamily="@font/lato_bold"
-                        android:hint="@string/label_pendidikan"
-                        android:inputType="text|textNoSuggestions"
-                        android:text="Universitas Indonesia"
+                        android:text="Laki-Laki"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
@@ -251,7 +206,7 @@
                         android:textSize="10sp" />
 
                     <EditText
-                        android:id="@+id/edit_profile_pekerjaan"
+                        android:id="@+id/ubah_data_lapor_pekerjaan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -259,7 +214,109 @@
                         android:fontFamily="@font/lato_bold"
                         android:hint="@string/label_pekerjaan"
                         android:inputType="text|textNoSuggestions"
-                        android:text="Opinium Social"
+                        android:text="PNS"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_italic"
+                        android:text="@string/label_kewarganegaraan"
+                        android:textColor="@color/gray_4"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:id="@+id/ubah_data_lapor_kewarganegaraan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/transparant"
+                        android:fontFamily="@font/lato_bold"
+                        android:hint="@string/label_kewarganegaraan"
+                        android:inputType="text|textNoSuggestions"
+                        android:text="Indonesia"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_italic"
+                        android:text="@string/label_alamat"
+                        android:textColor="@color/gray_4"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:id="@+id/ubah_data_lapor_alamat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/transparant"
+                        android:fontFamily="@font/lato_bold"
+                        android:hint="@string/label_alamat"
+                        android:inputType="text|textNoSuggestions"
+                        android:text="Jalan Viva La Vida no.30"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_italic"
+                        android:text="@string/label_hp"
+                        android:textColor="@color/gray_4"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:id="@+id/ubah_data_lapor_hp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/transparant"
+                        android:fontFamily="@font/lato_bold"
+                        android:hint="@string/label_hp"
+                        android:inputType="text|textNoSuggestions"
+                        android:text="088842366888"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
@@ -275,7 +332,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
-        android:id="@+id/edit_profile_submit"
+        android:id="@+id/ubah_data_lapor_submit"
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:layout_alignParentBottom="true"
