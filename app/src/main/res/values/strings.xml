@@ -125,9 +125,4 @@
     <string name="label_alamat">Alamat</string>
     <string name="label_hp">No Tell/HP</string>
     <string name="title_ubah_sandi">Ubah Sandi</string>
-    <string name="label_verifikasi_akun">Verifikasi Akun</string>
-    <string name="kenapa_akunmu_perlu_diverifikasi">Kenapa Akunmu Perlu Diverifikasi?</string>
-    <string name="info_verifikasi_step_1">Dengan diverifikasi kamu akan…. Mendapatkan manfaat dan is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
-    <string name="label_masukkan_no_identitas_ktp">Masukkan No Identitas KTP</string>
-    <string name="label_ok">OK</string>
 </resources>
