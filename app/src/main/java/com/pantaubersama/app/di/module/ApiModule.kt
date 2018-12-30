@@ -1,12 +1,15 @@
 package com.pantaubersama.app.di.module
 
+import android.content.Context
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.pantaubersama.app.BuildConfig
+import com.pantaubersama.app.R
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.data.remote.PantauAPI
 import com.pantaubersama.app.data.remote.PantauOAuthAPI
 import com.pantaubersama.app.data.remote.WordStadiumAPI
+import com.pantaubersama.app.utils.ConnectionState
 import com.pantaubersama.app.utils.CustomAuthenticator
 import com.pantaubersama.app.utils.RequestInterceptor
 import dagger.Module
@@ -18,7 +21,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by ali on 02/10/17.
  */
-@Module(includes = [SharedPreferenceModule::class])
+@Module(includes = [SharedPreferenceModule::class, ConnectionModule::class])
 class ApiModule {
     @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
@@ -37,20 +40,37 @@ class ApiModule {
         return CustomAuthenticator(dataCache, loggingInterceptor)
     }
 
-//    private fun isNetworkAvailable(context: Context): Boolean {
-//        var connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-//        var activeNetworkInfo = connectivityManager.activeNetworkInfo
-//        return activeNetworkInfo != null && activeNetworkInfo.isConnected
-//    }
-
     @Provides
-    fun httpClient(loggingInterceptor: HttpLoggingInterceptor, requestInterceptor: RequestInterceptor, customAuthenticator: CustomAuthenticator): OkHttpClient {
+    fun httpClient(
+        loggingInterceptor: HttpLoggingInterceptor,
+        requestInterceptor: RequestInterceptor,
+        customAuthenticator: CustomAuthenticator,
+        connectionState: ConnectionState): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
             .addNetworkInterceptor(StethoInterceptor())
             .addInterceptor(loggingInterceptor)
             .addInterceptor(requestInterceptor)
+//            .addInterceptor { chain ->
+//                if (!connectionState.isConnected()) {
+//                    throw Exception("Tidak terhubung internet")
+//                }
+//
+//                val response = chain.proceed(chain.request())
+//
+//                try {
+//                    if (!response.isSuccessful) {
+//                        throw Exception("Koneksi bermasalah : " + response.body()?.string())
+//                    }
+//                } catch (e: Exception) {
+//                    throw Exception("Koneksi bermasalah : " + response.body()?.string())
+////                    e.printStackTrace()
+//                }
+//
+//
+//                response
+//            }
             .authenticator(customAuthenticator)
             .build()
     }

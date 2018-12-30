@@ -125,4 +125,6 @@
     <string name="label_alamat">Alamat</string>
     <string name="label_hp">No Tell/HP</string>
     <string name="title_ubah_sandi">Ubah Sandi</string>
+    <string name="no_internet">Tidak terhubung internet</string>
+    <string name="connection_error">Koneksi bermasalah :</string>
 </resources>
