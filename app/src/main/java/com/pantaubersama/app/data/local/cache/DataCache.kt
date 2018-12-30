@@ -4,6 +4,9 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.pantaubersama.app.data.local.SharedPref
+import com.pantaubersama.app.data.model.user.EMPTY_USER
+import com.pantaubersama.app.data.model.user.User
+
 /**
  * @author edityomurti on 21/12/2018 18:05
  */
@@ -27,6 +30,8 @@ class DataCache(context: Context) : SharedPref(context) {
         const val ACCESS_TOKEN_FIELD = "client_token"
 
         const val REFRESH_TOKEN_FIELD = "client_refresh_token"
+
+        const val USER_PROFILE = "user_profile"
     }
 
     override fun prefId(): String {
@@ -63,5 +68,13 @@ class DataCache(context: Context) : SharedPref(context) {
 
     fun loadRefreshToken(): String? {
         return getString(REFRESH_TOKEN_FIELD)
+    }
+
+    fun saveUserProfile(userProfile: User) {
+        putString(USER_PROFILE, gson.toJson(userProfile))
+    }
+
+    fun loadUserProfile(): User {
+        return gson.fromJson(getString(USER_PROFILE), User::class.java) ?: EMPTY_USER
     }
 }

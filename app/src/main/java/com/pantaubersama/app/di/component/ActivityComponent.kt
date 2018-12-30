@@ -9,6 +9,7 @@ import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
+import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import dagger.Subcomponent
 
@@ -19,6 +20,7 @@ import dagger.Subcomponent
 @Subcomponent(modules = [ActivityModule::class])
 interface ActivityComponent {
     fun inject(loginActivity: LoginActivity)
+    fun inject(profileActivity: ProfileActivity)
     fun inject(createTanyaKandidatActivity: CreateTanyaKandidatActivity)
     fun inject(splashScreenActivity: SplashScreenActivity)
     fun inject(tanyaKandidatFragment: TanyaKandidatFragment)
