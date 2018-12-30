@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.profile.setting
 import android.content.Intent
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
 import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
 import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
@@ -66,7 +67,8 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             startActivityForResult(intent, VERIFIKASI)
         }
         setting_badge.setOnClickListener {
-            // badge
+            val intent = Intent(this@SettingActivity, BadgeActivity::class.java)
+            startActivityForResult(intent, BADGE)
         }
         setting_connect_twitter.setOnClickListener {
             // connect with twitter
