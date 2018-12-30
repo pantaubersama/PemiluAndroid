@@ -1,5 +1,6 @@
 package com.pantaubersama.app.di.module
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.remote.APIWrapper
@@ -8,7 +9,6 @@ import com.pantaubersama.app.data.remote.PantauOAuthAPI
 import com.pantaubersama.app.data.remote.WordStadiumAPI
 import com.pantaubersama.app.utils.CustomAuthenticator
 import com.pantaubersama.app.utils.RequestInterceptor
-import com.pantaubersama.app.utils.RxSchedulers
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -33,15 +33,22 @@ class ApiModule {
     }
 
     @Provides
-    fun provideCustomAuthenticator(dataCache: DataCache, rxSchedulers: RxSchedulers, loggingInterceptor: HttpLoggingInterceptor): CustomAuthenticator {
-        return CustomAuthenticator(dataCache, rxSchedulers, loggingInterceptor)
+    fun provideCustomAuthenticator(dataCache: DataCache, loggingInterceptor: HttpLoggingInterceptor): CustomAuthenticator {
+        return CustomAuthenticator(dataCache, loggingInterceptor)
     }
+
+//    private fun isNetworkAvailable(context: Context): Boolean {
+//        var connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//        var activeNetworkInfo = connectivityManager.activeNetworkInfo
+//        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+//    }
 
     @Provides
     fun httpClient(loggingInterceptor: HttpLoggingInterceptor, requestInterceptor: RequestInterceptor, customAuthenticator: CustomAuthenticator): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
+            .addNetworkInterceptor(StethoInterceptor())
             .addInterceptor(loggingInterceptor)
             .addInterceptor(requestInterceptor)
             .authenticator(customAuthenticator)

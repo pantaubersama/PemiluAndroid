@@ -12,22 +12,19 @@ data class BannerInfo(
     @SerializedName("body") var body: String? = null,
     @SerializedName("header_image") var headerImage: HeaderImage? = null,
     @SerializedName("image") var image: Image? = null
-    ){
+) {
 
-    data class HeaderImage (
+    data class HeaderImage(
         @SerializedName("url") var url: String?,
         @SerializedName("large") var large: Large? = null
     )
 
-    data class Image (
+    data class Image(
         @SerializedName("url") var url: String?,
         @SerializedName("large") var large: Large? = null
     )
 
-    data class Large (
+    data class Large(
         @SerializedName("url") var url: String? = null
     )
-    
-
 }
-

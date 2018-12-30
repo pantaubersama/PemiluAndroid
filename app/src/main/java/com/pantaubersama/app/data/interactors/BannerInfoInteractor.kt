@@ -16,7 +16,7 @@ class BannerInfoInteractor @Inject constructor(
     private val dataCache: DataCache?
 ) {
     fun getBannerInfo(): Single<BannerInfoResponse>? {
-        return apiWrapper?.getPantauApi()?.getBannerInfos(dataCache?.loadToken()!!)
+        return apiWrapper?.getPantauApi()?.getBannerInfos()
             ?.subscribeOn(rxSchedulers?.io())
             ?.observeOn(rxSchedulers?.mainThread())
     }

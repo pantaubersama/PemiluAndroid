@@ -1,7 +1,9 @@
 package com.pantaubersama.app.data.remote
 
+import com.pantaubersama.app.data.model.accesstoken.Token
 import com.pantaubersama.app.data.model.accesstoken.TokenResponse
 import io.reactivex.Single
+import retrofit2.Call
 import retrofit2.http.* // ktlint-disable
 
 /**
@@ -18,5 +20,5 @@ interface PantauOAuthAPI {
         @Field("client_id") client_id: String,
         @Field("client_secret") client_secret: String?,
         @Field("refresh_token") refresh_token: String?
-    ): Single<TokenResponse>
+    ): Call<Token>
 }

@@ -8,6 +8,7 @@ class CreateTanyaKandidatPresenter @Inject constructor(private val tanyaKandidat
     fun submitQuestion(question: String?) {
         if (question != "") {
             view?.showLoading()
+            view?.hideActions()
             disposables?.add(tanyaKandidateInteractor
                 ?.createTanyaKandidat(question)
                 ?.doOnSuccess {

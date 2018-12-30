@@ -44,19 +44,19 @@
                     android:paddingTop="10dp">
 
                     <ImageView
-                        android:id="@+id/setting_ivUbahProfil"
+                        android:id="@+id/setting_icon_ubah_profil"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/baseline_profile_48_px" />
 
                     <TextView
-                        android:id="@+id/setting_tvUbahProfile"
+                        android:id="@+id/setting_text_ubah_profil"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/setting_ivUbahProfil"
+                        android:layout_toRightOf="@+id/setting_icon_ubah_profil"
                         android:fontFamily="@font/lato_regular"
                         android:text="@string/label_ubah_profil"
                         android:textColor="@color/black"
@@ -67,7 +67,7 @@
                         android:layout_height="1dp"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/setting_ivUbahProfil"
+                        android:layout_toRightOf="@+id/setting_icon_ubah_profil"
                         android:background="@color/gray_3" />
 
                 </RelativeLayout>
@@ -82,19 +82,19 @@
                     android:paddingTop="10dp">
 
                     <ImageView
-                        android:id="@+id/setting_ivUbahSandi"
+                        android:id="@+id/setting_icon_ubah_sandi"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/group_1172" />
 
                     <TextView
-                        android:id="@+id/setting_tvUbahSandi"
+                        android:id="@+id/setting_text_ubah_sandi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/setting_ivUbahSandi"
+                        android:layout_toRightOf="@+id/setting_icon_ubah_sandi"
                         android:fontFamily="@font/lato_regular"
                         android:text="@string/label_ubah_sandi"
                         android:textColor="@color/black"
@@ -105,7 +105,7 @@
                         android:layout_height="1dp"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/setting_ivUbahSandi"
+                        android:layout_toRightOf="@+id/setting_icon_ubah_sandi"
                         android:background="@color/gray_3" />
 
                 </RelativeLayout>
@@ -120,19 +120,19 @@
                     android:paddingTop="10dp">
 
                     <ImageView
-                        android:id="@+id/setting_ivUbahDataLaporan"
+                        android:id="@+id/setting_icon_ubah_data_laporan"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/baseline_assignment_48_px" />
 
                     <TextView
-                        android:id="@+id/setting_tvUbahDataLaporan"
+                        android:id="@+id/setting_text_ubah_data_laporan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/setting_ivUbahDataLaporan"
+                        android:layout_toRightOf="@+id/setting_icon_ubah_data_laporan"
                         android:fontFamily="@font/lato_regular"
                         android:text="@string/label_ubah_data_lapor"
                         android:textColor="@color/black"
@@ -143,7 +143,7 @@
                         android:layout_height="1dp"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/setting_ivUbahDataLaporan"
+                        android:layout_toRightOf="@+id/setting_icon_ubah_data_laporan"
                         android:background="@color/gray_3" />
 
                 </RelativeLayout>
@@ -158,19 +158,19 @@
                     android:paddingTop="10dp">
 
                     <ImageView
-                        android:id="@+id/setting_ivUbahVerifikasi"
+                        android:id="@+id/setting_icon_ubah_verifikasi"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/baseline_verified_48_px" />
 
                     <TextView
-                        android:id="@+id/setting_tvUbahVerifikasi"
+                        android:id="@+id/setting_text_ubah_verifikasi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/setting_ivUbahVerifikasi"
+                        android:layout_toRightOf="@+id/setting_icon_ubah_verifikasi"
                         android:fontFamily="@font/lato_regular"
                         android:text="@string/label_verifikasi"
                         android:textColor="@color/black"
@@ -181,7 +181,7 @@
                         android:layout_height="1dp"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/setting_ivUbahVerifikasi"
+                        android:layout_toRightOf="@+id/setting_icon_ubah_verifikasi"
                         android:background="@color/gray_3" />
 
                 </RelativeLayout>
@@ -196,19 +196,19 @@
                     android:paddingTop="10dp">
 
                     <ImageView
-                        android:id="@+id/setting_ivUbahBadge"
+                        android:id="@+id/setting_icon_ubah_badge"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/group_1174" />
 
                     <TextView
-                        android:id="@+id/setting_tvUbahBadge"
+                        android:id="@+id/setting_text_ubah_badge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/setting_ivUbahBadge"
+                        android:layout_toRightOf="@+id/setting_icon_ubah_badge"
                         android:fontFamily="@font/lato_regular"
                         android:text="@string/label_badge"
                         android:textColor="@color/black"
@@ -219,7 +219,7 @@
                         android:layout_height="1dp"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/setting_ivUbahBadge"
+                        android:layout_toRightOf="@+id/setting_icon_ubah_badge"
                         android:background="@color/gray_3" />
 
                 </RelativeLayout>

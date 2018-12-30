@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -14,26 +15,27 @@ import com.pantaubersama.app.base.adapter.BaseAdapter
 import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.base.listener.OnItemLongClickListener
 import com.pantaubersama.app.base.viewholder.BaseViewHolder
-import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
+import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_action_post.*
 import kotlinx.android.synthetic.main.layout_option_dialog_tanya_kandidat.*
 
-class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaKandidatAdapter.TanyaKandidatViewHolder>(context) {
+class TanyaKandidatAdapter(context: Context) : BaseAdapter<Pertanyaan, TanyaKandidatAdapter.TanyaKandidatViewHolder>(context) {
     var listener: TanyaKandidatAdapter.AdapterListener? = null
 
     inner class TanyaKandidatViewHolder(
         override val containerView: View?,
         clickListener: OnItemClickListener?,
         longClickListener: OnItemLongClickListener?
-    ) : BaseViewHolder<TanyaKandidat>(
+    ) : BaseViewHolder<Pertanyaan>(
         containerView!!, clickListener, longClickListener), LayoutContainer {
-        override fun bind(item: TanyaKandidat) {
-            tv_user_name.text = item.user?.name
-            question_time.text = item.createdAt
-            upvote_count_text.text = item.upVoteCount.toString()
-            user_question.text = item.question
+        @SuppressLint("SetTextI18n")
+        override fun bind(item: Pertanyaan) {
+            tv_user_name.text = item.user?.firstName + item.user?.lastName
+            question_time.text = item.createdAt?.id
+            upvote_count_text.text = item.likeCount.toString()
+            user_question.text = item.body
             iv_options_button.setOnClickListener {
                 showOptionsDialog(itemView)
             }
@@ -45,21 +47,21 @@ class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaK
             }
         }
 
-        private fun setUpvoted(item: TanyaKandidat?) {
-            val upVoted = item?.isUpvoted
-            item?.isUpvoted = !item?.isUpvoted!!
+        private fun setUpvoted(item: Pertanyaan?) {
+            val upVoted = item?.isliked
+            item?.isliked = !item?.isliked!!
             val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
             if (upVoted!!) {
-                val upVoteCount = item.upVoteCount!! - 1
-                item.upVoteCount = upVoteCount
-                upvote_count_text.text = item.upVoteCount.toString()
+                val upVoteCount = item.likeCount!! - 1
+                item.likeCount = upVoteCount
+                upvote_count_text.text = item.likeCount.toString()
                 upvote_button.progress = 0.0f
             } else {
-                val loveCount = item.upVoteCount!! + 1
-                item.upVoteCount = loveCount
+                val loveCount = item.likeCount!! + 1
+                item.likeCount = loveCount
                 animator.addUpdateListener {
                     animation -> upvote_button.progress = animation.animatedValue as Float
-                    upvote_count_text.text = item.upVoteCount.toString()
+                    upvote_count_text.text = item.likeCount.toString()
                 }
                 animator.start()
             }
@@ -111,6 +113,6 @@ class TanyaKandidatAdapter(context: Context) : BaseAdapter<TanyaKandidat, TanyaK
     }
 
     interface AdapterListener {
-        fun onClickShare(item: TanyaKandidat)
+        fun onClickShare(item: Pertanyaan)
     }
 }

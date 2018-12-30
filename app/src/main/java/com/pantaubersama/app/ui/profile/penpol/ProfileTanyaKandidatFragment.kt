@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.listener.OnItemClickListener
-import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
+import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatAdapter
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
@@ -37,7 +37,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     private fun setupTanyaKandidatList() {
         adapter = TanyaKandidatAdapter(context!!)
         adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
-            override fun onClickShare(item: TanyaKandidat) {
+            override fun onClickShare(item: Pertanyaan) {
                 ShareUtil(context!!, item)
             }
         }
@@ -50,9 +50,9 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
         })
     }
 
-    override fun bindDataTanyaKandidat(tanyaKandidatList: MutableList<TanyaKandidat>?) {
+    override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>?) {
         recycler_view?.visibility = View.VISIBLE
-        adapter.replaceData(tanyaKandidatList?.toList()!!)
+        adapter.replaceData(pertanyaanList?.toList()!!)
     }
 
     override fun showEmptyDataAlert() {

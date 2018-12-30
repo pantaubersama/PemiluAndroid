@@ -17,7 +17,7 @@ class BannerInfoPresenter @Inject constructor(private val bannerInfoInteractor: 
             ?.doOnSuccess { bannerInfoResponse ->
                 bannerInfoInteractor.getBannerInfo()
             }
-            ?.doOnError {e ->
+            ?.doOnError { e ->
                 view?.dismissLoading()
                 view?.showError(e!!)
                 view?.showBannerInfo()

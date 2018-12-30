@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.create
 
 import com.pantaubersama.app.base.BaseView
+import com.pantaubersama.app.data.interactors.TanyaKandidateInteractor
 import org.junit.After
 import org.junit.Before
 
@@ -12,8 +13,11 @@ import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class CreateTanyaKandidatPresenterTest {
+class CreatePertanyaanPresenterTest {
     private var presenter: CreateTanyaKandidatPresenter? = null
+
+    @Mock
+    private var interactor: TanyaKandidateInteractor? = null
 
     @Mock
     private var view: CreateTanyaKandidatView? = null
@@ -21,7 +25,7 @@ class CreateTanyaKandidatPresenterTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        presenter = spy(CreateTanyaKandidatPresenter())
+        presenter = spy(CreateTanyaKandidatPresenter(interactor))
         presenter?.attach(view as BaseView)
     }
 

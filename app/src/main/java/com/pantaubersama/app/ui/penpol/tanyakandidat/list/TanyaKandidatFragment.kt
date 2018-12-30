@@ -8,8 +8,9 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.listener.OnItemClickListener
-import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidat
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
+import com.pantaubersama.app.data.interactors.TanyaKandidateInteractor
+import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
@@ -17,8 +18,13 @@ import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import javax.inject.Inject
 
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
+    @Inject
+    lateinit var interactor: TanyaKandidateInteractor
+    private var page = 1
+    private var perPage = 10
 
     private lateinit var adapter: TanyaKandidatAdapter
 
@@ -27,7 +33,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun initPresenter(): TanyaKandidatPresenter? {
-        return TanyaKandidatPresenter()
+        return TanyaKandidatPresenter(interactor)
     }
 
     override fun initView(view: View) {
@@ -37,7 +43,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         }
         setupBanner()
         setupTanyaKandidatList()
-        presenter?.getTanyaKandidatList()
+        presenter?.getTanyaKandidatList(page, perPage, "created", "desc", "user_verified_all")
     }
 
     private fun setupBanner() {
@@ -52,7 +58,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     private fun setupTanyaKandidatList() {
         adapter = TanyaKandidatAdapter(context!!)
         adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
-            override fun onClickShare(item: TanyaKandidat) {
+            override fun onClickShare(item: Pertanyaan) {
                 ShareUtil(context!!, item)
             }
         }
@@ -65,13 +71,14 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         })
         swipe_refresh?.setOnRefreshListener {
             swipe_refresh?.isRefreshing = false
-            presenter?.getTanyaKandidatList()
+            page = 1
+            presenter?.getTanyaKandidatList(page, perPage, "created", "desc", "user_verified_all")
         }
     }
 
-    override fun bindDataTanyaKandidat(tanyaKandidatList: MutableList<TanyaKandidat>?) {
+    override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>?) {
         recycler_view?.visibility = View.VISIBLE
-        adapter.replaceData(tanyaKandidatList?.toList()!!)
+        adapter.replaceData(pertanyaanList?.toList()!!)
     }
 
     override fun showEmptyDataAlert() {
@@ -90,6 +97,10 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     override fun dismissLoading() {
         progress_bar?.visibility = View.GONE
+    }
+
+    override fun showFailedGetDataAlert() {
+        ToastUtil.show(context!!, "Gagal memuat daftar pertanyaan")
     }
 
     companion object {
