@@ -23,8 +23,8 @@ import kotlinx.android.synthetic.main.fragment_pen_pol.*
 class PenPolFragment : BaseFragment<BasePresenter<*>>() {
     private var selectedTabs: Int = 0
 
-    private var tanyaKandidatFragment = TanyaKandidatFragment.newInstance()
-    private var kuisFragment = KuisFragment.newInstance()
+    private var tanyaKandidatFragment: TanyaKandidatFragment? = TanyaKandidatFragment.newInstance()
+    private var kuisFragment: KuisFragment? = KuisFragment.newInstance()
 
     override fun initPresenter(): BasePresenter<*>? {
         return null
@@ -35,7 +35,7 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
         setupViewPager()
         btn_create.setOnClickListener {
             val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE)
         }
         btn_filter?.setOnClickListener {
             when (selectedTabs) {
@@ -100,8 +100,8 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
         view_pager?.adapter = object : FragmentPagerAdapter(childFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
-                    0 -> tanyaKandidatFragment
-                    1 -> kuisFragment
+                    0 -> tanyaKandidatFragment!!
+                    1 -> kuisFragment!!
                     else -> Fragment()
                 }
             }
@@ -115,6 +115,13 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
     companion object {
         fun newInstance(): PenPolFragment {
             return PenPolFragment()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (tanyaKandidatFragment != null) {
+            tanyaKandidatFragment?.onActivityResult(requestCode, resultCode, data)
         }
     }
 }

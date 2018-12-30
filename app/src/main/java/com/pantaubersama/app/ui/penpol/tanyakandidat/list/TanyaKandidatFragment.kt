@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
+import android.app.Activity
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -112,5 +113,15 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     override fun onDestroy() {
         (activity?.application as BaseApp).releaseActivityComponent()
         super.onDestroy()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE) {
+                adapter.add((data?.getSerializableExtra(PantauConstants.TanyaKandidat.TANYA_KANDIDAT_DATA) as Pertanyaan), 0)
+                recycler_view.smoothScrollToPosition(0)
+            }
+        }
     }
 }
