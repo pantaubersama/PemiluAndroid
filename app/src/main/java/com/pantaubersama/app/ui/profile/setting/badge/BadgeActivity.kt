@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.profile.setting.badge
 
-import android.app.Activity
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_badge.*
