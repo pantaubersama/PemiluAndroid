@@ -277,7 +277,7 @@
     <LinearLayout
         android:id="@+id/edit_profile_submit"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
         android:clickable="true"
