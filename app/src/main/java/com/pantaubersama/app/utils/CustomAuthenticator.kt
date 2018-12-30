@@ -21,45 +21,47 @@ class CustomAuthenticator(
 
     @Throws(IOException::class)
     override fun authenticate(route: Route, response: Response): Request? {
-        val client = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .addNetworkInterceptor(StethoInterceptor())
-            .build()
-
-        retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.PANTAU_OAUTH_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
-
-        oAuthApi = retrofit?.create<PantauOAuthAPI>(PantauOAuthAPI::class.java)
-
-        val refreshToken = oAuthApi?.refreshToken(
-            PantauConstants.Networking.GRANT_TYPE,
-            BuildConfig.PANTAU_CLIENT_ID,
-            BuildConfig.PANTAU_CLIENT_SECRET,
-            dataCache.loadRefreshToken())?.execute()
-
-        if (refreshToken?.code() == 200) {
-            dataCache.saveToken(refreshToken.body()?.accessToken!!)
-            dataCache.saveRefreshToken(refreshToken.body()?.refreshToken!!)
-            val originalRequest = response.request()
-            val originalUrl = originalRequest.url()
-
-            val url = originalUrl
-                .newBuilder()
+        synchronized(this) {
+            val client = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .addNetworkInterceptor(StethoInterceptor())
                 .build()
 
-            return originalRequest
-                .newBuilder()
-                .removeHeader(PantauConstants.Networking.AUTHORIZATION)
-                .addHeader(PantauConstants.Networking.AUTHORIZATION, dataCache.loadToken()!!)
-                .url(url)
+            retrofit = Retrofit.Builder()
+                .baseUrl(BuildConfig.PANTAU_OAUTH_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
-        } else {
-            Timber.d("FAILED REFRESHING TOKEN –– caused by : ${refreshToken?.message()}")
-            return null
+
+            oAuthApi = retrofit?.create<PantauOAuthAPI>(PantauOAuthAPI::class.java)
+
+            val refreshToken = oAuthApi?.refreshToken(
+                PantauConstants.Networking.GRANT_TYPE,
+                BuildConfig.PANTAU_CLIENT_ID,
+                BuildConfig.PANTAU_CLIENT_SECRET,
+                dataCache.loadRefreshToken())?.execute()
+
+            if (refreshToken?.code() == 200) {
+                dataCache.saveToken(refreshToken.body()?.accessToken!!)
+                dataCache.saveRefreshToken(refreshToken.body()?.refreshToken!!)
+                val originalRequest = response.request()
+                val originalUrl = originalRequest.url()
+
+                val url = originalUrl
+                    .newBuilder()
+                    .build()
+
+                return originalRequest
+                    .newBuilder()
+                    .removeHeader(PantauConstants.Networking.AUTHORIZATION)
+                    .addHeader(PantauConstants.Networking.AUTHORIZATION, dataCache.loadToken()!!)
+                    .url(url)
+                    .build()
+            } else {
+                Timber.d("FAILED REFRESHING TOKEN –– caused by : ${refreshToken?.message()}")
+                return null
+            }
         }
     }
 }
