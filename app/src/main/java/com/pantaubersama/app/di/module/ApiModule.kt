@@ -1,9 +1,7 @@
 package com.pantaubersama.app.di.module
 
-import android.content.Context
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.pantaubersama.app.BuildConfig
-import com.pantaubersama.app.R
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.data.remote.PantauAPI
@@ -45,7 +43,8 @@ class ApiModule {
         loggingInterceptor: HttpLoggingInterceptor,
         requestInterceptor: RequestInterceptor,
         customAuthenticator: CustomAuthenticator,
-        connectionState: ConnectionState): OkHttpClient {
+        connectionState: ConnectionState
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -65,7 +64,7 @@ class ApiModule {
 //                    }
 //                } catch (e: Exception) {
 //                    throw Exception("Koneksi bermasalah : " + response.body()?.string())
-////                    e.printStackTrace()
+//                    e.printStackTrace()
 //                }
 //
 //
