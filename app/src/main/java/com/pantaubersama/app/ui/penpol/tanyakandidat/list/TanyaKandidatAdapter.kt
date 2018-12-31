@@ -135,7 +135,7 @@ class TanyaKandidatAdapter(private val userId: String?) : RecyclerView.Adapter<R
             dialog.setContentView(R.layout.layout_delete_confirmation_dialog)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.setOnKeyListener { _, keyCode, _ ->
-                if (keyCode == KeyEvent.KEYCODE_BACK){
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
                     dialog.dismiss()
                     true
                 } else {

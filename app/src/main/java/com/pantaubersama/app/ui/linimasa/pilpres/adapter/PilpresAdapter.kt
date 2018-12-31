@@ -5,8 +5,10 @@ import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
@@ -18,7 +20,6 @@ import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.base.listener.OnItemLongClickListener
 import com.pantaubersama.app.base.viewholder.BaseViewHolder
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
-import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.extensions.LayoutContainer
@@ -28,7 +29,10 @@ import kotlinx.android.synthetic.main.layout_option_dialog_pilpres_tweet.*
 /**
  * @author edityomurti on 19/12/2018 14:17
  */
-class PilpresAdapter(context: Context) : BaseAdapter<FeedsItem, PilpresAdapter.PilpresViewHolder>(context) {
+class PilpresAdapter(context: Context, isTwitterAppInstalled: Boolean) : BaseAdapter<FeedsItem, PilpresAdapter.PilpresViewHolder>(context) {
+
+//    constructor(context: Context, isTwitterAppInstalled: Boolean): super(conte)
+    private var isTwitterAppInstalled: Boolean = isTwitterAppInstalled
 
     var listener: PilpresAdapter.AdapterListener? = null
     var VIEW_TYPE_LOADING = 0
@@ -49,13 +53,13 @@ class PilpresAdapter(context: Context) : BaseAdapter<FeedsItem, PilpresAdapter.P
             Glide.with(itemView.context).load(item.account?.profileImageUrl).into(iv_tweet_avatar)
             tv_tweet_name.text = item.account?.name
             tv_tweet_username.text = item.account?.username
-            tv_tweet_content.text = item.source?.text
-            tv_team_name.text = itemView.context.getString(R.string.txt_disematkan_dari) + item.team?.title
-            tv_tweet_content.setOnClickListener {
+            tv_tweet_content.text = "@" + item.source?.text
+            tv_team_name.text = itemView.context.getString(R.string.txt_disematkan_dari) + " " + item.team?.title
+            rl_item_pilpres_tweet.setOnClickListener {
                 listener?.onClickTweetContent(item)
             }
             iv_option.setOnClickListener {
-                showOptionDialog(itemView, item)
+                showOptionDialog(itemView, item, isTwitterAppInstalled)
             }
         }
     }
@@ -96,7 +100,7 @@ class PilpresAdapter(context: Context) : BaseAdapter<FeedsItem, PilpresAdapter.P
         fun onClickShare(item: FeedsItem)
     }
 
-    private fun showOptionDialog(itemView: View?, item: FeedsItem) {
+    private fun showOptionDialog(itemView: View?, item: FeedsItem, isTwitterAppInstalled: Boolean) {
         val dialog = Dialog(itemView?.context!!)
         dialog.setContentView(R.layout.layout_option_dialog_pilpres_tweet)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -128,9 +132,16 @@ class PilpresAdapter(context: Context) : BaseAdapter<FeedsItem, PilpresAdapter.P
             listener?.onClickShare(item)
             dialog.dismiss()
         }
-        dialog.action_open_in_app?.setOnClickListener {
-            ChromeTabUtil(itemView.context).loadUrl(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id)
+        if (isTwitterAppInstalled) {
+            dialog.action_open_in_app?.setOnClickListener {
+                //            ChromeTabUtil(itemView.context).loadUrl(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id)
+                var openInTwitterApp = Intent(Intent.ACTION_VIEW, Uri.parse("twitter://status?status_id=${item.source?.id}"))
+                itemView.context.startActivity(openInTwitterApp)
+            }
+        } else {
+            dialog.action_open_in_app?.visibility = View.GONE
         }
+
         dialog.show()
     }
 

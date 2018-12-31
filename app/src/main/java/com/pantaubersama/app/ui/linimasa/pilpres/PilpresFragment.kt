@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.linimasa.pilpres
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,7 @@ import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_pilpres.*
 import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
@@ -82,7 +84,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     private fun setupRecyclerPilpres() {
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        adapter = PilpresAdapter(context!!)
+        adapter = PilpresAdapter(context!!, isTwitterAppInstalled())
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
         adapter.setOnItemClickListener(object : OnItemClickListener {
@@ -92,6 +94,8 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         adapter.listener = object : PilpresAdapter.AdapterListener {
             override fun onClickTweetContent(item: FeedsItem) {
                 ChromeTabUtil(context!!).loadUrl(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id)
+//                var openTweetinBrowser = Intent(Intent.ACTION_VIEW, Uri.parse(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id))
+//                startActivityForResult(openTweetinBrowser, 666)
             }
 
             override fun onClickShare(item: FeedsItem) {
@@ -170,10 +174,39 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
                 PantauConstants.RequestCode.BANNER_PILPRES -> hideBanner()
             }
         }
+        when (requestCode) {
+            666 -> {
+                Timber.e("WAGU BUKA TWITTER")
+                Timber.e("RC : $resultCode")
+                if (data != null) {
+                    Timber.e("data : $data")
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
         (activity?.application as BaseApp).releaseActivityComponent()
         super.onDestroy()
+    }
+
+    private fun isTwitterAppInstalled(): Boolean {
+        val pkManager = activity?.getPackageManager()
+        var isInstalled = false
+        try {
+            val pkgInfo = pkManager?.getPackageInfo("com.twitter.android", 0)
+            val getPkgInfo = pkgInfo.toString()
+
+            Timber.d("pkginfo : $pkgInfo")
+
+            if (getPkgInfo.contains("com.twitter.android")) {
+                isInstalled = true
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+
+            isInstalled = false
+        }
+        return isInstalled
     }
 }

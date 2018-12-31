@@ -4,7 +4,8 @@
     android:id="@+id/rl_item_pilpres_tweet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp">
+    android:paddingTop="10dp"
+    android:foreground="?selectableItemBackground">
 
     <LinearLayout
         android:id="@+id/ll_tweet_content"
@@ -100,6 +101,7 @@
                             android:id="@+id/tv_tweet_username"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
                             android:textSize="12sp"
                             android:text=" @Toranta"
                             android:textColor="@color/gray_4"
@@ -134,7 +136,6 @@
                 </LinearLayout>
 
                 <TextView
-                    android:background="?selectableItemBackground"
                     android:fontFamily="@font/lato_medium"
                     android:id="@+id/tv_tweet_content"
                     android:layout_width="match_parent"
