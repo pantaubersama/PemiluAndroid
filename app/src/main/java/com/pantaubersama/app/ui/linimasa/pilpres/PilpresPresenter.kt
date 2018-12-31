@@ -18,20 +18,28 @@ class PilpresPresenter @Inject constructor(
     }
 
     fun getFeeds(page: Int, perPage: Int) {
-        view?.showLoading()
+        if (page == 1) {
+            view?.showLoading()
+        } else {
+
+        }
         val selectedFilter = pilpresInteractor?.getPilpresFilter()
 
         disposables?.add(pilpresInteractor?.getFeeds(page, perPage)
             ?.doOnSuccess {
-                view?.dismissLoading()
-                if (it.feeds?.feedList != null) {
-                    if (it.feeds?.feedList?.size != 0) {
-                        view?.showFeeds(it.feeds?.feedList!!)
+                if (page == 1) {
+                    view?.dismissLoading()
+                    if (it.feeds?.feedList != null) {
+                        if (it.feeds?.feedList?.size != 0) {
+                            view?.showFeeds(it.feeds?.feedList!!)
+                        } else {
+                            view?.showEmptyData()
+                        }
                     } else {
-                        view?.showEmptyData()
+                        view?.showFailedGetData()
                     }
                 } else {
-                    view?.showFailedGetData()
+                    view?.showMoreFeeds(it.feeds?.feedList!!)
                 }
             }
             ?.doOnError {

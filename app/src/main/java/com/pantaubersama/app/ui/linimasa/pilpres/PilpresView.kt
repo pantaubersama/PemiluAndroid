@@ -10,6 +10,7 @@ interface PilpresView : BaseView {
     fun showBanner()
     fun hideBanner()
     fun showFeeds(feedsList: MutableList<FeedsItem>)
+    fun showMoreFeeds(feedsList: MutableList<FeedsItem>)
     fun showEmptyData()
     fun showFailedGetData()
 }

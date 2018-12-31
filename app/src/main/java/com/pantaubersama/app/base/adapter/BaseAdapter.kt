@@ -24,9 +24,10 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
     private var lastVisibleItem: Int? = null
     private var totalItemCount: Int? = null
     private var totalItemBeforeLoadMore: Int? = null
-    private var visibleTreshold = 5
+    private var visibleTreshold = 10
     private var page = 1
-    private var loadingMore = false
+    private var isLoadingMore = false
+    private var isDataEnd = false
     private var loadMoreListener: OnLoadMoreListener? = null
 
     fun setOnItemClickListener(itemClickListener: OnItemClickListener) {
@@ -51,17 +52,16 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
                     super.onScrollStateChanged(recyclerView, newState)
                     totalItemCount = linearLayoutManager.itemCount
                     lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition()
-
-                    if (!loadingMore && totalItemCount!! <= (lastVisibleItem!! + visibleTreshold)) {
+                    if (!isDataEnd && !isLoadingMore && totalItemCount!! <= (lastVisibleItem!! + visibleTreshold)) {
                         page++
                         loadMoreListener.loadMore(page)
-                        loadingMore = true
+                        isLoadingMore = true
                     }
 
-                    if (totalItemBeforeLoadMore != totalItemCount) {
-                        loadingMore = false
-                        totalItemBeforeLoadMore = totalItemCount
-                    }
+//                    if (totalItemBeforeLoadMore != totalItemCount) {
+//                        isLoadingMore = false
+//                        totalItemBeforeLoadMore = totalItemCount
+//                    }
                 }
             })
         } else {
@@ -178,6 +178,29 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
 
     fun getPosition(item: T): Int {
         return data.indexOf(item)
+    }
+
+    fun setLoading(item: T) {
+        isLoadingMore = true
+        add(item)
+    }
+
+    fun setLoaded() {
+        if (isLoadingMore) {
+            isLoadingMore = false
+            remove(data.size - 1)
+        }
+    }
+
+    fun setDataEnd(isDataEnd: Boolean) {
+        if (!isDataEnd) {
+            page = 1
+        }
+        this.isDataEnd = isDataEnd
+    }
+
+    fun isDataEnd(): Boolean {
+        return isDataEnd
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): V {

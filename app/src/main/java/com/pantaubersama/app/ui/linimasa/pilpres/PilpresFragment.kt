@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
+import com.pantaubersama.app.base.adapter.BaseAdapter
 import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.data.interactors.PilpresInteractor
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
@@ -29,7 +30,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     @Inject
     lateinit var interactor: PilpresInteractor
 
-    private var page = 1
+//    private var page = 1
     private var perPage = 20
 
     private lateinit var adapter: PilpresAdapter
@@ -97,6 +98,14 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
                 shareTweet(item)
             }
         }
+        adapter.addSupportLoadMore(recycler_view, object : BaseAdapter.OnLoadMoreListener {
+            override fun loadMore(page: Int) {
+//                this@PilpresFragment.page = page
+                adapter.setLoading()
+                presenter?.getFeeds(page, perPage)
+            }
+        })
+
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
             getFeedsData()
@@ -105,12 +114,21 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     fun getFeedsData() {
-        presenter?.getFeeds(page, perPage)
+        adapter.setDataEnd(false)
+        presenter?.getFeeds(1, perPage)
     }
 
     override fun showFeeds(feedsList: MutableList<FeedsItem>) {
         recycler_view.visibility = View.VISIBLE
         adapter.replaceData(feedsList)
+    }
+
+    override fun showMoreFeeds(feedsList: MutableList<FeedsItem>) {
+        adapter.setLoaded()
+        if (feedsList.size < perPage) {
+            adapter.setDataEnd(true)
+        }
+        adapter.add(feedsList)
     }
 
     override fun showFailedGetData() {

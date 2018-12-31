@@ -31,8 +31,10 @@ import kotlinx.android.synthetic.main.layout_option_dialog_pilpres_tweet.*
 class PilpresAdapter(context: Context) : BaseAdapter<FeedsItem, PilpresAdapter.PilpresViewHolder>(context) {
 
     var listener: PilpresAdapter.AdapterListener? = null
+    var VIEW_TYPE_LOADING = 0
+    var VIEW_TYPE_ITEM = 1
 
-    inner class PilpresViewHolder(
+    open inner class PilpresViewHolder(
         override val containerView: View?,
         itemClickListener: OnItemClickListener?,
         itemLongClickListener: OnItemLongClickListener?
@@ -58,12 +60,35 @@ class PilpresAdapter(context: Context) : BaseAdapter<FeedsItem, PilpresAdapter.P
         }
     }
 
+    inner class LoadingViewHolder(
+        override val containerView: View?,
+        itemClickListener: OnItemClickListener?,
+        itemLongClickListener: OnItemLongClickListener?
+    ): PilpresViewHolder(containerView, itemClickListener, itemLongClickListener) {
+        override fun bind(item: FeedsItem) {
+            // do nothing
+        }
+    }
+
     override fun initViewHolder(view: View, viewType: Int): PilpresViewHolder {
-        return PilpresViewHolder(view, itemClickListener, itemLongClickListener)
+        return when (viewType) {
+            VIEW_TYPE_LOADING -> LoadingViewHolder(view, itemClickListener, itemLongClickListener)
+            else -> PilpresViewHolder(view, itemClickListener, itemLongClickListener)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (data[position].id) {
+            VIEW_TYPE_LOADING.toString() -> VIEW_TYPE_LOADING
+            else -> VIEW_TYPE_ITEM
+        }
     }
 
     override fun setItemView(viewType: Int): Int {
-        return R.layout.item_pilpres_tweet
+        return when (viewType) {
+            VIEW_TYPE_LOADING -> R.layout.layout_loading
+            else -> R.layout.item_pilpres_tweet
+        }
     }
 
     interface AdapterListener {
@@ -108,4 +133,12 @@ class PilpresAdapter(context: Context) : BaseAdapter<FeedsItem, PilpresAdapter.P
         }
         dialog.show()
     }
+
+    fun setLoading() {
+        setLoading(FeedsItem(id = VIEW_TYPE_LOADING.toString()))
+    }
+
+//    fun setLoaded() {
+//
+//    }
 }

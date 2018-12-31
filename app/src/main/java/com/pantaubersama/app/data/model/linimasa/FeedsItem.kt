@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 data class FeedsItem(
     @SerializedName("id") var id: String? = null,
     @SerializedName("team") var team: Team? = null,
-    @SerializedName("created_at") var createdAt: String?,
-    @SerializedName("source") var source: Source?,
-    @SerializedName("account") var account: Account?
+    @SerializedName("created_at") var createdAt: String? = null,
+    @SerializedName("source") var source: Source? = null,
+    @SerializedName("account") var account: Account? = null
 )
