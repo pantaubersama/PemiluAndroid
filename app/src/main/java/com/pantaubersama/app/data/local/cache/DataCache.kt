@@ -27,6 +27,11 @@ class DataCache(context: Context) : SharedPref(context) {
         const val ACCESS_TOKEN_FIELD = "client_token"
 
         const val REFRESH_TOKEN_FIELD = "client_refresh_token"
+
+        const val IS_BANNER_PILPRES_OPENED = "IS_BANNER_PILPRES_OPENED"
+        const val IS_BANNER_JANPOL_OPENED = "IS_BANNER_JANPOL_OPENED"
+        const val IS_BANNER_TANYA_OPENED = "IS_BANNER_TANYA_OPENED"
+        const val IS_BANNER_KUIS_OPENED = "IS_BANNER_KUIS_OPENED"
     }
 
     override fun prefId(): String {
@@ -64,4 +69,42 @@ class DataCache(context: Context) : SharedPref(context) {
     fun loadRefreshToken(): String? {
         return getString(REFRESH_TOKEN_FIELD)
     }
+
+    fun setBannerPilpresOpened(isOpened: Boolean) {
+        putBoolean(IS_BANNER_PILPRES_OPENED, isOpened)
+    }
+
+    fun isBannerPilpresOpened(): Boolean? {
+        return getBoolean(IS_BANNER_PILPRES_OPENED)
+    }
+
+
+    fun setBannerJanpolOpened(isOpened: Boolean) {
+        putBoolean(IS_BANNER_JANPOL_OPENED, isOpened)
+    }
+
+    fun isBannerJanpolOpened(): Boolean? {
+        return getBoolean(IS_BANNER_JANPOL_OPENED)
+    }
+
+    fun setBannerTanyaKandidatOpened(isOpened: Boolean) {
+        putBoolean(IS_BANNER_TANYA_OPENED, isOpened)
+    }
+
+    fun isBannerTanyaKandidatOpened(): Boolean? {
+        return getBoolean(IS_BANNER_TANYA_OPENED)
+    }
+
+    fun setBannerKuisOpened(isOpened: Boolean) {
+        putBoolean(IS_BANNER_KUIS_OPENED, isOpened)
+    }
+
+    fun isBannerKuisOpened(): Boolean? {
+        return getBoolean(IS_BANNER_KUIS_OPENED)
+    }
+
+
+
+
+
 }

@@ -1,5 +1,7 @@
 package com.pantaubersama.app.ui.linimasa.pilpres
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,12 +11,14 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.data.interactors.PilpresInteractor
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tweet.PilpresTweet
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
+import kotlinx.android.synthetic.main.fragment_pilpres.*
 import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject
@@ -53,11 +57,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     private fun setupBanner() {
-        tv_banner_text.text = getString(R.string.pilpres_banner_text)
-        iv_banner_image.setImageResource(R.drawable.ic_banner_pilpres)
-        fl_banner.setOnClickListener {
-            startActivity(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES))
-        }
+        presenter?.isBannerShown()
     }
 
     private fun setupRecyclerPilpres() {
@@ -88,6 +88,24 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     fun getPilpresTweet() {
         presenter?.getPilpresTweet()
     }
+
+
+    override fun showBanner() {
+        layout_banner_pilpres.visibility = View.VISIBLE
+        tv_banner_text.text = getString(R.string.pilpres_banner_text)
+        iv_banner_image.setImageResource(R.drawable.ic_banner_pilpres)
+        fl_banner.setOnClickListener {
+            startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES), PantauConstants.RequestCode.BANNER_PILPRES)
+        }
+        iv_banner_close.setOnClickListener {
+            layout_banner_pilpres.visibility = View.GONE
+        }
+    }
+
+    override fun hideBanner() {
+        layout_banner_pilpres.visibility = View.GONE
+    }
+
 
     override fun showPilpresTweet(tweetList: List<PilpresTweet>) {
         if (tweetList.isEmpty()) {
@@ -120,5 +138,14 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     override fun onDestroy() {
         (activity?.application as BaseApp).releaseActivityComponent()
         super.onDestroy()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                PantauConstants.RequestCode.BANNER_PILPRES -> hideBanner()
+            }
+        }
     }
 }

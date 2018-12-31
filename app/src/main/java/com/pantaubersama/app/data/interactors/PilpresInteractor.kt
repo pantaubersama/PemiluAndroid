@@ -12,4 +12,8 @@ class PilpresInteractor @Inject constructor(
     fun getPilpresFilter(): Int {
         return dataCache?.getFilterPilpres()!!
     }
+
+    fun isBannerShown(): Boolean? {
+        return dataCache?.isBannerPilpresOpened()
+    }
 }

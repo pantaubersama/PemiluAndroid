@@ -20,4 +20,8 @@ class BannerInfoInteractor @Inject constructor(
             ?.subscribeOn(rxSchedulers?.io())
             ?.observeOn(rxSchedulers?.mainThread())
     }
+
+    fun setBannerOpened() {
+        dataCache?.setBannerPilpresOpened(true)
+    }
 }
