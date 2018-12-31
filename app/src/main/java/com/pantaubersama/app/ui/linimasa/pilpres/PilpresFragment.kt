@@ -11,15 +11,17 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.data.interactors.PilpresInteractor
-import com.pantaubersama.app.data.model.tweet.PilpresTweet
+import com.pantaubersama.app.data.model.linimasa.FeedsItem
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
+import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_pilpres.*
 import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
@@ -27,6 +29,9 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     @Inject
     lateinit var interactor: PilpresInteractor
+
+    private var page = 1
+    private var perPage = 20
 
     private lateinit var adapter: PilpresAdapter
 
@@ -85,35 +90,39 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
             }
         })
         adapter.listener = object : PilpresAdapter.AdapterListener {
-            override fun onClickTweetContent(item: PilpresTweet) {
-                ChromeTabUtil(context!!).loadUrl("https://twitter.com/AndroidDev/status/1077232436164153345")
+            override fun onClickTweetContent(item: FeedsItem) {
+                ChromeTabUtil(context!!).loadUrl(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id)
             }
 
-            override fun onClickShare(item: PilpresTweet) {
+            override fun onClickShare(item: FeedsItem) {
                 shareTweet(item)
             }
         }
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
-            getPilpresTweet()
+            getFeedsData()
         }
-        getPilpresTweet()
+        getFeedsData()
     }
 
-    fun getPilpresTweet() {
-        presenter?.getPilpresTweet()
+    fun getFeedsData() {
+        presenter?.getFeeds(page, perPage)
     }
 
-    override fun showPilpresTweet(tweetList: List<PilpresTweet>) {
-        if (tweetList.isEmpty()) {
-            view_empty_state.visibility = View.VISIBLE
-        } else {
-            recycler_view.visibility = View.VISIBLE
-            adapter.replaceData(tweetList)
-        }
+    override fun showFeeds(feedsList: List<FeedsItem>) {
+        recycler_view.visibility = View.VISIBLE
+        adapter.replaceData(feedsList)
     }
 
-    private fun shareTweet(item: PilpresTweet) {
+    override fun showFailedGetData() {
+        ToastUtil.show(context!!, "Gagal memuat pilpres")
+    }
+
+    override fun showEmptyData() {
+        view_empty_state.visibility = View.VISIBLE
+    }
+
+    private fun shareTweet(item: FeedsItem) {
         ShareUtil(context!!, item)
     }
 
@@ -130,6 +139,11 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     override fun dismissLoading() {
         recycler_view.visibility = View.GONE
         progress_bar.visibility = View.GONE
+    }
+
+    override fun showError(throwable: Throwable) {
+        ToastUtil.show(context!!, throwable.message!!)
+        throwable.printStackTrace()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

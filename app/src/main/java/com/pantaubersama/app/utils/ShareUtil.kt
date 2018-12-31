@@ -3,7 +3,7 @@ package com.pantaubersama.app.utils
 import android.content.Context
 import android.content.Intent
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
-import com.pantaubersama.app.data.model.tweet.PilpresTweet
+import com.pantaubersama.app.data.model.linimasa.FeedsItem
 
 /**
  * @author edityomurti on 25/12/2018 20:03
@@ -20,7 +20,7 @@ class ShareUtil(context: Context, item: Any) {
         val resInfo = context.packageManager?.queryIntentActivities(shareIntent, 0)
         var sharedItem: String = "" + when (item) {
             is Pertanyaan -> "share/tk/" + item.id
-            is PilpresTweet -> "share/pilpres/" + item.id
+            is FeedsItem -> "share/pilpres/" + item.id
             else -> ""
         }
         if (!resInfo!!.isEmpty()) {

@@ -2,7 +2,8 @@ package com.pantaubersama.app.ui.linimasa.pilpres
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.PilpresInteractor
-import com.pantaubersama.app.data.model.tweet.PilpresTweet
+import com.pantaubersama.app.data.model.linimasa.FeedsItem
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 /**
@@ -11,27 +12,36 @@ import javax.inject.Inject
 class PilpresPresenter @Inject constructor(
     private val pilpresInteractor: PilpresInteractor?
 ) : BasePresenter<PilpresView>() {
+
     fun isBannerShown() {
         if (!pilpresInteractor?.isBannerShown()!!) {
             view?.showBanner()
         }
     }
 
-    fun getPilpresTweet() {
+    fun getFeeds(page: Int, perPage: Int) {
         view?.showLoading()
         val selectedFilter = pilpresInteractor?.getPilpresFilter()
 
-        val tweetList: MutableList<PilpresTweet> = ArrayList()
-
-        for (i in 1..25) {
-            val tweet = PilpresTweet()
-            tweet.id = "666$i"
-            tweet.tweetContent = "tweet $i, filter = $selectedFilter"
-            tweet.tweetUrl = ""
-            tweetList.add(tweet)
-        }
-
-        view?.dismissLoading()
-        view?.showPilpresTweet(tweetList)
+        disposables?.add(pilpresInteractor?.getFeeds(page, perPage)
+            ?.doOnSuccess {
+                view?.dismissLoading()
+                if (it.feeds?.feedList != null) {
+                    if (it.feeds?.feedList?.size != 0) {
+                        view?.showFeeds(it.feeds?.feedList!!)
+                    } else {
+                        view?.showEmptyData()
+                    }
+                } else {
+                    view?.showFailedGetData()
+                }
+            }
+            ?.doOnError {
+                view?.dismissLoading()
+                view?.showFailedGetData()
+                view?.showError(it)
+            }
+            ?.subscribe()!!
+        )
     }
 }

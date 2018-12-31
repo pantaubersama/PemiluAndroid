@@ -52,6 +52,8 @@ class PantauConstants {
             "/v1/profile"
         )
         val BEARER = "bearer "
+
+        const val BASE_TWEET_URL = "https://twitter.com/i/web/status/"
     }
 
     object Kuis {

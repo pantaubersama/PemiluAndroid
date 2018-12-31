@@ -1,7 +1,7 @@
 package com.pantaubersama.app.ui.linimasa.pilpres
 
 import com.pantaubersama.app.base.BaseView
-import com.pantaubersama.app.data.model.tweet.PilpresTweet
+import com.pantaubersama.app.data.model.linimasa.FeedsItem
 
 /**
  * @author edityomurti on 19/12/2018 14:46
@@ -9,5 +9,7 @@ import com.pantaubersama.app.data.model.tweet.PilpresTweet
 interface PilpresView : BaseView {
     fun showBanner()
     fun hideBanner()
-    fun showPilpresTweet(tweetList: List<PilpresTweet>)
+    fun showFeeds(feedsList: List<FeedsItem>)
+    fun showEmptyData()
+    fun showFailedGetData()
 }

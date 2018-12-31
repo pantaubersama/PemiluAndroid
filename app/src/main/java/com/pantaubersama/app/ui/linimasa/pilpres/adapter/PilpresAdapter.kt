@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.linimasa.pilpres.adapter
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -10,12 +11,13 @@ import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
+import com.bumptech.glide.Glide
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.adapter.BaseAdapter
 import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.base.listener.OnItemLongClickListener
 import com.pantaubersama.app.base.viewholder.BaseViewHolder
-import com.pantaubersama.app.data.model.tweet.PilpresTweet
+import com.pantaubersama.app.data.model.linimasa.FeedsItem
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
@@ -26,7 +28,7 @@ import kotlinx.android.synthetic.main.layout_option_dialog_pilpres_tweet.*
 /**
  * @author edityomurti on 19/12/2018 14:17
  */
-class PilpresAdapter(context: Context) : BaseAdapter<PilpresTweet, PilpresAdapter.PilpresViewHolder>(context) {
+class PilpresAdapter(context: Context) : BaseAdapter<FeedsItem, PilpresAdapter.PilpresViewHolder>(context) {
 
     var listener: PilpresAdapter.AdapterListener? = null
 
@@ -34,14 +36,19 @@ class PilpresAdapter(context: Context) : BaseAdapter<PilpresTweet, PilpresAdapte
         override val containerView: View?,
         itemClickListener: OnItemClickListener?,
         itemLongClickListener: OnItemLongClickListener?
-    ) : BaseViewHolder<PilpresTweet>(
+    ) : BaseViewHolder<FeedsItem>(
         containerView!!,
         itemClickListener,
         itemLongClickListener),
         LayoutContainer {
 
-        override fun bind(item: PilpresTweet) {
-            tv_tweet_content.text = item.tweetContent
+        @SuppressLint("SetTextI18n")
+        override fun bind(item: FeedsItem) {
+            Glide.with(itemView.context).load(item.account?.profileImageUrl).into(iv_tweet_avatar)
+            tv_tweet_name.text = item.account?.name
+            tv_tweet_username.text = item.account?.username
+            tv_tweet_content.text = item.source?.text
+            tv_team_name.text = itemView.context.getString(R.string.txt_disematkan_dari) + item.team?.title
             tv_tweet_content.setOnClickListener {
                 listener?.onClickTweetContent(item)
             }
@@ -60,11 +67,11 @@ class PilpresAdapter(context: Context) : BaseAdapter<PilpresTweet, PilpresAdapte
     }
 
     interface AdapterListener {
-        fun onClickTweetContent(item: PilpresTweet)
-        fun onClickShare(item: PilpresTweet)
+        fun onClickTweetContent(item: FeedsItem)
+        fun onClickShare(item: FeedsItem)
     }
 
-    private fun showOptionDialog(itemView: View?, item: PilpresTweet) {
+    private fun showOptionDialog(itemView: View?, item: FeedsItem) {
         val dialog = Dialog(itemView?.context!!)
         dialog.setContentView(R.layout.layout_option_dialog_pilpres_tweet)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -97,7 +104,7 @@ class PilpresAdapter(context: Context) : BaseAdapter<PilpresTweet, PilpresAdapte
             dialog.dismiss()
         }
         dialog.action_open_in_app?.setOnClickListener {
-            ChromeTabUtil(itemView.context).loadUrl("https://twitter.com/businessinsider/status/1077438036122787840")
+            ChromeTabUtil(itemView.context).loadUrl(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id)
         }
         dialog.show()
     }
