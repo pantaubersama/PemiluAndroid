@@ -1,7 +1,8 @@
 package com.pantaubersama.app.ui.profile
 
 import com.pantaubersama.app.base.BaseView
+import com.pantaubersama.app.data.model.user.User
 
 interface ProfileView : BaseView {
-    // ok
+    fun showProfile(profile: User)
 }

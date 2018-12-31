@@ -1,7 +1,27 @@
 package com.pantaubersama.app.ui.profile
 
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.interactors.ProfileInteractor
+import javax.inject.Inject
 
-class ProfilePresenter : BasePresenter<ProfileView>() {
-    // ok
+class ProfilePresenter @Inject constructor(
+        private val profileInteractor: ProfileInteractor
+): BasePresenter<ProfileView>() {
+
+    fun getProfile() {
+        view?.showProfile(profileInteractor.getProfile())
+    }
+
+    fun refreshProfile() {
+        view?.showLoading()
+        val disposable = profileInteractor.refreshProfile()
+                .doOnEvent { _, _ -> view?.dismissLoading() }
+                .subscribe({
+                    profileInteractor.saveProfile(it.data.user)
+                    view?.showProfile(it.data.user)
+                }, {
+                    view?.showError(it)
+                })
+        disposables?.add(disposable)
+    }
 }
