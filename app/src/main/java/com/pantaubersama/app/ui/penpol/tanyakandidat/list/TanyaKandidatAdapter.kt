@@ -3,18 +3,13 @@ package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.view.*
+import android.view.* // ktlint-disable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.adapter.BaseAdapter
-import com.pantaubersama.app.base.listener.OnItemClickListener
-import com.pantaubersama.app.base.listener.OnItemLongClickListener
-import com.pantaubersama.app.base.viewholder.BaseViewHolder
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.utils.GlideApp
@@ -22,8 +17,8 @@ import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_action_post.*
-import kotlinx.android.synthetic.main.layout_tanya_kandidat_header.*
 import kotlinx.android.synthetic.main.layout_option_dialog_tanya_kandidat.*
+import kotlinx.android.synthetic.main.layout_tanya_kandidat_header.*
 
 class TanyaKandidatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var data: MutableList<Pertanyaan> = ArrayList()
@@ -120,7 +115,7 @@ class TanyaKandidatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         override val containerView: View?
     ) : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
         fun onBind() {
-
+            // no need to do
         }
     }
 
@@ -181,11 +176,11 @@ class TanyaKandidatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun setLoading() {
         data.add(Pertanyaan(viewType = VIEW_TYPE_LOADING))
-        notifyItemInserted(data.size-1)
+        notifyItemInserted(data.size - 1)
     }
 
     fun setLoaded() {
-        data.removeAt(data.size-1)
+        data.removeAt(data.size - 1)
         notifyItemRemoved(data.size)
     }
 

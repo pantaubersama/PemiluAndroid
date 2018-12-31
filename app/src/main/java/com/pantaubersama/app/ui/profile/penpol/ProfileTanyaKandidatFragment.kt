@@ -58,7 +58,6 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
             override fun isLoading(): Boolean {
                 return isLoading
             }
-
         })
     }
 

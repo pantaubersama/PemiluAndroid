@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * Created by alimustofa on 05/02/18.
  */
-abstract class OnScrollListener(val layoutManager: LinearLayoutManager?): RecyclerView.OnScrollListener(){
+abstract class OnScrollListener(val layoutManager: LinearLayoutManager?) : RecyclerView.OnScrollListener() {
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
         val totalItemCount = layoutManager?.itemCount

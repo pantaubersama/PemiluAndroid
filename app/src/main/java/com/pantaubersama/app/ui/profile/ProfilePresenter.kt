@@ -5,8 +5,8 @@ import com.pantaubersama.app.data.interactors.ProfileInteractor
 import javax.inject.Inject
 
 class ProfilePresenter @Inject constructor(
-        private val profileInteractor: ProfileInteractor
-): BasePresenter<ProfileView>() {
+    private val profileInteractor: ProfileInteractor
+) : BasePresenter<ProfileView>() {
 
     fun getProfile() {
         view?.showProfile(profileInteractor.getProfile())

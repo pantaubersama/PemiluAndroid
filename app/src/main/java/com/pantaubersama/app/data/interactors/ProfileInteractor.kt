@@ -9,9 +9,9 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class ProfileInteractor @Inject constructor(
-        private val apiWrapper: APIWrapper,
-        private val rxSchedulers: RxSchedulers,
-        private val dataCache: DataCache
+    private val apiWrapper: APIWrapper,
+    private val rxSchedulers: RxSchedulers,
+    private val dataCache: DataCache
 ) {
 
     fun refreshProfile(): Single<UserResponse> {

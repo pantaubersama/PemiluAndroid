@@ -31,10 +31,10 @@ fun Button.setBackgroundTint(@ColorRes color: Int) {
 }
 
 fun ImageView.loadUrl(
-        url: String?,
-        placeholderResId: Int? = null,
-        errorResId: Int? = null,
-        requestListener: RequestListener<Drawable>? = null
+    url: String?,
+    placeholderResId: Int? = null,
+    errorResId: Int? = null,
+    requestListener: RequestListener<Drawable>? = null
 ) {
     GlideApp.with(this)
             .load(url)

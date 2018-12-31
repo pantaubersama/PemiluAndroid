@@ -90,7 +90,6 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             override fun isLoading(): Boolean {
                 return isLoading
             }
-
         })
         swipe_refresh.setOnRefreshListener {
             swipe_refresh?.isRefreshing = false
