@@ -4,6 +4,7 @@ import android.content.Intent
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
+import com.pantaubersama.app.ui.profile.setting.clusterundang.ClusterUndangActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
 import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
 import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
@@ -18,6 +19,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         val UBAH_DATA_LAPOR = 3
         val VERIFIKASI = 4
         val BADGE = 5
+        val CLUSTER_UNDANG = 6
     }
 
     override fun statusBarColor(): Int? {
@@ -69,6 +71,10 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         setting_badge.setOnClickListener {
             val intent = Intent(this@SettingActivity, BadgeActivity::class.java)
             startActivityForResult(intent, BADGE)
+        }
+        setting_cluster_undang.setOnClickListener {
+            val intent = Intent(this@SettingActivity, ClusterUndangActivity::class.java)
+            startActivityForResult(intent, CLUSTER_UNDANG)
         }
         setting_connect_twitter.setOnClickListener {
             // connect with twitter
