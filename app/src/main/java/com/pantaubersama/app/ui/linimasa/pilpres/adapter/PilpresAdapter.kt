@@ -64,7 +64,7 @@ class PilpresAdapter(context: Context) : BaseAdapter<FeedsItem, PilpresAdapter.P
         override val containerView: View?,
         itemClickListener: OnItemClickListener?,
         itemLongClickListener: OnItemLongClickListener?
-    ): PilpresViewHolder(containerView, itemClickListener, itemLongClickListener) {
+    ) : PilpresViewHolder(containerView, itemClickListener, itemLongClickListener) {
         override fun bind(item: FeedsItem) {
             // do nothing
         }

@@ -20,9 +20,8 @@ class PilpresPresenter @Inject constructor(
     fun getFeeds(page: Int, perPage: Int) {
         if (page == 1) {
             view?.showLoading()
-        } else {
-
         }
+
         val selectedFilter = pilpresInteractor?.getPilpresFilter()
 
         disposables?.add(pilpresInteractor?.getFeeds(page, perPage)
