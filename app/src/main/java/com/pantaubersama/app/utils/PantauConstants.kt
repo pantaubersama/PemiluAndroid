@@ -7,6 +7,11 @@ class PantauConstants {
 
     companion object {
         const val LABEL_COPY = "LABEL_COPY"
+
+        const val BANNER_PILPRES = "pilpres"
+        const val BANNER_JANPOL = "janji politik"
+        const val BANNER_TANYA = "tanya"
+        const val BANNER_KUIS = "kuis"
     }
 
     object Extra {

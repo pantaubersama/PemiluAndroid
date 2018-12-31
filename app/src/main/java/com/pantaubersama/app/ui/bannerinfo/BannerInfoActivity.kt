@@ -81,18 +81,18 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
     }
 
     private fun getBannerInfo() {
-        var pageName = when (infoType) {
-            PantauConstants.Extra.TYPE_PILPRES -> "pilpres"
-            PantauConstants.Extra.TYPE_JANPOL -> "janji politik"
-            PantauConstants.Extra.TYPE_TANYA_KANDIDAT -> "tanya"
-            else ->  "kuis"
+        val pageName = when (infoType) {
+            PantauConstants.Extra.TYPE_PILPRES -> PantauConstants.BANNER_PILPRES
+            PantauConstants.Extra.TYPE_JANPOL -> PantauConstants.BANNER_JANPOL
+            PantauConstants.Extra.TYPE_TANYA_KANDIDAT -> PantauConstants.BANNER_TANYA
+            else ->  PantauConstants.BANNER_KUIS
         }
         presenter?.getBannerInfo(pageName)
-        setResult(Activity.RESULT_OK)
     }
 
     override fun showBannerInfo(item: BannerInfo) {
 //        Glide.with(this).load(item.headerImage).into(iv_banner_background)
+        setResult(Activity.RESULT_OK)
         tv_banner_title.text = item.title
         tv_banner_desricption.text = item.body
     }

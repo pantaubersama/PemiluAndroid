@@ -19,7 +19,7 @@ class BannerInfoPresenter @Inject constructor(private val bannerInfoInteractor: 
                     if (bannerInfo.pageName?.toLowerCase()?.contains(pageName)!!) {
                         view?.showBannerInfo(bannerInfo)
                         view?.dismissLoading()
-                        bannerInfoInteractor.setBannerOpened()
+                        bannerInfoInteractor.setBannerOpened(pageName)
                         break
                     }
                 }

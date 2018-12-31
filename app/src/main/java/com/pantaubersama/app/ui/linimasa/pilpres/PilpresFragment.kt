@@ -60,6 +60,22 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         presenter?.isBannerShown()
     }
 
+    override fun showBanner() {
+        layout_banner_pilpres.visibility = View.VISIBLE
+        tv_banner_text.text = getString(R.string.pilpres_banner_text)
+        iv_banner_image.setImageResource(R.drawable.ic_banner_pilpres)
+        fl_banner.setOnClickListener {
+            startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES), PantauConstants.RequestCode.BANNER_PILPRES)
+        }
+        iv_banner_close.setOnClickListener {
+            layout_banner_pilpres.visibility = View.GONE
+        }
+    }
+
+    override fun hideBanner() {
+        layout_banner_pilpres.visibility = View.GONE
+    }
+
     private fun setupRecyclerPilpres() {
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         adapter = PilpresAdapter(context!!)
@@ -88,24 +104,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     fun getPilpresTweet() {
         presenter?.getPilpresTweet()
     }
-
-
-    override fun showBanner() {
-        layout_banner_pilpres.visibility = View.VISIBLE
-        tv_banner_text.text = getString(R.string.pilpres_banner_text)
-        iv_banner_image.setImageResource(R.drawable.ic_banner_pilpres)
-        fl_banner.setOnClickListener {
-            startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES), PantauConstants.RequestCode.BANNER_PILPRES)
-        }
-        iv_banner_close.setOnClickListener {
-            layout_banner_pilpres.visibility = View.GONE
-        }
-    }
-
-    override fun hideBanner() {
-        layout_banner_pilpres.visibility = View.GONE
-    }
-
 
     override fun showPilpresTweet(tweetList: List<PilpresTweet>) {
         if (tweetList.isEmpty()) {
