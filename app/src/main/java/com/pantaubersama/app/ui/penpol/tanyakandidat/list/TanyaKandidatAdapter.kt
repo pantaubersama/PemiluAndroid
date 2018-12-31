@@ -7,11 +7,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.view.Gravity
-import android.view.KeyEvent
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.adapter.BaseAdapter
 import com.pantaubersama.app.base.listener.OnItemClickListener
@@ -20,36 +18,36 @@ import com.pantaubersama.app.base.viewholder.BaseViewHolder
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.utils.GlideApp
+import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_action_post.*
 import kotlinx.android.synthetic.main.layout_tanya_kandidat_header.*
 import kotlinx.android.synthetic.main.layout_option_dialog_tanya_kandidat.*
 
-class TanyaKandidatAdapter(val mContext: Context) : BaseAdapter<Pertanyaan, TanyaKandidatAdapter.TanyaKandidatViewHolder>(mContext) {
+class TanyaKandidatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var data: MutableList<Pertanyaan> = ArrayList()
     var listener: TanyaKandidatAdapter.AdapterListener? = null
     var VIEW_TYPE_LOADING = 0
     var VIEW_TYPE_HEADER = 1
     var VIEW_TYPE_ITEM = 2
 
-    abstract inner class TanyaKandidatViewHolder(
-        override val containerView: View?,
-        clickListener: OnItemClickListener?,
-        longClickListener: OnItemLongClickListener?
-    ) : BaseViewHolder<Pertanyaan>(
-        containerView!!, clickListener, longClickListener), LayoutContainer {
+    inner class TanyaKandidatViewHolder(
+        override val containerView: View?
+    ) : RecyclerView.ViewHolder(
+        containerView!!), LayoutContainer {
 
         @SuppressLint("SetTextI18n")
-        protected fun showItem(item: Pertanyaan) {
+        fun onBind(item: Pertanyaan?) {
             GlideApp
                 .with(itemView.context)
-                .load(item.user?.avatar?.url)
+                .load(item?.user?.avatar?.url)
                 .placeholder(ContextCompat.getDrawable(itemView.context, R.drawable.ic_person))
                 .into(user_avatar)
-            tv_user_name.text = item.user?.firstName + item.user?.lastName
-            question_time.text = item.createdAt?.id
-            upvote_count_text.text = item.likeCount.toString()
-            user_question.text = item.body
+            tv_user_name.text = item?.user?.firstName + item?.user?.lastName
+            question_time.text = item?.createdAt?.id
+            upvote_count_text.text = item?.likeCount.toString()
+            user_question.text = item?.body
             iv_options_button.setOnClickListener {
                 showOptionsDialog(itemView)
             }
@@ -58,17 +56,6 @@ class TanyaKandidatAdapter(val mContext: Context) : BaseAdapter<Pertanyaan, Tany
             }
             iv_share_button.setOnClickListener {
                 listener?.onClickShare(item)
-            }
-        }
-
-        protected fun showLoading() {
-            // no need to do
-        }
-
-        protected fun showHeader() {
-            question_section.setOnClickListener {
-                val intent = Intent(mContext, CreateTanyaKandidatActivity::class.java)
-                itemView.context.startActivity(intent)
             }
         }
 
@@ -96,7 +83,7 @@ class TanyaKandidatAdapter(val mContext: Context) : BaseAdapter<Pertanyaan, Tany
             val dialog = Dialog(itemView?.context!!)
             dialog.setContentView(R.layout.layout_option_dialog_tanya_kandidat)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.setOnKeyListener { dialogInterface, i, keyEvent ->
+            dialog.setOnKeyListener { _, i, _ ->
                 if (i == KeyEvent.KEYCODE_BACK) {
                     dialog.dismiss()
                     true
@@ -130,32 +117,21 @@ class TanyaKandidatAdapter(val mContext: Context) : BaseAdapter<Pertanyaan, Tany
     }
 
     inner class LoadingViewHolder(
-        override val containerView: View?,
-        clickListener: OnItemClickListener?,
-        longClickListener: OnItemLongClickListener?
-    ) : TanyaKandidatViewHolder(containerView!!, clickListener, longClickListener), LayoutContainer {
-        override fun bind(item: Pertanyaan) {
-            showLoading()
+        override val containerView: View?
+    ) : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
+        fun onBind() {
+
         }
     }
 
     inner class HeaderViewHolder(
-        override val containerView: View?,
-        clickListener: OnItemClickListener?,
-        longClickListener: OnItemLongClickListener?
-    ) : TanyaKandidatViewHolder(containerView!!, clickListener, longClickListener), LayoutContainer {
-        override fun bind(item: Pertanyaan) {
-            showHeader()
-        }
-    }
-
-    inner class ItemViewHolder(
-        override val containerView: View?,
-        clickListener: OnItemClickListener?,
-        longClickListener: OnItemLongClickListener?
-    ) : TanyaKandidatViewHolder(containerView!!, clickListener, longClickListener), LayoutContainer {
-        override fun bind(item: Pertanyaan) {
-            showItem(item)
+        override val containerView: View?
+    ) : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
+        fun onBind() {
+            question_section.setOnClickListener {
+                val intent = Intent(itemView.context, CreateTanyaKandidatActivity::class.java)
+                itemView.context.startActivity(intent)
+            }
         }
     }
 
@@ -167,38 +143,58 @@ class TanyaKandidatAdapter(val mContext: Context) : BaseAdapter<Pertanyaan, Tany
         }
     }
 
-    override fun initViewHolder(view: View, viewType: Int): TanyaKandidatViewHolder? {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            VIEW_TYPE_LOADING -> LoadingViewHolder(view, itemClickListener, itemLongClickListener)
-            VIEW_TYPE_HEADER -> HeaderViewHolder(view, itemClickListener, itemLongClickListener)
-            VIEW_TYPE_ITEM -> ItemViewHolder(view, itemClickListener, itemLongClickListener)
-            else -> null
+            VIEW_TYPE_LOADING -> LoadingViewHolder(parent.inflate(R.layout.layout_loading))
+            VIEW_TYPE_HEADER -> HeaderViewHolder(parent.inflate(R.layout.layout_tanya_kandidat_header))
+            else -> TanyaKandidatViewHolder(parent.inflate(R.layout.item_tanya_kandidat))
         }
     }
 
-    override fun setItemView(viewType: Int): Int? {
-        return when (viewType) {
-            VIEW_TYPE_LOADING -> R.layout.layout_loading
-            VIEW_TYPE_HEADER -> R.layout.layout_tanya_kandidat_header
-            VIEW_TYPE_ITEM -> R.layout.item_tanya_kandidat
-            else -> null
-        }
-    }
-
-    override fun onBindViewHolder(holder: TanyaKandidatViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is LoadingViewHolder -> (holder as LoadingViewHolder).bind(get(position))
-            is HeaderViewHolder -> (holder as HeaderViewHolder).bind(get(position))
-            is ItemViewHolder -> (holder as ItemViewHolder).bind(get(position))
+            is LoadingViewHolder -> holder.onBind()
+            is HeaderViewHolder -> holder.onBind()
+            is TanyaKandidatViewHolder -> holder.onBind(data[position])
         }
+    }
+
+    override fun getItemCount(): Int {
+        return data.size
     }
 
     fun addHeader() {
-        data.add(0, Pertanyaan(viewType = 1))
+        data.add(0, Pertanyaan(viewType = VIEW_TYPE_HEADER))
         notifyItemInserted(0)
     }
 
+    fun addItem(question: Pertanyaan, position: Int) {
+        data.add(question)
+        notifyItemInserted(itemCount)
+    }
+
+    fun setData(question: MutableList<Pertanyaan>) {
+        data.clear()
+        data.addAll(question)
+        notifyDataSetChanged()
+    }
+
+    fun setLoading() {
+        data.add(Pertanyaan(viewType = VIEW_TYPE_LOADING))
+        notifyItemInserted(data.size-1)
+    }
+
+    fun setLoaded() {
+        data.removeAt(data.size-1)
+        notifyItemRemoved(data.size)
+    }
+
+    fun addData(questions: MutableList<Pertanyaan>) {
+        data.addAll(questions)
+        notifyItemRangeInserted(itemCount, questions.size)
+    }
+
     interface AdapterListener {
-        fun onClickShare(item: Pertanyaan)
+        fun onClickShare(item: Pertanyaan?)
     }
 }

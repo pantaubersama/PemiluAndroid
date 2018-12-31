@@ -14,7 +14,10 @@ class TanyaKandidatPresenter @Inject constructor(
         direction: String?,
         filterBy: String?
     ) {
-        view?.showLoading()
+        if (page == 1) {
+            view?.showLoading()
+        }
+        view?.setIsLoading(true)
         disposables?.add(tanyaKandidateInteractor.getTanyaKandidatlist(
             page,
             perPage,
@@ -22,15 +25,40 @@ class TanyaKandidatPresenter @Inject constructor(
             direction,
             filterBy)
             .doOnSuccess {
-                view?.dismissLoading()
-                if (it.data?.questions != null) {
-                    if (it.data?.questions?.size != 0) {
-                        view?.bindDataTanyaKandidat(it.data?.questions)
+                view?.setIsLoading(false)
+                if (page == 1) {
+                    view?.dismissLoading()
+                    if (it.data?.questions != null) {
+                        if (it.data?.questions?.size != 0) {
+                            view?.bindDataTanyaKandidat(it.data?.questions!!)
+                            if (it.data?.questions?.size!! < perPage!!) {
+                                view?.setDataEnd(true)
+                            } else {
+                                view?.setDataEnd(false)
+                            }
+                        } else {
+                            view?.setDataEnd(true)
+                            view?.showEmptyDataAlert()
+                        }
                     } else {
-                        view?.showEmptyDataAlert()
+                        view?.showFailedGetDataAlert()
                     }
                 } else {
-                    view?.showFailedGetDataAlert()
+                    if (it.data?.questions != null) {
+                        if (it.data?.questions?.size != 0) {
+                            view?.bindNextDataTanyaKandidat(it.data?.questions!!)
+                            if (it.data?.questions?.size!! < perPage!!) {
+                                view?.setDataEnd(true)
+                            } else {
+                                view?.setDataEnd(false)
+                            }
+                        } else {
+                            view?.setDataEnd(true)
+                            view?.showEmptyNextDataAlert()
+                        }
+                    } else {
+                        view?.showFailedGetDataAlert()
+                    }
                 }
             }
             .doOnError {

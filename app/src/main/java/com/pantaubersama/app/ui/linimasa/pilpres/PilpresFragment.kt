@@ -99,7 +99,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     private fun shareTweet(item: PilpresTweet) {
-        ShareUtil(context!!, item)
+        ShareUtil.shareItem(context!!, item)
     }
 
     override fun setLayout(): Int {
