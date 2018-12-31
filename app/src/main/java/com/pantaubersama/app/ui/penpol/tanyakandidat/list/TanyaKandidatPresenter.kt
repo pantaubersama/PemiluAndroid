@@ -2,7 +2,6 @@ package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
-import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import javax.inject.Inject
 
 class TanyaKandidatPresenter @Inject constructor(

@@ -6,9 +6,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Handler
 import android.view.* // ktlint-disable
-import android.view.animation.Animation
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
@@ -140,7 +138,7 @@ class TanyaKandidatAdapter(private val userId: String?) : RecyclerView.Adapter<R
                 if (keyCode == KeyEvent.KEYCODE_BACK){
                     dialog.dismiss()
                     true
-                } else{
+                } else {
                     false
                 }
             }
