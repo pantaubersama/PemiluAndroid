@@ -7,8 +7,9 @@
     tools:context="com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment">
 
     <include
-        android:id="@+id/banner_container"
-        layout="@layout/layout_banner_container" />
+        android:id="@+id/layout_banner_kuis"
+        layout="@layout/layout_banner_container"
+        android:visibility="gone"/>
 
     <include layout="@layout/layout_common_recyclerview" />
 

@@ -1,11 +1,13 @@
 package com.pantaubersama.app.ui.penpol.kuis.list
 
+import android.app.Activity
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
+import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.interactors.KuisInteractor
 import com.pantaubersama.app.data.model.kuis.KuisListItem
 import com.pantaubersama.app.data.model.kuis.KuisState
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
@@ -20,14 +22,23 @@ import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_kuis.*
 import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import javax.inject.Inject
 
-class KuisFragment : BaseFragment<BasePresenter<*>>() {
+class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
+    val TAG = KuisFragment::class.java.simpleName
+
+    @Inject
+    lateinit var interactor: KuisInteractor
 
     private lateinit var adapter: KuisListAdapter
 
     override fun setLayout(): Int = R.layout.fragment_kuis
 
-    override fun initPresenter(): BasePresenter<*>? = null
+    override fun initInjection() {
+        (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
+    }
+
+    override fun initPresenter(): KuisPresenter? = KuisPresenter(interactor)
 
     override fun initView(view: View) {
         setupBanner()
@@ -56,10 +67,6 @@ class KuisFragment : BaseFragment<BasePresenter<*>>() {
         recycler_view.adapter = adapter
         recycler_view.addItemDecoration(LineDividerItemDecoration(color(R.color.gray_3), dip(1), dip(16)))
 
-        iv_banner_close.setOnClickListener {
-            content_container.removeView(banner_container)
-        }
-
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
         }
@@ -69,13 +76,26 @@ class KuisFragment : BaseFragment<BasePresenter<*>>() {
     }
 
     private fun setupBanner() {
+        presenter?.isBannerShown()
+    }
+
+    override fun showBanner() {
+        layout_banner_kuis.visibility = View.VISIBLE
         tv_banner_text.text = getString(R.string.kuis_banner_text)
         iv_banner_image.setImageResource(R.drawable.ic_banner_kuis)
 
         fl_banner.setOnClickListener {
             val intent = BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_KUIS)
-            startActivity(intent)
+            startActivityForResult(intent, PantauConstants.RequestCode.BANNER_KUIS)
         }
+        iv_banner_close.setOnClickListener {
+            layout_banner_kuis.visibility = View.GONE
+        }
+
+    }
+
+    override fun hideBanner() {
+        layout_banner_kuis.visibility = View.GONE
     }
 
     private fun shareKuis(item: KuisListItem.Item) {
@@ -117,5 +137,19 @@ class KuisFragment : BaseFragment<BasePresenter<*>>() {
         fun newInstance(): KuisFragment {
             return KuisFragment()
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                PantauConstants.RequestCode.BANNER_KUIS -> hideBanner()
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        (activity?.application as BaseApp).releaseActivityComponent()
+        super.onDestroy()
     }
 }

@@ -133,11 +133,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         progress_bar.visibility = View.GONE
     }
 
-    override fun onDestroy() {
-        (activity?.application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -145,5 +140,10 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
                 PantauConstants.RequestCode.BANNER_PILPRES -> hideBanner()
             }
         }
+    }
+
+    override fun onDestroy() {
+        (activity?.application as BaseApp).releaseActivityComponent()
+        super.onDestroy()
     }
 }
