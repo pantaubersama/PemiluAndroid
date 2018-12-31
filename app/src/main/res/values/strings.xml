@@ -131,4 +131,7 @@
     <string name="label_mau_mengundang_anggota">Mau mengundang Anggota?</string>
     <string name="hint_masukan_email_disini">Masukan email disini</string>
     <string name="title_undang_anggota">Undang Anggota</string>
+    <string name="label_panduan_komunitas">Panduan Komunitas</string>
+    <string name="all_rights_reserved">All rights reserved</string>
+    <string name="lisensi">LISENSI</string>
 </resources>

@@ -6,6 +6,8 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.clusterundang.ClusterUndangActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
+import com.pantaubersama.app.ui.profile.setting.panduankomunitas.PanduanKomunitasActivity
+import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
 import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
 import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
@@ -83,10 +85,12 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             // pusat bantuan
         }
         setting_pedoman_komunitas.setOnClickListener {
-            // pedoman komunitas
+            val intent = Intent(this@SettingActivity, PanduanKomunitasActivity::class.java)
+            startActivity(intent)
         }
         setting_tentang.setOnClickListener {
-            // tentang pantau bersama
+            val intent = Intent(this@SettingActivity, TentangAppActivity::class.java)
+            startActivity(intent)
         }
         setting_berikan_nilai.setOnClickListener {
             // berikan nikai kami
