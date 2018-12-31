@@ -14,7 +14,7 @@ class CreateTanyaKandidatPresenter @Inject constructor(private val tanyaKandidat
                 ?.doOnSuccess {
                     view?.dismissLoading()
                     view?.showSuccessCreateTanyaKandidatAlert()
-                    view?.finishActivity(it.data.question)
+                    view?.finishActivity(it.data?.question)
                 }
                 ?.doOnError {
                     view?.dismissLoading()

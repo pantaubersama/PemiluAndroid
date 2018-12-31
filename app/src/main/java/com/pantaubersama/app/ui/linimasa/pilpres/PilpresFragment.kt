@@ -89,7 +89,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         presenter?.getPilpresTweet()
     }
 
-    override fun showPilpresTweet(tweetList: List<PilpresTweet>) {
+    override fun showPilpresTweet(tweetList: MutableList<PilpresTweet>) {
         if (tweetList.isEmpty()) {
             view_empty_state.visibility = View.VISIBLE
         } else {

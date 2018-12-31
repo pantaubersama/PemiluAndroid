@@ -44,8 +44,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/user_avatar"
@@ -58,10 +57,10 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/username_container"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_toEndOf="@id/user_avatar"
@@ -76,34 +75,39 @@
                         android:maxLines="1"
                         android:lines="1"
                         android:ellipsize="end"
-                        android:textColor="@color/black_2"/>
+                        android:textColor="@color/black_2" />
 
                     <TextView
-                        android:id="@+id/user_bio"
+                        android:id="@+id/question_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/question_time_dummy_text"
                         android:fontFamily="@font/lato_regular"
-                        android:text="Kapan kemana Indonesia?"
-                        android:textSize="11sp"
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:textColor="@color/gray_dark_3"/>
+                        android:textSize="12sp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_centerVertical="true"/>
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/question_time"
+                    android:id="@+id/user_bio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/question_time_dummy_text"
                     android:fontFamily="@font/lato_regular"
-                    android:textSize="12sp"
+                    android:text="Kapan kemana Indonesia?"
+                    android:textSize="11sp"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/gray_dark_3"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_centerVertical="true"/>
+                    android:layout_toEndOf="@id/user_avatar"
+                    android:layout_toRightOf="@id/user_avatar"
+                    android:layout_below="@id/username_container"/>
 
             </RelativeLayout>
 

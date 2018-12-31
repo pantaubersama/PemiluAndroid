@@ -52,7 +52,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
 
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>?) {
         recycler_view?.visibility = View.VISIBLE
-        adapter.replaceData(pertanyaanList?.toList()!!)
+        adapter.replaceData(pertanyaanList!!)
     }
 
     override fun showEmptyDataAlert() {

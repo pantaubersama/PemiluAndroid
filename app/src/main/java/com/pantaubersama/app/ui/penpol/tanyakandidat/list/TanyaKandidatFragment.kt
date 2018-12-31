@@ -12,11 +12,9 @@ import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.data.interactors.TanyaKandidateInteractor
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
-import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
-import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject
@@ -38,10 +36,6 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun initView(view: View) {
-        question_section.setOnClickListener {
-            val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
-            startActivity(intent)
-        }
         setupBanner()
         setupTanyaKandidatList()
         presenter?.getTanyaKandidatList(page, perPage, "created", "desc", "user_verified_all")
@@ -79,7 +73,8 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>?) {
         recycler_view?.visibility = View.VISIBLE
-        adapter.replaceData(pertanyaanList?.toList()!!)
+        adapter.replaceData(pertanyaanList!!)
+        adapter.addHeader()
     }
 
     override fun showEmptyDataAlert() {
