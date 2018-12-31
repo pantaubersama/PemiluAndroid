@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
+import android.app.Activity
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,9 +9,9 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.listener.OnItemClickListener
+import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.data.interactors.TanyaKandidateInteractor
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
-import com.pantaubersama.app.ui.infobanner.BannerInfoActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
@@ -112,5 +113,15 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     override fun onDestroy() {
         (activity?.application as BaseApp).releaseActivityComponent()
         super.onDestroy()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE) {
+                adapter.add((data?.getSerializableExtra(PantauConstants.TanyaKandidat.TANYA_KANDIDAT_DATA) as Pertanyaan), 0)
+                recycler_view.smoothScrollToPosition(0)
+            }
+        }
     }
 }

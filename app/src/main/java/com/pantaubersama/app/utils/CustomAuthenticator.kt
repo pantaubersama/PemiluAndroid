@@ -1,5 +1,6 @@
 package com.pantaubersama.app.utils
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.remote.PantauOAuthAPI
@@ -20,11 +21,10 @@ class CustomAuthenticator(
 
     @Throws(IOException::class)
     override fun authenticate(route: Route, response: Response): Request? {
-        if (response.request().header(PantauConstants.Networking.AUTHORIZATION) != null) {
-            return response.request()
-        } else {
+        synchronized(this) {
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .addNetworkInterceptor(StethoInterceptor())
                 .build()
 
             retrofit = Retrofit.Builder()
@@ -50,15 +50,16 @@ class CustomAuthenticator(
 
                 val url = originalUrl
                     .newBuilder()
-                    .setQueryParameter(PantauConstants.Networking.OAUTH_ACCESS_TOKEN_FIELD, dataCache.loadToken())
                     .build()
 
                 return originalRequest
                     .newBuilder()
+                    .removeHeader(PantauConstants.Networking.AUTHORIZATION)
+                    .addHeader(PantauConstants.Networking.AUTHORIZATION, dataCache.loadToken()!!)
                     .url(url)
                     .build()
             } else {
-                Timber.d("failed")
+                Timber.d("FAILED REFRESHING TOKEN –– caused by : ${refreshToken?.message()}")
                 return null
             }
         }

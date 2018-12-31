@@ -10,5 +10,11 @@ data class TanyaKandidatData(
     var questions: MutableList<Pertanyaan>? = null,
     @SerializedName("meta")
     @Expose
-    var meta: Meta? = null
+    var meta: Meta? = null,
+    @SerializedName("status")
+    @Expose
+    var status: Boolean? = false,
+    @SerializedName("question")
+    @Expose
+    var question: Pertanyaan
 ) : Serializable

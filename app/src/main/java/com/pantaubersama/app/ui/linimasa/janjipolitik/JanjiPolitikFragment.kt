@@ -9,7 +9,7 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
-import com.pantaubersama.app.ui.infobanner.BannerInfoActivity
+import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.adapter.JanjiPolitikAdapter
 import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.utils.PantauConstants

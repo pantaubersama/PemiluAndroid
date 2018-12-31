@@ -43,7 +43,8 @@ ext {
             flexbox                 : "1.1.0",
             lottie                  : "2.8.0",
             chromeCustomTab         : "23.3.0",
-            expandableLayout        : "1.6.0@aar"
+            expandableLayout        : "1.6.0@aar",
+            stetho                 : "1.5.0"
     ]
 
 
@@ -62,7 +63,8 @@ ext {
 
     okHttp = [
             logger: "com.squareup.okhttp3:logging-interceptor:$versions.okHttp",
-            okhttp: "com.squareup.okhttp3:okhttp:$versions.okHttp"
+            okhttp: "com.squareup.okhttp3:okhttp:$versions.okHttp",
+            stetho: "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
     ]
 
     firebase = [
