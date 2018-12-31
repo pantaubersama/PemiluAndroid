@@ -14,5 +14,9 @@ interface TanyaKandidatView : BaseView {
     fun setDataEnd(isDataEnd: Boolean)
     fun setIsLoading(isLoading: Boolean)
     fun onItemUpVoted()
-    fun onItemFailedUpvote(liked: Boolean?, position: Int?)
+    fun onFailedUpVoteItem(liked: Boolean?, position: Int?)
+    fun showItemReportedAlert()
+    fun showFailedReportItem()
+    fun showFailedDeleteItemAlert()
+    fun onItemDeleted(position: Int?)
 }

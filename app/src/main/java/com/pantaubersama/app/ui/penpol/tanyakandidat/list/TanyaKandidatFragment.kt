@@ -1,7 +1,11 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +14,7 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
+import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.utils.OnScrollListener
 import com.pantaubersama.app.utils.PantauConstants
@@ -23,6 +28,8 @@ import javax.inject.Inject
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
     @Inject
     lateinit var interactor: TanyaKandidatInteractor
+    @Inject
+    lateinit var dataCache: DataCache
     private var page = 1
     private var perPage = 10
 
@@ -40,6 +47,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun initView(view: View) {
+        presenter
         setupBanner()
         setupTanyaKandidatList()
         presenter?.getTanyaKandidatList(page, perPage, "created", "desc", "user_verified_all")
@@ -67,14 +75,30 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     private fun setupTanyaKandidatList() {
-        adapter = TanyaKandidatAdapter()
+        adapter = TanyaKandidatAdapter(dataCache.loadUserProfile().id)
         adapter?.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickShare(item: Pertanyaan?) {
                 ShareUtil.shareItem(context!!, item)
             }
 
             override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
-                presenter?.upVoteQuestion(id, "Question", isLiked, position)
+                presenter?.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
+            }
+
+            override fun onClickDeleteItem(id: String?, position: Int?) {
+                presenter?.deleteItem(id, position)
+            }
+
+            override fun onClickCopyUrl(id: String?) {
+                val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val copyUri = Uri.parse("pantau.co.id/" + "share/tk/" + id)
+                val clip = ClipData.newUri(activity?.contentResolver, "URI", copyUri)
+                clipboard.primaryClip = clip
+                ToastUtil.show(context!!, "Copied to clipboard")
+            }
+
+            override fun onClickLapor(id: String?) {
+                presenter?.reportQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME)
             }
         }
         layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -151,8 +175,24 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         // no need to do
     }
 
-    override fun onItemFailedUpvote(liked: Boolean?, position: Int?) {
+    override fun onFailedUpVoteItem(liked: Boolean?, position: Int?) {
         adapter?.reverseVote(liked, position)
+    }
+
+    override fun showItemReportedAlert() {
+        ToastUtil.show(context!!, "Berhasil melaporkan pertanyaan")
+    }
+
+    override fun showFailedReportItem() {
+        ToastUtil.show(context!!, "Gagal melaporkan pertanyaan")
+    }
+
+    override fun showFailedDeleteItemAlert() {
+        ToastUtil.show(context!!, "Gagal menghapus pertanyaan")
+    }
+
+    override fun onItemDeleted(position: Int?) {
+        adapter?.deleteItem(position)
     }
 
     companion object {

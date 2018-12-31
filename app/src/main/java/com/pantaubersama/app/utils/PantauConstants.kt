@@ -17,6 +17,7 @@ class PantauConstants {
     object TanyaKandidat {
         const val CREATE_TANYA_KANDIDAT_REQUEST_CODE = 21
         val TANYA_KANDIDAT_DATA = "tanya_kandidat_data"
+        val CLASS_NAME = "Question"
     }
 
     object Extra {
