@@ -100,7 +100,8 @@
         <activity android:name=".ui.profile.setting.ubahsandi.UbahSandiActivity" />
         <activity android:name=".ui.profile.setting.ubahdatalapor.UbahDataLaporActivity" />
         <activity android:name=".ui.profile.setting.verifikasi.VerifikasiActivity" />
-        <activity android:name="com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity"></activity>
+        <activity android:name=".ui.profile.setting.badge.BadgeActivity" />
+        <activity android:name=".ui.profile.setting.clusterundang.ClusterUndangActivity"></activity>
     </application>
 
 </manifest>
