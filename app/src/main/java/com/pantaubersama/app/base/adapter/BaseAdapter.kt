@@ -77,11 +77,11 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
         return data.get(position)
     }
 
-    fun getData(): List<T> {
+    fun getData(): MutableList<T> {
         return data
     }
 
-    fun replaceData(items: List<T>) {
+    fun replaceData(items: MutableList<T>) {
         data.clear()
         add(items)
     }
@@ -96,7 +96,7 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
         notifyItemInserted(position)
     }
 
-    open fun add(items: List<T>) {
+    open fun add(items: MutableList<T>) {
         for (item in items) {
             data.add(item)
         }
@@ -104,7 +104,7 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
     }
 
     fun add(items: Array<T>) {
-        add(items.toList())
+        add(items.toMutableList())
         notifyDataSetChanged()
     }
 
@@ -118,12 +118,12 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
         }
     }
 
-    fun addOrUpdate(items: List<T>, reverse: Boolean) {
+    fun addOrUpdate(items: MutableList<T>, reverse: Boolean) {
         if (reverse) {
             for (item in items) {
-                var i = data.indexOf(item)
+                val i = data.indexOf(item)
                 if (i >= 0) {
-                    data.set(i, item)
+                    data[i] = item
                 } else {
                     data.add(item)
                 }
@@ -146,13 +146,13 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
         }
     }
 
-    fun addOnTopOrUpdate(items: List<T>) {
+    fun addOnTopOrUpdate(items: MutableList<T>) {
         for (item in items) {
             addOnTopOrUpdate(item)
         }
     }
 
-    fun addOrUpdate(items: List<T>) {
+    fun addOrUpdate(items: MutableList<T>) {
         for (item in items) {
             addOrUpdate(item)
         }
@@ -181,18 +181,18 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): V {
-        val view = LayoutInflater.from(parent.context).inflate(setItemView(viewType), parent, false)
-        return initViewHolder(view, viewType)
+        val view = LayoutInflater.from(parent.context).inflate(setItemView(viewType)!!, parent, false)
+        return initViewHolder(view, viewType)!!
     }
 
-    protected abstract fun initViewHolder(view: View, viewType: Int): V
+    protected abstract fun initViewHolder(view: View, viewType: Int): V?
 
     override fun onBindViewHolder(holder: V, position: Int) {
         holder.bind(get(position))
     }
 
     @LayoutRes
-    protected abstract fun setItemView(viewType: Int): Int
+    protected abstract fun setItemView(viewType: Int): Int?
 
     interface OnLoadMoreListener {
         fun loadMore(page: Int)

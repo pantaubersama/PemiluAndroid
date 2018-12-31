@@ -22,7 +22,7 @@ class ClusterListDialogAdapter(context: Context) : BaseAdapter<ClusterItem,
 
     private var originalData: MutableList<ClusterItem> = ArrayList()
 
-    override fun add(items: List<ClusterItem>) {
+    override fun add(items: MutableList<ClusterItem>) {
         super.add(items)
         originalData.addAll(items)
     }

@@ -27,5 +27,6 @@ class Pertanyaan(
     var user: User? = null,
     @SerializedName("is_liked")
     @Expose
-    var isliked: Boolean? = false
+    var isliked: Boolean? = false,
+    var viewType: Int? = null
 ) : Serializable

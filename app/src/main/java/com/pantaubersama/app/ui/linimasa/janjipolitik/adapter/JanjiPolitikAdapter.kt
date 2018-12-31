@@ -41,7 +41,7 @@ class JanjiPolitikAdapter(context: Context) : BaseAdapter<JanjiPolitik, JanjiPol
             tv_janpol_title.text = item.title
             tv_janpol_content.text = item.content
             ll_janpol_content.setOnClickListener { listener?.onClickContent(item) }
-            iv_share_button.setOnClickListener { ShareUtil(itemView.context, item) }
+            iv_share_button.setOnClickListener { ShareUtil.shareItem(itemView.context, item) }
             iv_options_button.setOnClickListener { showOptionDialog(itemView, item) }
         }
     }

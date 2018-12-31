@@ -5,15 +5,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatAdapter
+import com.pantaubersama.app.utils.OnScrollListener
 import com.pantaubersama.app.utils.ShareUtil
-import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_profile_tanya_kandidat.*
 
 class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>(), ProfileTanyaKandidatView {
     private lateinit var adapter: TanyaKandidatAdapter
+    private lateinit var layoutManager: LinearLayoutManager
+    private var isDataEnd = false
+    private var isLoading = false
 
     companion object {
         fun newInstance(): ProfileTanyaKandidatFragment {
@@ -35,24 +37,34 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     }
 
     private fun setupTanyaKandidatList() {
-        adapter = TanyaKandidatAdapter(context!!)
+        adapter = TanyaKandidatAdapter()
         adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
-            override fun onClickShare(item: Pertanyaan) {
-                ShareUtil(context!!, item)
+            override fun onClickShare(item: Pertanyaan?) {
+                ShareUtil.shareItem(context!!, item)
             }
         }
-        recycler_view?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recycler_view?.layoutManager = layoutManager
         recycler_view?.adapter = adapter
-        adapter.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClick(view: View, position: Int) {
-                ToastUtil.show(context!!, "clicked!")
+        recycler_view.addOnScrollListener(object : OnScrollListener(layoutManager) {
+            override fun loadMoreItem() {
+                adapter.setLoading()
             }
+
+            override fun isDataEnd(): Boolean {
+                return isDataEnd
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+
         })
     }
 
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>?) {
         recycler_view?.visibility = View.VISIBLE
-        adapter.replaceData(pertanyaanList?.toList()!!)
+        adapter.setData(pertanyaanList!!)
     }
 
     override fun showEmptyDataAlert() {
