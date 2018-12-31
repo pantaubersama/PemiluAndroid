@@ -108,7 +108,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         presenter?.getFeeds(page, perPage)
     }
 
-    override fun showFeeds(feedsList: List<FeedsItem>) {
+    override fun showFeeds(feedsList: MutableList<FeedsItem>) {
         recycler_view.visibility = View.VISIBLE
         adapter.replaceData(feedsList)
     }
@@ -122,7 +122,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     private fun shareTweet(item: FeedsItem) {
-        ShareUtil(context!!, item)
+        ShareUtil.shareItem(context!!, item)
     }
 
     override fun setLayout(): Int {

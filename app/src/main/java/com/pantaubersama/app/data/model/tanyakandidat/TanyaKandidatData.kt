@@ -17,5 +17,5 @@ data class TanyaKandidatData(
     var status: Boolean? = false,
     @SerializedName("question")
     @Expose
-    var question: Pertanyaan
+    var question: Pertanyaan? = null
 ) : Serializable

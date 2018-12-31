@@ -86,7 +86,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         presenter?.getJanjiPolitikList()
     }
 
-    override fun showJanjiPolitikList(janjiPolitikList: List<JanjiPolitik>) {
+    override fun showJanjiPolitikList(janjiPolitikList: MutableList<JanjiPolitik>) {
         if (janjiPolitikList.isEmpty()) {
             view_empty_state.visibility = View.VISIBLE
         } else {

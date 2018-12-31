@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
-import com.pantaubersama.app.data.interactors.TanyaKandidateInteractor
+import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
-import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
+import com.pantaubersama.app.utils.OnScrollListener
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
@@ -23,11 +22,14 @@ import javax.inject.Inject
 
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
     @Inject
-    lateinit var interactor: TanyaKandidateInteractor
+    lateinit var interactor: TanyaKandidatInteractor
     private var page = 1
     private var perPage = 10
 
-    private lateinit var adapter: TanyaKandidatAdapter
+    private var adapter: TanyaKandidatAdapter? = null
+    private var layoutManager: LinearLayoutManager? = null
+    private var isDataEnd = false
+    private var isLoading = false
 
     override fun initInjection() {
         (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
@@ -38,10 +40,6 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun initView(view: View) {
-        question_section.setOnClickListener {
-            val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
-            startActivity(intent)
-        }
         setupBanner()
         setupTanyaKandidatList()
         presenter?.getTanyaKandidatList(page, perPage, "created", "desc", "user_verified_all")
@@ -69,33 +67,66 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     private fun setupTanyaKandidatList() {
-        adapter = TanyaKandidatAdapter(context!!)
-        adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
-            override fun onClickShare(item: Pertanyaan) {
-                ShareUtil(context!!, item)
+        adapter = TanyaKandidatAdapter()
+        adapter?.listener = object : TanyaKandidatAdapter.AdapterListener {
+            override fun onClickShare(item: Pertanyaan?) {
+                ShareUtil.shareItem(context!!, item)
+            }
+
+            override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
+                presenter?.upVoteQuestion(id, "Question", isLiked, position)
             }
         }
-        recycler_view?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        recycler_view?.adapter = adapter
-        adapter.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClick(view: View, position: Int) {
-                ToastUtil.show(context!!, "clicked!")
+        layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recycler_view.layoutManager = layoutManager
+        recycler_view.adapter = adapter
+        recycler_view.addOnScrollListener(object : OnScrollListener(layoutManager) {
+            override fun loadMoreItem() {
+                adapter?.setLoading()
+                page += 1
+                presenter?.getTanyaKandidatList(page, perPage, "created", "desc", "user_verified_all")
+            }
+
+            override fun isDataEnd(): Boolean {
+                return isDataEnd
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
             }
         })
-        swipe_refresh?.setOnRefreshListener {
+        swipe_refresh.setOnRefreshListener {
             swipe_refresh?.isRefreshing = false
             page = 1
             presenter?.getTanyaKandidatList(page, perPage, "created", "desc", "user_verified_all")
         }
     }
 
-    override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>?) {
-        recycler_view?.visibility = View.VISIBLE
-        adapter.replaceData(pertanyaanList?.toList()!!)
+    override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>) {
+        recycler_view.visibility = View.VISIBLE
+        adapter?.setData(pertanyaanList)
+        adapter?.addHeader()
     }
 
     override fun showEmptyDataAlert() {
-        view_empty_state?.visibility = View.VISIBLE
+        view_empty_state.visibility = View.VISIBLE
+    }
+
+    override fun bindNextDataTanyaKandidat(questions: MutableList<Pertanyaan>) {
+        adapter?.setLoaded()
+        adapter?.addData(questions)
+    }
+
+    override fun showEmptyNextDataAlert() {
+        ToastUtil.show(context!!, "Gagal memuat lebih banyak pertanyaan")
+    }
+
+    override fun setIsLoading(isLoading: Boolean) {
+        this.isLoading = isLoading
+    }
+
+    override fun setDataEnd(isDataEnd: Boolean) {
+        this.isDataEnd = isDataEnd
     }
 
     override fun setLayout(): Int {
@@ -103,17 +134,25 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun showLoading() {
-        view_empty_state?.visibility = View.GONE
-        recycler_view?.visibility = View.INVISIBLE
-        progress_bar?.visibility = View.VISIBLE
+        view_empty_state.visibility = View.GONE
+        recycler_view.visibility = View.INVISIBLE
+        progress_bar.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
-        progress_bar?.visibility = View.GONE
+        progress_bar.visibility = View.GONE
     }
 
     override fun showFailedGetDataAlert() {
         ToastUtil.show(context!!, "Gagal memuat daftar pertanyaan")
+    }
+
+    override fun onItemUpVoted() {
+        // no need to do
+    }
+
+    override fun onItemFailedUpvote(liked: Boolean?, position: Int?) {
+        adapter?.reverseVote(liked, position)
     }
 
     companion object {
@@ -132,7 +171,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE -> {
-                    adapter.add((data?.getSerializableExtra(PantauConstants.TanyaKandidat.TANYA_KANDIDAT_DATA) as Pertanyaan), 0)
+                    adapter?.addItem((data?.getSerializableExtra(PantauConstants.TanyaKandidat.TANYA_KANDIDAT_DATA) as Pertanyaan), 0)
                     recycler_view.smoothScrollToPosition(0)
                 }
                 PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT -> hideBanner()

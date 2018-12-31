@@ -10,7 +10,7 @@ import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.TanyaKandidateInteractor
+import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>(), CreateTanyaKandidatView {
     @Inject
-    lateinit var interactor: TanyaKandidateInteractor
+    lateinit var interactor: TanyaKandidatInteractor
     private var isLoading = false
 
     override fun statusBarColor(): Int {

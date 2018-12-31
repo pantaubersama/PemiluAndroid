@@ -9,5 +9,5 @@ import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 interface JanjiPolitikView : BaseView {
     fun showBanner()
     fun hideBanner()
-    fun showJanjiPolitikList(janjiPolitikList: List<JanjiPolitik>)
+    fun showJanjiPolitikList(janjiPolitikList: MutableList<JanjiPolitik>)
 }

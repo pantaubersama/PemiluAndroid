@@ -1,20 +1,20 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.create
 
 import com.pantaubersama.app.base.BasePresenter
-import com.pantaubersama.app.data.interactors.TanyaKandidateInteractor
+import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
 import javax.inject.Inject
 
-class CreateTanyaKandidatPresenter @Inject constructor(private val tanyaKandidateInteractor: TanyaKandidateInteractor?) : BasePresenter<CreateTanyaKandidatView>() {
+class CreateTanyaKandidatPresenter @Inject constructor(private val tanyaKandidatInteractor: TanyaKandidatInteractor?) : BasePresenter<CreateTanyaKandidatView>() {
     fun submitQuestion(question: String?) {
         if (question != "") {
             view?.showLoading()
             view?.hideActions()
-            disposables?.add(tanyaKandidateInteractor
+            disposables?.add(tanyaKandidatInteractor
                 ?.createTanyaKandidat(question)
                 ?.doOnSuccess {
                     view?.dismissLoading()
                     view?.showSuccessCreateTanyaKandidatAlert()
-                    view?.finishActivity(it.data.question)
+                    view?.finishActivity(it.data?.question)
                 }
                 ?.doOnError {
                     view?.dismissLoading()
