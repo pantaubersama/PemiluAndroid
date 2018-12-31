@@ -50,15 +50,14 @@ class TanyaKandidatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 listener?.onClickShare(item)
             }
             if (data[adapterPosition].isliked != null) {
-                if (data[adapterPosition].isliked!!){
+                if (data[adapterPosition].isliked!!) {
                     upvote_animation.progress = 1.0f
-                }
-                else{
+                } else {
                     upvote_animation.progress = 0.0f
                 }
             }
             upvote_container.setOnClickListener {
-                if (!item?.isliked!!){
+                if (!item?.isliked!!) {
                     setUpvoted(item)
                     listener?.onClickUpvote(item.id, item.isliked, position)
                 }
@@ -107,16 +106,17 @@ class TanyaKandidatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             lp.gravity = Gravity.BOTTOM
             window?.attributes = lp
             dialog.delete_tanya_kandidat_item_action?.setOnClickListener {
-                // delete
+                listener?.onClickDeleteItem(data[position], position)
             }
             dialog.copy_url_tanya_kandidat_action?.setOnClickListener {
-                // copy url
+                listener?.onClickCopyUrl(data[position].id)
             }
             dialog.share_tanya_kandidat_action?.setOnClickListener {
-                // share
+                listener?.onClickShare(data[position])
             }
             dialog.report_tanya_kandidat_action?.setOnClickListener {
-                // lapor
+                listener?.onClickLapor(data[position].id)
+                dialog.dismiss()
             }
             dialog.show()
         }
@@ -208,5 +208,8 @@ class TanyaKandidatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     interface AdapterListener {
         fun onClickShare(item: Pertanyaan?)
         fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?)
+        fun onClickDeleteItem(question: Pertanyaan?, position: Int?)
+        fun onClickCopyUrl(id: String?)
+        fun onClickLapor(id: String?)
     }
 }

@@ -55,4 +55,15 @@ class TanyaKandidatInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun reportQuestion(id: String?, className: String?): Completable {
+        return apiWrapper
+            .getPantauApi()
+            .reportQuestion(
+                id,
+                className
+            )
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
     android:background="@color/white">
 
     <LinearLayout
@@ -11,9 +10,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingTop="10dp"
+        android:paddingTop="16dp"
         android:paddingBottom="10dp"
-        android:foreground="?selectableItemBackground">
+        android:foreground="?selectableItemBackground"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingRight="16dp"
+        android:paddingEnd="16dp">
 
         <ImageView
             android:layout_width="32dp"
@@ -41,7 +44,11 @@
         android:gravity="center_vertical"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:foreground="?selectableItemBackground">
+        android:foreground="?selectableItemBackground"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingRight="16dp"
+        android:paddingEnd="16dp">
 
         <ImageView
             android:layout_width="32dp"
@@ -69,7 +76,11 @@
         android:gravity="center_vertical"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:foreground="?selectableItemBackground">
+        android:foreground="?selectableItemBackground"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingRight="16dp"
+        android:paddingEnd="16dp">
 
         <ImageView
             android:layout_width="32dp"
@@ -97,8 +108,12 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:foreground="?selectableItemBackground">
+        android:paddingBottom="16dp"
+        android:foreground="?selectableItemBackground"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingRight="16dp"
+        android:paddingEnd="16dp">
 
         <ImageView
             android:layout_width="32dp"

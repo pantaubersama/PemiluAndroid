@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
+import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import javax.inject.Inject
 
 class TanyaKandidatPresenter @Inject constructor(
@@ -90,9 +91,31 @@ class TanyaKandidatPresenter @Inject constructor(
                 }
                 .doOnError {
                     view?.showError(it)
-                    view?.onItemFailedUpvote(isLiked, position)
+                    view?.onFailedUpVoteItem(isLiked, position)
                 }
                 .subscribe()!!
         )
+    }
+
+    fun reportQuestion(id: String?, className: String?) {
+        disposables?.add(
+            tanyaKandidatInteractor
+                .reportQuestion(
+                    id,
+                    className
+                )
+                .doOnComplete {
+                    view?.showItemReportedAlert()
+                }
+                .doOnError {
+                    view?.showError(it)
+                    view?.showFailedReportItem()
+                }
+                .subscribe()!!
+        )
+    }
+
+    fun deleteItem(question: Pertanyaan?, position: Int?) {
+
     }
 }

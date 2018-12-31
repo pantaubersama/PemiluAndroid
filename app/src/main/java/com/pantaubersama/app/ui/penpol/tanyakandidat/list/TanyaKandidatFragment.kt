@@ -1,7 +1,11 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -74,7 +78,23 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             }
 
             override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
-                presenter?.upVoteQuestion(id, "Question", isLiked, position)
+                presenter?.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
+            }
+
+            override fun onClickDeleteItem(question: Pertanyaan?, position: Int?) {
+                presenter?.deleteItem(question, position)
+            }
+
+            override fun onClickCopyUrl(id: String?) {
+                val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val copyUri = Uri.parse("pantau.co.id/" + "share/tk/" + id)
+                val clip = ClipData.newUri(activity?.contentResolver, "URI", copyUri)
+                clipboard.primaryClip = clip
+                ToastUtil.show(context!!, "Copied to clipboard")
+            }
+
+            override fun onClickLapor(id: String?) {
+                presenter?.reportQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME)
             }
         }
         layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -151,8 +171,16 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         // no need to do
     }
 
-    override fun onItemFailedUpvote(liked: Boolean?, position: Int?) {
+    override fun onFailedUpVoteItem(liked: Boolean?, position: Int?) {
         adapter?.reverseVote(liked, position)
+    }
+
+    override fun showItemReportedAlert() {
+        ToastUtil.show(context!!, "Berhasil melaporkan pertanyaan")
+    }
+
+    override fun showFailedReportItem() {
+        ToastUtil.show(context!!, "Gagal melaporkan pertanyaan")
     }
 
     companion object {

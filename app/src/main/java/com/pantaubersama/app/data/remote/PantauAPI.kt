@@ -31,4 +31,11 @@ interface PantauAPI {
         @Field("id") id: String?,
         @Field("class_name") className: String?
     ): Completable
+
+    @FormUrlEncoded
+    @POST("pendidikan_politik/v1/reports")
+    fun reportQuestion(
+        @Field("id") id: String?,
+        @Field("class_name") className: String?
+    ): Completable
 }
