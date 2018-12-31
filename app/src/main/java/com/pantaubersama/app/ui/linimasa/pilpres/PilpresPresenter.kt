@@ -2,8 +2,6 @@ package com.pantaubersama.app.ui.linimasa.pilpres
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.PilpresInteractor
-import com.pantaubersama.app.data.model.linimasa.FeedsItem
-import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 /**

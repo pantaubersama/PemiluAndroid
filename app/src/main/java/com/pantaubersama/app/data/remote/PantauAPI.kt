@@ -15,7 +15,7 @@ interface PantauAPI {
 
     @GET("linimasa/v1/feeds/pilpres")
     fun getFeeds(
-        @Query("page") page:Int?,
+        @Query("page") page: Int?,
         @Query("per_page") perPage: Int?
     ): Single<FeedsResponse>
 

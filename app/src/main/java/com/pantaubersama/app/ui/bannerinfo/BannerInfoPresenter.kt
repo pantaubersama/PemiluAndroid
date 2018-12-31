@@ -2,7 +2,6 @@ package com.pantaubersama.app.ui.bannerinfo
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
-import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 /**
