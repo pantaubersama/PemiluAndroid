@@ -83,7 +83,6 @@ class DataCache(context: Context) : SharedPref(context) {
         return getBoolean(IS_BANNER_PILPRES_OPENED)
     }
 
-
     fun setBannerJanpolOpened(isOpened: Boolean) {
         putBoolean(IS_BANNER_JANPOL_OPENED, isOpened)
     }

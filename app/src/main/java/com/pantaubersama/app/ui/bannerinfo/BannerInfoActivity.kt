@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.text.Html
 import android.view.View
-import com.bumptech.glide.Glide
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
@@ -85,7 +84,7 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
             PantauConstants.Extra.TYPE_PILPRES -> PantauConstants.BANNER_PILPRES
             PantauConstants.Extra.TYPE_JANPOL -> PantauConstants.BANNER_JANPOL
             PantauConstants.Extra.TYPE_TANYA_KANDIDAT -> PantauConstants.BANNER_TANYA
-            else ->  PantauConstants.BANNER_KUIS
+            else -> PantauConstants.BANNER_KUIS
         }
         presenter?.getBannerInfo(pageName)
     }

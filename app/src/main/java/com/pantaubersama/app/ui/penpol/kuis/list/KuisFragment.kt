@@ -91,7 +91,6 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         iv_banner_close.setOnClickListener {
             layout_banner_kuis.visibility = View.GONE
         }
-
     }
 
     override fun hideBanner() {
