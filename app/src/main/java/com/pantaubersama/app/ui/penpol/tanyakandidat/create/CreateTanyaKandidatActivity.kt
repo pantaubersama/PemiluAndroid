@@ -1,5 +1,7 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.create
 
+import android.app.Activity
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
@@ -9,6 +11,8 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.TanyaKandidateInteractor
+import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_create_tanya_kandidat.*
 import javax.inject.Inject
@@ -89,7 +93,10 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
         ToastUtil.show(this@CreateTanyaKandidatActivity, "Berhasil mengirim pertanyaan")
     }
 
-    override fun finishActivity() {
+    override fun finishActivity(question: Pertanyaan?) {
+        val intent = Intent()
+        intent.putExtra(PantauConstants.TanyaKandidat.TANYA_KANDIDAT_DATA, question)
+        setResult(Activity.RESULT_OK, intent)
         finish()
     }
 

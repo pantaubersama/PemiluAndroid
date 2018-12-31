@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
+import android.app.Activity
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,12 +48,24 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     private fun setupBanner() {
+        presenter?.isBannerShown()
+    }
+
+    override fun showBanner() {
+        layout_banner_tanya_kandidat.visibility = View.VISIBLE
         tv_banner_text.text = getString(R.string.tanya_kandidat_banner_text)
         iv_banner_image.setImageResource(R.drawable.ic_banner_tanya_kandidat)
         fl_banner.setOnClickListener {
             val intent = BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_TANYA_KANDIDAT)
-            startActivity(intent)
+            startActivityForResult(intent, PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT)
         }
+        iv_banner_close.setOnClickListener {
+            layout_banner_tanya_kandidat.visibility = View.GONE
+        }
+    }
+
+    override fun hideBanner() {
+        layout_banner_tanya_kandidat.visibility = View.GONE
     }
 
     private fun setupTanyaKandidatList() {
@@ -112,5 +125,18 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     override fun onDestroy() {
         (activity?.application as BaseApp).releaseActivityComponent()
         super.onDestroy()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE -> {
+                    adapter.add((data?.getSerializableExtra(PantauConstants.TanyaKandidat.TANYA_KANDIDAT_DATA) as Pertanyaan), 0)
+                    recycler_view.smoothScrollToPosition(0)
+                }
+                PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT -> hideBanner()
+            }
+        }
     }
 }

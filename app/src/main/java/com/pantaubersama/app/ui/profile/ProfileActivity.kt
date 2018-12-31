@@ -12,23 +12,36 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.data.model.user.Avatar
+import com.pantaubersama.app.base.BaseApp
+import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.User
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
+import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.snackBar
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.cluster_options_layout.*
+import javax.inject.Inject
 
 class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
+
+    @Inject
+    lateinit var interactor: ProfileInteractor
+
     private lateinit var activeFragment: Fragment
     private var pLinimasaFragment: ProfileJanjiPolitikFragment? = null
     private var pTanyaKandidatFragment: ProfileTanyaKandidatFragment? = null
     private var otherFrag: Fragment? = null // dummy
 
+    override fun initInjection() {
+        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    }
+
     override fun initPresenter(): ProfilePresenter? {
-        return ProfilePresenter()
+        return ProfilePresenter(interactor)
     }
 
     override fun statusBarColor(): Int? {
@@ -41,7 +54,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     override fun setupUI() {
         setupToolbar(true, "", R.color.white, 4f)
-        setProfileData()
         setupClusterLayout()
         setupBiodataLayout()
         setupBadgeLayout()
@@ -51,22 +63,16 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         }
         initFragment()
         setupNavigation()
+        presenter?.refreshProfile()
+        presenter?.getProfile()
     }
 
-    private fun setProfileData() {
-        val user = User(
-            "8787",
-            "haryonosugi@gmail.com",
-            "Haryono",
-            "Sugi",
-                "haryono",
-                Avatar(),
-                false)
-        if (user.verified!!) {
-            setVerified()
-        } else {
-            setUnverified()
-        }
+    override fun showProfile(profile: User) {
+        user_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+        tv_user_name.text = "%s %s".format(profile.firstName, profile.lastName)
+        user_username.text = profile.username?.takeIf { it.isNotBlank() }?.let { "@%s".format(it) }
+        user_bio.text = profile.about
+        if (profile.verified == true) setVerified() else setUnverified()
     }
 
     private fun setUnverified() {
@@ -220,11 +226,16 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     override fun showLoading() {
-        // show loading
+        progress_bar.visibleIf(true)
     }
 
     override fun dismissLoading() {
-        // hide loading
+        progress_bar.visibleIf(false)
+    }
+
+    override fun showError(throwable: Throwable) {
+        super.showError(throwable)
+        coordinator.snackBar(throwable.message ?: "Terjadi kesalahan")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

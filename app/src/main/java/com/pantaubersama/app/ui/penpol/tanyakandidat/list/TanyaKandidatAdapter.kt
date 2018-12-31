@@ -10,14 +10,17 @@ import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.adapter.BaseAdapter
 import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.base.listener.OnItemLongClickListener
 import com.pantaubersama.app.base.viewholder.BaseViewHolder
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.utils.GlideApp
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_tanya_kandidat.*
+import kotlinx.android.synthetic.main.item_tanya_kandidat.view.*
 import kotlinx.android.synthetic.main.layout_action_post.*
 import kotlinx.android.synthetic.main.layout_option_dialog_tanya_kandidat.*
 
@@ -32,6 +35,11 @@ class TanyaKandidatAdapter(context: Context) : BaseAdapter<Pertanyaan, TanyaKand
         containerView!!, clickListener, longClickListener), LayoutContainer {
         @SuppressLint("SetTextI18n")
         override fun bind(item: Pertanyaan) {
+            GlideApp
+                .with(itemView.context)
+                .load(item.user?.avatar?.url)
+                .placeholder(ContextCompat.getDrawable(itemView.context, R.drawable.ic_person))
+                .into(itemView.user_avatar)
             tv_user_name.text = item.user?.firstName + item.user?.lastName
             question_time.text = item.createdAt?.id
             upvote_count_text.text = item.likeCount.toString()

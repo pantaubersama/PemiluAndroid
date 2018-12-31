@@ -14,6 +14,11 @@ class PantauConstants {
         const val BANNER_KUIS = "kuis"
     }
 
+    object TanyaKandidat {
+        const val CREATE_TANYA_KANDIDAT_REQUEST_CODE = 21
+        val TANYA_KANDIDAT_DATA = "tanya_kandidat_data"
+    }
+
     object Extra {
         const val SELECTED_FILTER_PILPRES = "EXTRA_SELECTED_FILTER"
         const val BANNER_INFO_TYPE = "EXTRA_BANNER_INFO_TYPE"

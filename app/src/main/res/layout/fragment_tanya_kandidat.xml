@@ -8,7 +8,8 @@
 
     <include
         android:id="@+id/layout_banner_tanya_kandidat"
-        layout="@layout/layout_banner_container"/>
+        layout="@layout/layout_banner_container"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/question_section"
