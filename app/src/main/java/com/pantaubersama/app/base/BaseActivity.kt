@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -26,6 +27,10 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // prevent all crash
+//        Thread.setDefaultUncaughtExceptionHandler { paramThread, paramThrowable ->
+//            Log.e("Error" + Thread.currentThread().stackTrace[2], paramThrowable.localizedMessage)
+//        }
         setContentView(setLayout())
         initInjection()
         fetchIntentExtra()

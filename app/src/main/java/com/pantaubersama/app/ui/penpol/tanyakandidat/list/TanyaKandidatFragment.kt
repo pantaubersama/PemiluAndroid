@@ -9,7 +9,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
-import com.pantaubersama.app.data.interactors.TanyaKandidateInteractor
+import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.utils.OnScrollListener
 import com.pantaubersama.app.utils.PantauConstants
@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
     @Inject
-    lateinit var interactor: TanyaKandidateInteractor
+    lateinit var interactor: TanyaKandidatInteractor
     private var page = 1
     private var perPage = 10
 
@@ -71,6 +71,10 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         adapter?.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickShare(item: Pertanyaan?) {
                 ShareUtil.shareItem(context!!, item)
+            }
+
+            override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
+                presenter?.upVoteQuestion(id, "Question", isLiked, position)
             }
         }
         layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -141,6 +145,14 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     override fun showFailedGetDataAlert() {
         ToastUtil.show(context!!, "Gagal memuat daftar pertanyaan")
+    }
+
+    override fun onItemUpVoted() {
+        // no need to do
+    }
+
+    override fun onItemFailedUpvote(liked: Boolean?, position: Int?) {
+        adapter?.reverseVote(liked, position)
     }
 
     companion object {

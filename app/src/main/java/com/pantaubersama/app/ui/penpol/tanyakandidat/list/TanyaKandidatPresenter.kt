@@ -1,14 +1,14 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import com.pantaubersama.app.base.BasePresenter
-import com.pantaubersama.app.data.interactors.TanyaKandidateInteractor
+import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
 import javax.inject.Inject
 
 class TanyaKandidatPresenter @Inject constructor(
-    private val tanyaKandidateInteractor: TanyaKandidateInteractor
+    private val tanyaKandidatInteractor: TanyaKandidatInteractor
 ) : BasePresenter<TanyaKandidatView>() {
     fun isBannerShown() {
-        if (!tanyaKandidateInteractor.isBannerShown()!!) {
+        if (!tanyaKandidatInteractor.isBannerShown()!!) {
             view?.showBanner()
         }
     }
@@ -24,12 +24,15 @@ class TanyaKandidatPresenter @Inject constructor(
             view?.showLoading()
         }
         view?.setIsLoading(true)
-        disposables?.add(tanyaKandidateInteractor.getTanyaKandidatlist(
-            page,
-            perPage,
-            orderBy,
-            direction,
-            filterBy)
+        disposables?.add(
+            tanyaKandidatInteractor
+                .getTanyaKandidatlist(
+                    page,
+                    perPage,
+                    orderBy,
+                    direction,
+                    filterBy
+            )
             .doOnSuccess {
                 view?.setIsLoading(false)
                 if (page == 1) {
@@ -73,5 +76,23 @@ class TanyaKandidatPresenter @Inject constructor(
                 view?.showError(it)
             }
             .subscribe())
+    }
+
+    fun upVoteQuestion(id: String?, questionCalass: String?, isLiked: Boolean?, position: Int?) {
+        disposables?.add(
+            tanyaKandidatInteractor
+                .upVoteQuestion(
+                    id,
+                    questionCalass
+                )
+                .doOnComplete {
+                    view?.onItemUpVoted()
+                }
+                .doOnError {
+                    view?.showError(it)
+                    view?.onItemFailedUpvote(isLiked, position)
+                }
+                .subscribe()!!
+        )
     }
 }

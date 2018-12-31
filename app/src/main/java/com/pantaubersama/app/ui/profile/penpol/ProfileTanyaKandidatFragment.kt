@@ -42,6 +42,10 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
             override fun onClickShare(item: Pertanyaan?) {
                 ShareUtil.shareItem(context!!, item)
             }
+
+            override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
+                // not implemented yet
+            }
         }
         layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         recycler_view?.layoutManager = layoutManager

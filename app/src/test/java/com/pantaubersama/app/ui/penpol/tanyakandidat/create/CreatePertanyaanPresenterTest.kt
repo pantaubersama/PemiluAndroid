@@ -1,7 +1,7 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.create
 
 import com.pantaubersama.app.base.BaseView
-import com.pantaubersama.app.data.interactors.TanyaKandidateInteractor
+import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
 import org.junit.After
 import org.junit.Before
 
@@ -17,7 +17,7 @@ class CreatePertanyaanPresenterTest {
     private var presenter: CreateTanyaKandidatPresenter? = null
 
     @Mock
-    private var interactor: TanyaKandidateInteractor? = null
+    private var interactor: TanyaKandidatInteractor? = null
 
     @Mock
     private var view: CreateTanyaKandidatView? = null

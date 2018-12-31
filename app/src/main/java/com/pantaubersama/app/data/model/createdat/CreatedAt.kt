@@ -1,4 +1,4 @@
-package com.pantaubersama.app.data.createdat
+package com.pantaubersama.app.data.model.createdat
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

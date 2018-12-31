@@ -46,11 +46,22 @@ class TanyaKandidatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             iv_options_button.setOnClickListener {
                 showOptionsDialog(itemView)
             }
-            upvote_button.setOnClickListener {
-                setUpvoted(item)
-            }
             iv_share_button.setOnClickListener {
                 listener?.onClickShare(item)
+            }
+            if (data[adapterPosition].isliked != null) {
+                if (data[adapterPosition].isliked!!){
+                    upvote_animation.progress = 1.0f
+                }
+                else{
+                    upvote_animation.progress = 0.0f
+                }
+            }
+            upvote_container.setOnClickListener {
+                if (!item?.isliked!!){
+                    setUpvoted(item)
+                    listener?.onClickUpvote(item.id, item.isliked, position)
+                }
             }
         }
 
@@ -58,20 +69,20 @@ class TanyaKandidatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val upVoted = item?.isliked
             item?.isliked = !item?.isliked!!
             val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
-            if (upVoted!!) {
-                val upVoteCount = item.likeCount!! - 1
-                item.likeCount = upVoteCount
-                upvote_count_text.text = item.likeCount.toString()
-                upvote_button.progress = 0.0f
-            } else {
+            if (!upVoted!!) {
                 val loveCount = item.likeCount!! + 1
                 item.likeCount = loveCount
-                animator.addUpdateListener {
-                    animation -> upvote_button.progress = animation.animatedValue as Float
+                animator.addUpdateListener { animation -> upvote_animation.progress = animation.animatedValue as Float
                     upvote_count_text.text = item.likeCount.toString()
                 }
                 animator.start()
             }
+//            else {
+//                val upVoteCount = item.likeCount!! - 1
+//                item.likeCount = upVoteCount
+//                upvote_count_text.text = item.likeCount.toString()
+//                upvote_animation.progress = 0.0f
+//            }
         }
 
         private fun showOptionsDialog(itemView: View?) {
@@ -189,7 +200,13 @@ class TanyaKandidatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyItemRangeInserted(itemCount, questions.size)
     }
 
+    fun reverseVote(liked: Boolean?, position: Int?) {
+        data[position!!].isliked = liked
+        notifyItemChanged(position)
+    }
+
     interface AdapterListener {
         fun onClickShare(item: Pertanyaan?)
+        fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?)
     }
 }

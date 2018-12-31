@@ -2,7 +2,7 @@ package com.pantaubersama.app.data.model.tanyakandidat
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.pantaubersama.app.data.createdat.CreatedAt
+import com.pantaubersama.app.data.model.createdat.CreatedAt
 import com.pantaubersama.app.data.model.user.User
 import java.io.Serializable
 

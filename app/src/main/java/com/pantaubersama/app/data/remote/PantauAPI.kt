@@ -2,6 +2,7 @@ package com.pantaubersama.app.data.remote
 
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfoResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.* // ktlint-disable
 
@@ -23,4 +24,11 @@ interface PantauAPI {
         @Query("direction") direction: String?,
         @Query("filter_by") filterBy: String?
     ): Single<TanyaKandidatResponse>
+
+    @FormUrlEncoded
+    @POST("pendidikan_politik/v1/votes")
+    fun upVoteQuestion(
+        @Field("id") id: String?,
+        @Field("class_name") className: String?
+    ): Completable
 }
