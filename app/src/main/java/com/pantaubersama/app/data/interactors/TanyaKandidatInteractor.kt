@@ -66,4 +66,14 @@ class TanyaKandidatInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun deleteQuestions(id: String?): Completable {
+        return apiWrapper
+            .getPantauApi()
+            .deleteQuestion(
+                id
+            )
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }

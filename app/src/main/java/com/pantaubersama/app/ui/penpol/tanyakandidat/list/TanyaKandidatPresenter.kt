@@ -93,7 +93,7 @@ class TanyaKandidatPresenter @Inject constructor(
                     view?.showError(it)
                     view?.onFailedUpVoteItem(isLiked, position)
                 }
-                .subscribe()!!
+                .subscribe()
         )
     }
 
@@ -111,11 +111,22 @@ class TanyaKandidatPresenter @Inject constructor(
                     view?.showError(it)
                     view?.showFailedReportItem()
                 }
-                .subscribe()!!
+                .subscribe()
         )
     }
 
-    fun deleteItem(question: Pertanyaan?, position: Int?) {
-
+    fun deleteItem(id: String?, position: Int?) {
+        disposables?.add(
+            tanyaKandidatInteractor
+                .deleteQuestions(id)
+                .doOnComplete {
+                    view?.onItemDeleted(position)
+                }
+                .doOnError {
+                    view?.showError(it)
+                    view?.showFailedDeleteItemAlert()
+                }
+                .subscribe()
+        )
     }
 }

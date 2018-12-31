@@ -14,6 +14,7 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
+import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.utils.OnScrollListener
 import com.pantaubersama.app.utils.PantauConstants
@@ -27,6 +28,8 @@ import javax.inject.Inject
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
     @Inject
     lateinit var interactor: TanyaKandidatInteractor
+    @Inject
+    lateinit var dataCache: DataCache
     private var page = 1
     private var perPage = 10
 
@@ -44,6 +47,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun initView(view: View) {
+        presenter
         setupBanner()
         setupTanyaKandidatList()
         presenter?.getTanyaKandidatList(page, perPage, "created", "desc", "user_verified_all")
@@ -71,7 +75,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     private fun setupTanyaKandidatList() {
-        adapter = TanyaKandidatAdapter()
+        adapter = TanyaKandidatAdapter(dataCache.loadUserProfile().id)
         adapter?.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickShare(item: Pertanyaan?) {
                 ShareUtil.shareItem(context!!, item)
@@ -81,8 +85,8 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                 presenter?.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
             }
 
-            override fun onClickDeleteItem(question: Pertanyaan?, position: Int?) {
-                presenter?.deleteItem(question, position)
+            override fun onClickDeleteItem(id: String?, position: Int?) {
+                presenter?.deleteItem(id, position)
             }
 
             override fun onClickCopyUrl(id: String?) {
@@ -181,6 +185,14 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     override fun showFailedReportItem() {
         ToastUtil.show(context!!, "Gagal melaporkan pertanyaan")
+    }
+
+    override fun showFailedDeleteItemAlert() {
+        ToastUtil.show(context!!, "Gagal menghapus pertanyaan")
+    }
+
+    override fun onItemDeleted(position: Int?) {
+        adapter?.deleteItem(position)
     }
 
     companion object {

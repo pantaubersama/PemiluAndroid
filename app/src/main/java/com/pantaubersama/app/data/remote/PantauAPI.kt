@@ -38,4 +38,9 @@ interface PantauAPI {
         @Field("id") id: String?,
         @Field("class_name") className: String?
     ): Completable
+
+    @DELETE("pendidikan_politik/v1/questions")
+    fun deleteQuestion(
+        @Query("id") id: String?
+    ): Completable
 }

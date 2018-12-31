@@ -37,7 +37,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     }
 
     private fun setupTanyaKandidatList() {
-        adapter = TanyaKandidatAdapter()
+        adapter = TanyaKandidatAdapter("")
         adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickShare(item: Pertanyaan?) {
                 ShareUtil.shareItem(context!!, item)
@@ -45,6 +45,18 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
 
             override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
                 // not implemented yet
+            }
+
+            override fun onClickDeleteItem(id: String?, position: Int?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onClickCopyUrl(id: String?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onClickLapor(id: String?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         }
         layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
