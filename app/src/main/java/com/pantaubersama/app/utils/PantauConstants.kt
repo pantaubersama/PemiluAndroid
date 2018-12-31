@@ -7,6 +7,11 @@ class PantauConstants {
 
     companion object {
         const val LABEL_COPY = "LABEL_COPY"
+
+        const val BANNER_PILPRES = "pilpres"
+        const val BANNER_JANPOL = "janji politik"
+        const val BANNER_TANYA = "tanya"
+        const val BANNER_KUIS = "kuis"
     }
 
     object TanyaKandidat {
@@ -29,6 +34,10 @@ class PantauConstants {
         const val FILTER_JANPOL = 1002
         const val FILTER_TANYA_KANDIDAT = 1003
         const val FILTER_KUIS = 1004
+        const val BANNER_PILPRES = 101
+        const val BANNER_JANPOL = 102
+        const val BANNER_TANYA_KANDIDAT = 103
+        const val BANNER_KUIS = 104
     }
 
     object Networking {

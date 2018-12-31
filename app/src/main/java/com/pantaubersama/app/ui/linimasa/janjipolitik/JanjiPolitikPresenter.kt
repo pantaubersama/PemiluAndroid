@@ -12,6 +12,12 @@ import javax.inject.Inject
 class JanjiPolitikPresenter @Inject constructor(
     private val janjiPolitikInteractor: JanjiPolitikInteractor?
 ) : BasePresenter<JanjiPolitikView>() {
+    fun isBannerShown() {
+        if (!janjiPolitikInteractor?.isBannerShown()!!) {
+            view?.showBanner()
+        }
+    }
+
     fun getJanjiPolitikList() {
         view?.showLoading()
 

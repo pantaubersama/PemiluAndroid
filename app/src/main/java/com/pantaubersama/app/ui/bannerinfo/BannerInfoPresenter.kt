@@ -10,17 +10,23 @@ import javax.inject.Inject
  */
 class BannerInfoPresenter @Inject constructor(private val bannerInfoInteractor: BannerInfoInteractor?) : BasePresenter<BannerInfoView>() {
 
-    fun getBannerInfo() {
+    fun getBannerInfo(pageName: String) {
         view?.showLoading()
         val disposable: Disposable?
         disposable = bannerInfoInteractor?.getBannerInfo()
             ?.doOnSuccess { bannerInfoResponse ->
-                bannerInfoInteractor.getBannerInfo()
+                for (bannerInfo in bannerInfoResponse.data.bannerInfoList) {
+                    if (bannerInfo.pageName?.toLowerCase()?.contains(pageName)!!) {
+                        view?.showBannerInfo(bannerInfo)
+                        view?.dismissLoading()
+                        bannerInfoInteractor.setBannerOpened(pageName)
+                        break
+                    }
+                }
             }
             ?.doOnError { e ->
                 view?.dismissLoading()
                 view?.showError(e!!)
-                view?.showBannerInfo()
             }
             ?.subscribe()
         disposables?.add(disposable!!)

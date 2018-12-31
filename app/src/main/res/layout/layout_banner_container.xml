@@ -33,7 +33,8 @@
             android:layout_height="30dp"
             android:padding="6dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_delete_48_px"/>
+            android:src="@drawable/ic_delete_48_px"
+            android:background="?selectableItemBackground"/>
 
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/fl_banner"

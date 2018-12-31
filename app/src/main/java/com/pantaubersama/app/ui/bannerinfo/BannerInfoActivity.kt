@@ -1,12 +1,15 @@
 package com.pantaubersama.app.ui.bannerinfo
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.text.Html
+import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.utils.HtmlTagHandler
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_banner_info.*
@@ -47,7 +50,7 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
             finish()
         }
 
-        tv_info_title.text = when (infoType) {
+        tv_banner_title.text = when (infoType) {
             PantauConstants.Extra.TYPE_PILPRES -> getString(R.string.txt_pilpres)
             PantauConstants.Extra.TYPE_JANPOL -> getString(R.string.txt_tab_janji_politik)
             PantauConstants.Extra.TYPE_TANYA_KANDIDAT -> getString(R.string.tanya_kandidat_label)
@@ -68,16 +71,29 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
 
         val str = String(buffer)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            tv_info_desricption.text = Html.fromHtml(HtmlTagHandler.customizeListTags(str), Html.FROM_HTML_MODE_LEGACY, null, HtmlTagHandler())
+            tv_banner_desricption.text = Html.fromHtml(HtmlTagHandler.customizeListTags(str), Html.FROM_HTML_MODE_LEGACY, null, HtmlTagHandler())
         } else {
-            tv_info_desricption.text = Html.fromHtml(HtmlTagHandler.customizeListTags(str), null, HtmlTagHandler())
+            tv_banner_desricption.text = Html.fromHtml(HtmlTagHandler.customizeListTags(str), null, HtmlTagHandler())
         }
 
-        presenter?.getBannerInfo()
+        getBannerInfo()
     }
 
-    override fun showBannerInfo() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private fun getBannerInfo() {
+        val pageName = when (infoType) {
+            PantauConstants.Extra.TYPE_PILPRES -> PantauConstants.BANNER_PILPRES
+            PantauConstants.Extra.TYPE_JANPOL -> PantauConstants.BANNER_JANPOL
+            PantauConstants.Extra.TYPE_TANYA_KANDIDAT -> PantauConstants.BANNER_TANYA
+            else -> PantauConstants.BANNER_KUIS
+        }
+        presenter?.getBannerInfo(pageName)
+    }
+
+    override fun showBannerInfo(item: BannerInfo) {
+//        Glide.with(this).load(item.headerImage).into(iv_banner_background)
+        setResult(Activity.RESULT_OK)
+        tv_banner_title.text = item.title
+        tv_banner_desricption.text = item.body
     }
 
     override fun setLayout(): Int {
@@ -85,11 +101,13 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progress_bar.visibility = View.VISIBLE
+        rl_banner_container.visibility = View.GONE
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progress_bar.visibility = View.GONE
+        rl_banner_container.visibility = View.VISIBLE
     }
 
     override fun onDestroy() {

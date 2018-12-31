@@ -7,6 +7,12 @@ import javax.inject.Inject
 class TanyaKandidatPresenter @Inject constructor(
     private val tanyaKandidateInteractor: TanyaKandidateInteractor
 ) : BasePresenter<TanyaKandidatView>() {
+    fun isBannerShown() {
+        if (!tanyaKandidateInteractor.isBannerShown()!!) {
+            view?.showBanner()
+        }
+    }
+
     fun getTanyaKandidatList(
         page: Int?,
         perPage: Int?,

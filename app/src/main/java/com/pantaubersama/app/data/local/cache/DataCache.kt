@@ -4,6 +4,9 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.pantaubersama.app.data.local.SharedPref
+import com.pantaubersama.app.data.model.user.EMPTY_USER
+import com.pantaubersama.app.data.model.user.User
+
 /**
  * @author edityomurti on 21/12/2018 18:05
  */
@@ -27,6 +30,13 @@ class DataCache(context: Context) : SharedPref(context) {
         const val ACCESS_TOKEN_FIELD = "client_token"
 
         const val REFRESH_TOKEN_FIELD = "client_refresh_token"
+
+        const val IS_BANNER_PILPRES_OPENED = "IS_BANNER_PILPRES_OPENED"
+        const val IS_BANNER_JANPOL_OPENED = "IS_BANNER_JANPOL_OPENED"
+        const val IS_BANNER_TANYA_OPENED = "IS_BANNER_TANYA_OPENED"
+        const val IS_BANNER_KUIS_OPENED = "IS_BANNER_KUIS_OPENED"
+
+        const val USER_PROFILE = "user_profile"
     }
 
     override fun prefId(): String {
@@ -63,5 +73,45 @@ class DataCache(context: Context) : SharedPref(context) {
 
     fun loadRefreshToken(): String? {
         return getString(REFRESH_TOKEN_FIELD)
+    }
+
+    fun setBannerPilpresOpened(isOpened: Boolean) {
+        putBoolean(IS_BANNER_PILPRES_OPENED, isOpened)
+    }
+
+    fun isBannerPilpresOpened(): Boolean? {
+        return getBoolean(IS_BANNER_PILPRES_OPENED)
+    }
+
+    fun setBannerJanpolOpened(isOpened: Boolean) {
+        putBoolean(IS_BANNER_JANPOL_OPENED, isOpened)
+    }
+
+    fun isBannerJanpolOpened(): Boolean? {
+        return getBoolean(IS_BANNER_JANPOL_OPENED)
+    }
+
+    fun setBannerTanyaKandidatOpened(isOpened: Boolean) {
+        putBoolean(IS_BANNER_TANYA_OPENED, isOpened)
+    }
+
+    fun isBannerTanyaKandidatOpened(): Boolean? {
+        return getBoolean(IS_BANNER_TANYA_OPENED)
+    }
+
+    fun setBannerKuisOpened(isOpened: Boolean) {
+        putBoolean(IS_BANNER_KUIS_OPENED, isOpened)
+    }
+
+    fun isBannerKuisOpened(): Boolean? {
+        return getBoolean(IS_BANNER_KUIS_OPENED)
+    }
+
+    fun saveUserProfile(userProfile: User) {
+        putString(USER_PROFILE, gson.toJson(userProfile))
+    }
+
+    fun loadUserProfile(): User {
+        return gson.fromJson(getString(USER_PROFILE), User::class.java) ?: EMPTY_USER
     }
 }

@@ -15,6 +15,7 @@ import com.pantaubersama.app.utils.OnScrollListener
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
+import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject
@@ -45,12 +46,24 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     private fun setupBanner() {
+        presenter?.isBannerShown()
+    }
+
+    override fun showBanner() {
+        layout_banner_tanya_kandidat.visibility = View.VISIBLE
         tv_banner_text.text = getString(R.string.tanya_kandidat_banner_text)
         iv_banner_image.setImageResource(R.drawable.ic_banner_tanya_kandidat)
         fl_banner.setOnClickListener {
             val intent = BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_TANYA_KANDIDAT)
-            startActivity(intent)
+            startActivityForResult(intent, PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT)
         }
+        iv_banner_close.setOnClickListener {
+            layout_banner_tanya_kandidat.visibility = View.GONE
+        }
+    }
+
+    override fun hideBanner() {
+        layout_banner_tanya_kandidat.visibility = View.GONE
     }
 
     private fun setupTanyaKandidatList() {
@@ -145,9 +158,12 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE) {
-                adapter?.addItem((data?.getSerializableExtra(PantauConstants.TanyaKandidat.TANYA_KANDIDAT_DATA) as Pertanyaan), 0)
-                recycler_view.smoothScrollToPosition(0)
+            when (requestCode) {
+                PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE -> {
+                    adapter?.addItem((data?.getSerializableExtra(PantauConstants.TanyaKandidat.TANYA_KANDIDAT_DATA) as Pertanyaan), 0)
+                    recycler_view.smoothScrollToPosition(0)
+                }
+                PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT -> hideBanner()
             }
         }
     }

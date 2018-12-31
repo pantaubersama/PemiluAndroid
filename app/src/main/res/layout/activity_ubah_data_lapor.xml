@@ -42,9 +42,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_regular"
                     android:lineSpacingExtra="2sp"
+                    android:text="@string/info_data_lapor"
                     android:textColor="@color/gray_5"
-                    android:textSize="10sp"
-                    android:text="@string/info_data_lapor" />
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -334,7 +334,7 @@
     <LinearLayout
         android:id="@+id/ubah_data_lapor_submit"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
         android:clickable="true"
