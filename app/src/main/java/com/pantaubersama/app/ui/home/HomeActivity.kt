@@ -5,12 +5,20 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.base.BaseApp
+import com.pantaubersama.app.data.interactors.ProfileInteractor
+import com.pantaubersama.app.data.model.user.User
 import com.pantaubersama.app.ui.linimasa.LinimasaFragment
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
+import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_home.*
+import javax.inject.Inject
 
 class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
+
+    @Inject
+    lateinit var profileInteractor: ProfileInteractor
 
     private val linimasaFragment = LinimasaFragment()
     private val penPolFragment = PenPolFragment.newInstance()
@@ -26,8 +34,12 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun initInjection() {
+        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    }
+
     override fun initPresenter(): HomePresenter {
-        return HomePresenter()
+        return HomePresenter(profileInteractor)
     }
 
     override fun setupUI() {
@@ -89,8 +101,13 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         return R.layout.activity_home
     }
 
-    override fun onSuccessLoadUser() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onResume() {
+        super.onResume()
+        presenter?.updateUser()
+    }
+
+    override fun onSuccessLoadUser(profile: User) {
+        user_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
     }
 
     override fun showLoading() {
