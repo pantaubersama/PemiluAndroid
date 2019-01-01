@@ -110,10 +110,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
-                            android:text="Belum terverifikasi"
                             android:textColor="@color/gray_dark_1"
                             android:fontFamily="@font/lato_medium"
-                            android:includeFontPadding="false"/>
+                            android:includeFontPadding="false"
+                            tools:text="@string/txt_belum_verifikasi" />
 
                     </LinearLayout>
 

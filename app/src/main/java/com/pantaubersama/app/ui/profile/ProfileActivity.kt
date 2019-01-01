@@ -78,6 +78,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     private fun setUnverified() {
         verified_icon.colorFilter =
                 PorterDuffColorFilter(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1), PorterDuff.Mode.MULTIPLY)
+        verified_text.text = getString(R.string.txt_belum_verifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_gray)
         verified_button.setOnClickListener {
@@ -89,6 +90,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     private fun setVerified() {
         verified_icon.colorFilter =
                 PorterDuffColorFilter(ContextCompat.getColor(this@ProfileActivity, R.color.colorAccent), PorterDuff.Mode.MULTIPLY)
+        verified_text.text = getString(R.string.txt_terverifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.colorAccent))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_green)
     }
