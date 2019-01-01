@@ -14,7 +14,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.ProfileInteractor
-import com.pantaubersama.app.data.model.user.User
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
@@ -67,12 +67,12 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         presenter?.getProfile()
     }
 
-    override fun showProfile(profile: User) {
-        user_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+    override fun showProfile(profile: Profile) {
+        user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
         tv_user_name.text = "%s %s".format(profile.firstName, profile.lastName)
         user_username.text = profile.username?.takeIf { it.isNotBlank() }?.let { "@%s".format(it) }
         user_bio.text = profile.about
-        if (profile.verified == true) setVerified() else setUnverified()
+        if (profile.verified) setVerified() else setUnverified()
     }
 
     private fun setUnverified() {

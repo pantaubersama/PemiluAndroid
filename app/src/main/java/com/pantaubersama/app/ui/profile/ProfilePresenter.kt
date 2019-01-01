@@ -17,8 +17,7 @@ class ProfilePresenter @Inject constructor(
         val disposable = profileInteractor.refreshProfile()
                 .doOnEvent { _, _ -> view?.dismissLoading() }
                 .subscribe({
-                    profileInteractor.saveProfile(it.data.user)
-                    view?.showProfile(it.data.user)
+                    view?.showProfile(it)
                 }, {
                     view?.showError(it)
                 })

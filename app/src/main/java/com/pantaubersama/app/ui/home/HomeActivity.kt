@@ -7,7 +7,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.ProfileInteractor
-import com.pantaubersama.app.data.model.user.User
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.ui.linimasa.LinimasaFragment
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
@@ -106,8 +106,8 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         presenter?.updateUser()
     }
 
-    override fun onSuccessLoadUser(profile: User) {
-        user_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+    override fun onSuccessLoadUser(profile: Profile) {
+        user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
     }
 
     override fun showLoading() {

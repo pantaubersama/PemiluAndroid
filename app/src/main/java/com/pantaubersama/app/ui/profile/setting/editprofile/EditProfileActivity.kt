@@ -6,7 +6,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.ProfileInteractor
-import com.pantaubersama.app.data.model.user.User
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import javax.inject.Inject
@@ -47,8 +47,8 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         presenter?.updateUser()
     }
 
-    override fun onSuccessLoadUser(profile: User) {
-        edit_profile_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+    override fun onSuccessLoadUser(profile: Profile) {
+        edit_profile_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
     }
 
     override fun showLoading() {
