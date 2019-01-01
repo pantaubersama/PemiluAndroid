@@ -73,6 +73,10 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         user_username.text = profile.username?.takeIf { it.isNotBlank() }?.let { "@%s".format(it) }
         user_bio.text = profile.about
         if (profile.verified) setVerified() else setUnverified()
+
+        user_location.text = profile.location
+        user_education.text = profile.education
+        user_work.text = profile.occupation
     }
 
     private fun setUnverified() {
