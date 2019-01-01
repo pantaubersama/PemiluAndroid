@@ -49,6 +49,12 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
 
     override fun onSuccessLoadUser(profile: Profile) {
         edit_profile_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
+        edit_profile_nama.setText("%s %s".format(profile.firstName, profile.lastName))
+        edit_profile_username.setText("@%s".format(profile.username))
+        edit_profile_lokasi.setText(profile.location)
+        edit_profile_deskripsi.setText(profile.about)
+        edit_profile_pendidikan.setText(profile.education)
+        edit_profile_pekerjaan.setText(profile.occupation)
     }
 
     override fun showLoading() {
