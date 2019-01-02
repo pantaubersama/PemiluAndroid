@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
+import com.pantaubersama.app.utils.ToastUtil
 import timber.log.Timber
 
 /**
@@ -137,6 +138,7 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
     }
 
     override fun showError(throwable: Throwable) {
+        ToastUtil.show(this, throwable.message!!)
         Timber.e(throwable)
     }
 }

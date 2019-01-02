@@ -11,17 +11,15 @@ class LoginPresenter @Inject constructor(private val loginInteractor: LoginInter
         view?.showLoading()
         val disposable: Disposable?
         disposable = loginInteractor?.exchangeToken(oAuthToken)
-            ?.doOnSuccess { tokenResponse ->
-                loginInteractor.saveLoginData(tokenResponse.token)
+            ?.subscribe({
+                loginInteractor.saveLoginData(it.token)
                 view?.dismissLoading()
                 view?.openHomeActivity()
-            }
-            ?.doOnError { e ->
+            },{
                 view?.dismissLoading()
-                view?.showError(e!!)
+                view?.showError(it!!)
                 view?.showLoginFailedAlert()
-            }
-            ?.subscribe()
+            })
         disposables?.add(disposable!!)
     }
 }

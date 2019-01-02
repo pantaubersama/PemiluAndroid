@@ -164,7 +164,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     override fun showError(throwable: Throwable) {
         ToastUtil.show(context!!, throwable.message!!)
-        throwable.printStackTrace()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
