@@ -1,8 +1,12 @@
 package com.pantaubersama.app.ui.profile.setting
 
 import android.content.Intent
+import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.base.BaseApp
+import com.pantaubersama.app.data.interactors.LoginInteractor
+import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.clusterundang.ClusterUndangActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
@@ -12,8 +16,11 @@ import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActiv
 import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
 import kotlinx.android.synthetic.main.activity_setting.*
+import javax.inject.Inject
 
 class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
+    @Inject
+    lateinit var interactor: LoginInteractor
 
     companion object {
         val EDIT_PROFILE = 1
@@ -22,6 +29,10 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         val VERIFIKASI = 4
         val BADGE = 5
         val CLUSTER_UNDANG = 6
+    }
+
+    override fun initInjection() {
+        (application as BaseApp).createActivityComponent(this)?.inject(this)
     }
 
     override fun statusBarColor(): Int? {
@@ -33,7 +44,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     }
 
     override fun initPresenter(): SettingPresenter? {
-        return SettingPresenter()
+        return SettingPresenter(interactor)
     }
 
     override fun setupUI() {
@@ -99,7 +110,13 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             // bagikan aplikasi pantau bersama
         }
         setting_logout.setOnClickListener {
-            // logout aplikasi
+            presenter?.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET, interactor.getToken())
         }
+    }
+
+    override fun goToLogin() {
+        val intent = Intent(this@SettingActivity, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 }
