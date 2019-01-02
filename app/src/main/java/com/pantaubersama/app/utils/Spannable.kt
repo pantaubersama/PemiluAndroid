@@ -3,9 +3,7 @@ package com.pantaubersama.app.utils
 import android.graphics.Typeface
 import android.text.SpannableStringBuilder
 import android.text.Spanned
-import android.text.style.AbsoluteSizeSpan
-import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
+import android.text.style.*
 
 fun spannable(init: SpanWithChildren.() -> Unit): SpanWithChildren {
     val spanWithChildren = SpanWithChildren()
@@ -35,6 +33,8 @@ class SpanWithChildren(val what: Any? = null) : Span() {
             span(AbsoluteSizeSpan(size, true), init)
 
     fun bold(init: SpanWithChildren.() -> Unit): SpanWithChildren = typeface(Typeface.BOLD, init)
+
+    fun underline(init: SpanWithChildren.() -> Unit): SpanWithChildren = span(UnderlineSpan(), init)
 
     fun span(what: Any, init: SpanWithChildren.() -> Unit): SpanWithChildren {
         val child = SpanWithChildren(what)
