@@ -50,7 +50,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         presenter
         setupBanner()
         setupTanyaKandidatList()
-        presenter?.getTanyaKandidatList(page, perPage, "created", "desc", "user_verified_all")
+        presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
     }
 
     private fun setupBanner() {
@@ -108,7 +108,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             override fun loadMoreItem() {
                 adapter?.setLoading()
                 page += 1
-                presenter?.getTanyaKandidatList(page, perPage, "created", "desc", "user_verified_all")
+                presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
             }
 
             override fun isDataEnd(): Boolean {
@@ -121,9 +121,13 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         })
         swipe_refresh.setOnRefreshListener {
             swipe_refresh?.isRefreshing = false
-            page = 1
-            presenter?.getTanyaKandidatList(page, perPage, "created", "desc", "user_verified_all")
+            refreshItem()
         }
+    }
+
+    private fun refreshItem() {
+        page = 1
+        presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
     }
 
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>) {
@@ -215,6 +219,9 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                     recycler_view.smoothScrollToPosition(0)
                 }
                 PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT -> hideBanner()
+                PantauConstants.TanyaKandidat.Filter.FILTER_TANYA_KANDIDAT_REQUEST_CODE -> {
+                    refreshItem()
+                }
             }
         }
     }

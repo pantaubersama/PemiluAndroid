@@ -18,6 +18,18 @@ class PantauConstants {
         const val CREATE_TANYA_KANDIDAT_REQUEST_CODE = 21
         val TANYA_KANDIDAT_DATA = "tanya_kandidat_data"
         val CLASS_NAME = "Question"
+        object Filter {
+            const val FILTER_TANYA_KANDIDAT_REQUEST_CODE = 22
+            object ByVerified {
+                const val USER_VERIFIED_ALL = "user_verified_all"
+                const val USER_VERIFIED_TRUE = "user_verified_true"
+                const val USER_VERIFIED_FALSE = "user_verified_false"
+            }
+            object ByVotes {
+                const val LATEST = "created"
+                const val MOST_VOTES = "cached_votes_up"
+            }
+        }
     }
 
     object Extra {

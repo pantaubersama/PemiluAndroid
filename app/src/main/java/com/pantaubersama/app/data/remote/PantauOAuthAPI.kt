@@ -3,6 +3,8 @@ package com.pantaubersama.app.data.remote
 import com.pantaubersama.app.data.model.accesstoken.Token
 import com.pantaubersama.app.data.model.accesstoken.TokenResponse
 import com.pantaubersama.app.data.model.user.UserResponse
+import com.pantaubersama.app.data.model.user.BadgeResponse
+import com.pantaubersama.app.data.model.user.ProfileResponse
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Call
@@ -34,4 +36,12 @@ interface PantauOAuthAPI {
             @Field("client_secret") client_secret: String?,
             @Field("token") token: String?
     ): Completable
+    @GET("/v1/me")
+    fun getUserProfile(): Single<ProfileResponse>
+
+    @GET("/v1/badges")
+    fun getUserBadges(): Single<BadgeResponse>
+
+    @DELETE("/v1/me/clusters")
+    fun leaveCluster(): Completable
 }

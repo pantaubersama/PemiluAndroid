@@ -19,7 +19,6 @@ import com.pantaubersama.app.ui.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
-import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_pilpres.*
 import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
@@ -136,7 +135,8 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun showFailedGetData() {
-        ToastUtil.show(context!!, "Gagal memuat pilpres")
+        // show Failed View
+//        ToastUtil.show(context!!, "Gagal memuat pilpres")
     }
 
     override fun showEmptyData() {
@@ -160,11 +160,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     override fun dismissLoading() {
         recycler_view.visibility = View.GONE
         progress_bar.visibility = View.GONE
-    }
-
-    override fun showError(throwable: Throwable) {
-        ToastUtil.show(context!!, throwable.message!!)
-        throwable.printStackTrace()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

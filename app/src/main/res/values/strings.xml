@@ -44,7 +44,7 @@
     <string name="filter_verified_label">Terverifikasi</string>
     <string name="filter_order_label">Urutan</string>
     <string name="filter_latest_label">Paling Baru</string>
-    <string name="filter_most_voted_label">Paling Banyak Divating</string>
+    <string name="filter_most_voted_label">Paling Banyak Divoting</string>
     <string name="reset_action">Reset</string>
     <string name="delete_action_label">Hapus</string>
     <string name="copy_url_action_label">Salin Tautan</string>
@@ -55,6 +55,7 @@
     <string name="user_bio_dummy">An ordinary netizen who likes to talk a lot. Like, a lot. Who cares anyway!</string>
     <string name="cluster_label">Cluster</string>
     <string name="cluster_name_dummy">Mancing Mania Jogja</string>
+    <string name="cluster_info">Cluster menunjukkan preferensi kelompok kamu. Seperti wadah berisi kumpulan user yang memiliki kesamaan suatu hal; misalnya partai, alumni kampus, sekolah, organisasi, dan/atau komunitas tertentu. Dalam Cluster, kamu bisa menemukan atau mengumpulkan user-user lain dengan minat selaras.</string>
     <string name="biodata_label">Biodata</string>
     <string name="pantau_bersama_tagline">Pantau Bersama\nuntuk Indonesia yang lebih baik</string>
     <string name="quiz_text_dummy">Pilihlah salah satu jawaban yang paling kamu sukai dari 2 pilihan yang ada. Ikuti kuis hingga selesai dan tunggu kejutan hasilnya</string>
@@ -134,4 +135,6 @@
     <string name="label_panduan_komunitas">Panduan Komunitas</string>
     <string name="all_rights_reserved">All rights reserved</string>
     <string name="lisensi">LISENSI</string>
+    <string name="invite_member_action">Undang Anggota</string>
+    <string name="leave_cluster_action">Tinggalkan Cluster</string>
 </resources>

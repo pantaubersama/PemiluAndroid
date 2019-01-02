@@ -14,16 +14,23 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.ProfileInteractor
-import com.pantaubersama.app.data.model.user.User
+import com.pantaubersama.app.data.model.cluster.ClusterItem
+import com.pantaubersama.app.data.model.user.Badge
+import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.ui.profile.cluster.RequestClusterActivity
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
+import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
-import com.pantaubersama.app.utils.extensions.loadUrl
-import com.pantaubersama.app.utils.extensions.snackBar
-import com.pantaubersama.app.utils.extensions.visibleIf
+import com.pantaubersama.app.utils.State
+import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.* // ktlint-disable
+import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.badge_item_layout.view.*
 import kotlinx.android.synthetic.main.cluster_options_layout.*
+import kotlinx.android.synthetic.main.layout_leave_cluster_confirmation_dialog.*
 import javax.inject.Inject
 
 class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
@@ -57,27 +64,40 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         setupClusterLayout()
         setupBiodataLayout()
         setupBadgeLayout()
-        addBadgeItemLayout()
-        cluster_options_action.setOnClickListener {
-            showClusterOptionsDialog()
-        }
         initFragment()
         setupNavigation()
         presenter?.refreshProfile()
         presenter?.getProfile()
+        presenter?.refreshBadges()
     }
 
-    override fun showProfile(profile: User) {
-        user_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+    override fun showProfile(profile: Profile) {
+        user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
         tv_user_name.text = "%s %s".format(profile.firstName, profile.lastName)
         user_username.text = profile.username?.takeIf { it.isNotBlank() }?.let { "@%s".format(it) }
         user_bio.text = profile.about
-        if (profile.verified == true) setVerified() else setUnverified()
+        if (profile.verified) setVerified() else setUnverified()
+
+        user_location.text = profile.location
+        user_education.text = profile.education
+        user_work.text = profile.occupation
+        if (profile.cluster != null) parseCluster(profile.cluster)
+    }
+
+    private fun parseCluster(cluster: ClusterItem) {
+        layout_cluster.visibility = View.VISIBLE
+        tv_request_cluster.visibility = View.GONE
+        cluster_image.loadUrl(cluster.image?.thumbnail?.url)
+        cluster_name.text = cluster.name
+        cluster_options_action.setOnClickListener {
+            showClusterOptionsDialog(cluster)
+        }
     }
 
     private fun setUnverified() {
         verified_icon.colorFilter =
                 PorterDuffColorFilter(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1), PorterDuff.Mode.MULTIPLY)
+        verified_text.text = getString(R.string.txt_belum_verifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_gray)
         verified_button.setOnClickListener {
@@ -89,6 +109,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     private fun setVerified() {
         verified_icon.colorFilter =
                 PorterDuffColorFilter(ContextCompat.getColor(this@ProfileActivity, R.color.colorAccent), PorterDuff.Mode.MULTIPLY)
+        verified_text.text = getString(R.string.txt_terverifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.colorAccent))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_green)
     }
@@ -149,11 +170,20 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 .commit()
     }
 
-    private fun addBadgeItemLayout() {
+    override fun showBadges(state: State, badges: List<Badge>) {
         badge_container.removeAllViews()
-        val inflater = LayoutInflater.from(this@ProfileActivity)
-        for (i in 1..3) {
-            val view = inflater.inflate(R.layout.badge_item_layout, null, false)
+        progress_badge.visibleIf(state == State.Loading)
+        tv_retry_badge.visibleIf(state is State.Error)
+        tv_badge_more.visibleIf(state == State.Success)
+        badges.forEach {
+            val view = badge_container.inflate(R.layout.badge_item_layout).apply {
+                iv_badge.loadUrl(it.image.thumbnail.url, R.drawable.dummy_badge)
+                iv_badge.setGrayScale(!it.achieved)
+                badge_name.text = it.name
+                badge_name.isEnabled = it.achieved
+                badge_description.text = it.description
+                badge_description.isEnabled = it.achieved
+            }
             badge_container.addView(view)
         }
     }
@@ -166,6 +196,10 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
             } else {
                 badge_expandable_image.animate().rotation(180F).start()
             }
+        }
+        tv_retry_badge.setOnClickListener { presenter?.refreshBadges() }
+        tv_badge_more.setOnClickListener {
+            startActivity(Intent(this, BadgeActivity::class.java))
         }
     }
 
@@ -189,9 +223,18 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 cluster_expandable_image.animate().rotation(180F).start()
             }
         }
+        tv_request_cluster.text = spannable {
+            +"Belum ada Cluster "
+            textColor(color(R.color.red)) {
+                underline { +"( Request Cluster? )" }
+            }
+        }.toCharSequence()
+        tv_request_cluster.setOnClickListener {
+            startActivity(Intent(this, RequestClusterActivity::class.java))
+        }
     }
 
-    private fun showClusterOptionsDialog() {
+    private fun showClusterOptionsDialog(cluster: ClusterItem) {
         val dialog = Dialog(this@ProfileActivity)
         dialog.setContentView(R.layout.cluster_options_layout)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -216,9 +259,55 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
             // invite
         }
         dialog.leave_cluster_action?.setOnClickListener {
-            // leave
+            showLeaveClusterConfirmationDialog(cluster)
+            dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun showLeaveClusterConfirmationDialog(cluster: ClusterItem) {
+        val dialog = Dialog(this@ProfileActivity)
+        dialog.setContentView(R.layout.layout_leave_cluster_confirmation_dialog)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                dialog.dismiss()
+                true
+            } else {
+                false
+            }
+        }
+
+        dialog.setCanceledOnTouchOutside(true)
+        val lp = WindowManager.LayoutParams()
+        val window = dialog.window
+        lp.copyFrom(window?.attributes)
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        window?.attributes = lp
+        lp.gravity = Gravity.CENTER
+        window?.attributes = lp
+        dialog.yes_button.setOnClickListener {
+            presenter?.leaveCluster(cluster.name)
+            dialog.dismiss()
+        }
+        dialog.no_button.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    override fun showSuccessLeaveClusterAlert(name: String?) {
+        ToastUtil.show(this@ProfileActivity, "Berhasil meninggalkan cluster $name")
+    }
+
+    override fun showRequestClusterLayout() {
+        layout_cluster.visibility = View.GONE
+        tv_request_cluster.visibility = View.VISIBLE
+    }
+
+    override fun showFailedLeaveClusterAlert(name: String?) {
+        ToastUtil.show(this@ProfileActivity, "Gagal meninggalkan cluster $name")
     }
 
     override fun setLayout(): Int {
@@ -231,11 +320,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     override fun dismissLoading() {
         progress_bar.visibleIf(false)
-    }
-
-    override fun showError(throwable: Throwable) {
-        super.showError(throwable)
-        coordinator.snackBar(throwable.message ?: "Terjadi kesalahan")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

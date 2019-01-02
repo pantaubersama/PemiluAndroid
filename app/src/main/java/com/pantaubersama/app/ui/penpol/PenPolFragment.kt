@@ -41,7 +41,7 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
             when (selectedTabs) {
                 0 -> {
                     val intent = Intent(context, FilterTanyaKandidatActivity::class.java)
-                    startActivityForResult(intent, PantauConstants.RequestCode.FILTER_JANPOL)
+                    startActivityForResult(intent, PantauConstants.TanyaKandidat.Filter.FILTER_TANYA_KANDIDAT_REQUEST_CODE)
                 }
                 else -> {
                     val intent = Intent(context, FilterKuisActivity::class.java)
