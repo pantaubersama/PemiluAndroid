@@ -2,7 +2,6 @@ package com.pantaubersama.app.data.remote
 
 import com.pantaubersama.app.data.model.accesstoken.Token
 import com.pantaubersama.app.data.model.accesstoken.TokenResponse
-import com.pantaubersama.app.data.model.user.UserResponse
 import com.pantaubersama.app.data.model.user.BadgeResponse
 import com.pantaubersama.app.data.model.user.ProfileResponse
 import io.reactivex.Completable
@@ -26,9 +25,6 @@ interface PantauOAuthAPI {
             @Field("refresh_token") refresh_token: String?
     ): Call<Token>
 
-    @GET("/v1/me/simple")
-    fun getUserProfile(): Single<UserResponse>
-
     @FormUrlEncoded
     @POST("/oauth/revoke")
     fun revokeToken(
@@ -36,6 +32,7 @@ interface PantauOAuthAPI {
             @Field("client_secret") client_secret: String?,
             @Field("token") token: String?
     ): Completable
+
     @GET("/v1/me")
     fun getUserProfile(): Single<ProfileResponse>
 
