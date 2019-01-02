@@ -76,4 +76,23 @@ class TanyaKandidatInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun saveTanyaKandidatFilter(userFilter: String?, orderFilter: String?): Completable {
+        return Completable.fromCallable{ dataCache.saveTanyaKandidatUserFilter(userFilter!!) }
+            .andThen(
+                Completable.fromCallable{ dataCache.saveTanyaKandidatOrderFilter(orderFilter!!) }
+            )
+    }
+
+    fun loadTanyaKandidatUserFilter(): Single<String> {
+        return Single.fromCallable{
+            dataCache.loadTanyaKandidatUserFilter()
+        }
+    }
+
+    fun loadTanyaKandidatOrderFilter(): Single<String> {
+        return Single.fromCallable{
+            dataCache.loadTanyaKandidatOrderFilter()
+        }
+    }
 }

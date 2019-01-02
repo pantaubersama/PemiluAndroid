@@ -11,6 +11,7 @@ import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
+import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
@@ -33,6 +34,7 @@ interface ActivityComponent {
     fun inject(tanyaKandidatFragment: TanyaKandidatFragment)
     fun inject(pilpresFragment: PilpresFragment)
     fun inject(filterPilpresActivity: FilterPilpresActivity)
+    fun inject(filterTanyaKandidatActivity: FilterTanyaKandidatActivity)
     fun inject(janjiPolitikFragment: JanjiPolitikFragment)
     fun inject(createJanjiPolitikActivity: CreateJanjiPolitikActivity)
     fun inject(bannerInfoActivity: BannerInfoActivity)

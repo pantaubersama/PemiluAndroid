@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder
 import com.pantaubersama.app.data.local.SharedPref
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.utils.PantauConstants
 
 /**
  * @author edityomurti on 21/12/2018 18:05
@@ -15,7 +16,6 @@ class DataCache(context: Context) : SharedPref(context) {
     private var gson: Gson = GsonBuilder().setFieldNamingPolicy(com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
 
     companion object {
-        private var gson: Gson? = null
 
         fun getInstance(context: Context): DataCache {
             return DataCache(context)
@@ -37,6 +37,9 @@ class DataCache(context: Context) : SharedPref(context) {
         const val IS_BANNER_KUIS_OPENED = "IS_BANNER_KUIS_OPENED"
 
         const val USER_PROFILE = "user_profile"
+
+        const val TANYA_KANDIDAT_USER_FILTER = "tanya_kandidat_user_filter"
+        const val TANYA_KANDIDAT_ORDER_FILTER = "tanya_kandidat_order_filter"
     }
 
     override fun prefId(): String {
@@ -113,5 +116,29 @@ class DataCache(context: Context) : SharedPref(context) {
 
     fun loadUserProfile(): Profile {
         return gson.fromJson(getString(USER_PROFILE), Profile::class.java) ?: EMPTY_PROFILE
+    }
+
+    fun saveTanyaKandidatUserFilter(userFilter: String) {
+        putString(TANYA_KANDIDAT_USER_FILTER, userFilter)
+    }
+
+    fun saveTanyaKandidatOrderFilter(orderFilter: String) {
+        putString(TANYA_KANDIDAT_ORDER_FILTER, orderFilter)
+    }
+
+    fun loadTanyaKandidatUserFilter(): String? {
+        return if (getString(TANYA_KANDIDAT_USER_FILTER) != null) {
+            getString(TANYA_KANDIDAT_USER_FILTER)
+        } else {
+            PantauConstants.TanyaKandidat.Filter.ByVerified.USER_VERIFIED_ALL
+        }
+    }
+
+    fun loadTanyaKandidatOrderFilter(): String? {
+        return if (getString(TANYA_KANDIDAT_ORDER_FILTER) != null) {
+            getString(TANYA_KANDIDAT_ORDER_FILTER)
+        } else {
+            PantauConstants.TanyaKandidat.Filter.ByVotes.LATEST
+        }
     }
 }
