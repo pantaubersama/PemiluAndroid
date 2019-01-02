@@ -52,5 +52,4 @@ class FilterTanyaKandidatPresenter @Inject constructor(private val tanyaKandidat
                 )
         )
     }
-
 }

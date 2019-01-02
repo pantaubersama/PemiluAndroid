@@ -78,20 +78,20 @@ class TanyaKandidatInteractor @Inject constructor(
     }
 
     fun saveTanyaKandidatFilter(userFilter: String?, orderFilter: String?): Completable {
-        return Completable.fromCallable{ dataCache.saveTanyaKandidatUserFilter(userFilter!!) }
+        return Completable.fromCallable { dataCache.saveTanyaKandidatUserFilter(userFilter!!) }
             .andThen(
-                Completable.fromCallable{ dataCache.saveTanyaKandidatOrderFilter(orderFilter!!) }
+                Completable.fromCallable { dataCache.saveTanyaKandidatOrderFilter(orderFilter!!) }
             )
     }
 
     fun loadTanyaKandidatUserFilter(): Single<String> {
-        return Single.fromCallable{
+        return Single.fromCallable {
             dataCache.loadTanyaKandidatUserFilter()
         }
     }
 
     fun loadTanyaKandidatOrderFilter(): Single<String> {
-        return Single.fromCallable{
+        return Single.fromCallable {
             dataCache.loadTanyaKandidatOrderFilter()
         }
     }
