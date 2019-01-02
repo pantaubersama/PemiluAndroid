@@ -3,7 +3,10 @@ package com.pantaubersama.app.utils
 import android.graphics.Typeface
 import android.text.SpannableStringBuilder
 import android.text.Spanned
-import android.text.style.*
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.UnderlineSpan
 
 fun spannable(init: SpanWithChildren.() -> Unit): SpanWithChildren {
     val spanWithChildren = SpanWithChildren()
