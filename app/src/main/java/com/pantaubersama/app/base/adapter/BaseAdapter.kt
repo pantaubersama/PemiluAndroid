@@ -24,9 +24,10 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
     private var lastVisibleItem: Int? = null
     private var totalItemCount: Int? = null
     private var totalItemBeforeLoadMore: Int? = null
-    private var visibleTreshold = 5
+    private var visibleTreshold = 10
     private var page = 1
-    private var loadingMore = false
+    private var isLoadingMore = false
+    private var isDataEnd = false
     private var loadMoreListener: OnLoadMoreListener? = null
 
     fun setOnItemClickListener(itemClickListener: OnItemClickListener) {
@@ -51,17 +52,16 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
                     super.onScrollStateChanged(recyclerView, newState)
                     totalItemCount = linearLayoutManager.itemCount
                     lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition()
-
-                    if (!loadingMore && totalItemCount!! <= (lastVisibleItem!! + visibleTreshold)) {
+                    if (!isDataEnd && !isLoadingMore && totalItemCount!! <= (lastVisibleItem!! + visibleTreshold)) {
                         page++
                         loadMoreListener.loadMore(page)
-                        loadingMore = true
+                        isLoadingMore = true
                     }
 
-                    if (totalItemBeforeLoadMore != totalItemCount) {
-                        loadingMore = false
-                        totalItemBeforeLoadMore = totalItemCount
-                    }
+//                    if (totalItemBeforeLoadMore != totalItemCount) {
+//                        isLoadingMore = false
+//                        totalItemBeforeLoadMore = totalItemCount
+//                    }
                 }
             })
         } else {
@@ -77,11 +77,11 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
         return data.get(position)
     }
 
-    fun getData(): List<T> {
+    fun getData(): MutableList<T> {
         return data
     }
 
-    fun replaceData(items: List<T>) {
+    fun replaceData(items: MutableList<T>) {
         data.clear()
         add(items)
     }
@@ -96,7 +96,7 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
         notifyItemInserted(position)
     }
 
-    open fun add(items: List<T>) {
+    open fun add(items: MutableList<T>) {
         for (item in items) {
             data.add(item)
         }
@@ -104,7 +104,7 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
     }
 
     fun add(items: Array<T>) {
-        add(items.toList())
+        add(items.toMutableList())
         notifyDataSetChanged()
     }
 
@@ -118,12 +118,12 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
         }
     }
 
-    fun addOrUpdate(items: List<T>, reverse: Boolean) {
+    fun addOrUpdate(items: MutableList<T>, reverse: Boolean) {
         if (reverse) {
             for (item in items) {
-                var i = data.indexOf(item)
+                val i = data.indexOf(item)
                 if (i >= 0) {
-                    data.set(i, item)
+                    data[i] = item
                 } else {
                     data.add(item)
                 }
@@ -146,13 +146,13 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
         }
     }
 
-    fun addOnTopOrUpdate(items: List<T>) {
+    fun addOnTopOrUpdate(items: MutableList<T>) {
         for (item in items) {
             addOnTopOrUpdate(item)
         }
     }
 
-    fun addOrUpdate(items: List<T>) {
+    fun addOrUpdate(items: MutableList<T>) {
         for (item in items) {
             addOrUpdate(item)
         }
@@ -180,19 +180,42 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
         return data.indexOf(item)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): V {
-        val view = LayoutInflater.from(parent.context).inflate(setItemView(viewType), parent, false)
-        return initViewHolder(view, viewType)
+    fun setLoading(item: T) {
+        isLoadingMore = true
+        add(item)
     }
 
-    protected abstract fun initViewHolder(view: View, viewType: Int): V
+    fun setLoaded() {
+        if (isLoadingMore) {
+            isLoadingMore = false
+            remove(data.size - 1)
+        }
+    }
+
+    fun setDataEnd(isDataEnd: Boolean) {
+        if (!isDataEnd) {
+            page = 1
+        }
+        this.isDataEnd = isDataEnd
+    }
+
+    fun isDataEnd(): Boolean {
+        return isDataEnd
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): V {
+        val view = LayoutInflater.from(parent.context).inflate(setItemView(viewType)!!, parent, false)
+        return initViewHolder(view, viewType)!!
+    }
+
+    protected abstract fun initViewHolder(view: View, viewType: Int): V?
 
     override fun onBindViewHolder(holder: V, position: Int) {
         holder.bind(get(position))
     }
 
     @LayoutRes
-    protected abstract fun setItemView(viewType: Int): Int
+    protected abstract fun setItemView(viewType: Int): Int?
 
     interface OnLoadMoreListener {
         fun loadMore(page: Int)

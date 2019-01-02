@@ -1,26 +1,68 @@
 package com.pantaubersama.app.ui.profile.linimasa
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
+import com.pantaubersama.app.base.BaseFragment
+import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
+import com.pantaubersama.app.ui.linimasa.janjipolitik.adapter.JanjiPolitikAdapter
+import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
+import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import timber.log.Timber
 
-class ProfileJanjiPolitikFragment : Fragment() {
+class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>(), ProfileJanjiPolitikView {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_janji_politik, container, false)
-    }
+    private lateinit var adapter: JanjiPolitikAdapter
 
     companion object {
         fun newInstance(): ProfileJanjiPolitikFragment {
             return ProfileJanjiPolitikFragment()
+        }
+    }
+
+    override fun initPresenter(): ProfileJanjiPolitikPresenter? {
+        return ProfileJanjiPolitikPresenter()
+    }
+
+    override fun initView(view: View) {
+        setupJanPolList()
+        presenter?.getJanjiPolitikList()
+    }
+
+    private fun setupJanPolList() {
+        adapter = JanjiPolitikAdapter(context!!)
+        adapter.listener = object : JanjiPolitikAdapter.AdapterListener {
+            override fun onClickContent(item: JanjiPolitik) {
+                startActivity(DetailJanjiPolitikActivity.setIntent(context!!, item.id!!))
+            }
+        }
+        recycler_view?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recycler_view?.adapter = adapter
+    }
+
+    override fun setLayout(): Int {
+        return R.layout.fragment_profile_janji_politik
+    }
+
+    override fun showLoading() {
+        view_empty_state.visibility = View.GONE
+        recycler_view.visibility = View.INVISIBLE
+//        progress_bar.visibility = View.VISIBLE
+    }
+
+    override fun dismissLoading() {
+        recycler_view.visibility = View.GONE
+//        progress_bar.visibility = View.GONE
+    }
+
+    override fun bindDataJanjiPolitik(janpolList: MutableList<JanjiPolitik>?) {
+        Timber.d("janpol data size : ${janpolList?.size}")
+        if (janpolList!!.isEmpty()) {
+            view_empty_state.visibility = View.VISIBLE
+        } else {
+            recycler_view.visibility = View.VISIBLE
+            adapter.replaceData(janpolList)
         }
     }
 }

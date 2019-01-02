@@ -1,5 +1,7 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.create
 
+import android.app.Activity
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
@@ -8,9 +10,17 @@ import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
+import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
+import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_create_tanya_kandidat.*
+import javax.inject.Inject
 
 class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>(), CreateTanyaKandidatView {
+    @Inject
+    lateinit var interactor: TanyaKandidatInteractor
+    private var isLoading = false
 
     override fun statusBarColor(): Int {
         return 0
@@ -25,7 +35,7 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
     }
 
     override fun initPresenter(): CreateTanyaKandidatPresenter? {
-        return CreateTanyaKandidatPresenter()
+        return CreateTanyaKandidatPresenter(interactor)
     }
 
     override fun setupUI() {
@@ -59,6 +69,7 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_done, menu)
+        menu?.findItem(R.id.done_action)?.isVisible = !isLoading
         return true
     }
 
@@ -76,5 +87,27 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
     override fun onDestroy() {
         (application as BaseApp).releaseActivityComponent()
         super.onDestroy()
+    }
+
+    override fun showSuccessCreateTanyaKandidatAlert() {
+        ToastUtil.show(this@CreateTanyaKandidatActivity, "Berhasil mengirim pertanyaan")
+    }
+
+    override fun finishActivity(question: Pertanyaan?) {
+        val intent = Intent()
+        intent.putExtra(PantauConstants.TanyaKandidat.TANYA_KANDIDAT_DATA, question)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
+    override fun showFailedCreateTanyaKandidatAlert() {
+        ToastUtil.show(this@CreateTanyaKandidatActivity, "Gagal mengirim pertanyaan")
+        isLoading = false
+        invalidateOptionsMenu()
+    }
+
+    override fun hideActions() {
+        isLoading = true
+        invalidateOptionsMenu()
     }
 }

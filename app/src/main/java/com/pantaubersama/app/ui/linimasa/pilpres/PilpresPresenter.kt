@@ -2,7 +2,6 @@ package com.pantaubersama.app.ui.linimasa.pilpres
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.PilpresInteractor
-import com.pantaubersama.app.data.model.tweet.PilpresTweet
 import javax.inject.Inject
 
 /**
@@ -11,21 +10,45 @@ import javax.inject.Inject
 class PilpresPresenter @Inject constructor(
     private val pilpresInteractor: PilpresInteractor?
 ) : BasePresenter<PilpresView>() {
-    fun getPilpresTweet() {
-        view?.showLoading()
-        val selectedFilter = pilpresInteractor?.getPilpresFilter()
 
-        val tweetList: MutableList<PilpresTweet> = ArrayList()
+    fun isBannerShown() {
+        if (!pilpresInteractor?.isBannerShown()!!) {
+            view?.showBanner()
+        }
+    }
 
-        for (i in 1..25) {
-            val tweet = PilpresTweet()
-            tweet.id = "666$i"
-            tweet.tweetContent = "tweet $i, filter = $selectedFilter"
-            tweet.tweetUrl = ""
-            tweetList.add(tweet)
+    fun getFeeds(page: Int, perPage: Int) {
+        if (page == 1) {
+            view?.showLoading()
         }
 
-        view?.dismissLoading()
-        view?.showPilpresTweet(tweetList)
+        val selectedFilter = pilpresInteractor?.getPilpresFilter()
+
+        disposables?.add(pilpresInteractor?.getFeeds(page, perPage)
+            ?.subscribe(
+                {
+                    if (page == 1) {
+                        view?.dismissLoading()
+                        if (it.feeds?.feedList != null) {
+                            if (it.feeds?.feedList?.size != 0) {
+                                view?.showFeeds(it.feeds?.feedList!!)
+                            } else {
+                                view?.showEmptyData()
+                            }
+                        } else {
+                            view?.showFailedGetData()
+                        }
+                    } else {
+                        view?.showMoreFeeds(it.feeds?.feedList!!)
+                    }
+                },
+                {
+                    it.printStackTrace()
+                    view?.dismissLoading()
+                    view?.showFailedGetData()
+                    view?.showError(it)
+                }
+            )!!
+        )
     }
 }

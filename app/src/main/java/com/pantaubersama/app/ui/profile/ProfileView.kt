@@ -1,7 +1,11 @@
 package com.pantaubersama.app.ui.profile
 
 import com.pantaubersama.app.base.BaseView
+import com.pantaubersama.app.data.model.user.Badge
+import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.utils.State
 
 interface ProfileView : BaseView {
-    // ok
+    fun showProfile(profile: Profile)
+    fun showBadges(state: State, badges: List<Badge> = emptyList())
 }

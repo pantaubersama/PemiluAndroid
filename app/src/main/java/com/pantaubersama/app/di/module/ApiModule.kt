@@ -1,41 +1,70 @@
 package com.pantaubersama.app.di.module
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.pantaubersama.app.BuildConfig
+import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.data.remote.PantauAPI
 import com.pantaubersama.app.data.remote.PantauOAuthAPI
 import com.pantaubersama.app.data.remote.WordStadiumAPI
+import com.pantaubersama.app.utils.ConnectionState
+import com.pantaubersama.app.utils.CustomAuthenticator
+import com.pantaubersama.app.utils.NetworkErrorInterceptor
+import com.pantaubersama.app.utils.RequestInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 /**
  * Created by ali on 02/10/17.
  */
-@Module
+@Module(includes = [SharedPreferenceModule::class, ConnectionModule::class])
 class ApiModule {
+
     @Provides
-    fun provideloggingInterceptor(): HttpLoggingInterceptor {
+    fun provideNetworkErrorInterceptor(connectionState: ConnectionState): NetworkErrorInterceptor {
+        return NetworkErrorInterceptor(connectionState)
+    }
+
+    @Provides
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
         return logging
     }
 
     @Provides
-    fun httpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideNetworkInterceptor(dataCache: DataCache): RequestInterceptor {
+        return RequestInterceptor(dataCache)
+    }
+
+    @Provides
+    fun provideCustomAuthenticator(dataCache: DataCache, loggingInterceptor: HttpLoggingInterceptor, networkErrorInterceptor: NetworkErrorInterceptor): CustomAuthenticator {
+        return CustomAuthenticator(dataCache, loggingInterceptor, networkErrorInterceptor)
+    }
+
+    @Provides
+    fun httpClient(
+        loggingInterceptor: HttpLoggingInterceptor,
+        requestInterceptor: RequestInterceptor,
+        customAuthenticator: CustomAuthenticator,
+        networkErrorInterceptor: NetworkErrorInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
+            .addNetworkInterceptor(StethoInterceptor())
+            .addInterceptor(networkErrorInterceptor)
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(requestInterceptor)
+            .authenticator(customAuthenticator)
             .build()
     }
 
     @Provides
     fun providePantauAPI(httpClient: OkHttpClient): PantauAPI {
-        Timber.d("TESTS providePantauAPI base = ${BuildConfig.PANTAU_BASE_URL}")
         return APIWrapper.createRetrofit(BuildConfig.PANTAU_BASE_URL, httpClient).create(PantauAPI::class.java)
     }
 

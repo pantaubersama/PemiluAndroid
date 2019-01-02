@@ -102,7 +102,7 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
             Activity.RESULT_OK -> {
                 when (requestCode) {
                     PantauConstants.RequestCode.FILTER_PILPRES -> {
-                        pilpresFragment.getPilpresTweet()
+                        pilpresFragment.getFeedsData()
                     }
                 }
             }

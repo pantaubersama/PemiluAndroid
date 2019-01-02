@@ -2,23 +2,22 @@ package com.pantaubersama.app.ui.profile.verifikasi
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.graphics.Point
 import android.hardware.Camera
 import android.os.Build
 import android.view.Surface
-import android.view.SurfaceHolder
-import android.view.SurfaceView
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.ui.widget.CameraPreview
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_step3_verifikasi.*
-import timber.log.Timber
-import java.io.IOException
 
 class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     private var permission =
@@ -30,6 +29,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     private var mCamera: Camera? = null
     private var mPreview: CameraPreview? = null
     private var cameraCallback: Camera.PictureCallback? = null
+    private var isPreview = false
 
     override fun statusBarColor(): Int? {
         return 0
@@ -55,19 +55,36 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
             }
         }
         next_button.setOnClickListener {
-            // next
+            val intent = Intent(this@Step3VerifikasiActivity, Step4VerifikasiActivity::class.java)
+            startActivity(intent)
+            finish()
         }
         retake_button.setOnClickListener {
             image_preview_container.visibility = View.GONE
-            finish()
-            startActivity(intent)
+            restartActivity()
         }
+    }
+
+    private fun restartActivity() {
+        finish()
+        startActivity(intent)
     }
 
     private fun setupCamera() {
         if (checkCameraHardware(this@Step3VerifikasiActivity)) {
             mCamera = getCameraInstance()
             mCamera?.setDisplayOrientation(90)
+            val params = mCamera?.parameters
+
+            val sizeList = params?.supportedPictureSizes
+            val display = windowManager.defaultDisplay
+            val size = Point()
+            display.getSize(size)
+            val height = size.y
+            val chosenSize = getPictureSizeIndexForHeight(sizeList!!, height) // height from screen
+            params.setPictureSize(sizeList.get(chosenSize).width, sizeList[chosenSize].height)
+
+            mCamera?.parameters = params
             mPreview = mCamera?.let {
                 CameraPreview(this, it)
             }
@@ -75,7 +92,6 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                 camera_preview.addView(it)
             }
             cameraCallback = Camera.PictureCallback { data, camera ->
-                val display = windowManager.defaultDisplay
                 var rotation = 0
                 when (display.rotation) {
                     Surface.ROTATION_0 -> rotation = -90
@@ -88,6 +104,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                 bitmap = BitmapTools.rotate(bitmap, rotation)
                 image_preview_container.visibility = View.VISIBLE
                 image_preview.setImageBitmap(bitmap)
+                isPreview = true
             }
             capture_button.setOnClickListener {
                 mCamera?.takePicture(null, null, cameraCallback)
@@ -96,6 +113,19 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                 finish()
             }
         }
+    }
+
+    private fun getPictureSizeIndexForHeight(sizeList: List<Camera.Size>, height: Int): Int {
+        var chosenHeight = -1
+        for (i in sizeList.indices) {
+            if (sizeList[i].height < height) {
+                chosenHeight = i - 1
+                if (chosenHeight == -1)
+                    chosenHeight = 0
+                break
+            }
+        }
+        return chosenHeight
     }
 
     object BitmapTools {
@@ -189,48 +219,11 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
         super.onDestroy()
     }
 
-    inner class CameraPreview(
-        context: Context,
-        private val mCamera: Camera
-    ) : SurfaceView(context), SurfaceHolder.Callback {
-
-        private val mHolder: SurfaceHolder = holder.apply {
-            addCallback(this@CameraPreview)
-            setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
-        }
-
-        override fun surfaceCreated(holder: SurfaceHolder) {
-            mCamera.apply {
-                try {
-                    setPreviewDisplay(holder)
-                    startPreview()
-                } catch (e: IOException) {
-                    Timber.e("Error setting camera preview: ${e.message}")
-                }
-            }
-        }
-
-        override fun surfaceDestroyed(holder: SurfaceHolder) {
-            // empty. Take care of releasing the Camera preview in your activity.
-        }
-
-        override fun surfaceChanged(holder: SurfaceHolder, format: Int, w: Int, h: Int) {
-            if (mHolder.surface == null) {
-                return
-            }
-            try {
-                mCamera.stopPreview()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            mCamera.apply {
-                try {
-                    setPreviewDisplay(mHolder)
-                    startPreview()
-                } catch (e: Exception) {
-                    Timber.e("Error starting camera preview: ${e.message}")
-                }
-            }
+    override fun onBackPressed() {
+        if (isPreview) {
+            restartActivity()
+        } else {
+            super.onBackPressed()
         }
     }
 

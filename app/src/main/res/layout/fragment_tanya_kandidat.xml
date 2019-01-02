@@ -8,55 +8,8 @@
 
     <include
         android:id="@+id/layout_banner_tanya_kandidat"
-        layout="@layout/layout_banner_container"/>
-
-    <LinearLayout
-        android:id="@+id/question_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <LinearLayout
-            android:id="@+id/user_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/user_avatar"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:scaleType="centerCrop"
-                app:riv_border_color="@color/white"
-                app:riv_oval="true"
-                android:src="@drawable/dummy_avatar"/>
-
-            <TextView
-                android:id="@+id/tv_user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:lines="1"
-                android:ellipsize="end"
-                android:layout_marginLeft="12dp"
-                android:layout_marginStart="12dp"
-                android:textSize="11sp"
-                android:text="Budi Santoso"
-                android:fontFamily="@font/lato_bold"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/question_short_hint"
-            android:textSize="16sp"
-            android:fontFamily="@font/bw_modelica_bold"
-            android:layout_marginTop="6dp"/>
-
-    </LinearLayout>
+        layout="@layout/layout_banner_container"
+        android:visibility="gone"/>
 
     <View
         android:layout_width="match_parent"

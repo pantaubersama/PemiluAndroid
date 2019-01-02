@@ -8,4 +8,8 @@ import javax.inject.Inject
  */
 class JanjiPolitikInteractor @Inject constructor(
     private val dataCache: DataCache?
-)
+) {
+    fun isBannerShown(): Boolean? {
+        return dataCache?.isBannerJanpolOpened()
+    }
+}

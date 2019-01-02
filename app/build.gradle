@@ -40,8 +40,8 @@ android {
         }
 
         buildTypes.each {
-            it.buildConfigField("String", "CLIENT_ID", CLIENT_ID)
-            it.buildConfigField("String", "CLIENT_SECRET", CLIENT_SECRET)
+            it.buildConfigField("String", "PANTAU_CLIENT_ID", PANTAU_CLIENT_ID)
+            it.buildConfigField("String", "PANTAU_CLIENT_SECRET", PANTAU_CLIENT_SECRET)
         }
     }
 

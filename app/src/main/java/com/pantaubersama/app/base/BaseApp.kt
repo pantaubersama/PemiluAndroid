@@ -3,6 +3,7 @@ package com.pantaubersama.app.base
 import android.app.Activity
 import android.content.Context
 import androidx.multidex.MultiDexApplication
+import com.facebook.stetho.Stetho
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.di.component.AppComponent
@@ -28,6 +29,7 @@ class BaseApp : MultiDexApplication() {
                 .build()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+            Stetho.initializeWithDefaults(this)
         } else {
             Timber.plant(TimberUtil())
         }
