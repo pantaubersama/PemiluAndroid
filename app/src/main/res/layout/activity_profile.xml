@@ -178,7 +178,18 @@
                         app:el_duration="300"
                         app:el_expanded="true">
 
+                        <TextView
+                            android:id="@+id/tv_request_cluster"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginStart="16dp"
+                            android:textColor="@color/black_3"
+                            tools:text="Belum ada Cluster ( Request Cluster? )" />
+
                         <RelativeLayout
+                            android:id="@+id/layout_cluster"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="16dp"
@@ -186,6 +197,7 @@
                             android:paddingRight="16dp"
                             android:paddingEnd="16dp"
                             android:orientation="horizontal"
+                            android:visibility="gone"
                             android:layout_marginBottom="16dp">
 
                             <com.makeramen.roundedimageview.RoundedImageView
