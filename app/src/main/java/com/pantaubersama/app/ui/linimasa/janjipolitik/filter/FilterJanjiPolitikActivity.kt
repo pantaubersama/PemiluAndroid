@@ -40,7 +40,7 @@ class FilterJanjiPolitikActivity : BaseActivity<BasePresenter<*>>() {
         tv_cluster_placeholder.visibility = View.GONE
         layout_item_cluster.visibility = View.VISIBLE
         tv_cluster_name.text = item.name
-        tv_cluster_member_count.setText("${item.memberCount} anggota")
+        tv_cluster_member_count.setText("0 anggota")
     }
 
     override fun setLayout(): Int {

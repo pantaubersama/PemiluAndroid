@@ -5,6 +5,7 @@ import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
+import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -38,5 +39,13 @@ class ProfileInteractor @Inject constructor(
                             response.data.badges
                 }
                 .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun leaveCluster(): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .leaveCluster()
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
     }
 }

@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.model.user
 
 import com.google.gson.annotations.SerializedName
+import com.pantaubersama.app.data.model.cluster.ClusterItem
 
 val EMPTY_INFORMANT = Informant("", null, null, null, null,
         null, null, null, null, null)
@@ -27,7 +28,7 @@ data class Profile(
     @SerializedName("provider") val provider: String,
     @SerializedName("is_admin") val isAdmin: Boolean,
     @SerializedName("is_moderator") val isModerator: Boolean,
-    @SerializedName("cluster") val cluster: Any?,
+    @SerializedName("cluster") val cluster: ClusterItem?,
     @SerializedName("vote_preference") val votePreference: Any?,
     @SerializedName("verified") val verified: Boolean,
     @SerializedName("username") val username: String?,

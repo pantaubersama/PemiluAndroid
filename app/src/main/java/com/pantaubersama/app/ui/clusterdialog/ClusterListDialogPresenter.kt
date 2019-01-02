@@ -20,7 +20,7 @@ class ClusterListDialogPresenter @Inject constructor() : BasePresenter<ClusterLi
             val cluster = ClusterItem()
             cluster.id = "123$i"
             cluster.name = "Cluster $i"
-            cluster.memberCount = i
+//            cluster.memberCount = i
             clusterList.add(cluster)
         }
 

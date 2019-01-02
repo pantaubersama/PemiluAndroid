@@ -14,6 +14,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.ProfileInteractor
+import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.ui.profile.cluster.RequestClusterActivity
@@ -23,11 +24,13 @@ import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
 import com.pantaubersama.app.utils.State
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.badge_item_layout.view.*
 import kotlinx.android.synthetic.main.cluster_options_layout.*
+import kotlinx.android.synthetic.main.layout_leave_cluster_confirmation_dialog.*
 import javax.inject.Inject
 
 class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
@@ -61,9 +64,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         setupClusterLayout()
         setupBiodataLayout()
         setupBadgeLayout()
-        cluster_options_action.setOnClickListener {
-            showClusterOptionsDialog()
-        }
         initFragment()
         setupNavigation()
         presenter?.refreshProfile()
@@ -81,6 +81,17 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         user_location.text = profile.location
         user_education.text = profile.education
         user_work.text = profile.occupation
+        if (profile.cluster != null) parseCluster(profile.cluster)
+    }
+
+    private fun parseCluster(cluster: ClusterItem) {
+        layout_cluster.visibility = View.VISIBLE
+        tv_request_cluster.visibility = View.GONE
+        cluster_image.loadUrl(cluster.image?.thumbnail?.url)
+        cluster_name.text = cluster.name
+        cluster_options_action.setOnClickListener {
+            showClusterOptionsDialog(cluster)
+        }
     }
 
     private fun setUnverified() {
@@ -223,7 +234,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         }
     }
 
-    private fun showClusterOptionsDialog() {
+    private fun showClusterOptionsDialog(cluster: ClusterItem) {
         val dialog = Dialog(this@ProfileActivity)
         dialog.setContentView(R.layout.cluster_options_layout)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -248,9 +259,55 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
             // invite
         }
         dialog.leave_cluster_action?.setOnClickListener {
-            // leave
+            showLeaveClusterConfirmationDialog(cluster)
+            dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun showLeaveClusterConfirmationDialog(cluster: ClusterItem) {
+        val dialog = Dialog(this@ProfileActivity)
+        dialog.setContentView(R.layout.layout_leave_cluster_confirmation_dialog)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                dialog.dismiss()
+                true
+            } else {
+                false
+            }
+        }
+
+        dialog.setCanceledOnTouchOutside(true)
+        val lp = WindowManager.LayoutParams()
+        val window = dialog.window
+        lp.copyFrom(window?.attributes)
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        window?.attributes = lp
+        lp.gravity = Gravity.CENTER
+        window?.attributes = lp
+        dialog.yes_button.setOnClickListener {
+            presenter?.leaveCluster(cluster.name)
+            dialog.dismiss()
+        }
+        dialog.no_button.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    override fun showSuccessLeaveClusterAlert(name: String?) {
+        ToastUtil.show(this@ProfileActivity, "Berhasil meninggalkan cluster $name")
+    }
+
+    override fun showRequestClusterLayout() {
+        layout_cluster.visibility = View.GONE
+        tv_request_cluster.visibility = View.VISIBLE
+    }
+
+    override fun showFailedLeaveClusterAlert(name: String?) {
+        ToastUtil.show(this@ProfileActivity, "Gagal meninggalkan cluster $name")
     }
 
     override fun setLayout(): Int {

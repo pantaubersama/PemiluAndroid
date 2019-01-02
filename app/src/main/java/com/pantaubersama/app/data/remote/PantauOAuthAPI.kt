@@ -4,6 +4,7 @@ import com.pantaubersama.app.data.model.accesstoken.Token
 import com.pantaubersama.app.data.model.accesstoken.TokenResponse
 import com.pantaubersama.app.data.model.user.BadgeResponse
 import com.pantaubersama.app.data.model.user.ProfileResponse
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.* // ktlint-disable
@@ -29,4 +30,7 @@ interface PantauOAuthAPI {
 
     @GET("/v1/badges")
     fun getUserBadges(): Single<BadgeResponse>
+
+    @DELETE("/v1/me/clusters")
+    fun leaveCluster(): Completable
 }

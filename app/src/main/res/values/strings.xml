@@ -135,4 +135,6 @@
     <string name="label_panduan_komunitas">Panduan Komunitas</string>
     <string name="all_rights_reserved">All rights reserved</string>
     <string name="lisensi">LISENSI</string>
+    <string name="invite_member_action">Undang Anggota</string>
+    <string name="leave_cluster_action">Tinggalkan Cluster</string>
 </resources>

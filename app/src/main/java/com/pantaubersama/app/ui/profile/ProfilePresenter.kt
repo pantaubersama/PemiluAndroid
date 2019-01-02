@@ -35,4 +35,20 @@ class ProfilePresenter @Inject constructor(
                 })
         disposables?.add(disposable)
     }
+
+    fun leaveCluster(name: String?) {
+        disposables?.add(
+            profileInteractor.leaveCluster()
+                .subscribe(
+                    {
+                        view?.showSuccessLeaveClusterAlert(name)
+                        view?.showRequestClusterLayout()
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedLeaveClusterAlert(name)
+                    }
+                )
+        )
+    }
 }
