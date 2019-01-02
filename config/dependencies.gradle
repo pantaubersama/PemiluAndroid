@@ -43,7 +43,7 @@ ext {
             flexbox                 : "1.1.0",
             lottie                  : "2.8.0",
             chromeCustomTab         : "23.3.0",
-            expandableLayout        : "1.6.0@aar",
+            expandableLayout        : "2.9.2",
             stetho                 : "1.5.0"
     ]
 
@@ -109,5 +109,5 @@ ext {
 
     chromeCustomTab = "com.android.support:customtabs:$versions.chromeCustomTab"
 
-    expandableLayout = "com.github.aakira:expandable-layout:$versions.expandableLayout"
+    expandableLayout = "net.cachapa.expandablelayout:expandablelayout:$versions.expandableLayout"
 }

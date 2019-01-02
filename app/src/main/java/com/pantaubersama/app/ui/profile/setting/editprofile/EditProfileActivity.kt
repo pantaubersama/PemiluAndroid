@@ -4,9 +4,17 @@ import android.text.method.KeyListener
 import android.widget.EditText
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.base.BaseApp
+import com.pantaubersama.app.data.interactors.ProfileInteractor
+import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import javax.inject.Inject
 
 class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileView {
+
+    @Inject
+    lateinit var profileInteractor: ProfileInteractor
 
     override fun statusBarColor(): Int? {
         return 0
@@ -16,8 +24,12 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         // ok
     }
 
+    override fun initInjection() {
+        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    }
+
     override fun initPresenter(): EditProfilePresenter? {
-        return EditProfilePresenter()
+        return EditProfilePresenter(profileInteractor)
     }
 
     override fun setupUI() {
@@ -28,6 +40,21 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
 
     override fun setLayout(): Int {
         return R.layout.activity_edit_profile
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter?.updateUser()
+    }
+
+    override fun onSuccessLoadUser(profile: Profile) {
+        edit_profile_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
+        edit_profile_nama.setText("%s %s".format(profile.firstName, profile.lastName))
+        edit_profile_username.setText("@%s".format(profile.username))
+        edit_profile_lokasi.setText(profile.location)
+        edit_profile_deskripsi.setText(profile.about)
+        edit_profile_pendidikan.setText(profile.education)
+        edit_profile_pekerjaan.setText(profile.occupation)
     }
 
     override fun showLoading() {

@@ -4,8 +4,8 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.pantaubersama.app.data.local.SharedPref
-import com.pantaubersama.app.data.model.user.EMPTY_USER
-import com.pantaubersama.app.data.model.user.User
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
+import com.pantaubersama.app.data.model.user.Profile
 
 /**
  * @author edityomurti on 21/12/2018 18:05
@@ -107,11 +107,11 @@ class DataCache(context: Context) : SharedPref(context) {
         return getBoolean(IS_BANNER_KUIS_OPENED)
     }
 
-    fun saveUserProfile(userProfile: User) {
-        putString(USER_PROFILE, gson.toJson(userProfile))
+    fun saveUserProfile(profile: Profile) {
+        putString(USER_PROFILE, gson.toJson(profile))
     }
 
-    fun loadUserProfile(): User {
-        return gson.fromJson(getString(USER_PROFILE), User::class.java) ?: EMPTY_USER
+    fun loadUserProfile(): Profile {
+        return gson.fromJson(getString(USER_PROFILE), Profile::class.java) ?: EMPTY_PROFILE
     }
 }

@@ -42,9 +42,9 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/dummy_avatar"
                     app:riv_border_color="@color/white"
-                    app:riv_oval="true" />
+                    app:riv_oval="true"
+                    tools:src="@drawable/dummy_avatar" />
 
                 <TextView
                     android:id="@+id/edit_profile_change_profile"
@@ -88,10 +88,10 @@
                         android:background="@color/transparant"
                         android:fontFamily="@font/lato_bold"
                         android:hint="@string/label_nama"
-                        android:inputType="text|textNoSuggestions"
-                        android:text="John Doe"
+                        android:inputType="textPersonName"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="John Doe" />
 
                 </LinearLayout>
 
@@ -123,9 +123,9 @@
                         android:fontFamily="@font/lato_bold"
                         android:hint="@string/label_username"
                         android:inputType="text|textNoSuggestions"
-                        android:text="jhon"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="jhon" />
 
                 </LinearLayout>
 
@@ -157,9 +157,9 @@
                         android:fontFamily="@font/lato_bold"
                         android:hint="@string/label_lokasi"
                         android:inputType="text|textNoSuggestions"
-                        android:text="Bandung"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="Bandung" />
 
                 </LinearLayout>
 
@@ -191,9 +191,9 @@
                         android:fontFamily="@font/lato_bold"
                         android:hint="@string/label_deskripi_tentang_kamu"
                         android:inputType="text|textNoSuggestions"
-                        android:text="An ordinary netizen who likes to talk a lot. Like, a lot."
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="An ordinary netizen who likes to talk a lot. Like, a lot." />
 
                 </LinearLayout>
 
@@ -224,10 +224,10 @@
                         android:background="@color/transparant"
                         android:fontFamily="@font/lato_bold"
                         android:hint="@string/label_pendidikan"
-                        android:inputType="text|textNoSuggestions"
-                        android:text="Universitas Indonesia"
+                        android:inputType="text|textNoSuggestions|textCapWords"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="Universitas Indonesia" />
 
                 </LinearLayout>
 
@@ -258,10 +258,10 @@
                         android:background="@color/transparant"
                         android:fontFamily="@font/lato_bold"
                         android:hint="@string/label_pekerjaan"
-                        android:inputType="text|textNoSuggestions"
-                        android:text="Opinium Social"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:inputType="text|textNoSuggestions"
+                        tools:text="Opinium Social" />
 
                 </LinearLayout>
 
