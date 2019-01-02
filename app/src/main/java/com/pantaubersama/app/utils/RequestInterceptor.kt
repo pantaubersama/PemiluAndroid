@@ -4,7 +4,6 @@ import com.pantaubersama.app.data.local.cache.DataCache
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
-
 class RequestInterceptor(private val dataCache: DataCache) : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -16,6 +15,10 @@ class RequestInterceptor(private val dataCache: DataCache) : Interceptor {
 
         val requestBuilder = req.build()
 
-        return chain.proceed(requestBuilder)
+        try {
+            return chain.proceed(requestBuilder)
+        } catch (e: Throwable) {
+            throw e
+        }
     }
 }
