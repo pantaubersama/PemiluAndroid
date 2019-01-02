@@ -9,6 +9,7 @@ import com.pantaubersama.app.data.remote.PantauOAuthAPI
 import com.pantaubersama.app.data.remote.WordStadiumAPI
 import com.pantaubersama.app.utils.ConnectionState
 import com.pantaubersama.app.utils.CustomAuthenticator
+import com.pantaubersama.app.utils.NetworkErrorInterceptor
 import com.pantaubersama.app.utils.RequestInterceptor
 import dagger.Module
 import dagger.Provides
@@ -21,6 +22,12 @@ import java.util.concurrent.TimeUnit
  */
 @Module(includes = [SharedPreferenceModule::class, ConnectionModule::class])
 class ApiModule {
+
+    @Provides
+    fun provideNetworkErrorInterceptor(connectionState: ConnectionState): NetworkErrorInterceptor {
+        return NetworkErrorInterceptor(connectionState)
+    }
+
     @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         val logging = HttpLoggingInterceptor()
@@ -34,8 +41,8 @@ class ApiModule {
     }
 
     @Provides
-    fun provideCustomAuthenticator(dataCache: DataCache, loggingInterceptor: HttpLoggingInterceptor): CustomAuthenticator {
-        return CustomAuthenticator(dataCache, loggingInterceptor)
+    fun provideCustomAuthenticator(dataCache: DataCache, loggingInterceptor: HttpLoggingInterceptor, networkErrorInterceptor: NetworkErrorInterceptor): CustomAuthenticator {
+        return CustomAuthenticator(dataCache, loggingInterceptor, networkErrorInterceptor)
     }
 
     @Provides
@@ -43,33 +50,15 @@ class ApiModule {
         loggingInterceptor: HttpLoggingInterceptor,
         requestInterceptor: RequestInterceptor,
         customAuthenticator: CustomAuthenticator,
-        connectionState: ConnectionState
+        networkErrorInterceptor: NetworkErrorInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
             .addNetworkInterceptor(StethoInterceptor())
+            .addInterceptor(networkErrorInterceptor)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(requestInterceptor)
-//            .addInterceptor { chain ->
-//                if (!connectionState.isConnected()) {
-//                    throw Exception("Tidak terhubung internet")
-//                }
-//
-//                val response = chain.proceed(chain.request())
-//
-//                try {
-//                    if (!response.isSuccessful) {
-//                        throw Exception("Koneksi bermasalah : " + response.body()?.string())
-//                    }
-//                } catch (e: Exception) {
-//                    throw Exception("Koneksi bermasalah : " + response.body()?.string())
-//                    e.printStackTrace()
-//                }
-//
-//
-//                response
-//            }
             .authenticator(customAuthenticator)
             .build()
     }

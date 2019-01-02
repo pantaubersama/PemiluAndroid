@@ -11,17 +11,15 @@ class CreateTanyaKandidatPresenter @Inject constructor(private val tanyaKandidat
             view?.hideActions()
             disposables?.add(tanyaKandidatInteractor
                 ?.createTanyaKandidat(question)
-                ?.doOnSuccess {
+                ?.subscribe({
                     view?.dismissLoading()
                     view?.showSuccessCreateTanyaKandidatAlert()
                     view?.finishActivity(it.data?.question)
-                }
-                ?.doOnError {
+                }, {
                     view?.dismissLoading()
                     view?.showError(it)
                     view?.showFailedCreateTanyaKandidatAlert()
-                }
-                ?.subscribe()!!
+                })!!
             )
         } else {
             view?.showEmptyQuestionAlert()

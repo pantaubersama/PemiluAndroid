@@ -14,7 +14,8 @@ import java.io.IOException
 
 class CustomAuthenticator(
     private val dataCache: DataCache,
-    private val loggingInterceptor: HttpLoggingInterceptor
+    private val loggingInterceptor: HttpLoggingInterceptor,
+    private val networkErrorInterceptor: NetworkErrorInterceptor
 ) : Authenticator {
     private var retrofit: Retrofit? = null
     private var oAuthApi: PantauOAuthAPI? = null
@@ -23,8 +24,9 @@ class CustomAuthenticator(
     override fun authenticate(route: Route, response: Response): Request? {
         synchronized(this) {
             val client = OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
                 .addNetworkInterceptor(StethoInterceptor())
+                .addInterceptor(networkErrorInterceptor)
+                .addInterceptor(loggingInterceptor)
                 .build()
 
             retrofit = Retrofit.Builder()

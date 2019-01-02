@@ -22,7 +22,7 @@ import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
 import com.pantaubersama.app.utils.State
-import com.pantaubersama.app.utils.extensions.*
+import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.badge_item_layout.view.*
 import kotlinx.android.synthetic.main.cluster_options_layout.*
@@ -252,11 +252,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     override fun dismissLoading() {
         progress_bar.visibleIf(false)
-    }
-
-    override fun showError(throwable: Throwable) {
-        super.showError(throwable)
-        coordinator.snackBar(throwable.message ?: "Terjadi kesalahan")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

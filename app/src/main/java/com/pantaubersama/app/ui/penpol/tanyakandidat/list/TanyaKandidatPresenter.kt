@@ -33,49 +33,50 @@ class TanyaKandidatPresenter @Inject constructor(
                     direction,
                     filterBy
             )
-            .doOnSuccess {
-                view?.setIsLoading(false)
-                if (page == 1) {
+            .subscribe(
+                {
+                    view?.setIsLoading(false)
+                    if (page == 1) {
+                        view?.dismissLoading()
+                        if (it.data?.questions != null) {
+                            if (it.data?.questions?.size != 0) {
+                                view?.bindDataTanyaKandidat(it.data?.questions!!)
+                                if (it.data?.questions?.size!! < perPage!!) {
+                                    view?.setDataEnd(true)
+                                } else {
+                                    view?.setDataEnd(false)
+                                }
+                            } else {
+                                view?.setDataEnd(true)
+                                view?.showEmptyDataAlert()
+                            }
+                        } else {
+                            view?.showFailedGetDataAlert()
+                        }
+                    } else {
+                        if (it.data?.questions != null) {
+                            if (it.data?.questions?.size != 0) {
+                                view?.bindNextDataTanyaKandidat(it.data?.questions!!)
+                                if (it.data?.questions?.size!! < perPage!!) {
+                                    view?.setDataEnd(true)
+                                } else {
+                                    view?.setDataEnd(false)
+                                }
+                            } else {
+                                view?.setDataEnd(true)
+                                view?.showEmptyNextDataAlert()
+                            }
+                        } else {
+                            view?.showFailedGetDataAlert()
+                        }
+                    }
+                },
+                {
                     view?.dismissLoading()
-                    if (it.data?.questions != null) {
-                        if (it.data?.questions?.size != 0) {
-                            view?.bindDataTanyaKandidat(it.data?.questions!!)
-                            if (it.data?.questions?.size!! < perPage!!) {
-                                view?.setDataEnd(true)
-                            } else {
-                                view?.setDataEnd(false)
-                            }
-                        } else {
-                            view?.setDataEnd(true)
-                            view?.showEmptyDataAlert()
-                        }
-                    } else {
-                        view?.showFailedGetDataAlert()
-                    }
-                } else {
-                    if (it.data?.questions != null) {
-                        if (it.data?.questions?.size != 0) {
-                            view?.bindNextDataTanyaKandidat(it.data?.questions!!)
-                            if (it.data?.questions?.size!! < perPage!!) {
-                                view?.setDataEnd(true)
-                            } else {
-                                view?.setDataEnd(false)
-                            }
-                        } else {
-                            view?.setDataEnd(true)
-                            view?.showEmptyNextDataAlert()
-                        }
-                    } else {
-                        view?.showFailedGetDataAlert()
-                    }
+                    view?.showFailedGetDataAlert()
+                    view?.showError(it)
                 }
-            }
-            .doOnError {
-                view?.dismissLoading()
-                view?.showFailedGetDataAlert()
-                view?.showError(it)
-            }
-            .subscribe())
+            ))
     }
 
     fun upVoteQuestion(id: String?, questionCalass: String?, isLiked: Boolean?, position: Int?) {
@@ -85,14 +86,15 @@ class TanyaKandidatPresenter @Inject constructor(
                     id,
                     questionCalass
                 )
-                .doOnComplete {
-                    view?.onItemUpVoted()
-                }
-                .doOnError {
-                    view?.showError(it)
-                    view?.onFailedUpVoteItem(isLiked, position)
-                }
-                .subscribe()
+                .subscribe(
+                    {
+                        view?.onItemUpVoted()
+                    },
+                    {
+                        view?.showError(it)
+                        view?.onFailedUpVoteItem(isLiked, position)
+                    }
+                )
         )
     }
 
@@ -103,14 +105,15 @@ class TanyaKandidatPresenter @Inject constructor(
                     id,
                     className
                 )
-                .doOnComplete {
-                    view?.showItemReportedAlert()
-                }
-                .doOnError {
-                    view?.showError(it)
-                    view?.showFailedReportItem()
-                }
-                .subscribe()
+                .subscribe(
+                    {
+                        view?.showItemReportedAlert()
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedReportItem()
+                    }
+                )
         )
     }
 
@@ -118,14 +121,15 @@ class TanyaKandidatPresenter @Inject constructor(
         disposables?.add(
             tanyaKandidatInteractor
                 .deleteQuestions(id)
-                .doOnComplete {
-                    view?.onItemDeleted(position)
-                }
-                .doOnError {
-                    view?.showError(it)
-                    view?.showFailedDeleteItemAlert()
-                }
-                .subscribe()
+                .subscribe(
+                    {
+                        view?.onItemDeleted(position)
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedDeleteItemAlert()
+                    }
+                )
         )
     }
 }

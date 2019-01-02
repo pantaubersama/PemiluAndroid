@@ -5,7 +5,7 @@ import com.pantaubersama.app.data.interactors.ProfileInteractor
 import javax.inject.Inject
 
 class BadgePresenter @Inject constructor(
-        private val interactor: ProfileInteractor
+    private val interactor: ProfileInteractor
 ) : BasePresenter<BadgeView>() {
 
     fun refreshBadges() {
