@@ -136,7 +136,8 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun showFailedGetData() {
-        ToastUtil.show(context!!, "Gagal memuat pilpres")
+        // show Failed View
+//        ToastUtil.show(context!!, "Gagal memuat pilpres")
     }
 
     override fun showEmptyData() {
@@ -160,10 +161,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     override fun dismissLoading() {
         recycler_view.visibility = View.GONE
         progress_bar.visibility = View.GONE
-    }
-
-    override fun showError(throwable: Throwable) {
-        ToastUtil.show(context!!, throwable.message!!)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

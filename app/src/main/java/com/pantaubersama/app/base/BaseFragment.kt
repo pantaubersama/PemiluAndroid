@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.snackBar
 import timber.log.Timber
 import java.util.Objects
 
@@ -83,7 +84,7 @@ abstract class BaseFragment<P : BasePresenter<*>> : Fragment(), BaseView {
     }
 
     override fun showError(throwable: Throwable) {
-        ToastUtil.show(context!!, throwable.message!!)
+        activity?.window?.decorView?.findViewById<View>(android.R.id.content)?.snackBar(throwable.message!!)
         Timber.e(throwable)
     }
 }

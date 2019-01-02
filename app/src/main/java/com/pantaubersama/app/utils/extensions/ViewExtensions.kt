@@ -25,7 +25,7 @@ fun View.visibleIf(condition: Boolean, invisible: Boolean = false) {
 }
 
 fun View.snackBar(message: String) {
-    Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
+    Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
 }
 
 fun Button.setBackgroundTint(@ColorRes color: Int) {

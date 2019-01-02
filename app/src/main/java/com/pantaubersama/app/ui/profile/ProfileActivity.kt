@@ -254,11 +254,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         progress_bar.visibleIf(false)
     }
 
-    override fun showError(throwable: Throwable) {
-        super.showError(throwable)
-        coordinator.snackBar(throwable.message ?: "Terjadi kesalahan")
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_profile, menu)
         return true
