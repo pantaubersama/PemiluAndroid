@@ -16,6 +16,7 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.ui.profile.cluster.RequestClusterActivity
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
@@ -23,6 +24,7 @@ import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
 import com.pantaubersama.app.utils.State
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable
+import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.badge_item_layout.view.*
 import kotlinx.android.synthetic.main.cluster_options_layout.*
@@ -209,6 +211,15 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
             } else {
                 cluster_expandable_image.animate().rotation(180F).start()
             }
+        }
+        tv_request_cluster.text = spannable {
+            +"Belum ada Cluster "
+            textColor(color(R.color.red)) {
+                underline { +"( Request Cluster? )" }
+            }
+        }.toCharSequence()
+        tv_request_cluster.setOnClickListener {
+            startActivity(Intent(this, RequestClusterActivity::class.java))
         }
     }
 
