@@ -7,7 +7,7 @@
     android:gravity="center_vertical">
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/user_avatar"
+        android:id="@+id/iv_badge"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:scaleType="centerCrop"
@@ -29,7 +29,7 @@
             android:text="Kadet"
             android:fontFamily="@font/lato_bold"
             android:textSize="16sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/text_title_state"/>
 
         <TextView
             android:id="@+id/badge_description"
@@ -39,7 +39,7 @@
             android:text="Ikut Kuis Pendidikan Pertama Kali"
             android:layout_marginTop="4dp"
             android:textSize="14sp"
-            android:textColor="@color/gray_4"/>
+            android:textColor="@color/text_desc_state"/>
 
     </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
+import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
@@ -27,5 +28,15 @@ class ProfileInteractor @Inject constructor(
 
     fun getProfile(): Profile {
         return dataCache.loadUserProfile()
+    }
+
+    fun getBadges(): Single<List<Badge>> {
+        return apiWrapper.getPantauOAuthApi().getUserBadges()
+                .subscribeOn(rxSchedulers.io())
+                .map { response ->
+                    response.data.achievedBadges.apply { forEach { it.achieved = true } } +
+                            response.data.badges
+                }
+                .observeOn(rxSchedulers.mainThread())
     }
 }

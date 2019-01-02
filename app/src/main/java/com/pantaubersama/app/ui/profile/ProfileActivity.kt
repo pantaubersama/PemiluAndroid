@@ -14,15 +14,16 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.ProfileInteractor
+import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
-import com.pantaubersama.app.utils.extensions.loadUrl
-import com.pantaubersama.app.utils.extensions.snackBar
-import com.pantaubersama.app.utils.extensions.visibleIf
+import com.pantaubersama.app.utils.State
+import com.pantaubersama.app.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.badge_item_layout.view.*
 import kotlinx.android.synthetic.main.cluster_options_layout.*
 import javax.inject.Inject
 
@@ -57,7 +58,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         setupClusterLayout()
         setupBiodataLayout()
         setupBadgeLayout()
-        addBadgeItemLayout()
         cluster_options_action.setOnClickListener {
             showClusterOptionsDialog()
         }
@@ -65,6 +65,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         setupNavigation()
         presenter?.refreshProfile()
         presenter?.getProfile()
+        presenter?.refreshBadges()
     }
 
     override fun showProfile(profile: Profile) {
@@ -155,11 +156,19 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 .commit()
     }
 
-    private fun addBadgeItemLayout() {
+    override fun showBadges(state: State, badges: List<Badge>) {
         badge_container.removeAllViews()
-        val inflater = LayoutInflater.from(this@ProfileActivity)
-        for (i in 1..3) {
-            val view = inflater.inflate(R.layout.badge_item_layout, null, false)
+        progress_badge.visibleIf(state == State.Loading)
+        tv_retry_badge.visibleIf(state is State.Error)
+        tv_badge_more.visibleIf(state == State.Success)
+        badges.forEach {
+            val view = badge_container.inflate(R.layout.badge_item_layout).apply {
+                isEnabled = it.achieved
+                iv_badge.loadUrl(it.image.thumbnail.url, R.drawable.dummy_badge)
+                iv_badge.setGrayScale(!it.achieved)
+                badge_name.text = it.name
+                badge_description.text = it.description
+            }
             badge_container.addView(view)
         }
     }
@@ -173,6 +182,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 badge_expandable_image.animate().rotation(180F).start()
             }
         }
+        tv_retry_badge.setOnClickListener { presenter?.refreshBadges() }
     }
 
     private fun setupBiodataLayout() {
