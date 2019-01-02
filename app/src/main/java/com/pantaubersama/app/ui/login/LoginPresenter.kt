@@ -15,7 +15,7 @@ class LoginPresenter @Inject constructor(private val loginInteractor: LoginInter
                 loginInteractor.saveLoginData(it.token)
                 view?.dismissLoading()
                 view?.openHomeActivity()
-            },{
+            }, {
                 view?.dismissLoading()
                 view?.showError(it!!)
                 view?.showLoginFailedAlert()

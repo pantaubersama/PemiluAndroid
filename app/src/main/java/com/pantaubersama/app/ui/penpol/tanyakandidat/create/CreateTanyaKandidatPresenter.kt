@@ -15,7 +15,7 @@ class CreateTanyaKandidatPresenter @Inject constructor(private val tanyaKandidat
                     view?.dismissLoading()
                     view?.showSuccessCreateTanyaKandidatAlert()
                     view?.finishActivity(it.data?.question)
-                },{
+                }, {
                     view?.dismissLoading()
                     view?.showError(it)
                     view?.showFailedCreateTanyaKandidatAlert()

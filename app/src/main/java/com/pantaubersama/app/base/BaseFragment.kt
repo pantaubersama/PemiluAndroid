@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
-import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.snackBar
 import timber.log.Timber
 import java.util.Objects

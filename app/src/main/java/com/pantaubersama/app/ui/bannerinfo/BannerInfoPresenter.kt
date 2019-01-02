@@ -21,7 +21,6 @@ class BannerInfoPresenter @Inject constructor(private val bannerInfoInteractor: 
                             break
                         }
                     }
-
                 }, {
                     view?.dismissLoading()
                     view?.showError(it!!)
