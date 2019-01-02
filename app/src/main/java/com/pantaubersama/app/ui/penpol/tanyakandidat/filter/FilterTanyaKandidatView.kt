@@ -10,5 +10,4 @@ interface FilterTanyaKandidatView : BaseView {
     fun showFailedLoadUserfilter()
     fun setOrderFilter(orderFilter: String?)
     fun showFailedLoadOrderfilter()
-
 }
