@@ -110,10 +110,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginStart="8dp"
-                            android:text="Belum terverifikasi"
                             android:textColor="@color/gray_dark_1"
                             android:fontFamily="@font/lato_medium"
-                            android:includeFontPadding="false"/>
+                            android:includeFontPadding="false"
+                            tools:text="@string/txt_belum_verifikasi" />
 
                     </LinearLayout>
 
@@ -171,13 +171,12 @@
 
                     </RelativeLayout>
 
-                    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                    <net.cachapa.expandablelayout.ExpandableLayout
                         android:id="@+id/cluster_expandable"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ael_duration="300"
-                        app:ael_expanded="true"
-                        app:ael_orientation="vertical">
+                        app:el_duration="300"
+                        app:el_expanded="true">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -227,7 +226,7 @@
 
                         </RelativeLayout>
 
-                    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+                    </net.cachapa.expandablelayout.ExpandableLayout>
 
                 </LinearLayout>
 
@@ -269,13 +268,12 @@
 
                     </RelativeLayout>
 
-                    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                    <net.cachapa.expandablelayout.ExpandableLayout
                         android:id="@+id/biodata_expandable"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ael_duration="300"
-                        app:ael_expanded="true"
-                        app:ael_orientation="vertical">
+                        app:el_duration="300"
+                        app:el_expanded="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -381,7 +379,7 @@
 
                         </LinearLayout>
 
-                    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+                    </net.cachapa.expandablelayout.ExpandableLayout>
 
                 </LinearLayout>
 
@@ -423,46 +421,56 @@
 
                     </RelativeLayout>
 
-                    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                    <net.cachapa.expandablelayout.ExpandableLayout
                         android:id="@+id/badge_expandable"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ael_duration="300"
-                        app:ael_expanded="true"
-                        app:ael_orientation="vertical">
+                        app:el_duration="300"
+                        app:el_expanded="true">
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:paddingLeft="16dp"
-                            android:paddingStart="16dp"
-                            android:paddingRight="16dp"
-                            android:paddingEnd="16dp"
+                            android:padding="16dp"
                             android:layout_marginBottom="16dp">
+
+                            <ProgressBar
+                                android:id="@+id/progress_badge"
+                                style="?android:progressBarStyleSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/tv_retry_badge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="8dp"
+                                android:text="Gagal mendapatkan badge. Klik untuk mengulangi"
+                                android:visibility="gone"/>
 
                             <LinearLayout
                                 android:id="@+id/badge_container"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                            </LinearLayout>
+                                android:orientation="vertical" />
 
                             <TextView
+                                android:id="@+id/tv_badge_more"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Lihat lainnya"
                                 android:fontFamily="@font/lato_regular"
                                 android:textSize="12sp"
-                                android:textColor="@color/gray_dark_2"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_below="@id/badge_container"/>
+                                android:layout_gravity="end"
+                                android:textColor="@color/gray_dark_2" />
 
-                        </RelativeLayout>
+                        </LinearLayout>
 
-                    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+                    </net.cachapa.expandablelayout.ExpandableLayout>
 
                 </LinearLayout>
 

@@ -1,6 +1,8 @@
 package com.pantaubersama.app.utils.extensions
 
 import android.content.res.ColorStateList
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -45,4 +47,11 @@ fun ImageView.loadUrl(
                 requestListener?.let { listener(it) }
             }
             .into(this)
+}
+
+fun ImageView.setGrayScale(isGray: Boolean) {
+    colorFilter = if (isGray)
+        ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
+    else
+        null
 }
