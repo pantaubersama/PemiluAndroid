@@ -13,6 +13,7 @@ import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
+import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import dagger.Subcomponent
@@ -36,4 +37,5 @@ interface ActivityComponent {
     fun inject(createJanjiPolitikActivity: CreateJanjiPolitikActivity)
     fun inject(bannerInfoActivity: BannerInfoActivity)
     fun inject(kuisFragment: KuisFragment)
+    fun inject(badgeActivity: BadgeActivity)
 }

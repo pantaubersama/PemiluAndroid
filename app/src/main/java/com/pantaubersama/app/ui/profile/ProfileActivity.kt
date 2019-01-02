@@ -19,6 +19,7 @@ import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
+import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
 import com.pantaubersama.app.utils.State
 import com.pantaubersama.app.utils.extensions.*
@@ -163,11 +164,12 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         tv_badge_more.visibleIf(state == State.Success)
         badges.forEach {
             val view = badge_container.inflate(R.layout.badge_item_layout).apply {
-                isEnabled = it.achieved
                 iv_badge.loadUrl(it.image.thumbnail.url, R.drawable.dummy_badge)
                 iv_badge.setGrayScale(!it.achieved)
                 badge_name.text = it.name
+                badge_name.isEnabled = it.achieved
                 badge_description.text = it.description
+                badge_description.isEnabled = it.achieved
             }
             badge_container.addView(view)
         }
@@ -183,6 +185,9 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
             }
         }
         tv_retry_badge.setOnClickListener { presenter?.refreshBadges() }
+        tv_badge_more.setOnClickListener {
+            startActivity(Intent(this, BadgeActivity::class.java))
+        }
     }
 
     private fun setupBiodataLayout() {

@@ -6,7 +6,7 @@ import com.pantaubersama.app.utils.State
 import javax.inject.Inject
 
 class ProfilePresenter @Inject constructor(
-    private val profileInteractor: ProfileInteractor
+        private val profileInteractor: ProfileInteractor
 ) : BasePresenter<ProfileView>() {
 
     fun getProfile() {
