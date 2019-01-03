@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.ItemModel
+import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.PilpresInteractor
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
@@ -95,47 +96,45 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
                 shareTweet(item)
             }
         }
-//        adapter.addSupportLoadMore(recycler_view, object : BaseAdapterDEL.OnLoadMoreListener {
-//            override fun loadMore(page: Int) {
-////                this@PilpresFragment.page = page
-//                adapter.setLoading()
-//                presenter?.getFeeds(page, perPage)
-//            }
-//        })
+        adapter.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
+            override fun loadMore(page: Int) {
+//                this@PilpresFragment.page = page
+                adapter.setLoading()
+                presenter?.getFeeds(page, perPage)
+            }
+        }, 10)
 
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
             getFeedsData()
         }
-//        getFeedsData()
-        presenter?.getList()
+        getFeedsData()
     }
 
     fun getFeedsData() {
-//        adapter.setDataEnd(false)
-        presenter?.getFeeds(1, perPage)
+        adapter.setDataEnd(false)
+        presenter?.getList()
     }
 
     override fun showFeeds(feedsList: MutableList<FeedsItem>) {
         recycler_view.visibility = View.VISIBLE
-//        adapter.replaceData(feedsList)
-//        adapter.addData(feedsList)
-        if (adapter.itemCount != 0 && adapter.data[0] is BannerInfo) {
-            var bannerInfo = adapter.data[0] as BannerInfo
-            adapter.setDatas(feedsList as MutableList<ItemModel>)
+        if (adapter.itemCount != 0 && adapter.get<ItemModel>(0) is BannerInfo) {
+            var bannerInfo = adapter.get<BannerInfo>(0)
+            adapter.clear()
             adapter.addBanner(bannerInfo)
+            adapter.addData(feedsList as MutableList<ItemModel>)
+            scrollToTop(false)
         } else {
             adapter.setDatas(feedsList as MutableList<ItemModel>)
         }
     }
 
     override fun showMoreFeeds(feedsList: MutableList<FeedsItem>) {
-//        adapter.setLoaded()
-//        if (feedsList.size < perPage) {
-//            adapter.setDataEnd(true)
-//        }
-//        adapter.addData(feedsList)
-        adapter.data.addAll(feedsList)
+        adapter.setLoaded()
+        if (feedsList.size < perPage) {
+            adapter.setDataEnd(true)
+        }
+        adapter.addData(feedsList as MutableList<ItemModel>)
     }
 
     override fun showFailedGetData() {
@@ -178,6 +177,14 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     override fun onDestroy() {
         (activity?.application as BaseApp).releaseActivityComponent()
         super.onDestroy()
+    }
+
+    fun scrollToTop(smoothScroll: Boolean) {
+        if (smoothScroll) {
+            recycler_view.smoothScrollToPosition(0)
+        } else {
+            recycler_view.scrollToPosition(0)
+        }
     }
 
     private fun isTwitterAppInstalled(): Boolean {

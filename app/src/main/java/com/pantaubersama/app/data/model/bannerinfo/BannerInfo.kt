@@ -1,7 +1,7 @@
 package com.pantaubersama.app.data.model.bannerinfo
 
 import com.google.gson.annotations.SerializedName
-import com.pantaubersama.app.base.ItemModel
+import com.pantaubersama.app.data.model.ItemModel
 
 /**
  * @author edityomurti on 27/12/2018 19:49

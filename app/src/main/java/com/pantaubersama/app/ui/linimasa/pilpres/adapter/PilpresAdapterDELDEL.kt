@@ -103,7 +103,7 @@ class PilpresAdapterDELDEL(context: Context, private val isTwitterAppInstalled: 
     override fun setItemView(viewType: Int): Int {
         return when (viewType) {
             VIEW_TYPE_BANNER -> R.layout.item_banner_container
-            VIEW_TYPE_LOADING -> R.layout.layout_loading
+            VIEW_TYPE_LOADING -> R.layout.item_loading
             else -> R.layout.item_pilpres_tweet
         }
     }

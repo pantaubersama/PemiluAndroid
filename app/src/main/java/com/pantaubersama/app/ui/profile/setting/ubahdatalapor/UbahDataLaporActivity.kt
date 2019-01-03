@@ -43,7 +43,7 @@ class UbahDataLaporActivity : BaseActivity<UbahDataLaporPresenter>(), UbahDataLa
             setEditextEnable(ubah_data_lapor_no_ktp)
         }
         ubah_data_lapor_submit.setOnClickListener {
-            // submit data lapor
+            // submit pilpresList lapor
         }
     }
 

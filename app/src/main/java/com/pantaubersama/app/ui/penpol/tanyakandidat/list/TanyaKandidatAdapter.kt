@@ -192,7 +192,7 @@ class TanyaKandidatAdapter(private val userId: String?) : RecyclerView.Adapter<R
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            VIEW_TYPE_LOADING -> LoadingViewHolder(parent.inflate(R.layout.layout_loading))
+            VIEW_TYPE_LOADING -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
             VIEW_TYPE_HEADER -> HeaderViewHolder(parent.inflate(R.layout.layout_tanya_kandidat_header))
             else -> TanyaKandidatViewHolder(parent.inflate(R.layout.item_tanya_kandidat))
         }

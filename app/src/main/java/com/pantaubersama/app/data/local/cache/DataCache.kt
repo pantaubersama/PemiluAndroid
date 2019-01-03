@@ -21,7 +21,7 @@ class DataCache(context: Context) : SharedPref(context) {
             return DataCache(context)
         }
 
-        const val PREF_ID = "com.pantaubersama.cache.data"
+        const val PREF_ID = "com.pantaubersama.cache.pilpresList"
 
         const val KEY_FILTER_PILPRES = "KEY_FILTER_PILPRES"
 

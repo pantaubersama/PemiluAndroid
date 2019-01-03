@@ -78,4 +78,10 @@ class PantauConstants {
         val ASK_PERMISSIONS_REQUEST_CODE = 123
         val BITMAP = "bitmap"
     }
+
+    object ItemModel {
+        const val TYPE_LOADING = 0
+        const val TYPE_BANNER = 1
+        const val TYPE_FEEDS = 2
+    }
 }
