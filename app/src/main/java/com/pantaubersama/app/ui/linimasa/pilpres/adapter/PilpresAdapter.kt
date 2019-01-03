@@ -61,8 +61,8 @@ class PilpresAdapter : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewHolder>()
             Timber.e("loads ViewHolder feed")
             iv_tweet_avatar.loadUrl(item.account?.profileImageUrl, R.drawable.ic_avatar_placeholder)
             tv_tweet_name.text = item.account?.name
-            tv_tweet_username.text = item.account?.username
-            tv_tweet_content.text = "@" + item.source?.text
+            tv_tweet_username.text = "@" + item.account?.username
+            tv_tweet_content.text = item.source?.text
             iv_team_avatar.loadUrl(item.team?.avatar, R.drawable.ic_avatar_placeholder)
             tv_team_name.text = itemView.context.getString(R.string.txt_disematkan_dari) + " " + item.team?.title
             rl_item_pilpres_tweet.setOnClickListener { listener?.onClickTweetContent(item) }

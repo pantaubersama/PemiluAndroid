@@ -1,8 +1,12 @@
 package com.pantaubersama.app.ui.linimasa.pilpres
 
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,12 +22,15 @@ import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.adapter.PilpresAdapter
+import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
+import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
@@ -83,7 +90,32 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
             }
 
             override fun onClickTweetOption(item: FeedsItem) {
-                // show option dialog
+                val dialog = OptionDialog(context!!, item, R.layout.layout_option_dialog_pilpres_tweet)
+                if (!isTwitterAppInstalled()) {
+                    dialog.removeItem(R.id.action_open_in_app)
+                }
+                dialog.show()
+                dialog.listener = object : OptionDialog.DialogListener {
+                    override fun onClick(position: Int) {
+                        when (position) {
+                            R.id.action_copy_url -> {
+                                val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, "tweet id : ${item.id}")
+                                clipboard.primaryClip = clip
+                                ToastUtil.show(context!!, "tweet copied to clipboard")
+                                dialog.dismiss()
+                            }
+                            R.id.action_share -> {
+                                ShareUtil.shareItem(context!!, item)
+                                dialog.dismiss()
+                            }
+                            R.id.action_open_in_app -> {
+                                val openInTwitterApp = Intent(Intent.ACTION_VIEW, Uri.parse("twitter://status?status_id=${item.source?.id}"))
+                                context!!.startActivity(openInTwitterApp)
+                            }
+                        }
+                    }
+                }
             }
 
             override fun onClickTweetContent(item: FeedsItem) {
