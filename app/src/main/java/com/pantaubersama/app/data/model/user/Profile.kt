@@ -6,7 +6,7 @@ import com.pantaubersama.app.data.model.cluster.ClusterItem
 val EMPTY_INFORMANT = Informant("", null, null, null, null,
         null, null, null, null, null)
 
-val EMPTY_PROFILE = Profile("", "", "Tanpa", "Nama", "", "",
+val EMPTY_PROFILE = Profile("", "", "Tanpa Nama", "", "",
         false, false, null, null, false,
         null, "", "", "", "",
         Avatar(null), EMPTY_INFORMANT)
@@ -22,8 +22,7 @@ data class ProfileData(
 data class Profile(
     @SerializedName("id") val id: String,
     @SerializedName("email") val email: String,
-    @SerializedName("first_name") val firstName: String,
-    @SerializedName("last_name") val lastName: String,
+    @SerializedName("full_name") val fullname: String,
     @SerializedName("uid") val uid: String,
     @SerializedName("provider") val provider: String,
     @SerializedName("is_admin") val isAdmin: Boolean,
