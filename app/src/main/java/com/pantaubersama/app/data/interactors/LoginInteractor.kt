@@ -10,9 +10,9 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class LoginInteractor @Inject constructor(
-        private val apiWrapper: APIWrapper?,
-        private val rxSchedulers: RxSchedulers?,
-        private val dataCache: DataCache?
+    private val apiWrapper: APIWrapper?,
+    private val rxSchedulers: RxSchedulers?,
+    private val dataCache: DataCache?
 ) {
     fun exchangeToken(oAuthToken: String?): Single<TokenResponse>? {
         return apiWrapper?.getPantauOAuthApi()?.exchangeToken(oAuthToken)
