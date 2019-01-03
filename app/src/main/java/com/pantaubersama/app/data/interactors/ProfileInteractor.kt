@@ -83,7 +83,17 @@ class ProfileInteractor @Inject constructor(
     }
 
     fun uploadAvatar(avatar: MultipartBody.Part?): Completable {
-        return apiWrapper.getPantauOAuthApi().uploadAvatar(avatar)
+        return apiWrapper
+            .getPantauOAuthApi()
+            .uploadAvatar(avatar)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun updatePassword(password: String, confirmation: String): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .updatePassword(password, confirmation)
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }

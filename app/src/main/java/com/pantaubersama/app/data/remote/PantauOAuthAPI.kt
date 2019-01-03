@@ -59,4 +59,11 @@ interface PantauOAuthAPI {
     fun uploadAvatar(
         @Part avatar: MultipartBody.Part?
     ): Completable
+
+    @FormUrlEncoded
+    @POST("v1/me/password")
+    fun updatePassword(
+        @Field("password") password: String,
+        @Field("password_confirmation") confirmation: String
+    ): Completable
 }
