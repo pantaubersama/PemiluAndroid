@@ -121,4 +121,6 @@ abstract class BaseRecyclerAdapter<T : ItemModel, V : RecyclerView.ViewHolder> :
     fun isDataEnd(): Boolean {
         return isDataEnd
     }
+
+    abstract override fun getItemViewType(position: Int): Int
 }

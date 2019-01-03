@@ -1,24 +1,23 @@
-package com.pantaubersama.app.ui.linimasa.pilpres.adapter
+package com.pantaubersama.app.ui.linimasa.janjipolitik.adapter
 
-import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
-import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.LoadingModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
-import com.pantaubersama.app.data.model.linimasa.FeedsItem
+import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_banner_container.*
-import kotlinx.android.synthetic.main.item_pilpres_tweet.*
+import kotlinx.android.synthetic.main.item_janji_politik.*
+import kotlinx.android.synthetic.main.layout_action_post.*
 
-class PilpresAdapter : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewHolder>() {
+class JanjiPolitikAdapter : BaseRecyclerAdapter<JanjiPolitik, RecyclerView.ViewHolder>() {
 
-    var listener: PilpresAdapter.AdapterListener? = null
+    var listener: JanjiPolitikAdapter.AdapterListener? = null
 
     override fun getItemViewType(position: Int): Int {
         return when (data[position]) {
@@ -31,14 +30,14 @@ class PilpresAdapter : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewHolder>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
-            TYPE_ITEM -> FeedViewHolder(parent.inflate(R.layout.item_pilpres_tweet))
+            TYPE_ITEM -> JanjiPolitikViewHolder((parent.inflate(R.layout.item_janji_politik)))
             else -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as? BannerViewHolder)?.bind(data[position] as BannerInfo)
-        (holder as? FeedViewHolder)?.bind(data[position] as FeedsItem)
+        (holder as? JanjiPolitikViewHolder)?.bind(data[position] as JanjiPolitik)
         (holder as? LoadingViewHolder)?.bind()
     }
 
@@ -52,19 +51,14 @@ class PilpresAdapter : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewHolder>()
         }
     }
 
-    inner class FeedViewHolder(override val containerView: View)
-        : RecyclerView.ViewHolder(containerView), LayoutContainer {
-
-        @SuppressLint("SetTextI18n")
-        fun bind(item: FeedsItem) {
-            iv_tweet_avatar.loadUrl(item.account?.profileImageUrl, R.drawable.ic_avatar_placeholder)
-            tv_tweet_name.text = item.account?.name
-            tv_tweet_username.text = "@" + item.account?.username
-            tv_tweet_content.text = item.source?.text
-            iv_team_avatar.loadUrl(item.team?.avatar, R.drawable.ic_avatar_placeholder)
-            tv_team_name.text = itemView.context.getString(R.string.txt_disematkan_dari) + " " + item.team?.title
-            rl_item_pilpres_tweet.setOnClickListener { listener?.onClickTweetContent(item) }
-            iv_tweet_option.setOnClickListener { listener?.onClickTweetOption(item) }
+    inner class JanjiPolitikViewHolder(override val containerView: View?)
+        : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
+        fun bind(item: JanjiPolitik) {
+            tv_janpol_title.text = item.title
+            tv_janpol_content.text = item.content
+            ll_janpol_content.setOnClickListener { listener?.onClickJanPolContent(item)}
+            iv_share_button.setOnClickListener { listener?.onClickShare(item) }
+            iv_options_button.setOnClickListener { listener?.onClickJanpolOption(item) }
         }
     }
 
@@ -92,8 +86,9 @@ class PilpresAdapter : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewHolder>()
 
     interface AdapterListener {
         fun onClickBanner(bannerInfo: BannerInfo)
-        fun onClickTweetContent(item: FeedsItem)
-        fun onClickTweetOption(item: FeedsItem)
-        fun onClickShare(item: FeedsItem)
+        fun onClickJanPolContent(item: JanjiPolitik)
+        fun onClickJanpolOption(item: JanjiPolitik)
+        fun onClickShare(item: JanjiPolitik)
     }
+
 }

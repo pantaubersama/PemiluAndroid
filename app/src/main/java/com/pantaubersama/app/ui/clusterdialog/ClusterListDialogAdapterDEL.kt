@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.item_cluster.*
 /**
  * @author edityomurti on 27/12/2018 00:16
  */
+@Deprecated("need to implement BaseRecyclerAdapter")
 class ClusterListDialogAdapterDEL(context: Context) : BaseAdapterDEL<ClusterItem,
     ClusterListDialogAdapterDEL.ClusterListViewHolder>(context),
     Filterable {

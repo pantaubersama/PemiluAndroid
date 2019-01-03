@@ -42,7 +42,7 @@ class CreatePertanyaanPresenterTest {
         val question: String?
         question = "Some question"
         presenter?.submitQuestion(question)
-        // continue to pilpresList manager
+        // continue to data manager
     }
 
     @After

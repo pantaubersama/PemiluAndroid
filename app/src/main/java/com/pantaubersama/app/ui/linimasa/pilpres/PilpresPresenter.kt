@@ -16,23 +16,23 @@ class PilpresPresenter @Inject constructor(
 
     fun getList() {
         view?.showLoading()
-        if (bannerInfoInteractor.isBannerPilpresShown()!!) {
-            disposables?.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_PILPRES)
-                ?.subscribe(
-                    {
-                        view?.showBanner(it)
-                        getFeeds(1, 20)
-                    },
-                    {
-                        view?.dismissLoading()
-                        view?.showError(it)
-                        view?.showFailedGetData()
-                    }
-                )!!
-            )
-        } else {
-            getFeeds(1, 20)
-        }
+//        if (bannerInfoInteractor.isBannerPilpresShown()!!) {
+        disposables?.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_PILPRES)
+            ?.subscribe(
+                {
+                    view?.showBanner(it)
+                    getFeeds(1, 20)
+                },
+                {
+                    view?.dismissLoading()
+                    view?.showError(it)
+                    view?.showFailedGetData()
+                }
+            )!!
+        )
+//        } else {
+//            getFeeds(1, 20)
+//        }
     }
 
     fun getFeeds(page: Int, perPage: Int) {

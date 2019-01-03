@@ -83,5 +83,6 @@ class PantauConstants {
         const val TYPE_LOADING = 0
         const val TYPE_BANNER = 1
         const val TYPE_FEEDS = 2
+        const val TYPE_JANPOL = 3
     }
 }

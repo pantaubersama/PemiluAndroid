@@ -8,13 +8,13 @@ class ProfileTanyaKandidatPresenter : BasePresenter<ProfileTanyaKandidatView>() 
 //        val tanyaKandidatList: MutableList<Pertanyaan> = ArrayList()
 //
 //        for (i in 1..25) {
-//            val pilpresList = Pertanyaan()
-//            pilpresList.question = "Apakah ini angka $i ?"
-//            pilpresList.user?.name = "Andi $i ?"
-//            pilpresList.user?.bio = "I love Indonesia"
-//            pilpresList.createdAt = "A seconds ago"
-//            pilpresList.upVoteCount = 100
-//            tanyaKandidatList.add(pilpresList)
+//            val data = Pertanyaan()
+//            data.question = "Apakah ini angka $i ?"
+//            data.user?.name = "Andi $i ?"
+//            data.user?.bio = "I love Indonesia"
+//            data.createdAt = "A seconds ago"
+//            data.upVoteCount = 100
+//            tanyaKandidatList.add(data)
 //        }
 //
 //        if (tanyaKandidatList.size != 0) {
