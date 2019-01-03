@@ -40,7 +40,7 @@ class TanyaKandidatAdapter(private val userId: String?) : RecyclerView.Adapter<R
                 .load(item?.user?.avatar?.url)
                 .placeholder(ContextCompat.getDrawable(itemView.context, R.drawable.ic_person))
                 .into(user_avatar)
-            tv_user_name.text = item?.user?.firstName + item?.user?.lastName
+            tv_user_name.text = item?.user?.fullName
             question_time.text = item?.createdAt?.id
             upvote_count_text.text = item?.likeCount.toString()
             user_question.text = item?.body

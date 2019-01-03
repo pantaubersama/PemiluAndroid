@@ -11,12 +11,9 @@ class User(
     @SerializedName("email")
     @Expose
     var email: String? = null,
-    @SerializedName("first_name")
+    @SerializedName("full_name")
     @Expose
-    var firstName: String? = null,
-    @SerializedName("last_name")
-    @Expose
-    var lastName: String? = null,
+    var fullName: String? = null,
     @SerializedName("username")
     @Expose
     var username: String? = null,

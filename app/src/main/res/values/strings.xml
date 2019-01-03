@@ -137,4 +137,8 @@
     <string name="lisensi">LISENSI</string>
     <string name="invite_member_action">Undang Anggota</string>
     <string name="leave_cluster_action">Tinggalkan Cluster</string>
+    <string name="hint_cari_kategori">Cari Kategori</string>
+    <string name="label_kategori_baru">Kategori Baru</string>
+    <string name="label_kategori">Kategori</string>
+    <string name="label_masukkan_nama_kategori">Masukkan Nama Kategori</string>
 </resources>
