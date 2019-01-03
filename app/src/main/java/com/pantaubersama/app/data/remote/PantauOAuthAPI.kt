@@ -41,4 +41,15 @@ interface PantauOAuthAPI {
 
     @DELETE("/v1/me/clusters")
     fun leaveCluster(): Completable
+
+    @FormUrlEncoded
+    @PUT("/v1/me")
+    fun updateUserData(
+        @Field("full_name") name: String?,
+        @Field("username") username: String?,
+        @Field("location") location: String?,
+        @Field("about") description: String?,
+        @Field("education") education: String?,
+        @Field("occupation") occupation: String?
+    ): Completable
 }

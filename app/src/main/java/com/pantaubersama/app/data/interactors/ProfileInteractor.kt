@@ -48,4 +48,36 @@ class ProfileInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun updateUserData(
+        name: String?,
+        username: String?,
+        location: String?,
+        description: String?,
+        education: String?,
+        occupation: String?
+    ): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .updateUserData(
+                name,
+                username,
+                location,
+                description,
+                education,
+                occupation
+            )
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnComplete {
+                val newProfile = dataCache.loadUserProfile()
+                newProfile.name = name!!
+                newProfile.username = username!!
+                newProfile.location = location!!
+                newProfile.about = description!!
+                newProfile.education = education!!
+                newProfile.occupation = occupation!!
+                dataCache.saveUserProfile(newProfile)
+            }
+    }
 }
