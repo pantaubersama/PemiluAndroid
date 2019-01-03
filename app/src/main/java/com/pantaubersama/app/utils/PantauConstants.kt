@@ -12,6 +12,7 @@ class PantauConstants {
         const val BANNER_JANPOL = "janji politik"
         const val BANNER_TANYA = "tanya"
         const val BANNER_KUIS = "kuis"
+        val ASK_PERMISSIONS_REQUEST_CODE = 115
     }
 
     object TanyaKandidat {
@@ -77,5 +78,10 @@ class PantauConstants {
     object Camera {
         val ASK_PERMISSIONS_REQUEST_CODE = 123
         val BITMAP = "bitmap"
+    }
+
+    object Profile {
+        val CAMERA_REQUEST_CODE = 111
+        val STORAGE_REQUEST_CODE = 112
     }
 }

@@ -11,4 +11,7 @@ interface EditProfileView : BaseView {
     fun disableView()
     fun finishThisScetion()
     fun enableView()
+    fun refreshProfile()
+    fun showSuccessUpdateAvatarAlert()
+    fun showFailedUpdateAvatarAlert()
 }

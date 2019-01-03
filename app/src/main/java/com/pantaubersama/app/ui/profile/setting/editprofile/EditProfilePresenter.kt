@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.profile.setting.editprofile
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.ProfileInteractor
+import okhttp3.MultipartBody
 
 class EditProfilePresenter(private val profileInteractor: ProfileInteractor) : BasePresenter<EditProfileView>() {
     fun getUserData() {
@@ -53,6 +54,22 @@ class EditProfilePresenter(private val profileInteractor: ProfileInteractor) : B
                         view?.showError(it)
                         view?.showFailedUpdateProfileAlert()
                         view?.enableView()
+                    }
+                )
+        )
+    }
+
+    fun uploadAvatar(avatar: MultipartBody.Part?) {
+        disposables?.add(
+            profileInteractor.uploadAvatar(avatar)
+                .subscribe(
+                    {
+                        view?.refreshProfile()
+                        view?.showSuccessUpdateAvatarAlert()
+                    },
+                    {
+                        view?.showFailedUpdateAvatarAlert()
+                        view?.showError(it)
                     }
                 )
         )
