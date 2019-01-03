@@ -12,11 +12,11 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
-import com.pantaubersama.app.ui.linimasa.janjipolitik.adapter.JanjiPolitikAdapter
+import com.pantaubersama.app.ui.linimasa.janjipolitik.adapter.JanjiPolitikAdapterDEL
 import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.fragment_janji_politik.*
-import kotlinx.android.synthetic.main.layout_banner_container.*
+import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject
 
@@ -26,7 +26,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     @Inject
     lateinit var interactor: JanjiPolitikInteractor
 
-    private lateinit var adapter: JanjiPolitikAdapter
+    private lateinit var adapter: JanjiPolitikAdapterDEL
 
     companion object {
         fun newInstance(): JanjiPolitikFragment {
@@ -71,10 +71,10 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
     private fun setupRecyclerJanpol() {
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        adapter = JanjiPolitikAdapter(context!!)
+        adapter = JanjiPolitikAdapterDEL(context!!)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
-        adapter.listener = object : JanjiPolitikAdapter.AdapterListener {
+        adapter.listener = object : JanjiPolitikAdapterDEL.AdapterListener {
             override fun onClickContent(item: JanjiPolitik) {
                 startActivity(DetailJanjiPolitikActivity.setIntent(context!!, item.id!!))
             }
@@ -102,12 +102,12 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     override fun showLoading() {
         view_empty_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
-        progress_bar.visibility = View.VISIBLE
+        lottie_loading.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
         recycler_view.visibility = View.GONE
-        progress_bar.visibility = View.GONE
+        lottie_loading.visibility = View.GONE
     }
 
     override fun showError(throwable: Throwable) {

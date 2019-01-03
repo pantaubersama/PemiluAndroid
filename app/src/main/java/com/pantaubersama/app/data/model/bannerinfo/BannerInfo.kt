@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.model.bannerinfo
 
 import com.google.gson.annotations.SerializedName
+import com.pantaubersama.app.base.ItemModel
 
 /**
  * @author edityomurti on 27/12/2018 19:49
@@ -12,7 +13,7 @@ data class BannerInfo(
     @SerializedName("body") var body: String? = null,
     @SerializedName("header_image") var headerImage: HeaderImage? = null,
     @SerializedName("image") var image: Image? = null
-) {
+): ItemModel {
 
     data class HeaderImage(
         @SerializedName("url") var url: String?,
@@ -27,4 +28,6 @@ data class BannerInfo(
     data class Large(
         @SerializedName("url") var url: String? = null
     )
+
+    override fun getType(): Int = 666
 }

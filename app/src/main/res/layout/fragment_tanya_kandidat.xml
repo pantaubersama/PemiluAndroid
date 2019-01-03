@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/layout_banner_tanya_kandidat"
-        layout="@layout/layout_banner_container"
+        layout="@layout/item_banner_container"
         android:visibility="gone"/>
 
     <View

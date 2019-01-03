@@ -9,7 +9,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.adapter.BaseAdapter
+import com.pantaubersama.app.base.adapter.BaseAdapterDEL
 import com.pantaubersama.app.base.viewholder.BaseViewHolder
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.utils.ShareUtil
@@ -20,9 +20,9 @@ import kotlinx.android.synthetic.main.layout_option_dialog_tanya_kandidat.*
 /**
  * @author edityomurti on 25/12/2018 21:43
  */
-class JanjiPolitikAdapter(context: Context) : BaseAdapter<JanjiPolitik, JanjiPolitikAdapter.JanjiPolitikViewHolder>(context) {
+class JanjiPolitikAdapterDEL(context: Context) : BaseAdapterDEL<JanjiPolitik, JanjiPolitikAdapterDEL.JanjiPolitikViewHolder>(context) {
 
-    var listener: JanjiPolitikAdapter.AdapterListener? = null
+    var listener: JanjiPolitikAdapterDEL.AdapterListener? = null
 
     inner class JanjiPolitikViewHolder(
         override val containerView: View?

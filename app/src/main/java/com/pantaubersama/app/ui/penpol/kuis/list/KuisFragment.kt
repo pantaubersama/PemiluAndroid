@@ -20,7 +20,7 @@ import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.dip
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_kuis.*
-import kotlinx.android.synthetic.main.layout_banner_container.*
+import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject
 
@@ -70,7 +70,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
         }
-        progress_bar.visibleIf(false)
+        lottie_loading.visibleIf(false)
 
         setupData()
     }

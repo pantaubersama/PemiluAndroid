@@ -13,7 +13,7 @@ import timber.log.Timber
 /**
  * @author edityomurti on 16/12/2018 02:12
  */
-abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : RecyclerView.Adapter<V>() {
+abstract class BaseAdapterDEL<T, V : BaseViewHolder<T>>(context: Context) : RecyclerView.Adapter<V>() {
     protected var data = ArrayList<T>()
     protected var context: Context? = null
 

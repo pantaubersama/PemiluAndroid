@@ -23,7 +23,7 @@ import timber.log.Timber
  * @author edityomurti on 26/12/2018 23:57
  */
 class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), ClusterListDialogView {
-    private var adapter: ClusterListDialogAdapter? = null
+    private var adapter: ClusterListDialogAdapterDEL? = null
     private var onClickListener: OnClickListener? = null
 
     companion object {
@@ -55,8 +55,8 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
 
     private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
-        adapter = ClusterListDialogAdapter(context!!)
-        adapter?.listener = object : ClusterListDialogAdapter.AdapterListener {
+        adapter = ClusterListDialogAdapterDEL(context!!)
+        adapter?.listener = object : ClusterListDialogAdapterDEL.AdapterListener {
             override fun onClick(item: ClusterItem) {
                 onClickListener?.onClick(item)
                 dismiss()

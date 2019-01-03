@@ -27,8 +27,4 @@ class PilpresInteractor @Inject constructor(
             ?.subscribeOn(rxSchedulers?.io())
             ?.observeOn(rxSchedulers?.mainThread())
     }
-
-    fun isBannerShown(): Boolean? {
-        return dataCache?.isBannerPilpresOpened()
-    }
 }

@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.Filter
 import android.widget.Filterable
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.adapter.BaseAdapter
+import com.pantaubersama.app.base.adapter.BaseAdapterDEL
 import com.pantaubersama.app.base.viewholder.BaseViewHolder
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import kotlinx.android.synthetic.main.item_cluster.*
@@ -13,11 +13,11 @@ import kotlinx.android.synthetic.main.item_cluster.*
 /**
  * @author edityomurti on 27/12/2018 00:16
  */
-class ClusterListDialogAdapter(context: Context) : BaseAdapter<ClusterItem,
-    ClusterListDialogAdapter.ClusterListViewHolder>(context),
+class ClusterListDialogAdapterDEL(context: Context) : BaseAdapterDEL<ClusterItem,
+    ClusterListDialogAdapterDEL.ClusterListViewHolder>(context),
     Filterable {
 
-    var listener: ClusterListDialogAdapter.AdapterListener? = null
+    var listener: ClusterListDialogAdapterDEL.AdapterListener? = null
     private var originalData: MutableList<ClusterItem> = ArrayList()
 
     override fun add(items: MutableList<ClusterItem>) {

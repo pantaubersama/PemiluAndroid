@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/rl_layout_banner_container"
+    android:id="@+id/rl_banner_container"
     android:background="?selectableItemBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -25,8 +25,9 @@
 
         <ImageView
             android:id="@+id/iv_banner_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:src="@drawable/ic_banner_tanya_kandidat"/>
 
         <ImageView
@@ -54,6 +55,7 @@
                 android:id="@+id/tv_banner_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:maxLines="3"
                 android:textSize="9sp"
                 android:textColor="@color/gray_4"

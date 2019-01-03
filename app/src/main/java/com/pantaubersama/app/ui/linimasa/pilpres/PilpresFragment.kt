@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.adapter.BaseAdapter
+import com.pantaubersama.app.base.ItemModel
+import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.PilpresInteractor
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.adapter.PilpresAdapter
@@ -26,7 +28,10 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     val TAG = PilpresFragment::class.java.simpleName
 
     @Inject
-    lateinit var interactor: PilpresInteractor
+    lateinit var pilpresInteractor: PilpresInteractor
+
+    @Inject
+    lateinit var bannerInfoInteractor: BannerInfoInteractor
 
 //    private var page = 1
     private var perPage = 20
@@ -50,46 +55,34 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun initPresenter(): PilpresPresenter? {
-        return PilpresPresenter(interactor)
+        return PilpresPresenter(pilpresInteractor, bannerInfoInteractor)
     }
 
     override fun initView(view: View) {
-//        setupBanner()
         setupRecyclerPilpres()
     }
 
-//    private fun setupBanner() {
-//        presenter?.isBannerShown()
-//    }
+    override fun showBanner(bannerInfo: BannerInfo) {
+        adapter.addBanner(bannerInfo)
+    }
 
-//    override fun showBanner() {
-//        layout_banner_pilpres.visibility = View.VISIBLE
-//        tv_banner_text.text = getString(R.string.pilpres_banner_text)
-//        iv_banner_image.setImageResource(R.drawable.ic_banner_pilpres)
-//        fl_banner.setOnClickListener {
-//            startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES), PantauConstants.RequestCode.BANNER_PILPRES)
-//        }
-//        iv_banner_close.setOnClickListener {
-//            layout_banner_pilpres.visibility = View.GONE
-//        }
-//    }
-//
-//    override fun hideBanner() {
-//        layout_banner_pilpres.visibility = View.GONE
-//    }
+    override fun hideBanner() {
+        adapter.removeBanner()
+    }
 
-    private fun setupRecyclerPilpres() {
+    fun setupRecyclerPilpres() {
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        adapter = PilpresAdapter(context!!, isTwitterAppInstalled(), true)
+//        adapter = PilpresAdapterDELDEL(context!!, isTwitterAppInstalled(), true)
+        adapter = PilpresAdapter()
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
         adapter.listener = object : PilpresAdapter.AdapterListener {
-            override fun onClickBanner() {
+            override fun onClickBanner(bannerInfo: BannerInfo) {
                 startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES), PantauConstants.RequestCode.BANNER_PILPRES)
             }
 
-            override fun onCloseBanner() {
-                adapter.remove(0)
+            override fun onClickTweetOption(item: FeedsItem) {
+                // show option dialog
             }
 
             override fun onClickTweetContent(item: FeedsItem) {
@@ -102,38 +95,47 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
                 shareTweet(item)
             }
         }
-        adapter.addSupportLoadMore(recycler_view, object : BaseAdapter.OnLoadMoreListener {
-            override fun loadMore(page: Int) {
-//                this@PilpresFragment.page = page
-                adapter.setLoading()
-                presenter?.getFeeds(page, perPage)
-            }
-        })
+//        adapter.addSupportLoadMore(recycler_view, object : BaseAdapterDEL.OnLoadMoreListener {
+//            override fun loadMore(page: Int) {
+////                this@PilpresFragment.page = page
+//                adapter.setLoading()
+//                presenter?.getFeeds(page, perPage)
+//            }
+//        })
 
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
             getFeedsData()
         }
-        getFeedsData()
+//        getFeedsData()
+        presenter?.getList()
     }
 
     fun getFeedsData() {
-        adapter.setDataEnd(false)
+//        adapter.setDataEnd(false)
         presenter?.getFeeds(1, perPage)
     }
 
     override fun showFeeds(feedsList: MutableList<FeedsItem>) {
         recycler_view.visibility = View.VISIBLE
 //        adapter.replaceData(feedsList)
-        adapter.add(feedsList)
+//        adapter.addData(feedsList)
+        if (adapter.itemCount != 0 && adapter.data[0] is BannerInfo) {
+            var bannerInfo = adapter.data[0] as BannerInfo
+            adapter.setDatas(feedsList as MutableList<ItemModel>)
+            adapter.addBanner(bannerInfo)
+        } else {
+            adapter.setDatas(feedsList as MutableList<ItemModel>)
+        }
     }
 
     override fun showMoreFeeds(feedsList: MutableList<FeedsItem>) {
-        adapter.setLoaded()
-        if (feedsList.size < perPage) {
-            adapter.setDataEnd(true)
-        }
-        adapter.add(feedsList)
+//        adapter.setLoaded()
+//        if (feedsList.size < perPage) {
+//            adapter.setDataEnd(true)
+//        }
+//        adapter.addData(feedsList)
+        adapter.data.addAll(feedsList)
     }
 
     override fun showFailedGetData() {
@@ -156,12 +158,12 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     override fun showLoading() {
         view_empty_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
-        progress_bar.visibility = View.VISIBLE
+        lottie_loading.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
         recycler_view.visibility = View.GONE
-        progress_bar.visibility = View.GONE
+        lottie_loading.visibility = View.GONE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
