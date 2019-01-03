@@ -6,11 +6,8 @@ import android.widget.Filter
 import android.widget.Filterable
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.adapter.BaseAdapter
-import com.pantaubersama.app.base.listener.OnItemClickListener
-import com.pantaubersama.app.base.listener.OnItemLongClickListener
 import com.pantaubersama.app.base.viewholder.BaseViewHolder
 import com.pantaubersama.app.data.model.cluster.ClusterItem
-import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_cluster.*
 
 /**
@@ -20,6 +17,7 @@ class ClusterListDialogAdapter(context: Context) : BaseAdapter<ClusterItem,
     ClusterListDialogAdapter.ClusterListViewHolder>(context),
     Filterable {
 
+    var listener: ClusterListDialogAdapter.AdapterListener? = null
     private var originalData: MutableList<ClusterItem> = ArrayList()
 
     override fun add(items: MutableList<ClusterItem>) {
@@ -28,23 +26,19 @@ class ClusterListDialogAdapter(context: Context) : BaseAdapter<ClusterItem,
     }
 
     inner class ClusterListViewHolder(
-        override val containerView: View?,
-        itemClickListener: OnItemClickListener?,
-        itemLongClickListener: OnItemLongClickListener?
+        override val containerView: View?
     ) : BaseViewHolder<ClusterItem>(
-        containerView!!,
-        itemClickListener,
-        itemLongClickListener),
-        LayoutContainer {
+        containerView!!) {
 
         override fun bind(item: ClusterItem) {
             tv_cluster_name.text = item.name
             tv_cluster_member_count.text = item.name
+            ll_cluster_container.setOnClickListener { listener?.onClick(item) }
         }
     }
 
     override fun initViewHolder(view: View, viewType: Int): ClusterListViewHolder {
-        return ClusterListViewHolder(view, itemClickListener, itemLongClickListener)
+        return ClusterListViewHolder(view)
     }
 
     override fun setItemView(viewType: Int): Int {
@@ -75,5 +69,9 @@ class ClusterListDialogAdapter(context: Context) : BaseAdapter<ClusterItem,
                 notifyDataSetChanged()
             }
         }
+    }
+
+    interface AdapterListener {
+        fun onClick(item: ClusterItem)
     }
 }

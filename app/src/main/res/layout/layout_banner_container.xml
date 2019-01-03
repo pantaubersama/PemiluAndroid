@@ -2,6 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/rl_layout_banner_container"
+    android:background="?selectableItemBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
@@ -34,7 +36,7 @@
             android:padding="6dp"
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_delete_48_px"
-            android:background="?selectableItemBackground"/>
+            android:foreground="?selectableItemBackgroundBorderless"/>
 
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/fl_banner"
@@ -46,8 +48,7 @@
             app:alignItems="center"
             app:alignContent="center"
             app:flexDirection="row"
-            app:flexWrap="wrap"
-            android:background="?selectableItemBackground">
+            app:flexWrap="wrap">
 
             <TextView
                 android:id="@+id/tv_banner_text"

@@ -11,10 +11,8 @@ class PilpresPresenter @Inject constructor(
     private val pilpresInteractor: PilpresInteractor?
 ) : BasePresenter<PilpresView>() {
 
-    fun isBannerShown() {
-        if (!pilpresInteractor?.isBannerShown()!!) {
-            view?.showBanner()
-        }
+    fun isBannerShown(): Boolean {
+        return !pilpresInteractor?.isBannerShown()!!
     }
 
     fun getFeeds(page: Int, perPage: Int) {

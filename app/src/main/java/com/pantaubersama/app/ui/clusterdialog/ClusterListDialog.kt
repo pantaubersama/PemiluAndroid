@@ -14,7 +14,6 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.base.BaseDialogFragment
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import kotlinx.android.synthetic.main.layout_dialog_cluster_list.*
@@ -57,12 +56,12 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
     private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
         adapter = ClusterListDialogAdapter(context!!)
-        adapter?.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClick(view: View, position: Int) {
-                onClickListener?.onClick(adapter?.get(position)!!)
+        adapter?.listener = object : ClusterListDialogAdapter.AdapterListener {
+            override fun onClick(item: ClusterItem) {
+                onClickListener?.onClick(item)
                 dismiss()
             }
-        })
+        }
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
     }

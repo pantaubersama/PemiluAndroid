@@ -11,7 +11,6 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.adapter.BaseAdapter
-import com.pantaubersama.app.base.listener.OnItemClickListener
 import com.pantaubersama.app.data.interactors.PilpresInteractor
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
@@ -19,8 +18,6 @@ import com.pantaubersama.app.ui.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
-import kotlinx.android.synthetic.main.fragment_pilpres.*
-import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -57,40 +54,44 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun initView(view: View) {
-        setupBanner()
+//        setupBanner()
         setupRecyclerPilpres()
     }
 
-    private fun setupBanner() {
-        presenter?.isBannerShown()
-    }
+//    private fun setupBanner() {
+//        presenter?.isBannerShown()
+//    }
 
-    override fun showBanner() {
-        layout_banner_pilpres.visibility = View.VISIBLE
-        tv_banner_text.text = getString(R.string.pilpres_banner_text)
-        iv_banner_image.setImageResource(R.drawable.ic_banner_pilpres)
-        fl_banner.setOnClickListener {
-            startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES), PantauConstants.RequestCode.BANNER_PILPRES)
-        }
-        iv_banner_close.setOnClickListener {
-            layout_banner_pilpres.visibility = View.GONE
-        }
-    }
-
-    override fun hideBanner() {
-        layout_banner_pilpres.visibility = View.GONE
-    }
+//    override fun showBanner() {
+//        layout_banner_pilpres.visibility = View.VISIBLE
+//        tv_banner_text.text = getString(R.string.pilpres_banner_text)
+//        iv_banner_image.setImageResource(R.drawable.ic_banner_pilpres)
+//        fl_banner.setOnClickListener {
+//            startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES), PantauConstants.RequestCode.BANNER_PILPRES)
+//        }
+//        iv_banner_close.setOnClickListener {
+//            layout_banner_pilpres.visibility = View.GONE
+//        }
+//    }
+//
+//    override fun hideBanner() {
+//        layout_banner_pilpres.visibility = View.GONE
+//    }
 
     private fun setupRecyclerPilpres() {
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        adapter = PilpresAdapter(context!!, isTwitterAppInstalled())
+        adapter = PilpresAdapter(context!!, isTwitterAppInstalled(), true)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
-        adapter.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClick(view: View, position: Int) {
-            }
-        })
         adapter.listener = object : PilpresAdapter.AdapterListener {
+            override fun onClickBanner() {
+                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES), PantauConstants.RequestCode.BANNER_PILPRES)
+            }
+
+            override fun onCloseBanner() {
+                adapter.remove(0)
+            }
+
             override fun onClickTweetContent(item: FeedsItem) {
                 ChromeTabUtil(context!!).loadUrl(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id)
 //                var openTweetinBrowser = Intent(Intent.ACTION_VIEW, Uri.parse(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id))
@@ -123,7 +124,8 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     override fun showFeeds(feedsList: MutableList<FeedsItem>) {
         recycler_view.visibility = View.VISIBLE
-        adapter.replaceData(feedsList)
+//        adapter.replaceData(feedsList)
+        adapter.add(feedsList)
     }
 
     override fun showMoreFeeds(feedsList: MutableList<FeedsItem>) {
@@ -166,16 +168,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                PantauConstants.RequestCode.BANNER_PILPRES -> hideBanner()
-            }
-        }
-        when (requestCode) {
-            666 -> {
-                Timber.e("WAGU BUKA TWITTER")
-                Timber.e("RC : $resultCode")
-                if (data != null) {
-                    Timber.e("data : $data")
-                }
+//                PantauConstants.RequestCode.BANNER_PILPRES -> hideBanner()
             }
         }
     }

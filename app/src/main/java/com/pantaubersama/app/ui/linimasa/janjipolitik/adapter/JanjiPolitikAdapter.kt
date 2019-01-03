@@ -10,12 +10,9 @@ import android.view.View
 import android.view.WindowManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.adapter.BaseAdapter
-import com.pantaubersama.app.base.listener.OnItemClickListener
-import com.pantaubersama.app.base.listener.OnItemLongClickListener
 import com.pantaubersama.app.base.viewholder.BaseViewHolder
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.utils.ShareUtil
-import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_janji_politik.*
 import kotlinx.android.synthetic.main.layout_action_post.*
 import kotlinx.android.synthetic.main.layout_option_dialog_tanya_kandidat.*
@@ -28,14 +25,9 @@ class JanjiPolitikAdapter(context: Context) : BaseAdapter<JanjiPolitik, JanjiPol
     var listener: JanjiPolitikAdapter.AdapterListener? = null
 
     inner class JanjiPolitikViewHolder(
-        override val containerView: View?,
-        itemClickListener: OnItemClickListener?,
-        itemLongClickListener: OnItemLongClickListener?
+        override val containerView: View?
     ) : BaseViewHolder<JanjiPolitik>(
-        containerView!!,
-        itemClickListener,
-        itemLongClickListener),
-        LayoutContainer {
+        containerView!!) {
 
         override fun bind(item: JanjiPolitik) {
             tv_janpol_title.text = item.title
@@ -47,7 +39,7 @@ class JanjiPolitikAdapter(context: Context) : BaseAdapter<JanjiPolitik, JanjiPol
     }
 
     override fun initViewHolder(view: View, viewType: Int): JanjiPolitikViewHolder {
-        return JanjiPolitikViewHolder(view, itemClickListener, itemLongClickListener)
+        return JanjiPolitikViewHolder(view)
     }
 
     override fun setItemView(viewType: Int): Int {

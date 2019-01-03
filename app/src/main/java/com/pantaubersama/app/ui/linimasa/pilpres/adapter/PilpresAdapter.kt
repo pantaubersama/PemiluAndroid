@@ -16,37 +16,32 @@ import android.view.WindowManager
 import com.bumptech.glide.Glide
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.adapter.BaseAdapter
-import com.pantaubersama.app.base.listener.OnItemClickListener
-import com.pantaubersama.app.base.listener.OnItemLongClickListener
 import com.pantaubersama.app.base.viewholder.BaseViewHolder
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
-import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_pilpres_tweet.*
+import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_option_dialog_pilpres_tweet.*
 
 /**
  * @author edityomurti on 19/12/2018 14:17
  */
-class PilpresAdapter(context: Context, isTwitterAppInstalled: Boolean) : BaseAdapter<FeedsItem, PilpresAdapter.PilpresViewHolder>(context) {
-
-//    constructor(context: Context, isTwitterAppInstalled: Boolean): super(conte)
-    private var isTwitterAppInstalled: Boolean = isTwitterAppInstalled
+class PilpresAdapter(context: Context, private val isTwitterAppInstalled: Boolean, isBannerShown: Boolean) : BaseAdapter<FeedsItem, PilpresAdapter.PilpresViewHolder>(context) {
 
     var listener: PilpresAdapter.AdapterListener? = null
-    var VIEW_TYPE_LOADING = 0
-    var VIEW_TYPE_ITEM = 1
+    val VIEW_TYPE_LOADING = 0
+    val VIEW_TYPE_ITEM = 1
+    val VIEW_TYPE_BANNER = 2
 
-    open inner class PilpresViewHolder(
-        override val containerView: View?,
-        itemClickListener: OnItemClickListener?,
-        itemLongClickListener: OnItemLongClickListener?
-    ) : BaseViewHolder<FeedsItem>(
-        containerView!!,
-        itemClickListener,
-        itemLongClickListener),
-        LayoutContainer {
+    init {
+        if (isBannerShown) {
+            add(FeedsItem(id = VIEW_TYPE_BANNER.toString()), 0)
+        }
+    }
+
+    open inner class PilpresViewHolder(override val containerView: View?) : BaseViewHolder<FeedsItem>(
+        containerView!!) {
 
         @SuppressLint("SetTextI18n")
         override fun bind(item: FeedsItem) {
@@ -65,24 +60,39 @@ class PilpresAdapter(context: Context, isTwitterAppInstalled: Boolean) : BaseAda
     }
 
     inner class LoadingViewHolder(
-        override val containerView: View?,
-        itemClickListener: OnItemClickListener?,
-        itemLongClickListener: OnItemLongClickListener?
-    ) : PilpresViewHolder(containerView, itemClickListener, itemLongClickListener) {
+        override val containerView: View?
+    ) : PilpresViewHolder(containerView) {
         override fun bind(item: FeedsItem) {
             // do nothing
         }
     }
 
+    inner class BannerViewHolder(override val containerView: View?)
+        : PilpresViewHolder(containerView) {
+        override fun bind(item: FeedsItem) {
+            tv_banner_text.text = itemView.context.getString(R.string.pilpres_banner_text)
+            iv_banner_image.setImageResource(R.drawable.ic_banner_pilpres)
+            rl_layout_banner_container.setOnClickListener {
+                listener?.onClickBanner()
+
+            }
+            iv_banner_close.setOnClickListener {
+                listener?.onCloseBanner()
+            }
+        }
+    }
+
     override fun initViewHolder(view: View, viewType: Int): PilpresViewHolder {
         return when (viewType) {
-            VIEW_TYPE_LOADING -> LoadingViewHolder(view, itemClickListener, itemLongClickListener)
-            else -> PilpresViewHolder(view, itemClickListener, itemLongClickListener)
+            VIEW_TYPE_BANNER -> BannerViewHolder(view)
+            VIEW_TYPE_LOADING -> LoadingViewHolder(view)
+            else -> PilpresViewHolder(view)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (data[position].id) {
+            VIEW_TYPE_BANNER.toString() -> VIEW_TYPE_BANNER
             VIEW_TYPE_LOADING.toString() -> VIEW_TYPE_LOADING
             else -> VIEW_TYPE_ITEM
         }
@@ -90,12 +100,15 @@ class PilpresAdapter(context: Context, isTwitterAppInstalled: Boolean) : BaseAda
 
     override fun setItemView(viewType: Int): Int {
         return when (viewType) {
+            VIEW_TYPE_BANNER -> R.layout.layout_banner_container
             VIEW_TYPE_LOADING -> R.layout.layout_loading
             else -> R.layout.item_pilpres_tweet
         }
     }
 
     interface AdapterListener {
+        fun onClickBanner()
+        fun onCloseBanner()
         fun onClickTweetContent(item: FeedsItem)
         fun onClickShare(item: FeedsItem)
     }
@@ -148,8 +161,4 @@ class PilpresAdapter(context: Context, isTwitterAppInstalled: Boolean) : BaseAda
     fun setLoading() {
         setLoading(FeedsItem(id = VIEW_TYPE_LOADING.toString()))
     }
-
-//    fun setLoaded() {
-//
-//    }
 }
