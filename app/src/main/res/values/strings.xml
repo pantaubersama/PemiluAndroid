@@ -141,4 +141,5 @@
     <string name="label_kategori_baru">Kategori Baru</string>
     <string name="label_kategori">Kategori</string>
     <string name="label_masukkan_nama_kategori">Masukkan Nama Kategori</string>
+    <string name="txt_failed_state">Oops.. ada yg salah</string>
 </resources>

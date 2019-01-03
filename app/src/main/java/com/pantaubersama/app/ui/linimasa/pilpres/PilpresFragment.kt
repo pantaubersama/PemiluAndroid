@@ -22,6 +22,7 @@ import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import kotlinx.android.synthetic.main.layout_fail_state.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -73,7 +74,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     fun setupRecyclerPilpres() {
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-//        adapter = PilpresAdapterDELDEL(context!!, isTwitterAppInstalled(), true)
         adapter = PilpresAdapter()
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
@@ -139,7 +139,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     override fun showFailedGetData() {
         // show Failed View
-//        ToastUtil.show(context!!, "Gagal memuat pilpres")
+        view_fail_state.visibility = View.VISIBLE
     }
 
     override fun showEmptyData() {
@@ -156,6 +156,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     override fun showLoading() {
         view_empty_state.visibility = View.GONE
+        view_fail_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
         lottie_loading.visibility = View.VISIBLE
     }
@@ -169,7 +170,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-//                PantauConstants.RequestCode.BANNER_PILPRES -> hideBanner()
+                PantauConstants.RequestCode.BANNER_PILPRES -> hideBanner()
             }
         }
     }

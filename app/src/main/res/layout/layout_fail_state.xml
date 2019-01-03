@@ -11,23 +11,23 @@
         android:layout_weight="1"/>
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_empty_state"
+        android:id="@+id/lottie_fail_state"
         android:scaleType="centerInside"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        app:lottie_fileName="lottie_empty_state.json"
+        app:lottie_fileName="lottie_failed.json"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"/>
 
     <TextView
-        android:id="@+id/tv_empty_state"
+        android:id="@+id/tv_fail_state"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="@string/txt_empty_state"
+        android:text="@string/txt_failed_state"
         android:fontFamily="@font/lato_regular"/>
 
 </LinearLayout>

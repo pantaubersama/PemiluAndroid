@@ -7,7 +7,12 @@
     <include
         android:id="@+id/view_empty_state"
         layout="@layout/layout_empty_state"
-        android:visibility="invisible"/>
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/view_fail_state"
+        layout="@layout/layout_fail_state"
+        android:visibility="gone"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"

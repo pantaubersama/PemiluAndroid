@@ -24,7 +24,9 @@ class PilpresPresenter @Inject constructor(
                         getFeeds(1, 20)
                     },
                     {
+                        view?.dismissLoading()
                         view?.showError(it)
+                        view?.showFailedGetData()
                     }
                 )!!
             )
