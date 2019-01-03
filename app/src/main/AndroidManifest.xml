@@ -22,7 +22,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:theme">
-
         <meta-data
             android:name="aia-compat-api-min-version"
             android:value="1" />
@@ -105,8 +104,9 @@
         <activity android:name=".ui.profile.setting.badge.BadgeActivity" />
         <activity android:name=".ui.profile.setting.clusterundang.ClusterUndangActivity" />
         <activity android:name=".ui.profile.setting.panduankomunitas.PanduanKomunitasActivity" />
-        <activity android:name=".ui.profile.setting.tentangapp.TentangAppActivity"></activity>
+        <activity android:name=".ui.profile.setting.tentangapp.TentangAppActivity" />
         <activity android:name=".ui.profile.cluster.RequestClusterActivity" />
+        <activity android:name=".ui.profile.cluster.ClusterCategoryActivity"></activity>
     </application>
 
 </manifest>
