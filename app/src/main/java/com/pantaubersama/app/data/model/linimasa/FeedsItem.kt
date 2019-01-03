@@ -7,7 +7,7 @@ import com.pantaubersama.app.utils.PantauConstants
 /**
  * @author edityomurti on 19/12/2018 14:20
  */
-data class FeedsItem (
+data class FeedsItem(
     @SerializedName("id") var id: String? = null,
     @SerializedName("team") var team: Team? = null,
     @SerializedName("created_at") var createdAt: String? = null,

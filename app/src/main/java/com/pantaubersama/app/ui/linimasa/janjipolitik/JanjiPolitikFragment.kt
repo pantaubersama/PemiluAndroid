@@ -100,7 +100,6 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         } else {
             adapter.setDatas(janjiPolitikList as MutableList<ItemModel>)
         }
-
     }
 
     override fun setLayout(): Int {

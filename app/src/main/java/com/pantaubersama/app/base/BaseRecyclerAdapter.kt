@@ -22,7 +22,7 @@ abstract class BaseRecyclerAdapter<T : ItemModel, V : RecyclerView.ViewHolder> :
         recyclerView: RecyclerView,
         loadMoreListener: OnLoadMoreListener,
         visibleTreshold: Int
-        ) {
+    ) {
         val layoutManager = recyclerView.layoutManager
         if (layoutManager != null) {
             if (layoutManager is LinearLayoutManager) {

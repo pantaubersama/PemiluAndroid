@@ -13,7 +13,7 @@ data class BannerInfo(
     @SerializedName("body") var body: String? = null,
     @SerializedName("header_image") var headerImage: HeaderImage? = null,
     @SerializedName("image") var image: Image? = null
-): ItemModel {
+) : ItemModel {
 
     data class HeaderImage(
         @SerializedName("url") var url: String?,

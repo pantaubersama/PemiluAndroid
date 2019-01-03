@@ -18,7 +18,7 @@ interface PantauAPI {
     @GET("linimasa/v1/banner_infos/show")
     fun getBannerInfo(
         @Query("page_name") pageName: String?
-    ) : Single<BannerInfoResponse>
+    ): Single<BannerInfoResponse>
 
     @GET("linimasa/v1/feeds/pilpres")
     fun getFeeds(

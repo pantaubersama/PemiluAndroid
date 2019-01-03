@@ -30,7 +30,6 @@ class JanjiPolitikPresenter @Inject constructor(
                 }
             )!!
         )
-
     }
 
     fun getJanjiPolitikList() {

@@ -28,9 +28,7 @@ import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
-import kotlinx.android.synthetic.main.layout_fail_state.*
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 
 class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {

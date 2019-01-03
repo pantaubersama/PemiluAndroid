@@ -56,7 +56,7 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter<JanjiPolitik, RecyclerView.ViewH
         fun bind(item: JanjiPolitik) {
             tv_janpol_title.text = item.title
             tv_janpol_content.text = item.content
-            ll_janpol_content.setOnClickListener { listener?.onClickJanPolContent(item)}
+            ll_janpol_content.setOnClickListener { listener?.onClickJanPolContent(item) }
             iv_share_button.setOnClickListener { listener?.onClickShare(item) }
             iv_options_button.setOnClickListener { listener?.onClickJanpolOption(item) }
         }
@@ -90,5 +90,4 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter<JanjiPolitik, RecyclerView.ViewH
         fun onClickJanpolOption(item: JanjiPolitik)
         fun onClickShare(item: JanjiPolitik)
     }
-
 }

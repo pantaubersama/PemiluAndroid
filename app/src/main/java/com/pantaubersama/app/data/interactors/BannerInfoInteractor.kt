@@ -23,7 +23,7 @@ class BannerInfoInteractor @Inject constructor(
             ?.observeOn(rxSchedulers?.mainThread())
     }
 
-    fun getBannerInfo(pageName: String) : Single<BannerInfo>? {
+    fun getBannerInfo(pageName: String): Single<BannerInfo>? {
         return apiWrapper?.getPantauApi()?.getBannerInfo(pageName)
             ?.subscribeOn(rxSchedulers?.io())
             ?.map { it.data.bannerInfo }

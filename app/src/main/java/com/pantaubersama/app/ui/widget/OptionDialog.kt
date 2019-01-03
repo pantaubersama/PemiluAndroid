@@ -4,9 +4,13 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.view.*
+import android.view.ViewGroup
+import android.view.LayoutInflater
+import android.view.KeyEvent
+import android.view.WindowManager
+import android.view.Gravity
+import android.view.View
 import androidx.annotation.LayoutRes
-import timber.log.Timber
 
 class OptionDialog<T>(context: Context, item: T, @LayoutRes optionLayout: Int) {
 
