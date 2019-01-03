@@ -1,9 +1,13 @@
 package com.pantaubersama.app.ui.profile.cluster
 
+import android.content.Intent
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_request_cluster.*
 
 class RequestClusterActivity : BaseActivity<RequestClusterPresenter>() {
+
+    val CHANGE_CATEGORY = 1
 
     override fun statusBarColor(): Int? = R.color.white
 
@@ -18,6 +22,14 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>() {
 
     override fun setupUI() {
         setupToolbar(true, "Request Buat Cluster", R.color.white, 4f)
+        onClickAction()
+    }
+
+    private fun onClickAction() {
+        request_cluster_category.setOnClickListener {
+            val intent = Intent(this@RequestClusterActivity, ClusterCategoryActivity::class.java)
+            startActivityForResult(intent, CHANGE_CATEGORY)
+        }
     }
 
     override fun showLoading() {

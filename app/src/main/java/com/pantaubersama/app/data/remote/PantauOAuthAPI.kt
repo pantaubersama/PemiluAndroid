@@ -18,20 +18,11 @@ interface PantauOAuthAPI {
 
     @FormUrlEncoded
     @POST("/oauth/token")
-    fun refreshToken(
-            @Field("grant_type") grantType: String,
-            @Field("client_id") client_id: String,
-            @Field("client_secret") client_secret: String?,
-            @Field("refresh_token") refresh_token: String?
-    ): Call<Token>
+    fun refreshToken(@Field("grant_type") grantType: String, @Field("client_id") client_id: String, @Field("client_secret") client_secret: String?, @Field("refresh_token") refresh_token: String?): Call<Token>
 
     @FormUrlEncoded
     @POST("/oauth/revoke")
-    fun revokeToken(
-            @Field("client_id") client_id: String?,
-            @Field("client_secret") client_secret: String?,
-            @Field("token") token: String?
-    ): Completable
+    fun revokeToken(@Field("client_id") client_id: String?, @Field("client_secret") client_secret: String?, @Field("token") token: String?): Completable
 
     @GET("/v1/me")
     fun getUserProfile(): Single<ProfileResponse>
