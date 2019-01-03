@@ -10,16 +10,21 @@ import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
+import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_create_tanya_kandidat.*
 import javax.inject.Inject
 
 class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>(), CreateTanyaKandidatView {
     @Inject
-    lateinit var interactor: TanyaKandidatInteractor
+    lateinit var tanyaKandidatInteractor: TanyaKandidatInteractor
+    @Inject
+    lateinit var profileInteractor: ProfileInteractor
     private var isLoading = false
 
     override fun statusBarColor(): Int {
@@ -35,11 +40,12 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
     }
 
     override fun initPresenter(): CreateTanyaKandidatPresenter? {
-        return CreateTanyaKandidatPresenter(interactor)
+        return CreateTanyaKandidatPresenter(tanyaKandidatInteractor, profileInteractor)
     }
 
     override fun setupUI() {
         setupToolbar(true, getString(R.string.create_question), R.color.white, 4f)
+        presenter?.getUserData()
         question?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -78,6 +84,11 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
             R.id.done_action -> presenter?.submitQuestion(question.text.toString())
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun bindProfileData(profile: Profile?) {
+        user_avatar.loadUrl(profile?.avatar?.thumbnail?.url, R.drawable.ic_avatar_placeholder)
+        tv_user_name.text = profile?.name
     }
 
     override fun showEmptyQuestionAlert() {

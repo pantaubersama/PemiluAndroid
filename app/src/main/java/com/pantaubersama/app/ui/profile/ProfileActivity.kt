@@ -73,7 +73,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     override fun showProfile(profile: Profile) {
         user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
-        tv_user_name.text = profile.fullname
+        tv_user_name.text = profile.name
         user_username.text = profile.username?.takeIf { it.isNotBlank() }?.let { "@%s".format(it) }
         user_bio.text = profile.about
         if (profile.verified) setVerified() else setUnverified()
@@ -81,7 +81,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         user_location.text = profile.location
         user_education.text = profile.education
         user_work.text = profile.occupation
-        if (profile.cluster != null) parseCluster(profile.cluster)
+        if (profile.cluster != null) parseCluster(profile.cluster!!)
     }
 
     private fun parseCluster(cluster: ClusterItem) {

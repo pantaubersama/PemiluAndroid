@@ -5,4 +5,13 @@ import com.pantaubersama.app.data.model.user.Profile
 
 interface EditProfileView : BaseView {
     fun onSuccessLoadUser(profile: Profile)
+    fun showFailedGetUserDataAlert()
+    fun showProfileUpdatedAlert()
+    fun showFailedUpdateProfileAlert()
+    fun disableView()
+    fun finishThisScetion()
+    fun enableView()
+    fun refreshProfile()
+    fun showSuccessUpdateAvatarAlert()
+    fun showFailedUpdateAvatarAlert()
 }

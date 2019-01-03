@@ -6,7 +6,7 @@ import com.pantaubersama.app.data.model.cluster.ClusterItem
 val EMPTY_INFORMANT = Informant("", null, null, null, null,
         null, null, null, null, null)
 
-val EMPTY_PROFILE = Profile("", "", "Tanpa Nama", "", "",
+val EMPTY_PROFILE = Profile("", "", "Tanpa", "", "",
         false, false, null, null, false,
         null, "", "", "", "",
         Avatar(null), EMPTY_INFORMANT)
@@ -20,23 +20,23 @@ data class ProfileData(
 )
 
 data class Profile(
-    @SerializedName("id") val id: String,
-    @SerializedName("email") val email: String,
-    @SerializedName("full_name") val fullname: String,
-    @SerializedName("uid") val uid: String,
-    @SerializedName("provider") val provider: String,
-    @SerializedName("is_admin") val isAdmin: Boolean,
-    @SerializedName("is_moderator") val isModerator: Boolean,
-    @SerializedName("cluster") val cluster: ClusterItem?,
-    @SerializedName("vote_preference") val votePreference: Any?,
-    @SerializedName("verified") val verified: Boolean,
-    @SerializedName("username") val username: String?,
-    @SerializedName("about") val about: String?,
-    @SerializedName("location") val location: String?,
-    @SerializedName("education") val education: String?,
-    @SerializedName("occupation") val occupation: String?,
-    @SerializedName("avatar") val avatar: Avatar,
-    @SerializedName("informant") val informant: Informant
+    @SerializedName("id") var id: String,
+    @SerializedName("email") var email: String,
+    @SerializedName("full_name") var name: String,
+    @SerializedName("uid") var uid: String,
+    @SerializedName("provider") var provider: String,
+    @SerializedName("is_admin") var isAdmin: Boolean,
+    @SerializedName("is_moderator") var isModerator: Boolean,
+    @SerializedName("cluster") var cluster: ClusterItem?,
+    @SerializedName("vote_preference") var votePreference: Any?,
+    @SerializedName("verified") var verified: Boolean,
+    @SerializedName("username") var username: String?,
+    @SerializedName("about") var about: String?,
+    @SerializedName("location") var location: String?,
+    @SerializedName("education") var education: String?,
+    @SerializedName("occupation") var occupation: String?,
+    @SerializedName("avatar") var avatar: Avatar,
+    @SerializedName("informant") var informant: Informant
 )
 
 data class Informant(

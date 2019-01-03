@@ -6,6 +6,7 @@ import com.pantaubersama.app.data.model.user.BadgeResponse
 import com.pantaubersama.app.data.model.user.ProfileResponse
 import io.reactivex.Completable
 import io.reactivex.Single
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.* // ktlint-disable
 
@@ -18,11 +19,20 @@ interface PantauOAuthAPI {
 
     @FormUrlEncoded
     @POST("/oauth/token")
-    fun refreshToken(@Field("grant_type") grantType: String, @Field("client_id") client_id: String, @Field("client_secret") client_secret: String?, @Field("refresh_token") refresh_token: String?): Call<Token>
+    fun refreshToken(
+        @Field("grant_type") grantType: String,
+        @Field("client_id") client_id: String,
+        @Field("client_secret") client_secret: String?,
+        @Field("refresh_token") refresh_token: String?
+    ): Call<Token>
 
     @FormUrlEncoded
     @POST("/oauth/revoke")
-    fun revokeToken(@Field("client_id") client_id: String?, @Field("client_secret") client_secret: String?, @Field("token") token: String?): Completable
+    fun revokeToken(
+        @Field("client_id") client_id: String?,
+        @Field("client_secret") client_secret: String?,
+        @Field("token") token: String?
+    ): Completable
 
     @GET("/v1/me")
     fun getUserProfile(): Single<ProfileResponse>
@@ -32,4 +42,28 @@ interface PantauOAuthAPI {
 
     @DELETE("/v1/me/clusters")
     fun leaveCluster(): Completable
+
+    @FormUrlEncoded
+    @PUT("/v1/me")
+    fun updateUserData(
+        @Field("full_name") name: String?,
+        @Field("username") username: String?,
+        @Field("location") location: String?,
+        @Field("about") description: String?,
+        @Field("education") education: String?,
+        @Field("occupation") occupation: String?
+    ): Completable
+
+    @Multipart
+    @PUT("/v1/me/avatar")
+    fun uploadAvatar(
+        @Part avatar: MultipartBody.Part?
+    ): Completable
+
+    @FormUrlEncoded
+    @POST("v1/me/password")
+    fun updatePassword(
+        @Field("password") password: String,
+        @Field("password_confirmation") confirmation: String
+    ): Completable
 }
