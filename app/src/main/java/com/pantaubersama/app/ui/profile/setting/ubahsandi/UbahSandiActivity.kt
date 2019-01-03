@@ -11,7 +11,6 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_ubah_sandi.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
