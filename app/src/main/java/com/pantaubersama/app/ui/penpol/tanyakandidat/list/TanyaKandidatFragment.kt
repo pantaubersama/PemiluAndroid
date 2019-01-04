@@ -89,7 +89,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         adapter?.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
             override fun loadMore(page: Int) {
                 adapter?.setLoading()
-                presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
+                presenter?.getTanyaKandidatList(page, perPage)
             }
         }, 5)
 
@@ -161,7 +161,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     private fun refreshItem() {
         page = 1
-        presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
+        presenter?.getTanyaKandidatList(page, perPage)
     }
 
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>) {

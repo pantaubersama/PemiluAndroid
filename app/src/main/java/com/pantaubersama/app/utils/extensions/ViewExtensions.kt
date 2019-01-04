@@ -9,10 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.request.RequestListener
 import com.google.android.material.snackbar.Snackbar
+import com.pantaubersama.app.R
 import com.pantaubersama.app.utils.GlideApp
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
@@ -54,4 +57,22 @@ fun ImageView.setGrayScale(isGray: Boolean) {
         ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
     else
         null
+}
+
+fun LinearLayout.enable(isEnable: Boolean) {
+    if (isEnable) {
+        this.isEnabled = true
+        this.setBackgroundColor(ContextCompat.getColor(this.context, R.color.colorPrimary))
+        for (i in 0 until this.childCount) {
+            val child = this.getChildAt(i)
+            child.isEnabled = true
+        }
+    } else {
+        this.isEnabled = false
+        this.setBackgroundColor(ContextCompat.getColor(this.context, R.color.gray_dark_1))
+        for (i in 0 until this.childCount) {
+            val child = this.getChildAt(i)
+            child.isEnabled = false
+        }
+    }
 }

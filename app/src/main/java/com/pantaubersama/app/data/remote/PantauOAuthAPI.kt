@@ -3,6 +3,7 @@ package com.pantaubersama.app.data.remote
 import com.pantaubersama.app.data.model.accesstoken.Token
 import com.pantaubersama.app.data.model.accesstoken.TokenResponse
 import com.pantaubersama.app.data.model.user.BadgeResponse
+import com.pantaubersama.app.data.model.user.Informant
 import com.pantaubersama.app.data.model.user.ProfileResponse
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -65,5 +66,21 @@ interface PantauOAuthAPI {
     fun updatePassword(
         @Field("password") password: String,
         @Field("password_confirmation") confirmation: String
+    ): Completable
+
+    @GET("v1/me/informants")
+    fun getDataLapor(): Single<Informant>
+
+    @FormUrlEncoded
+    @PUT("v1/informants")
+    fun updateDataLapor(
+        @Field("identity_number") idNumber: String?,
+        @Field("pob") pob: String?,
+        @Field("dob") dob: String?,
+        @Field("gender") gender: Int?,
+        @Field("occupation") occupation: String?,
+        @Field("nationality") nationality: String?,
+        @Field("address") address: String?,
+        @Field("phone_number") phoneNumber: String?
     ): Completable
 }

@@ -4,12 +4,12 @@ import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.enable
 import kotlinx.android.synthetic.main.activity_ubah_sandi.*
 import javax.inject.Inject
 
@@ -116,20 +116,12 @@ class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
     }
 
     override fun disableView() {
-        ubah_sandi_ubah.isEnabled = false
-        ubah_sandi_ubah.setBackgroundColor(ContextCompat.getColor(this@UbahSandiActivity, R.color.gray_dark_1))
-        for (i in 0 until ubah_password_container.childCount) {
-            val child = ubah_password_container.getChildAt(i)
-            child.isEnabled = false
-        }
+        ubah_sandi_ubah.enable(false)
+        ubah_password_container.enable(false)
     }
 
     override fun enableView() {
-        ubah_sandi_ubah.isEnabled = true
-        ubah_sandi_ubah.setBackgroundColor(ContextCompat.getColor(this@UbahSandiActivity, R.color.colorPrimary))
-        for (i in 0 until ubah_password_container.childCount) {
-            val child = ubah_password_container.getChildAt(i)
-            child.isEnabled = true
-        }
+        ubah_sandi_ubah.enable(true)
+        ubah_password_container.enable(true)
     }
 }

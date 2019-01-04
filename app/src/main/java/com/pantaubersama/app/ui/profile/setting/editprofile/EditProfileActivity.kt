@@ -16,7 +16,6 @@ import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
@@ -24,6 +23,7 @@ import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import okhttp3.MediaType
@@ -123,12 +123,8 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     override fun disableView() {
-        edit_profile_submit.isEnabled = false
-        edit_profile_submit.setBackgroundColor(ContextCompat.getColor(this@EditProfileActivity, R.color.gray_dark_1))
-        for (i in 0 until edit_profile_container.childCount) {
-            val child = edit_profile_container.getChildAt(i)
-            child.isEnabled = false
-        }
+        edit_profile_submit.enable(false)
+        edit_profile_container.enable(false)
     }
 
     override fun finishThisScetion() {
@@ -137,12 +133,8 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     override fun enableView() {
-        edit_profile_submit.isEnabled = true
-        edit_profile_submit.setBackgroundColor(ContextCompat.getColor(this@EditProfileActivity, R.color.colorPrimary))
-        for (i in 0 until edit_profile_container.childCount) {
-            val child = edit_profile_container.getChildAt(i)
-            child.isEnabled = true
-        }
+        edit_profile_submit.enable(true)
+        edit_profile_container.enable(true)
     }
 
     private fun showImageChooserDialog() {

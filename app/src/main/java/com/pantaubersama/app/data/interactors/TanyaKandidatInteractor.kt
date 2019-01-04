@@ -29,17 +29,14 @@ class TanyaKandidatInteractor @Inject constructor(
 
     fun getTanyaKandidatlist(
         page: Int?,
-        perPage: Int?,
-        orderBy: String?,
-        direction: String?,
-        filterBy: String?
+        perPage: Int?
     ): Single<TanyaKandidatResponse> {
         return apiWrapper.getPantauApi().getTanyaKandidatList(
             page,
             perPage,
-            orderBy,
-            direction,
-            filterBy
+            dataCache.loadTanyaKandidatOrderFilter(),
+            dataCache.loadTanyaKandidatOrderFilterDirection(),
+            dataCache.loadTanyaKandidatUserFilter()
         )
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
