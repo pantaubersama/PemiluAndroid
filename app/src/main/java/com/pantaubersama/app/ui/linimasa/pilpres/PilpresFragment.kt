@@ -116,9 +116,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
             }
 
             override fun onClickTweetContent(item: FeedsItem) {
-                ChromeTabUtil(context!!).loadUrl(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id)
-//                var openTweetinBrowser = Intent(Intent.ACTION_VIEW, Uri.parse(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id))
-//                startActivityForResult(openTweetinBrowser, 666)
+                ChromeTabUtil(context!!).forceLoadUrl(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id)
             }
 
             override fun onClickShare(item: FeedsItem) {

@@ -32,4 +32,9 @@ class ChromeTabUtil(private val context: Context) {
             customTabsIntent?.launchUrl(context, Uri.parse(StringUtil.pullUrlFromString(url)))
         }
     }
+
+    fun forceLoadUrl(url: String?) {
+        customTabsIntent?.intent?.setPackage("com.android.chrome")
+        loadUrl(url)
+    }
 }
