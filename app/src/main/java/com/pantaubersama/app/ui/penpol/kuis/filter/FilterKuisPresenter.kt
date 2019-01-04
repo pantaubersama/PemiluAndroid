@@ -25,5 +25,4 @@ class FilterKuisPresenter @Inject constructor(private val kuisInteractor: KuisIn
                 )
         )
     }
-
 }

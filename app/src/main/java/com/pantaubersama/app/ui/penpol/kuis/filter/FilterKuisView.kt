@@ -7,5 +7,4 @@ interface FilterKuisView : BaseView {
     fun onSuccessSaveKuisFilter()
     fun showSuccessSaveKuisFilterAlert()
     fun showFailedSaveKuisFilterAlert()
-
 }
