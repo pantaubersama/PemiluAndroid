@@ -15,10 +15,7 @@ class TanyaKandidatPresenter @Inject constructor(
 
     fun getTanyaKandidatList(
         page: Int?,
-        perPage: Int?,
-        orderBy: String?,
-        direction: String?,
-        filterBy: String?
+        perPage: Int?
     ) {
         if (page == 1) {
             view?.showLoading()
@@ -28,10 +25,7 @@ class TanyaKandidatPresenter @Inject constructor(
             tanyaKandidatInteractor
                 .getTanyaKandidatlist(
                     page,
-                    perPage,
-                    orderBy,
-                    direction,
-                    filterBy
+                    perPage
             )
             .subscribe(
                 {

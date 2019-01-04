@@ -50,7 +50,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         presenter
         setupBanner()
         setupTanyaKandidatList()
-        presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
+        presenter?.getTanyaKandidatList(page, perPage)
     }
 
     private fun setupBanner() {
@@ -108,7 +108,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             override fun loadMoreItem() {
                 adapter?.setLoading()
                 page += 1
-                presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
+                presenter?.getTanyaKandidatList(page, perPage)
             }
 
             override fun isDataEnd(): Boolean {
@@ -127,7 +127,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     private fun refreshItem() {
         page = 1
-        presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
+        presenter?.getTanyaKandidatList(page, perPage)
     }
 
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>) {

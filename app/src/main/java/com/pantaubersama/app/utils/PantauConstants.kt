@@ -21,6 +21,8 @@ class PantauConstants {
         val CLASS_NAME = "Question"
         object Filter {
             const val FILTER_TANYA_KANDIDAT_REQUEST_CODE = 22
+            val FILTER_ORDER_DIRECTION = "filter_order_direction"
+
             object ByVerified {
                 const val USER_VERIFIED_ALL = "user_verified_all"
                 const val USER_VERIFIED_TRUE = "user_verified_true"

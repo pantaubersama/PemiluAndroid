@@ -141,4 +141,12 @@ class DataCache(context: Context) : SharedPref(context) {
             PantauConstants.TanyaKandidat.Filter.ByVotes.LATEST
         }
     }
+
+    fun loadTanyaKandidatOrderFilterDirection(): String? {
+        if (getString(PantauConstants.TanyaKandidat.Filter.FILTER_ORDER_DIRECTION) != null) {
+            return getString(PantauConstants.TanyaKandidat.Filter.FILTER_ORDER_DIRECTION)
+        } else {
+            return "desc"
+        }
+    }
 }
