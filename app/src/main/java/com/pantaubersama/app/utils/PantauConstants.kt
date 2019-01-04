@@ -38,6 +38,7 @@ class PantauConstants {
     object Extra {
         const val SELECTED_FILTER_PILPRES = "EXTRA_SELECTED_FILTER"
         const val BANNER_INFO_TYPE = "EXTRA_BANNER_INFO_TYPE"
+        const val BANNER_INFO_DATA = "EXTRA_BANNER_INFO_DATA"
         const val TYPE_PILPRES = 0
         const val TYPE_JANPOL = 1
         const val TYPE_TANYA_KANDIDAT = 2
@@ -95,6 +96,9 @@ class PantauConstants {
         const val TYPE_BANNER = 1
         const val TYPE_FEEDS = 2
         const val TYPE_JANPOL = 3
+        const val TYPE_PERTANYAAN = 4
+        const val TYPE_KUIS_RESULT = 5
+        const val TYPE_KUIS_ITEM = 6
     }
     object Profile {
         val CAMERA_REQUEST_CODE = 111

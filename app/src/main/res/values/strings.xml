@@ -142,4 +142,6 @@
     <string name="label_kategori">Kategori</string>
     <string name="label_masukkan_nama_kategori">Masukkan Nama Kategori</string>
     <string name="txt_failed_state">Oops.. ada yg salah</string>
+    <string name="informasi_lebih_lengkap">Informasi lebih lengkap hubungi :</string>
+    <string name="url_pantau_bersama">www.pantaubersama.com</string>
 </resources>

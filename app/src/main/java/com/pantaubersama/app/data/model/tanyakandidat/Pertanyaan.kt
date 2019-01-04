@@ -2,8 +2,10 @@ package com.pantaubersama.app.data.model.tanyakandidat
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.createdat.CreatedAt
 import com.pantaubersama.app.data.model.user.User
+import com.pantaubersama.app.utils.PantauConstants
 import java.io.Serializable
 
 class Pertanyaan(
@@ -29,4 +31,6 @@ class Pertanyaan(
     @Expose
     var isliked: Boolean? = false,
     var viewType: Int? = null
-) : Serializable
+) : Serializable, ItemModel {
+    override fun getType(): Int = PantauConstants.ItemModel.TYPE_PERTANYAAN
+}

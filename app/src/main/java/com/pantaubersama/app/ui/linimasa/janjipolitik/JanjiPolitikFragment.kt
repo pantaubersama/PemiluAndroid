@@ -14,6 +14,7 @@ import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
+import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.adapter.JanjiPolitikAdapter
 import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.utils.PantauConstants
@@ -68,7 +69,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         recycler_view.adapter = adapter
         adapter.listener = object : JanjiPolitikAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                startActivity(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_JANPOL, bannerInfo))
             }
 
             override fun onClickJanPolContent(item: JanjiPolitik) {
@@ -82,6 +83,10 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             override fun onClickShare(item: JanjiPolitik) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
+        }
+        swipe_refresh.setOnRefreshListener {
+            getJanjiPolitikList()
+            swipe_refresh.isRefreshing = false
         }
         getJanjiPolitikList()
     }

@@ -66,6 +66,6 @@ class OptionDialog<T>(context: Context, item: T, @LayoutRes optionLayout: Int) {
     }
 
     interface DialogListener {
-        fun onClick(position: Int)
+        fun onClick(viewId: Int)
     }
 }

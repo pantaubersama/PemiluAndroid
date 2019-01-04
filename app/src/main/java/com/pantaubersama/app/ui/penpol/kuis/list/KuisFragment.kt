@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
+import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.KuisInteractor
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.kuis.KuisListItem
 import com.pantaubersama.app.data.model.kuis.KuisState
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
@@ -18,9 +21,7 @@ import com.pantaubersama.app.utils.LineDividerItemDecoration
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.dip
-import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_kuis.*
-import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject
 
@@ -28,7 +29,10 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     val TAG = KuisFragment::class.java.simpleName
 
     @Inject
-    lateinit var interactor: KuisInteractor
+    lateinit var kuisInteractor: KuisInteractor
+
+    @Inject
+    lateinit var bannerInteractor: BannerInfoInteractor
 
     private lateinit var adapter: KuisListAdapter
 
@@ -38,13 +42,18 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
     }
 
-    override fun initPresenter(): KuisPresenter? = KuisPresenter(interactor)
+    override fun initPresenter(): KuisPresenter? = KuisPresenter(kuisInteractor, bannerInteractor)
 
     override fun initView(view: View) {
-        setupBanner()
-
         adapter = KuisListAdapter()
         adapter.listener = object : KuisListAdapter.AdapterListener {
+            override fun onClickBanner(item: BannerInfo) {
+                startActivityForResult(
+                    BannerInfoActivity.setIntent(
+                        context!!, PantauConstants.Extra.TYPE_KUIS, item
+                    ), PantauConstants.RequestCode.BANNER_KUIS)
+            }
+
             override fun onClickIkuti(item: KuisListItem.Item) {
                 val intent = Intent(context, IkutiKuisActivity::class.java)
                 intent.putExtra(PantauConstants.Kuis.KUIS_ID, item.id)
@@ -69,28 +78,18 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
 
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
+            getDataList()
         }
-        lottie_loading.visibleIf(false)
+        getDataList()
+    }
 
+    private fun getDataList() {
+        presenter?.getList()
+    }
+
+    override fun showBanner(bannerInfo: BannerInfo) {
+        adapter.addBanner(bannerInfo)
         setupData()
-    }
-
-    private fun setupBanner() {
-        presenter?.isBannerShown()
-    }
-
-    override fun showBanner() {
-        layout_banner_kuis.visibility = View.VISIBLE
-        tv_banner_text.text = getString(R.string.kuis_banner_text)
-        iv_banner_image.setImageResource(R.drawable.ic_banner_kuis)
-
-        fl_banner.setOnClickListener {
-            val intent = BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_KUIS)
-            startActivityForResult(intent, PantauConstants.RequestCode.BANNER_KUIS)
-        }
-        iv_banner_close.setOnClickListener {
-            layout_banner_kuis.visibility = View.GONE
-        }
     }
 
     override fun hideBanner() {
@@ -120,17 +119,40 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     }
 
     private fun setupData() {
-        adapter.data = listOf(
+        dismissLoading()
+        val dummyData: MutableList<ItemModel> = mutableListOf(
             KuisListItem.Result(70, "Jokowi - Makruf"),
             KuisListItem.Item(1, 1, 7, KuisState.NOT_TAKEN),
             KuisListItem.Item(2, 2, 7, KuisState.COMPLETED),
             KuisListItem.Item(3, 3, 7, KuisState.INCOMPLETE)
         )
+
+        if (adapter.data.size != 0 && adapter.data[0] is BannerInfo) {
+            val bannerInfo = adapter.data[0] as BannerInfo
+            adapter.data.clear()
+            adapter.addBanner(bannerInfo)
+            adapter.data.addAll(dummyData)
+        } else {
+            adapter.data = dummyData
+        }
+        adapter.notifyDataSetChanged()
+        recycler_view.visibility = View.VISIBLE
     }
 
-    override fun showLoading() {}
-    override fun dismissLoading() {}
-    override fun showError(throwable: Throwable) {}
+    override fun showLoading() {
+        view_empty_state.visibility = View.GONE
+        view_fail_state.visibility = View.GONE
+        recycler_view.visibility = View.INVISIBLE
+        lottie_loading.visibility = View.VISIBLE
+    }
+    override fun dismissLoading() {
+        recycler_view.visibility = View.GONE
+        lottie_loading.visibility = View.GONE
+    }
+
+    override fun showFailedGetData() {
+        view_fail_state.visibility = View.VISIBLE
+    }
 
     companion object {
         fun newInstance(): KuisFragment {

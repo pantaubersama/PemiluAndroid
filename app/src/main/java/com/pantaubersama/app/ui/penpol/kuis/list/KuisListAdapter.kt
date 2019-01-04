@@ -4,17 +4,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.kuis.KuisListItem
 import com.pantaubersama.app.data.model.kuis.KuisState
 import com.pantaubersama.app.utils.extensions.inflate
+import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.setBackgroundTint
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_kuis.*
 import kotlinx.android.synthetic.main.item_kuis_result.*
 
 class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var data: List<KuisListItem> = emptyList()
+    var data: MutableList<ItemModel> = ArrayList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -25,17 +29,25 @@ class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = data.size
 
     override fun getItemViewType(position: Int): Int {
-        return if (data[position] is KuisListItem.Result) TYPE_RESULT else TYPE_ITEM
+        return when (data[position]) {
+            is KuisListItem.Result -> TYPE_RESULT
+            is BannerInfo -> TYPE_BANNER
+            else -> TYPE_ITEM
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == TYPE_RESULT) ResultViewHolder(parent.inflate(R.layout.item_kuis_result))
-        else ItemViewHolder(parent.inflate(R.layout.item_kuis))
+        return when (viewType) {
+            TYPE_RESULT -> ResultViewHolder(parent.inflate(R.layout.item_kuis_result))
+            TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
+            else -> ItemViewHolder(parent.inflate(R.layout.item_kuis))
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as? ItemViewHolder)?.bind(data[position] as KuisListItem.Item)
         (holder as? ResultViewHolder)?.bind(data[position] as KuisListItem.Result)
+        (holder as? BannerViewHolder)?.bind(data[position] as BannerInfo)
     }
 
     inner class ItemViewHolder(override val containerView: View)
@@ -72,12 +84,37 @@ class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
+    inner class BannerViewHolder(
+        override val containerView: View?
+    ) : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
+        fun bind(item: BannerInfo) {
+            tv_banner_text.text = item.body
+            iv_banner_image.loadUrl(item.headerImage?.url)
+            rl_banner_container.setOnClickListener { listener?.onClickBanner(item) }
+            iv_banner_close.setOnClickListener { removeBanner() }
+        }
+    }
+
+    fun addBanner(bannerInfo: BannerInfo) {
+        data.add(0, bannerInfo)
+        notifyItemInserted(0)
+    }
+
+    fun removeBanner() {
+        if (data[0] is BannerInfo) {
+            data.removeAt(0)
+            notifyItemRemoved(0)
+        }
+    }
+
     companion object {
         private const val TYPE_RESULT = 0
         private const val TYPE_ITEM = 1
+        private const val TYPE_BANNER = 3
     }
 
     interface AdapterListener {
+        fun onClickBanner(item: BannerInfo)
         fun onClickIkuti(item: KuisListItem.Item)
         fun onClickLanjut(item: KuisListItem.Item)
         fun onClickHasil(item: KuisListItem.Item)

@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatAdapter
 import com.pantaubersama.app.utils.OnScrollListener
@@ -37,8 +39,16 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     }
 
     private fun setupTanyaKandidatList() {
-        adapter = TanyaKandidatAdapter("")
+        adapter = TanyaKandidatAdapter()
         adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
+            override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onClickBanner(bannerInfo: BannerInfo) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
             override fun onClickShare(item: Pertanyaan?) {
                 ShareUtil.shareItem(context!!, item)
             }
@@ -79,7 +89,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
 
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>?) {
         recycler_view?.visibility = View.VISIBLE
-        adapter.setData(pertanyaanList!!)
+        adapter.setDatas(pertanyaanList!! as MutableList<ItemModel>)
     }
 
     override fun showEmptyDataAlert() {
