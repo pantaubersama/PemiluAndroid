@@ -9,6 +9,7 @@ import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikA
 import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.login.LoginActivity
+import com.pantaubersama.app.ui.penpol.kuis.filter.FilterKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
@@ -46,4 +47,5 @@ interface ActivityComponent {
     fun inject(badgeActivity: BadgeActivity)
     fun inject(ubahSandiActivity: UbahSandiActivity)
     fun inject(ubahDataLaporActivity: UbahDataLaporActivity)
+    fun inject(filterKuisActivity: FilterKuisActivity)
 }

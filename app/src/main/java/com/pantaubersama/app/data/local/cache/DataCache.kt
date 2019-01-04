@@ -149,4 +149,16 @@ class DataCache(context: Context) : SharedPref(context) {
             return "desc"
         }
     }
+
+    fun getKuisFilter(): String? {
+        if (getString(PantauConstants.Kuis.KUIS_FILTER) != null) {
+            return getString(PantauConstants.Kuis.KUIS_FILTER)
+        } else {
+            return PantauConstants.Kuis.Filter.KUIS_ALL
+        }
+    }
+
+    fun saveKuisFilter(kuisFilter: String) {
+        putString(PantauConstants.Kuis.KUIS_FILTER, kuisFilter)
+    }
 }

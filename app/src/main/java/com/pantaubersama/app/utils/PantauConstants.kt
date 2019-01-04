@@ -75,6 +75,14 @@ class PantauConstants {
     object Kuis {
         const val KUIS_ID = "kuis_id"
         const val KUIS_NUMBER = "kuis_number"
+        val KUIS_FILTER = "kuis_filter"
+
+        object Filter {
+            const val KUIS_ALL = "all"
+            const val BELUM_DIIKUTI = "not_participating"
+            const val BELUM_SELESAI = "in_progress"
+            const val SELESAI = "finished"
+        }
     }
 
     object Camera {

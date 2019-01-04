@@ -123,5 +123,8 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
         if (tanyaKandidatFragment != null) {
             tanyaKandidatFragment?.onActivityResult(requestCode, resultCode, data)
         }
+        if (kuisFragment != null) {
+            kuisFragment?.onActivityResult(requestCode, resultCode, data)
+        }
     }
 }
