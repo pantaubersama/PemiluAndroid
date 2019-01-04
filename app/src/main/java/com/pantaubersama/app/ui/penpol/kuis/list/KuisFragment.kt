@@ -21,7 +21,6 @@ import com.pantaubersama.app.utils.LineDividerItemDecoration
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.dip
-import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_kuis.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject

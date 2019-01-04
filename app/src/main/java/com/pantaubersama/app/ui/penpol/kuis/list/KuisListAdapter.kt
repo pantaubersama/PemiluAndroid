@@ -42,7 +42,6 @@ class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
             else -> ItemViewHolder(parent.inflate(R.layout.item_kuis))
         }
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
