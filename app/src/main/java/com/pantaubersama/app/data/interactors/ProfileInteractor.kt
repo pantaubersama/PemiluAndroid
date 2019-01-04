@@ -2,6 +2,7 @@ package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.user.Badge
+import com.pantaubersama.app.data.model.user.Informant
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
@@ -96,5 +97,54 @@ class ProfileInteractor @Inject constructor(
             .updatePassword(password, confirmation)
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getDataLapor(): Single<Informant> {
+//        return apiWrapper
+//            .getPantauOAuthApi()
+//            .getDataLapor()
+//            .subscribeOn(rxSchedulers.io())
+//            .observeOn(rxSchedulers.mainThread())
+        return Single.fromCallable {
+            dataCache.loadUserProfile().informant
+        }
+    }
+
+    fun updateDataLapor(
+        idNumber: String?,
+        pob: String?,
+        dob: String?,
+        gender: Int?,
+        occupation: String?,
+        nationality: String?,
+        address: String?,
+        phoneNumber: String?
+    ): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .updateDataLapor(
+                idNumber,
+                pob,
+                dob,
+                gender,
+                occupation,
+                nationality,
+                address,
+                phoneNumber
+            )
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnComplete {
+                val newProfile = dataCache.loadUserProfile()
+                newProfile.informant.identityNumber = idNumber
+                newProfile.informant.pob = pob
+                newProfile.informant.dob = dob
+                newProfile.informant.gender = gender
+                newProfile.informant.occupation = occupation
+                newProfile.informant.nationality = nationality
+                newProfile.informant.address = address
+                newProfile.informant.phoneNumber = phoneNumber
+                dataCache.saveUserProfile(newProfile)
+            }
     }
 }

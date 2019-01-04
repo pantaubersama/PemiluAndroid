@@ -40,14 +40,14 @@ data class Profile(
 )
 
 data class Informant(
-    @SerializedName("user_id") val userId: String,
-    @SerializedName("identity_number") val identityNumber: String?,
-    @SerializedName("pob") val pob: String?,
-    @SerializedName("dob") val dob: String?,
-    @SerializedName("gender") val gender: Any?,
-    @SerializedName("gender_str") val genderStr: String?,
-    @SerializedName("occupation") val occupation: String?,
-    @SerializedName("nationality") val nationality: String?,
-    @SerializedName("address") val address: String?,
-    @SerializedName("phone_number") val phoneNumber: String?
+    @SerializedName("user_id") var userId: String,
+    @SerializedName("identity_number") var identityNumber: String?,
+    @SerializedName("pob") var pob: String?,
+    @SerializedName("dob") var dob: String?,
+    @SerializedName("gender") var gender: Int?,
+    @SerializedName("gender_str") var genderStr: String?,
+    @SerializedName("occupation") var occupation: String?,
+    @SerializedName("nationality") var nationality: String?,
+    @SerializedName("address") var address: String?,
+    @SerializedName("phone_number") var phoneNumber: String?
 )

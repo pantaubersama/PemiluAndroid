@@ -183,10 +183,9 @@ class TanyaKandidatAdapter(private val userId: String?) : RecyclerView.Adapter<R
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (data.get(position).viewType != null) {
+        return if (data[position].viewType != null) {
             data[position].viewType!!
-        }
-        else {
+        } else {
             VIEW_TYPE_ITEM
         }
     }
