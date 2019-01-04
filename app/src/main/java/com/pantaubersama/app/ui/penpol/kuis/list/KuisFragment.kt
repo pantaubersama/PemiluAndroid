@@ -143,6 +143,9 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 PantauConstants.RequestCode.BANNER_KUIS -> hideBanner()
+                PantauConstants.RequestCode.FILTER_KUIS -> {
+                    // refresh kuis
+                }
             }
         }
     }
