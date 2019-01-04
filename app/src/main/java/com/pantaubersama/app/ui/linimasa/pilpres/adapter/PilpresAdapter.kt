@@ -1,155 +1,99 @@
 package com.pantaubersama.app.ui.linimasa.pilpres.adapter
 
 import android.annotation.SuppressLint
-import android.app.Dialog
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.net.Uri
-import android.view.Gravity
-import android.view.KeyEvent
 import android.view.View
-import android.view.WindowManager
-import com.bumptech.glide.Glide
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.adapter.BaseAdapter
-import com.pantaubersama.app.base.listener.OnItemClickListener
-import com.pantaubersama.app.base.listener.OnItemLongClickListener
-import com.pantaubersama.app.base.viewholder.BaseViewHolder
+import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.LoadingModel
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
-import com.pantaubersama.app.utils.PantauConstants
-import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.inflate
+import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_pilpres_tweet.*
-import kotlinx.android.synthetic.main.layout_option_dialog_pilpres_tweet.*
 
-/**
- * @author edityomurti on 19/12/2018 14:17
- */
-class PilpresAdapter(context: Context, isTwitterAppInstalled: Boolean) : BaseAdapter<FeedsItem, PilpresAdapter.PilpresViewHolder>(context) {
-
-//    constructor(context: Context, isTwitterAppInstalled: Boolean): super(conte)
-    private var isTwitterAppInstalled: Boolean = isTwitterAppInstalled
+class PilpresAdapter : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewHolder>() {
 
     var listener: PilpresAdapter.AdapterListener? = null
-    var VIEW_TYPE_LOADING = 0
-    var VIEW_TYPE_ITEM = 1
 
-    open inner class PilpresViewHolder(
-        override val containerView: View?,
-        itemClickListener: OnItemClickListener?,
-        itemLongClickListener: OnItemLongClickListener?
-    ) : BaseViewHolder<FeedsItem>(
-        containerView!!,
-        itemClickListener,
-        itemLongClickListener),
-        LayoutContainer {
+    override fun getItemViewType(position: Int): Int {
+        return when (data[position]) {
+            is BannerInfo -> TYPE_BANNER
+            is LoadingModel -> TYPE_LOADING
+            else -> TYPE_ITEM
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
+            TYPE_ITEM -> FeedViewHolder(parent.inflate(R.layout.item_pilpres_tweet))
+            else -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        (holder as? BannerViewHolder)?.bind(data[position] as BannerInfo)
+        (holder as? FeedViewHolder)?.bind(data[position] as FeedsItem)
+        (holder as? LoadingViewHolder)?.bind()
+    }
+
+    inner class BannerViewHolder(override val containerView: View)
+        : RecyclerView.ViewHolder(containerView), LayoutContainer {
+        fun bind(item: BannerInfo) {
+            tv_banner_text.text = item.body
+            iv_banner_image.loadUrl(item.headerImage?.url)
+            rl_banner_container.setOnClickListener { listener?.onClickBanner(item) }
+            iv_banner_close.setOnClickListener { removeBanner() }
+        }
+    }
+
+    inner class FeedViewHolder(override val containerView: View)
+        : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         @SuppressLint("SetTextI18n")
-        override fun bind(item: FeedsItem) {
-            Glide.with(itemView.context).load(item.account?.profileImageUrl).into(iv_tweet_avatar)
+        fun bind(item: FeedsItem) {
+            iv_tweet_avatar.loadUrl(item.account?.profileImageUrl, R.drawable.ic_avatar_placeholder)
             tv_tweet_name.text = item.account?.name
-            tv_tweet_username.text = item.account?.username
-            tv_tweet_content.text = "@" + item.source?.text
+            tv_tweet_username.text = "@" + item.account?.username
+            tv_tweet_content.text = item.source?.text
+            iv_team_avatar.loadUrl(item.team?.avatar, R.drawable.ic_avatar_placeholder)
             tv_team_name.text = itemView.context.getString(R.string.txt_disematkan_dari) + " " + item.team?.title
-            rl_item_pilpres_tweet.setOnClickListener {
-                listener?.onClickTweetContent(item)
-            }
-            iv_option.setOnClickListener {
-                showOptionDialog(itemView, item, isTwitterAppInstalled)
-            }
+            rl_item_pilpres_tweet.setOnClickListener { listener?.onClickTweetContent(item) }
+            iv_tweet_option.setOnClickListener { listener?.onClickTweetOption(item) }
         }
     }
 
     inner class LoadingViewHolder(
-        override val containerView: View?,
-        itemClickListener: OnItemClickListener?,
-        itemLongClickListener: OnItemLongClickListener?
-    ) : PilpresViewHolder(containerView, itemClickListener, itemLongClickListener) {
-        override fun bind(item: FeedsItem) {
-            // do nothing
+        override val containerView: View
+    ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+        fun bind() {}
+    }
+
+    fun addBanner(bannerInfo: BannerInfo) {
+        addItem(bannerInfo, 0)
+    }
+
+    fun removeBanner() {
+        if (data[0] is BannerInfo) {
+            deleteItem(0)
         }
     }
 
-    override fun initViewHolder(view: View, viewType: Int): PilpresViewHolder {
-        return when (viewType) {
-            VIEW_TYPE_LOADING -> LoadingViewHolder(view, itemClickListener, itemLongClickListener)
-            else -> PilpresViewHolder(view, itemClickListener, itemLongClickListener)
-        }
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return when (data[position].id) {
-            VIEW_TYPE_LOADING.toString() -> VIEW_TYPE_LOADING
-            else -> VIEW_TYPE_ITEM
-        }
-    }
-
-    override fun setItemView(viewType: Int): Int {
-        return when (viewType) {
-            VIEW_TYPE_LOADING -> R.layout.layout_loading
-            else -> R.layout.item_pilpres_tweet
-        }
+    companion object {
+        private const val TYPE_BANNER = 0
+        private const val TYPE_ITEM = 1
+        private const val TYPE_LOADING = 2
     }
 
     interface AdapterListener {
+        fun onClickBanner(bannerInfo: BannerInfo)
         fun onClickTweetContent(item: FeedsItem)
+        fun onClickTweetOption(item: FeedsItem)
         fun onClickShare(item: FeedsItem)
     }
-
-    private fun showOptionDialog(itemView: View?, item: FeedsItem, isTwitterAppInstalled: Boolean) {
-        val dialog = Dialog(itemView?.context!!)
-        dialog.setContentView(R.layout.layout_option_dialog_pilpres_tweet)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setOnKeyListener { dialogInterface, i, keyEvent ->
-            if (i == KeyEvent.KEYCODE_BACK) {
-                dialog.dismiss()
-                true
-            } else {
-                false
-            }
-        }
-        dialog.setCanceledOnTouchOutside(true)
-        val lp = WindowManager.LayoutParams()
-        val window = dialog.window
-        lp.copyFrom(window?.attributes)
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        window?.attributes = lp
-        lp.gravity = Gravity.BOTTOM
-        window?.attributes = lp
-        dialog.action_copy_url?.setOnClickListener {
-            val clipboard = itemView.context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, "tweet id : ${item.id}")
-            clipboard.primaryClip = clip
-            ToastUtil.show(itemView.context, "tweet copied to clipboard")
-            dialog.dismiss()
-        }
-        dialog.action_share?.setOnClickListener {
-            listener?.onClickShare(item)
-            dialog.dismiss()
-        }
-        if (isTwitterAppInstalled) {
-            dialog.action_open_in_app?.setOnClickListener {
-                //            ChromeTabUtil(itemView.context).loadUrl(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id)
-                var openInTwitterApp = Intent(Intent.ACTION_VIEW, Uri.parse("twitter://status?status_id=${item.source?.id}"))
-                itemView.context.startActivity(openInTwitterApp)
-            }
-        } else {
-            dialog.action_open_in_app?.visibility = View.GONE
-        }
-
-        dialog.show()
-    }
-
-    fun setLoading() {
-        setLoading(FeedsItem(id = VIEW_TYPE_LOADING.toString()))
-    }
-
-//    fun setLoaded() {
-//
-//    }
 }

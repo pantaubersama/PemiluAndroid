@@ -1,19 +1,13 @@
 package com.pantaubersama.app.ui.profile.linimasa
 
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
-import com.pantaubersama.app.ui.linimasa.janjipolitik.adapter.JanjiPolitikAdapter
-import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import timber.log.Timber
 
 class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>(), ProfileJanjiPolitikView {
-
-    private lateinit var adapter: JanjiPolitikAdapter
 
     companion object {
         fun newInstance(): ProfileJanjiPolitikFragment {
@@ -31,14 +25,14 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
     }
 
     private fun setupJanPolList() {
-        adapter = JanjiPolitikAdapter(context!!)
-        adapter.listener = object : JanjiPolitikAdapter.AdapterListener {
-            override fun onClickContent(item: JanjiPolitik) {
-                startActivity(DetailJanjiPolitikActivity.setIntent(context!!, item.id!!))
-            }
-        }
-        recycler_view?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        recycler_view?.adapter = adapter
+//        adapter = JanjiPolitikAdapterDEL(context!!)
+//        adapter.listener = object : JanjiPolitikAdapterDEL.AdapterListener {
+//            override fun onClickContent(item: JanjiPolitik) {
+//                startActivity(DetailJanjiPolitikActivity.setIntent(context!!, item.id!!))
+//            }
+//        }
+//        recycler_view?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+//        recycler_view?.adapter = adapter
     }
 
     override fun setLayout(): Int {
@@ -62,7 +56,7 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
             view_empty_state.visibility = View.VISIBLE
         } else {
             recycler_view.visibility = View.VISIBLE
-            adapter.replaceData(janpolList)
+//            adapter.replaceData(janpolList)
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.remote
 
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfoResponse
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfosResponse
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import io.reactivex.Completable
@@ -12,7 +13,12 @@ import retrofit2.http.* // ktlint-disable
  */
 interface PantauAPI {
     @GET("linimasa/v1/banner_infos")
-    fun getBannerInfos(): Single<BannerInfoResponse>
+    fun getBannerInfos(): Single<BannerInfosResponse>
+
+    @GET("linimasa/v1/banner_infos/show")
+    fun getBannerInfo(
+        @Query("page_name") pageName: String?
+    ): Single<BannerInfoResponse>
 
     @GET("linimasa/v1/feeds/pilpres")
     fun getFeeds(

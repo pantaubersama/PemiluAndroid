@@ -128,7 +128,7 @@
 
                     </LinearLayout>
                     <ImageView
-                        android:id="@+id/iv_option"
+                        android:id="@+id/iv_tweet_option"
                         android:layout_width="30dp"
                         android:layout_height="24dp"
                         android:background="?selectableItemBackgroundBorderless"
@@ -140,8 +140,8 @@
                     android:id="@+id/tv_tweet_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:lines="3"
-                    android:maxLines="4"
+                    android:minLines="2"
+                    android:maxLength="280"
                     android:textSize="12sp"
                     android:textColor="@color/black_1"
                     android:ellipsize="end"

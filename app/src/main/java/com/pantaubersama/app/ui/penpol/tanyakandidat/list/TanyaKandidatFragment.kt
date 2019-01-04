@@ -21,7 +21,7 @@ import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
-import kotlinx.android.synthetic.main.layout_banner_container.*
+import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject
 
@@ -164,11 +164,11 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     override fun showLoading() {
         view_empty_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
-        progress_bar.visibility = View.VISIBLE
+        lottie_loading.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
-        progress_bar.visibility = View.GONE
+        lottie_loading.visibility = View.GONE
     }
 
     override fun showFailedGetDataAlert() {

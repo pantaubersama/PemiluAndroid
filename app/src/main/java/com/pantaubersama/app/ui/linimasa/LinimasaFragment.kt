@@ -62,6 +62,7 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
 
         tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(p0: TabLayout.Tab?) {
+                pilpresFragment.scrollToTop(true)
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {

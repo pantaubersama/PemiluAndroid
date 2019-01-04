@@ -9,14 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
+import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
-import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.adapter.JanjiPolitikAdapter
 import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.fragment_janji_politik.*
-import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject
 
@@ -24,7 +25,10 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     val TAG = JanjiPolitikFragment::class.java.simpleName
 
     @Inject
-    lateinit var interactor: JanjiPolitikInteractor
+    lateinit var janpolInteractor: JanjiPolitikInteractor
+
+    @Inject
+    lateinit var bannerInteractor: BannerInfoInteractor
 
     private lateinit var adapter: JanjiPolitikAdapter
 
@@ -42,27 +46,15 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     override fun initPresenter(): JanjiPolitikPresenter? {
-        return JanjiPolitikPresenter(interactor)
+        return JanjiPolitikPresenter(janpolInteractor, bannerInteractor)
     }
 
     override fun initView(view: View) {
-        setupBanner()
         setupRecyclerJanpol()
     }
 
-    private fun setupBanner() {
-        presenter?.isBannerShown()
-    }
-    override fun showBanner() {
-        layout_banner_janpol.visibility = View.VISIBLE
-        tv_banner_text.text = getString(R.string.janpol_banner_text)
-        iv_banner_image.setImageResource(R.drawable.ic_banner_janpol)
-        fl_banner.setOnClickListener {
-            startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_JANPOL), PantauConstants.RequestCode.BANNER_JANPOL)
-        }
-        iv_banner_close.setOnClickListener {
-            layout_banner_janpol.visibility = View.GONE
-        }
+    override fun showBanner(bannerInfo: BannerInfo) {
+        adapter.addBanner(bannerInfo)
     }
 
     override fun hideBanner() {
@@ -71,27 +63,42 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
     private fun setupRecyclerJanpol() {
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        adapter = JanjiPolitikAdapter(context!!)
+        adapter = JanjiPolitikAdapter()
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
         adapter.listener = object : JanjiPolitikAdapter.AdapterListener {
-            override fun onClickContent(item: JanjiPolitik) {
+            override fun onClickBanner(bannerInfo: BannerInfo) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onClickJanPolContent(item: JanjiPolitik) {
                 startActivity(DetailJanjiPolitikActivity.setIntent(context!!, item.id!!))
+            }
+
+            override fun onClickJanpolOption(item: JanjiPolitik) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onClickShare(item: JanjiPolitik) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         }
         getJanjiPolitikList()
     }
 
     private fun getJanjiPolitikList() {
-        presenter?.getJanjiPolitikList()
+        presenter?.getList()
     }
 
     override fun showJanjiPolitikList(janjiPolitikList: MutableList<JanjiPolitik>) {
-        if (janjiPolitikList.isEmpty()) {
-            view_empty_state.visibility = View.VISIBLE
+        recycler_view.visibility = View.VISIBLE
+        if (adapter.itemCount != 0 && adapter.get<ItemModel>(0) is BannerInfo) {
+            val bannerInfo = adapter.get<BannerInfo>(0)
+            adapter.clear()
+            adapter.addBanner(bannerInfo)
+            adapter.addData(janjiPolitikList as MutableList<ItemModel>)
         } else {
-            recycler_view.visibility = View.VISIBLE
-            adapter.replaceData(janjiPolitikList)
+            adapter.setDatas(janjiPolitikList as MutableList<ItemModel>)
         }
     }
 
@@ -102,12 +109,12 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     override fun showLoading() {
         view_empty_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
-        progress_bar.visibility = View.VISIBLE
+        lottie_loading.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
         recycler_view.visibility = View.GONE
-        progress_bar.visibility = View.GONE
+        lottie_loading.visibility = View.GONE
     }
 
     override fun showError(throwable: Throwable) {

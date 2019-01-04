@@ -7,19 +7,16 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.pantaubersama.app.base.listener.OnItemClickListener
-import com.pantaubersama.app.base.listener.OnItemLongClickListener
 import com.pantaubersama.app.base.viewholder.BaseViewHolder
 import timber.log.Timber
 
 /**
  * @author edityomurti on 16/12/2018 02:12
  */
-abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : RecyclerView.Adapter<V>() {
+@Deprecated("Changed to BaseRecyclerAdapter")
+abstract class BaseAdapterDEL<T, V : BaseViewHolder<T>>(context: Context) : RecyclerView.Adapter<V>() {
     protected var data = ArrayList<T>()
     protected var context: Context? = null
-    protected var itemClickListener: OnItemClickListener? = null
-    protected var itemLongClickListener: OnItemLongClickListener? = null
 
     private var lastVisibleItem: Int? = null
     private var totalItemCount: Int? = null
@@ -29,14 +26,6 @@ abstract class BaseAdapter<T, V : BaseViewHolder<T>>(context: Context) : Recycle
     private var isLoadingMore = false
     private var isDataEnd = false
     private var loadMoreListener: OnLoadMoreListener? = null
-
-    fun setOnItemClickListener(itemClickListener: OnItemClickListener) {
-        this.itemClickListener = itemClickListener
-    }
-
-    fun setOnItemLongClickListener(itemLongClickListener: OnItemLongClickListener) {
-        this.itemLongClickListener = itemLongClickListener
-    }
 
     fun addSupportLoadMore(recyclerView: RecyclerView, loadMoreListener: OnLoadMoreListener) {
         var layoutManager = recyclerView.layoutManager

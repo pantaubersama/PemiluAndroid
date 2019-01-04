@@ -1,7 +1,8 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
-import com.pantaubersama.app.data.model.bannerinfo.BannerInfoResponse
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfosResponse
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.RxSchedulers
@@ -16,9 +17,16 @@ class BannerInfoInteractor @Inject constructor(
     private val rxSchedulers: RxSchedulers?,
     private val dataCache: DataCache?
 ) {
-    fun getBannerInfo(): Single<BannerInfoResponse>? {
+    fun getBannerInfoAll(): Single<BannerInfosResponse>? {
         return apiWrapper?.getPantauApi()?.getBannerInfos()
             ?.subscribeOn(rxSchedulers?.io())
+            ?.observeOn(rxSchedulers?.mainThread())
+    }
+
+    fun getBannerInfo(pageName: String): Single<BannerInfo>? {
+        return apiWrapper?.getPantauApi()?.getBannerInfo(pageName)
+            ?.subscribeOn(rxSchedulers?.io())
+            ?.map { it.data.bannerInfo }
             ?.observeOn(rxSchedulers?.mainThread())
     }
 
@@ -29,5 +37,9 @@ class BannerInfoInteractor @Inject constructor(
             PantauConstants.BANNER_TANYA -> dataCache?.setBannerTanyaKandidatOpened(true)
             PantauConstants.BANNER_KUIS -> dataCache?.setBannerKuisOpened(true)
         }
+    }
+
+    fun isBannerPilpresShown(): Boolean? {
+        return !dataCache?.isBannerPilpresOpened()!!
     }
 }

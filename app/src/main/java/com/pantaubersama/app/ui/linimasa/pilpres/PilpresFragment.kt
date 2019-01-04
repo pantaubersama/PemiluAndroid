@@ -1,8 +1,12 @@
 package com.pantaubersama.app.ui.linimasa.pilpres
 
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,17 +14,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.adapter.BaseAdapter
-import com.pantaubersama.app.base.listener.OnItemClickListener
+import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.PilpresInteractor
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.adapter.PilpresAdapter
+import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
-import kotlinx.android.synthetic.main.fragment_pilpres.*
-import kotlinx.android.synthetic.main.layout_banner_container.*
+import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -29,7 +35,10 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     val TAG = PilpresFragment::class.java.simpleName
 
     @Inject
-    lateinit var interactor: PilpresInteractor
+    lateinit var pilpresInteractor: PilpresInteractor
+
+    @Inject
+    lateinit var bannerInfoInteractor: BannerInfoInteractor
 
 //    private var page = 1
     private var perPage = 20
@@ -53,44 +62,60 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun initPresenter(): PilpresPresenter? {
-        return PilpresPresenter(interactor)
+        return PilpresPresenter(pilpresInteractor, bannerInfoInteractor)
     }
 
     override fun initView(view: View) {
-        setupBanner()
         setupRecyclerPilpres()
     }
 
-    private fun setupBanner() {
-        presenter?.isBannerShown()
-    }
-
-    override fun showBanner() {
-        layout_banner_pilpres.visibility = View.VISIBLE
-        tv_banner_text.text = getString(R.string.pilpres_banner_text)
-        iv_banner_image.setImageResource(R.drawable.ic_banner_pilpres)
-        fl_banner.setOnClickListener {
-            startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES), PantauConstants.RequestCode.BANNER_PILPRES)
-        }
-        iv_banner_close.setOnClickListener {
-            layout_banner_pilpres.visibility = View.GONE
-        }
+    override fun showBanner(bannerInfo: BannerInfo) {
+        adapter.addBanner(bannerInfo)
     }
 
     override fun hideBanner() {
-        layout_banner_pilpres.visibility = View.GONE
+        adapter.removeBanner()
     }
 
-    private fun setupRecyclerPilpres() {
+    fun setupRecyclerPilpres() {
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        adapter = PilpresAdapter(context!!, isTwitterAppInstalled())
+        adapter = PilpresAdapter()
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
-        adapter.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClick(view: View, position: Int) {
-            }
-        })
         adapter.listener = object : PilpresAdapter.AdapterListener {
+            override fun onClickBanner(bannerInfo: BannerInfo) {
+                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES), PantauConstants.RequestCode.BANNER_PILPRES)
+            }
+
+            override fun onClickTweetOption(item: FeedsItem) {
+                val dialog = OptionDialog(context!!, item, R.layout.layout_option_dialog_pilpres_tweet)
+                if (!isTwitterAppInstalled()) {
+                    dialog.removeItem(R.id.action_open_in_app)
+                }
+                dialog.show()
+                dialog.listener = object : OptionDialog.DialogListener {
+                    override fun onClick(position: Int) {
+                        when (position) {
+                            R.id.action_copy_url -> {
+                                val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, "tweet id : ${item.id}")
+                                clipboard.primaryClip = clip
+                                ToastUtil.show(context!!, "tweet copied to clipboard")
+                                dialog.dismiss()
+                            }
+                            R.id.action_share -> {
+                                ShareUtil.shareItem(context!!, item)
+                                dialog.dismiss()
+                            }
+                            R.id.action_open_in_app -> {
+                                val openInTwitterApp = Intent(Intent.ACTION_VIEW, Uri.parse("twitter://status?status_id=${item.source?.id}"))
+                                context!!.startActivity(openInTwitterApp)
+                            }
+                        }
+                    }
+                }
+            }
+
             override fun onClickTweetContent(item: FeedsItem) {
                 ChromeTabUtil(context!!).loadUrl(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id)
 //                var openTweetinBrowser = Intent(Intent.ACTION_VIEW, Uri.parse(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id))
@@ -101,13 +126,13 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
                 shareTweet(item)
             }
         }
-        adapter.addSupportLoadMore(recycler_view, object : BaseAdapter.OnLoadMoreListener {
+        adapter.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
             override fun loadMore(page: Int) {
 //                this@PilpresFragment.page = page
                 adapter.setLoading()
                 presenter?.getFeeds(page, perPage)
             }
-        })
+        }, 10)
 
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
@@ -118,12 +143,20 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     fun getFeedsData() {
         adapter.setDataEnd(false)
-        presenter?.getFeeds(1, perPage)
+        presenter?.getList()
     }
 
     override fun showFeeds(feedsList: MutableList<FeedsItem>) {
         recycler_view.visibility = View.VISIBLE
-        adapter.replaceData(feedsList)
+        if (adapter.itemCount != 0 && adapter.get<ItemModel>(0) is BannerInfo) {
+            val bannerInfo = adapter.get<BannerInfo>(0)
+            adapter.clear()
+            adapter.addBanner(bannerInfo)
+            adapter.addData(feedsList as MutableList<ItemModel>)
+            scrollToTop(false)
+        } else {
+            adapter.setDatas(feedsList as MutableList<ItemModel>)
+        }
     }
 
     override fun showMoreFeeds(feedsList: MutableList<FeedsItem>) {
@@ -131,12 +164,12 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         if (feedsList.size < perPage) {
             adapter.setDataEnd(true)
         }
-        adapter.add(feedsList)
+        adapter.addData(feedsList as MutableList<ItemModel>)
     }
 
     override fun showFailedGetData() {
         // show Failed View
-//        ToastUtil.show(context!!, "Gagal memuat pilpres")
+        view_fail_state.visibility = View.VISIBLE
     }
 
     override fun showEmptyData() {
@@ -153,13 +186,14 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     override fun showLoading() {
         view_empty_state.visibility = View.GONE
+        view_fail_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
-        progress_bar.visibility = View.VISIBLE
+        lottie_loading.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
         recycler_view.visibility = View.GONE
-        progress_bar.visibility = View.GONE
+        lottie_loading.visibility = View.GONE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -169,20 +203,19 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
                 PantauConstants.RequestCode.BANNER_PILPRES -> hideBanner()
             }
         }
-        when (requestCode) {
-            666 -> {
-                Timber.e("WAGU BUKA TWITTER")
-                Timber.e("RC : $resultCode")
-                if (data != null) {
-                    Timber.e("data : $data")
-                }
-            }
-        }
     }
 
     override fun onDestroy() {
         (activity?.application as BaseApp).releaseActivityComponent()
         super.onDestroy()
+    }
+
+    fun scrollToTop(smoothScroll: Boolean) {
+        if (smoothScroll) {
+            recycler_view.smoothScrollToPosition(0)
+        } else {
+            recycler_view.scrollToPosition(0)
+        }
     }
 
     private fun isTwitterAppInstalled(): Boolean {
