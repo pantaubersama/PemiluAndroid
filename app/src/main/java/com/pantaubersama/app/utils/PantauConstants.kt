@@ -89,6 +89,8 @@ class PantauConstants {
         const val TYPE_FEEDS = 2
         const val TYPE_JANPOL = 3
         const val TYPE_PERTANYAAN = 4
+        const val TYPE_KUIS_RESULT = 5
+        const val TYPE_KUIS_ITEM = 6
     }
     object Profile {
         val CAMERA_REQUEST_CODE = 111
