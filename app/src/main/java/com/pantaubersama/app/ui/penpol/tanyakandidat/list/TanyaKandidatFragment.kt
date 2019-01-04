@@ -1,35 +1,51 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.view.Gravity
+import android.view.KeyEvent
 import android.view.View
+import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
+import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
 import com.pantaubersama.app.data.local.cache.DataCache
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
+import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.OnScrollListener
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
-import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import kotlinx.android.synthetic.main.layout_delete_confirmation_dialog.*
 import javax.inject.Inject
 
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
     @Inject
-    lateinit var interactor: TanyaKandidatInteractor
+    lateinit var tanyaInteractor: TanyaKandidatInteractor
+
     @Inject
     lateinit var dataCache: DataCache
+
+    @Inject
+    lateinit var bannerInfoInteractor: BannerInfoInteractor
+
     private var page = 1
     private var perPage = 10
 
@@ -43,31 +59,22 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun initPresenter(): TanyaKandidatPresenter? {
-        return TanyaKandidatPresenter(interactor)
+        return TanyaKandidatPresenter(tanyaInteractor, bannerInfoInteractor)
     }
 
     override fun initView(view: View) {
-        presenter
-        setupBanner()
         setupTanyaKandidatList()
-        presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
+        getDataList()
     }
 
-    private fun setupBanner() {
-        presenter?.isBannerShown()
+    fun getDataList() {
+        adapter?.setDataEnd(false)
+        presenter?.getList()
     }
 
-    override fun showBanner() {
-        layout_banner_tanya_kandidat.visibility = View.VISIBLE
-        tv_banner_text.text = getString(R.string.tanya_kandidat_banner_text)
-        iv_banner_image.setImageResource(R.drawable.ic_banner_tanya_kandidat)
-        fl_banner.setOnClickListener {
-//            val intent = BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_TANYA_KANDIDAT)
-//            startActivityForResult(intent, PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT)
-        }
-        iv_banner_close.setOnClickListener {
-            layout_banner_tanya_kandidat.visibility = View.GONE
-        }
+    override fun showBanner(bannerInfo: BannerInfo) {
+        adapter?.addBanner(bannerInfo)
+        refreshItem()
     }
 
     override fun hideBanner() {
@@ -75,8 +82,56 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     private fun setupTanyaKandidatList() {
-        adapter = TanyaKandidatAdapter(dataCache.loadUserProfile().id)
+        val userId = dataCache.loadUserProfile().id
+        adapter = TanyaKandidatAdapter()
+        layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recycler_view.layoutManager = layoutManager
+        recycler_view.adapter = adapter
+        adapter?.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
+            override fun loadMore(page: Int) {
+                adapter?.setLoading()
+                presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
+            }
+
+        }, 5)
+
         adapter?.listener = object : TanyaKandidatAdapter.AdapterListener {
+            override fun onClickBanner(bannerInfo: BannerInfo) {
+                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT)
+            }
+
+            override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
+                val dialog = OptionDialog(context!!, item, R.layout.layout_option_dialog_tanya_kandidat)
+                if (!item.user?.id.equals(userId)) {
+                    dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
+                    dialog.removeItem(R.id.report_tanya_kandidat_action)
+                }
+                dialog.show()
+                dialog.listener = object : OptionDialog.DialogListener {
+                    override fun onClick(viewId: Int) {
+                        when (viewId) {
+                            R.id.copy_url_tanya_kandidat_action -> {
+                                onClickCopyUrl(item.id)
+                                dialog.dismiss()
+                            }
+                            R.id.share_tanya_kandidat_action -> {
+                                onClickShare(item)
+                                dialog.dismiss()
+                            }
+                            R.id.report_tanya_kandidat_action -> {
+                                onClickLapor(item.id)
+                                dialog.dismiss()
+                            }
+                            R.id.delete_tanya_kandidat_item_action -> {
+                                showDeleteConfirmationDialog(item.id!!, position)
+                                dialog.dismiss()
+                            }
+                        }
+                    }
+
+                }
+            }
+
             override fun onClickShare(item: Pertanyaan?) {
                 ShareUtil.shareItem(context!!, item)
             }
@@ -101,27 +156,9 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                 presenter?.reportQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME)
             }
         }
-        layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        recycler_view.layoutManager = layoutManager
-        recycler_view.adapter = adapter
-        recycler_view.addOnScrollListener(object : OnScrollListener(layoutManager) {
-            override fun loadMoreItem() {
-                adapter?.setLoading()
-                page += 1
-                presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
-            }
-
-            override fun isDataEnd(): Boolean {
-                return isDataEnd
-            }
-
-            override fun isLoading(): Boolean {
-                return isLoading
-            }
-        })
         swipe_refresh.setOnRefreshListener {
             swipe_refresh?.isRefreshing = false
-            refreshItem()
+            getDataList()
         }
     }
 
@@ -132,7 +169,15 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>) {
         recycler_view.visibility = View.VISIBLE
-        adapter?.setData(pertanyaanList)
+        if (adapter?.itemCount != 0 && adapter?.get<ItemModel>(0) is BannerInfo) {
+            val bannerInfo = adapter?.get<BannerInfo>(0)
+            adapter?.clear()
+            adapter?.addBanner(bannerInfo!!)
+            adapter?.addData(pertanyaanList as MutableList<ItemModel>)
+            scrollToTop(false)
+        } else {
+            adapter?.setDatas(pertanyaanList as MutableList<ItemModel>)
+        }
         adapter?.addHeader()
     }
 
@@ -142,7 +187,10 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     override fun bindNextDataTanyaKandidat(questions: MutableList<Pertanyaan>) {
         adapter?.setLoaded()
-        adapter?.addData(questions)
+        if (questions.size < perPage) {
+            adapter?.setDataEnd(true)
+        }
+        adapter?.addData(questions as MutableList<ItemModel>)
     }
 
     override fun showEmptyNextDataAlert() {
@@ -224,5 +272,45 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                 }
             }
         }
+    }
+
+    fun scrollToTop(smoothScroll: Boolean) {
+        if (smoothScroll) {
+            recycler_view.smoothScrollToPosition(0)
+        } else {
+            recycler_view.scrollToPosition(0)
+        }
+    }
+
+    private fun showDeleteConfirmationDialog(id: String, position: Int) {
+        val dialog = Dialog(context)
+        dialog.setContentView(R.layout.layout_delete_confirmation_dialog)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                dialog.dismiss()
+                true
+            } else {
+                false
+            }
+        }
+
+        dialog.setCanceledOnTouchOutside(true)
+        val lp = WindowManager.LayoutParams()
+        val window = dialog.window
+        lp.copyFrom(window?.attributes)
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        window?.attributes = lp
+        lp.gravity = Gravity.CENTER
+        window?.attributes = lp
+        dialog.yes_button.setOnClickListener {
+            adapter?.listener?.onClickDeleteItem(id, position)
+            dialog.dismiss()
+        }
+        dialog.no_button.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 }

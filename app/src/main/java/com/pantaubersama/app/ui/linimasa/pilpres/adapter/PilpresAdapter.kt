@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.base.viewholder.LoadingViewHolder
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.LoadingModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
@@ -66,12 +67,6 @@ class PilpresAdapter : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewHolder>()
             rl_item_pilpres_tweet.setOnClickListener { listener?.onClickTweetContent(item) }
             iv_tweet_option.setOnClickListener { listener?.onClickTweetOption(item) }
         }
-    }
-
-    inner class LoadingViewHolder(
-        override val containerView: View
-    ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind() {}
     }
 
     fun addBanner(bannerInfo: BannerInfo) {

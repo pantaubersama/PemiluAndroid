@@ -1,16 +1,29 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
+import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
 
 class TanyaKandidatPresenter @Inject constructor(
-    private val tanyaKandidatInteractor: TanyaKandidatInteractor
+    private val tanyaKandidatInteractor: TanyaKandidatInteractor,
+    private val bannerInfoInteractor: BannerInfoInteractor
 ) : BasePresenter<TanyaKandidatView>() {
-    fun isBannerShown() {
-        if (!tanyaKandidatInteractor.isBannerShown()!!) {
-            view?.showBanner()
-        }
+    fun getList() {
+        view?.showLoading()
+        disposables?.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_TANYA)
+            ?.subscribe(
+                {
+                    view?.showBanner(it)
+                },
+                {
+                    view?.dismissLoading()
+                    view?.showError(it)
+                    view?.showFailedGetDataAlert()
+                }
+            )!!
+        )
     }
 
     fun getTanyaKandidatList(

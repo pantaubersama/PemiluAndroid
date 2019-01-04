@@ -93,8 +93,8 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
                 }
                 dialog.show()
                 dialog.listener = object : OptionDialog.DialogListener {
-                    override fun onClick(position: Int) {
-                        when (position) {
+                    override fun onClick(viewId: Int) {
+                        when (viewId) {
                             R.id.action_copy_url -> {
                                 val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                                 val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, "tweet id : ${item.id}")
