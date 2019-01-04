@@ -62,8 +62,8 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         tv_banner_text.text = getString(R.string.tanya_kandidat_banner_text)
         iv_banner_image.setImageResource(R.drawable.ic_banner_tanya_kandidat)
         fl_banner.setOnClickListener {
-            val intent = BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_TANYA_KANDIDAT)
-            startActivityForResult(intent, PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT)
+//            val intent = BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_TANYA_KANDIDAT)
+//            startActivityForResult(intent, PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT)
         }
         iv_banner_close.setOnClickListener {
             layout_banner_tanya_kandidat.visibility = View.GONE

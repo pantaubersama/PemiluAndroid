@@ -85,8 +85,8 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         iv_banner_image.setImageResource(R.drawable.ic_banner_kuis)
 
         fl_banner.setOnClickListener {
-            val intent = BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_KUIS)
-            startActivityForResult(intent, PantauConstants.RequestCode.BANNER_KUIS)
+//            val intent = BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_KUIS)
+//            startActivityForResult(intent, PantauConstants.RequestCode.BANNER_KUIS)
         }
         iv_banner_close.setOnClickListener {
             layout_banner_kuis.visibility = View.GONE

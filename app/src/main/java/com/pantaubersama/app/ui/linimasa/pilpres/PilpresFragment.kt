@@ -40,7 +40,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     @Inject
     lateinit var bannerInfoInteractor: BannerInfoInteractor
 
-//    private var page = 1
     private var perPage = 20
 
     private lateinit var adapter: PilpresAdapter
@@ -84,7 +83,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         recycler_view.adapter = adapter
         adapter.listener = object : PilpresAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES), PantauConstants.RequestCode.BANNER_PILPRES)
+                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.BANNER_PILPRES)
             }
 
             override fun onClickTweetOption(item: FeedsItem) {
@@ -128,7 +127,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         }
         adapter.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
             override fun loadMore(page: Int) {
-//                this@PilpresFragment.page = page
                 adapter.setLoading()
                 presenter?.getFeeds(page, perPage)
             }
@@ -200,7 +198,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                PantauConstants.RequestCode.BANNER_PILPRES -> hideBanner()
+//                PantauConstants.RequestCode.BANNER_PILPRES -> hideBanner()
             }
         }
     }
