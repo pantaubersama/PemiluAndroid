@@ -107,6 +107,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                 isPreview = true
             }
             capture_button.setOnClickListener {
+                capture_button.isEnabled = false
                 mCamera?.takePicture(null, null, cameraCallback)
             }
             close_camera_button.setOnClickListener {
