@@ -79,8 +79,8 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
 
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
+            getDataList()
         }
-        lottie_loading.visibleIf(false)
         getDataList()
     }
 
