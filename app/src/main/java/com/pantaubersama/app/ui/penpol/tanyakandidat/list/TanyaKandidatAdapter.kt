@@ -2,10 +2,7 @@ package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.view.* // ktlint-disable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -24,8 +21,6 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_action_post.*
-import kotlinx.android.synthetic.main.layout_delete_confirmation_dialog.*
-import kotlinx.android.synthetic.main.layout_option_dialog_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_tanya_kandidat_header.*
 
 class TanyaKandidatAdapter() : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewHolder>() {
@@ -37,11 +32,9 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewH
             VIEW_TYPE_BANNER
         } else if (data[position] is LoadingModel) {
             VIEW_TYPE_LOADING
-        }
-        else if ((data[position] as Pertanyaan).viewType != null) {
+        } else if ((data[position] as Pertanyaan).viewType != null) {
             (data[position] as Pertanyaan).viewType!!
-        }
-        else {
+        } else {
             VIEW_TYPE_ITEM
         }
     }
@@ -119,7 +112,6 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewH
 //                upvote_animation.progress = 0.0f
 //            }
         }
-
     }
 
     inner class HeaderViewHolder(
