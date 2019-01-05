@@ -144,4 +144,7 @@
     <string name="txt_failed_state">Oops.. ada yg salah</string>
     <string name="informasi_lebih_lengkap">Informasi lebih lengkap hubungi :</string>
     <string name="url_pantau_bersama">www.pantaubersama.com</string>
+    <string name="label_connect_with_fb">CONNECT WITH FACEBOOK</string>
+    <string name="label_click_connect_fb">Click below to connect your Symbolic account with Twitter</string>
+    <string name="title_connet">Connect</string>
 </resources>
