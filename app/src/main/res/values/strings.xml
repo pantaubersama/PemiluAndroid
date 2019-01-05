@@ -147,4 +147,8 @@
     <string name="label_connect_with_fb">CONNECT WITH FACEBOOK</string>
     <string name="label_click_connect_fb">Click below to connect your Symbolic account with Twitter</string>
     <string name="title_connet">Connect</string>
+    <string name="info_preferensi_calon_presiden">Preferensi calon presiden hanya digunakan catatanmu dan tidak akan ditampilkan pada profile kamu</string>
+    <string name="label_belum_menentukan_pilihan">Belum menentukan pilihan</string>
+    <string name="label_total_kecenderungan">Total Kecenderungamu, </string>
+    <string name="title_catatan_pilihanku">Catatan Pilihanku</string>
 </resources>
