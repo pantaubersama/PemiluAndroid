@@ -1,0 +1,152 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pantaubersama.app.ui.note.PresidenFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_3"
+                android:gravity="center"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/presiden_info_preferensi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_regular"
+                    android:lineSpacingExtra="2sp"
+                    android:textColor="@color/gray_5"
+                    android:textSize="10sp"
+                    tools:text="@string/info_preferensi_calon_presiden" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_italic"
+                    android:lineSpacingExtra="2sp"
+                    android:textColor="@color/gray_5"
+                    android:textSize="10sp"
+                    tools:text="Pilih Note Calon Presidenmu saat ini :" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/presiden_recycler_view_calon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"></androidx.recyclerview.widget.RecyclerView>
+
+                <LinearLayout
+                    android:id="@+id/presiden_belum_menentukan_pilihan"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_rounded_outline_white"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_regular"
+                        android:letterSpacing="0.03"
+                        android:lineSpacingExtra="3sp"
+                        android:textColor="@color/gray_5"
+                        android:textSize="16sp"
+                        tools:text="@string/label_belum_menentukan_pilihan" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/edit_profile_avatar"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:scaleType="centerCrop"
+                    app:riv_border_color="@color/white"
+                    app:riv_oval="true"
+                    tools:src="@drawable/dummy_avatar" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/bw_modelica_regular"
+                            android:letterSpacing="0.02"
+                            android:lineSpacingExtra="4sp"
+                            android:textColor="@color/black_3"
+                            android:textSize="12sp"
+                            tools:text="@string/label_total_kecenderungan" />
+
+                        <TextView
+                            android:id="@+id/presiden_total_kuis"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:letterSpacing="0.02"
+                            android:lineSpacingExtra="4sp"
+                            android:textColor="@color/black_3"
+                            android:textSize="12sp"
+                            tools:text="4 dari 6 Kuis" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/presiden_total_kecenderungan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:gravity="center_horizontal"
+                        android:lineSpacingExtra="0sp"
+                        android:textColor="@color/black_3"
+                        android:textSize="16sp"
+                        tools:text="70% (Jokowi - Makruf)" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>
