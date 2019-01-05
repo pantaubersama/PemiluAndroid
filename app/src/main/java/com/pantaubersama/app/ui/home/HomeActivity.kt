@@ -87,6 +87,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         navigation.selectedItemId = R.id.navigation_linimasa
+        presenter?.updateUser()
     }
 
     private fun showActiveFragment() {
