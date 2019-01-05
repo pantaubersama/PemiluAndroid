@@ -11,7 +11,6 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
-import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.widget.TabView
@@ -27,10 +26,6 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
     override fun initView(view: View) {
         setupTabLayout()
         setupViewPager()
-        btn_create.setOnClickListener {
-            val intent = Intent(context, CreateJanjiPolitikActivity::class.java)
-            startActivity(intent)
-        }
         btn_filter.setOnClickListener {
             when (selectedTabs) {
                 0 -> startActivityForResult(Intent(
@@ -53,7 +48,7 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
 
     fun setupTabLayout() {
         val tabPilpres = TabView(context)
-        tabPilpres.setTitleLabel(R.string.txt_tab_pilpres)
+        tabPilpres.setTitleLabel(R.string.txt_tab_linimasa)
         val tabJanPol = TabView(context)
         tabJanPol.setTitleLabel(R.string.txt_tab_janji_politik)
 
@@ -71,11 +66,6 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 selectedTabs = tab!!.position
                 view_pager.currentItem = tab.position
-                if (tab.position == 0) {
-                    btn_create.visibility = View.GONE
-                } else {
-                    btn_create.visibility = View.VISIBLE
-                }
             }
         })
     }

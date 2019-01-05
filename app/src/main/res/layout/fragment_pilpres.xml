@@ -1,15 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.linimasa.pilpres.PilpresFragment">
 
-    <include
-        android:id="@+id/layout_banner_pilpres"
-        layout="@layout/item_banner_container"
-        android:visibility="gone"/>
-
     <include layout="@layout/layout_common_recyclerview"/>
 
-</LinearLayout>
+</RelativeLayout>

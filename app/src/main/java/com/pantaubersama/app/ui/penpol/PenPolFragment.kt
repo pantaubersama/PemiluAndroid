@@ -10,7 +10,6 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.ui.penpol.kuis.filter.FilterKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
-import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.ui.widget.TabView
@@ -33,10 +32,6 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
     override fun initView(view: View) {
         setupTabLayout()
         setupViewPager()
-        btn_create.setOnClickListener {
-            val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
-            startActivityForResult(intent, PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE)
-        }
         btn_filter?.setOnClickListener {
             when (selectedTabs) {
                 0 -> {
@@ -85,11 +80,6 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 selectedTabs = tab!!.position
-                if (tab.position == 0) {
-                    btn_create?.visibility = View.VISIBLE
-                } else if (tab.position == 1) {
-                    btn_create?.visibility = View.GONE
-                }
                 view_pager?.currentItem = tab.position
             }
         })

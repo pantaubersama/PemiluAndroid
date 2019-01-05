@@ -53,7 +53,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/dummy_avatar"
+                android:src="@drawable/ic_avatar_placeholder"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center_horizontal"
                 app:riv_oval="true"/>

@@ -9,7 +9,6 @@ import com.pantaubersama.app.data.model.linimasa.FeedsItem
  */
 interface PilpresView : BaseView {
     fun showBanner(bannerInfo: BannerInfo)
-    fun hideBanner()
     fun showFeeds(feedsList: MutableList<FeedsItem>)
     fun showMoreFeeds(feedsList: MutableList<FeedsItem>)
     fun showEmptyData()

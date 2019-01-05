@@ -11,16 +11,20 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
+import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.adapter.JanjiPolitikAdapter
+import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_janji_politik.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitikView {
     val TAG = JanjiPolitikFragment::class.java.simpleName
@@ -30,6 +34,9 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
     @Inject
     lateinit var bannerInteractor: BannerInfoInteractor
+
+    @Inject
+    lateinit var profileInteractor: ProfileInteractor
 
     private lateinit var adapter: JanjiPolitikAdapter
 
@@ -47,19 +54,22 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     override fun initPresenter(): JanjiPolitikPresenter? {
-        return JanjiPolitikPresenter(janpolInteractor, bannerInteractor)
+        return JanjiPolitikPresenter(janpolInteractor, bannerInteractor, profileInteractor)
     }
 
     override fun initView(view: View) {
+        if (presenter?.isUserModerator()!!) {
+            fab_add.visibleIf(true)
+            fab_add.setOnClickListener {
+                val intent = Intent(context, CreateJanjiPolitikActivity::class.java)
+                startActivity(intent)
+            }
+        }
         setupRecyclerJanpol()
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {
         adapter.addBanner(bannerInfo)
-    }
-
-    override fun hideBanner() {
-        layout_banner_janpol.visibility = View.GONE
     }
 
     private fun setupRecyclerJanpol() {
@@ -84,10 +94,26 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         }
+        if (presenter?.isUserModerator()!!) {
+            recycler_view.setPadding(0, 0, 0,
+                (resources.getDimension(R.dimen.fab_size) + resources.getDimension(R.dimen.fab_margin)).roundToInt())
+
+            recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    when (newState) {
+                        RecyclerView.SCROLL_STATE_IDLE -> fab_add.show()
+                        else -> fab_add.hide()
+                    }
+                }
+            })
+        }
+
         swipe_refresh.setOnRefreshListener {
             getJanjiPolitikList()
             swipe_refresh.isRefreshing = false
         }
+        fab_add
         getJanjiPolitikList()
     }
 
@@ -115,11 +141,17 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         view_empty_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
         lottie_loading.visibility = View.VISIBLE
+        if (presenter?.isUserModerator()!!) {
+            fab_add.hide()
+        }
     }
 
     override fun dismissLoading() {
         recycler_view.visibility = View.GONE
         lottie_loading.visibility = View.GONE
+        if (presenter?.isUserModerator()!!) {
+            fab_add.show()
+        }
     }
 
     override fun showError(throwable: Throwable) {
@@ -135,7 +167,6 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                PantauConstants.RequestCode.BANNER_JANPOL -> hideBanner()
             }
         }
     }

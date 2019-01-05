@@ -49,7 +49,7 @@
                         android:scaleType="centerCrop"
                         app:riv_border_color="@color/white"
                         app:riv_oval="true"
-                        android:src="@drawable/dummy_avatar"/>
+                        android:src="@drawable/ic_avatar_placeholder"/>
 
                     <TextView
                         android:id="@+id/tv_user_name"

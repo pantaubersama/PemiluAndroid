@@ -92,10 +92,6 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         setupData()
     }
 
-    override fun hideBanner() {
-        layout_banner_kuis.visibility = View.GONE
-    }
-
     private fun shareKuis(item: KuisListItem.Item) {
         val targetedShareIntents: MutableList<Intent> = ArrayList()
         val shareIntent = Intent(Intent.ACTION_SEND)
@@ -164,7 +160,6 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                PantauConstants.RequestCode.BANNER_KUIS -> hideBanner()
                 PantauConstants.RequestCode.FILTER_KUIS -> {
                     // refresh kuis
                 }

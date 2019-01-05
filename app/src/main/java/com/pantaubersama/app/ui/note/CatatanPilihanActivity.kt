@@ -1,9 +1,7 @@
 package com.pantaubersama.app.ui.note
 
-import android.app.Activity
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_catatan_pilihanku.*
 
 class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanPilihanView {
 

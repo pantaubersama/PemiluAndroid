@@ -10,7 +10,6 @@ class ConnectActivity : BaseActivity<ConnectPresenter>(), ConnectView {
     }
 
     override fun fetchIntentExtra() {
-
     }
 
     override fun initPresenter(): ConnectPresenter? {

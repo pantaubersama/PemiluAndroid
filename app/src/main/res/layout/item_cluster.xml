@@ -17,7 +17,7 @@
         android:id="@+id/iv_avatar_cluster"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/dummy_avatar"
+        android:src="@drawable/ic_avatar_placeholder"
         android:scaleType="centerCrop"
         app:riv_oval="true"/>
     <LinearLayout

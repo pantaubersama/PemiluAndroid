@@ -58,7 +58,7 @@
                                 android:scaleType="centerCrop"
                                 app:riv_border_color="@color/white"
                                 app:riv_oval="true"
-                                tools:src="@drawable/dummy_avatar" />
+                                tools:src="@drawable/ic_avatar_placeholder" />
 
                             <TextView
                                 android:id="@+id/edit_profile_change_profile"

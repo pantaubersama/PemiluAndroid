@@ -5,6 +5,5 @@ import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 
 interface KuisView : BaseView {
     fun showBanner(bannerInfo: BannerInfo)
-    fun hideBanner()
     fun showFailedGetData()
 }

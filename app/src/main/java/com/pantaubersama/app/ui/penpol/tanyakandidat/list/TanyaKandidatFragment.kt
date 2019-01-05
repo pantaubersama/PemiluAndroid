@@ -26,6 +26,7 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
+import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
@@ -34,6 +35,7 @@ import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_delete_confirmation_dialog.*
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
     @Inject
@@ -62,6 +64,12 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     override fun initView(view: View) {
         setupTanyaKandidatList()
         getDataList()
+        recycler_view.setPadding(0, 0, 0,
+            (resources.getDimension(R.dimen.fab_size) + resources.getDimension(R.dimen.fab_margin)).roundToInt())
+        fab_add.setOnClickListener {
+            val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
+            startActivityForResult(intent, PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE)
+        }
     }
 
     fun getDataList() {
@@ -72,10 +80,6 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     override fun showBanner(bannerInfo: BannerInfo) {
         adapter?.addBanner(bannerInfo)
         refreshItem()
-    }
-
-    override fun hideBanner() {
-        layout_banner_tanya_kandidat.visibility = View.GONE
     }
 
     private fun setupTanyaKandidatList() {
@@ -151,6 +155,15 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                 presenter?.reportQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME)
             }
         }
+        recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                when (newState) {
+                    RecyclerView.SCROLL_STATE_IDLE -> fab_add.show()
+                    else -> fab_add.hide()
+                }
+            }
+        })
         swipe_refresh.setOnRefreshListener {
             swipe_refresh?.isRefreshing = false
             getDataList()
@@ -203,10 +216,12 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         view_empty_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
         lottie_loading.visibility = View.VISIBLE
+        fab_add.hide()
     }
 
     override fun dismissLoading() {
         lottie_loading.visibility = View.GONE
+        fab_add.show()
     }
 
     override fun showFailedGetDataAlert() {
@@ -253,10 +268,9 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE -> {
-                    adapter?.addItem((data?.getSerializableExtra(PantauConstants.TanyaKandidat.TANYA_KANDIDAT_DATA) as Pertanyaan), 0)
+                    adapter?.addItem((data?.getSerializableExtra(PantauConstants.TanyaKandidat.TANYA_KANDIDAT_DATA) as Pertanyaan), 2)
                     recycler_view.smoothScrollToPosition(0)
                 }
-                PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT -> hideBanner()
                 PantauConstants.TanyaKandidat.Filter.FILTER_TANYA_KANDIDAT_REQUEST_CODE -> {
                     refreshItem()
                 }

@@ -75,11 +75,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     override fun showBanner(bannerInfo: BannerInfo) {
         adapter.addBanner(bannerInfo)
     }
-
-    override fun hideBanner() {
-        adapter.removeBanner()
-    }
-
     fun setupRecyclerPilpres() {
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         adapter = PilpresAdapter()
@@ -200,7 +195,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-//                PantauConstants.RequestCode.BANNER_PILPRES -> hideBanner()
             }
         }
     }

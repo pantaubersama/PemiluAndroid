@@ -10,6 +10,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.LoginInteractor
+import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
@@ -17,7 +18,11 @@ import javax.inject.Inject
 
 class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     @Inject
-    lateinit var interactor: LoginInteractor
+    lateinit var loginInteractor: LoginInteractor
+
+    @Inject
+    lateinit var profileInteractor: ProfileInteractor
+
     private var symbolicScope: MutableList<String>? = null
 
     override fun statusBarColor(): Int {
@@ -33,7 +38,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     }
 
     override fun initPresenter(): LoginPresenter? {
-        return LoginPresenter(interactor)
+        return LoginPresenter(loginInteractor, profileInteractor)
     }
 
     override fun setupUI() {

@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.linimasa.janjipolitik
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
+import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
@@ -13,8 +14,13 @@ import javax.inject.Inject
 
 class JanjiPolitikPresenter @Inject constructor(
     private val janjiPolitikInteractor: JanjiPolitikInteractor,
-    private val bannerInfoInteractor: BannerInfoInteractor
+    private val bannerInfoInteractor: BannerInfoInteractor,
+    private val profileInteractor: ProfileInteractor
 ) : BasePresenter<JanjiPolitikView>() {
+
+    fun isUserModerator(): Boolean {
+        return profileInteractor.isModerator()
+    }
 
     fun getList() {
         view?.showLoading()
@@ -41,7 +47,7 @@ class JanjiPolitikPresenter @Inject constructor(
             val janpol = JanjiPolitik()
             janpol.id = "777$i"
             janpol.title = "Jan Pol $i"
-            janpol.content = "Dukung partai nomer $i !!"
+            janpol.content = "Saya berjanji akan membuat janji $i kali"
             janPolList.add(janpol)
         }
 

@@ -1,16 +1,14 @@
 <resources>
-    <string name="title_navbar_linimasa">Linimasa</string>
-    <string name="title_navbar_penpol">Penpol</string>
-    <string name="title_navbar_wordstadium">Wordstadium</string>
-    <string name="title_navbar_lapor">Lapor</string>
-    <string name="title_navbar_rekap">Rekap</string>
+    <string name="title_navbar_menyerap">Menyerap</string>
+    <string name="title_navbar_menggali">Menggali</string>
+    <string name="title_navbar_menguji">Menguji</string>
+    <string name="title_navbar_merayakan">Merayakan</string>
+    <string name="title_navbar_menjaga">Menjaga</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="txt_mohon_tunggu">Mohon tunggu…</string>
     <string name="txt_cari">Cari</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="txt_tab_pilpres">Pilpres</string>
+    <string name="txt_tab_linimasa">Linimasa</string>
     <string name="txt_tab_janji_politik">Janji Politik</string>
     <string name="create_question">Buat Pertanyaan</string>
     <string name="question_hint">Buat pertanyaan singkat untuk pasangan calon presiden periode 2019–2024. Pertanyaan terpilih akan disampaikan kepada kedua tim pasangan calon Presiden. Gunakan tata bahasa yang sopan.</string>

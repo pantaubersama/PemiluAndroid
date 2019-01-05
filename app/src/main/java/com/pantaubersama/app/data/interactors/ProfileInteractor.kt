@@ -147,4 +147,8 @@ class ProfileInteractor @Inject constructor(
                 dataCache.saveUserProfile(newProfile)
             }
     }
+
+    fun isModerator(): Boolean {
+        return getProfile().isModerator
+    }
 }

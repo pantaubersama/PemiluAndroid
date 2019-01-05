@@ -130,23 +130,23 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
         val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_linimasa -> run {
+                R.id.navigation_menyerap -> run {
                     activeFragment = pLinimasaFragment!!
                     return@run
                 }
-                R.id.navigation_penpol -> run {
+                R.id.navigation_menggali -> run {
                     activeFragment = pTanyaKandidatFragment!!
                     return@run
                 }
-                R.id.navigation_wordstadium -> run {
+                R.id.navigation_menguji -> run {
                     activeFragment = otherFrag!!
                     return@run
                 }
-                R.id.navigation_lapor -> run {
+                R.id.navigation_merayakan -> run {
                     activeFragment = otherFrag!!
                     return@run
                 }
-                R.id.navigation_rekap -> run {
+                R.id.navigation_menjaga -> run {
                     activeFragment = otherFrag!!
                     return@run
                 }
@@ -159,7 +159,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        navigation.selectedItemId = R.id.navigation_linimasa
+        navigation.selectedItemId = R.id.navigation_menyerap
     }
 
     private fun showActiveFragment() {

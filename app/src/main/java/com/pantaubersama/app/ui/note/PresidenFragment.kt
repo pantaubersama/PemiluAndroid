@@ -40,5 +40,4 @@ class PresidenFragment : BaseFragment<BasePresenter<*>>() {
             return PresidenFragment()
         }
     }
-
 }
