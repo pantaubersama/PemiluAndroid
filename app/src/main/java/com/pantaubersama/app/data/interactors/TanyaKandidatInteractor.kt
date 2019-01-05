@@ -13,10 +13,6 @@ class TanyaKandidatInteractor @Inject constructor(
     private val rxSchedulers: RxSchedulers,
     private val dataCache: DataCache
 ) {
-    fun isBannerShown(): Boolean? {
-        return dataCache.isBannerTanyaKandidatOpened()
-    }
-
     fun createTanyaKandidat(body: String?): Single<TanyaKandidatResponse> {
         return apiWrapper
             .getPantauApi()

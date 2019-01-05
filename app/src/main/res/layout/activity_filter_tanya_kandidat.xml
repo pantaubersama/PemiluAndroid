@@ -20,13 +20,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/apply_filter_button"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -45,13 +44,13 @@
 
                 <RadioGroup
                     android:id="@+id/user_filter"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp">
 
                     <RadioButton
                         android:id="@+id/filter_all"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_all_label"
                         android:checked="true"
@@ -59,14 +58,14 @@
 
                     <RadioButton
                         android:id="@+id/filter_unverified"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_unverified_label"
                         android:theme="@style/RadioButtonStyle" />
 
                     <RadioButton
                         android:id="@+id/filter_verified"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_verified_label"
                         android:theme="@style/RadioButtonStyle" />
@@ -96,13 +95,13 @@
 
                 <RadioGroup
                     android:id="@+id/order_filter"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp">
 
                     <RadioButton
                         android:id="@+id/filter_latest"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_latest_label"
                         android:checked="true"
@@ -110,7 +109,7 @@
 
                     <RadioButton
                         android:id="@+id/filter_most_voted"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_most_voted_label"
                         android:theme="@style/RadioButtonStyle"/>
@@ -121,24 +120,8 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/apply_filter_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/colorPrimary"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:padding="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/apply_filter_action"
-                android:textColor="@color/white"
-                android:fontFamily="@font/lato_regular"/>
-
-        </LinearLayout>
+        <include
+            layout="@layout/layout_button_terapkan_filter"/>
 
     </RelativeLayout>
 

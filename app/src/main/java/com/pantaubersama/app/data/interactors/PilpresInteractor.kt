@@ -15,15 +15,12 @@ class PilpresInteractor @Inject constructor(
     private val rxSchedulers: RxSchedulers?,
     private val dataCache: DataCache?
 ) {
-    fun getPilpresFilter(): Int {
-        return dataCache?.getFilterPilpres()!!
-    }
-
     fun getFeeds(
+        filterBy: String,
         page: Int,
         perPage: Int
     ): Single<FeedsResponse>? {
-        return apiWrapper?.getPantauApi()?.getFeeds(page, perPage)
+        return apiWrapper?.getPantauApi()?.getFeeds(filterBy, page, perPage)
             ?.subscribeOn(rxSchedulers?.io())
             ?.observeOn(rxSchedulers?.mainThread())
     }

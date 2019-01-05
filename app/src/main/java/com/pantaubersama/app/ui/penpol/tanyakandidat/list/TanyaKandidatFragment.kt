@@ -50,8 +50,6 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     private var adapter: TanyaKandidatAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
-    private var isDataEnd = false
-    private var isLoading = false
 
     override fun initInjection() {
         (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
@@ -161,6 +159,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     private fun refreshItem() {
         page = 1
+        adapter?.setDataEnd(false)
         presenter?.getTanyaKandidatList(page, perPage)
     }
 
@@ -191,15 +190,9 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun showEmptyNextDataAlert() {
-        ToastUtil.show(context!!, "Gagal memuat lebih banyak pertanyaan")
-    }
-
-    override fun setIsLoading(isLoading: Boolean) {
-        this.isLoading = isLoading
-    }
-
-    override fun setDataEnd(isDataEnd: Boolean) {
-        this.isDataEnd = isDataEnd
+//        ToastUtil.show(context!!, "Gagal memuat lebih banyak pertanyaan")
+        adapter?.setLoaded()
+        adapter?.setDataEnd(true)
     }
 
     override fun setLayout(): Int {

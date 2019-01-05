@@ -104,4 +104,12 @@ class PantauConstants {
         val CAMERA_REQUEST_CODE = 111
         val STORAGE_REQUEST_CODE = 112
     }
+
+    object Filter {
+        object Pilpres {
+            const val FILTER_ALL = "team_all" // value dari backend
+            const val FILTER_TEAM_1 = "team_id_1" // value dari backend
+            const val FILTER_TEAM_2 = "team_id_2" // value dari backend
+        }
+    }
 }

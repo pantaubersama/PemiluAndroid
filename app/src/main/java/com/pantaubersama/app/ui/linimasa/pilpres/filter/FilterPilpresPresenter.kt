@@ -13,7 +13,7 @@ class FilterPilpresPresenter @Inject constructor(private val filterPilpresIntera
         view?.showSelectedFilter(filterPilpresInteractor?.getPilpresFilter()!!)
     }
 
-    fun setFilter(selectedFilter: Int) {
+    fun setFilter(selectedFilter: String) {
         filterPilpresInteractor?.setPilpresFilter(selectedFilter)
         view?.onSuccessSetFilter()
     }

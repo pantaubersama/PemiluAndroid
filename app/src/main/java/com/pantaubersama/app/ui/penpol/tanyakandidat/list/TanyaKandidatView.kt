@@ -12,8 +12,6 @@ interface TanyaKandidatView : BaseView {
     fun showFailedGetDataAlert()
     fun bindNextDataTanyaKandidat(questions: MutableList<Pertanyaan>)
     fun showEmptyNextDataAlert()
-    fun setDataEnd(isDataEnd: Boolean)
-    fun setIsLoading(isLoading: Boolean)
     fun onItemUpVoted()
     fun onFailedUpVoteItem(liked: Boolean?, position: Int?)
     fun showItemReportedAlert()

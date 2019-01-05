@@ -23,7 +23,7 @@ class DataCache(context: Context) : SharedPref(context) {
 
         const val PREF_ID = "com.pantaubersama.cache.data"
 
-        const val KEY_FILTER_PILPRES = "KEY_FILTER_PILPRES"
+        const val KEY_FILTER_FEED = "KEY_FILTER_FEED"
 
         const val IS_USER_LOGGED_IN = "is_user_logged_in"
 
@@ -46,12 +46,12 @@ class DataCache(context: Context) : SharedPref(context) {
         return PREF_ID
     }
 
-    fun setFilterPilpres(selectedFilterPilpres: Int) {
-        putInt(KEY_FILTER_PILPRES, selectedFilterPilpres)
+    fun setFilterPilpres(selectedFilterPilpres: String) {
+        putString(KEY_FILTER_FEED, selectedFilterPilpres)
     }
 
-    fun getFilterPilpres(): Int {
-        return getInt(KEY_FILTER_PILPRES)
+    fun getFilterPilpres(): String? {
+        return getString(KEY_FILTER_FEED)
     }
 
     fun saveLoginState(isLogin: Boolean) {

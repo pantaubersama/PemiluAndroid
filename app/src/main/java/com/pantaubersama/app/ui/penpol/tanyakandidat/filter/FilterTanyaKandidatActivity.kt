@@ -11,6 +11,7 @@ import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_filter_tanya_kandidat.*
+import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
 import javax.inject.Inject
 
 class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>(), FilterTanyaKandidatView {
@@ -39,7 +40,7 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
         setupToolbar(true, "Filter", R.color.white, 4f)
         presenter?.loadTanyaKandidatUserFilter()
         presenter?.loadTanyaKandidatOrderFilter()
-        apply_filter_button.setOnClickListener {
+        btn_terapkan.setOnClickListener {
             applyFilter()
             presenter?.saveTanyaKandidatFilter(userFilter, orderFilter)
         }

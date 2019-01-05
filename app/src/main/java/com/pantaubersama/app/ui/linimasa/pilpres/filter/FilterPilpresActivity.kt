@@ -9,7 +9,9 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.FilterPilpresInteractor
-import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_ALL
+import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_1
+import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_2
 import kotlinx.android.synthetic.main.activity_filter_pilpres.*
 import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
 import javax.inject.Inject
@@ -26,10 +28,10 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
         return FilterPilpresPresenter(interactor)
     }
 
-    private var selectedFilter = 0
+    private var selectedFilter: String? = ""
 
     companion object {
-        fun setIntent(context: Context, selectedFilter: Int): Intent {
+        fun setIntent(context: Context): Intent {
             val intent = Intent(context, FilterPilpresActivity::class.java)
 //        intent.putExtra(PantauConstants.Extra.SELECTED_FILTER_PILPRES, selectedFilter)
             return intent
@@ -41,7 +43,6 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
     }
 
     override fun fetchIntentExtra() {
-        this.selectedFilter = intent.getIntExtra(PantauConstants.Extra.SELECTED_FILTER_PILPRES, 0)
     }
 
     override fun setupUI() {
@@ -50,23 +51,24 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
 
         radio_group_pilpres.setOnCheckedChangeListener { view, checkedId ->
             selectedFilter = when (checkedId) {
-                R.id.radbtn_semua -> 0
-                R.id.radbtn_capres1 -> 1
-                R.id.radbtn_capres2 -> 2
-                else -> 0
+                R.id.radbtn_semua -> FILTER_ALL
+                R.id.radbtn_capres1 -> FILTER_TEAM_1
+                R.id.radbtn_capres2 -> FILTER_TEAM_2
+                else -> FILTER_ALL
             }
         }
 
         btn_terapkan.setOnClickListener {
-            presenter?.setFilter(selectedFilter)
+            presenter?.setFilter(selectedFilter!!)
         }
     }
 
-    override fun showSelectedFilter(selectedFilter: Int) {
+    override fun showSelectedFilter(selectedFilter: String) {
+        this.selectedFilter = selectedFilter
         radio_group_pilpres.check(when (selectedFilter) {
-            0 -> R.id.radbtn_semua
-            1 -> R.id.radbtn_capres1
-            2 -> R.id.radbtn_capres2
+            FILTER_ALL -> R.id.radbtn_semua
+            FILTER_TEAM_1 -> R.id.radbtn_capres1
+            FILTER_TEAM_2 -> R.id.radbtn_capres2
             else -> R.id.radbtn_semua
         })
     }
@@ -93,7 +95,7 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
                 return true
             }
             R.id.action_reset -> {
-                // reset
+                radio_group_pilpres.check(R.id.radbtn_semua)
             }
         }
         return super.onOptionsItemSelected(item)
