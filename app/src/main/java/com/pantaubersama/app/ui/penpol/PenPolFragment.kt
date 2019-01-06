@@ -103,6 +103,8 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
     }
 
     companion object {
+        val TAG: String = PenPolFragment::class.java.simpleName
+
         fun newInstance(): PenPolFragment {
             return PenPolFragment()
         }

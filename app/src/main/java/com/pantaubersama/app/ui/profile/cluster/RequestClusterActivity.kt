@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.profile.cluster
 
 import android.content.Intent
+import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_request_cluster.*
@@ -20,7 +21,7 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>() {
         return RequestClusterPresenter()
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Request Buat Cluster", R.color.white, 4f)
         onClickAction()
     }

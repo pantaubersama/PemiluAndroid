@@ -39,7 +39,7 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
             presenter!!.attach(this)
         }
         initProgressDialog()
-        setupUI()
+        setupUI(savedInstanceState)
 
         if (statusBarColor() != 0) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -88,7 +88,7 @@ abstract class BaseActivity<P : BasePresenter<*>> : AppCompatActivity(), BaseVie
      */
     protected abstract fun initPresenter(): P?
 
-    protected abstract fun setupUI()
+    protected abstract fun setupUI(savedInstanceState: Bundle?)
 
     protected fun setFragmentContainerId(): Int {
         return 0

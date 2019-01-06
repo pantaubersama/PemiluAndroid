@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.profile.connect
 
+import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 
@@ -16,7 +17,7 @@ class ConnectActivity : BaseActivity<ConnectPresenter>(), ConnectView {
         return ConnectPresenter()
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(false, getString(R.string.title_connet), R.color.white, 4f)
     }
 

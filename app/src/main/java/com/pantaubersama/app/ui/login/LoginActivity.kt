@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.login
 
 import android.content.Intent
+import android.os.Bundle
 import com.extrainteger.identitaslogin.Callback
 import com.extrainteger.identitaslogin.Result
 import com.extrainteger.identitaslogin.SymbolicConfig
@@ -41,7 +42,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
         return LoginPresenter(loginInteractor, profileInteractor)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         symbolicScope = ArrayList()
         symbolic_login_button.configure(
             SymbolicConfig(

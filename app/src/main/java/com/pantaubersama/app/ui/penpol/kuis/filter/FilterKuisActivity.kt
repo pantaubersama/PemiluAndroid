@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.penpol.kuis.filter
 
 import android.app.Activity
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.RadioButton
@@ -35,7 +36,7 @@ class FilterKuisActivity : BaseActivity<FilterKuisPresenter>(), FilterKuisView {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
         presenter?.getKuisFilterData()
         btn_terapkan.setOnClickListener {

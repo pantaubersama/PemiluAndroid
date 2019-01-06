@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.filter
 
 import android.app.Activity
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.RadioButton
@@ -36,7 +37,7 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
         return FilterTanyaKandidatPresenter(interactor)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Filter", R.color.white, 4f)
         presenter?.loadTanyaKandidatUserFilter()
         presenter?.loadTanyaKandidatOrderFilter()

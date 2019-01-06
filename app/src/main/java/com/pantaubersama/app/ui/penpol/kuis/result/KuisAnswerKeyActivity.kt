@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.penpol.kuis.result
 
+import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -17,7 +18,7 @@ class KuisAnswerKeyActivity : BaseActivity<BasePresenter<*>>() {
     override fun fetchIntentExtra() {
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = KuisAnswerKeyAdapter().apply { items = 10 }
         recycler_view.addItemDecoration(OffsetItemDecoration(dip(16)))

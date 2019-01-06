@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.profile.setting
 
 import android.content.Intent
+import android.os.Bundle
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -47,7 +48,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         return SettingPresenter(interactor)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_setting), R.color.white, 4f)
         onClickAction()
     }

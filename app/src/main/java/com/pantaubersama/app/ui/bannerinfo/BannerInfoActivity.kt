@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.bannerinfo
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.text.Html
 import android.view.View
 import com.pantaubersama.app.R
@@ -50,7 +51,7 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
         return BannerInfoPresenter(interactor)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         btn_close.setOnClickListener {
             finish()
         }

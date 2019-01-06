@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
 import android.view.* // ktlint-disable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -59,7 +60,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "", R.color.white, 4f)
         setupClusterLayout()
         setupBiodataLayout()

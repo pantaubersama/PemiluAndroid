@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.penpol.kuis.ikutikuis
 
+import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
@@ -22,7 +23,7 @@ class IkutiKuisActivity : BaseActivity<BasePresenter<*>>() {
         return null
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         start_quiz_action.setOnClickListener {
             val intent = KuisActivity.setIntent(this, kuisId, 1)
             startActivity(intent)

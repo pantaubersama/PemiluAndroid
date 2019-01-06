@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.penpol.kuis.result
 
 import android.content.Intent
+import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
@@ -17,7 +18,7 @@ class KuisResultActivity : BaseActivity<BasePresenter<*>>() {
     override fun fetchIntentExtra() {
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "", R.color.white, 0f)
 
         tv_kuis_result.text = spannable {

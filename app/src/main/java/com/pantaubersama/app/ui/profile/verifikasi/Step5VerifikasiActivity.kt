@@ -10,6 +10,7 @@ import android.graphics.Matrix
 import android.graphics.Point
 import android.hardware.Camera
 import android.os.Build
+import android.os.Bundle
 import android.view.Surface
 import android.view.View
 import com.pantaubersama.app.R
@@ -43,7 +44,7 @@ class Step5VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
         return null
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
 

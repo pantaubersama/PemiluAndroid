@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.profile.setting.ubahsandi
 
 import android.app.Activity
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -34,7 +35,7 @@ class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
         return UbahSandiPresenter(profileInteractor)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_ubah_sandi), R.color.white, 4f)
         setupPasswordField()
         onClickAction()

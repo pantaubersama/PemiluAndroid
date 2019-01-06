@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.penpol.tanyakandidat.create
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
@@ -43,7 +44,7 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
         return CreateTanyaKandidatPresenter(tanyaKandidatInteractor, profileInteractor)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.create_question), R.color.white, 4f)
         presenter?.getUserData()
         question?.addTextChangedListener(object : TextWatcher {

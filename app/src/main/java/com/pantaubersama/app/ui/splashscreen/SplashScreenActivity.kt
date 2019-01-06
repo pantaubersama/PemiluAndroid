@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.splashscreen
 
 import android.content.Intent
+import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
@@ -29,7 +30,7 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
         return SplashScreenPresenter(interactor)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         presenter?.getLoginState()
     }
 

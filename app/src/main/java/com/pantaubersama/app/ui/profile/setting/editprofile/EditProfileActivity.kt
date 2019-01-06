@@ -10,6 +10,7 @@ import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
@@ -58,7 +59,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         return EditProfilePresenter(profileInteractor)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_edit_profile), R.color.white, 4f)
         onClickAction()
         swipe_refresh.setOnRefreshListener {

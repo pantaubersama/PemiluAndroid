@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.profile.setting.badge
 
+import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
@@ -32,7 +33,7 @@ class BadgeActivity : BaseActivity<BadgePresenter>(), BadgeView {
         return BadgePresenter(interactor)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupRecyclerView()
         onClickAction()
         presenter?.refreshBadges()

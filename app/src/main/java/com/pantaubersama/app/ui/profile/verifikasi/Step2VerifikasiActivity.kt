@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.profile.verifikasi
 
 import android.content.Intent
+import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
@@ -20,7 +21,7 @@ class Step2VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
         return null
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "", R.color.white, 4f)
         verification_step_indicator.text = "1/3"
         next_button.setOnClickListener {

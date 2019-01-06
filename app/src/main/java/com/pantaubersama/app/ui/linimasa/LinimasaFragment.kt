@@ -108,4 +108,8 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
 
     override fun showError(throwable: Throwable) {
     }
+
+    companion object {
+        val TAG: String = LinimasaFragment::class.java.simpleName
+    }
 }

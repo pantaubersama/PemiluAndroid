@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.penpol.kuis.kuisstart
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
@@ -24,7 +25,7 @@ class KuisActivity : BaseActivity<BasePresenter<*>>() {
         questionNumber = intent.getIntExtra(PantauConstants.Kuis.KUIS_NUMBER, 0)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         back_icon.setOnClickListener {
             finish()
         }

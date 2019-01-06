@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.profile.verifikasi
 
+import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
@@ -19,7 +20,7 @@ class FinalScreenVerifikasiActivity : BaseActivity<BasePresenter<*>>() {
         return null
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         finish_button.setOnClickListener {
             finish()
         }

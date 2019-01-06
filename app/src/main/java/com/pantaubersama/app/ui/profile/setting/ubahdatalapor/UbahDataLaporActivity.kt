@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.profile.setting.ubahdatalapor
 
 import android.app.Activity
+import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import com.pantaubersama.app.R
@@ -33,7 +34,7 @@ class UbahDataLaporActivity : BaseActivity<UbahDataLaporPresenter>(), UbahDataLa
         return UbahDataLaporPresenter(profileInteractor)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_ubah_data_lapor), R.color.white, 4f)
         setupGenderSpinner()
 //        setEditextDisable(ubah_data_lapor_no_ktp)

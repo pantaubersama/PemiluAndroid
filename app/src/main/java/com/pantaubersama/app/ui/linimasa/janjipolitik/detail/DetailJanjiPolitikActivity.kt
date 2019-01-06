@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.linimasa.janjipolitik.detail
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
@@ -32,7 +33,7 @@ class DetailJanjiPolitikActivity : BaseActivity<BasePresenter<*>>() {
         this.id = intent.getStringExtra(PantauConstants.Extra.JANPOL_ID)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         tv_title.text = "JANPOL ID $id"
 
         tv_content.text = getString(R.string.question_1_b_dummy) + getString(R.string.question_1_b_dummy) + getString(R.string.question_1_b_dummy) + getString(R.string.question_1_b_dummy) + getString(R.string.question_1_b_dummy)

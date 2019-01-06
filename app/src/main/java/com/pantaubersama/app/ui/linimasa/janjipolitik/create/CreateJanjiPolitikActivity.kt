@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.linimasa.janjipolitik.create
 
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import com.pantaubersama.app.R
@@ -25,7 +26,7 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
         return CreateJanjiPolitikPresenter()
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_tab_janji_politik), R.color.white, 4f)
         et_create_janpol_content.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {

@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.profile.cluster
 
 import android.app.AlertDialog
+import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_cluster_category.*
@@ -20,7 +21,7 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
         return ClusterCategoryPresenter()
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
 
         onclickAction()
     }

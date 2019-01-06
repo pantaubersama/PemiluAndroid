@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.linimasa.pilpres.filter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.pantaubersama.app.R
@@ -45,7 +46,7 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
     override fun fetchIntentExtra() {
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
         presenter?.getFilter()
 

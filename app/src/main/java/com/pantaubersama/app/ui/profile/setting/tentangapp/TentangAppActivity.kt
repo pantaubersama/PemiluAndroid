@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.profile.setting.tentangapp
 
+import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_tentang_app.*
@@ -18,7 +19,7 @@ class TentangAppActivity : BaseActivity<TentangAppPresenter>(), TentangAppView {
         return TentangAppPresenter()
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         onClickAction()
     }
 

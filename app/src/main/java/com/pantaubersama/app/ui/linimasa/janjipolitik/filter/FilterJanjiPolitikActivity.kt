@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.linimasa.janjipolitik.filter
 
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -25,7 +26,7 @@ class FilterJanjiPolitikActivity : BaseActivity<BasePresenter<*>>() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
         rl_cluster_container.setOnClickListener {
             ClusterListDialog.show(supportFragmentManager, object : ClusterListDialog.OnClickListener {
