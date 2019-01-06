@@ -12,7 +12,7 @@ import android.view.Gravity
 import android.view.View
 import androidx.annotation.LayoutRes
 
-class OptionDialog<T>(context: Context, item: T, @LayoutRes optionLayout: Int) {
+class OptionDialog(context: Context, @LayoutRes optionLayout: Int) {
 
     private val dialog: Dialog
     private val dialogLayout: ViewGroup

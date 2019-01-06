@@ -13,4 +13,5 @@ interface PilpresView : BaseView {
     fun showMoreFeeds(feedsList: MutableList<FeedsItem>)
     fun showEmptyData()
     fun showFailedGetData()
+    fun showFailedGetMoreData()
 }

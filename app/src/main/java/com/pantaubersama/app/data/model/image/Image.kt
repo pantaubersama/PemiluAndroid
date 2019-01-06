@@ -1,10 +1,11 @@
-package com.pantaubersama.app.data.model.user
+package com.pantaubersama.app.data.model.image
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import java.io.Serializable
 
-data class Avatar(
+data class Image(
     @SerializedName("url")
     @Expose
     var url: String? = null,
@@ -19,5 +20,10 @@ data class Avatar(
     var medium: Medium? = null,
     @SerializedName("medium_square")
     @Expose
-    var mediumSquare: MediumSquare? = null
+    var mediumSquare: MediumSquare? = null,
+    @SerializedName("large") var large: Large? = null
+) : Serializable
+
+data class Large(
+    @SerializedName("url") var url: String? = null
 ) : Serializable

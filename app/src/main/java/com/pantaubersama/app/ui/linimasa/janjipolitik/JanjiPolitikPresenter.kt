@@ -13,13 +13,15 @@ import javax.inject.Inject
  */
 
 class JanjiPolitikPresenter @Inject constructor(
-    private val janjiPolitikInteractor: JanjiPolitikInteractor,
+    private val janPolInteractor: JanjiPolitikInteractor,
     private val bannerInfoInteractor: BannerInfoInteractor,
     private val profileInteractor: ProfileInteractor
 ) : BasePresenter<JanjiPolitikView>() {
 
-    fun isUserModerator(): Boolean {
-        return profileInteractor.isModerator()
+    var perPage = 20
+
+    fun isUserEligible(): Boolean {
+        return profileInteractor.isEligible()
     }
 
     fun getList() {
@@ -28,30 +30,47 @@ class JanjiPolitikPresenter @Inject constructor(
             ?.subscribe(
                 {
                     view?.showBanner(it)
-                    getJanjiPolitikList()
+                    getJanjiPolitikList(1)
                 },
                 {
                     view?.dismissLoading()
                     view?.showError(it)
+                    view?.showFailedGetData()
                 }
             )!!
         )
     }
 
-    fun getJanjiPolitikList() {
-        view?.showLoading()
-
-        val janPolList: MutableList<JanjiPolitik> = ArrayList()
-
-        for (i in 1..20) {
-            val janpol = JanjiPolitik()
-            janpol.id = "777$i"
-            janpol.title = "Jan Pol $i"
-            janpol.content = "Saya berjanji akan membuat janji $i kali"
-            janPolList.add(janpol)
+    fun getJanjiPolitikList(page: Int) {
+        if (page == 1) {
+            view?.showLoading()
         }
 
-        view?.dismissLoading()
-        view?.showJanjiPolitikList(janPolList)
+        disposables?.add(janPolInteractor.getJanPol("", page, perPage)
+            ?.subscribe(
+                {
+                    if (page == 1) {
+                        view?.dismissLoading()
+                        if (it?.janjiPolitikList?.size != 0) {
+                            view?.showJanpolList(it?.janjiPolitikList!!)
+                        } else {
+                            view?.showEmptyData()
+                        }
+                    } else {
+                        view?.showMoreJanpolList(it?.janjiPolitikList!!)
+                    }
+                },
+                {
+                    if (page == 1) {
+                        view?.dismissLoading()
+                        view?.showFailedGetData()
+                    } else {
+                        view?.showFailedGetMoreData()
+                    }
+                    it.printStackTrace()
+                    view?.showError(it)
+                }
+            )!!
+        )
     }
 }

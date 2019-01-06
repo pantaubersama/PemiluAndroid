@@ -106,10 +106,16 @@ class PantauConstants {
     }
 
     object Filter {
-        object Pilpres {
-            const val FILTER_ALL = "team_all" // value dari backend
-            const val FILTER_TEAM_1 = "team_id_1" // value dari backend
-            const val FILTER_TEAM_2 = "team_id_2" // value dari backend
+        object Pilpres { // value dari backend
+            const val FILTER_ALL = "team_all"
+            const val FILTER_TEAM_1 = "team_id_1"
+            const val FILTER_TEAM_2 = "team_id_2"
+        }
+
+        object Janpol { // value dari backend
+            const val USER_VERIFIED_ALL = "user_verified_all"
+            const val USER_VERIFIED_TRUE = "user_verified_true"
+            const val USER_VERIFIED_FALSE = "user_verified_false"
         }
     }
 }

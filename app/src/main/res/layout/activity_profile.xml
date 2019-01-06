@@ -43,7 +43,7 @@
                     android:paddingBottom="16dp">
 
                     <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/user_avatar"
+                        android:id="@+id/iv_user_avatar"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:scaleType="centerCrop"
@@ -55,8 +55,8 @@
                         android:id="@+id/tv_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/user_avatar"
-                        android:layout_toEndOf="@id/user_avatar"
+                        android:layout_toRightOf="@id/iv_user_avatar"
+                        android:layout_toEndOf="@id/iv_user_avatar"
                         android:layout_marginLeft="28dp"
                         android:layout_marginStart="28dp"
                         android:text="Haryono Sugi"
@@ -84,7 +84,7 @@
                         android:orientation="horizontal"
                         android:background="@drawable/rounded_outline_gray"
                         android:layout_below="@id/tv_user_name"
-                        android:layout_toRightOf="@id/user_avatar"
+                        android:layout_toRightOf="@id/iv_user_avatar"
                         android:layout_marginLeft="28dp"
                         android:layout_marginStart="28dp"
                         android:layout_marginTop="8dp"

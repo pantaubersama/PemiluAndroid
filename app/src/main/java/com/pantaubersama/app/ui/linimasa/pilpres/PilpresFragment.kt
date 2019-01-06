@@ -44,8 +44,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     @Inject
     lateinit var filterPilpresInteractor: FilterPilpresInteractor
 
-    private var perPage = 20
-
     private lateinit var adapter: PilpresAdapter
 
     companion object {
@@ -86,7 +84,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
             }
 
             override fun onClickTweetOption(item: FeedsItem) {
-                val dialog = OptionDialog(context!!, item, R.layout.layout_option_dialog_pilpres_tweet)
+                val dialog = OptionDialog(context!!, R.layout.layout_option_dialog_pilpres_tweet)
                 if (!isTwitterAppInstalled()) {
                     dialog.removeItem(R.id.action_open_in_app)
                 }
@@ -125,7 +123,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         adapter.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
             override fun loadMore(page: Int) {
                 adapter.setLoading()
-                presenter?.getFeeds(page, perPage)
+                presenter?.getFeeds(page)
             }
         }, 10)
 
@@ -156,15 +154,18 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     override fun showMoreFeeds(feedsList: MutableList<FeedsItem>) {
         adapter.setLoaded()
-        if (feedsList.size < perPage) {
+        if (feedsList.size < presenter?.perPage!!) {
             adapter.setDataEnd(true)
         }
         adapter.addData(feedsList as MutableList<ItemModel>)
     }
 
     override fun showFailedGetData() {
-        // show Failed View
         view_fail_state.visibility = View.VISIBLE
+    }
+
+    override fun showFailedGetMoreData() {
+        adapter.setLoaded()
     }
 
     override fun showEmptyData() {

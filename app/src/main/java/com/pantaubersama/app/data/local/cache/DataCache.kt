@@ -25,6 +25,9 @@ class DataCache(context: Context) : SharedPref(context) {
 
         const val KEY_FILTER_FEED = "KEY_FILTER_FEED"
 
+        const val KEY_FILTER_JANPOL_USER = "KEY_FILTER_JANPOL_USER"
+        const val KEY_FILTER_JANPOL_CLUSTER = "KEY_FILTER_JANPOL_CLUSTER"
+
         const val IS_USER_LOGGED_IN = "is_user_logged_in"
 
         const val ACCESS_TOKEN_FIELD = "client_token"
@@ -46,12 +49,12 @@ class DataCache(context: Context) : SharedPref(context) {
         return PREF_ID
     }
 
-    fun setFilterPilpres(selectedFilterPilpres: String) {
+    fun saveFilterPilpres(selectedFilterPilpres: String) {
         putString(KEY_FILTER_FEED, selectedFilterPilpres)
     }
 
     fun getFilterPilpres(): String? {
-        return getString(KEY_FILTER_FEED)
+        return getString(KEY_FILTER_FEED) ?: PantauConstants.Filter.Pilpres.FILTER_ALL
     }
 
     fun saveLoginState(isLogin: Boolean) {
@@ -143,22 +146,38 @@ class DataCache(context: Context) : SharedPref(context) {
     }
 
     fun loadTanyaKandidatOrderFilterDirection(): String? {
-        if (getString(PantauConstants.TanyaKandidat.Filter.FILTER_ORDER_DIRECTION) != null) {
-            return getString(PantauConstants.TanyaKandidat.Filter.FILTER_ORDER_DIRECTION)
+        return if (getString(PantauConstants.TanyaKandidat.Filter.FILTER_ORDER_DIRECTION) != null) {
+            getString(PantauConstants.TanyaKandidat.Filter.FILTER_ORDER_DIRECTION)
         } else {
-            return "desc"
+            "desc"
         }
     }
 
     fun getKuisFilter(): String? {
-        if (getString(PantauConstants.Kuis.KUIS_FILTER) != null) {
-            return getString(PantauConstants.Kuis.KUIS_FILTER)
+        return if (getString(PantauConstants.Kuis.KUIS_FILTER) != null) {
+            getString(PantauConstants.Kuis.KUIS_FILTER)
         } else {
-            return PantauConstants.Kuis.Filter.KUIS_ALL
+            PantauConstants.Kuis.Filter.KUIS_ALL
         }
     }
 
     fun saveKuisFilter(kuisFilter: String) {
         putString(PantauConstants.Kuis.KUIS_FILTER, kuisFilter)
+    }
+
+    fun getJanpolUserFilter(): String {
+        return getString(KEY_FILTER_JANPOL_USER) ?: PantauConstants.Filter.Janpol.USER_VERIFIED_ALL
+    }
+
+    fun saveJanpolUserFilter(janpolUserFilter: String){
+        putString(KEY_FILTER_JANPOL_USER, janpolUserFilter)
+    }
+
+    fun getJanpolClusterFilter(): String? {
+        return getString(KEY_FILTER_JANPOL_CLUSTER) ?: ""
+    }
+
+    fun saveJanpolClusterFilter(janpolClusterFilter: String) {
+        putString(KEY_FILTER_JANPOL_CLUSTER, janpolClusterFilter)
     }
 }

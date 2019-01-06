@@ -1,5 +1,8 @@
 package com.pantaubersama.app.data.model.user
 import com.google.gson.annotations.SerializedName
+import com.pantaubersama.app.data.model.image.Image
+import com.pantaubersama.app.data.model.image.Thumbnail
+import com.pantaubersama.app.data.model.image.ThumbnailSquare
 import com.pantaubersama.app.data.model.meta.Meta
 
 data class BadgeResponse(
@@ -21,9 +24,3 @@ data class Badge(
 ) {
     var achieved: Boolean = false
 }
-
-data class Image(
-    @SerializedName("url") val url: String,
-    @SerializedName("thumbnail") val thumbnail: Thumbnail,
-    @SerializedName("thumbnail_square") val thumbnailSquare: ThumbnailSquare
-)

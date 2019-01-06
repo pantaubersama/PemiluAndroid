@@ -16,6 +16,8 @@ class PilpresPresenter @Inject constructor(
     private val filterPilpresInteractor: FilterPilpresInteractor
 ) : BasePresenter<PilpresView>() {
 
+    var perPage = 20
+
     fun getList() {
         view?.showLoading()
 //        if (bannerInfoInteractor.isBannerPilpresShown()!!) {
@@ -23,7 +25,7 @@ class PilpresPresenter @Inject constructor(
             ?.subscribe(
                 {
                     view?.showBanner(it)
-                    getFeeds(1, 20)
+                    getFeeds(1)
                 },
                 {
                     view?.dismissLoading()
@@ -37,7 +39,7 @@ class PilpresPresenter @Inject constructor(
 //        }
     }
 
-    fun getFeeds(page: Int, perPage: Int) {
+    fun getFeeds(page: Int) {
         if (page == 1) {
             view?.showLoading()
         }
@@ -61,9 +63,13 @@ class PilpresPresenter @Inject constructor(
                     }
                 },
                 {
+                    if (page == 1) {
+                        view?.dismissLoading()
+                        view?.showFailedGetData()
+                    } else {
+                        view?.showFailedGetMoreData()
+                    }
                     it.printStackTrace()
-                    view?.dismissLoading()
-                    view?.showFailedGetData()
                     view?.showError(it)
                 }
             )!!

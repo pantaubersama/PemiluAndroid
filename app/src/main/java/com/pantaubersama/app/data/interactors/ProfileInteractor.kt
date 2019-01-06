@@ -151,4 +151,12 @@ class ProfileInteractor @Inject constructor(
     fun isModerator(): Boolean {
         return getProfile().isModerator
     }
+
+    fun isEligible(): Boolean {
+        return if (getProfile().cluster == null) {
+            false
+        } else {
+            getProfile().cluster?.isEligible!!
+        }
+    }
 }
