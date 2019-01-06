@@ -169,7 +169,7 @@ class DataCache(context: Context) : SharedPref(context) {
         return getString(KEY_FILTER_JANPOL_USER) ?: PantauConstants.Filter.Janpol.USER_VERIFIED_ALL
     }
 
-    fun saveJanpolUserFilter(janpolUserFilter: String){
+    fun saveJanpolUserFilter(janpolUserFilter: String) {
         putString(KEY_FILTER_JANPOL_USER, janpolUserFilter)
     }
 

@@ -2,7 +2,6 @@ package com.pantaubersama.app.data.model.image
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import java.io.Serializable
 
 data class Image(

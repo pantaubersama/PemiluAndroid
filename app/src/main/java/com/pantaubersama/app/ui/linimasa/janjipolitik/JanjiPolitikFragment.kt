@@ -121,17 +121,15 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
                             R.id.delete_tanya_kandidat_item_action -> {
                                 val deleteDialog = DeleteConfimationDialog(context!!, getString(R.string.txt_delete_item_ini), position, item.id!!)
                                 deleteDialog.show()
-                                deleteDialog.listener = object : DeleteConfimationDialog.DialogListener{
+                                deleteDialog.listener = object : DeleteConfimationDialog.DialogListener {
                                     override fun onClickDeleteItem(id: String, position: Int) {
 //                                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                                     }
-
                                 }
                                 dialog.dismiss()
                             }
                         }
                     }
-
                 }
             }
 
@@ -252,7 +250,6 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             }
         }
     }
-
 
     fun scrollToTop(smoothScroll: Boolean) {
         if (smoothScroll) {

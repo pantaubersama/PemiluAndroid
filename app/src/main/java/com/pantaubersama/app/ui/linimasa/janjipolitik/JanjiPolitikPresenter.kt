@@ -4,7 +4,6 @@ import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
-import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
 

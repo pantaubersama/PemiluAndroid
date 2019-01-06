@@ -17,7 +17,7 @@ data class JanjiPolitik(
     @SerializedName("created_at") var createdAt: String? = null,
     @SerializedName("image") var image: Image? = null,
     @SerializedName("creator") var creator: Creator? = null
-    ) : ItemModel {
+) : ItemModel {
     override fun getType(): Int = PantauConstants.ItemModel.TYPE_JANPOL
 }
 
