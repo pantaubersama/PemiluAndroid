@@ -34,7 +34,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
 
     override fun initView(view: View) {
         setupTanyaKandidatList()
-        presenter?.getTanyaKandidatList()
+        presenter.getTanyaKandidatList()
     }
 
     override fun setLayout(): Int {

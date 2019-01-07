@@ -4,7 +4,6 @@ import android.app.ProgressDialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager

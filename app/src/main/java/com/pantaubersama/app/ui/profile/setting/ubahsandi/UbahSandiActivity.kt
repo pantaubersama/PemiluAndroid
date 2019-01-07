@@ -88,7 +88,7 @@ class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
             if (ubah_sandi_sandi_baru.error == null) {
                 if (repeat_password.error == null) {
                     if (ubah_sandi_lama.text.isNotEmpty()) {
-                        presenter?.updatePassword(
+                        presenter.updatePassword(
                             ubah_sandi_sandi_baru.text.toString(),
                             repeat_password.text.toString()
                         )

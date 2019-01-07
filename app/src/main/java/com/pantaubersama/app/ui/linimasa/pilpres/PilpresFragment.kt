@@ -112,7 +112,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         adapter.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
             override fun loadMore(page: Int) {
                 adapter.setLoading()
-                presenter?.getFeeds(page, perPage)
+                presenter.getFeeds(page, perPage)
             }
         }, 10)
 

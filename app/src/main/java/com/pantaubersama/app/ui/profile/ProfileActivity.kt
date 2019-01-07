@@ -62,9 +62,9 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         setupBadgeLayout()
         initFragment()
         setupNavigation()
-        presenter?.refreshProfile()
-        presenter?.getProfile()
-        presenter?.refreshBadges()
+        presenter.refreshProfile()
+        presenter.getProfile()
+        presenter.refreshBadges()
     }
 
     override fun showProfile(profile: Profile) {
@@ -284,7 +284,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         lp.gravity = Gravity.CENTER
         window?.attributes = lp
         dialog.yes_button.setOnClickListener {
-            presenter?.leaveCluster(cluster.name)
+            presenter.leaveCluster(cluster.name)
             dialog.dismiss()
         }
         dialog.no_button.setOnClickListener {

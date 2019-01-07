@@ -40,7 +40,7 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.create_question), R.color.white, 4f)
-        presenter?.getUserData()
+        presenter.getUserData()
         question?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

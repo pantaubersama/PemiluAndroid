@@ -58,7 +58,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         setupToolbar(true, getString(R.string.title_edit_profile), R.color.white, 4f)
         onClickAction()
         swipe_refresh.setOnRefreshListener {
-            presenter?.refreshUserData()
+            presenter.refreshUserData()
         }
     }
 
@@ -99,7 +99,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             showImageChooserDialog()
         }
         edit_profile_submit.setOnClickListener {
-            presenter?.saveEditedUserData(
+            presenter.saveEditedUserData(
                 edit_profile_nama.text.toString(),
                 edit_profile_username.text.toString().substring(1),
                 edit_profile_lokasi.text.toString(),
@@ -290,11 +290,11 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         val reqFile = RequestBody.create(MediaType.parse(type), file)
         val avatar = MultipartBody.Part.createFormData("avatar", file.getName(), reqFile)
 
-        presenter?.uploadAvatar(avatar)
+        presenter.uploadAvatar(avatar)
     }
 
     override fun refreshProfile() {
-        presenter?.refreshUserData()
+        presenter.refreshUserData()
     }
 
     override fun showSuccessUpdateAvatarAlert() {

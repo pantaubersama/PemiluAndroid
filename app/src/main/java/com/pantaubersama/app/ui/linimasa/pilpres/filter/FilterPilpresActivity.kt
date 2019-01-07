@@ -44,7 +44,7 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
-        presenter?.getFilter()
+        presenter.getFilter()
 
         radio_group_pilpres.setOnCheckedChangeListener { view, checkedId ->
             selectedFilter = when (checkedId) {
@@ -56,7 +56,7 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
         }
 
         btn_terapkan.setOnClickListener {
-            presenter?.setFilter(selectedFilter!!)
+            presenter.setFilter(selectedFilter!!)
         }
     }
 

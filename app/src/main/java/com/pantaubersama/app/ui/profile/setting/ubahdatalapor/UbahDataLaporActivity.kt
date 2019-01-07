@@ -34,7 +34,7 @@ class UbahDataLaporActivity : BaseActivity<UbahDataLaporPresenter>(), UbahDataLa
         setupToolbar(true, getString(R.string.title_ubah_data_lapor), R.color.white, 4f)
         setupGenderSpinner()
 //        setEditextDisable(ubah_data_lapor_no_ktp)
-        presenter?.getDataLapor()
+        presenter.getDataLapor()
         onClickAction()
     }
 

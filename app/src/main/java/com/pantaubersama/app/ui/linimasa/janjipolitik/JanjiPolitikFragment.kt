@@ -45,7 +45,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     override fun initView(view: View) {
-        if (presenter?.isUserModerator()!!) {
+        if (presenter.isUserModerator()) {
             fab_add.visibleIf(true)
             fab_add.setOnClickListener {
                 val intent = Intent(context, CreateJanjiPolitikActivity::class.java)
@@ -81,7 +81,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         }
-        if (presenter?.isUserModerator()!!) {
+        if (presenter.isUserModerator()) {
             recycler_view.setPadding(0, 0, 0,
                 (resources.getDimension(R.dimen.fab_size) + resources.getDimension(R.dimen.fab_margin)).roundToInt())
 
@@ -105,7 +105,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     private fun getJanjiPolitikList() {
-        presenter?.getList()
+        presenter.getList()
     }
 
     override fun showJanjiPolitikList(janjiPolitikList: MutableList<JanjiPolitik>) {
@@ -128,7 +128,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         view_empty_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
         lottie_loading.visibility = View.VISIBLE
-        if (presenter?.isUserModerator()!!) {
+        if (presenter.isUserModerator()) {
             fab_add.hide()
         }
     }
@@ -136,7 +136,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     override fun dismissLoading() {
         recycler_view.visibility = View.GONE
         lottie_loading.visibility = View.GONE
-        if (presenter?.isUserModerator()!!) {
+        if (presenter.isUserModerator()) {
             fab_add.show()
         }
     }

@@ -62,7 +62,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     fun getDataList() {
         adapter?.setDataEnd(false)
-        presenter?.getList()
+        presenter.getList()
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {
@@ -123,11 +123,11 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             }
 
             override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
-                presenter?.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
+                presenter.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
             }
 
             override fun onClickDeleteItem(id: String?, position: Int?) {
-                presenter?.deleteItem(id, position)
+                presenter.deleteItem(id, position)
             }
 
             override fun onClickCopyUrl(id: String?) {
@@ -139,7 +139,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             }
 
             override fun onClickLapor(id: String?) {
-                presenter?.reportQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME)
+                presenter.reportQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME)
             }
         }
         recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {

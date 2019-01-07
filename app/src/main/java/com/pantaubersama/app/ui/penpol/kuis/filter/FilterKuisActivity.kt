@@ -35,7 +35,7 @@ class FilterKuisActivity : BaseActivity<FilterKuisPresenter>(), FilterKuisView {
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
-        presenter?.getKuisFilterData()
+        presenter.getKuisFilterData()
         btn_terapkan.setOnClickListener {
             applyFilter()
             presenter?.saveKuisFilter(kuisFilter)
@@ -79,7 +79,7 @@ class FilterKuisActivity : BaseActivity<FilterKuisPresenter>(), FilterKuisView {
                 return true
             }
             R.id.action_reset -> {
-                presenter?.saveKuisFilter(PantauConstants.Kuis.Filter.KUIS_ALL)
+                presenter.saveKuisFilter(PantauConstants.Kuis.Filter.KUIS_ALL)
             }
         }
         return super.onOptionsItemSelected(item)

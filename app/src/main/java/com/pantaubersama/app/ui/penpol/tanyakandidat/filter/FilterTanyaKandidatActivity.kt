@@ -36,11 +36,11 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Filter", R.color.white, 4f)
-        presenter?.loadTanyaKandidatUserFilter()
-        presenter?.loadTanyaKandidatOrderFilter()
+        presenter.loadTanyaKandidatUserFilter()
+        presenter.loadTanyaKandidatOrderFilter()
         btn_terapkan.setOnClickListener {
             applyFilter()
-            presenter?.saveTanyaKandidatFilter(userFilter, orderFilter)
+            presenter.saveTanyaKandidatFilter(userFilter, orderFilter)
         }
     }
 

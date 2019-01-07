@@ -57,7 +57,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        presenter?.updateUser()
+        presenter.updateUser()
     }
 
     private fun showFragment(fragment: Fragment, tag: String) = with(supportFragmentManager) {
