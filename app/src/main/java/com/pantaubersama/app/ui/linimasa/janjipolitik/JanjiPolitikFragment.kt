@@ -12,10 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BaseRecyclerAdapter
-import com.pantaubersama.app.data.interactors.BannerInfoInteractor
-import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
-import com.pantaubersama.app.data.interactors.ProfileInteractor
-import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
@@ -192,7 +188,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
     override fun showMoreJanpolList(janjiPolitikList: MutableList<JanjiPolitik>) {
         adapter.setLoaded()
-        if (janjiPolitikList.size < presenter?.perPage!!) {
+        if (janjiPolitikList.size < presenter.perPage) {
             adapter.setDataEnd(true)
         }
         adapter.addData(janjiPolitikList as MutableList<ItemModel>)
