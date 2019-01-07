@@ -1,25 +1,35 @@
-package com.pantaubersama.app.ui.profile.verifikasi
+package com.pantaubersama.app.ui.profile.verifikasi.step7
 
 import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.graphics.Point
 import android.hardware.Camera
 import android.os.Build
+import android.os.Bundle
 import android.view.Surface
 import android.view.View
+import android.webkit.MimeTypeMap
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.profile.verifikasi.finalstep.FinalScreenVerifikasiActivity
 import com.pantaubersama.app.ui.widget.CameraPreview
+import com.pantaubersama.app.utils.ImageTools
 import com.pantaubersama.app.utils.PantauConstants
-import kotlinx.android.synthetic.main.activity_step5_verifikasi.*
+import com.pantaubersama.app.utils.ToastUtil
+import kotlinx.android.synthetic.main.activity_step7_verifikasi.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import javax.inject.Inject
 
-class Step5VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
+class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7VerifikasiView {
+
+    @Inject
+    override lateinit var presenter: Step7VerifikasiPresenter
+
     private var permission =
         arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -31,19 +41,21 @@ class Step5VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     private var cameraCallback: Camera.PictureCallback? = null
     private var isPreview = false
 
+    private var signPhoto: MultipartBody.Part? = null
+
     override fun statusBarColor(): Int? {
         return 0
+    }
+
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun fetchIntentExtra() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
 
@@ -55,9 +67,7 @@ class Step5VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
             }
         }
         next_button.setOnClickListener {
-            val intent = Intent(this@Step5VerifikasiActivity, Step6VerifikasiActivity::class.java)
-            startActivity(intent)
-            finish()
+            presenter?.submitSignaturePhoto(signPhoto)
         }
         retake_button.setOnClickListener {
             image_preview_container.visibility = View.GONE
@@ -71,7 +81,7 @@ class Step5VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     private fun setupCamera() {
-        if (checkCameraHardware(this@Step5VerifikasiActivity)) {
+        if (checkCameraHardware(this@Step7VerifikasiActivity)) {
             mCamera = getCameraInstance()
             mCamera?.setDisplayOrientation(90)
             val params = mCamera?.parameters
@@ -100,11 +110,18 @@ class Step5VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                     Surface.ROTATION_270 -> rotation = 180
                 }
 
-                var bitmap = BitmapTools.toBitmap(data)
-                bitmap = BitmapTools.rotate(bitmap, rotation)
+                var bitmap = ImageTools.BitmapTools.toBitmap(data)
+                bitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
                 image_preview_container.visibility = View.VISIBLE
                 image_preview.setImageBitmap(bitmap)
                 isPreview = true
+
+                val type: String
+                val extension = MimeTypeMap.getFileExtensionFromUrl(ImageTools.getImageFile(bitmap).absolutePath)
+                type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
+
+                val reqFile = RequestBody.create(MediaType.parse(type), ImageTools.getImageFile(bitmap))
+                signPhoto = MultipartBody.Part.createFormData("signature", ImageTools.getImageFile(bitmap).name, reqFile)
             }
             capture_button.setOnClickListener {
                 capture_button.isEnabled = false
@@ -127,18 +144,6 @@ class Step5VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
             }
         }
         return chosenHeight
-    }
-
-    object BitmapTools {
-        fun toBitmap(data: ByteArray): Bitmap {
-            return BitmapFactory.decodeByteArray(data, 0, data.size)
-        }
-
-        fun rotate(bitmap: Bitmap, angle: Int): Bitmap {
-            val mat = Matrix()
-            mat.postRotate(angle.toFloat())
-            return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, mat, true)
-        }
     }
 
     private fun findFrontFacingCamera(): Int {
@@ -185,21 +190,21 @@ class Step5VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
 
     override fun onResume() {
         super.onResume()
-        if (checkCameraHardware(this@Step5VerifikasiActivity)) {
+        if (checkCameraHardware(this@Step7VerifikasiActivity)) {
             setupCamera()
         }
     }
 
     override fun setLayout(): Int {
-        return R.layout.activity_step5_verifikasi
+        return R.layout.activity_step7_verifikasi
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressDialog?.show()
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressDialog?.dismiss()
     }
 
     private fun checkCameraHardware(context: Context): Boolean {
@@ -230,5 +235,15 @@ class Step5VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
 
     fun endActivity() {
         finish()
+    }
+
+    override fun onSuccessSignature() {
+        val intent = Intent(this@Step7VerifikasiActivity, FinalScreenVerifikasiActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun showFailedSubmitSignatureAlert() {
+        ToastUtil.show(this@Step7VerifikasiActivity, "Gagal mengirim gambar")
     }
 }

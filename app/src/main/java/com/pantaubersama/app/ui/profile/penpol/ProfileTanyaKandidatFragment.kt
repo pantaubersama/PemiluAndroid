@@ -8,12 +8,16 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatAdapter
 import com.pantaubersama.app.utils.OnScrollListener
 import com.pantaubersama.app.utils.ShareUtil
 import kotlinx.android.synthetic.main.fragment_profile_tanya_kandidat.*
 
 class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>(), ProfileTanyaKandidatView {
+
+    override var presenter: ProfileTanyaKandidatPresenter = ProfileTanyaKandidatPresenter()
+
     private lateinit var adapter: TanyaKandidatAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private var isDataEnd = false
@@ -25,13 +29,12 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
         }
     }
 
-    override fun initPresenter(): ProfileTanyaKandidatPresenter? {
-        return ProfileTanyaKandidatPresenter()
+    override fun initInjection(activityComponent: ActivityComponent) {
     }
 
     override fun initView(view: View) {
         setupTanyaKandidatList()
-        presenter?.getTanyaKandidatList()
+        presenter.getTanyaKandidatList()
     }
 
     override fun setLayout(): Int {

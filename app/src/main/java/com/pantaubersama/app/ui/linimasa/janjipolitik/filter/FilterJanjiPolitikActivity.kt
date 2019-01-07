@@ -1,13 +1,13 @@
 package com.pantaubersama.app.ui.linimasa.janjipolitik.filter
 
 import android.app.Activity
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
 import com.pantaubersama.app.data.model.cluster.ClusterItem
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
 import com.pantaubersama.app.utils.PantauConstants.Filter.Janpol.USER_VERIFIED_ALL
 import com.pantaubersama.app.utils.PantauConstants.Filter.Janpol.USER_VERIFIED_FALSE
@@ -22,17 +22,14 @@ import javax.inject.Inject
 
 class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), FilterJanjiPolitikView {
 
-    @Inject lateinit var janpolInteractor: JanjiPolitikInteractor
+    @Inject
+    override lateinit var presenter: FilterJanjiPolitikPresenter
 
     private var userFilter: String? = USER_VERIFIED_ALL
     private var clusterFilter: ClusterItem? = null
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
-    }
-
-    override fun initPresenter(): FilterJanjiPolitikPresenter? {
-        return FilterJanjiPolitikPresenter(janpolInteractor)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun statusBarColor(): Int? {
@@ -42,9 +39,9 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
     override fun fetchIntentExtra() {
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
-        presenter?.getFilter()
+        presenter.getFilter()
 
         rl_cluster_container.setOnClickListener {
             ClusterListDialog.show(supportFragmentManager, object : ClusterListDialog.DialogListener {
@@ -134,10 +131,5 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onDestroy() {
-        (application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 }

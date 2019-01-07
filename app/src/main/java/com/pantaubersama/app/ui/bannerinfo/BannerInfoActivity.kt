@@ -3,13 +3,13 @@ package com.pantaubersama.app.ui.bannerinfo
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.text.Html
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.HtmlTagHandler
 import com.pantaubersama.app.utils.PantauConstants
@@ -20,7 +20,8 @@ import javax.inject.Inject
 class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
 
     @Inject
-    lateinit var interactor: BannerInfoInteractor
+    override lateinit var presenter: BannerInfoPresenter
+
     private var infoType: Int? = null
     private var bannerInfo: BannerInfo? = null
 
@@ -33,8 +34,8 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
         }
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun statusBarColor(): Int? {
@@ -46,11 +47,7 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
         this.bannerInfo = intent.getSerializableExtra(PantauConstants.Extra.BANNER_INFO_DATA) as BannerInfo
     }
 
-    override fun initPresenter(): BannerInfoPresenter? {
-        return BannerInfoPresenter(interactor)
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         btn_close.setOnClickListener {
             finish()
         }
@@ -88,10 +85,5 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
     override fun dismissLoading() {
         progress_bar.visibility = View.GONE
         rl_banner_container.visibility = View.VISIBLE
-    }
-
-    override fun onDestroy() {
-        (application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 }

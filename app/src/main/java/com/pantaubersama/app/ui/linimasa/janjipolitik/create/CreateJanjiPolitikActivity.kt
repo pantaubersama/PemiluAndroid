@@ -1,14 +1,20 @@
 package com.pantaubersama.app.ui.linimasa.janjipolitik.create
 
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
+import com.pantaubersama.app.di.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_create_janji_politik.*
 import kotlinx.android.synthetic.main.layout_editor_option.*
+import javax.inject.Inject
 
 class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), CreateJanjiPolitikView {
+
+    @Inject
+    override lateinit var presenter: CreateJanjiPolitikPresenter
+
     override fun statusBarColor(): Int? {
         return 0
     }
@@ -17,15 +23,11 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun initPresenter(): CreateJanjiPolitikPresenter? {
-        return CreateJanjiPolitikPresenter()
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_tab_janji_politik), R.color.white, 4f)
         et_create_janpol_content.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {

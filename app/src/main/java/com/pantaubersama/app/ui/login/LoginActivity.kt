@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.login
 
 import android.content.Intent
+import android.os.Bundle
 import com.extrainteger.identitaslogin.Callback
 import com.extrainteger.identitaslogin.Result
 import com.extrainteger.identitaslogin.SymbolicConfig
@@ -8,20 +9,16 @@ import com.extrainteger.identitaslogin.SymbolicException
 import com.extrainteger.identitaslogin.models.AuthToken
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.LoginInteractor
-import com.pantaubersama.app.data.interactors.ProfileInteractor
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
-    @Inject
-    lateinit var loginInteractor: LoginInteractor
 
     @Inject
-    lateinit var profileInteractor: ProfileInteractor
+    override lateinit var presenter: LoginPresenter
 
     private var symbolicScope: MutableList<String>? = null
 
@@ -33,15 +30,11 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun initPresenter(): LoginPresenter? {
-        return LoginPresenter(loginInteractor, profileInteractor)
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         symbolicScope = ArrayList()
         symbolic_login_button.configure(
             SymbolicConfig(
@@ -81,10 +74,6 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
         dismissProgressDialog()
     }
 
-    override fun showError(throwable: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun openHomeActivity() {
         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -93,10 +82,5 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
 
     override fun showLoginFailedAlert() {
         ToastUtil.show(this@LoginActivity, getString(R.string.login_failed_alert))
-    }
-
-    override fun onDestroy() {
-        (application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 }

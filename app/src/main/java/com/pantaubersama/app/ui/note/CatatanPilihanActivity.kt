@@ -1,9 +1,12 @@
 package com.pantaubersama.app.ui.note
 
+import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 
 class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanPilihanView {
+
+    override var presenter: CatatanPilihanPresenter = CatatanPilihanPresenter()
 
     val presidenFragment = PresidenFragment.newInstance()
 
@@ -15,11 +18,7 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
         // ok
     }
 
-    override fun initPresenter(): CatatanPilihanPresenter? {
-        return CatatanPilihanPresenter()
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(false, getString(R.string.title_catatan_pilihanku), R.color.white, 4f)
         showFragment()
     }

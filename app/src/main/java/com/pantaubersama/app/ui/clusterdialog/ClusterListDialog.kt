@@ -19,6 +19,7 @@ import com.pantaubersama.app.base.BaseDialogFragment
 import com.pantaubersama.app.data.interactors.ClusterInteractor
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.cluster.ClusterItem
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_dialog_cluster_list.*
@@ -29,7 +30,8 @@ import javax.inject.Inject
  */
 class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), ClusterListDialogView {
 
-    @Inject lateinit var clusterInteractor: ClusterInteractor
+    @Inject
+    override lateinit var presenter: ClusterListDialogPresenter
 
     private var adapter: ClusterListDialogAdapter? = null
     private var listener: DialogListener? = null
@@ -44,12 +46,8 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
         }
     }
 
-    override fun initInjection() {
-        (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
-    }
-
-    override fun initPresenter(): ClusterListDialogPresenter? {
-        return ClusterListDialogPresenter(clusterInteractor)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initView(view: View) {
@@ -167,10 +165,5 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
         window?.setLayout((size.x * 0.95).toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
         window?.setGravity(Gravity.CENTER)
         super.onResume()
-    }
-
-    override fun onDestroy() {
-        (activity?.application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 }

@@ -16,15 +16,12 @@ import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BaseRecyclerAdapter
-import com.pantaubersama.app.data.interactors.BannerInfoInteractor
-import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
-import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.ui.widget.OptionDialog
@@ -38,14 +35,9 @@ import javax.inject.Inject
 import kotlin.math.roundToInt
 
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
-    @Inject
-    lateinit var tanyaInteractor: TanyaKandidatInteractor
 
     @Inject
-    lateinit var dataCache: DataCache
-
-    @Inject
-    lateinit var bannerInfoInteractor: BannerInfoInteractor
+    override lateinit var presenter: TanyaKandidatPresenter
 
     private var page = 1
     private var perPage = 10
@@ -53,12 +45,8 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     private var adapter: TanyaKandidatAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
 
-    override fun initInjection() {
-        (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
-    }
-
-    override fun initPresenter(): TanyaKandidatPresenter? {
-        return TanyaKandidatPresenter(tanyaInteractor, bannerInfoInteractor)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initView(view: View) {
@@ -74,7 +62,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     fun getDataList() {
         adapter?.setDataEnd(false)
-        presenter?.getList()
+        presenter.getList()
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {
@@ -83,7 +71,6 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     private fun setupTanyaKandidatList() {
-        val userId = dataCache.loadUserProfile().id
         adapter = TanyaKandidatAdapter()
         layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         recycler_view.layoutManager = layoutManager
@@ -97,12 +84,12 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
         adapter?.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT)
+                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT)
             }
 
             override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
-                val dialog = OptionDialog(context!!, R.layout.layout_option_dialog_tanya_kandidat)
-                if (item.user?.id.equals(userId)) {
+                val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
+                if (item.user?.id.equals(presenter.getUserId())) {
                     dialog.removeItem(R.id.report_tanya_kandidat_action)
                 } else {
                     dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
@@ -137,11 +124,11 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             }
 
             override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
-                presenter?.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
+                presenter.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
             }
 
             override fun onClickDeleteItem(id: String?, position: Int?) {
-                presenter?.deleteItem(id, position)
+                presenter.deleteItem(id, position)
             }
 
             override fun onClickCopyUrl(id: String?) {
@@ -153,7 +140,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             }
 
             override fun onClickLapor(id: String?) {
-                presenter?.reportQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME)
+                presenter.reportQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME)
             }
         }
         recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -257,11 +244,6 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         fun newInstance(): TanyaKandidatFragment {
             return TanyaKandidatFragment()
         }
-    }
-
-    override fun onDestroy() {
-        (activity?.application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

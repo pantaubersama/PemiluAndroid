@@ -1,26 +1,49 @@
 package com.pantaubersama.app.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
+import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.di.module.ActivityModule
+import com.pantaubersama.app.utils.extensions.snackBar
+import timber.log.Timber
 
 /**
  * @author edityomurti on 27/12/2018 01:03
  */
 abstract class BaseDialogFragment<P : BasePresenter<*>> : DialogFragment(), BaseView {
 
-    protected var presenter: P? = null
+    protected abstract var presenter: P
+
+    override fun onAttach(context: Context) {
+        initInjection(createActivityComponent())
+        super.onAttach(context)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initInjection()
-        presenter = initPresenter()
-        if (presenter != null) {
-            presenter?.attach(this)
-        }
+        presenter.attach(this)
+    }
+
+    protected abstract fun initInjection(activityComponent: ActivityComponent)
+
+    override fun onDestroy() {
+        presenter.detach()
+        super.onDestroy()
+    }
+
+    override fun showError(throwable: Throwable) {
+        activity?.window?.decorView?.findViewById<View>(android.R.id.content)?.snackBar(throwable.message!!)
+        Timber.e(throwable)
+    }
+
+    private fun createActivityComponent(): ActivityComponent {
+        return (requireActivity().application as BaseApp).appComponent
+            .withActivityComponent(ActivityModule(requireActivity()))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -32,19 +55,9 @@ abstract class BaseDialogFragment<P : BasePresenter<*>> : DialogFragment(), Base
         initView(view)
     }
 
-    protected abstract fun initPresenter(): P?
-
-    protected open fun initInjection() {}
-
     protected abstract fun initView(view: View)
 
     @LayoutRes
     protected abstract fun setLayout(): Int
 
-    override fun onDestroy() {
-        if (presenter != null) {
-            presenter?.detach()
-        }
-        super.onDestroy()
-    }
 }

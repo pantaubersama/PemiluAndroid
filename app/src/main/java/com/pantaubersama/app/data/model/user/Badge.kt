@@ -1,4 +1,5 @@
 package com.pantaubersama.app.data.model.user
+
 import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.image.Image
 import com.pantaubersama.app.data.model.meta.Meta
@@ -9,9 +10,15 @@ data class BadgeResponse(
 ) : Serializable
 
 data class BadgeData(
-    @SerializedName("achieved_badges") val achievedBadges: List<Badge>,
+    @SerializedName("achieved_badges") val achievedBadges: List<AchievedBadge>,
     @SerializedName("badges") val badges: List<Badge>,
     @SerializedName("meta") val meta: Meta
+) : Serializable
+
+data class AchievedBadge(
+    @SerializedName("achieved_id") val achievedId: String,
+    @SerializedName("badge") val badge: Badge,
+    @SerializedName("user") val user: User
 ) : Serializable
 
 data class Badge(

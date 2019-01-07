@@ -8,12 +8,9 @@ import dagger.Provides
 /**
  * Created by ali on 19/10/17.
  */
-@Module(includes = [ApiModule::class,
-    ConnectionModule::class,
-    RxSchedulersModule::class,
-    SharedPreferenceModule::class])
-class ActivityModule(val activity: Activity?) {
+@Module
+class ActivityModule(private val activity: Activity) {
     @Provides
     @ActivityScope
-    fun provideActivity() = activity
+    fun provideActivity(): Activity = activity
 }

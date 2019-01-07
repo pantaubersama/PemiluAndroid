@@ -7,8 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.base.CommonFragment
 import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
 import com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity
@@ -18,7 +17,7 @@ import com.pantaubersama.app.utils.PantauConstants.RequestCode.FILTER_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.FILTER_PILPRES
 import kotlinx.android.synthetic.main.fragment_linimasa.*
 
-class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
+class LinimasaFragment : CommonFragment() {
     private var selectedTabs: Int = 0
 
     private var pilpresFragment = PilpresFragment.newInstance()
@@ -37,10 +36,6 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
                     FILTER_JANPOL)
             }
         }
-    }
-
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
     }
 
     override fun setLayout(): Int {
@@ -104,12 +99,7 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
         }
     }
 
-    override fun showLoading() {
-    }
-
-    override fun dismissLoading() {
-    }
-
-    override fun showError(throwable: Throwable) {
+    companion object {
+        val TAG: String = LinimasaFragment::class.java.simpleName
     }
 }
