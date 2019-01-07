@@ -5,7 +5,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.di.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_create_janji_politik.*
 import kotlinx.android.synthetic.main.layout_editor_option.*

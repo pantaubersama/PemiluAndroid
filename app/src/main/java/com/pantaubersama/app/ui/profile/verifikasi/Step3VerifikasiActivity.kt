@@ -15,8 +15,6 @@ import android.view.Surface
 import android.view.View
 import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.ui.widget.CameraPreview
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_step3_verifikasi.*

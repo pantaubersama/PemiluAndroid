@@ -6,8 +6,6 @@ import android.view.View
 import android.widget.ArrayAdapter
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.Informant
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.ToastUtil

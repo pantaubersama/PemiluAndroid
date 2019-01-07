@@ -30,7 +30,6 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
-
     }
 
     override fun initView(view: View) {

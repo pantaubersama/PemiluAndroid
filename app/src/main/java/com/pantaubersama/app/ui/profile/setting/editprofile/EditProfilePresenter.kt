@@ -6,7 +6,7 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class EditProfilePresenter @Inject constructor(
-        private val profileInteractor: ProfileInteractor
+    private val profileInteractor: ProfileInteractor
 ) : BasePresenter<EditProfileView>() {
 
     fun getUserData() {

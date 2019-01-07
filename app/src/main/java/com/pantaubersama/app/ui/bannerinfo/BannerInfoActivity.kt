@@ -8,8 +8,6 @@ import android.text.Html
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.ChromeTabUtil

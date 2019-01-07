@@ -19,7 +19,6 @@ class ClusterUndangActivity : BaseActivity<ClusterUndangPresenter>(), ClusterUnd
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
-
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

@@ -3,8 +3,6 @@ package com.pantaubersama.app.ui.profile.verifikasi
 import android.os.Bundle
 import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BasePresenter
 import kotlinx.android.synthetic.main.activity_final_screen_verifikasi.*
 
 class FinalScreenVerifikasiActivity : CommonActivity() {

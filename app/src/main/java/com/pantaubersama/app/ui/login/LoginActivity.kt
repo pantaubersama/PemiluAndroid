@@ -9,9 +9,6 @@ import com.extrainteger.identitaslogin.SymbolicException
 import com.extrainteger.identitaslogin.models.AuthToken
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.LoginInteractor
-import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.utils.ToastUtil

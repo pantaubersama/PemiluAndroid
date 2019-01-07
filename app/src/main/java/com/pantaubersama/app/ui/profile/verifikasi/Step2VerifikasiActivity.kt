@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BasePresenter
 import kotlinx.android.synthetic.main.activity_step2_verifikasi.*
 
 class Step2VerifikasiActivity : CommonActivity() {

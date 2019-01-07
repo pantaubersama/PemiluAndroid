@@ -6,8 +6,6 @@ import android.view.MenuItem
 import android.view.View
 import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
 import kotlinx.android.synthetic.main.activity_filter_janji_politik.*
