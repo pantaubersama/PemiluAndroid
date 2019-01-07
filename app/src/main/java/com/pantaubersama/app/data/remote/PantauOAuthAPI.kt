@@ -101,4 +101,10 @@ interface PantauOAuthAPI {
     fun submitKtpPhoto(
         @Part ktpPhoto: MultipartBody.Part?
     ): Completable
+
+    @Multipart
+    @PUT("/v1/verifications/signature")
+    fun submitSignaturePhoto(
+        @Part signPhoto: MultipartBody.Part?
+    ): Completable
 }

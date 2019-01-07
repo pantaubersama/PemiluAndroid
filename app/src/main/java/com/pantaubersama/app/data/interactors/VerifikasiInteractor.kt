@@ -33,4 +33,12 @@ class VerifikasiInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun submitSignaturePhoto(signPhoto: MultipartBody.Part?): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .submitSignaturePhoto(signPhoto)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }

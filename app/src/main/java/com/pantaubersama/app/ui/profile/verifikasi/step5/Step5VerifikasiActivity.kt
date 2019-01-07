@@ -14,7 +14,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.VerifikasiInteractor
-import com.pantaubersama.app.ui.profile.verifikasi.Step6VerifikasiActivity
+import com.pantaubersama.app.ui.profile.verifikasi.step6.Step6VerifikasiActivity
 import com.pantaubersama.app.ui.widget.CameraPreview
 import com.pantaubersama.app.utils.ImageTools
 import com.pantaubersama.app.utils.PantauConstants
@@ -69,9 +69,6 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
             }
         }
         next_button.setOnClickListener {
-//            val intent = Intent(this@Step5VerifikasiActivity, Step6VerifikasiActivity::class.java)
-//            startActivity(intent)
-//            finish()
             presenter?.submitKtpPhoto(ktpPhoto)
         }
         retake_button.setOnClickListener {

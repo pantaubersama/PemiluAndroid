@@ -1,25 +1,33 @@
-package com.pantaubersama.app.ui.profile.verifikasi
+package com.pantaubersama.app.ui.profile.verifikasi.step7
 
 import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.graphics.Point
 import android.hardware.Camera
 import android.os.Build
 import android.view.Surface
 import android.view.View
+import android.webkit.MimeTypeMap
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.base.BaseApp
+import com.pantaubersama.app.data.interactors.VerifikasiInteractor
+import com.pantaubersama.app.ui.profile.verifikasi.finalstep.FinalScreenVerifikasiActivity
 import com.pantaubersama.app.ui.widget.CameraPreview
+import com.pantaubersama.app.utils.ImageTools
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_step7_verifikasi.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import javax.inject.Inject
 
-class Step7VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
+class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7VerifikasiView {
+    @Inject
+    lateinit var verifikasiInteractor: VerifikasiInteractor
 
     private var permission =
         arrayOf(
@@ -32,16 +40,22 @@ class Step7VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     private var cameraCallback: Camera.PictureCallback? = null
     private var isPreview = false
 
+    private var signPhoto: MultipartBody.Part? = null
+
     override fun statusBarColor(): Int? {
         return 0
+    }
+
+    override fun initInjection() {
+        (application as BaseApp).createActivityComponent(this)?.inject(this)
     }
 
     override fun fetchIntentExtra() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
+    override fun initPresenter(): Step7VerifikasiPresenter {
+        return Step7VerifikasiPresenter(verifikasiInteractor)
     }
 
     override fun setupUI() {
@@ -56,9 +70,7 @@ class Step7VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
             }
         }
         next_button.setOnClickListener {
-            val intent = Intent(this@Step7VerifikasiActivity, FinalScreenVerifikasiActivity::class.java)
-            startActivity(intent)
-            finish()
+            presenter?.submitSignaturePhoto(signPhoto)
         }
         retake_button.setOnClickListener {
             image_preview_container.visibility = View.GONE
@@ -101,11 +113,18 @@ class Step7VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                     Surface.ROTATION_270 -> rotation = 180
                 }
 
-                var bitmap = BitmapTools.toBitmap(data)
-                bitmap = BitmapTools.rotate(bitmap, rotation)
+                var bitmap = ImageTools.BitmapTools.toBitmap(data)
+                bitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
                 image_preview_container.visibility = View.VISIBLE
                 image_preview.setImageBitmap(bitmap)
                 isPreview = true
+
+                val type: String
+                val extension = MimeTypeMap.getFileExtensionFromUrl(ImageTools.getImageFile(bitmap).absolutePath)
+                type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
+
+                val reqFile = RequestBody.create(MediaType.parse(type), ImageTools.getImageFile(bitmap))
+                signPhoto = MultipartBody.Part.createFormData("signature", ImageTools.getImageFile(bitmap).name, reqFile)
             }
             capture_button.setOnClickListener {
                 capture_button.isEnabled = false
@@ -128,18 +147,6 @@ class Step7VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
             }
         }
         return chosenHeight
-    }
-
-    object BitmapTools {
-        fun toBitmap(data: ByteArray): Bitmap {
-            return BitmapFactory.decodeByteArray(data, 0, data.size)
-        }
-
-        fun rotate(bitmap: Bitmap, angle: Int): Bitmap {
-            val mat = Matrix()
-            mat.postRotate(angle.toFloat())
-            return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, mat, true)
-        }
     }
 
     private fun findFrontFacingCamera(): Int {
@@ -196,11 +203,11 @@ class Step7VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressDialog?.show()
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressDialog?.dismiss()
     }
 
     private fun checkCameraHardware(context: Context): Boolean {
@@ -231,5 +238,15 @@ class Step7VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
 
     fun endActivity() {
         finish()
+    }
+
+    override fun onSuccessSignature() {
+        val intent = Intent(this@Step7VerifikasiActivity, FinalScreenVerifikasiActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun showFailedSubmitSignatureAlert() {
+        ToastUtil.show(this@Step7VerifikasiActivity, "Gagal mengirim gambar")
     }
 }
