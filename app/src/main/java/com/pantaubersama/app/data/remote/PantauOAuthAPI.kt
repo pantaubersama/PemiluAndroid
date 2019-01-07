@@ -31,8 +31,7 @@ interface PantauOAuthAPI {
     @POST("/oauth/revoke")
     fun revokeToken(
         @Field("client_id") client_id: String?,
-        @Field("client_secret") client_secret: String?,
-        @Field("token") token: String?
+        @Field("client_secret") client_secret: String?
     ): Completable
 
     @GET("/v1/me")

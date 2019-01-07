@@ -108,7 +108,8 @@
         <activity android:name=".ui.profile.cluster.RequestClusterActivity" />
         <activity android:name=".ui.profile.cluster.ClusterCategoryActivity" />
         <activity android:name=".ui.profile.connect.ConnectActivity" />
-        <activity android:name=".ui.note.CatatanPilihanActivity"></activity>
+        <activity android:name=".ui.note.CatatanPilihanActivity" />
+        <activity android:name=".ui.profile.setting.verified.VerifiedActivity"></activity>
     </application>
 
 </manifest>
