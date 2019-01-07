@@ -9,16 +9,14 @@ import kotlinx.android.synthetic.main.add_category_dialog.view.*
 
 class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), ClusterCategoryView {
 
+    override var presenter: ClusterCategoryPresenter = ClusterCategoryPresenter()
+
     override fun statusBarColor(): Int? {
         return 0
     }
 
     override fun fetchIntentExtra() {
         // ok
-    }
-
-    override fun initPresenter(): ClusterCategoryPresenter? {
-        return ClusterCategoryPresenter()
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

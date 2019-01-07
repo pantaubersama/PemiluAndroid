@@ -6,8 +6,12 @@ import android.text.Html
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_panduan_komunitas.*
+import javax.inject.Inject
 
 class PanduanKomunitasActivity : BaseActivity<PanduanKomunitasPresenter>(), PanduangKomunitasView {
+
+    @Inject
+    override lateinit var presenter: PanduanKomunitasPresenter
 
     override fun statusBarColor(): Int? {
         return 0
@@ -15,10 +19,6 @@ class PanduanKomunitasActivity : BaseActivity<PanduanKomunitasPresenter>(), Pand
 
     override fun fetchIntentExtra() {
         // ok
-    }
-
-    override fun initPresenter(): PanduanKomunitasPresenter? {
-        return PanduanKomunitasPresenter()
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

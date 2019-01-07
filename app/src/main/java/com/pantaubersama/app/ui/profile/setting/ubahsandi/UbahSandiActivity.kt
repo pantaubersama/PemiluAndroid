@@ -16,8 +16,10 @@ import kotlinx.android.synthetic.main.activity_ubah_sandi.*
 import javax.inject.Inject
 
 class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
+
     @Inject
-    lateinit var profileInteractor: ProfileInteractor
+    override lateinit var presenter: UbahSandiPresenter
+
     var passwordValid = false
 
     override fun statusBarColor(): Int? {
@@ -30,10 +32,6 @@ class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): UbahSandiPresenter? {
-        return UbahSandiPresenter(profileInteractor)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

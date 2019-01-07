@@ -19,11 +19,9 @@ import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
-    @Inject
-    lateinit var loginInteractor: LoginInteractor
 
     @Inject
-    lateinit var profileInteractor: ProfileInteractor
+    override lateinit var presenter: LoginPresenter
 
     private var symbolicScope: MutableList<String>? = null
 
@@ -37,10 +35,6 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): LoginPresenter? {
-        return LoginPresenter(loginInteractor, profileInteractor)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
@@ -81,10 +75,6 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
 
     override fun dismissLoading() {
         dismissProgressDialog()
-    }
-
-    override fun showError(throwable: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun openHomeActivity() {

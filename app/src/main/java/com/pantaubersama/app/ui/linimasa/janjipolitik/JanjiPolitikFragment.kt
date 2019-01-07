@@ -31,13 +31,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     val TAG = JanjiPolitikFragment::class.java.simpleName
 
     @Inject
-    lateinit var janpolInteractor: JanjiPolitikInteractor
-
-    @Inject
-    lateinit var bannerInteractor: BannerInfoInteractor
-
-    @Inject
-    lateinit var profileInteractor: ProfileInteractor
+    override lateinit var presenter: JanjiPolitikPresenter
 
     private lateinit var adapter: JanjiPolitikAdapter
 
@@ -52,10 +46,6 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): JanjiPolitikPresenter? {
-        return JanjiPolitikPresenter(janpolInteractor, bannerInteractor, profileInteractor)
     }
 
     override fun initView(view: View) {

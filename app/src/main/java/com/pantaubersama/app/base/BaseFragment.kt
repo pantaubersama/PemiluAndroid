@@ -10,11 +10,12 @@ import timber.log.Timber
 
 /**
  * @author edityomurti on 18/12/2018 01:03
- * This class should be extended only for classes that wants to be injected with Dagger.
+ * This class should be extended only for fragments that has presenter.
  * Otherwise please use CommonFragment instead
  */
 abstract class BaseFragment<P : BasePresenter<*>> : CommonFragment(), BaseView {
-    protected var presenter: P? = null
+
+    protected abstract var presenter: P
 
     override fun onAttach(context: Context) {
         initInjection(createActivityComponent())
@@ -23,20 +24,13 @@ abstract class BaseFragment<P : BasePresenter<*>> : CommonFragment(), BaseView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = initPresenter()
-        if (presenter != null) {
-            presenter?.attach(this)
-        }
+        presenter.attach(this)
     }
 
     protected abstract fun initInjection(activityComponent: ActivityComponent)
 
-    protected abstract fun initPresenter(): P?
-
     override fun onDestroy() {
-        if (presenter != null) {
-            presenter?.detach()
-        }
+        presenter.detach()
         super.onDestroy()
     }
 

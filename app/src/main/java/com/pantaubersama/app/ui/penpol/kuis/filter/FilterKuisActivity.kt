@@ -17,16 +17,14 @@ import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
 import javax.inject.Inject
 
 class FilterKuisActivity : BaseActivity<FilterKuisPresenter>(), FilterKuisView {
+
     @Inject
-    lateinit var kuisInteractor: KuisInteractor
+    override lateinit var presenter: FilterKuisPresenter
+
     private var kuisFilter: String? = null
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): FilterKuisPresenter? {
-        return FilterKuisPresenter(kuisInteractor)
     }
 
     override fun statusBarColor(): Int? {

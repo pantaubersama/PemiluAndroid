@@ -2,8 +2,11 @@ package com.pantaubersama.app.ui.profile.setting.ubahdatalapor
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.ProfileInteractor
+import javax.inject.Inject
 
-class UbahDataLaporPresenter(private val profileInteractor: ProfileInteractor) : BasePresenter<UbahDataLaporView>() {
+class UbahDataLaporPresenter @Inject constructor(
+        private val profileInteractor: ProfileInteractor
+) : BasePresenter<UbahDataLaporView>() {
     fun getDataLapor() {
         disposables?.add(
             profileInteractor

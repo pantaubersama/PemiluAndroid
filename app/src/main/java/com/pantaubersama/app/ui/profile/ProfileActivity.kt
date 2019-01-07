@@ -38,7 +38,7 @@ import javax.inject.Inject
 class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     @Inject
-    lateinit var interactor: ProfileInteractor
+    override lateinit var presenter: ProfilePresenter
 
     private lateinit var activeFragment: Fragment
     private var pLinimasaFragment: ProfileJanjiPolitikFragment? = null
@@ -47,10 +47,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): ProfilePresenter? {
-        return ProfilePresenter(interactor)
     }
 
     override fun statusBarColor(): Int? {

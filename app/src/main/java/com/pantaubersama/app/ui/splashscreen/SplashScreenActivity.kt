@@ -4,16 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.LoginInteractor
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.login.LoginActivity
 import javax.inject.Inject
 
 class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreenView {
+
     @Inject
-    lateinit var interactor: LoginInteractor
+    override lateinit var presenter: SplashScreenPresenter
 
     override fun statusBarColor(): Int? {
         return 0
@@ -27,12 +26,8 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initPresenter(): SplashScreenPresenter? {
-        return SplashScreenPresenter(interactor)
-    }
-
     override fun setupUI(savedInstanceState: Bundle?) {
-        presenter?.getLoginState()
+        presenter.getLoginState()
     }
 
     override fun goToHome() {

@@ -3,8 +3,11 @@ package com.pantaubersama.app.ui.note
 import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.di.component.ActivityComponent
 
 class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanPilihanView {
+
+    override var presenter: CatatanPilihanPresenter = CatatanPilihanPresenter()
 
     val presidenFragment = PresidenFragment.newInstance()
 
@@ -14,10 +17,6 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
 
     override fun fetchIntentExtra() {
         // ok
-    }
-
-    override fun initPresenter(): CatatanPilihanPresenter? {
-        return CatatanPilihanPresenter()
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

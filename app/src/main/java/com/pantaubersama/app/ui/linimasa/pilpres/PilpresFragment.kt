@@ -37,13 +37,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     val TAG = PilpresFragment::class.java.simpleName
 
     @Inject
-    lateinit var pilpresInteractor: PilpresInteractor
-
-    @Inject
-    lateinit var bannerInfoInteractor: BannerInfoInteractor
-
-    @Inject
-    lateinit var filterPilpresInteractor: FilterPilpresInteractor
+    override lateinit var presenter: PilpresPresenter
 
     private var perPage = 20
 
@@ -63,10 +57,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): PilpresPresenter? {
-        return PilpresPresenter(pilpresInteractor, bannerInfoInteractor, filterPilpresInteractor)
     }
 
     override fun initView(view: View) {

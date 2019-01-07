@@ -42,7 +42,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     private var imageUriFromCamera: Uri? = null
 
     @Inject
-    lateinit var profileInteractor: ProfileInteractor
+    override lateinit var presenter: EditProfilePresenter
 
     override fun statusBarColor(): Int? {
         return 0
@@ -54,10 +54,6 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): EditProfilePresenter? {
-        return EditProfilePresenter(profileInteractor)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

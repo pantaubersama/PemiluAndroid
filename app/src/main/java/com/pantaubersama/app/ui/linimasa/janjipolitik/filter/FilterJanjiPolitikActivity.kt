@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
@@ -12,11 +13,7 @@ import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
 import kotlinx.android.synthetic.main.activity_filter_janji_politik.*
 import kotlinx.android.synthetic.main.item_cluster.*
 
-class FilterJanjiPolitikActivity : BaseActivity<BasePresenter<*>>() {
-
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
-    }
+class FilterJanjiPolitikActivity : CommonActivity() {
 
     override fun statusBarColor(): Int? {
         return R.color.white
@@ -46,14 +43,6 @@ class FilterJanjiPolitikActivity : BaseActivity<BasePresenter<*>>() {
 
     override fun setLayout(): Int {
         return R.layout.activity_filter_janji_politik
-    }
-
-    override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

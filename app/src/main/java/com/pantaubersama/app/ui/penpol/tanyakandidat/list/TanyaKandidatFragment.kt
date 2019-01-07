@@ -39,14 +39,9 @@ import javax.inject.Inject
 import kotlin.math.roundToInt
 
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
-    @Inject
-    lateinit var tanyaInteractor: TanyaKandidatInteractor
 
     @Inject
-    lateinit var dataCache: DataCache
-
-    @Inject
-    lateinit var bannerInfoInteractor: BannerInfoInteractor
+    override lateinit var presenter: TanyaKandidatPresenter
 
     private var page = 1
     private var perPage = 10
@@ -56,10 +51,6 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): TanyaKandidatPresenter? {
-        return TanyaKandidatPresenter(tanyaInteractor, bannerInfoInteractor)
     }
 
     override fun initView(view: View) {
@@ -84,7 +75,6 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     private fun setupTanyaKandidatList() {
-        val userId = dataCache.loadUserProfile().id
         adapter = TanyaKandidatAdapter()
         layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         recycler_view.layoutManager = layoutManager
@@ -103,7 +93,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
             override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
                 val dialog = OptionDialog(context!!, item, R.layout.layout_option_dialog_tanya_kandidat)
-                if (!item.user?.id.equals(userId)) {
+                if (!item.user?.id.equals(presenter.getUserId())) {
                     dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
                     dialog.removeItem(R.id.report_tanya_kandidat_action)
                 }

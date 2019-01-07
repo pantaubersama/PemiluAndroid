@@ -5,12 +5,12 @@ import com.pantaubersama.app.data.interactors.LoginInteractor
 import javax.inject.Inject
 
 class SettingPresenter @Inject constructor(private val loginInteractor: LoginInteractor?) : BasePresenter<SettingView>() {
-    fun logOut(clientId: String?, clientSecret: String?, token: String?) {
+    fun logOut(clientId: String?, clientSecret: String?) {
         disposables?.add(
                 loginInteractor?.logOut(
                         clientId,
                         clientSecret,
-                        token
+                        loginInteractor.getToken()
                 )?.doOnComplete {
                     loginInteractor.clearDataCache()
                     view?.goToLogin()

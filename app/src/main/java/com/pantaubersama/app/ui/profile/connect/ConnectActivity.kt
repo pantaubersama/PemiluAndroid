@@ -3,8 +3,13 @@ package com.pantaubersama.app.ui.profile.connect
 import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.di.component.ActivityComponent
+import javax.inject.Inject
 
 class ConnectActivity : BaseActivity<ConnectPresenter>(), ConnectView {
+
+    @Inject
+    override lateinit var presenter: ConnectPresenter
 
     override fun statusBarColor(): Int? {
         return 0
@@ -13,8 +18,8 @@ class ConnectActivity : BaseActivity<ConnectPresenter>(), ConnectView {
     override fun fetchIntentExtra() {
     }
 
-    override fun initPresenter(): ConnectPresenter? {
-        return ConnectPresenter()
+    override fun initInjection(activityComponent: ActivityComponent) {
+
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

@@ -16,12 +16,10 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
         }
     }
 
+    override var presenter: ProfileJanjiPolitikPresenter = ProfileJanjiPolitikPresenter()
+
     override fun initInjection(activityComponent: ActivityComponent) {
 
-    }
-
-    override fun initPresenter(): ProfileJanjiPolitikPresenter? {
-        return ProfileJanjiPolitikPresenter()
     }
 
     override fun initView(view: View) {

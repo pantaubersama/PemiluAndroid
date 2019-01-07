@@ -4,8 +4,12 @@ import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_tentang_app.*
+import javax.inject.Inject
 
 class TentangAppActivity : BaseActivity<TentangAppPresenter>(), TentangAppView {
+
+    @Inject
+    override lateinit var presenter: TentangAppPresenter
 
     override fun statusBarColor(): Int? {
         return 0
@@ -13,10 +17,6 @@ class TentangAppActivity : BaseActivity<TentangAppPresenter>(), TentangAppView {
 
     override fun fetchIntentExtra() {
         // ok
-    }
-
-    override fun initPresenter(): TentangAppPresenter? {
-        return TentangAppPresenter()
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

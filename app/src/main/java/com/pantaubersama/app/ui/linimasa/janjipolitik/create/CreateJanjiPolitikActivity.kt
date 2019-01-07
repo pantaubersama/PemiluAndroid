@@ -9,8 +9,13 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.di.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_create_janji_politik.*
 import kotlinx.android.synthetic.main.layout_editor_option.*
+import javax.inject.Inject
 
 class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), CreateJanjiPolitikView {
+
+    @Inject
+    override lateinit var presenter: CreateJanjiPolitikPresenter
+
     override fun statusBarColor(): Int? {
         return 0
     }
@@ -21,10 +26,6 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): CreateJanjiPolitikPresenter? {
-        return CreateJanjiPolitikPresenter()
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

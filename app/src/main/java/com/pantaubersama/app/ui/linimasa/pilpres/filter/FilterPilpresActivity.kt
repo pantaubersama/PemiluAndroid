@@ -19,15 +19,12 @@ import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
 import javax.inject.Inject
 
 class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilpresView {
+
     @Inject
-    lateinit var interactor: FilterPilpresInteractor
+    override lateinit var presenter: FilterPilpresPresenter
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): FilterPilpresPresenter? {
-        return FilterPilpresPresenter(interactor)
     }
 
     private var selectedFilter: String? = ""

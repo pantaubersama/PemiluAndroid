@@ -29,10 +29,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     val TAG = KuisFragment::class.java.simpleName
 
     @Inject
-    lateinit var kuisInteractor: KuisInteractor
-
-    @Inject
-    lateinit var bannerInteractor: BannerInfoInteractor
+    override lateinit var presenter: KuisPresenter
 
     private lateinit var adapter: KuisListAdapter
 
@@ -41,8 +38,6 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
-
-    override fun initPresenter(): KuisPresenter? = KuisPresenter(kuisInteractor, bannerInteractor)
 
     override fun initView(view: View) {
         adapter = KuisListAdapter()

@@ -5,8 +5,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -16,7 +14,7 @@ import javax.inject.Inject
 class BadgeActivity : BaseActivity<BadgePresenter>(), BadgeView {
 
     @Inject
-    lateinit var interactor: ProfileInteractor
+    override lateinit var presenter: BadgePresenter
 
     private lateinit var adapter: BadgeAdapter
 
@@ -30,14 +28,10 @@ class BadgeActivity : BaseActivity<BadgePresenter>(), BadgeView {
         activityComponent.inject(this)
     }
 
-    override fun initPresenter(): BadgePresenter? {
-        return BadgePresenter(interactor)
-    }
-
     override fun setupUI(savedInstanceState: Bundle?) {
         setupRecyclerView()
         onClickAction()
-        presenter?.refreshBadges()
+        presenter.refreshBadges()
     }
 
     private fun setupRecyclerView() {
@@ -48,7 +42,7 @@ class BadgeActivity : BaseActivity<BadgePresenter>(), BadgeView {
         badge_recycler_view.layoutManager = LinearLayoutManager(this)
 
         badge_swipe_refresh.setOnRefreshListener {
-            presenter?.refreshBadges()
+            presenter.refreshBadges()
             badge_swipe_refresh.isRefreshing = false
         }
     }

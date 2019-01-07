@@ -17,8 +17,10 @@ import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
 import javax.inject.Inject
 
 class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>(), FilterTanyaKandidatView {
+
     @Inject
-    lateinit var interactor: TanyaKandidatInteractor
+    override lateinit var presenter: FilterTanyaKandidatPresenter
+
     private var userFilter: String? = null
     private var orderFilter: String? = null
 
@@ -32,10 +34,6 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): FilterTanyaKandidatPresenter? {
-        return FilterTanyaKandidatPresenter(interactor)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

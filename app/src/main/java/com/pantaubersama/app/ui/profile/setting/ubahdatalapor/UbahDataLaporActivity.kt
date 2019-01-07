@@ -16,8 +16,9 @@ import kotlinx.android.synthetic.main.activity_ubah_data_lapor.*
 import javax.inject.Inject
 
 class UbahDataLaporActivity : BaseActivity<UbahDataLaporPresenter>(), UbahDataLaporView {
+
     @Inject
-    lateinit var profileInteractor: ProfileInteractor
+    override lateinit var presenter: UbahDataLaporPresenter
 
     override fun statusBarColor(): Int? {
         return 0
@@ -29,10 +30,6 @@ class UbahDataLaporActivity : BaseActivity<UbahDataLaporPresenter>(), UbahDataLa
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): UbahDataLaporPresenter? {
-        return UbahDataLaporPresenter(profileInteractor)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

@@ -3,13 +3,14 @@ package com.pantaubersama.app.ui.linimasa.janjipolitik.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_detail_janji_politik.*
 
-class DetailJanjiPolitikActivity : BaseActivity<BasePresenter<*>>() {
+class DetailJanjiPolitikActivity : CommonActivity() {
 
     private var id: String? = null
 
@@ -19,10 +20,6 @@ class DetailJanjiPolitikActivity : BaseActivity<BasePresenter<*>>() {
             intent.putExtra(PantauConstants.Extra.JANPOL_ID, id)
             return intent
         }
-    }
-
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
     }
 
     override fun statusBarColor(): Int? {
@@ -45,13 +42,5 @@ class DetailJanjiPolitikActivity : BaseActivity<BasePresenter<*>>() {
 
     override fun setLayout(): Int {
         return R.layout.activity_detail_janji_politik
-    }
-
-    override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

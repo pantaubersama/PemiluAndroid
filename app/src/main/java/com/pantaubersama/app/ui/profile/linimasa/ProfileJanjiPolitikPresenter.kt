@@ -2,11 +2,12 @@ package com.pantaubersama.app.ui.profile.linimasa
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
+import javax.inject.Inject
 
 /**
  * @author edityomurti on 27/12/2018 15:29
  */
-class ProfileJanjiPolitikPresenter : BasePresenter<ProfileJanjiPolitikView>() {
+class ProfileJanjiPolitikPresenter @Inject constructor() : BasePresenter<ProfileJanjiPolitikView>() {
     fun getJanjiPolitikList() {
         view?.showLoading()
 

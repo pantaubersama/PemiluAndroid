@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.penpol.kuis.result
 
 import android.content.Intent
 import android.os.Bundle
+import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
@@ -9,9 +10,7 @@ import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_kuis_result.*
 
-class KuisResultActivity : BaseActivity<BasePresenter<*>>() {
-
-    override fun initPresenter(): BasePresenter<*>? = null
+class KuisResultActivity : CommonActivity() {
 
     override fun statusBarColor(): Int? = R.color.white
 
@@ -33,10 +32,4 @@ class KuisResultActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun setLayout(): Int = R.layout.activity_kuis_result
-
-    override fun showLoading() {
-    }
-
-    override fun dismissLoading() {
-    }
 }

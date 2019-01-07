@@ -15,6 +15,9 @@ import com.pantaubersama.app.utils.ShareUtil
 import kotlinx.android.synthetic.main.fragment_profile_tanya_kandidat.*
 
 class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>(), ProfileTanyaKandidatView {
+
+    override var presenter: ProfileTanyaKandidatPresenter = ProfileTanyaKandidatPresenter()
+
     private lateinit var adapter: TanyaKandidatAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private var isDataEnd = false
@@ -28,10 +31,6 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
 
     override fun initInjection(activityComponent: ActivityComponent) {
 
-    }
-
-    override fun initPresenter(): ProfileTanyaKandidatPresenter? {
-        return ProfileTanyaKandidatPresenter()
     }
 
     override fun initView(view: View) {

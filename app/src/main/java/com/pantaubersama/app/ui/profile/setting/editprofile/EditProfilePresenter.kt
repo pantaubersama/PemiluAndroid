@@ -3,8 +3,12 @@ package com.pantaubersama.app.ui.profile.setting.editprofile
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import okhttp3.MultipartBody
+import javax.inject.Inject
 
-class EditProfilePresenter(private val profileInteractor: ProfileInteractor) : BasePresenter<EditProfileView>() {
+class EditProfilePresenter @Inject constructor(
+        private val profileInteractor: ProfileInteractor
+) : BasePresenter<EditProfileView>() {
+
     fun getUserData() {
         view?.onSuccessLoadUser(profileInteractor.getProfile())
     }

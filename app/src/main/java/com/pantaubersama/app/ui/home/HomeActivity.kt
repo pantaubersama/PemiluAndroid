@@ -20,7 +20,7 @@ import javax.inject.Inject
 class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
     @Inject
-    lateinit var profileInteractor: ProfileInteractor
+    override lateinit var presenter: HomePresenter
 
     override fun statusBarColor(): Int {
         return R.color.white
@@ -32,10 +32,6 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): HomePresenter {
-        return HomePresenter(profileInteractor)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

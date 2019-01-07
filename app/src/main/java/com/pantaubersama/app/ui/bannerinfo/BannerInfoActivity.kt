@@ -22,7 +22,8 @@ import javax.inject.Inject
 class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
 
     @Inject
-    lateinit var interactor: BannerInfoInteractor
+    override lateinit var presenter: BannerInfoPresenter
+
     private var infoType: Int? = null
     private var bannerInfo: BannerInfo? = null
 
@@ -46,10 +47,6 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
     override fun fetchIntentExtra() {
         this.infoType = intent.getIntExtra(PantauConstants.Extra.BANNER_INFO_TYPE, 0)
         this.bannerInfo = intent.getSerializableExtra(PantauConstants.Extra.BANNER_INFO_DATA) as BannerInfo
-    }
-
-    override fun initPresenter(): BannerInfoPresenter? {
-        return BannerInfoPresenter(interactor)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

@@ -3,22 +3,19 @@ package com.pantaubersama.app.ui.penpol.kuis.kuisstart
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_kuis.*
 
-class KuisActivity : BaseActivity<BasePresenter<*>>() {
+class KuisActivity : CommonActivity() {
 
     private var questionNumber: Int = 0
 
     override fun statusBarColor(): Int? {
         return 0
-    }
-
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
     }
 
     override fun fetchIntentExtra() {
@@ -49,14 +46,6 @@ class KuisActivity : BaseActivity<BasePresenter<*>>() {
 
     override fun setLayout(): Int {
         return R.layout.activity_kuis
-    }
-
-    override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     companion object {

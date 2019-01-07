@@ -23,10 +23,10 @@ import kotlinx.android.synthetic.main.activity_create_tanya_kandidat.*
 import javax.inject.Inject
 
 class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>(), CreateTanyaKandidatView {
+
     @Inject
-    lateinit var tanyaKandidatInteractor: TanyaKandidatInteractor
-    @Inject
-    lateinit var profileInteractor: ProfileInteractor
+    override lateinit var presenter: CreateTanyaKandidatPresenter
+
     private var isLoading = false
 
     override fun statusBarColor(): Int {
@@ -39,10 +39,6 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun initPresenter(): CreateTanyaKandidatPresenter? {
-        return CreateTanyaKandidatPresenter(tanyaKandidatInteractor, profileInteractor)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

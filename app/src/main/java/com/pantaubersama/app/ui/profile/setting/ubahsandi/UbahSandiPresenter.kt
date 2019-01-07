@@ -2,8 +2,11 @@ package com.pantaubersama.app.ui.profile.setting.ubahsandi
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.ProfileInteractor
+import javax.inject.Inject
 
-class UbahSandiPresenter(private val profileInteractor: ProfileInteractor) : BasePresenter<UbahSandiView>() {
+class UbahSandiPresenter @Inject constructor(
+        private val profileInteractor: ProfileInteractor
+) : BasePresenter<UbahSandiView>() {
     fun updatePassword(password: String, confirmation: String) {
         view?.showLoading()
         view?.disableView()

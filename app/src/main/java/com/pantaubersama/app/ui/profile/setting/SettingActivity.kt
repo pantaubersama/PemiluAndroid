@@ -21,8 +21,9 @@ import kotlinx.android.synthetic.main.activity_setting.*
 import javax.inject.Inject
 
 class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
+
     @Inject
-    lateinit var interactor: LoginInteractor
+    override lateinit var presenter: SettingPresenter
 
     companion object {
         val EDIT_PROFILE = 1
@@ -43,10 +44,6 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     override fun fetchIntentExtra() {
         // OK
-    }
-
-    override fun initPresenter(): SettingPresenter? {
-        return SettingPresenter(interactor)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
@@ -112,7 +109,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             // bagikan aplikasi pantau bersama
         }
         setting_logout.setOnClickListener {
-            presenter?.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET, interactor.getToken())
+            presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
         }
     }
 
