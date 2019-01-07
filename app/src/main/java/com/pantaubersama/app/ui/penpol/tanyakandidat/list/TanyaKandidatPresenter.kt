@@ -3,10 +3,12 @@ package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
+import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
 
 class TanyaKandidatPresenter @Inject constructor(
+    private val dataCache: DataCache,
     private val tanyaKandidatInteractor: TanyaKandidatInteractor,
     private val bannerInfoInteractor: BannerInfoInteractor
 ) : BasePresenter<TanyaKandidatView>() {
@@ -24,6 +26,10 @@ class TanyaKandidatPresenter @Inject constructor(
                 }
             )!!
         )
+    }
+
+    fun getUserId(): String {
+        return dataCache.loadUserProfile().id
     }
 
     fun getTanyaKandidatList(

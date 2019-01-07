@@ -1,13 +1,13 @@
 package com.pantaubersama.app.ui.profile.verifikasi.step1
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_step1_verifikasi.*
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.VerifikasiInteractor
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.profile.verifikasi.step2.Step2VerifikasiActivity
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
@@ -15,26 +15,23 @@ import java.util.regex.Pattern
 import javax.inject.Inject
 
 class Step1VerifikasiActivity : BaseActivity<Step1VerifikasiPresenter>(), Step1VerifikasiView {
+
     @Inject
-    lateinit var interactor: VerifikasiInteractor
+    override lateinit var presenter: Step1VerifikasiPresenter
 
     override fun statusBarColor(): Int? {
         return 0
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun fetchIntentExtra() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initPresenter(): Step1VerifikasiPresenter? {
-        return Step1VerifikasiPresenter(interactor)
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "", R.color.white, 4f)
         verification_step_indicator.text = "0/3"
         ok_button.setOnClickListener {

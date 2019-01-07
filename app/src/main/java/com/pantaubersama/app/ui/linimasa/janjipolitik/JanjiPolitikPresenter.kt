@@ -19,6 +19,10 @@ class JanjiPolitikPresenter @Inject constructor(
 
     var perPage = 20
 
+    fun getUserId(): String {
+        return profileInteractor.getProfile().id
+    }
+
     fun isUserEligible(): Boolean {
         return profileInteractor.isEligible()
     }

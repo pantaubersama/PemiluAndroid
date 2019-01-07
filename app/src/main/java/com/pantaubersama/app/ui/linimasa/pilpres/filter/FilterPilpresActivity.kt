@@ -3,12 +3,12 @@ package com.pantaubersama.app.ui.linimasa.pilpres.filter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.FilterPilpresInteractor
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_ALL
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_1
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_2
@@ -17,15 +17,12 @@ import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
 import javax.inject.Inject
 
 class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilpresView {
+
     @Inject
-    lateinit var interactor: FilterPilpresInteractor
+    override lateinit var presenter: FilterPilpresPresenter
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
-    }
-
-    override fun initPresenter(): FilterPilpresPresenter? {
-        return FilterPilpresPresenter(interactor)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     private var selectedFilter: String? = ""
@@ -45,9 +42,9 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
     override fun fetchIntentExtra() {
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
-        presenter?.getFilter()
+        presenter.getFilter()
 
         radio_group_pilpres.setOnCheckedChangeListener { view, checkedId ->
             selectedFilter = when (checkedId) {
@@ -59,7 +56,7 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
         }
 
         btn_terapkan.setOnClickListener {
-            presenter?.setFilter(selectedFilter!!)
+            presenter.setFilter(selectedFilter!!)
         }
     }
 
@@ -107,10 +104,5 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
 
     override fun dismissLoading() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onDestroy() {
-        (application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 }

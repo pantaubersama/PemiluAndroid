@@ -6,17 +6,17 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
 import android.view.* // ktlint-disable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.profile.cluster.RequestClusterActivity
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
@@ -36,19 +36,15 @@ import javax.inject.Inject
 class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     @Inject
-    lateinit var interactor: ProfileInteractor
+    override lateinit var presenter: ProfilePresenter
 
     private lateinit var activeFragment: Fragment
     private var pLinimasaFragment: ProfileJanjiPolitikFragment? = null
     private var pTanyaKandidatFragment: ProfileTanyaKandidatFragment? = null
     private var otherFrag: Fragment? = null // dummy
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
-    }
-
-    override fun initPresenter(): ProfilePresenter? {
-        return ProfilePresenter(interactor)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun statusBarColor(): Int? {
@@ -59,16 +55,16 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "", R.color.white, 4f)
         setupClusterLayout()
         setupBiodataLayout()
         setupBadgeLayout()
         initFragment()
         setupNavigation()
-        presenter?.refreshProfile()
-        presenter?.getProfile()
-        presenter?.refreshBadges()
+        presenter.refreshProfile()
+        presenter.getProfile()
+        presenter.refreshBadges()
     }
 
     override fun showProfile(profile: Profile) {
@@ -288,7 +284,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         lp.gravity = Gravity.CENTER
         window?.attributes = lp
         dialog.yes_button.setOnClickListener {
-            presenter?.leaveCluster(cluster.name)
+            presenter.leaveCluster(cluster.name)
             dialog.dismiss()
         }
         dialog.no_button.setOnClickListener {

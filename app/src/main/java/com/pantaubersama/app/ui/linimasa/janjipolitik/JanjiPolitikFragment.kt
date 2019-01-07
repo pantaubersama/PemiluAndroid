@@ -10,16 +10,12 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BaseRecyclerAdapter
-import com.pantaubersama.app.data.interactors.BannerInfoInteractor
-import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
-import com.pantaubersama.app.data.interactors.ProfileInteractor
-import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.adapter.JanjiPolitikAdapter
 import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity
@@ -38,10 +34,8 @@ import kotlin.math.roundToInt
 class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitikView {
     val TAG = JanjiPolitikFragment::class.java.simpleName
 
-    @Inject lateinit var janpolInteractor: JanjiPolitikInteractor
-    @Inject lateinit var dataCache: DataCache
-    @Inject lateinit var bannerInteractor: BannerInfoInteractor
-    @Inject lateinit var profileInteractor: ProfileInteractor
+    @Inject
+    override lateinit var presenter: JanjiPolitikPresenter
 
     private lateinit var adapter: JanjiPolitikAdapter
 
@@ -54,16 +48,12 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         }
     }
 
-    override fun initInjection() {
-        (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
-    }
-
-    override fun initPresenter(): JanjiPolitikPresenter? {
-        return JanjiPolitikPresenter(janpolInteractor, bannerInteractor, profileInteractor)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initView(view: View) {
-        if (presenter?.isUserEligible()!!) {
+        if (presenter.isUserEligible()) {
             fab_add.visibleIf(true)
             fab_add.setOnClickListener {
                 val intent = Intent(context, CreateJanjiPolitikActivity::class.java)
@@ -80,7 +70,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     private fun setupRecyclerJanpol() {
-        val userId = dataCache.loadUserProfile().id
+        val userId = presenter.getUserId()
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         adapter = JanjiPolitikAdapter()
         recycler_view.layoutManager = layoutManager
@@ -152,11 +142,11 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         adapter.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
             override fun loadMore(page: Int) {
                 adapter.setLoading()
-                presenter?.getJanjiPolitikList(page)
+                presenter.getJanjiPolitikList(page)
             }
         }, 10)
 
-        if (presenter?.isUserEligible()!!) {
+        if (presenter.isUserEligible()) {
             recycler_view.setPadding(0, 0, 0,
                 (resources.getDimension(R.dimen.fab_size) + resources.getDimension(R.dimen.fab_margin)).roundToInt())
 
@@ -180,7 +170,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
     private fun getJanjiPolitikList() {
         adapter.setDataEnd(false)
-        presenter?.getList()
+        presenter.getList()
     }
 
     override fun showJanpolList(janjiPolitikList: MutableList<JanjiPolitik>) {
@@ -198,7 +188,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
     override fun showMoreJanpolList(janjiPolitikList: MutableList<JanjiPolitik>) {
         adapter.setLoaded()
-        if (janjiPolitikList.size < presenter?.perPage!!) {
+        if (janjiPolitikList.size < presenter.perPage) {
             adapter.setDataEnd(true)
         }
         adapter.addData(janjiPolitikList as MutableList<ItemModel>)
@@ -225,7 +215,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         view_fail_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
         lottie_loading.visibility = View.VISIBLE
-        if (presenter?.isUserEligible()!!) {
+        if (presenter.isUserEligible()) {
             fab_add.hide()
         }
     }
@@ -233,14 +223,13 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     override fun dismissLoading() {
         recycler_view.visibility = View.GONE
         lottie_loading.visibility = View.GONE
-        if (presenter?.isUserEligible()!!) {
+        if (presenter.isUserEligible()) {
             fab_add.show()
         }
     }
 
-    override fun onDestroy() {
-        (activity?.application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
+    override fun showError(throwable: Throwable) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

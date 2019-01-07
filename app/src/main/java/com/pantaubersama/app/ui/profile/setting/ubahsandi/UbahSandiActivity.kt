@@ -1,21 +1,23 @@
 package com.pantaubersama.app.ui.profile.setting.ubahsandi
 
 import android.app.Activity
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.ProfileInteractor
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import kotlinx.android.synthetic.main.activity_ubah_sandi.*
 import javax.inject.Inject
 
 class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
+
     @Inject
-    lateinit var profileInteractor: ProfileInteractor
+    override lateinit var presenter: UbahSandiPresenter
+
     var passwordValid = false
 
     override fun statusBarColor(): Int? {
@@ -26,15 +28,11 @@ class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
         // ok
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun initPresenter(): UbahSandiPresenter? {
-        return UbahSandiPresenter(profileInteractor)
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_ubah_sandi), R.color.white, 4f)
         setupPasswordField()
         onClickAction()
@@ -90,7 +88,7 @@ class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
             if (ubah_sandi_sandi_baru.error == null) {
                 if (repeat_password.error == null) {
                     if (ubah_sandi_lama.text.isNotEmpty()) {
-                        presenter?.updatePassword(
+                        presenter.updatePassword(
                             ubah_sandi_sandi_baru.text.toString(),
                             repeat_password.text.toString()
                         )

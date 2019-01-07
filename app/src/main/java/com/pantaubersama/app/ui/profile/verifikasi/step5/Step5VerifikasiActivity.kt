@@ -7,13 +7,13 @@ import android.content.pm.PackageManager
 import android.graphics.Point
 import android.hardware.Camera
 import android.os.Build
+import android.os.Bundle
 import android.view.Surface
 import android.view.View
 import android.webkit.MimeTypeMap
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.VerifikasiInteractor
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.profile.verifikasi.step6.Step6VerifikasiActivity
 import com.pantaubersama.app.ui.widget.CameraPreview
 import com.pantaubersama.app.utils.ImageTools
@@ -26,8 +26,9 @@ import okhttp3.RequestBody
 import javax.inject.Inject
 
 class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5VerifikasiView {
+
     @Inject
-    lateinit var verifikasiInteractor: VerifikasiInteractor
+    override lateinit var presenter: Step5VerifikasiPresenter
 
     private var permission =
         arrayOf(
@@ -49,15 +50,11 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun initPresenter(): Step5VerifikasiPresenter {
-        return Step5VerifikasiPresenter(verifikasiInteractor)
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
 

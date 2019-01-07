@@ -7,18 +7,18 @@ import android.content.pm.PackageManager
 import android.graphics.Point
 import android.hardware.Camera
 import android.os.Build
+import android.os.Bundle
 import android.view.Surface
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.VerifikasiInteractor
 import com.pantaubersama.app.ui.profile.verifikasi.step4.Step4VerifikasiActivity
 import com.pantaubersama.app.ui.widget.CameraPreview
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_step3_verifikasi.*
 import javax.inject.Inject
 import android.webkit.MimeTypeMap
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.ImageTools
 import com.pantaubersama.app.utils.ToastUtil
 import okhttp3.MediaType
@@ -26,8 +26,10 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3VerifikasiView {
+
     @Inject
-    lateinit var verifikasiInteractor: VerifikasiInteractor
+    override lateinit var presenter: Step3VerifikasiPresenter
+
     private var ktpSelfie: MultipartBody.Part? = null
 
     private var permission =
@@ -49,15 +51,11 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun initPresenter(): Step3VerifikasiPresenter {
-        return Step3VerifikasiPresenter(verifikasiInteractor)
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
 

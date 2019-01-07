@@ -7,15 +7,14 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.LoginInteractor
-import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.clusterundang.ClusterUndangActivity
@@ -31,10 +30,9 @@ import kotlinx.android.synthetic.main.verified_layout.*
 import javax.inject.Inject
 
 class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
+
     @Inject
-    lateinit var loginInteractor: LoginInteractor
-    @Inject
-    lateinit var profileInteractor: ProfileInteractor
+    override lateinit var presenter: SettingPresenter
     private var verifiedDialog: Dialog? = null
 
     companion object {
@@ -46,8 +44,8 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         val CLUSTER_UNDANG = 6
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun statusBarColor(): Int? {
@@ -58,14 +56,10 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         // OK
     }
 
-    override fun initPresenter(): SettingPresenter? {
-        return SettingPresenter(loginInteractor, profileInteractor)
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_setting), R.color.white, 4f)
         onClickAction()
-        presenter?.getProfile()
+        presenter.getProfile()
     }
 
     override fun onSuccessGetProfile(profile: Profile) {
@@ -165,7 +159,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             // bagikan aplikasi pantau bersama
         }
         setting_logout.setOnClickListener {
-            presenter?.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
+            presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
         }
     }
 

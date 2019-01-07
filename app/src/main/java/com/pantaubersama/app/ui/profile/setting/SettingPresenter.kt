@@ -6,12 +6,12 @@ import com.pantaubersama.app.data.interactors.ProfileInteractor
 import javax.inject.Inject
 
 class SettingPresenter @Inject constructor(
-    private val loginInteractor: LoginInteractor?,
+    private val loginInteractor: LoginInteractor,
     private val profileInteractor: ProfileInteractor
 ) : BasePresenter<SettingView>() {
     fun logOut(clientId: String?, clientSecret: String?) {
         disposables?.add(
-                loginInteractor?.logOut(
+                loginInteractor.logOut(
                         clientId,
                         clientSecret
                 )?.doOnComplete {
