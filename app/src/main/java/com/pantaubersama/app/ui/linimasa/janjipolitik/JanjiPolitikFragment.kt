@@ -178,7 +178,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         getJanjiPolitikList()
     }
 
-    private fun getJanjiPolitikList() {
+    fun getJanjiPolitikList() {
         adapter.setDataEnd(false)
         presenter?.getList()
     }

@@ -21,14 +21,12 @@ class JanjiPolitikInteractor @Inject constructor(
     }
 
     fun getJanpolClusterFilter(): ClusterItem? {
-        return dataCache?.getJanpolClusterFilter() ?: ClusterItem()
+        return dataCache?.getJanpolClusterFilter()
     }
 
     fun setJanpolFilter(userFilter: String, clusterFilter: ClusterItem?) {
         dataCache?.saveJanpolUserFilter(userFilter)
-        if (clusterFilter != null) {
-            dataCache?.saveJanpolClusterFilter(clusterFilter)
-        }
+        dataCache?.saveJanpolClusterFilter(clusterFilter)
     }
 
     fun getJanPol(

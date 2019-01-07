@@ -4,7 +4,6 @@ import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
-import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 

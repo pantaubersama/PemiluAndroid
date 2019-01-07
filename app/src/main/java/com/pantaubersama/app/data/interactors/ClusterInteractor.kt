@@ -10,7 +10,7 @@ class ClusterInteractor @Inject constructor(
     private val apiWrapper: APIWrapper?,
     private val rxSchedulers: RxSchedulers
 ) {
-    fun getClusterList(page: Int, perPage: Int) : Single<MutableList<ClusterItem>>? {
+    fun getClusterList(page: Int, perPage: Int): Single<MutableList<ClusterItem>>? {
         return apiWrapper?.getPantauOAuthApi()
             ?.getClusterList(page, perPage)
             ?.subscribeOn(rxSchedulers.io())

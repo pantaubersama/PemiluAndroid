@@ -3,7 +3,6 @@ package com.pantaubersama.app.ui.linimasa.janjipolitik.filter
 import android.app.Activity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
@@ -19,7 +18,6 @@ import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_filter_janji_politik.*
 import kotlinx.android.synthetic.main.item_cluster.*
 import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), FilterJanjiPolitikView {
@@ -75,6 +73,7 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
     }
 
     private fun selectCluster(item: ClusterItem?) {
+        this.clusterFilter = item
         if (item == null) {
             layout_default_cluster_filter.visibleIf(true)
             item_cluster.visibleIf(false)
@@ -103,8 +102,6 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
 
         selectCluster(clusterFilter)
 
-        Timber.e("clusterFilter : $clusterFilter")
-
         radio_group_janpol.check(when (userFilter) {
             USER_VERIFIED_TRUE -> R.id.radbtn_terverifikasi
             USER_VERIFIED_FALSE -> R.id.radbtn_belum_verifikasi
@@ -130,7 +127,10 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
                 return true
             }
             R.id.action_reset -> {
-                // reset
+                radio_group_janpol.check(R.id.radbtn_semua)
+                selectCluster(null)
+                ToastUtil.show(this, "Filter telah di reset")
+                btn_terapkan.performClick()
             }
         }
         return super.onOptionsItemSelected(item)

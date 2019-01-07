@@ -178,7 +178,7 @@ class DataCache(context: Context) : SharedPref(context) {
         return gson.fromJson(getString(KEY_FILTER_JANPOL_CLUSTER), ClusterItem::class.java)
     }
 
-    fun saveJanpolClusterFilter(janpolClusterFilter: ClusterItem) {
+    fun saveJanpolClusterFilter(janpolClusterFilter: ClusterItem?) {
         putString(KEY_FILTER_JANPOL_CLUSTER, gson.toJson(janpolClusterFilter))
     }
 }
