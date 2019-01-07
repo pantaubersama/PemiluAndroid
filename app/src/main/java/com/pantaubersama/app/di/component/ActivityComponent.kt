@@ -20,6 +20,7 @@ import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
 import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
 import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
+import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import dagger.Subcomponent
 
@@ -48,4 +49,5 @@ interface ActivityComponent {
     fun inject(ubahSandiActivity: UbahSandiActivity)
     fun inject(ubahDataLaporActivity: UbahDataLaporActivity)
     fun inject(filterKuisActivity: FilterKuisActivity)
+    fun inject(step1VerifikasiActivity: Step1VerifikasiActivity)
 }

@@ -14,7 +14,7 @@ import com.pantaubersama.app.ui.profile.setting.panduankomunitas.PanduanKomunita
 import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
 import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
 import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
-import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
+import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 import javax.inject.Inject
 

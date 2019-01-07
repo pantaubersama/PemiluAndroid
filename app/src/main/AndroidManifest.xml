@@ -73,7 +73,7 @@
             android:name=".ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.verifikasi.Step1VerifikasiActivity"
+            android:name=".ui.profile.verifikasi.step1.Step1VerifikasiActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.verifikasi.Step2VerifikasiActivity"

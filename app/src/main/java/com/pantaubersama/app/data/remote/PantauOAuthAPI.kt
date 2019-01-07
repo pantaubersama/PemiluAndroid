@@ -83,4 +83,10 @@ interface PantauOAuthAPI {
         @Field("address") address: String?,
         @Field("phone_number") phoneNumber: String?
     ): Completable
+
+    @FormUrlEncoded
+    @PUT("v1/verifications/ktp_number")
+    fun submitKtpNumber(
+        @Field("ktp_number") ktpNumber: String?
+    ): Completable
 }
