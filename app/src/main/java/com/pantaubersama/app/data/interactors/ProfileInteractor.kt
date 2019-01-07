@@ -19,10 +19,10 @@ class ProfileInteractor @Inject constructor(
 
     fun refreshProfile(): Single<Profile> {
         return apiWrapper.getPantauOAuthApi().getUserProfile()
-                .subscribeOn(rxSchedulers.io())
-                .map { it.data.user }
-                .doOnSuccess(::saveProfile)
-                .observeOn(rxSchedulers.mainThread())
+            .subscribeOn(rxSchedulers.io())
+            .map { it.data.user }
+            .doOnSuccess(::saveProfile)
+            .observeOn(rxSchedulers.mainThread())
     }
 
     fun saveProfile(profile: Profile) {
@@ -35,12 +35,13 @@ class ProfileInteractor @Inject constructor(
 
     fun getBadges(): Single<List<Badge>> {
         return apiWrapper.getPantauOAuthApi().getUserBadges()
-                .subscribeOn(rxSchedulers.io())
-                .map { response ->
-                    response.data.achievedBadges.apply { forEach { it.achieved = true } } +
-                            response.data.badges
-                }
-                .observeOn(rxSchedulers.mainThread())
+            .subscribeOn(rxSchedulers.io())
+            .map { response ->
+                val achievedBadges = response.data.achievedBadges
+                    .map { it.badge.apply { achieved = true } }
+                achievedBadges + response.data.badges
+            }
+            .observeOn(rxSchedulers.mainThread())
     }
 
     fun leaveCluster(): Completable {
@@ -150,5 +151,13 @@ class ProfileInteractor @Inject constructor(
 
     fun isModerator(): Boolean {
         return getProfile().isModerator
+    }
+
+    fun isEligible(): Boolean {
+        return if (getProfile().cluster == null) {
+            false
+        } else {
+            getProfile().cluster?.isEligible!!
+        }
     }
 }

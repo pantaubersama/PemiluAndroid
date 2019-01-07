@@ -34,7 +34,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setSupportActionBar(toolbar_home)
-        user_avatar.setOnClickListener {
+        iv_user_avatar.setOnClickListener {
             val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
             startActivity(intent)
         }
@@ -89,7 +89,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     }
 
     override fun onSuccessLoadUser(profile: Profile) {
-        user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
+        iv_user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
     }
 
     override fun showLoading() {

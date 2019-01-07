@@ -22,7 +22,7 @@ import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
-import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
+import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
 import com.pantaubersama.app.utils.State
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable
@@ -68,7 +68,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     override fun showProfile(profile: Profile) {
-        user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
+        iv_user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
         tv_user_name.text = profile.name
         user_username.text = profile.username?.takeIf { it.isNotBlank() }?.let { "@%s".format(it) }
         user_bio.text = profile.about
@@ -173,7 +173,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         tv_badge_more.visibleIf(state == State.Success)
         badges.forEach {
             val view = badge_container.inflate(R.layout.badge_item_layout).apply {
-                iv_badge.loadUrl(it.image.thumbnail.url, R.drawable.dummy_badge)
+                iv_badge.loadUrl(it.image.thumbnail?.url, R.drawable.dummy_badge)
                 iv_badge.setGrayScale(!it.achieved)
                 badge_name.text = it.name
                 badge_name.isEnabled = it.achieved

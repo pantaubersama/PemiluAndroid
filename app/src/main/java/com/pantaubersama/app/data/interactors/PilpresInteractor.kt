@@ -1,6 +1,5 @@
 package com.pantaubersama.app.data.interactors
 
-import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
@@ -12,8 +11,7 @@ import javax.inject.Inject
  */
 class PilpresInteractor @Inject constructor(
     private val apiWrapper: APIWrapper?,
-    private val rxSchedulers: RxSchedulers?,
-    private val dataCache: DataCache?
+    private val rxSchedulers: RxSchedulers?
 ) {
     fun getFeeds(
         filterBy: String,

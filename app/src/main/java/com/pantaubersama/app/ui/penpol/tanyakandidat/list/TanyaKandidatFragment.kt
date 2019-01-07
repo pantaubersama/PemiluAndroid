@@ -84,14 +84,15 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
         adapter?.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT)
+                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT)
             }
 
             override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
-                val dialog = OptionDialog(context!!, item, R.layout.layout_option_dialog_tanya_kandidat)
-                if (!item.user?.id.equals(presenter.getUserId())) {
-                    dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
+                val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
+                if (item.user?.id.equals(presenter.getUserId())) {
                     dialog.removeItem(R.id.report_tanya_kandidat_action)
+                } else {
+                    dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
                 }
                 dialog.show()
                 dialog.listener = object : OptionDialog.DialogListener {

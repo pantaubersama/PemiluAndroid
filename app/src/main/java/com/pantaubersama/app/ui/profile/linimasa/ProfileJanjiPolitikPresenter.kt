@@ -16,7 +16,7 @@ class ProfileJanjiPolitikPresenter @Inject constructor() : BasePresenter<Profile
         for (i in 1..20) {
             val janpol = JanjiPolitik()
             janpol.id = "123$i"
-            janpol.content = "janpol $i"
+            janpol.body = "janpol $i"
             janpol.title = "My Janpol $i"
             janpolList.add(janpol)
         }

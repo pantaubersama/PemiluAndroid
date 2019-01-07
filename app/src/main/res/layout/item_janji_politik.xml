@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_janpol_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
     android:orientation="vertical">
 
     <LinearLayout
@@ -15,7 +17,7 @@
         android:layout_marginEnd="18dp">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/user_avatar"
+            android:id="@+id/iv_user_avatar"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:scaleType="centerCrop"
@@ -47,8 +49,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_medium"
                 android:layout_toRightOf="@id/tv_user_name"
-                android:text=", Cluster Partai Pedang Panjang"
+                android:text="Cluster Partai Pedang Panjang"
                 android:textSize="10sp"
+                android:layout_marginStart="5dp"
                 android:lines="1"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -70,11 +73,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_janpol_content"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="?selectableItemBackground"
         android:layout_marginStart="18dp"
         android:layout_marginEnd="18dp">
 

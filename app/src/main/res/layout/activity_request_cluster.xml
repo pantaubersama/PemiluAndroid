@@ -51,7 +51,7 @@
                 tools:text="Isi Form di Bawah Ini :" />
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/user_avatar"
+                android:id="@+id/iv_user_avatar"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="12dp"

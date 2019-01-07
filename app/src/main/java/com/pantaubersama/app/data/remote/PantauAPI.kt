@@ -2,6 +2,7 @@ package com.pantaubersama.app.data.remote
 
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfoResponse
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfosResponse
+import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitikResponse
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import io.reactivex.Completable
@@ -26,6 +27,15 @@ interface PantauAPI {
         @Query("page") page: Int?,
         @Query("per_page") perPage: Int?
     ): Single<FeedsResponse>
+
+    @GET("linimasa/v1/janji_politiks")
+    fun getJanPol(
+        @Query("q") keyword: String?,
+        @Query("cluster_id") clusterId: String?,
+        @Query("filter_by") filterBy: String?,
+        @Query("page") page: Int?,
+        @Query("per_page") perPage: Int?
+    ): Single<JanjiPolitikResponse>
 
     @FormUrlEncoded
     @POST("pendidikan_politik/v1/questions")

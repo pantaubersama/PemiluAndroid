@@ -66,7 +66,7 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewH
                 .with(itemView.context)
                 .load(item?.user?.avatar?.url)
                 .placeholder(ContextCompat.getDrawable(itemView.context, R.drawable.ic_person))
-                .into(user_avatar)
+                .into(iv_user_avatar)
             tv_user_name.text = item?.user?.fullName
             question_time.text = item?.createdAt?.id
             upvote_count_text.text = item?.likeCount.toString()

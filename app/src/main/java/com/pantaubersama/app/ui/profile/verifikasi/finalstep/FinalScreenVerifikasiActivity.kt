@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.profile.verifikasi
+package com.pantaubersama.app.ui.profile.verifikasi.finalstep
 
 import android.os.Bundle
 import com.pantaubersama.app.CommonActivity

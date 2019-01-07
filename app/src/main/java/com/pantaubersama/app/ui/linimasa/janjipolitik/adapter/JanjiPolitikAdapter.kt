@@ -55,11 +55,15 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter<JanjiPolitik, RecyclerView.ViewH
     inner class JanjiPolitikViewHolder(override val containerView: View?)
         : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
         fun bind(item: JanjiPolitik) {
+            iv_user_avatar.loadUrl(item.creator?.avatar?.url, R.drawable.ic_avatar_placeholder)
+            tv_user_name.text = item.creator?.fullName
+            tv_user_cluster.text = item.creator?.cluster?.name
             tv_janpol_title.text = item.title
-            tv_janpol_content.text = item.content
+            tv_janpol_content.text = item.body
+
             ll_janpol_content.setOnClickListener { listener?.onClickJanPolContent(item) }
             iv_share_button.setOnClickListener { listener?.onClickShare(item) }
-            iv_options_button.setOnClickListener { listener?.onClickJanpolOption(item) }
+            iv_options_button.setOnClickListener { listener?.onClickJanpolOption(item, adapterPosition) }
         }
     }
     fun addBanner(bannerInfo: BannerInfo) {
@@ -81,7 +85,9 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter<JanjiPolitik, RecyclerView.ViewH
     interface AdapterListener {
         fun onClickBanner(bannerInfo: BannerInfo)
         fun onClickJanPolContent(item: JanjiPolitik)
-        fun onClickJanpolOption(item: JanjiPolitik)
+        fun onClickJanpolOption(item: JanjiPolitik, position: Int)
         fun onClickShare(item: JanjiPolitik)
+        fun onClickCopyUrl(id: String?)
+        fun onClickLapor(id: String?)
     }
 }

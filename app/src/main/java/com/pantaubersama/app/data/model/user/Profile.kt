@@ -2,6 +2,8 @@ package com.pantaubersama.app.data.model.user
 
 import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.cluster.ClusterItem
+import com.pantaubersama.app.data.model.image.Image
+import java.io.Serializable
 
 val EMPTY_INFORMANT = Informant("", null, null, null, null,
         null, null, null, null, null)
@@ -9,15 +11,15 @@ val EMPTY_INFORMANT = Informant("", null, null, null, null,
 val EMPTY_PROFILE = Profile("", "", "Tanpa", "", "",
         false, false, null, null, false,
         null, "", "", "", "",
-        Avatar(null), EMPTY_INFORMANT)
+    Image(null), EMPTY_INFORMANT)
 
 data class ProfileResponse(
     @SerializedName("data") val data: ProfileData
-)
+) : Serializable
 
 data class ProfileData(
     @SerializedName("user") val user: Profile
-)
+) : Serializable
 
 data class Profile(
     @SerializedName("id") var id: String,
@@ -35,9 +37,9 @@ data class Profile(
     @SerializedName("location") var location: String?,
     @SerializedName("education") var education: String?,
     @SerializedName("occupation") var occupation: String?,
-    @SerializedName("avatar") var avatar: Avatar,
+    @SerializedName("avatar") var avatar: Image,
     @SerializedName("informant") var informant: Informant
-)
+) : Serializable
 
 data class Informant(
     @SerializedName("user_id") var userId: String,
@@ -50,4 +52,4 @@ data class Informant(
     @SerializedName("nationality") var nationality: String?,
     @SerializedName("address") var address: String?,
     @SerializedName("phone_number") var phoneNumber: String?
-)
+) : Serializable

@@ -150,4 +150,5 @@
     <string name="label_belum_menentukan_pilihan">Belum menentukan pilihan</string>
     <string name="label_total_kecenderungan">Total Kecenderungamu, </string>
     <string name="title_catatan_pilihanku">Catatan Pilihanku</string>
+    <string name="txt_delete_item_ini">Apakah Anda yakin akan menghapus item ini?</string>
 </resources>

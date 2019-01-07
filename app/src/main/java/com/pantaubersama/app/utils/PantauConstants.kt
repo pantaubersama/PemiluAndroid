@@ -106,10 +106,21 @@ class PantauConstants {
     }
 
     object Filter {
-        object Pilpres {
-            const val FILTER_ALL = "team_all" // value dari backend
-            const val FILTER_TEAM_1 = "team_id_1" // value dari backend
-            const val FILTER_TEAM_2 = "team_id_2" // value dari backend
+        object Pilpres { // value dari backend
+            const val FILTER_ALL = "team_all"
+            const val FILTER_TEAM_1 = "team_id_1"
+            const val FILTER_TEAM_2 = "team_id_2"
         }
+
+        object Janpol { // value dari backend
+            const val USER_VERIFIED_ALL = "user_verified_all"
+            const val USER_VERIFIED_TRUE = "user_verified_true"
+            const val USER_VERIFIED_FALSE = "user_verified_false"
+        }
+    }
+
+    object Regex {
+        const val KTP =
+            "^((1[1-9])|(21)|([37][1-6])|(5[1-4])|(6[1-5])|([8-9][1-2]))[0-9]{2}[0-9]{2}(([0-6][0-9])|(7[0-1]))((0[1-9])|(1[0-2]))([0-9]{2})[0-9]{4}\$"
     }
 }
