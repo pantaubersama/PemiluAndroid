@@ -5,14 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include
-        android:id="@+id/view_empty_state"
-        layout="@layout/layout_empty_state"
-        android:visibility="gone"/>
+        layout="@layout/layout_empty_state"/>
 
     <include
-        android:id="@+id/view_fail_state"
-        layout="@layout/layout_fail_state"
-        android:visibility="gone"/>
+        layout="@layout/layout_fail_state"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
@@ -37,7 +33,6 @@
         android:layout_height="150dp"
         android:layout_gravity="center"
         app:lottie_fileName="lottie_loading.json"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"/>
+        app:lottie_autoPlay="false"/>
 
 </FrameLayout>

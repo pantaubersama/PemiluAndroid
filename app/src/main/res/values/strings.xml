@@ -81,7 +81,7 @@
     <string name="txt_user">User</string>
     <string name="txt_belum_verifikasi">Belum Verifikasi</string>
     <string name="txt_terverifikasi">Terverifikasi</string>
-    <string name="txt_pilih_cluster">Pilih Cluster</string>
+    <string name="txt_semua_cluster">Semua Cluster</string>
     <string name="foto_ktp_hint">Pastikan seluruh bagian KTP anda breada dalam bingkai foto ( KTP asli dan bukan fotokopi KTP)</string>
     <string name="foto_tanda_tangan_hint">Yakk, langkah terakhir foto tanda tanganmu diatas kertas putih dengan kameramu</string>
     <string name="title_setting">Setting</string>

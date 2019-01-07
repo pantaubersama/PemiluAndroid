@@ -2,6 +2,7 @@ package com.pantaubersama.app.data.remote
 
 import com.pantaubersama.app.data.model.accesstoken.Token
 import com.pantaubersama.app.data.model.accesstoken.TokenResponse
+import com.pantaubersama.app.data.model.cluster.ClustersResponse
 import com.pantaubersama.app.data.model.user.BadgeResponse
 import com.pantaubersama.app.data.model.user.Informant
 import com.pantaubersama.app.data.model.user.ProfileResponse
@@ -31,8 +32,7 @@ interface PantauOAuthAPI {
     @POST("/oauth/revoke")
     fun revokeToken(
         @Field("client_id") client_id: String?,
-        @Field("client_secret") client_secret: String?,
-        @Field("token") token: String?
+        @Field("client_secret") client_secret: String?
     ): Completable
 
     @GET("/v1/me")
@@ -82,5 +82,38 @@ interface PantauOAuthAPI {
         @Field("nationality") nationality: String?,
         @Field("address") address: String?,
         @Field("phone_number") phoneNumber: String?
+    ): Completable
+
+    @GET("v1/clusters")
+    fun getClusterList(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("q") keyword: String? = "",
+        @Query("filter_by") filterBy: String? = "category_id",
+        @Query("filter_value") filterValue: String = ""
+    ): Single<ClustersResponse>
+
+    @FormUrlEncoded
+    @PUT("v1/verifications/ktp_number")
+    fun submitKtpNumber(
+        @Field("ktp_number") ktpNumber: String?
+    ): Completable
+
+    @Multipart
+    @PUT("/v1/verifications/ktp_selfie")
+    fun submitSelfieKtp(
+        @Part avatar: MultipartBody.Part?
+    ): Completable
+
+    @Multipart
+    @PUT("/v1/verifications/ktp_photo")
+    fun submitKtpPhoto(
+        @Part ktpPhoto: MultipartBody.Part?
+    ): Completable
+
+    @Multipart
+    @PUT("/v1/verifications/signature")
+    fun submitSignaturePhoto(
+        @Part signPhoto: MultipartBody.Part?
     ): Completable
 }

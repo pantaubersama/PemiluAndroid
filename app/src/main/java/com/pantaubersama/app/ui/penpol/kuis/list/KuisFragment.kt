@@ -5,44 +5,37 @@ import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.data.interactors.BannerInfoInteractor
-import com.pantaubersama.app.data.interactors.KuisInteractor
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.kuis.KuisListItem
 import com.pantaubersama.app.data.model.kuis.KuisState
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.penpol.kuis.ikutikuis.IkutiKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
 import com.pantaubersama.app.utils.LineDividerItemDecoration
 import com.pantaubersama.app.utils.PantauConstants
-import com.pantaubersama.app.utils.extensions.color
-import com.pantaubersama.app.utils.extensions.dip
-import kotlinx.android.synthetic.main.fragment_kuis.*
+import com.pantaubersama.app.utils.extensions.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import kotlinx.android.synthetic.main.layout_empty_state.*
+import kotlinx.android.synthetic.main.layout_fail_state.*
 import javax.inject.Inject
 
 class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     val TAG = KuisFragment::class.java.simpleName
 
     @Inject
-    lateinit var kuisInteractor: KuisInteractor
-
-    @Inject
-    lateinit var bannerInteractor: BannerInfoInteractor
+    override lateinit var presenter: KuisPresenter
 
     private lateinit var adapter: KuisListAdapter
 
     override fun setLayout(): Int = R.layout.fragment_kuis
 
-    override fun initInjection() {
-        (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
-
-    override fun initPresenter(): KuisPresenter? = KuisPresenter(kuisInteractor, bannerInteractor)
 
     override fun initView(view: View) {
         adapter = KuisListAdapter()
@@ -84,7 +77,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     }
 
     private fun getDataList() {
-        presenter?.getList()
+        presenter.getList()
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {
@@ -116,6 +109,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
 
     private fun setupData() {
         dismissLoading()
+        recycler_view.visibleIf(true)
         val dummyData: MutableList<ItemModel> = mutableListOf(
             KuisListItem.Result(70, "Jokowi - Makruf"),
             KuisListItem.Item(1, 1, 7, KuisState.NOT_TAKEN),
@@ -132,22 +126,21 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
             adapter.data = dummyData
         }
         adapter.notifyDataSetChanged()
-        recycler_view.visibility = View.VISIBLE
     }
 
     override fun showLoading() {
-        view_empty_state.visibility = View.GONE
-        view_fail_state.visibility = View.GONE
-        recycler_view.visibility = View.INVISIBLE
-        lottie_loading.visibility = View.VISIBLE
+        lottie_loading.setVisible(true)
+        view_empty_state.emptyStateVisible(false)
+        view_fail_state.failStateVisible(false)
+        recycler_view.visibleIf(false)
     }
     override fun dismissLoading() {
-        recycler_view.visibility = View.GONE
-        lottie_loading.visibility = View.GONE
+        recycler_view.visibleIf(false)
+        lottie_loading.setVisible(false)
     }
 
     override fun showFailedGetData() {
-        view_fail_state.visibility = View.VISIBLE
+        view_fail_state.failStateVisible(true)
     }
 
     companion object {
@@ -165,10 +158,5 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        (activity?.application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 }

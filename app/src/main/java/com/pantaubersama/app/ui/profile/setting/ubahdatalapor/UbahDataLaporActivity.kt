@@ -1,21 +1,22 @@
 package com.pantaubersama.app.ui.profile.setting.ubahdatalapor
 
 import android.app.Activity
+import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.Informant
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import kotlinx.android.synthetic.main.activity_ubah_data_lapor.*
 import javax.inject.Inject
 
 class UbahDataLaporActivity : BaseActivity<UbahDataLaporPresenter>(), UbahDataLaporView {
+
     @Inject
-    lateinit var profileInteractor: ProfileInteractor
+    override lateinit var presenter: UbahDataLaporPresenter
 
     override fun statusBarColor(): Int? {
         return 0
@@ -25,19 +26,15 @@ class UbahDataLaporActivity : BaseActivity<UbahDataLaporPresenter>(), UbahDataLa
         // ok
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun initPresenter(): UbahDataLaporPresenter? {
-        return UbahDataLaporPresenter(profileInteractor)
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_ubah_data_lapor), R.color.white, 4f)
         setupGenderSpinner()
 //        setEditextDisable(ubah_data_lapor_no_ktp)
-        presenter?.getDataLapor()
+        presenter.getDataLapor()
         onClickAction()
     }
 

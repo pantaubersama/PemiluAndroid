@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.pantaubersama.app.data.local.SharedPref
+import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.PantauConstants
@@ -173,11 +174,11 @@ class DataCache(context: Context) : SharedPref(context) {
         putString(KEY_FILTER_JANPOL_USER, janpolUserFilter)
     }
 
-    fun getJanpolClusterFilter(): String? {
-        return getString(KEY_FILTER_JANPOL_CLUSTER) ?: ""
+    fun getJanpolClusterFilter(): ClusterItem? {
+        return gson.fromJson(getString(KEY_FILTER_JANPOL_CLUSTER), ClusterItem::class.java)
     }
 
-    fun saveJanpolClusterFilter(janpolClusterFilter: String) {
-        putString(KEY_FILTER_JANPOL_CLUSTER, janpolClusterFilter)
+    fun saveJanpolClusterFilter(janpolClusterFilter: ClusterItem?) {
+        putString(KEY_FILTER_JANPOL_CLUSTER, gson.toJson(janpolClusterFilter))
     }
 }

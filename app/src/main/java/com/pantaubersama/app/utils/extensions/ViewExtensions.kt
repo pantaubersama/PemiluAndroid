@@ -15,6 +15,8 @@ import android.widget.LinearLayout
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.request.RequestListener
 import com.google.android.material.snackbar.Snackbar
 import com.pantaubersama.app.R
@@ -89,4 +91,41 @@ fun Int.toDP(context: Context): Float {
         this.toFloat(),
         context.resources.displayMetrics
     )
+}
+
+fun LottieAnimationView.setVisible(isVisible: Boolean) {
+    if (isVisible) {
+        this.visibility = View.VISIBLE
+        this.playAnimation()
+        this.repeatCount = LottieDrawable.INFINITE
+    } else {
+        this.visibility = View.GONE
+        this.cancelAnimation()
+    }
+}
+
+/* used only for layout_fail_state.xml */
+fun LinearLayout.failStateVisible(isVisible: Boolean) {
+    val lottieView = this.findViewById<LottieAnimationView>(R.id.lottie_fail_state)
+    if (isVisible) {
+        this.visibility = View.VISIBLE
+        lottieView.playAnimation()
+        lottieView.repeatCount = LottieDrawable.INFINITE
+    } else {
+        this.visibility = View.GONE
+        lottieView.cancelAnimation()
+    }
+}
+
+/* used only for layout_empty_state.xml */
+fun LinearLayout.emptyStateVisible(isVisible: Boolean) {
+    val lottieView = this.findViewById<LottieAnimationView>(R.id.lottie_empty_state)
+    if (isVisible) {
+        this.visibility = View.VISIBLE
+        lottieView.playAnimation()
+        lottieView.repeatCount = LottieDrawable.INFINITE
+    } else {
+        lottieView.cancelAnimation()
+        this.visibility = View.GONE
+    }
 }

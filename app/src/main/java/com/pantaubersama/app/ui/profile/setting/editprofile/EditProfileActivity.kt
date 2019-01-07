@@ -10,6 +10,7 @@ import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
@@ -18,9 +19,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
@@ -40,7 +40,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     private var imageUriFromCamera: Uri? = null
 
     @Inject
-    lateinit var profileInteractor: ProfileInteractor
+    override lateinit var presenter: EditProfilePresenter
 
     override fun statusBarColor(): Int? {
         return 0
@@ -50,19 +50,15 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         // ok
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun initPresenter(): EditProfilePresenter? {
-        return EditProfilePresenter(profileInteractor)
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_edit_profile), R.color.white, 4f)
         onClickAction()
         swipe_refresh.setOnRefreshListener {
-            presenter?.refreshUserData()
+            presenter.refreshUserData()
         }
     }
 
@@ -103,7 +99,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             showImageChooserDialog()
         }
         edit_profile_submit.setOnClickListener {
-            presenter?.saveEditedUserData(
+            presenter.saveEditedUserData(
                 edit_profile_nama.text.toString(),
                 edit_profile_username.text.toString().substring(1),
                 edit_profile_lokasi.text.toString(),
@@ -294,11 +290,11 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         val reqFile = RequestBody.create(MediaType.parse(type), file)
         val avatar = MultipartBody.Part.createFormData("avatar", file.getName(), reqFile)
 
-        presenter?.uploadAvatar(avatar)
+        presenter.uploadAvatar(avatar)
     }
 
     override fun refreshProfile() {
-        presenter?.refreshUserData()
+        presenter.refreshUserData()
     }
 
     override fun showSuccessUpdateAvatarAlert() {

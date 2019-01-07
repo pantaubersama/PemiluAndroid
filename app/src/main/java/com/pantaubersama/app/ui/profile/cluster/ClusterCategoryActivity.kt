@@ -1,12 +1,15 @@
 package com.pantaubersama.app.ui.profile.cluster
 
 import android.app.AlertDialog
+import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_cluster_category.*
 import kotlinx.android.synthetic.main.add_category_dialog.view.*
 
 class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), ClusterCategoryView {
+
+    override var presenter: ClusterCategoryPresenter = ClusterCategoryPresenter()
 
     override fun statusBarColor(): Int? {
         return 0
@@ -16,11 +19,7 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
         // ok
     }
 
-    override fun initPresenter(): ClusterCategoryPresenter? {
-        return ClusterCategoryPresenter()
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
 
         onclickAction()
     }

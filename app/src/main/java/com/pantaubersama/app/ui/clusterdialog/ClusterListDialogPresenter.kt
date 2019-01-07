@@ -1,30 +1,57 @@
 package com.pantaubersama.app.ui.clusterdialog
 
 import com.pantaubersama.app.base.BasePresenter
-import com.pantaubersama.app.data.model.cluster.ClusterItem
-import timber.log.Timber
+import com.pantaubersama.app.data.interactors.ClusterInteractor
 import javax.inject.Inject
 
 /**
  * @author edityomurti on 27/12/2018 01:18
  */
-class ClusterListDialogPresenter @Inject constructor() : BasePresenter<ClusterListDialogView>() {
-    fun getClusterList() {
+class ClusterListDialogPresenter @Inject constructor(private val clusterInteractor: ClusterInteractor)
+    : BasePresenter<ClusterListDialogView>() {
 
-        Timber.d("clusterList size: getClusterList")
-        view?.showLoading()
+    var perPage = 20
 
-        val clusterList: MutableList<ClusterItem> = ArrayList()
-
-        for (i in 1..10) {
-            val cluster = ClusterItem()
-            cluster.id = "123$i"
-            cluster.name = "Cluster $i"
-//            cluster.memberCount = i
-            clusterList.add(cluster)
+    fun getClusterList(page: Int) {
+        if (page == 1) {
+            view?.showLoading()
         }
+//        val clusterList: MutableList<ClusterItem> = ArrayList()
+//
+//        for (i in 1..10) {
+//            val cluster = ClusterItem()
+//            cluster.id = "123$i"
+//            cluster.name = "Cluster $i"
+//            cluster.memberCount = i
+//            clusterList.add(cluster)
+//        }
+//        view?.showClusters(clusterList)
 
-        view?.dismissLoading()
-        view?.showCluster(clusterList)
+        disposables?.add(clusterInteractor.getClusterList(page, perPage)
+            ?.subscribe(
+                {
+                    if (page == 1) {
+                        view?.dismissLoading()
+                        if (it?.size != 0) {
+                            view?.showClusters(it)
+                        } else {
+                            view?.showEmptyCluster()
+                        }
+                    } else {
+                        view?.showMoreClusters(it)
+                    }
+                },
+                {
+                    if (page == 1) {
+                        view?.dismissLoading()
+                        view?.showFailedGetClusters()
+                    } else {
+                        view?.showFailedGetMoreClusters()
+                    }
+                    it.printStackTrace()
+                    view?.showError(it)
+                }
+            )!!
+        )
     }
 }

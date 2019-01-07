@@ -2,14 +2,9 @@ package com.pantaubersama.app.ui.note
 
 import android.view.View
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.base.CommonFragment
 
-class PresidenFragment : BaseFragment<BasePresenter<*>>() {
-
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
-    }
+class PresidenFragment : CommonFragment() {
 
     override fun initView(view: View) {
         setupRecyclerView()
@@ -25,14 +20,6 @@ class PresidenFragment : BaseFragment<BasePresenter<*>>() {
 
     override fun setLayout(): Int {
         return R.layout.fragment_presiden
-    }
-
-    override fun showLoading() {
-        // show
-    }
-
-    override fun dismissLoading() {
-        // dismiss
     }
 
     companion object {

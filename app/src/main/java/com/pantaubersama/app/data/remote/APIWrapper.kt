@@ -6,7 +6,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class APIWrapper @Inject constructor(private val pantauAPI: PantauAPI, private val pantauOAuthAPI: PantauOAuthAPI, private val wordStadiumAPI: WordStadiumAPI) {
 
     fun getPantauApi(): PantauAPI {

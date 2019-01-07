@@ -99,6 +99,7 @@ class PantauConstants {
         const val TYPE_PERTANYAAN = 4
         const val TYPE_KUIS_RESULT = 5
         const val TYPE_KUIS_ITEM = 6
+        const val TYPE_CLUSTER_ITEM = 7
     }
     object Profile {
         val CAMERA_REQUEST_CODE = 111
@@ -117,5 +118,10 @@ class PantauConstants {
             const val USER_VERIFIED_TRUE = "user_verified_true"
             const val USER_VERIFIED_FALSE = "user_verified_false"
         }
+    }
+
+    object Regex {
+        const val KTP =
+            "^((1[1-9])|(21)|([37][1-6])|(5[1-4])|(6[1-5])|([8-9][1-2]))[0-9]{2}[0-9]{2}(([0-6][0-9])|(7[0-1]))((0[1-9])|(1[0-2]))([0-9]{2})[0-9]{4}\$"
     }
 }

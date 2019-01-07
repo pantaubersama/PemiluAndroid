@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_fail_state"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:visibility="gone"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <View
@@ -17,8 +19,7 @@
         android:layout_height="0dp"
         android:layout_weight="2"
         app:lottie_fileName="lottie_failed.json"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"/>
+        app:lottie_autoPlay="false"/>
 
     <TextView
         android:id="@+id/tv_fail_state"

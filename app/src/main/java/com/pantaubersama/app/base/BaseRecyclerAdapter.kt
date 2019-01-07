@@ -63,7 +63,7 @@ abstract class BaseRecyclerAdapter<T : ItemModel, V : RecyclerView.ViewHolder> :
         return data.indexOf(item)
     }
 
-    fun <T : MutableList<ItemModel>> setDatas(items: T) {
+    open fun <T : MutableList<ItemModel>> setDatas(items: T) {
         data.clear()
         data.addAll(items)
     }
@@ -122,5 +122,7 @@ abstract class BaseRecyclerAdapter<T : ItemModel, V : RecyclerView.ViewHolder> :
         return isDataEnd
     }
 
-    abstract override fun getItemViewType(position: Int): Int
+    override fun getItemViewType(position: Int): Int {
+        return data[position].getType()
+    }
 }

@@ -9,14 +9,13 @@ abstract class BasePresenter<V : BaseView> {
     var view: V? = null
     var disposables: CompositeDisposable? = null
 
+    @Suppress("UNCHECKED_CAST")
     fun attach(view: BaseView) {
         this.view = view as V
         disposables = CompositeDisposable()
     }
 
     fun detach() {
-        if (disposables != null && !disposables?.isDisposed!!) {
-            disposables?.dispose()
-        }
+        disposables?.run { if (!isDisposed) dispose() }
     }
 }

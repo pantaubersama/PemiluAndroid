@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.base.viewholder.LoadingViewHolder
-import com.pantaubersama.app.data.model.LoadingModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
+import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_BANNER
+import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_JANPOL
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
@@ -20,18 +21,10 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter<JanjiPolitik, RecyclerView.ViewH
 
     var listener: JanjiPolitikAdapter.AdapterListener? = null
 
-    override fun getItemViewType(position: Int): Int {
-        return when (data[position]) {
-            is BannerInfo -> TYPE_BANNER
-            is LoadingModel -> TYPE_LOADING
-            else -> TYPE_ITEM
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
-            TYPE_ITEM -> JanjiPolitikViewHolder((parent.inflate(R.layout.item_janji_politik)))
+            TYPE_JANPOL -> JanjiPolitikViewHolder((parent.inflate(R.layout.item_janji_politik)))
             else -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
         }
     }
@@ -74,12 +67,6 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter<JanjiPolitik, RecyclerView.ViewH
         if (data[0] is BannerInfo) {
             deleteItem(0)
         }
-    }
-
-    companion object {
-        private const val TYPE_BANNER = 0
-        private const val TYPE_ITEM = 1
-        private const val TYPE_LOADING = 2
     }
 
     interface AdapterListener {

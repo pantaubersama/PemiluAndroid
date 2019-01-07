@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
+import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitikData
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
@@ -15,12 +16,17 @@ class JanjiPolitikInteractor @Inject constructor(
     private val rxSchedulers: RxSchedulers?,
     private val dataCache: DataCache?
 ) {
-    private fun getJanpolUserFilter(): String {
+    fun getJanpolUserFilter(): String {
         return dataCache?.getJanpolUserFilter()!!
     }
 
-    private fun getJanpolClusterFilter(): String {
-        return dataCache?.getJanpolClusterFilter()!!
+    fun getJanpolClusterFilter(): ClusterItem? {
+        return dataCache?.getJanpolClusterFilter()
+    }
+
+    fun setJanpolFilter(userFilter: String, clusterFilter: ClusterItem?) {
+        dataCache?.saveJanpolUserFilter(userFilter)
+        dataCache?.saveJanpolClusterFilter(clusterFilter)
     }
 
     fun getJanPol(
@@ -29,7 +35,7 @@ class JanjiPolitikInteractor @Inject constructor(
         perPage: Int?
     ): Single<JanjiPolitikData?>? {
         return apiWrapper?.getPantauApi()
-            ?.getJanPol(keyword, getJanpolClusterFilter(), getJanpolUserFilter(), page, perPage)
+            ?.getJanPol(keyword, getJanpolClusterFilter()?.id ?: "", getJanpolUserFilter(), page, perPage)
             ?.subscribeOn(rxSchedulers?.io())
             ?.map { it.data }
             ?.observeOn(rxSchedulers?.mainThread())
