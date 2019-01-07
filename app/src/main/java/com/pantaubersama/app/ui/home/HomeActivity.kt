@@ -9,6 +9,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.linimasa.LinimasaFragment
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
@@ -29,8 +30,8 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): HomePresenter {

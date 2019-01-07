@@ -7,6 +7,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.LoginInteractor
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.clusterundang.ClusterUndangActivity
@@ -32,8 +33,8 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         val CLUSTER_UNDANG = 6
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun statusBarColor(): Int? {

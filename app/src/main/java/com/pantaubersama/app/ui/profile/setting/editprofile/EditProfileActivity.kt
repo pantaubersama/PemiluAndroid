@@ -22,6 +22,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
@@ -51,8 +52,8 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         // ok
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): EditProfilePresenter? {

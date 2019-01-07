@@ -13,6 +13,7 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.kuis.KuisListItem
 import com.pantaubersama.app.data.model.kuis.KuisState
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.penpol.kuis.ikutikuis.IkutiKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
@@ -21,7 +22,6 @@ import com.pantaubersama.app.utils.LineDividerItemDecoration
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.dip
-import kotlinx.android.synthetic.main.fragment_kuis.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import javax.inject.Inject
 
@@ -38,8 +38,8 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
 
     override fun setLayout(): Int = R.layout.fragment_kuis
 
-    override fun initInjection() {
-        (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): KuisPresenter? = KuisPresenter(kuisInteractor, bannerInteractor)
@@ -165,10 +165,5 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        (activity?.application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 }

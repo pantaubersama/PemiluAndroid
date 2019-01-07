@@ -18,6 +18,7 @@ import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.profile.cluster.RequestClusterActivity
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
@@ -44,8 +45,8 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     private var pTanyaKandidatFragment: ProfileTanyaKandidatFragment? = null
     private var otherFrag: Fragment? = null // dummy
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): ProfilePresenter? {

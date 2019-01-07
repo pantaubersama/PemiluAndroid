@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
+import com.pantaubersama.app.di.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_create_janji_politik.*
 import kotlinx.android.synthetic.main.layout_editor_option.*
 
@@ -18,8 +19,8 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): CreateJanjiPolitikPresenter? {

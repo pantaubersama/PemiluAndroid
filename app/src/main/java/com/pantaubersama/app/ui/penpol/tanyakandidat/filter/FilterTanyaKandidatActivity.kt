@@ -9,6 +9,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_filter_tanya_kandidat.*
@@ -29,8 +30,8 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): FilterTanyaKandidatPresenter? {

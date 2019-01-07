@@ -21,6 +21,7 @@ import com.pantaubersama.app.data.interactors.FilterPilpresInteractor
 import com.pantaubersama.app.data.interactors.PilpresInteractor
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.ui.widget.OptionDialog
@@ -60,8 +61,8 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         }
     }
 
-    override fun initInjection() {
-        (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): PilpresPresenter? {
@@ -197,11 +198,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
             when (requestCode) {
             }
         }
-    }
-
-    override fun onDestroy() {
-        (activity?.application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 
     fun scrollToTop(smoothScroll: Boolean) {

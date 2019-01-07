@@ -9,6 +9,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.Informant
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import kotlinx.android.synthetic.main.activity_ubah_data_lapor.*
@@ -26,8 +27,8 @@ class UbahDataLaporActivity : BaseActivity<UbahDataLaporPresenter>(), UbahDataLa
         // ok
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): UbahDataLaporPresenter? {

@@ -6,6 +6,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.LoginInteractor
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.login.LoginActivity
 import javax.inject.Inject
@@ -18,8 +19,8 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
         return 0
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun fetchIntentExtra() {
@@ -56,10 +57,5 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
 
     override fun dismissLoading() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onDestroy() {
-        (application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 }

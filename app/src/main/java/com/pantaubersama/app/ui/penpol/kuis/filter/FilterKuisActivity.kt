@@ -9,6 +9,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.KuisInteractor
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_filter_kuis.*
@@ -20,8 +21,8 @@ class FilterKuisActivity : BaseActivity<FilterKuisPresenter>(), FilterKuisView {
     lateinit var kuisInteractor: KuisInteractor
     private var kuisFilter: String? = null
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): FilterKuisPresenter? {

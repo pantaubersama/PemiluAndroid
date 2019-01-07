@@ -8,6 +8,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.Badge
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_badge.*
 import javax.inject.Inject
@@ -25,8 +26,8 @@ class BadgeActivity : BaseActivity<BadgePresenter>(), BadgeView {
         // ok
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): BadgePresenter? {

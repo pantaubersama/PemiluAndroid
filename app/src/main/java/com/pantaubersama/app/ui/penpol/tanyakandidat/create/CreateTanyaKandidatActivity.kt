@@ -15,6 +15,7 @@ import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -36,8 +37,8 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): CreateTanyaKandidatPresenter? {
@@ -94,11 +95,6 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 
     override fun showEmptyQuestionAlert() {
         question.error = getString(R.string.empty_question_alert)
-    }
-
-    override fun onDestroy() {
-        (application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 
     override fun showSuccessCreateTanyaKandidatAlert() {

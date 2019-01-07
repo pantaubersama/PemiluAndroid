@@ -15,6 +15,7 @@ import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.adapter.JanjiPolitikAdapter
 import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity
@@ -49,8 +50,8 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         }
     }
 
-    override fun initInjection() {
-        (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): JanjiPolitikPresenter? {
@@ -156,11 +157,6 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
     override fun showError(throwable: Throwable) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onDestroy() {
-        (activity?.application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

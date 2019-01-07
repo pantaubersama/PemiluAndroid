@@ -12,6 +12,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.LoginInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
@@ -34,8 +35,8 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): LoginPresenter? {
@@ -94,10 +95,5 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
 
     override fun showLoginFailedAlert() {
         ToastUtil.show(this@LoginActivity, getString(R.string.login_failed_alert))
-    }
-
-    override fun onDestroy() {
-        (application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 }

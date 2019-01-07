@@ -8,6 +8,7 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatAdapter
 import com.pantaubersama.app.utils.OnScrollListener
 import com.pantaubersama.app.utils.ShareUtil
@@ -23,6 +24,10 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
         fun newInstance(): ProfileTanyaKandidatFragment {
             return ProfileTanyaKandidatFragment()
         }
+    }
+
+    override fun initInjection(activityComponent: ActivityComponent) {
+
     }
 
     override fun initPresenter(): ProfileTanyaKandidatPresenter? {

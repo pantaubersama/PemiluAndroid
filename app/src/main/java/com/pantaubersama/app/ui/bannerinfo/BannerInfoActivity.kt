@@ -11,6 +11,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.HtmlTagHandler
 import com.pantaubersama.app.utils.PantauConstants
@@ -34,8 +35,8 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
         }
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun statusBarColor(): Int? {
@@ -89,10 +90,5 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
     override fun dismissLoading() {
         progress_bar.visibility = View.GONE
         rl_banner_container.visibility = View.VISIBLE
-    }
-
-    override fun onDestroy() {
-        (application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 }

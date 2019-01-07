@@ -10,6 +10,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.FilterPilpresInteractor
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_ALL
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_1
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_2
@@ -21,8 +22,8 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
     @Inject
     lateinit var interactor: FilterPilpresInteractor
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): FilterPilpresPresenter? {
@@ -108,10 +109,5 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
 
     override fun dismissLoading() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onDestroy() {
-        (application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 }

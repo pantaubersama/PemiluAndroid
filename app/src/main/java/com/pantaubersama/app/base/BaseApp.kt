@@ -1,14 +1,10 @@
 package com.pantaubersama.app.base
 
-import android.app.Activity
-import android.app.Service
 import androidx.multidex.MultiDexApplication
 import com.facebook.stetho.Stetho
 import com.pantaubersama.app.BuildConfig
-import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.di.component.AppComponent
 import com.pantaubersama.app.di.component.DaggerAppComponent
-import com.pantaubersama.app.di.component.ServiceComponent
 import com.pantaubersama.app.di.module.* // ktlint-disable
 import com.pantaubersama.app.utils.TimberUtil
 import timber.log.Timber
@@ -33,19 +29,5 @@ class BaseApp : MultiDexApplication() {
         } else {
             Timber.plant(TimberUtil())
         }
-    }
-
-    fun createActivityComponent(activity: Activity?): ActivityComponent? {
-        return appComponent.withActivityComponent(
-                ActivityModule(activity!!))
-    }
-
-    fun releaseActivityComponent() {
-
-    }
-
-    fun createServiceComponent(service: Service): ServiceComponent? {
-        return appComponent.withServiceComponent(
-                ServiceModule(service))
     }
 }

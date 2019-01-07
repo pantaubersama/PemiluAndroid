@@ -4,6 +4,7 @@ import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
+import com.pantaubersama.app.di.component.ActivityComponent
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import timber.log.Timber
 
@@ -13,6 +14,10 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
         fun newInstance(): ProfileJanjiPolitikFragment {
             return ProfileJanjiPolitikFragment()
         }
+    }
+
+    override fun initInjection(activityComponent: ActivityComponent) {
+
     }
 
     override fun initPresenter(): ProfileJanjiPolitikPresenter? {

@@ -25,6 +25,7 @@ import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.ui.widget.OptionDialog
@@ -53,8 +54,8 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     private var adapter: TanyaKandidatAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
 
-    override fun initInjection() {
-        (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun initPresenter(): TanyaKandidatPresenter? {
@@ -256,11 +257,6 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         fun newInstance(): TanyaKandidatFragment {
             return TanyaKandidatFragment()
         }
-    }
-
-    override fun onDestroy() {
-        (activity?.application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
