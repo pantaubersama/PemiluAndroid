@@ -76,7 +76,7 @@
             android:name=".ui.profile.verifikasi.step1.Step1VerifikasiActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.verifikasi.Step2VerifikasiActivity"
+            android:name=".ui.profile.verifikasi.step2.Step2VerifikasiActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity"
@@ -88,7 +88,7 @@
             android:name=".ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.verifikasi.Step3VerifikasiActivity"
+            android:name=".ui.profile.verifikasi.step3.Step3VerifikasiActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.verifikasi.Step4VerifikasiActivity"

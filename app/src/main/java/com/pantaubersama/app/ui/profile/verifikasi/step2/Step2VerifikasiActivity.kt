@@ -1,9 +1,10 @@
-package com.pantaubersama.app.ui.profile.verifikasi
+package com.pantaubersama.app.ui.profile.verifikasi.step2
 
 import android.content.Intent
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.ui.profile.verifikasi.step3.Step3VerifikasiActivity
 import kotlinx.android.synthetic.main.activity_step2_verifikasi.*
 
 class Step2VerifikasiActivity : BaseActivity<BasePresenter<*>>() {

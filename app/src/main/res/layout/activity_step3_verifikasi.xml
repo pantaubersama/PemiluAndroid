@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pantaubersama.app.ui.profile.verifikasi.Step3VerifikasiActivity">
+    tools:context="com.pantaubersama.app.ui.profile.verifikasi.step3.Step3VerifikasiActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -26,20 +26,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginBottom="100dp">
+                android:padding="16dp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="230dp"
+                    android:layout_height="280dp"
                     android:src="@drawable/verify_face"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"/>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="230dp"
+                    android:layout_height="140dp"
                     android:src="@drawable/verify_id"
                     android:layout_gravity="center"
-                    android:layout_marginTop="70dp"/>
+                    android:layout_marginTop="60dp"
+                    android:scaleType="fitXY"/>
 
             </LinearLayout>
 

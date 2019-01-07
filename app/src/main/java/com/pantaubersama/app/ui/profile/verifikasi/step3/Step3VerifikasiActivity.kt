@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.profile.verifikasi
+package com.pantaubersama.app.ui.profile.verifikasi.step3
 
 import android.Manifest
 import android.content.Context
@@ -14,12 +14,30 @@ import android.view.Surface
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.base.BaseApp
+import com.pantaubersama.app.data.interactors.VerifikasiInteractor
+import com.pantaubersama.app.ui.profile.verifikasi.Step4VerifikasiActivity
 import com.pantaubersama.app.ui.widget.CameraPreview
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_step3_verifikasi.*
+import javax.inject.Inject
+import android.os.Environment
+import android.webkit.MimeTypeMap
+import com.pantaubersama.app.utils.ToastUtil
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
-class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
+
+
+class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3VerifikasiView {
+    @Inject
+    lateinit var verifikasiInteractor: VerifikasiInteractor
+    private var ktpSelfie: MultipartBody.Part? = null
+
     private var permission =
         arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -39,8 +57,12 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
+    override fun initInjection() {
+        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    }
+
+    override fun initPresenter(): Step3VerifikasiPresenter {
+        return Step3VerifikasiPresenter(verifikasiInteractor)
     }
 
     override fun setupUI() {
@@ -55,9 +77,7 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
             }
         }
         next_button.setOnClickListener {
-            val intent = Intent(this@Step3VerifikasiActivity, Step4VerifikasiActivity::class.java)
-            startActivity(intent)
-            finish()
+            presenter?.submitSelfieKtp(ktpSelfie)
         }
         retake_button.setOnClickListener {
             image_preview_container.visibility = View.GONE
@@ -105,6 +125,31 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
                 image_preview_container.visibility = View.VISIBLE
                 image_preview.setImageBitmap(bitmap)
                 isPreview = true
+                var file = File(Environment.getExternalStorageDirectory().path + "/dirr")
+                if (!file.isDirectory) {
+                    file.mkdir()
+                }
+
+                file = File(Environment.getExternalStorageDirectory().path + "/dirr", System.currentTimeMillis().toString() + ".jpg")
+
+                try {
+                    val fileOutputStream = FileOutputStream(file)
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+
+                    fileOutputStream.flush()
+                    fileOutputStream.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                } catch (exception: Exception) {
+                    exception.printStackTrace()
+                }
+
+                val type: String
+                val extension = MimeTypeMap.getFileExtensionFromUrl(file.getAbsolutePath())
+                type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
+
+                val reqFile = RequestBody.create(MediaType.parse(type), file)
+                ktpSelfie = MultipartBody.Part.createFormData("ktp_selfie", file.getName(), reqFile)
             }
             capture_button.setOnClickListener {
                 capture_button.isEnabled = false
@@ -195,11 +240,11 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressDialog?.show()
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressDialog?.dismiss()
     }
 
     private fun checkCameraHardware(context: Context): Boolean {
@@ -230,5 +275,15 @@ class Step3VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
 
     fun endActivity() {
         finish()
+    }
+
+    override fun onSuccessSubmitSelfieKtp() {
+        val intent = Intent(this@Step3VerifikasiActivity, Step4VerifikasiActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun showFailedSubmitSelfieKtpAlert() {
+        ToastUtil.show(this@Step3VerifikasiActivity, "Gagal mengunggah gambar")
     }
 }

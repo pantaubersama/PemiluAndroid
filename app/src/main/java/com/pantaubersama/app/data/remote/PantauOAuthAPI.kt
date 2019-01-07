@@ -89,4 +89,10 @@ interface PantauOAuthAPI {
     fun submitKtpNumber(
         @Field("ktp_number") ktpNumber: String?
     ): Completable
+
+    @Multipart
+    @PUT("/v1/verifications/ktp_selfie")
+    fun submitSelfieKtp(
+        @Part avatar: MultipartBody.Part?
+    ): Completable
 }

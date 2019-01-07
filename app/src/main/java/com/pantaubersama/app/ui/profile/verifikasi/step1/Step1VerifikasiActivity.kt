@@ -8,7 +8,7 @@ import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_step1_verifikasi.*
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.VerifikasiInteractor
-import com.pantaubersama.app.ui.profile.verifikasi.Step2VerifikasiActivity
+import com.pantaubersama.app.ui.profile.verifikasi.step2.Step2VerifikasiActivity
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import java.util.regex.Pattern
