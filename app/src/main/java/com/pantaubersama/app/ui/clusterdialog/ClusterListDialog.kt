@@ -14,51 +14,62 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
+import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseDialogFragment
+import com.pantaubersama.app.data.interactors.ClusterInteractor
+import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.cluster.ClusterItem
+import com.pantaubersama.app.utils.extensions.visibleIf
+import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_dialog_cluster_list.*
-import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * @author edityomurti on 26/12/2018 23:57
  */
 class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), ClusterListDialogView {
-    private var adapter: ClusterListDialogAdapterDEL? = null
-    private var onClickListener: OnClickListener? = null
+
+    @Inject lateinit var clusterInteractor: ClusterInteractor
+
+    private var adapter: ClusterListDialogAdapter? = null
+    private var listener: DialogListener? = null
 
     companion object {
         private val TAG = ClusterListDialog::class.java.simpleName
 
-        fun show(fragmentManager: FragmentManager, onClickListener: OnClickListener) {
+        fun show(fragmentManager: FragmentManager, dialogListener: DialogListener) {
             val dialog = ClusterListDialog()
-            dialog.onClickListener = onClickListener
+            dialog.listener = dialogListener
             dialog.show(fragmentManager, TAG)
         }
     }
 
+    override fun initInjection() {
+        (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
+    }
+
     override fun initPresenter(): ClusterListDialogPresenter? {
-        return ClusterListDialogPresenter()
+        return ClusterListDialogPresenter(clusterInteractor)
     }
 
     override fun initView(view: View) {
+        lottie_loading.visibility = View.GONE
         setupRecyclerView()
-        Timber.d("clusterList presenter = $presenter")
-        presenter?.getClusterList()
+        presenter?.getClusterList(1)
         setupSearchEditText()
-    }
-
-    override fun showCluster(clusterList: MutableList<ClusterItem>) {
-        Timber.d("clusterList size: %s", clusterList.size)
-        recycler_view.visibility = View.VISIBLE
-        adapter?.add(clusterList)
     }
 
     private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
-        adapter = ClusterListDialogAdapterDEL(context!!)
-        adapter?.listener = object : ClusterListDialogAdapterDEL.AdapterListener {
-            override fun onClick(item: ClusterItem) {
-                onClickListener?.onClick(item)
+        adapter = ClusterListDialogAdapter()
+        adapter?.listener = object : ClusterListDialogAdapter.AdapterListener {
+            override fun onClickItem(item: ClusterItem) {
+                listener?.onClickItem(item)
+                dismiss()
+            }
+
+            override fun onClickDefault() {
+                listener?.onClickDefault()
                 dismiss()
             }
         }
@@ -76,29 +87,64 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                adapter?.filter?.filter(s)
+//                adapter?.filter?.filter(s)
             }
         })
+    }
+
+    override fun showLoadingGetMoreClusters() {
+        adapter?.setLoading()
+    }
+
+    override fun showClusters(clusterList: MutableList<ClusterItem>) {
+        recycler_view.visibility = View.VISIBLE
+        adapter?.setLoaded()
+        adapter?.setDatas(clusterList as MutableList<ItemModel>)
+    }
+
+    override fun showMoreClusters(clusterList: MutableList<ClusterItem>) {
+        adapter?.setLoaded()
+        if (clusterList.size < presenter?.perPage!!) {
+            adapter?.setDataEnd(true)
+        }
+    }
+
+    override fun showEmptyCluster() {
+        view_empty_state.visibleIf(true)
+    }
+
+    override fun showFailedGetClusters() {
+        view_fail_state.visibleIf(true)
+    }
+
+    override fun showFailedGetMoreClusters() {
+        adapter?.setLoaded()
     }
 
     override fun setLayout(): Int {
         return R.layout.layout_dialog_cluster_list
     }
+
     override fun showLoading() {
-        progress_bar.visibility = View.VISIBLE
-        recycler_view.visibility = View.GONE
+        adapter?.setLoading()
+        view_empty_state.visibility = View.GONE
+        view_fail_state.visibility = View.GONE
+        recycler_view.visibility = View.INVISIBLE
     }
 
     override fun dismissLoading() {
-        progress_bar.visibility = View.GONE
+        adapter?.setLoaded()
+        recycler_view.visibility = View.GONE
+        lottie_loading.visibility = View.GONE
     }
 
     override fun showError(throwable: Throwable) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    interface OnClickListener {
-        fun onClick(item: ClusterItem)
+    interface DialogListener {
+        fun onClickItem(item: ClusterItem)
+        fun onClickDefault()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -121,5 +167,10 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
         window?.setLayout((size.x * 0.95).toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
         window?.setGravity(Gravity.CENTER)
         super.onResume()
+    }
+
+    override fun onDestroy() {
+        (activity?.application as BaseApp).releaseActivityComponent()
+        super.onDestroy()
     }
 }

@@ -11,6 +11,8 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.LoadingModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
+import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_BANNER
+import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_FEEDS
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
@@ -21,18 +23,10 @@ class PilpresAdapter : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewHolder>()
 
     var listener: PilpresAdapter.AdapterListener? = null
 
-    override fun getItemViewType(position: Int): Int {
-        return when (data[position]) {
-            is BannerInfo -> TYPE_BANNER
-            is LoadingModel -> TYPE_LOADING
-            else -> TYPE_ITEM
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
-            TYPE_ITEM -> FeedViewHolder(parent.inflate(R.layout.item_pilpres_tweet))
+            TYPE_FEEDS -> FeedViewHolder(parent.inflate(R.layout.item_pilpres_tweet))
             else -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
         }
     }
@@ -77,12 +71,6 @@ class PilpresAdapter : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewHolder>()
         if (data[0] is BannerInfo) {
             deleteItem(0)
         }
-    }
-
-    companion object {
-        private const val TYPE_BANNER = 0
-        private const val TYPE_ITEM = 1
-        private const val TYPE_LOADING = 2
     }
 
     interface AdapterListener {

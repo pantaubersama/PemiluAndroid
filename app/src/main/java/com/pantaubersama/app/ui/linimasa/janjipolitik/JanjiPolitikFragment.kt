@@ -205,7 +205,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     override fun showEmptyData() {
-        view_empty_state.visibleIf(false)
+        view_empty_state.visibleIf(true)
     }
 
     override fun showFailedGetData() {

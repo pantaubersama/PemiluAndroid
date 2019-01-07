@@ -3,6 +3,7 @@ package com.pantaubersama.app.data.model.bannerinfo
 import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.image.Image
+import com.pantaubersama.app.utils.PantauConstants
 import java.io.Serializable
 
 /**
@@ -17,5 +18,5 @@ data class BannerInfo(
     @SerializedName("image") var image: Image? = null
 ) : ItemModel, Serializable {
 
-    override fun getType(): Int = 666
+    override fun getType(): Int = PantauConstants.ItemModel.TYPE_BANNER
 }

@@ -2,6 +2,7 @@ package com.pantaubersama.app.data.remote
 
 import com.pantaubersama.app.data.model.accesstoken.Token
 import com.pantaubersama.app.data.model.accesstoken.TokenResponse
+import com.pantaubersama.app.data.model.cluster.ClustersResponse
 import com.pantaubersama.app.data.model.user.BadgeResponse
 import com.pantaubersama.app.data.model.user.Informant
 import com.pantaubersama.app.data.model.user.ProfileResponse
@@ -83,4 +84,13 @@ interface PantauOAuthAPI {
         @Field("address") address: String?,
         @Field("phone_number") phoneNumber: String?
     ): Completable
+
+    @GET("v1/clusters")
+    fun getClusterList(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("q") keyword: String? = "",
+        @Query("filter_by") filterBy: String? = "category_id",
+        @Query("filter_value") filterValue: String = ""
+    ): Single<ClustersResponse>
 }

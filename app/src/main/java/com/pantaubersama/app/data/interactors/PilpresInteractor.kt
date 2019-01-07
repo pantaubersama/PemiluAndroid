@@ -1,8 +1,10 @@
 package com.pantaubersama.app.data.interactors
 
+import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
+import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -11,7 +13,8 @@ import javax.inject.Inject
  */
 class PilpresInteractor @Inject constructor(
     private val apiWrapper: APIWrapper?,
-    private val rxSchedulers: RxSchedulers?
+    private val rxSchedulers: RxSchedulers?,
+    private val dataCache: DataCache?
 ) {
     fun getFeeds(
         filterBy: String,
@@ -21,5 +24,13 @@ class PilpresInteractor @Inject constructor(
         return apiWrapper?.getPantauApi()?.getFeeds(filterBy, page, perPage)
             ?.subscribeOn(rxSchedulers?.io())
             ?.observeOn(rxSchedulers?.mainThread())
+    }
+
+    fun getPilpresFilter(): String {
+        return dataCache?.getFilterPilpres()!!
+    }
+
+    fun setPilpresFilter(selectedFilter: String) {
+        dataCache?.saveFilterPilpres(selectedFilter)!!
     }
 }

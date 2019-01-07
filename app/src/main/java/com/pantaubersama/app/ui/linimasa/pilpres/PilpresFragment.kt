@@ -17,7 +17,6 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
-import com.pantaubersama.app.data.interactors.FilterPilpresInteractor
 import com.pantaubersama.app.data.interactors.PilpresInteractor
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
@@ -41,9 +40,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     @Inject
     lateinit var bannerInfoInteractor: BannerInfoInteractor
 
-    @Inject
-    lateinit var filterPilpresInteractor: FilterPilpresInteractor
-
     private lateinit var adapter: PilpresAdapter
 
     companion object {
@@ -63,7 +59,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun initPresenter(): PilpresPresenter? {
-        return PilpresPresenter(pilpresInteractor, bannerInfoInteractor, filterPilpresInteractor)
+        return PilpresPresenter(pilpresInteractor, bannerInfoInteractor)
     }
 
     override fun initView(view: View) {

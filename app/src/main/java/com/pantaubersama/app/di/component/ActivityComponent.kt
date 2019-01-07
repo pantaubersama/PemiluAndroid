@@ -3,9 +3,11 @@ package com.pantaubersama.app.di.component
 import com.pantaubersama.app.di.module.ActivityModule
 import com.pantaubersama.app.di.scope.ActivityScope
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
+import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
 import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity
+import com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.login.LoginActivity
@@ -48,4 +50,6 @@ interface ActivityComponent {
     fun inject(ubahSandiActivity: UbahSandiActivity)
     fun inject(ubahDataLaporActivity: UbahDataLaporActivity)
     fun inject(filterKuisActivity: FilterKuisActivity)
+    fun inject(filterJanjiPolitikActivity: FilterJanjiPolitikActivity)
+    fun inject(clusterListDialog: ClusterListDialog)
 }

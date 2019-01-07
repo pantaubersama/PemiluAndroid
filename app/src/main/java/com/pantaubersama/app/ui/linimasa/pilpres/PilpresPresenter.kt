@@ -2,7 +2,6 @@ package com.pantaubersama.app.ui.linimasa.pilpres
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
-import com.pantaubersama.app.data.interactors.FilterPilpresInteractor
 import com.pantaubersama.app.data.interactors.PilpresInteractor
 import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
@@ -12,8 +11,7 @@ import javax.inject.Inject
  */
 class PilpresPresenter @Inject constructor(
     private val pilpresInteractor: PilpresInteractor?,
-    private val bannerInfoInteractor: BannerInfoInteractor,
-    private val filterPilpresInteractor: FilterPilpresInteractor
+    private val bannerInfoInteractor: BannerInfoInteractor
 ) : BasePresenter<PilpresView>() {
 
     var perPage = 20
@@ -44,7 +42,7 @@ class PilpresPresenter @Inject constructor(
             view?.showLoading()
         }
 
-        disposables?.add(pilpresInteractor?.getFeeds(filterPilpresInteractor.getPilpresFilter(), page, perPage)
+        disposables?.add(pilpresInteractor?.getFeeds(pilpresInteractor.getPilpresFilter(), page, perPage)
             ?.subscribe(
                 {
                     if (page == 1) {

@@ -8,7 +8,7 @@ import android.view.MenuItem
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.FilterPilpresInteractor
+import com.pantaubersama.app.data.interactors.PilpresInteractor
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_ALL
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_1
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_2
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilpresView {
     @Inject
-    lateinit var interactor: FilterPilpresInteractor
+    lateinit var interactor: PilpresInteractor
 
     override fun initInjection() {
         (application as BaseApp).createActivityComponent(this)?.inject(this)
@@ -49,7 +49,7 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
         presenter?.getFilter()
 
-        radio_group_pilpres.setOnCheckedChangeListener { view, checkedId ->
+        radio_group_pilpres.setOnCheckedChangeListener { _, checkedId ->
             selectedFilter = when (checkedId) {
                 R.id.radbtn_semua -> FILTER_ALL
                 R.id.radbtn_capres1 -> FILTER_TEAM_1
