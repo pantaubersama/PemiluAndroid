@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pantaubersama.app.ui.profile.cluster.UndangAnggotaActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <include layout="@layout/layout_toolbar_light" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_3"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingTop="20dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bw_modelica_bold"
+                    android:lineSpacingExtra="4sp"
+                    android:textColor="@color/black_3"
+                    android:textSize="16sp"
+                    tools:text="Bagikan Undangan Lewat Email" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_rounded_outline_white"
+                    android:paddingStart="10dp"
+                    android:paddingTop="16dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="16dp">
+
+                    <EditText
+                        android:id="@+id/undang_anggota_text_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparant"
+                        android:fontFamily="@font/lato_regular"
+                        android:hint="@string/hint_masukkan_email_disini"
+                        android:lineSpacingExtra="3sp"
+                        android:textColor="@color/gray_4"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/undang_anggota_btn_undang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:text="@string/label_undang"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:fontFamily="@font/lato_regular"
+                android:lineSpacingExtra="2sp"
+                android:textColor="@color/gray_5"
+                android:textSize="10sp"
+                tools:text="@string/deskripsi_undang_lewat_tautan" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingTop="20dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bw_modelica_bold"
+                    android:lineSpacingExtra="4sp"
+                    android:textColor="@color/black_3"
+                    android:textSize="16sp"
+                    tools:text="@string/label_bagikan_undangan_lewat_link" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_rounded_outline_white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+
+                    <ImageView
+                        android:id="@+id/undang_anggota_copy_link"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/outline_link_72_px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/lato_regular"
+                        android:letterSpacing="0.02"
+                        android:lineSpacingExtra="4sp"
+                        android:maxLines="1"
+                        android:textColor="@color/gray_5"
+                        android:textSize="12sp"
+                        tools:text="https://xd.adobe.com/view/91d02c33-58cd-442c- 7d01 -900a7724345b-e7e1/?fullscreen" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+
+                    <ImageView
+                        android:id="@+id/undang_anggota_non_aktifkan"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/rectangle_4_copy" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/lato_italic"
+                        android:lineSpacingExtra="3sp"
+                        android:textColor="@color/gray_5"
+                        android:textSize="12sp"
+                        tools:text="@string/label_non_aktifkan_link_undangan" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>
