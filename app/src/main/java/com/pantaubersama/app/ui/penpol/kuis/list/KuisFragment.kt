@@ -17,9 +17,10 @@ import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
 import com.pantaubersama.app.utils.LineDividerItemDecoration
 import com.pantaubersama.app.utils.PantauConstants
-import com.pantaubersama.app.utils.extensions.color
-import com.pantaubersama.app.utils.extensions.dip
+import com.pantaubersama.app.utils.extensions.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import kotlinx.android.synthetic.main.layout_empty_state.*
+import kotlinx.android.synthetic.main.layout_fail_state.*
 import javax.inject.Inject
 
 class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
@@ -76,7 +77,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     }
 
     private fun getDataList() {
-        presenter?.getList()
+        presenter.getList()
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {
@@ -108,6 +109,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
 
     private fun setupData() {
         dismissLoading()
+        recycler_view.visibleIf(true)
         val dummyData: MutableList<ItemModel> = mutableListOf(
             KuisListItem.Result(70, "Jokowi - Makruf"),
             KuisListItem.Item(1, 1, 7, KuisState.NOT_TAKEN),
@@ -124,22 +126,21 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
             adapter.data = dummyData
         }
         adapter.notifyDataSetChanged()
-        recycler_view.visibility = View.VISIBLE
     }
 
     override fun showLoading() {
-//        view_empty_state.visibility = View.GONE
-//        view_fail_state.visibility = View.GONE
-        recycler_view.visibility = View.INVISIBLE
-        lottie_loading.visibility = View.VISIBLE
+        lottie_loading.setVisible(true)
+        view_empty_state.emptyStateVisible(false)
+        view_fail_state.failStateVisible(false)
+        recycler_view.visibleIf(false)
     }
     override fun dismissLoading() {
-        recycler_view.visibility = View.GONE
-        lottie_loading.visibility = View.GONE
+        recycler_view.visibleIf(false)
+        lottie_loading.setVisible(false)
     }
 
     override fun showFailedGetData() {
-//        view_fail_state.visibility = View.VISIBLE
+        view_fail_state.failStateVisible(true)
     }
 
     companion object {

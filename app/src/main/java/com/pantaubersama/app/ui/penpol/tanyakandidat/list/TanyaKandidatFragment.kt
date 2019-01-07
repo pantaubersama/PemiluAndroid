@@ -28,9 +28,15 @@ import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.emptyStateVisible
+import com.pantaubersama.app.utils.extensions.failStateVisible
+import com.pantaubersama.app.utils.extensions.setVisible
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_delete_confirmation_dialog.*
+import kotlinx.android.synthetic.main.layout_empty_state.*
+import kotlinx.android.synthetic.main.layout_fail_state.*
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -165,7 +171,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>) {
-        recycler_view.visibility = View.VISIBLE
+        recycler_view.visibleIf(true)
         if (adapter?.itemCount != 0 && adapter?.get<ItemModel>(0) is BannerInfo) {
             val bannerInfo = adapter?.get<BannerInfo>(0)
             adapter?.clear()
@@ -179,7 +185,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun showEmptyDataAlert() {
-//        view_empty_state.visibility = View.VISIBLE
+        view_empty_state.emptyStateVisible(true)
     }
 
     override fun bindNextDataTanyaKandidat(questions: MutableList<Pertanyaan>) {
@@ -201,14 +207,16 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun showLoading() {
-//        view_empty_state.visibility = View.GONE
-        recycler_view.visibility = View.INVISIBLE
-        lottie_loading.visibility = View.VISIBLE
+        lottie_loading.setVisible(true)
+        view_empty_state.emptyStateVisible(false)
+        view_fail_state.failStateVisible(false)
+        recycler_view.visibleIf(false)
         fab_add.hide()
     }
 
     override fun dismissLoading() {
-        lottie_loading.visibility = View.GONE
+        lottie_loading.setVisible(false)
+        recycler_view.visibleIf(false)
         fab_add.show()
     }
 

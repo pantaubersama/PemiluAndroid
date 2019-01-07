@@ -25,9 +25,14 @@ import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.emptyStateVisible
+import com.pantaubersama.app.utils.extensions.failStateVisible
+import com.pantaubersama.app.utils.extensions.setVisible
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_janji_politik.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import kotlinx.android.synthetic.main.layout_empty_state.*
+import kotlinx.android.synthetic.main.layout_fail_state.*
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -174,7 +179,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     override fun showJanpolList(janjiPolitikList: MutableList<JanjiPolitik>) {
-        recycler_view.visibility = View.VISIBLE
+        recycler_view.visibleIf(true)
         if (adapter.itemCount != 0 && adapter.get<ItemModel>(0) is BannerInfo) {
             val bannerInfo = adapter.get<BannerInfo>(0)
             adapter.clear()
@@ -195,11 +200,11 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     override fun showEmptyData() {
-//        view_empty_state.visibleIf(true)
+        view_empty_state.emptyStateVisible(true)
     }
 
     override fun showFailedGetData() {
-//        view_fail_state.visibleIf(true)
+        view_fail_state.failStateVisible(true)
     }
 
     override fun showFailedGetMoreData() {
@@ -211,18 +216,18 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     override fun showLoading() {
-//        view_empty_state.visibility = View.GONE
-//        view_fail_state.visibility = View.GONE
-        recycler_view.visibility = View.INVISIBLE
-        lottie_loading.visibility = View.VISIBLE
+        lottie_loading.setVisible(true)
+        view_empty_state.emptyStateVisible(false)
+        view_fail_state.failStateVisible(false)
+        recycler_view.visibleIf(false)
         if (presenter.isUserEligible()) {
             fab_add.hide()
         }
     }
 
     override fun dismissLoading() {
-        recycler_view.visibility = View.GONE
-        lottie_loading.visibility = View.GONE
+        recycler_view.visibleIf(false)
+        lottie_loading.setVisible(false)
         if (presenter.isUserEligible()) {
             fab_add.show()
         }

@@ -125,7 +125,7 @@ fun LinearLayout.emptyStateVisible(isVisible: Boolean) {
         lottieView.playAnimation()
         lottieView.repeatCount = LottieDrawable.INFINITE
     } else {
-        this.visibility = View.GONE
         lottieView.cancelAnimation()
+        this.visibility = View.GONE
     }
 }

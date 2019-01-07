@@ -133,7 +133,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun showFeeds(feedsList: MutableList<FeedsItem>) {
-        recycler_view.visibility = View.VISIBLE
+        recycler_view.visibleIf(true)
         if (adapter.itemCount != 0 && adapter.get<ItemModel>(0) is BannerInfo) {
             val bannerInfo = adapter.get<BannerInfo>(0)
             adapter.clear()
@@ -155,7 +155,6 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     override fun showFailedGetData() {
         view_fail_state.failStateVisible(true)
-//        view_fail_state.visibility = View.VISIBLE
     }
 
     override fun showFailedGetMoreData() {
@@ -163,8 +162,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun showEmptyData() {
-        view_fail_state.failStateVisible(true)
-//        view_empty_state.visibility = View.VISIBLE
+        view_empty_state.emptyStateVisible(true)
     }
 
     private fun shareTweet(item: FeedsItem) {
@@ -180,15 +178,11 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         view_empty_state.emptyStateVisible(false)
         view_fail_state.failStateVisible(false)
         recycler_view.visibleIf(false)
-//        view_empty_state.visibility = View.GONE
-//        view_fail_state.visibility = View.GONE
     }
 
     override fun dismissLoading() {
         recycler_view.visibleIf(false)
         lottie_loading.setVisible(false)
-//        recycler_view.visibility = View.GONE
-//        lottie_loading.visibility = View.GONE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
