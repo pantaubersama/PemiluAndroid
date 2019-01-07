@@ -22,7 +22,7 @@ import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
-import com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity
+import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
 import com.pantaubersama.app.utils.State
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable

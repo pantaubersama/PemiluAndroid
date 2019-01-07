@@ -1,12 +1,13 @@
-package com.pantaubersama.app.ui.profile.verifikasi
+package com.pantaubersama.app.ui.profile.verifikasi.step2
 
 import android.content.Intent
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BasePresenter
-import kotlinx.android.synthetic.main.activity_step4_verifikasi.*
+import com.pantaubersama.app.ui.profile.verifikasi.step3.Step3VerifikasiActivity
+import kotlinx.android.synthetic.main.activity_step2_verifikasi.*
 
-class Step4VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
+class Step2VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
 
     override fun statusBarColor(): Int? {
         return 0
@@ -22,16 +23,16 @@ class Step4VerifikasiActivity : BaseActivity<BasePresenter<*>>() {
 
     override fun setupUI() {
         setupToolbar(true, "", R.color.white, 4f)
-        verification_step_indicator.text = "2/3"
+        verification_step_indicator.text = "1/3"
         next_button.setOnClickListener {
-            val intent = Intent(this@Step4VerifikasiActivity, Step5VerifikasiActivity::class.java)
+            val intent = Intent(this@Step2VerifikasiActivity, Step3VerifikasiActivity::class.java)
             startActivity(intent)
             finish()
         }
     }
 
     override fun setLayout(): Int {
-        return R.layout.activity_step4_verifikasi
+        return R.layout.activity_step2_verifikasi
     }
 
     override fun showLoading() {

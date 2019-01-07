@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.profile.verifikasi
+package com.pantaubersama.app.ui.profile.verifikasi.finalstep
 
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity

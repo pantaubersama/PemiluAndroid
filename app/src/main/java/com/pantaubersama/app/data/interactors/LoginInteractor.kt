@@ -30,14 +30,11 @@ class LoginInteractor @Inject constructor(
         return dataCache?.loadLoginState()
     }
 
-    fun logOut(clientId: String?, clientSecret: String?, token: String?): Completable? {
-        return apiWrapper?.getPantauOAuthApi()?.revokeToken(clientId, clientSecret, token)
-                ?.subscribeOn(rxSchedulers?.io())
-                ?.observeOn(rxSchedulers?.mainThread())
-    }
-
-    fun getToken(): String? {
-        return dataCache?.loadToken()
+    fun logOut(clientId: String?, clientSecret: String?): Completable? {
+        return apiWrapper?.getPantauOAuthApi()
+            ?.revokeToken(clientId, clientSecret)
+            ?.subscribeOn(rxSchedulers?.io())
+            ?.observeOn(rxSchedulers?.mainThread())
     }
 
     fun clearDataCache() {

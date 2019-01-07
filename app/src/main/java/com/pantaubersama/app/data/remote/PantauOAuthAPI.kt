@@ -31,8 +31,7 @@ interface PantauOAuthAPI {
     @POST("/oauth/revoke")
     fun revokeToken(
         @Field("client_id") client_id: String?,
-        @Field("client_secret") client_secret: String?,
-        @Field("token") token: String?
+        @Field("client_secret") client_secret: String?
     ): Completable
 
     @GET("/v1/me")
@@ -82,5 +81,29 @@ interface PantauOAuthAPI {
         @Field("nationality") nationality: String?,
         @Field("address") address: String?,
         @Field("phone_number") phoneNumber: String?
+    ): Completable
+
+    @FormUrlEncoded
+    @PUT("v1/verifications/ktp_number")
+    fun submitKtpNumber(
+        @Field("ktp_number") ktpNumber: String?
+    ): Completable
+
+    @Multipart
+    @PUT("/v1/verifications/ktp_selfie")
+    fun submitSelfieKtp(
+        @Part avatar: MultipartBody.Part?
+    ): Completable
+
+    @Multipart
+    @PUT("/v1/verifications/ktp_photo")
+    fun submitKtpPhoto(
+        @Part ktpPhoto: MultipartBody.Part?
+    ): Completable
+
+    @Multipart
+    @PUT("/v1/verifications/signature")
+    fun submitSignaturePhoto(
+        @Part signPhoto: MultipartBody.Part?
     ): Completable
 }
