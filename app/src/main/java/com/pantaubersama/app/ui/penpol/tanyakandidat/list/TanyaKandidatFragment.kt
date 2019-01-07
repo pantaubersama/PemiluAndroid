@@ -179,7 +179,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun showEmptyDataAlert() {
-        view_empty_state.visibility = View.VISIBLE
+//        view_empty_state.visibility = View.VISIBLE
     }
 
     override fun bindNextDataTanyaKandidat(questions: MutableList<Pertanyaan>) {
@@ -201,7 +201,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun showLoading() {
-        view_empty_state.visibility = View.GONE
+//        view_empty_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
         lottie_loading.visibility = View.VISIBLE
         fab_add.hide()

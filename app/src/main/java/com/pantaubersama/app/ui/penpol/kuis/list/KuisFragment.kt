@@ -128,8 +128,8 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     }
 
     override fun showLoading() {
-        view_empty_state.visibility = View.GONE
-        view_fail_state.visibility = View.GONE
+//        view_empty_state.visibility = View.GONE
+//        view_fail_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
         lottie_loading.visibility = View.VISIBLE
     }
@@ -139,7 +139,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     }
 
     override fun showFailedGetData() {
-        view_fail_state.visibility = View.VISIBLE
+//        view_fail_state.visibility = View.VISIBLE
     }
 
     companion object {

@@ -25,7 +25,13 @@ import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.emptyStateVisible
+import com.pantaubersama.app.utils.extensions.failStateVisible
+import com.pantaubersama.app.utils.extensions.setVisible
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import kotlinx.android.synthetic.main.layout_empty_state.*
+import kotlinx.android.synthetic.main.layout_fail_state.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -148,7 +154,8 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun showFailedGetData() {
-        view_fail_state.visibility = View.VISIBLE
+        view_fail_state.failStateVisible(true)
+//        view_fail_state.visibility = View.VISIBLE
     }
 
     override fun showFailedGetMoreData() {
@@ -156,7 +163,8 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun showEmptyData() {
-        view_empty_state.visibility = View.VISIBLE
+        view_fail_state.failStateVisible(true)
+//        view_empty_state.visibility = View.VISIBLE
     }
 
     private fun shareTweet(item: FeedsItem) {
@@ -168,15 +176,19 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     override fun showLoading() {
-        view_empty_state.visibility = View.GONE
-        view_fail_state.visibility = View.GONE
-        recycler_view.visibility = View.INVISIBLE
-        lottie_loading.visibility = View.VISIBLE
+        lottie_loading.setVisible(true)
+        view_empty_state.emptyStateVisible(false)
+        view_fail_state.failStateVisible(false)
+        recycler_view.visibleIf(false)
+//        view_empty_state.visibility = View.GONE
+//        view_fail_state.visibility = View.GONE
     }
 
     override fun dismissLoading() {
-        recycler_view.visibility = View.GONE
-        lottie_loading.visibility = View.GONE
+        recycler_view.visibleIf(false)
+        lottie_loading.setVisible(false)
+//        recycler_view.visibility = View.GONE
+//        lottie_loading.visibility = View.GONE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -195,11 +195,11 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     override fun showEmptyData() {
-        view_empty_state.visibleIf(true)
+//        view_empty_state.visibleIf(true)
     }
 
     override fun showFailedGetData() {
-        view_fail_state.visibleIf(true)
+//        view_fail_state.visibleIf(true)
     }
 
     override fun showFailedGetMoreData() {
@@ -211,8 +211,8 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     override fun showLoading() {
-        view_empty_state.visibility = View.GONE
-        view_fail_state.visibility = View.GONE
+//        view_empty_state.visibility = View.GONE
+//        view_fail_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
         lottie_loading.visibility = View.VISIBLE
         if (presenter.isUserEligible()) {

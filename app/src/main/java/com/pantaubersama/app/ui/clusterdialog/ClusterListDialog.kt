@@ -108,11 +108,11 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
     }
 
     override fun showEmptyCluster() {
-        view_empty_state.visibleIf(true)
+//        view_empty_state.visibleIf(true)
     }
 
     override fun showFailedGetClusters() {
-        view_fail_state.visibleIf(true)
+//        view_fail_state.visibleIf(true)
     }
 
     override fun showFailedGetMoreClusters() {
@@ -125,8 +125,8 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
 
     override fun showLoading() {
         adapter?.setLoading()
-        view_empty_state.visibility = View.GONE
-        view_fail_state.visibility = View.GONE
+//        view_empty_state.visibility = View.GONE
+//        view_fail_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
     }
 

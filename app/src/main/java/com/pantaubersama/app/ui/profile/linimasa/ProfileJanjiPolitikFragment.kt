@@ -42,7 +42,7 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
     }
 
     override fun showLoading() {
-        view_empty_state.visibility = View.GONE
+//        view_empty_state.visibility = View.GONE
         recycler_view.visibility = View.INVISIBLE
 //        progress_bar.visibility = View.VISIBLE
     }
@@ -55,7 +55,7 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
     override fun bindDataJanjiPolitik(janpolList: MutableList<JanjiPolitik>?) {
         Timber.d("janpol data size : ${janpolList?.size}")
         if (janpolList!!.isEmpty()) {
-            view_empty_state.visibility = View.VISIBLE
+//            view_empty_state.visibility = View.VISIBLE
         } else {
             recycler_view.visibility = View.VISIBLE
 //            adapter.replaceData(janpolList)

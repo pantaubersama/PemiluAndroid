@@ -18,6 +18,7 @@ import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_filter_janji_politik.*
 import kotlinx.android.synthetic.main.item_cluster.*
 import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
+import kotlinx.android.synthetic.main.layout_empty_state.*
 import javax.inject.Inject
 
 class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), FilterJanjiPolitikView {

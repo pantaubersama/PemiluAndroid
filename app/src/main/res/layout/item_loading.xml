@@ -13,7 +13,6 @@
         android:layout_height="50dp"
         android:layout_centerInParent="true"
         app:lottie_fileName="lottie_loading.json"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"/>
+        app:lottie_autoPlay="false"/>
 
 </RelativeLayout>
