@@ -4,9 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.graphics.Point
 import android.hardware.Camera
 import android.os.Build
@@ -16,22 +13,17 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.data.interactors.VerifikasiInteractor
-import com.pantaubersama.app.ui.profile.verifikasi.Step4VerifikasiActivity
+import com.pantaubersama.app.ui.profile.verifikasi.step4.Step4VerifikasiActivity
 import com.pantaubersama.app.ui.widget.CameraPreview
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_step3_verifikasi.*
 import javax.inject.Inject
-import android.os.Environment
 import android.webkit.MimeTypeMap
+import com.pantaubersama.app.utils.ImageTools
 import com.pantaubersama.app.utils.ToastUtil
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-
-
 
 class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3VerifikasiView {
     @Inject
@@ -120,36 +112,18 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
                     Surface.ROTATION_270 -> rotation = 180
                 }
 
-                var bitmap = BitmapTools.toBitmap(data)
-                bitmap = BitmapTools.rotate(bitmap, rotation)
+                var bitmap = ImageTools.BitmapTools.toBitmap(data)
+                bitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
                 image_preview_container.visibility = View.VISIBLE
                 image_preview.setImageBitmap(bitmap)
                 isPreview = true
-                var file = File(Environment.getExternalStorageDirectory().path + "/dirr")
-                if (!file.isDirectory) {
-                    file.mkdir()
-                }
-
-                file = File(Environment.getExternalStorageDirectory().path + "/dirr", System.currentTimeMillis().toString() + ".jpg")
-
-                try {
-                    val fileOutputStream = FileOutputStream(file)
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
-
-                    fileOutputStream.flush()
-                    fileOutputStream.close()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                } catch (exception: Exception) {
-                    exception.printStackTrace()
-                }
 
                 val type: String
-                val extension = MimeTypeMap.getFileExtensionFromUrl(file.getAbsolutePath())
+                val extension = MimeTypeMap.getFileExtensionFromUrl(ImageTools.getImageFile(bitmap).absolutePath)
                 type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
 
-                val reqFile = RequestBody.create(MediaType.parse(type), file)
-                ktpSelfie = MultipartBody.Part.createFormData("ktp_selfie", file.getName(), reqFile)
+                val reqFile = RequestBody.create(MediaType.parse(type), ImageTools.getImageFile(bitmap))
+                ktpSelfie = MultipartBody.Part.createFormData("ktp_selfie", ImageTools.getImageFile(bitmap).name, reqFile)
             }
             capture_button.setOnClickListener {
                 capture_button.isEnabled = false
@@ -172,18 +146,6 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
             }
         }
         return chosenHeight
-    }
-
-    object BitmapTools {
-        fun toBitmap(data: ByteArray): Bitmap {
-            return BitmapFactory.decodeByteArray(data, 0, data.size)
-        }
-
-        fun rotate(bitmap: Bitmap, angle: Int): Bitmap {
-            val mat = Matrix()
-            mat.postRotate(angle.toFloat())
-            return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, mat, true)
-        }
     }
 
     private fun findFrontFacingCamera(): Int {

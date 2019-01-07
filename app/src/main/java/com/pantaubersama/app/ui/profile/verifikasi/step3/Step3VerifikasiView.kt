@@ -5,5 +5,4 @@ import com.pantaubersama.app.base.BaseView
 interface Step3VerifikasiView : BaseView {
     fun onSuccessSubmitSelfieKtp()
     fun showFailedSubmitSelfieKtpAlert()
-
 }

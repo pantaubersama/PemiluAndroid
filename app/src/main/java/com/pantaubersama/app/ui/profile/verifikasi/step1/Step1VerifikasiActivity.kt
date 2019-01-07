@@ -14,7 +14,6 @@ import com.pantaubersama.app.utils.extensions.enable
 import java.util.regex.Pattern
 import javax.inject.Inject
 
-
 class Step1VerifikasiActivity : BaseActivity<Step1VerifikasiPresenter>(), Step1VerifikasiView {
     @Inject
     lateinit var interactor: VerifikasiInteractor

@@ -95,4 +95,10 @@ interface PantauOAuthAPI {
     fun submitSelfieKtp(
         @Part avatar: MultipartBody.Part?
     ): Completable
+
+    @Multipart
+    @PUT("/v1/verifications/ktp_photo")
+    fun submitKtpPhoto(
+        @Part ktpPhoto: MultipartBody.Part?
+    ): Completable
 }

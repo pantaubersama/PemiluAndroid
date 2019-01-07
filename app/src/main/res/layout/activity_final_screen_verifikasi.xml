@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Yapp, Selamat \n Akunmu telah terverifikasi"
+            android:text="Yapp, Selamat \n Akunmu dalam proses pengecekan"
             android:textSize="24sp"
             android:fontFamily="@font/lato_bold"
             android:textColor="@color/black_3"

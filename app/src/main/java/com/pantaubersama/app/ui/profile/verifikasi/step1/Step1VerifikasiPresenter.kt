@@ -27,5 +27,4 @@ class Step1VerifikasiPresenter @Inject constructor(
                 )
         )
     }
-
 }

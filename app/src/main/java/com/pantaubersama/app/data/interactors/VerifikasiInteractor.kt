@@ -9,7 +9,7 @@ import javax.inject.Inject
 class VerifikasiInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
     private val rxSchedulers: RxSchedulers
-    ) {
+) {
     fun submitKtpNumber(ktpNumber: String): Completable {
         return apiWrapper
             .getPantauOAuthApi()
@@ -26,4 +26,11 @@ class VerifikasiInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
+    fun submitKtpPhoto(ktpPhoto: MultipartBody.Part?): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .submitKtpPhoto(ktpPhoto)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }

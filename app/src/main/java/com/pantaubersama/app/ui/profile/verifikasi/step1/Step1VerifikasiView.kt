@@ -7,5 +7,4 @@ interface Step1VerifikasiView : BaseView {
     fun showFailedSubmitKtpNumberAlert()
     fun disableView()
     fun enableView()
-
 }
