@@ -124,7 +124,9 @@
                     <ImageView
                         android:id="@+id/undang_anggota_copy_link"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/outline_link_72_px" />
 
                     <TextView
                         android:layout_width="wrap_content"
