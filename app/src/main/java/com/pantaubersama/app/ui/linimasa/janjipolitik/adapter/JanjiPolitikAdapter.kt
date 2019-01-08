@@ -61,7 +61,7 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter() {
                 riv_janpol_image.visibleIf(false)
             }
 
-            ll_janpol_content.setOnClickListener { listener?.onClickJanPolContent(item) }
+            ll_janpol_content.setOnClickListener { listener?.onClickJanPolContent(item, adapterPosition) }
             iv_share_button.setOnClickListener { listener?.onClickShare(item) }
             iv_options_button.setOnClickListener { listener?.onClickJanpolOption(item, adapterPosition) }
         }
@@ -78,7 +78,7 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter() {
 
     interface AdapterListener {
         fun onClickBanner(bannerInfo: BannerInfo)
-        fun onClickJanPolContent(item: JanjiPolitik)
+        fun onClickJanPolContent(item: JanjiPolitik, position: Int)
         fun onClickJanpolOption(item: JanjiPolitik, position: Int)
         fun onClickShare(item: JanjiPolitik)
         fun onClickCopyUrl(id: String?)

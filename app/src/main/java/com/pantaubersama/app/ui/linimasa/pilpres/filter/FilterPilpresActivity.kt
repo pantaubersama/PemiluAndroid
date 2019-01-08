@@ -30,7 +30,7 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
     companion object {
         fun setIntent(context: Context): Intent {
             val intent = Intent(context, FilterPilpresActivity::class.java)
-//        intent.putExtra(PantauConstants.Extra.SELECTED_FILTER_PILPRES, selectedFilter)
+//        intent.putExtra(PantauConstants.Extra.EXTRA_SELECTED_FILTER_PILPRES, selectedFilter)
             return intent
         }
     }

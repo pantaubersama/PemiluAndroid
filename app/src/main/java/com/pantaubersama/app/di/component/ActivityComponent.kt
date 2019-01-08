@@ -7,6 +7,7 @@ import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
 import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity
+import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
@@ -62,4 +63,5 @@ interface ActivityComponent {
     fun inject(step5VerifikasiActivity: Step5VerifikasiActivity)
     fun inject(step7VerifikasiActivity: Step7VerifikasiActivity)
     fun inject(clusterCategoryActivity: ClusterCategoryActivity)
+    fun inject(detailJanjiPolitikActivity: DetailJanjiPolitikActivity)
 }

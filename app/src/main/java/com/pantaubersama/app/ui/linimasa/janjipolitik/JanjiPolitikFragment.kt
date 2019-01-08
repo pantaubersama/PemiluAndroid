@@ -22,7 +22,10 @@ import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikA
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_CREATE_JANPOL
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_JANPOL
+import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_ITEM_JANPOL
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.emptyStateVisible
@@ -83,11 +86,11 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         adapter.listener = object : JanjiPolitikAdapter.AdapterListener {
 
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivity(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_JANPOL, bannerInfo))
+                startActivity(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.EXTRA_TYPE_JANPOL, bannerInfo))
             }
 
-            override fun onClickJanPolContent(item: JanjiPolitik) {
-                startActivity(DetailJanjiPolitikActivity.setIntent(context!!, item.id!!))
+            override fun onClickJanPolContent(item: JanjiPolitik, position: Int) {
+                startActivityForResult(DetailJanjiPolitikActivity.setIntent(context!!, item, position), RC_OPEN_DETAIL_JANPOL)
             }
 
             override fun onClickJanpolOption(item: JanjiPolitik, position: Int) {
@@ -254,6 +257,12 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 //                        scrollToTop(false)
 //                    }
                     getJanjiPolitikList()
+                }
+            }
+        } else if (resultCode == RESULT_DELETE_ITEM_JANPOL) {
+            if (requestCode == RC_OPEN_DETAIL_JANPOL) {
+                if (data != null && data.getIntExtra(EXTRA_ITEM_POSITION, -1) != -1) {
+                    adapter.deleteItem(data.getIntExtra(EXTRA_ITEM_POSITION, -1))
                 }
             }
         }

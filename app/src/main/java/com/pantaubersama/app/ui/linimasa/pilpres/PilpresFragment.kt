@@ -72,7 +72,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         recycler_view.adapter = adapter
         adapter.listener = object : PilpresAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.RC_BANNER_PILPRES)
+                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.EXTRA_TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.RC_BANNER_PILPRES)
             }
 
             override fun onClickTweetOption(item: FeedsItem) {

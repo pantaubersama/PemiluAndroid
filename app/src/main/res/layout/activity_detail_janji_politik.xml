@@ -8,7 +8,7 @@
     tools:context="com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity">
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_detail_janpol_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/gray_2"
@@ -18,7 +18,7 @@
         android:fontFamily="@font/bw_modelica_bold"/>
 
     <ScrollView
-        android:layout_below="@id/tv_title"
+        android:layout_below="@id/tv_detail_janpol_title"
         android:layout_above="@id/btn_close"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -31,7 +31,7 @@
             <include layout="@layout/item_cluster"/>
 
             <TextView
-                android:id="@+id/tv_content"
+                android:id="@+id/tv_detail_janpol_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -40,6 +40,14 @@
                 android:textSize="12sp"
                 android:textColor="@color/black_1"
                 android:fontFamily="@font/lato_medium"/>
+            
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/iv_detail_janpol_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"/>
 
             <View
                 android:layout_marginTop="10dp"
@@ -49,7 +57,7 @@
                 android:background="@color/gray_2"/>
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/iv_author_avatar"
+                android:id="@+id/iv_creator_avatar"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="20dp"
@@ -59,7 +67,7 @@
                 app:riv_oval="true"/>
 
             <TextView
-                android:id="@+id/tv_author_name"
+                android:id="@+id/tv_creator_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -70,7 +78,7 @@
                 android:fontFamily="@font/lato_bold"/>
 
             <TextView
-                android:id="@+id/tv_author_description"
+                android:id="@+id/tv_creator_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -101,23 +109,23 @@
                 xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_margin="16dp">
+                android:layout_marginBottom="4dp">
 
                 <ImageView
                     android:id="@+id/iv_share_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="10dp"
                     android:src="@drawable/ic_share"
                     android:layout_toStartOf="@id/iv_options_button"
-                    android:layout_toLeftOf="@id/iv_options_button"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="8dp"
                     android:background="?selectableItemBackgroundBorderless"/>
 
                 <ImageView
                     android:id="@+id/iv_options_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="10dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/ic_more_horiz"
