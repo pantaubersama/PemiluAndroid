@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,10 +40,12 @@
                 android:background="@color/transparant"
                 android:fontFamily="@font/lato_italic"
                 android:lineSpacingExtra="12sp"
-                android:text="@string/hint_cari_kategori"
+                android:hint="@string/hint_cari_kategori"
                 android:textColor="@color/gray_4"
                 android:textSize="12sp"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:lines="1"
+                android:maxLines="1"/>
 
         </LinearLayout>
 

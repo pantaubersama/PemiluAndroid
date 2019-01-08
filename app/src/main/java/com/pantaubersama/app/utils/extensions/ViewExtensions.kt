@@ -14,7 +14,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
-import androidx.core.content.ContextCompat
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.request.RequestListener

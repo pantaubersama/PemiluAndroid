@@ -12,6 +12,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseRecyclerAdapter
@@ -20,12 +21,15 @@ import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
-import com.pantaubersama.app.utils.extensions.*
+import com.pantaubersama.app.utils.extensions.* // ktlint-disable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_cluster_category.*
 import kotlinx.android.synthetic.main.add_category_dialog.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), ClusterCategoryView {
@@ -58,6 +62,18 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
             page = 1
             presenter.getCategories(page, perPage, query)
         }
+        RxTextView.textChanges(cluster_category_search)
+            .filter { it.isNotEmpty() }
+            .debounce(1000, TimeUnit.MILLISECONDS)
+            .map { it.toString() }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext {
+                this.query = it
+                page = 1
+                presenter.getCategories(page, perPage, query)
+            }
+            .subscribe()
     }
 
     private fun setupCategories() {
