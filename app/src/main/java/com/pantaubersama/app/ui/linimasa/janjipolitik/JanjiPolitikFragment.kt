@@ -145,12 +145,10 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             }
         }
 
-        adapter.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
-            override fun loadMore(page: Int) {
-                adapter.setLoading()
-                presenter.getJanjiPolitikList(page)
-            }
-        }, 10)
+        adapter.addSupportLoadMore(recycler_view, 10) {
+            adapter.setLoading()
+            presenter.getJanjiPolitikList(it)
+        }
 
         if (presenter.isUserEligible()) {
             recycler_view.setPadding(0, 0, 0,

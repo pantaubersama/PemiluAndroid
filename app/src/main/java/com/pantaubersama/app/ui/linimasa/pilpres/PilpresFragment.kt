@@ -113,12 +113,10 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
                 shareTweet(item)
             }
         }
-        adapter.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
-            override fun loadMore(page: Int) {
-                adapter.setLoading()
-                presenter.getFeeds(page)
-            }
-        }, 10)
+        adapter.addSupportLoadMore(recycler_view, 10) {
+            adapter.setLoading()
+            presenter.getFeeds(it)
+        }
 
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false

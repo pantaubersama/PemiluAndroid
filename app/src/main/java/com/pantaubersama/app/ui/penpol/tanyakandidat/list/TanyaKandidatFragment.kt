@@ -81,12 +81,10 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
-        adapter?.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
-            override fun loadMore(page: Int) {
-                adapter?.setLoading()
-                presenter.getTanyaKandidatList(page, perPage)
-            }
-        }, 5)
+        adapter?.addSupportLoadMore(recycler_view, 5) {
+            adapter?.setLoading()
+            presenter.getTanyaKandidatList(it, perPage)
+        }
 
         adapter?.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {

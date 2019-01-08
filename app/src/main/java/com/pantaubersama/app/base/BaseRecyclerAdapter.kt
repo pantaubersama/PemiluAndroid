@@ -20,8 +20,8 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
 
     fun addSupportLoadMore(
         recyclerView: RecyclerView,
-        loadMoreListener: OnLoadMoreListener,
-        visibleTreshold: Int
+        visibleTreshold: Int,
+        onLoadMore: (page: Int) -> Unit
     ) {
         val layoutManager = recyclerView.layoutManager
         if (layoutManager != null) {
@@ -34,7 +34,7 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
                         lastVisibleItem = layoutManager.findLastVisibleItemPosition()
                         if (!isDataEnd && !isLoadingMore && totalItemCount!! <= (lastVisibleItem!! + visibleTreshold)) {
                             page++
-                            loadMoreListener.loadMore(page)
+                            onLoadMore(page)
                             isLoadingMore = true
                         }
                     }
@@ -45,10 +45,6 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
         } else {
             Timber.e("No LayoutManager found")
         }
-    }
-
-    interface OnLoadMoreListener {
-        fun loadMore(page: Int)
     }
 
     override fun getItemCount(): Int {
