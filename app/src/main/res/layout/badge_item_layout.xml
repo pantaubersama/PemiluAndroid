@@ -4,7 +4,9 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/iv_badge"

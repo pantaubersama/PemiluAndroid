@@ -59,5 +59,4 @@ abstract class BaseDialogFragment<P : BasePresenter<*>> : DialogFragment(), Base
 
     @LayoutRes
     protected abstract fun setLayout(): Int
-
 }

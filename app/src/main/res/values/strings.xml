@@ -20,7 +20,7 @@
     <string name="dummy_tweet_content">#SahabatBawaslu, Sentra  Gakkumdu berkomitmen untuk tidak memunculkan sikap ego sektoral antar personil, baik dari pihak Bawaslu,  Kepolisian,  maupun Kejaksaan dalam menegakkan hukum Pemilu dalam Rapat Koordinasi Nasional Sentra Gakkumdu,  di Jakarta, Rabu,  (5/12/2018).</string>
     <string name="tanya_kandidat_label">Tanya Kandidat</string>
     <string name="kuis_label">Kuis</string>
-    <string name="login_failed_alert">Failed to login with symbolic</string>
+    <string name="login_failed_alert">Failed to login with Symbolic</string>
     <string name="tanya_kandidat_banner_text">Apa yang ingin kamu tanyakan kepada Capres &amp; Cawapres Jokowi-Ma\'ruf dan Prabowo-Sandi</string>
     <string name="pilpres_banner_text">Halaman ini berisikan informasi dari channel Resmi twitter Jokowi - Makruf dan Prabowo - Sandi yang terdaftar di Bawaslu</string>
     <string name="kuis_banner_text">Ikuti quiz pilih jawaban tanpa kamu tahu itu jawaban siapa, kemudian tunggu kejutannya dan lihat hasil dari quiz ini</string>
@@ -155,4 +155,10 @@
     <string name="label_bagikan_undangan_lewat_link">Bagikan Undangan Lewat Link</string>
     <string name="label_non_aktifkan_link_undangan">Non aktifkan link undangan</string>
     <string name="deskripsi_undang_lewat_tautan">Dengan metode bagikan link undangan siapapun yg meng klik Otomatis akan menjadi anggota. Anda dapat mematikan link undangan sewaktu waktu</string>
+    <string name="logging_in_label">Logging in</string>
+    <string name="failed_login_alert">Failed to login using Symbolic</string>
+    <string name="failed_load_profile_alert">Gagal memuat data profil</string>
+    <string name="failed_update_avatar_alert">Failed to update avatar</string>
+    <string name="success_update_avatar_alert">Avatar updated</string>
+    <string name="failed_load_image_alert">Gagal memuat gambar</string>
 </resources>

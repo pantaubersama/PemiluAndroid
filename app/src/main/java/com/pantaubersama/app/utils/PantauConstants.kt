@@ -55,6 +55,7 @@ class PantauConstants {
         const val BANNER_JANPOL = 102
         const val BANNER_TANYA_KANDIDAT = 103
         const val BANNER_KUIS = 104
+        val SETTINGS = 600
     }
 
     object Networking {
