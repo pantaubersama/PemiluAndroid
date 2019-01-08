@@ -56,7 +56,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
                 ShareUtil.shareItem(context!!, item)
             }
 
-            override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
+            override fun onClickUpvote(id: String?, isLiked: Boolean, position: Int?) {
                 // not implemented yet
             }
 

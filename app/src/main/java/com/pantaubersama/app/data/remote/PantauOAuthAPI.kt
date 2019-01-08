@@ -2,6 +2,7 @@ package com.pantaubersama.app.data.remote
 
 import com.pantaubersama.app.data.model.accesstoken.Token
 import com.pantaubersama.app.data.model.accesstoken.TokenResponse
+import com.pantaubersama.app.data.model.cluster.CategoryData
 import com.pantaubersama.app.data.model.cluster.ClustersResponse
 import com.pantaubersama.app.data.model.user.BadgeResponse
 import com.pantaubersama.app.data.model.user.Informant
@@ -122,4 +123,11 @@ interface PantauOAuthAPI {
     fun createNewCategory(
         @Field("name") categoryName: String
     ): Completable
+
+    @GET("/v1/categories")
+    fun getCategories(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("name")query: String
+    ): Single<CategoryData>
 }
