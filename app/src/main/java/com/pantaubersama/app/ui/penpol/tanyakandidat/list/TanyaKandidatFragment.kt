@@ -129,8 +129,12 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                 ShareUtil.shareItem(context!!, item)
             }
 
-            override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
-                presenter.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
+            override fun onClickUpvote(id: String?, isLiked: Boolean, position: Int?) {
+                if (!isLiked) {
+                    presenter.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
+                } else {
+                    presenter.unVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
+                }
             }
 
             override fun onClickDeleteItem(id: String?, position: Int?) {

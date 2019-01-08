@@ -131,4 +131,20 @@ class TanyaKandidatPresenter @Inject constructor(
                 )
         )
     }
+
+    fun unVoteQuestion(id: String?, className: String, liked: Boolean, position: Int?) {
+        disposables?.add(
+            tanyaKandidatInteractor
+                .unVoteQuestion(id, className)
+                .subscribe(
+                    {
+                        view?.onItemUpVoted()
+                    },
+                    {
+                        view?.showError(it)
+                        view?.onFailedUpVoteItem(liked, position)
+                    }
+                )
+        )
+    }
 }

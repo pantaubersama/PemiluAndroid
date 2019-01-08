@@ -88,4 +88,15 @@ class TanyaKandidatInteractor @Inject constructor(
             dataCache.loadTanyaKandidatOrderFilter()
         }
     }
+
+    fun unVoteQuestion(id: String?, className: String): Completable {
+        return apiWrapper
+            .getPantauApi()
+            .unVoteQuestion(
+                id,
+                className
+            )
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }

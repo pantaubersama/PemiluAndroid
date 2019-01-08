@@ -1,7 +1,6 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.* // ktlint-disable
 import androidx.core.content.ContextCompat
@@ -60,7 +59,6 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewH
     ) : RecyclerView.ViewHolder(
         containerView!!), LayoutContainer {
 
-        @SuppressLint("SetTextI18n")
         fun onBind(item: Pertanyaan?) {
             GlideApp
                 .with(itemView.context)
@@ -86,10 +84,7 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewH
                 }
             }
             upvote_container.setOnClickListener {
-                if (!item?.isliked!!) {
-                    setUpvoted(item)
-                    listener?.onClickUpvote(item.id, item.isliked, position)
-                }
+                setUpvoted(item)
             }
         }
 
@@ -104,13 +99,13 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewH
                     upvote_count_text.text = item.likeCount.toString()
                 }
                 animator.start()
+            } else {
+                val upVoteCount = item.likeCount!! - 1
+                item.likeCount = upVoteCount
+                upvote_count_text.text = item.likeCount.toString()
+                upvote_animation.progress = 0.0f
             }
-//            else {
-//                val upVoteCount = item.likeCount!! - 1
-//                item.likeCount = upVoteCount
-//                upvote_count_text.text = item.likeCount.toString()
-//                upvote_animation.progress = 0.0f
-//            }
+            listener?.onClickUpvote(item.id, upVoted, adapterPosition)
         }
     }
 
@@ -203,7 +198,7 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewH
     interface AdapterListener {
         fun onClickBanner(bannerInfo: BannerInfo)
         fun onClickShare(item: Pertanyaan?)
-        fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?)
+        fun onClickUpvote(id: String?, isLiked: Boolean, position: Int?)
         fun onClickDeleteItem(id: String?, position: Int?)
         fun onClickCopyUrl(id: String?)
         fun onClickLapor(id: String?)
