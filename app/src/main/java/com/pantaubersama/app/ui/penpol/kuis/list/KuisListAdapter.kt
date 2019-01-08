@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.base.viewholder.LoadingViewHolder
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.data.model.kuis.KuisUserResult
@@ -12,6 +13,7 @@ import com.pantaubersama.app.data.model.kuis.KuisState
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_BANNER
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_KUIS_ITEM
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_KUIS_RESULT
+import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_LOADING
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.setBackgroundTint
@@ -29,7 +31,8 @@ class KuisListAdapter : BaseRecyclerAdapter() {
             TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
             TYPE_KUIS_RESULT -> ResultViewHolder(parent.inflate(R.layout.item_kuis_result))
             TYPE_KUIS_ITEM -> ItemViewHolder(parent.inflate(R.layout.item_kuis))
-            else -> throw IllegalArgumentException("unknown view type")
+            TYPE_LOADING -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
+            else -> throw IllegalArgumentException("unknown view type $viewType")
         }
     }
 

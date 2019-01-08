@@ -96,7 +96,7 @@ interface PantauAPI {
     @GET("pendidikan_politik/v1/quizzes")
     fun getKuisList(
         @Query("page") page: Int,
-        @Query("per_page") perPage: Int = 25,
+        @Query("per_page") perPage: Int,
         @Query("filter_by") filterBy: String? = null
     ): Single<KuisResponse>
 

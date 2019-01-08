@@ -60,19 +60,57 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
                 shareKuis(item)
             }
         }
+
         recycler_view.layoutManager = LinearLayoutManager(requireContext())
         recycler_view.adapter = adapter
         recycler_view.addItemDecoration(LineDividerItemDecoration(color(R.color.gray_3), dip(1), dip(16)))
+        adapter.addSupportLoadMore(recycler_view, 3, presenter::getNextPage)
 
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
-            presenter.getTopPageItems()
+            getTopPageItems()
         }
+        getTopPageItems()
+    }
+
+    private fun getTopPageItems() {
+        adapter.setDataEnd(false)
         presenter.getTopPageItems()
     }
 
     override fun showTopPageItems(itemModels: List<ItemModel>) {
         adapter.setDatas(itemModels)
+    }
+
+    override fun showMoreKuis(list: List<KuisItem>) {
+        adapter.addData(list)
+        if (list.size < presenter.perPage) {
+            adapter.setDataEnd(true)
+        }
+    }
+
+    override fun showLoadingMore() {
+        adapter.setLoading()
+    }
+
+    override fun dismissLoadingMore() {
+        adapter.setLoaded()
+    }
+
+    override fun showLoading() {
+        lottie_loading.setVisible(true)
+        view_empty_state.emptyStateVisible(false)
+        view_fail_state.failStateVisible(false)
+        recycler_view.visibleIf(false)
+    }
+
+    override fun dismissLoading() {
+        recycler_view.visibleIf(true)
+        lottie_loading.setVisible(false)
+    }
+
+    override fun showFailedGetData() {
+        view_fail_state.failStateVisible(true)
     }
 
     private fun shareKuis(item: KuisItem) {
@@ -95,22 +133,6 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
             startActivity(chooserIntent)
         }
-    }
-
-    override fun showLoading() {
-        lottie_loading.setVisible(true)
-        view_empty_state.emptyStateVisible(false)
-        view_fail_state.failStateVisible(false)
-        recycler_view.visibleIf(false)
-    }
-
-    override fun dismissLoading() {
-        recycler_view.visibleIf(true)
-        lottie_loading.setVisible(false)
-    }
-
-    override fun showFailedGetData() {
-        view_fail_state.failStateVisible(true)
     }
 
     companion object {
