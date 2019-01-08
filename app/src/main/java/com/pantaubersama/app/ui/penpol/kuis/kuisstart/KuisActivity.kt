@@ -47,7 +47,7 @@ class KuisActivity : CommonActivity() {
     }
 
     companion object {
-        fun setIntent(context: Context, kuisId: Int, questionNumber: Int): Intent {
+        fun setIntent(context: Context, kuisId: String, questionNumber: Int): Intent {
             val intent = Intent(context, KuisActivity::class.java)
             intent.putExtra(PantauConstants.Kuis.KUIS_ID, kuisId)
             intent.putExtra(PantauConstants.Kuis.KUIS_NUMBER, questionNumber)

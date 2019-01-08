@@ -63,12 +63,12 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
         return data.indexOf(item)
     }
 
-    open fun setDatas(items: MutableList<ItemModel>) {
+    open fun setDatas(items: List<ItemModel>) {
         data.clear()
         data.addAll(items)
     }
 
-    fun addData(items: MutableList<ItemModel>) {
+    fun addData(items: List<ItemModel>) {
         data.addAll(items)
         notifyItemRangeInserted(itemCount - 1, items.size)
     }

@@ -6,14 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.base.viewholder.LoadingViewHolder
-import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.category_item.*
 
-class CategoriesAdapter : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewHolder>() {
+class CategoriesAdapter : BaseRecyclerAdapter() {
     var listener: CategoriesAdapter.Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

@@ -26,7 +26,7 @@ class ClusterListDialogAdapter() : BaseRecyclerAdapter() {
         }
     }
 
-    override fun setDatas(items: MutableList<ItemModel>) {
+    override fun setDatas(items: List<ItemModel>) {
         super.setDatas(items)
         addItem(ClusterItem(), 0)
     }
