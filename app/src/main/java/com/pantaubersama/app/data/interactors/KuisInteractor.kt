@@ -19,8 +19,8 @@ class KuisInteractor @Inject constructor(
         return dataCache.isBannerKuisOpened()
     }
 
-    fun getKuisList(page: Int): Single<List<KuisItem>> {
-        return pantauAPI.getKuisList(page)
+    fun getKuisList(page: Int, perPage: Int): Single<List<KuisItem>> {
+        return pantauAPI.getKuisList(page, perPage)
             .subscribeOn(rxSchedulers.io())
             .map { it.data.kuisList }
             .observeOn(rxSchedulers.mainThread())

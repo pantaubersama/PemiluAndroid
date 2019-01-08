@@ -5,24 +5,31 @@ import android.content.Intent
 import android.os.Bundle
 import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
+import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_ikuti_kuis.*
 
 class IkutiKuisActivity : CommonActivity() {
-    private var kuisId: String = ""
+
+    private lateinit var kuisItem: KuisItem
 
     override fun statusBarColor(): Int? {
         return 0
     }
 
     override fun fetchIntentExtra() {
-        kuisId = intent.getStringExtra(PantauConstants.Kuis.KUIS_ID)
+        kuisItem = intent.getSerializableExtra(PantauConstants.Kuis.KUIS_ITEM) as KuisItem
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
+        iv_kuis_image.loadUrl(kuisItem.image.url)
+        quiz_title.text = kuisItem.title
+        question_count.text = "%d Pertanyaan".format(kuisItem.kuisQuestionsCount)
+        quiz_long_hint.text = kuisItem.description
         start_quiz_action.setOnClickListener {
-            val intent = KuisActivity.setIntent(this, kuisId, 1)
+            val intent = KuisActivity.setIntent(this, kuisItem.id, 1)
             startActivity(intent)
         }
     }
@@ -32,9 +39,9 @@ class IkutiKuisActivity : CommonActivity() {
     }
 
     companion object {
-        fun setIntent(context: Context, kuisId: String): Intent {
-            val intent = Intent(context, KuisActivity::class.java)
-            intent.putExtra(PantauConstants.Kuis.KUIS_ID, kuisId)
+        fun setIntent(context: Context, kuisItem: KuisItem): Intent {
+            val intent = Intent(context, IkutiKuisActivity::class.java)
+            intent.putExtra(PantauConstants.Kuis.KUIS_ITEM, kuisItem)
             return intent
         }
     }

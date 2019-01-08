@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.createdat.CreatedAt
 import com.pantaubersama.app.data.model.image.Image
 import com.pantaubersama.app.data.model.meta.Meta
+import java.io.Serializable
 
 data class KuisResponse(
     @SerializedName("data") val data: KuisData
@@ -24,7 +25,7 @@ data class KuisItem(
     @SerializedName("quiz_questions_count") val kuisQuestionsCount: Int,
     @SerializedName("created_at") val createdAt: CreatedAt,
     @SerializedName("participation_status") val participationStatus: String
-) : ItemModel {
+) : ItemModel, Serializable {
 
     val state: KuisState
         get() = KuisState.fromString(participationStatus)
