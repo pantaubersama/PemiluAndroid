@@ -66,7 +66,6 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
     open fun setDatas(items: List<ItemModel>) {
         data.clear()
         data.addAll(items)
-        notifyDataSetChanged()
     }
 
     fun addData(items: List<ItemModel>) {
