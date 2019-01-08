@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.profile
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -23,6 +24,7 @@ import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.State
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable
@@ -193,7 +195,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 badge_expandable_image.animate().rotation(180F).start()
             }
         }
-        tv_retry_badge.setOnClickListener { presenter?.refreshBadges() }
+        tv_retry_badge.setOnClickListener { presenter.refreshBadges() }
         tv_badge_more.setOnClickListener {
             startActivity(Intent(this, BadgeActivity::class.java))
         }
@@ -327,12 +329,21 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         when (item?.itemId) {
             R.id.settings_action -> {
                 val intent = Intent(this@ProfileActivity, SettingActivity::class.java)
-                startActivity(intent)
+                startActivityForResult(intent, PantauConstants.RequestCode.SETTINGS)
             }
             R.id.open_cluster_action -> {
                 // open cluster
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PantauConstants.RequestCode.SETTINGS) {
+                presenter.refreshProfile()
+            }
+        }
     }
 }

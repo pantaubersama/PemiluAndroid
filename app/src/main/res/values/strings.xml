@@ -157,4 +157,8 @@
     <string name="deskripsi_undang_lewat_tautan">Dengan metode bagikan link undangan siapapun yg meng klik Otomatis akan menjadi anggota. Anda dapat mematikan link undangan sewaktu waktu</string>
     <string name="logging_in_label">Logging in</string>
     <string name="failed_login_alert">Failed to login using Symbolic</string>
+    <string name="failed_load_profile_alert">Gagal memuat data profil</string>
+    <string name="failed_update_avatar_alert">Failed to update avatar</string>
+    <string name="success_update_avatar_alert">Avatar updated</string>
+    <string name="failed_load_image_alert">Gagal memuat gambar</string>
 </resources>

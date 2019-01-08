@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.profile.setting
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -167,5 +168,14 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         val intent = Intent(this@SettingActivity, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == EDIT_PROFILE) {
+                setResult(Activity.RESULT_OK)
+            }
+        }
     }
 }
