@@ -45,6 +45,7 @@ class PantauConstants {
         const val TYPE_TANYA_KANDIDAT = 2
         const val TYPE_KUIS = 3
         const val JANPOL_ID = "JANPOL_ID"
+        const val EXTRA_JANPOL_ITEM = "EXTRA_JANPOL_ITEM"
     }
 
     object RequestCode {
@@ -59,7 +60,8 @@ class PantauConstants {
         const val RC_ASK_PERMISSIONS = 115
         const val RC_CAMERA = 111
         const val RC_STORAGE = 112
-        const val SETTINGS = 600
+        const val RC_SETTINGS = 600
+        const val RC_CREATE_JANPOL = 1010
     }
 
     object Networking {
@@ -106,8 +108,7 @@ class PantauConstants {
         const val TYPE_KUIS_ITEM = 6
         const val TYPE_CLUSTER_ITEM = 7
     }
-    object Profile {
-    }
+    object Profile
 
     object Filter {
         object Pilpres { // value dari backend
@@ -130,6 +131,5 @@ class PantauConstants {
 
     object Permission {
         val GET_IMAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
     }
 }

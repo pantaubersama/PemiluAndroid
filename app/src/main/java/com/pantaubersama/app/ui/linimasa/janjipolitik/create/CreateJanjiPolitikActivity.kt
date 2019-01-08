@@ -1,24 +1,40 @@
 package com.pantaubersama.app.ui.linimasa.janjipolitik.create
 
-import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AlertDialog
+import android.webkit.MimeTypeMap
+import com.bumptech.glide.Glide
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.ImageChooserDialog
+import com.pantaubersama.app.utils.ImageTools
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_JANPOL_ITEM
 import com.pantaubersama.app.utils.PantauConstants.Permission.GET_IMAGE_PERMISSION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_CAMERA
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_STORAGE
+import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_create_janji_politik.*
 import kotlinx.android.synthetic.main.layout_editor_option.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
+import java.io.File
 import javax.inject.Inject
 
 class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), CreateJanjiPolitikView {
@@ -27,6 +43,10 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
     override lateinit var presenter: CreateJanjiPolitikPresenter
 
     private var isLoading = false
+
+    private var title = ""
+    private var body = ""
+    private var imageFile: File? = null
 
     override fun statusBarColor(): Int? {
         return 0
@@ -38,7 +58,11 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_tab_janji_politik), R.color.white, 4f)
-        et_create_janpol_content.addTextChangedListener(object : TextWatcher {
+
+        presenter.getProfile()
+
+        et_create_janpol_content.movementMethod = null
+        et_create_janpol_title.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -51,8 +75,24 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
                 tv_current_length.text = query?.length.toString()
             }
         })
-        et_create_janpol_content.setOnFocusChangeListener { _, hasFocus -> ll_layout_editor_option.visibleIf(hasFocus) }
+        et_create_janpol_content.setOnFocusChangeListener { _, hasFocus -> ll_layout_editor_option.visibleIf(hasFocus && imageFile == null) }
         setupEditor()
+    }
+
+    override fun onSuccessGetProfile(profile: Profile) {
+        iv_user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
+        tv_user_name.text = profile.name
+    }
+
+    override fun onSuccessCreateJanpol(janjiPolitik: JanjiPolitik) {
+        val intent = Intent()
+        intent.putExtra(EXTRA_JANPOL_ITEM, janjiPolitik)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
+    override fun onFailedCreateJanpol() {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun setupEditor() {
@@ -74,6 +114,7 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
         page_loading.visibleIf(true)
         page_content.visibleIf(false)
         invalidateOptionsMenu()
+        et_create_janpol_content.clearFocus()
     }
 
     override fun dismissLoading() {
@@ -90,12 +131,51 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
         } else {
             EasyPermissions.requestPermissions(
                 PermissionRequest.Builder(this, RC_ASK_PERMISSIONS, *GET_IMAGE_PERMISSION)
-                    .setRationale("Mohon izinkan aplikasi mengakses perangkat anda")
-                    .setPositiveButtonText("OK")
-                    .setNegativeButtonText("Cancel")
+                    .setRationale(getString(R.string.izinkan_akses_kamera_dan_galeri))
+                    .setPositiveButtonText(getString(R.string.ok))
+                    .setNegativeButtonText(getString(R.string.batal))
                     .build()
             )
         }
+    }
+
+    private fun createPost() {
+        if (isValidInput()) {
+            val title = RequestBody.create(MediaType.parse("text/plain"), this.title)
+            val body = RequestBody.create(MediaType.parse("text/plain"), this.body)
+
+            if (imageFile != null) {
+                val type: String
+                val extension = MimeTypeMap.getFileExtensionFromUrl(imageFile?.absolutePath)
+                type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
+                val reqFile = RequestBody.create(MediaType.parse(type), imageFile!!)
+                val image = MultipartBody.Part.createFormData("image", imageFile?.name, reqFile)
+                presenter.createJanpol(title, body, image)
+            } else {
+                presenter.createJanpol(title, body, null)
+            }
+        }
+    }
+
+    private fun isValidInput(): Boolean {
+        title = et_create_janpol_title.text.toString().trim()
+        body = et_create_janpol_content.text.toString().trim()
+
+        var isValid = true
+        if (title.isEmpty()) {
+            isValid = false
+            et_create_janpol_title.error = getString(R.string.wajib_diisi)
+        } else {
+            et_create_janpol_title.error = null
+        }
+        if (body.isEmpty()) {
+            isValid = false
+            et_create_janpol_content.error = getString(R.string.wajib_diisi)
+        } else {
+            et_create_janpol_content.error = null
+        }
+
+        return isValid
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -106,10 +186,7 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.done_action -> {
-                et_create_janpol_content.clearFocus()
-//                presenter.
-            }
+            R.id.done_action -> createPost()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -117,5 +194,64 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                RC_CAMERA -> onCaptureImageResult(data)
+                RC_STORAGE -> onSelectFromGalleryResult(data)
+            }
+        }
+    }
+
+    private fun onCaptureImageResult(data: Intent?) {
+        if (data != null) {
+//            var rotation = 0
+//            when (windowManager.defaultDisplay.rotation) {
+//                Surface.ROTATION_0 -> rotation = 90
+//                Surface.ROTATION_90 -> rotation = 180
+//                Surface.ROTATION_180 -> rotation = 270
+//                Surface.ROTATION_270 -> rotation = 0
+//            }
+            val bitmap = data.extras?.get("data") as Bitmap
+//            val rotatedBitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
+            setImage(ImageTools.getImageFile(bitmap))
+        } else {
+            showError(Throwable(getString(R.string.failed_load_image_alert)))
+        }
+    }
+
+    private fun onSelectFromGalleryResult(data: Intent?) {
+        if (data != null) {
+            val selectedImage = data.data
+            val projection = arrayOf(MediaStore.MediaColumns.DATA)
+            val cursor = managedQuery(selectedImage, projection, null, null, null)
+            val column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
+            cursor.moveToFirst()
+            val path = cursor.getString(column_index)
+            val file = File(path)
+            setImage(file)
+        } else {
+            showError(Throwable(getString(R.string.failed_load_image_alert)))
+        }
+    }
+
+    private fun setImage(file: File?) {
+        this.imageFile = file
+        iv_create_janpol_image.visibleIf(file != null)
+        ll_layout_editor_option.visibleIf(file == null)
+        if (file != null) {
+            Glide.with(this).load(file).into(iv_create_janpol_image)
+            iv_create_janpol_image.setOnClickListener {
+                val dialog = DeleteConfimationDialog(this, "Hapus gambar", 0, "")
+                dialog.show()
+                dialog.listener = object : DeleteConfimationDialog.DialogListener {
+                    override fun onClickDeleteItem(id: String, position: Int) {
+                        setImage(null)
+                    }
+                }
+            }
+        }
     }
 }

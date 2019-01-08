@@ -3,10 +3,13 @@ package com.pantaubersama.app.data.remote
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfoResponse
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfosResponse
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitikResponse
+import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitiksResponse
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import io.reactivex.Completable
 import io.reactivex.Single
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.* // ktlint-disable
 
 /**
@@ -35,6 +38,14 @@ interface PantauAPI {
         @Query("filter_by") filterBy: String?,
         @Query("page") page: Int?,
         @Query("per_page") perPage: Int?
+    ): Single<JanjiPolitiksResponse>
+
+    @Multipart
+    @POST("linimasa/v1/janji_politiks")
+    fun createJanjiPolitik(
+        @Part("title") title: RequestBody,
+        @Part("body") body: RequestBody,
+        @Part image: MultipartBody.Part?
     ): Single<JanjiPolitikResponse>
 
     @FormUrlEncoded

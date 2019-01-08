@@ -27,6 +27,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
         android:id="@+id/lottie_loading"
         android:scaleType="centerInside"
         android:layout_width="300dp"

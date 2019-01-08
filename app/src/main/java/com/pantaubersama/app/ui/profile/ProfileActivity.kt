@@ -329,7 +329,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         when (item?.itemId) {
             R.id.settings_action -> {
                 val intent = Intent(this@ProfileActivity, SettingActivity::class.java)
-                startActivityForResult(intent, PantauConstants.RequestCode.SETTINGS)
+                startActivityForResult(intent, PantauConstants.RequestCode.RC_SETTINGS)
             }
             R.id.open_cluster_action -> {
                 // open cluster
@@ -341,7 +341,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == PantauConstants.RequestCode.SETTINGS) {
+            if (requestCode == PantauConstants.RequestCode.RC_SETTINGS) {
                 presenter.refreshProfile()
             }
         }

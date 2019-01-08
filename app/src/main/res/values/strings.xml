@@ -67,7 +67,7 @@
     <string name="kuis_result">Dari hasil pilhan Quiz minggu pertama,\nRoni Handoko lebih suka jawaban dari Paslon no 1</string>
     <string name="txt_pilpres">Pilpres</string>
     <string name="txt_buka_di_aplikasi">Buka di Aplikasi Twitter</string>
-    <string name="hint_create_janpol">Bagikan janji politik dari media Capres kepada user lain. Sertakan sumber bila memungkinkan seperti link, gambar, ucapan langsung dan lainnya. Gunakan tata Bahasa yang baik</string>
+    <string name="hint_create_janpol">Bagikan Janji Politik dengan bahasa yang baik dan mudah dimengerti. Sertakan ilustrasi, gambar, tautan sumber berita, atau referensi lain sebagai tambahan informasi.</string>
     <string name="hint_create_janpol_title">Judul Janji Politik</string>
     <string name="hint_create_janpol_content">Beri deskripsi detail lebih lanjut dari Judul</string>
     <string name="verification_hint">Dengan diverifikasi kamu akan…. Mendapatkan manfaat dan is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
@@ -163,4 +163,9 @@
     <string name="failed_load_image_alert">Gagal memuat gambar</string>
     <string name="kamera">Kamera</string>
     <string name="galeri">Galeri</string>
+    <string name="ambil_gambar_dari">Ambil gambar dari :</string>
+    <string name="izinkan_akses_kamera_dan_galeri"><![CDATA[Izinkan aplikasi mengakses Kamera & Galeri pada perangkat anda]]></string>
+    <string name="ok">OK</string>
+    <string name="batal">Batal</string>
+    <string name="wajib_diisi">wajib diisi</string>
 </resources>

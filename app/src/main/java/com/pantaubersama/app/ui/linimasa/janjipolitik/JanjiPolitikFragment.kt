@@ -23,6 +23,7 @@ import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikA
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_CREATE_JANPOL
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.emptyStateVisible
@@ -62,7 +63,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             fab_add.visibleIf(true)
             fab_add.setOnClickListener {
                 val intent = Intent(context, CreateJanjiPolitikActivity::class.java)
-                startActivity(intent)
+                startActivityForResult(intent, RC_CREATE_JANPOL)
             }
         } else {
             fab_add.visibleIf(false)
@@ -233,14 +234,19 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         }
     }
 
-    override fun showError(throwable: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
+                RC_CREATE_JANPOL -> {
+//                    if (adapter.get(0) is BannerInfo) {
+//                        adapter.addItem(data?.getSerializableExtra(EXTRA_JANPOL_ITEM) as ItemModel, 1)
+//                    } else {
+//                        adapter.addItem(data?.getSerializableExtra(EXTRA_JANPOL_ITEM) as ItemModel, 0)
+//                        scrollToTop(false)
+//                    }
+                    getJanjiPolitikList()
+                }
             }
         }
     }
