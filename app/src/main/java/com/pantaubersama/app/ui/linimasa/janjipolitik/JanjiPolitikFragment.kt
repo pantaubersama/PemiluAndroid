@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
@@ -94,10 +93,11 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             override fun onClickJanpolOption(item: JanjiPolitik, position: Int) {
                 val dialog = OptionDialog(context!!, R.layout.layout_option_dialog_tanya_kandidat)
                 if (item.creator?.id.equals(userId)) {
-                    dialog.removeItem(R.id.report_tanya_kandidat_action)
+//                    dialog.removeItem(R.id.report_tanya_kandidat_action)
                 } else {
                     dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
                 }
+                dialog.removeItem(R.id.report_tanya_kandidat_action) // dihilangkan sementara karena belum ada endpoint @edityo 08/01/19
                 dialog.show()
                 dialog.listener = object : OptionDialog.DialogListener {
                     override fun onClick(viewId: Int) {
@@ -119,7 +119,8 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
                                 deleteDialog.show()
                                 deleteDialog.listener = object : DeleteConfimationDialog.DialogListener {
                                     override fun onClickDeleteItem(id: String, position: Int) {
-//                                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                        showProgressDialog(getString(R.string.menghapus_janji_politik))
+                                        presenter.deleteJanjiPolitik(id, position)
                                     }
                                 }
                                 dialog.dismiss()
@@ -208,6 +209,15 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
     override fun showFailedGetMoreData() {
         adapter.setLoaded()
+    }
+
+    override fun onSuccessDeleteItem(position: Int) {
+        dismissProgressDialog()
+        adapter.deleteItem(position)
+    }
+
+    override fun onFailedDeleteItem(throwable: Throwable) {
+        dismissProgressDialog()
     }
 
     override fun setLayout(): Int {

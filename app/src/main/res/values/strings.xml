@@ -171,4 +171,5 @@
     <string name="ok">OK</string>
     <string name="batal">Batal</string>
     <string name="wajib_diisi">wajib diisi</string>
+    <string name="menghapus_janji_politik">Menghapus janji politik</string>
 </resources>

@@ -31,4 +31,3 @@ data class KuisItem(
 
     override fun getType(): Int = PantauConstants.ItemModel.TYPE_KUIS_ITEM
 }
-

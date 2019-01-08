@@ -76,4 +76,18 @@ class JanjiPolitikPresenter @Inject constructor(
             )!!
         )
     }
+
+    fun deleteJanjiPolitik(id: String, position: Int) {
+        disposables?.add(janPolInteractor.deleteJanjiPolitik(id)
+            .subscribe(
+                {
+                    view?.onSuccessDeleteItem(position)
+                },
+                {
+                    view?.onFailedDeleteItem(it)
+                    view?.showError(it)
+                }
+            )
+        )
+    }
 }

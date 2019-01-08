@@ -34,7 +34,7 @@ interface PantauAPI {
     ): Single<FeedsResponse>
 
     @GET("linimasa/v1/janji_politiks")
-    fun getJanPol(
+    fun getJanjiPolitikList(
         @Query("q") keyword: String?,
         @Query("cluster_id") clusterId: String?,
         @Query("filter_by") filterBy: String?,
@@ -49,6 +49,11 @@ interface PantauAPI {
         @Part("body") body: RequestBody,
         @Part image: MultipartBody.Part?
     ): Single<JanjiPolitikResponse>
+
+    @DELETE("linimasa/v1/janji_politiks")
+    fun deleteJanjiPolitik(
+        @Query("id") id: String
+    ): Completable
 
     @FormUrlEncoded
     @POST("pendidikan_politik/v1/questions")

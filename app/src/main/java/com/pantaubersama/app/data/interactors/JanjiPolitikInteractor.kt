@@ -6,6 +6,7 @@ import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitiksData
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
+import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -38,16 +39,22 @@ class JanjiPolitikInteractor @Inject constructor(
         perPage: Int?
     ): Single<JanjiPolitiksData?>? {
         return apiWrapper.getPantauApi()
-            .getJanPol(keyword, getJanpolClusterFilter()?.id ?: "", getJanpolUserFilter(), page, perPage)
+            .getJanjiPolitikList(keyword, getJanpolClusterFilter()?.id ?: "", getJanpolUserFilter(), page, perPage)
             .subscribeOn(rxSchedulers.io())
-            ?.map { it.data }
-            ?.observeOn(rxSchedulers.mainThread())
+            .map { it.data }
+            .observeOn(rxSchedulers.mainThread())
     }
 
     fun createJanjiPolitik(title: RequestBody, body: RequestBody, image: MultipartBody.Part?): Single<JanjiPolitik> {
         return apiWrapper.getPantauApi().createJanjiPolitik(title, body, image)
             .subscribeOn(rxSchedulers.io())
             .map { it.data.janjiPolitik!! }
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun deleteJanjiPolitik(id: String): Completable {
+        return apiWrapper.getPantauApi().deleteJanjiPolitik(id)
+            .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
 }
