@@ -14,7 +14,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
-import androidx.core.content.ContextCompat
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.request.RequestListener
@@ -66,14 +65,12 @@ fun ImageView.setGrayScale(isGray: Boolean) {
 fun LinearLayout.enable(isEnable: Boolean) {
     if (isEnable) {
         this.isEnabled = true
-        this.setBackgroundColor(ContextCompat.getColor(this.context, R.color.colorPrimary))
         for (i in 0 until this.childCount) {
             val child = this.getChildAt(i)
             child.isEnabled = true
         }
     } else {
         this.isEnabled = false
-        this.setBackgroundColor(ContextCompat.getColor(this.context, R.color.gray_dark_1))
         for (i in 0 until this.childCount) {
             val child = this.getChildAt(i)
             child.isEnabled = false

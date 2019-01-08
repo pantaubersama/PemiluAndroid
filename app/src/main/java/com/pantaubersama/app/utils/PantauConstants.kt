@@ -15,6 +15,10 @@ class PantauConstants {
         val ASK_PERMISSIONS_REQUEST_CODE = 115
     }
 
+    object Cluster {
+        const val CATEGORY = "category"
+    }
+
     object TanyaKandidat {
         const val CREATE_TANYA_KANDIDAT_REQUEST_CODE = 21
         val TANYA_KANDIDAT_DATA = "tanya_kandidat_data"
@@ -101,6 +105,7 @@ class PantauConstants {
         const val TYPE_KUIS_RESULT = 5
         const val TYPE_KUIS_ITEM = 6
         const val TYPE_CLUSTER_ITEM = 7
+        val CATEGORY_ITEM = 8
     }
     object Profile {
         val CAMERA_REQUEST_CODE = 111

@@ -110,6 +110,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation chromeCustomTab
     implementation expandableLayout
+    implementation rxBinding
     kapt daggerCompiler
 
     testImplementation unitTestLibs

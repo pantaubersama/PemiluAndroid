@@ -39,4 +39,8 @@ data class ClustersData(
 data class Category(
     @SerializedName("id") var id: String,
     @SerializedName("name") var name: String
-)
+) : Serializable, ItemModel {
+    override fun getType(): Int {
+        return PantauConstants.ItemModel.CATEGORY_ITEM
+    }
+}
