@@ -4,6 +4,8 @@ import com.pantaubersama.app.data.model.bannerinfo.BannerInfoResponse
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfosResponse
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitikResponse
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitiksResponse
+import com.pantaubersama.app.data.model.kuis.KuisResponse
+import com.pantaubersama.app.data.model.kuis.KuisUserResultResponse
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import io.reactivex.Completable
@@ -85,4 +87,14 @@ interface PantauAPI {
         @Query("id") id: String?,
         @Query("class_name") className: String
     ): Completable
+
+    @GET("pendidikan_politik/v1/quizzes")
+    fun getKuisList(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = 25,
+        @Query("filter_by") filterBy: String? = null
+    ): Single<KuisResponse>
+
+    @GET("pendidikan_politik/v1/me/quizzes")
+    fun getKuisUserResult(): Single<KuisUserResultResponse>
 }

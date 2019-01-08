@@ -8,7 +8,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
-import com.pantaubersama.app.data.model.kuis.KuisListItem
+import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.data.model.kuis.KuisState
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
@@ -43,25 +43,20 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
             override fun onClickBanner(item: BannerInfo) {
                 startActivityForResult(
                     BannerInfoActivity.setIntent(
-                        context!!, PantauConstants.Extra.TYPE_KUIS, item
+                        requireContext(), PantauConstants.Extra.TYPE_KUIS, item
                     ), PantauConstants.RequestCode.RC_BANNER_KUIS)
             }
 
-            override fun onClickIkuti(item: KuisListItem.Item) {
-                val intent = Intent(context, IkutiKuisActivity::class.java)
-                intent.putExtra(PantauConstants.Kuis.KUIS_ID, item.id)
+            override fun onClickOpenKuis(item: KuisItem) {
+                val intent = when (item.state) {
+                    KuisState.NOT_PARTICIPATING -> IkutiKuisActivity.setIntent(requireContext(), item.id)
+                    KuisState.IN_PROGRESS -> KuisActivity.setIntent(requireContext(), item.id, 2)
+                    KuisState.FINISHED -> Intent(requireContext(), KuisResultActivity::class.java)
+                }
                 startActivity(intent)
             }
 
-            override fun onClickLanjut(item: KuisListItem.Item) {
-                startActivity(KuisActivity.setIntent(requireContext(), item.id, 2))
-            }
-
-            override fun onClickHasil(item: KuisListItem.Item) {
-                startActivity(Intent(requireContext(), KuisResultActivity::class.java))
-            }
-
-            override fun onClickShare(item: KuisListItem.Item) {
+            override fun onClickShare(item: KuisItem) {
                 shareKuis(item)
             }
         }
@@ -71,21 +66,16 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
 
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
-            getDataList()
+            presenter.getTopPageItems()
         }
-        getDataList()
+        presenter.getTopPageItems()
     }
 
-    private fun getDataList() {
-        presenter.getList()
+    override fun showTopPageItems(itemModels: List<ItemModel>) {
+        adapter.setDatas(itemModels)
     }
 
-    override fun showBanner(bannerInfo: BannerInfo) {
-        adapter.addBanner(bannerInfo)
-        setupData()
-    }
-
-    private fun shareKuis(item: KuisListItem.Item) {
+    private fun shareKuis(item: KuisItem) {
         val targetedShareIntents: MutableList<Intent> = ArrayList()
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
@@ -107,35 +97,15 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         }
     }
 
-    private fun setupData() {
-        dismissLoading()
-        recycler_view.visibleIf(true)
-        val dummyData: MutableList<ItemModel> = mutableListOf(
-            KuisListItem.Result(70, "Jokowi - Makruf"),
-            KuisListItem.Item(1, 1, 7, KuisState.NOT_TAKEN),
-            KuisListItem.Item(2, 2, 7, KuisState.COMPLETED),
-            KuisListItem.Item(3, 3, 7, KuisState.INCOMPLETE)
-        )
-
-        if (adapter.data.size != 0 && adapter.data[0] is BannerInfo) {
-            val bannerInfo = adapter.data[0] as BannerInfo
-            adapter.data.clear()
-            adapter.addBanner(bannerInfo)
-            adapter.data.addAll(dummyData)
-        } else {
-            adapter.data = dummyData
-        }
-        adapter.notifyDataSetChanged()
-    }
-
     override fun showLoading() {
         lottie_loading.setVisible(true)
         view_empty_state.emptyStateVisible(false)
         view_fail_state.failStateVisible(false)
         recycler_view.visibleIf(false)
     }
+
     override fun dismissLoading() {
-        recycler_view.visibleIf(false)
+        recycler_view.visibleIf(true)
         lottie_loading.setVisible(false)
     }
 

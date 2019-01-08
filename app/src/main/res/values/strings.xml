@@ -161,6 +161,9 @@
     <string name="failed_update_avatar_alert">Failed to update avatar</string>
     <string name="success_update_avatar_alert">Avatar updated</string>
     <string name="failed_load_image_alert">Gagal memuat gambar</string>
+    <string name="batal_action">Batal</string>
+    <string name="buat_action">Buat</string>
+    <string name="failed_add_category_alert">Gagal menambah kategori baru</string>
     <string name="kamera">Kamera</string>
     <string name="galeri">Galeri</string>
     <string name="ambil_gambar_dari">Ambil gambar dari :</string>

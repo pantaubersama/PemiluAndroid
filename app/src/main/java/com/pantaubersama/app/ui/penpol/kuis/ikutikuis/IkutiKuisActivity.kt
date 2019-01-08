@@ -1,5 +1,7 @@
 package com.pantaubersama.app.ui.penpol.kuis.ikutikuis
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
@@ -8,14 +10,14 @@ import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_ikuti_kuis.*
 
 class IkutiKuisActivity : CommonActivity() {
-    private var kuisId: Int = 0
+    private var kuisId: String = ""
 
     override fun statusBarColor(): Int? {
         return 0
     }
 
     override fun fetchIntentExtra() {
-        kuisId = intent.getIntExtra(PantauConstants.Kuis.KUIS_ID, 0)
+        kuisId = intent.getStringExtra(PantauConstants.Kuis.KUIS_ID)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
@@ -27,5 +29,13 @@ class IkutiKuisActivity : CommonActivity() {
 
     override fun setLayout(): Int {
         return R.layout.activity_ikuti_kuis
+    }
+
+    companion object {
+        fun setIntent(context: Context, kuisId: String): Intent {
+            val intent = Intent(context, KuisActivity::class.java)
+            intent.putExtra(PantauConstants.Kuis.KUIS_ID, kuisId)
+            return intent
+        }
     }
 }

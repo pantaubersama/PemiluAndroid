@@ -185,10 +185,10 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             val bannerInfo = adapter.get(0) as BannerInfo
             adapter.clear()
             adapter.addBanner(bannerInfo)
-            adapter.addData(janjiPolitikList as MutableList<ItemModel>)
+            adapter.addData(janjiPolitikList)
             scrollToTop(false)
         } else {
-            adapter.setDatas(janjiPolitikList as MutableList<ItemModel>)
+            adapter.setDatas(janjiPolitikList)
         }
     }
 

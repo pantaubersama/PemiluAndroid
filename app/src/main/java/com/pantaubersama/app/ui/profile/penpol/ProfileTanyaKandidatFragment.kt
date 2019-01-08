@@ -57,7 +57,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
             }
 
             override fun onClickUpvote(id: String?, isLiked: Boolean, position: Int?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                // not implemented yet
             }
 
             override fun onClickDeleteItem(id: String?, position: Int?) {
