@@ -24,10 +24,6 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         return R.color.white
     }
 
-    override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
@@ -85,7 +81,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
     override fun onResume() {
         super.onResume()
-        presenter?.updateUser()
+        presenter.updateUser()
     }
 
     override fun onSuccessLoadUser(profile: Profile) {

@@ -44,7 +44,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
                 startActivityForResult(
                     BannerInfoActivity.setIntent(
                         context!!, PantauConstants.Extra.TYPE_KUIS, item
-                    ), PantauConstants.RequestCode.BANNER_KUIS)
+                    ), PantauConstants.RequestCode.RC_BANNER_KUIS)
             }
 
             override fun onClickIkuti(item: KuisListItem.Item) {
@@ -153,7 +153,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                PantauConstants.RequestCode.FILTER_KUIS -> {
+                PantauConstants.RequestCode.RC_FILTER_KUIS -> {
                     // refresh kuis
                 }
             }

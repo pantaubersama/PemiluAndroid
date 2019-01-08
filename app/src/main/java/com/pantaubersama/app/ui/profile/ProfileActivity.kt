@@ -193,7 +193,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 badge_expandable_image.animate().rotation(180F).start()
             }
         }
-        tv_retry_badge.setOnClickListener { presenter?.refreshBadges() }
+        tv_retry_badge.setOnClickListener { presenter.refreshBadges() }
         tv_badge_more.setOnClickListener {
             startActivity(Intent(this, BadgeActivity::class.java))
         }

@@ -66,7 +66,7 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
         }
 
         btn_terapkan.setOnClickListener {
-            presenter?.setFilter(this.userFilter!!, this.clusterFilter)
+            presenter.setFilter(this.userFilter!!, this.clusterFilter)
         }
     }
 

@@ -38,7 +38,7 @@ class Step1VerifikasiActivity : BaseActivity<Step1VerifikasiPresenter>(), Step1V
             val pattern = Pattern.compile(PantauConstants.Regex.KTP)
             val matcher = pattern.matcher(ktp_number.text)
             if (matcher.matches()) {
-                presenter?.submitKtpNumber(ktp_number.text.toString())
+                presenter.submitKtpNumber(ktp_number.text.toString())
             } else {
                 ktp_number.error = "Format nomor KTP tidak valid"
             }

@@ -27,7 +27,7 @@ ext {
 
             junit                   : "4.12",
 
-            easyPermission          : "1.2.0",
+            easyPermission          : "2.0.0",
 
             timber                  : "4.7.1",
 

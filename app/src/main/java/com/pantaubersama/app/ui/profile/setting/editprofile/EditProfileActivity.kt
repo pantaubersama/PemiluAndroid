@@ -22,6 +22,8 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Permission.GET_IMAGE_PERMISSION
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -36,7 +38,6 @@ import java.io.IOException
 import javax.inject.Inject
 
 class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileView {
-    private var permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private var imageUriFromCamera: Uri? = null
 
     @Inject
@@ -72,7 +73,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
 
     override fun onResume() {
         super.onResume()
-        presenter?.getUserData()
+        presenter.getUserData()
     }
 
     override fun onSuccessLoadUser(profile: Profile) {
@@ -138,7 +139,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             showIntentChooser()
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(permission, PantauConstants.ASK_PERMISSIONS_REQUEST_CODE)
+                requestPermissions(GET_IMAGE_PERMISSION, RC_ASK_PERMISSIONS)
             }
         }
     }
@@ -155,7 +156,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     private fun showIntentChooser() {
-        val items = arrayOf<CharSequence>("Camera", "Gallery",
+        val items = arrayOf<CharSequence>("Kamera", "Galeri",
             "Batal")
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Ambil gambar dari")
@@ -177,7 +178,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriFromCamera)
-        startActivityForResult(intent, PantauConstants.Profile.CAMERA_REQUEST_CODE)
+        startActivityForResult(intent, PantauConstants.Profile.RC_CAMERA)
     }
 
     private fun openGallery() {
@@ -187,14 +188,14 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PantauConstants.ASK_PERMISSIONS_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == RC_ASK_PERMISSIONS && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             showIntentChooser()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == PantauConstants.Profile.CAMERA_REQUEST_CODE) {
+            if (requestCode == PantauConstants.Profile.RC_CAMERA) {
                 onCaptureImageResult()
             } else if (requestCode == PantauConstants.Profile.STORAGE_REQUEST_CODE) {
                 onSelectFromGalleryResult(data)
@@ -249,7 +250,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
 
         val reqFile = RequestBody.create(MediaType.parse(type), destination)
         val avatar = MultipartBody.Part.createFormData("avatar", destination.getName(), reqFile)
-        presenter?.uploadAvatar(avatar)
+        presenter.uploadAvatar(avatar)
     }
 
     private fun rotateImage(source: Bitmap, angle: Float): Bitmap? {

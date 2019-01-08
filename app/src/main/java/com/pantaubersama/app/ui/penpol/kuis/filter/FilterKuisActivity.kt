@@ -38,7 +38,7 @@ class FilterKuisActivity : BaseActivity<FilterKuisPresenter>(), FilterKuisView {
         presenter.getKuisFilterData()
         btn_terapkan.setOnClickListener {
             applyFilter()
-            presenter?.saveKuisFilter(kuisFilter)
+            presenter.saveKuisFilter(kuisFilter)
         }
     }
 

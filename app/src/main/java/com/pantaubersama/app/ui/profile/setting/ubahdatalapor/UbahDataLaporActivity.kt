@@ -64,7 +64,7 @@ class UbahDataLaporActivity : BaseActivity<UbahDataLaporPresenter>(), UbahDataLa
 
     private fun onClickAction() {
         ubah_data_lapor_submit.setOnClickListener {
-            presenter?.updateDataLapor(
+            presenter.updateDataLapor(
                 ubah_data_lapor_no_ktp.text.toString(),
                 ubah_data_lapor_tempat_lahir.text.toString(),
                 ubah_data_lapor_tanggal_lahir.text.toString(),

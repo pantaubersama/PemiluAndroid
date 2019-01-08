@@ -52,7 +52,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
             }
 
             override fun success(result: Result<AuthToken>) {
-                presenter?.exchangeToken(result.data.accessToken, "")
+                presenter.exchangeToken(result.data.accessToken, "")
             }
         })
     }

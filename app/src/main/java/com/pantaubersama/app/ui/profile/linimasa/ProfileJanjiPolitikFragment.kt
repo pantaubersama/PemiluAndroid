@@ -23,7 +23,7 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
 
     override fun initView(view: View) {
         setupJanPolList()
-        presenter?.getJanjiPolitikList()
+        presenter.getJanjiPolitikList()
     }
 
     private fun setupJanPolList() {

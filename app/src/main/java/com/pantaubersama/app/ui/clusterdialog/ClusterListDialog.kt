@@ -53,7 +53,7 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
     override fun initView(view: View) {
         lottie_loading.visibility = View.GONE
         setupRecyclerView()
-        presenter?.getClusterList(1)
+        presenter.getClusterList(1)
         setupSearchEditText()
     }
 
@@ -102,7 +102,7 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
 
     override fun showMoreClusters(clusterList: MutableList<ClusterItem>) {
         adapter?.setLoaded()
-        if (clusterList.size < presenter?.perPage!!) {
+        if (clusterList.size < presenter.perPage!!) {
             adapter?.setDataEnd(true)
         }
     }

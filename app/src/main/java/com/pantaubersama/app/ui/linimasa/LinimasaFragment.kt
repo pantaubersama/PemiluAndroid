@@ -13,8 +13,8 @@ import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
 import com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.widget.TabView
-import com.pantaubersama.app.utils.PantauConstants.RequestCode.FILTER_JANPOL
-import com.pantaubersama.app.utils.PantauConstants.RequestCode.FILTER_PILPRES
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_FILTER_JANPOL
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_FILTER_PILPRES
 import kotlinx.android.synthetic.main.fragment_linimasa.*
 
 class LinimasaFragment : CommonFragment() {
@@ -30,10 +30,10 @@ class LinimasaFragment : CommonFragment() {
             when (selectedTabs) {
                 0 -> startActivityForResult(Intent(
                     context, FilterPilpresActivity::class.java),
-                    FILTER_PILPRES)
+                    RC_FILTER_PILPRES)
                 else -> startActivityForResult(Intent(
                     context, FilterJanjiPolitikActivity::class.java),
-                    FILTER_JANPOL)
+                    RC_FILTER_JANPOL)
             }
         }
     }
@@ -88,10 +88,10 @@ class LinimasaFragment : CommonFragment() {
         when (resultCode) {
             Activity.RESULT_OK -> {
                 when (requestCode) {
-                    FILTER_PILPRES -> {
+                    RC_FILTER_PILPRES -> {
                         pilpresFragment.getFeedsData()
                     }
-                    FILTER_JANPOL -> {
+                    RC_FILTER_JANPOL -> {
                         janjiPolitikFragment.getJanjiPolitikList()
                     }
                 }
