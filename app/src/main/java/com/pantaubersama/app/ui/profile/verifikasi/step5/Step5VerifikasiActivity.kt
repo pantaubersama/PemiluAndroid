@@ -66,7 +66,7 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
             }
         }
         next_button.setOnClickListener {
-            presenter?.submitKtpPhoto(ktpPhoto)
+            presenter.submitKtpPhoto(ktpPhoto)
         }
         retake_button.setOnClickListener {
             image_preview_container.visibility = View.GONE

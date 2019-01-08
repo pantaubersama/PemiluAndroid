@@ -67,7 +67,7 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
             }
         }
         next_button.setOnClickListener {
-            presenter?.submitSelfieKtp(ktpSelfie)
+            presenter.submitSelfieKtp(ktpSelfie)
         }
         retake_button.setOnClickListener {
             image_preview_container.visibility = View.GONE

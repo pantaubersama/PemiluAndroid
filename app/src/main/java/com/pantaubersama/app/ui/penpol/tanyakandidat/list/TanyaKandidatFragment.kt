@@ -84,13 +84,13 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         adapter?.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
             override fun loadMore(page: Int) {
                 adapter?.setLoading()
-                presenter?.getTanyaKandidatList(page, perPage)
+                presenter.getTanyaKandidatList(page, perPage)
             }
         }, 5)
 
         adapter?.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT)
+                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.RC_BANNER_TANYA_KANDIDAT)
             }
 
             override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
@@ -171,13 +171,13 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     private fun refreshItem() {
         page = 1
         adapter?.setDataEnd(false)
-        presenter?.getTanyaKandidatList(page, perPage)
+        presenter.getTanyaKandidatList(page, perPage)
     }
 
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>) {
         recycler_view.visibleIf(true)
-        if (adapter?.itemCount != 0 && adapter?.get<ItemModel>(0) is BannerInfo) {
-            val bannerInfo = adapter?.get<BannerInfo>(0)
+        if (adapter?.itemCount != 0 && adapter?.get(0) is BannerInfo) {
+            val bannerInfo = adapter?.get(0) as BannerInfo
             adapter?.clear()
             adapter?.addBanner(bannerInfo!!)
             adapter?.addData(pertanyaanList as MutableList<ItemModel>)

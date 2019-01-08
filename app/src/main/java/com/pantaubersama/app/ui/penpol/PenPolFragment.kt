@@ -35,7 +35,7 @@ class PenPolFragment : CommonFragment() {
                 }
                 else -> {
                     val intent = Intent(context, FilterKuisActivity::class.java)
-                    startActivityForResult(intent, PantauConstants.RequestCode.FILTER_KUIS)
+                    startActivityForResult(intent, PantauConstants.RequestCode.RC_FILTER_KUIS)
                 }
             }
         }

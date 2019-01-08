@@ -76,7 +76,7 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.done_action -> presenter?.submitQuestion(question.text.toString())
+            R.id.done_action -> presenter.submitQuestion(question.text.toString())
         }
         return super.onOptionsItemSelected(item)
     }

@@ -14,7 +14,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_cluster.*
 import kotlinx.android.synthetic.main.item_default_cluster_filter.*
 
-class ClusterListDialogAdapter() : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewHolder>() {
+class ClusterListDialogAdapter() : BaseRecyclerAdapter() {
 
     var listener: AdapterListener? = null
 
@@ -26,7 +26,7 @@ class ClusterListDialogAdapter() : BaseRecyclerAdapter<ItemModel, RecyclerView.V
         }
     }
 
-    override fun <T : MutableList<ItemModel>> setDatas(items: T) {
+    override fun setDatas(items: MutableList<ItemModel>) {
         super.setDatas(items)
         addItem(ClusterItem(), 0)
     }

@@ -1,5 +1,7 @@
 package com.pantaubersama.app.utils
 
+import android.Manifest
+
 /**
  * @author edityomurti on 14/12/2018 14:54
  */
@@ -12,7 +14,6 @@ class PantauConstants {
         const val BANNER_JANPOL = "janji politik"
         const val BANNER_TANYA = "tanya"
         const val BANNER_KUIS = "kuis"
-        val ASK_PERMISSIONS_REQUEST_CODE = 115
     }
 
     object Cluster {
@@ -51,15 +52,18 @@ class PantauConstants {
     }
 
     object RequestCode {
-        const val FILTER_PILPRES = 1001
-        const val FILTER_JANPOL = 1002
-        const val FILTER_TANYA_KANDIDAT = 1003
-        const val FILTER_KUIS = 1004
-        const val BANNER_PILPRES = 101
-        const val BANNER_JANPOL = 102
-        const val BANNER_TANYA_KANDIDAT = 103
-        const val BANNER_KUIS = 104
-        val SETTINGS = 600
+        const val RC_FILTER_PILPRES = 1001
+        const val RC_FILTER_JANPOL = 1002
+        const val RC_FILTER_TANYA_KANDIDAT = 1003
+        const val RC_FILTER_KUIS = 1004
+        const val RC_BANNER_PILPRES = 101
+        const val RC_BANNER_JANPOL = 102
+        const val RC_BANNER_TANYA_KANDIDAT = 103
+        const val RC_BANNER_KUIS = 104
+        const val RC_ASK_PERMISSIONS = 115
+        const val RC_CAMERA = 111
+        const val RC_STORAGE = 112
+        const val SETTINGS = 600
     }
 
     object Networking {
@@ -108,8 +112,6 @@ class PantauConstants {
         val CATEGORY_ITEM = 8
     }
     object Profile {
-        val CAMERA_REQUEST_CODE = 111
-        val STORAGE_REQUEST_CODE = 112
     }
 
     object Filter {
@@ -129,5 +131,10 @@ class PantauConstants {
     object Regex {
         const val KTP =
             "^((1[1-9])|(21)|([37][1-6])|(5[1-4])|(6[1-5])|([8-9][1-2]))[0-9]{2}[0-9]{2}(([0-6][0-9])|(7[0-1]))((0[1-9])|(1[0-2]))([0-9]{2})[0-9]{4}\$"
+    }
+
+    object Permission {
+        val GET_IMAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
     }
 }

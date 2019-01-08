@@ -164,4 +164,6 @@
     <string name="batal_action">Batal</string>
     <string name="buat_action">Buat</string>
     <string name="failed_add_category_alert">Gagal menambah kategori baru</string>
+    <string name="kamera">Kamera</string>
+    <string name="galeri">Galeri</string>
 </resources>

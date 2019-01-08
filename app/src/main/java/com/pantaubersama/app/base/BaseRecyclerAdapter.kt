@@ -6,7 +6,7 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.LoadingModel
 import timber.log.Timber
 
-abstract class BaseRecyclerAdapter<T : ItemModel, V : RecyclerView.ViewHolder> : RecyclerView.Adapter<V>() {
+abstract class BaseRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     protected var data: MutableList<ItemModel> = ArrayList()
 
     private var lastVisibleItem: Int? = null
@@ -55,30 +55,30 @@ abstract class BaseRecyclerAdapter<T : ItemModel, V : RecyclerView.ViewHolder> :
         return data.size
     }
 
-    fun <T : ItemModel> get(position: Int): T {
-        return data.get(position) as T
+    fun get(position: Int): ItemModel {
+        return data[position]
     }
 
-    fun <T : ItemModel> getPosition(item: T): Int {
+    fun getPosition(item: ItemModel): Int {
         return data.indexOf(item)
     }
 
-    open fun <T : MutableList<ItemModel>> setDatas(items: T) {
+    open fun setDatas(items: MutableList<ItemModel>) {
         data.clear()
         data.addAll(items)
     }
 
-    fun <T : MutableList<ItemModel>> addData(items: T) {
+    fun addData(items: MutableList<ItemModel>) {
         data.addAll(items)
         notifyItemRangeInserted(itemCount - 1, items.size)
     }
 
-    fun <T : ItemModel> addItem(item: T) {
+    fun addItem(item: ItemModel) {
         data.add(item)
         notifyItemInserted(itemCount - 1)
     }
 
-    fun <T : ItemModel> addItem(item: T, position: Int) {
+    fun addItem(item: ItemModel, position: Int) {
         data.add(position, item)
         notifyItemInserted(position)
     }
@@ -90,7 +90,7 @@ abstract class BaseRecyclerAdapter<T : ItemModel, V : RecyclerView.ViewHolder> :
         }
     }
 
-    fun <T : ItemModel> deleteItem(item: T) {
+    fun deleteItem(item: ItemModel) {
         data.remove(item)
     }
 

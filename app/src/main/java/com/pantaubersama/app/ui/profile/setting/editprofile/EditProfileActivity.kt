@@ -14,13 +14,15 @@ import android.view.Surface
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.widget.ImageChooserDialog
 import com.pantaubersama.app.utils.ImageTools
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Permission.GET_IMAGE_PERMISSION
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -28,16 +30,11 @@ import kotlinx.android.synthetic.main.activity_edit_profile.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
 class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileView {
-    private var permission = arrayOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.CAMERA,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-    )
-
     @Inject
     override lateinit var presenter: EditProfilePresenter
 
@@ -137,7 +134,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             showIntentChooser()
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(permission, PantauConstants.ASK_PERMISSIONS_REQUEST_CODE)
+                requestPermissions(GET_IMAGE_PERMISSION, RC_ASK_PERMISSIONS)
             }
         }
     }
@@ -154,44 +151,21 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     private fun showIntentChooser() {
-        val items = arrayOf<CharSequence>("Camera", "Gallery",
-            "Batal")
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Ambil gambar dari")
-        builder.setItems(items) { dialog, item ->
-            if (item == 0) {
-                openCamera()
-            } else if (item == 1) {
-                openGallery()
-            } else if (item == 2) {
-                dialog.dismiss()
-            }
-        }
-        builder.show()
-    }
-
-    private fun openCamera() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, PantauConstants.Profile.CAMERA_REQUEST_CODE)
-    }
-
-    private fun openGallery() {
-        val intentGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), PantauConstants.Profile.STORAGE_REQUEST_CODE)
+        ImageChooserDialog(this).show()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PantauConstants.ASK_PERMISSIONS_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == RC_ASK_PERMISSIONS && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             showIntentChooser()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == PantauConstants.Profile.CAMERA_REQUEST_CODE) {
+            if (requestCode == PantauConstants.RequestCode.RC_CAMERA) {
                 onCaptureImageResult(data)
-            } else if (requestCode == PantauConstants.Profile.STORAGE_REQUEST_CODE) {
+            } else if (requestCode == PantauConstants.RequestCode.RC_STORAGE) {
                 onSelectFromGalleryResult(data)
             }
         }
@@ -205,6 +179,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             Surface.ROTATION_180 -> rotation = 270
             Surface.ROTATION_270 -> rotation = 0
         }
+        Timber.e("onCaptureImageResult data = $data")
         val bitmap = data?.extras?.get("data") as Bitmap
         val rotatedBitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
         updateAvatar(ImageTools.getImageFile(rotatedBitmap))

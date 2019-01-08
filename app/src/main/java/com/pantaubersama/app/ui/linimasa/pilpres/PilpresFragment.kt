@@ -73,7 +73,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         recycler_view.adapter = adapter
         adapter.listener = object : PilpresAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.BANNER_PILPRES)
+                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.RC_BANNER_PILPRES)
             }
 
             override fun onClickTweetOption(item: FeedsItem) {
@@ -134,8 +134,8 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     override fun showFeeds(feedsList: MutableList<FeedsItem>) {
         recycler_view.visibleIf(true)
-        if (adapter.itemCount != 0 && adapter.get<ItemModel>(0) is BannerInfo) {
-            val bannerInfo = adapter.get<BannerInfo>(0)
+        if (adapter.itemCount != 0 && adapter.get(0) is BannerInfo) {
+            val bannerInfo = adapter.get(0) as BannerInfo
             adapter.clear()
             adapter.addBanner(bannerInfo)
             adapter.addData(feedsList as MutableList<ItemModel>)
@@ -147,7 +147,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     override fun showMoreFeeds(feedsList: MutableList<FeedsItem>) {
         adapter.setLoaded()
-        if (feedsList.size < presenter?.perPage!!) {
+        if (feedsList.size < presenter.perPage) {
             adapter.setDataEnd(true)
         }
         adapter.addData(feedsList as MutableList<ItemModel>)

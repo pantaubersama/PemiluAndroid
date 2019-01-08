@@ -67,7 +67,7 @@ class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7V
             }
         }
         next_button.setOnClickListener {
-            presenter?.submitSignaturePhoto(signPhoto)
+            presenter.submitSignaturePhoto(signPhoto)
         }
         retake_button.setOnClickListener {
             image_preview_container.visibility = View.GONE
