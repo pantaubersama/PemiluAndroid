@@ -134,8 +134,8 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
     override fun showFeeds(feedsList: MutableList<FeedsItem>) {
         recycler_view.visibleIf(true)
-        if (adapter.itemCount != 0 && adapter.get<ItemModel>(0) is BannerInfo) {
-            val bannerInfo = adapter.get<BannerInfo>(0)
+        if (adapter.itemCount != 0 && adapter.get(0) is BannerInfo) {
+            val bannerInfo = adapter.get(0) as BannerInfo
             adapter.clear()
             adapter.addBanner(bannerInfo)
             adapter.addData(feedsList as MutableList<ItemModel>)

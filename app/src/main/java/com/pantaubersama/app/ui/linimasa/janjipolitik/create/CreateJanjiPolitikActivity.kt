@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.widget.ImageChooserDialog
 import com.pantaubersama.app.utils.PantauConstants.Permission.GET_IMAGE_PERMISSION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -84,21 +85,8 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
 
     @AfterPermissionGranted(RC_ASK_PERMISSIONS)
     private fun showIntentChooser() {
-        var perms =
         if (EasyPermissions.hasPermissions(this, *GET_IMAGE_PERMISSION)) {
-            // show intent chooser
-            val items = arrayOf<CharSequence>("Kamera", "Galeri",
-                "Batal")
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Ambil gambar dari")
-            builder.setItems(items) { dialog, item ->
-                when (item) {
-//                    0 -> openCamera()
-//                    1 -> openGallery()
-                    2 -> dialog.dismiss()
-                }
-            }
-            builder.show()
+            ImageChooserDialog(this).show()
         } else {
             EasyPermissions.requestPermissions(
                 PermissionRequest.Builder(this, RC_ASK_PERMISSIONS, *GET_IMAGE_PERMISSION)
@@ -108,7 +96,6 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
                     .build()
             )
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -120,6 +107,7 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.done_action -> {
+                et_create_janpol_content.clearFocus()
 //                presenter.
             }
         }

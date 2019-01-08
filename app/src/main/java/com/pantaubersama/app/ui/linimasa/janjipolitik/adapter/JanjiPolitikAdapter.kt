@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_janji_politik.*
 import kotlinx.android.synthetic.main.layout_action_post.*
 
-class JanjiPolitikAdapter : BaseRecyclerAdapter<JanjiPolitik, RecyclerView.ViewHolder>() {
+class JanjiPolitikAdapter : BaseRecyclerAdapter() {
 
     var listener: JanjiPolitikAdapter.AdapterListener? = null
 

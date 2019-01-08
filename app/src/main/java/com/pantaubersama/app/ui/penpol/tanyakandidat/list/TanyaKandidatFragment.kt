@@ -129,8 +129,12 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                 ShareUtil.shareItem(context!!, item)
             }
 
-            override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
-                presenter.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
+            override fun onClickUpvote(id: String?, isLiked: Boolean, position: Int?) {
+                if (!isLiked) {
+                    presenter.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
+                } else {
+                    presenter.unVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
+                }
             }
 
             override fun onClickDeleteItem(id: String?, position: Int?) {
@@ -172,8 +176,8 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>) {
         recycler_view.visibleIf(true)
-        if (adapter?.itemCount != 0 && adapter?.get<ItemModel>(0) is BannerInfo) {
-            val bannerInfo = adapter?.get<BannerInfo>(0)
+        if (adapter?.itemCount != 0 && adapter?.get(0) is BannerInfo) {
+            val bannerInfo = adapter?.get(0) as BannerInfo
             adapter?.clear()
             adapter?.addBanner(bannerInfo!!)
             adapter?.addData(pertanyaanList as MutableList<ItemModel>)

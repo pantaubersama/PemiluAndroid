@@ -2,25 +2,24 @@ package com.pantaubersama.app.ui.profile.setting.editprofile
 
 import android.Manifest
 import android.app.Activity
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
-import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
+import android.view.Surface
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.widget.ImageChooserDialog
+import com.pantaubersama.app.utils.ImageTools
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Permission.GET_IMAGE_PERMISSION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
@@ -31,15 +30,11 @@ import kotlinx.android.synthetic.main.activity_edit_profile.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.ByteArrayOutputStream
+import timber.log.Timber
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 import javax.inject.Inject
 
 class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileView {
-    private var imageUriFromCamera: Uri? = null
-
     @Inject
     override lateinit var presenter: EditProfilePresenter
 
@@ -64,7 +59,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     override fun showFailedGetUserDataAlert() {
-        ToastUtil.show(this@EditProfileActivity, "Gagal memuat data profil")
+        ToastUtil.show(this@EditProfileActivity, getString(R.string.failed_load_profile_alert))
     }
 
     override fun setLayout(): Int {
@@ -145,45 +140,18 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     private fun isHaveStorageAndCameraPermission(): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val storagePermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
             val cameraPermission = checkSelfPermission(Manifest.permission.CAMERA)
             val writeExternalPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            return !(storagePermission != PackageManager.PERMISSION_GRANTED || cameraPermission != PackageManager.PERMISSION_GRANTED || writeExternalPermission != PackageManager.PERMISSION_GRANTED)
+            !(storagePermission != PackageManager.PERMISSION_GRANTED || cameraPermission != PackageManager.PERMISSION_GRANTED || writeExternalPermission != PackageManager.PERMISSION_GRANTED)
         } else {
-            return true
+            true
         }
     }
 
     private fun showIntentChooser() {
-        val items = arrayOf<CharSequence>("Kamera", "Galeri",
-            "Batal")
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Ambil gambar dari")
-        builder.setItems(items) { dialog, item ->
-            if (item == 0) {
-                openCamera()
-            } else if (item == 1) {
-                openGallery()
-            } else if (item == 2) {
-                dialog.dismiss()
-            }
-        }
-        builder.show()
-    }
-
-    fun openCamera() {
-        val values = ContentValues()
-        imageUriFromCamera = contentResolver?.insert(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriFromCamera)
-        startActivityForResult(intent, PantauConstants.Profile.RC_CAMERA)
-    }
-
-    private fun openGallery() {
-        val intentGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), PantauConstants.Profile.STORAGE_REQUEST_CODE)
+        ImageChooserDialog(this).show()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -195,61 +163,34 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == PantauConstants.Profile.RC_CAMERA) {
-                onCaptureImageResult()
-            } else if (requestCode == PantauConstants.Profile.STORAGE_REQUEST_CODE) {
+            if (requestCode == PantauConstants.RequestCode.RC_CAMERA) {
+                onCaptureImageResult(data)
+            } else if (requestCode == PantauConstants.RequestCode.RC_STORAGE) {
                 onSelectFromGalleryResult(data)
             }
         }
     }
 
-    private fun onCaptureImageResult() {
-        val thumbnail = MediaStore.Images.Media.getBitmap(contentResolver, imageUriFromCamera)
-
-        val ei = ExifInterface(getRealPathFromURI(imageUriFromCamera))
-        val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-            ExifInterface.ORIENTATION_UNDEFINED)
-        val rotatedBitmap: Bitmap?
-        when (orientation) {
-            ExifInterface.ORIENTATION_ROTATE_90 -> {
-                rotatedBitmap = rotateImage(thumbnail, 90f)
-            }
-            ExifInterface.ORIENTATION_ROTATE_180 -> {
-                rotatedBitmap = rotateImage(thumbnail, 180f)
-            }
-            ExifInterface.ORIENTATION_ROTATE_270 -> {
-                rotatedBitmap = rotateImage(thumbnail, 270f)
-            }
-            else -> rotatedBitmap = thumbnail
+    private fun onCaptureImageResult(data: Intent?) {
+        var rotation = 0
+        when (windowManager.defaultDisplay.rotation) {
+            Surface.ROTATION_0 -> rotation = 90
+            Surface.ROTATION_90 -> rotation = 180
+            Surface.ROTATION_180 -> rotation = 270
+            Surface.ROTATION_270 -> rotation = 0
         }
+        Timber.e("onCaptureImageResult data = $data")
+        val bitmap = data?.extras?.get("data") as Bitmap
+        val rotatedBitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
+        updateAvatar(ImageTools.getImageFile(rotatedBitmap))
+    }
 
-        val bytes = ByteArrayOutputStream()
-        val compressedBitmap =
-            Bitmap.createScaledBitmap(
-                rotatedBitmap!!,
-                rotatedBitmap.width / 4,
-                rotatedBitmap.height / 4,
-                false
-            )
-        compressedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes)
-        val destination = File(Environment.getExternalStorageDirectory(),
-            System.currentTimeMillis().toString() + ".jpg")
-        val fo: FileOutputStream
-        try {
-            destination.createNewFile()
-            fo = FileOutputStream(destination)
-            fo.write(bytes.toByteArray())
-            fo.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
+    private fun updateAvatar(file: File) {
         val type: String
-        val extension = MimeTypeMap.getFileExtensionFromUrl(destination.getAbsolutePath())
+        val extension = MimeTypeMap.getFileExtensionFromUrl(file.absolutePath)
         type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
-
-        val reqFile = RequestBody.create(MediaType.parse(type), destination)
-        val avatar = MultipartBody.Part.createFormData("avatar", destination.getName(), reqFile)
+        val reqFile = RequestBody.create(MediaType.parse(type), file)
+        val avatar = MultipartBody.Part.createFormData("avatar", file.getName(), reqFile)
         presenter.uploadAvatar(avatar)
     }
 
@@ -273,7 +214,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     private fun onSelectFromGalleryResult(data: Intent?) {
         if (data == null) {
             // Display an error
-            Toast.makeText(this@EditProfileActivity, "Gagal memuat gambar", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@EditProfileActivity, getString(R.string.failed_load_image_alert), Toast.LENGTH_SHORT).show()
             return
         }
         val selectedImage = data.data
@@ -283,15 +224,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         cursor.moveToFirst()
         val path = cursor.getString(column_index)
         val file = File(path)
-
-        val type: String
-        val extension = MimeTypeMap.getFileExtensionFromUrl(file.getAbsolutePath())
-        type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
-
-        val reqFile = RequestBody.create(MediaType.parse(type), file)
-        val avatar = MultipartBody.Part.createFormData("avatar", file.getName(), reqFile)
-
-        presenter.uploadAvatar(avatar)
+        updateAvatar(file)
     }
 
     override fun refreshProfile() {
@@ -299,19 +232,10 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     override fun showSuccessUpdateAvatarAlert() {
-        ToastUtil.show(this@EditProfileActivity, "Avatar updated")
+        ToastUtil.show(this@EditProfileActivity, getString(R.string.success_update_avatar_alert))
     }
 
     override fun showFailedUpdateAvatarAlert() {
-        ToastUtil.show(this@EditProfileActivity, "Failed to update avatar")
+        ToastUtil.show(this@EditProfileActivity, getString(R.string.failed_update_avatar_alert))
     }
-
-    //    fun setEditextDisable(editext: EditText) {
-//        editext.tag = editext.keyListener
-//        editext.keyListener = null
-//    }
-//
-//    fun setEditextEnable(editext: EditText) {
-//        editext.setKeyListener(editext.getTag() as KeyListener)
-//    }
 }

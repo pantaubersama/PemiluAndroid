@@ -68,4 +68,10 @@ interface PantauAPI {
     fun deleteQuestion(
         @Query("id") id: String?
     ): Completable
+
+    @DELETE("pendidikan_politik/v1/votes")
+    fun unVoteQuestion(
+        @Query("id") id: String?,
+        @Query("class_name") className: String
+    ): Completable
 }

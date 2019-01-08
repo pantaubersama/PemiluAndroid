@@ -59,6 +59,7 @@ class PantauConstants {
         const val RC_ASK_PERMISSIONS = 115
         const val RC_CAMERA = 111
         const val RC_STORAGE = 112
+        const val SETTINGS = 600
     }
 
     object Networking {

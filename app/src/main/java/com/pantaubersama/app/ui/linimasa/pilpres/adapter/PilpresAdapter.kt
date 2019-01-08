@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.base.viewholder.LoadingViewHolder
-import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_BANNER
@@ -18,7 +17,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_pilpres_tweet.*
 
-class PilpresAdapter : BaseRecyclerAdapter<ItemModel, RecyclerView.ViewHolder>() {
+class PilpresAdapter : BaseRecyclerAdapter() {
 
     var listener: PilpresAdapter.AdapterListener? = null
 

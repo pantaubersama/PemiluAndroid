@@ -56,8 +56,8 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
                 ShareUtil.shareItem(context!!, item)
             }
 
-            override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
-                // not implemented yet
+            override fun onClickUpvote(id: String?, isLiked: Boolean, position: Int?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onClickDeleteItem(id: String?, position: Int?) {
