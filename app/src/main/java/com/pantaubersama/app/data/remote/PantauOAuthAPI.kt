@@ -116,4 +116,10 @@ interface PantauOAuthAPI {
     fun submitSignaturePhoto(
         @Part signPhoto: MultipartBody.Part?
     ): Completable
+
+    @FormUrlEncoded
+    @POST("/v1/categories")
+    fun createNewCategory(
+        @Field("name") categoryName: String
+    ): Completable
 }
