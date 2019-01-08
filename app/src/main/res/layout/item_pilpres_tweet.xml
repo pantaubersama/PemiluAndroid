@@ -25,7 +25,7 @@
                 android:layout_width="12dp"
                 android:layout_height="12dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/dummy_avatar"
+                android:src="@drawable/ic_avatar_placeholder"
                 app:riv_border_width="1dp"
                 app:riv_border_color="@color/colorPrimary"
                 app:riv_corner_radius="3dp"/>
@@ -52,7 +52,7 @@
                     android:id="@+id/iv_tweet_avatar"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/dummy_avatar"
+                    android:src="@drawable/ic_avatar_placeholder"
                     android:scaleType="centerCrop"
                     app:riv_oval="true"/>
 
@@ -128,7 +128,7 @@
 
                     </LinearLayout>
                     <ImageView
-                        android:id="@+id/iv_option"
+                        android:id="@+id/iv_tweet_option"
                         android:layout_width="30dp"
                         android:layout_height="24dp"
                         android:background="?selectableItemBackgroundBorderless"
@@ -140,8 +140,8 @@
                     android:id="@+id/tv_tweet_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:lines="3"
-                    android:maxLines="4"
+                    android:minLines="2"
+                    android:maxLength="280"
                     android:textSize="12sp"
                     android:textColor="@color/black_1"
                     android:ellipsize="end"

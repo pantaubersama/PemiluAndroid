@@ -1,9 +1,18 @@
 package com.pantaubersama.app.ui.profile.cluster
 
+import android.app.Activity
+import android.content.Intent
+import android.os.Bundle
+import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.cluster.Category
+import com.pantaubersama.app.ui.profile.cluster.categery.ClusterCategoryActivity
+import com.pantaubersama.app.utils.PantauConstants
+import kotlinx.android.synthetic.main.activity_request_cluster.*
 
-class RequestClusterActivity : BaseActivity<RequestClusterPresenter>() {
+class RequestClusterActivity : CommonActivity() {
+
+    val CHANGE_CATEGORY = 1
 
     override fun statusBarColor(): Int? = R.color.white
 
@@ -12,17 +21,25 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>() {
     override fun fetchIntentExtra() {
     }
 
-    override fun initPresenter(): RequestClusterPresenter? {
-        return RequestClusterPresenter()
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Request Buat Cluster", R.color.white, 4f)
+        onClickAction()
     }
 
-    override fun showLoading() {
+    private fun onClickAction() {
+        request_cluster_category.setOnClickListener {
+            val intent = Intent(this@RequestClusterActivity, ClusterCategoryActivity::class.java)
+            startActivityForResult(intent, CHANGE_CATEGORY)
+        }
     }
 
-    override fun dismissLoading() {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == CHANGE_CATEGORY) {
+                val category = data?.getSerializableExtra(PantauConstants.Cluster.CATEGORY) as Category
+                partai_selected.text = category.name
+            }
+        }
     }
 }

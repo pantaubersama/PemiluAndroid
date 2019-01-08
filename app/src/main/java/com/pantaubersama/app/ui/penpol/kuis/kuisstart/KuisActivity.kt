@@ -2,13 +2,13 @@ package com.pantaubersama.app.ui.penpol.kuis.kuisstart
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_kuis.*
 
-class KuisActivity : BaseActivity<BasePresenter<*>>() {
+class KuisActivity : CommonActivity() {
 
     private var questionNumber: Int = 0
 
@@ -16,15 +16,11 @@ class KuisActivity : BaseActivity<BasePresenter<*>>() {
         return 0
     }
 
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
-    }
-
     override fun fetchIntentExtra() {
         questionNumber = intent.getIntExtra(PantauConstants.Kuis.KUIS_NUMBER, 0)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         back_icon.setOnClickListener {
             finish()
         }
@@ -50,16 +46,8 @@ class KuisActivity : BaseActivity<BasePresenter<*>>() {
         return R.layout.activity_kuis
     }
 
-    override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     companion object {
-        fun setIntent(context: Context, kuisId: Int, questionNumber: Int): Intent {
+        fun setIntent(context: Context, kuisId: String, questionNumber: Int): Intent {
             val intent = Intent(context, KuisActivity::class.java)
             intent.putExtra(PantauConstants.Kuis.KUIS_ID, kuisId)
             intent.putExtra(PantauConstants.Kuis.KUIS_NUMBER, questionNumber)

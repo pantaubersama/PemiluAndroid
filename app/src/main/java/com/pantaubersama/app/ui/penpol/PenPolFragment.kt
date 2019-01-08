@@ -6,11 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.base.CommonFragment
 import com.pantaubersama.app.ui.penpol.kuis.filter.FilterKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
-import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.ui.widget.TabView
@@ -20,23 +18,15 @@ import kotlinx.android.synthetic.main.fragment_pen_pol.*
  * A simple [Fragment] subclass.
  *
  */
-class PenPolFragment : BaseFragment<BasePresenter<*>>() {
+class PenPolFragment : CommonFragment() {
     private var selectedTabs: Int = 0
 
     private var tanyaKandidatFragment: TanyaKandidatFragment? = TanyaKandidatFragment.newInstance()
     private var kuisFragment: KuisFragment? = KuisFragment.newInstance()
 
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
-    }
-
     override fun initView(view: View) {
         setupTabLayout()
         setupViewPager()
-        btn_create.setOnClickListener {
-            val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
-            startActivityForResult(intent, PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE)
-        }
         btn_filter?.setOnClickListener {
             when (selectedTabs) {
                 0 -> {
@@ -45,7 +35,7 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
                 }
                 else -> {
                     val intent = Intent(context, FilterKuisActivity::class.java)
-                    startActivityForResult(intent, PantauConstants.RequestCode.FILTER_KUIS)
+                    startActivityForResult(intent, PantauConstants.RequestCode.RC_FILTER_KUIS)
                 }
             }
         }
@@ -53,18 +43,6 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
 
     override fun setLayout(): Int {
         return R.layout.fragment_pen_pol
-    }
-
-    override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun showError(throwable: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     fun setupTabLayout() {
@@ -85,11 +63,6 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 selectedTabs = tab!!.position
-                if (tab.position == 0) {
-                    btn_create?.visibility = View.VISIBLE
-                } else if (tab.position == 1) {
-                    btn_create?.visibility = View.GONE
-                }
                 view_pager?.currentItem = tab.position
             }
         })
@@ -113,6 +86,8 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
     }
 
     companion object {
+        val TAG: String = PenPolFragment::class.java.simpleName
+
         fun newInstance(): PenPolFragment {
             return PenPolFragment()
         }
@@ -122,6 +97,9 @@ class PenPolFragment : BaseFragment<BasePresenter<*>>() {
         super.onActivityResult(requestCode, resultCode, data)
         if (tanyaKandidatFragment != null) {
             tanyaKandidatFragment?.onActivityResult(requestCode, resultCode, data)
+        }
+        if (kuisFragment != null) {
+            kuisFragment?.onActivityResult(requestCode, resultCode, data)
         }
     }
 }

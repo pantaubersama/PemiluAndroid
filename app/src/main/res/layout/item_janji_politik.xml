@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_janpol_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
     android:orientation="vertical">
 
     <LinearLayout
@@ -15,13 +17,13 @@
         android:layout_marginEnd="18dp">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/user_avatar"
+            android:id="@+id/iv_user_avatar"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:scaleType="centerCrop"
             app:riv_border_color="@color/white"
             app:riv_oval="true"
-            android:src="@drawable/dummy_avatar"
+            android:src="@drawable/ic_avatar_placeholder"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"/>
         <RelativeLayout
@@ -47,8 +49,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_medium"
                 android:layout_toRightOf="@id/tv_user_name"
-                android:text=", Cluster Partai Pedang Panjang"
+                android:text="Cluster Partai Pedang Panjang"
                 android:textSize="10sp"
+                android:layout_marginStart="5dp"
                 android:lines="1"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -70,11 +73,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_janpol_content"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="?selectableItemBackground"
         android:layout_marginStart="18dp"
         android:layout_marginEnd="18dp">
 
@@ -91,16 +92,36 @@
             android:paddingTop="10dp"
             android:paddingBottom="4dp"/>
 
-        <TextView
-            android:id="@+id/tv_janpol_content"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/question_dummy_text"
-            android:fontFamily="@font/lato_medium"
-            android:textSize="12sp"
-            android:textColor="@color/black_1"
-            android:maxLines="6"
-            android:ellipsize="end"/>
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_janpol_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/lorem"
+                android:fontFamily="@font/lato_medium"
+                android:textSize="12sp"
+                android:textColor="@color/black_1"
+                android:maxLines="5"
+                android:ellipsize="end"/>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/riv_janpol_image"
+                android:visibility="gone"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_avatar_placeholder"
+                android:scaleType="centerCrop"
+                app:riv_border_color="@color/gray_3"
+                app:riv_border_width="2dp"/>
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <RelativeLayout

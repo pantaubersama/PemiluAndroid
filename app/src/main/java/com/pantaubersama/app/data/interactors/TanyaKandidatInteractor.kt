@@ -13,10 +13,6 @@ class TanyaKandidatInteractor @Inject constructor(
     private val rxSchedulers: RxSchedulers,
     private val dataCache: DataCache
 ) {
-    fun isBannerShown(): Boolean? {
-        return dataCache.isBannerTanyaKandidatOpened()
-    }
-
     fun createTanyaKandidat(body: String?): Single<TanyaKandidatResponse> {
         return apiWrapper
             .getPantauApi()
@@ -29,17 +25,14 @@ class TanyaKandidatInteractor @Inject constructor(
 
     fun getTanyaKandidatlist(
         page: Int?,
-        perPage: Int?,
-        orderBy: String?,
-        direction: String?,
-        filterBy: String?
+        perPage: Int?
     ): Single<TanyaKandidatResponse> {
         return apiWrapper.getPantauApi().getTanyaKandidatList(
             page,
             perPage,
-            orderBy,
-            direction,
-            filterBy
+            dataCache.loadTanyaKandidatOrderFilter(),
+            dataCache.loadTanyaKandidatOrderFilterDirection(),
+            dataCache.loadTanyaKandidatUserFilter()
         )
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -94,5 +87,16 @@ class TanyaKandidatInteractor @Inject constructor(
         return Single.fromCallable {
             dataCache.loadTanyaKandidatOrderFilter()
         }
+    }
+
+    fun unVoteQuestion(id: String?, className: String): Completable {
+        return apiWrapper
+            .getPantauApi()
+            .unVoteQuestion(
+                id,
+                className
+            )
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
     }
 }

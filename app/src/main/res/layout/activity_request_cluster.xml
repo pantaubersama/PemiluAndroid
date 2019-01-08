@@ -51,7 +51,7 @@
                 tools:text="Isi Form di Bawah Ini :" />
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/user_avatar"
+                android:id="@+id/iv_user_avatar"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="12dp"
@@ -93,22 +93,59 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Kategori"
-                app:boxBackgroundColor="@android:color/transparent"
-                app:hintTextColor="@color/gray_4">
+                android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_category"
+                <TextView
+                    android:id="@+id/label_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/lato_italic"
+                    android:lineSpacingExtra="2sp"
+                    android:text="@string/label_kategori"
+                    android:textColor="@color/gray_4"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:id="@+id/request_cluster_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_regular"
-                    android:inputType="text"
-                    android:textColor="@color/black_3" />
+                    android:layout_below="@+id/label_category"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/partai_selected"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/lato_bold"
+                        android:lineSpacingExtra="3sp"
+                        android:text="Partai"
+                        android:textColor="@color/black_3"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/outline_expand_more_48_px" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/ln_category"
+                    android:background="@color/gray_3" />
+
+            </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

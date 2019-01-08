@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.pantaubersama.app.ui.profile.verifikasi.Step4VerifikasiActivity">
+    tools:context="com.pantaubersama.app.ui.profile.verifikasi.step4.Step4VerifikasiActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -104,8 +104,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:lottie_fileName="id_card_animation.json"
-                            app:lottie_autoPlay="true"
-                            app:lottie_loop="true"/>
+                            app:lottie_autoPlay="false"/>
 
                         <TextView
                             android:layout_width="wrap_content"

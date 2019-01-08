@@ -41,7 +41,7 @@ class BadgeAdapter(private val onShareClick: (String) -> Unit)
         }
 
         fun bind(item: Badge) {
-            item_badge_icon.loadUrl(item.image.thumbnail.url, R.drawable.dummy_badge)
+            item_badge_icon.loadUrl(item.image.thumbnail?.url, R.drawable.dummy_badge)
             item_badge_icon.setGrayScale(!item.achieved)
             item_badge_title.text = item.name
             item_badge_title.isEnabled = item.achieved

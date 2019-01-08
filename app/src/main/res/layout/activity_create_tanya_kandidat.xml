@@ -77,13 +77,13 @@
                         android:gravity="center_vertical">
 
                         <com.makeramen.roundedimageview.RoundedImageView
-                            android:id="@+id/user_avatar"
+                            android:id="@+id/iv_user_avatar"
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:scaleType="centerCrop"
                             app:riv_border_color="@color/white"
                             app:riv_oval="true"
-                            android:src="@drawable/dummy_avatar"/>
+                            android:src="@drawable/ic_avatar_placeholder"/>
 
                         <TextView
                             android:id="@+id/tv_user_name"

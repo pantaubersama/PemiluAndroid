@@ -5,13 +5,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatAdapter
 import com.pantaubersama.app.utils.OnScrollListener
 import com.pantaubersama.app.utils.ShareUtil
 import kotlinx.android.synthetic.main.fragment_profile_tanya_kandidat.*
 
 class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>(), ProfileTanyaKandidatView {
+
+    override var presenter: ProfileTanyaKandidatPresenter = ProfileTanyaKandidatPresenter()
+
     private lateinit var adapter: TanyaKandidatAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private var isDataEnd = false
@@ -23,13 +29,12 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
         }
     }
 
-    override fun initPresenter(): ProfileTanyaKandidatPresenter? {
-        return ProfileTanyaKandidatPresenter()
+    override fun initInjection(activityComponent: ActivityComponent) {
     }
 
     override fun initView(view: View) {
         setupTanyaKandidatList()
-        presenter?.getTanyaKandidatList()
+        presenter.getTanyaKandidatList()
     }
 
     override fun setLayout(): Int {
@@ -37,13 +42,21 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     }
 
     private fun setupTanyaKandidatList() {
-        adapter = TanyaKandidatAdapter("")
+        adapter = TanyaKandidatAdapter()
         adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
+            override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onClickBanner(bannerInfo: BannerInfo) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
             override fun onClickShare(item: Pertanyaan?) {
                 ShareUtil.shareItem(context!!, item)
             }
 
-            override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
+            override fun onClickUpvote(id: String?, isLiked: Boolean, position: Int?) {
                 // not implemented yet
             }
 
@@ -79,7 +92,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
 
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>?) {
         recycler_view?.visibility = View.VISIBLE
-        adapter.setData(pertanyaanList!!)
+        adapter.setDatas(pertanyaanList!! as MutableList<ItemModel>)
     }
 
     override fun showEmptyDataAlert() {

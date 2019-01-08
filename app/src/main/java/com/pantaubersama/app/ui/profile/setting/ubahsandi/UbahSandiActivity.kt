@@ -1,10 +1,24 @@
 package com.pantaubersama.app.ui.profile.setting.ubahsandi
 
+import android.app.Activity
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.enable
 import kotlinx.android.synthetic.main.activity_ubah_sandi.*
+import javax.inject.Inject
 
 class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
+
+    @Inject
+    override lateinit var presenter: UbahSandiPresenter
+
+    var passwordValid = false
 
     override fun statusBarColor(): Int? {
         return 0
@@ -14,13 +28,47 @@ class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
         // ok
     }
 
-    override fun initPresenter(): UbahSandiPresenter? {
-        return UbahSandiPresenter()
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_ubah_sandi), R.color.white, 4f)
+        setupPasswordField()
         onClickAction()
+    }
+
+    private fun setupPasswordField() {
+        ubah_sandi_sandi_baru.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onTextChanged(string: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (string?.length!! < 8) {
+                    ubah_sandi_sandi_baru.error = "Password minimal 8 karakter"
+                }
+            }
+        })
+        repeat_password.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onTextChanged(string: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (string.toString() != ubah_sandi_sandi_baru.text.toString()) {
+                    repeat_password.error = "Password tidak cocok"
+                }
+            }
+        })
     }
 
     override fun setLayout(): Int {
@@ -28,16 +76,50 @@ class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
     }
 
     override fun showLoading() {
-        // show loading
+        loading.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
-        // hide loading
+        loading.visibility = View.VISIBLE
     }
 
     private fun onClickAction() {
         ubah_sandi_ubah.setOnClickListener {
-            // ubah password
+            if (ubah_sandi_sandi_baru.error == null) {
+                if (repeat_password.error == null) {
+                    if (ubah_sandi_lama.text.isNotEmpty()) {
+                        presenter.updatePassword(
+                            ubah_sandi_sandi_baru.text.toString(),
+                            repeat_password.text.toString()
+                        )
+                    } else {
+                        ubah_sandi_lama.error = "Passowrd lama harus diisi"
+                    }
+                }
+            }
         }
+    }
+
+    override fun showSuccessUpdatePasswordAlert() {
+        ToastUtil.show(this@UbahSandiActivity, "Berhasil memperbarui password")
+    }
+
+    override fun finishActivity() {
+        setResult(Activity.RESULT_OK)
+        finish()
+    }
+
+    override fun showFailedUpdatePasswordAlert() {
+        ToastUtil.show(this@UbahSandiActivity, "Gagal memperbarui password")
+    }
+
+    override fun disableView() {
+        ubah_sandi_ubah.enable(false)
+        ubah_password_container.enable(false)
+    }
+
+    override fun enableView() {
+        ubah_sandi_ubah.enable(true)
+        ubah_password_container.enable(true)
     }
 }

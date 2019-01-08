@@ -2,24 +2,40 @@ package com.pantaubersama.app.ui.login
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.LoginInteractor
-import io.reactivex.disposables.Disposable
+import com.pantaubersama.app.data.interactors.ProfileInteractor
 import javax.inject.Inject
 
-class LoginPresenter @Inject constructor(private val loginInteractor: LoginInteractor?) : BasePresenter<LoginView>() {
+class LoginPresenter @Inject constructor(
+    private val loginInteractor: LoginInteractor?,
+    private val profileInteractor: ProfileInteractor
+) : BasePresenter<LoginView>() {
 
     fun exchangeToken(oAuthToken: String?, registrationId: String?) {
         view?.showLoading()
-        val disposable: Disposable?
-        disposable = loginInteractor?.exchangeToken(oAuthToken)
+        val disposable = loginInteractor?.exchangeToken(oAuthToken)
             ?.subscribe({
                 loginInteractor.saveLoginData(it.token)
-                view?.dismissLoading()
-                view?.openHomeActivity()
+                getProfile()
             }, {
                 view?.dismissLoading()
                 view?.showError(it!!)
                 view?.showLoginFailedAlert()
             })
         disposables?.add(disposable!!)
+    }
+
+    private fun getProfile() {
+        val disposable = profileInteractor.refreshProfile().subscribe(
+                {
+                    view?.dismissLoading()
+                    view?.openHomeActivity()
+                },
+                {
+                    view?.dismissLoading()
+                    view?.showError(it!!)
+                    view?.showLoginFailedAlert()
+                }
+            )
+        disposables?.add(disposable)
     }
 }

@@ -1,6 +1,10 @@
 package com.pantaubersama.app.data.model.bannerinfo
 
 import com.google.gson.annotations.SerializedName
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.image.Image
+import com.pantaubersama.app.utils.PantauConstants
+import java.io.Serializable
 
 /**
  * @author edityomurti on 27/12/2018 19:49
@@ -10,21 +14,9 @@ data class BannerInfo(
     @SerializedName("page_name") var pageName: String? = null,
     @SerializedName("title") var title: String? = null,
     @SerializedName("body") var body: String? = null,
-    @SerializedName("header_image") var headerImage: HeaderImage? = null,
+    @SerializedName("header_image") var headerImage: Image? = null,
     @SerializedName("image") var image: Image? = null
-) {
+) : ItemModel, Serializable {
 
-    data class HeaderImage(
-        @SerializedName("url") var url: String?,
-        @SerializedName("large") var large: Large? = null
-    )
-
-    data class Image(
-        @SerializedName("url") var url: String?,
-        @SerializedName("large") var large: Large? = null
-    )
-
-    data class Large(
-        @SerializedName("url") var url: String? = null
-    )
+    override fun getType(): Int = PantauConstants.ItemModel.TYPE_BANNER
 }

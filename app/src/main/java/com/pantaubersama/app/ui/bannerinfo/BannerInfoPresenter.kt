@@ -11,7 +11,7 @@ class BannerInfoPresenter @Inject constructor(private val bannerInfoInteractor: 
 
     fun getBannerInfo(pageName: String) {
         view?.showLoading()
-        disposables?.add(bannerInfoInteractor?.getBannerInfo()
+        disposables?.add(bannerInfoInteractor?.getBannerInfoAll()
                 ?.subscribe({ bannerInfoResponse ->
                     for (bannerInfo in bannerInfoResponse.data.bannerInfoList) {
                         if (bannerInfo.pageName?.toLowerCase()?.contains(pageName)!!) {

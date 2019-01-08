@@ -29,6 +29,10 @@ android {
             it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_PROD)
             it.buildConfigField("String", "PANTAU_OAUTH_URL", PANTAU_OAUTH_URL_PROD)
             it.buildConfigField("String", "WORD_STADIUM_BASE_URL", WORD_STADIUM_BASE_URL_PROD)
+            it.buildConfigField("String", "SYMBOLIC_URl", SYMBOLIC_URL_PROD)
+            it.buildConfigField("String", "SYMBOLIC_CLIENT_ID", SYMBOLIC_CLIENT_ID_STAG)
+            it.buildConfigField("String", "SYMBOLIC_CLIENT_SECRET", SYMBOLIC_CLIENT_SECRET_PROD)
+            it.buildConfigField("String", "SYMBOLIC_REDIRECT_URI", SYMBOLIC_REDIRECT_URI)
         }
         debug {
             applicationIdSuffix ".staging"
@@ -37,6 +41,10 @@ android {
             it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_STAG)
             it.buildConfigField("String", "PANTAU_OAUTH_URL", PANTAU_OAUTH_URL_STAG)
             it.buildConfigField("String", "WORD_STADIUM_BASE_URL", WORD_STADIUM_BASE_URL_STAG)
+            it.buildConfigField("String", "SYMBOLIC_URL", SYMBOLIC_URL_STAG)
+            it.buildConfigField("String", "SYMBOLIC_CLIENT_ID", SYMBOLIC_CLIENT_ID_STAG)
+            it.buildConfigField("String", "SYMBOLIC_CLIENT_SECRET", SYMBOLIC_CLIENT_SECRET_STAG)
+            it.buildConfigField("String", "SYMBOLIC_REDIRECT_URI", SYMBOLIC_REDIRECT_URI)
         }
 
         buildTypes.each {
@@ -102,6 +110,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation chromeCustomTab
     implementation expandableLayout
+    implementation rxBinding
     kapt daggerCompiler
 
     testImplementation unitTestLibs

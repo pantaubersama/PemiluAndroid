@@ -3,35 +3,34 @@ package com.pantaubersama.app.ui.linimasa.pilpres.filter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.FilterPilpresInteractor
-import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_ALL
+import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_1
+import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_2
 import kotlinx.android.synthetic.main.activity_filter_pilpres.*
 import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
 import javax.inject.Inject
 
 class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilpresView {
+
     @Inject
-    lateinit var interactor: FilterPilpresInteractor
+    override lateinit var presenter: FilterPilpresPresenter
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun initPresenter(): FilterPilpresPresenter? {
-        return FilterPilpresPresenter(interactor)
-    }
-
-    private var selectedFilter = 0
+    private var selectedFilter: String? = ""
 
     companion object {
-        fun setIntent(context: Context, selectedFilter: Int): Intent {
+        fun setIntent(context: Context): Intent {
             val intent = Intent(context, FilterPilpresActivity::class.java)
-//        intent.putExtra(PantauConstants.Extra.SELECTED_FILTER_PILPRES, selectedFilter)
+//        intent.putExtra(PantauConstants.Extra.EXTRA_SELECTED_FILTER_PILPRES, selectedFilter)
             return intent
         }
     }
@@ -41,32 +40,32 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
     }
 
     override fun fetchIntentExtra() {
-        this.selectedFilter = intent.getIntExtra(PantauConstants.Extra.SELECTED_FILTER_PILPRES, 0)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
-        presenter?.getFilter()
+        presenter.getFilter()
 
-        radio_group_pilpres.setOnCheckedChangeListener { view, checkedId ->
+        radio_group_pilpres.setOnCheckedChangeListener { _, checkedId ->
             selectedFilter = when (checkedId) {
-                R.id.radbtn_semua -> 0
-                R.id.radbtn_capres1 -> 1
-                R.id.radbtn_capres2 -> 2
-                else -> 0
+                R.id.radbtn_semua -> FILTER_ALL
+                R.id.radbtn_capres1 -> FILTER_TEAM_1
+                R.id.radbtn_capres2 -> FILTER_TEAM_2
+                else -> FILTER_ALL
             }
         }
 
         btn_terapkan.setOnClickListener {
-            presenter?.setFilter(selectedFilter)
+            presenter.setFilter(selectedFilter!!)
         }
     }
 
-    override fun showSelectedFilter(selectedFilter: Int) {
+    override fun showSelectedFilter(selectedFilter: String) {
+        this.selectedFilter = selectedFilter
         radio_group_pilpres.check(when (selectedFilter) {
-            0 -> R.id.radbtn_semua
-            1 -> R.id.radbtn_capres1
-            2 -> R.id.radbtn_capres2
+            FILTER_ALL -> R.id.radbtn_semua
+            FILTER_TEAM_1 -> R.id.radbtn_capres1
+            FILTER_TEAM_2 -> R.id.radbtn_capres2
             else -> R.id.radbtn_semua
         })
     }
@@ -93,7 +92,7 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
                 return true
             }
             R.id.action_reset -> {
-                // reset
+                radio_group_pilpres.check(R.id.radbtn_semua)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -105,10 +104,5 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
 
     override fun dismissLoading() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onDestroy() {
-        (application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 }

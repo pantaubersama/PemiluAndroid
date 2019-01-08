@@ -1,16 +1,14 @@
 <resources>
-    <string name="title_navbar_linimasa">Linimasa</string>
-    <string name="title_navbar_penpol">Penpol</string>
-    <string name="title_navbar_wordstadium">Wordstadium</string>
-    <string name="title_navbar_lapor">Lapor</string>
-    <string name="title_navbar_rekap">Rekap</string>
+    <string name="title_navbar_menyerap">Menyerap</string>
+    <string name="title_navbar_menggali">Menggali</string>
+    <string name="title_navbar_menguji">Menguji</string>
+    <string name="title_navbar_merayakan">Merayakan</string>
+    <string name="title_navbar_menjaga">Menjaga</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="txt_mohon_tunggu">Mohon tunggu…</string>
     <string name="txt_cari">Cari</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="txt_tab_pilpres">Pilpres</string>
+    <string name="txt_tab_linimasa">Linimasa</string>
     <string name="txt_tab_janji_politik">Janji Politik</string>
     <string name="create_question">Buat Pertanyaan</string>
     <string name="question_hint">Buat pertanyaan singkat untuk pasangan calon presiden periode 2019–2024. Pertanyaan terpilih akan disampaikan kepada kedua tim pasangan calon Presiden. Gunakan tata bahasa yang sopan.</string>
@@ -22,7 +20,7 @@
     <string name="dummy_tweet_content">#SahabatBawaslu, Sentra  Gakkumdu berkomitmen untuk tidak memunculkan sikap ego sektoral antar personil, baik dari pihak Bawaslu,  Kepolisian,  maupun Kejaksaan dalam menegakkan hukum Pemilu dalam Rapat Koordinasi Nasional Sentra Gakkumdu,  di Jakarta, Rabu,  (5/12/2018).</string>
     <string name="tanya_kandidat_label">Tanya Kandidat</string>
     <string name="kuis_label">Kuis</string>
-    <string name="login_failed_alert">Failed to login with symbolic</string>
+    <string name="login_failed_alert">Failed to login with Symbolic</string>
     <string name="tanya_kandidat_banner_text">Apa yang ingin kamu tanyakan kepada Capres &amp; Cawapres Jokowi-Ma\'ruf dan Prabowo-Sandi</string>
     <string name="pilpres_banner_text">Halaman ini berisikan informasi dari channel Resmi twitter Jokowi - Makruf dan Prabowo - Sandi yang terdaftar di Bawaslu</string>
     <string name="kuis_banner_text">Ikuti quiz pilih jawaban tanpa kamu tahu itu jawaban siapa, kemudian tunggu kejutannya dan lihat hasil dari quiz ini</string>
@@ -69,7 +67,7 @@
     <string name="kuis_result">Dari hasil pilhan Quiz minggu pertama,\nRoni Handoko lebih suka jawaban dari Paslon no 1</string>
     <string name="txt_pilpres">Pilpres</string>
     <string name="txt_buka_di_aplikasi">Buka di Aplikasi Twitter</string>
-    <string name="hint_create_janpol">Bagikan janji politik dari media Capres kepada user lain. Sertakan sumber bila memungkinkan seperti link, gambar, ucapan langsung dan lainnya. Gunakan tata Bahasa yang baik</string>
+    <string name="hint_create_janpol">Bagikan Janji Politik dengan bahasa yang baik dan mudah dimengerti. Sertakan ilustrasi, gambar, tautan sumber berita, atau referensi lain sebagai tambahan informasi.</string>
     <string name="hint_create_janpol_title">Judul Janji Politik</string>
     <string name="hint_create_janpol_content">Beri deskripsi detail lebih lanjut dari Judul</string>
     <string name="verification_hint">Dengan diverifikasi kamu akan…. Mendapatkan manfaat dan is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
@@ -83,7 +81,7 @@
     <string name="txt_user">User</string>
     <string name="txt_belum_verifikasi">Belum Verifikasi</string>
     <string name="txt_terverifikasi">Terverifikasi</string>
-    <string name="txt_pilih_cluster">Pilih Cluster</string>
+    <string name="txt_semua_cluster">Semua Cluster</string>
     <string name="foto_ktp_hint">Pastikan seluruh bagian KTP anda breada dalam bingkai foto ( KTP asli dan bukan fotokopi KTP)</string>
     <string name="foto_tanda_tangan_hint">Yakk, langkah terakhir foto tanda tanganmu diatas kertas putih dengan kameramu</string>
     <string name="title_setting">Setting</string>
@@ -135,4 +133,44 @@
     <string name="label_panduan_komunitas">Panduan Komunitas</string>
     <string name="all_rights_reserved">All rights reserved</string>
     <string name="lisensi">LISENSI</string>
+    <string name="invite_member_action">Undang Anggota</string>
+    <string name="leave_cluster_action">Tinggalkan Cluster</string>
+    <string name="hint_cari_kategori">Cari Kategori</string>
+    <string name="label_kategori_baru">Kategori Baru</string>
+    <string name="label_kategori">Kategori</string>
+    <string name="label_masukkan_nama_kategori">Masukkan Nama Kategori</string>
+    <string name="txt_failed_state">Oops.. ada yg salah</string>
+    <string name="informasi_lebih_lengkap">Informasi lebih lengkap hubungi :</string>
+    <string name="url_pantau_bersama">www.pantaubersama.com</string>
+    <string name="terapkan">TERAPKAN</string>
+    <string name="label_connect_with_fb">CONNECT WITH FACEBOOK</string>
+    <string name="label_click_connect_fb">Click below to connect your Symbolic account with Twitter</string>
+    <string name="title_connet">Connect</string>
+    <string name="info_preferensi_calon_presiden">Preferensi calon presiden hanya digunakan catatanmu dan tidak akan ditampilkan pada profile kamu</string>
+    <string name="label_belum_menentukan_pilihan">Belum menentukan pilihan</string>
+    <string name="label_total_kecenderungan">Total Kecenderungamu, </string>
+    <string name="title_catatan_pilihanku">Catatan Pilihanku</string>
+    <string name="txt_delete_item_ini">Apakah Anda yakin akan menghapus item ini?</string>
+    <string name="hint_masukkan_email_disini">Masukkan email disini</string>
+    <string name="label_bagikan_undangan_lewat_link">Bagikan Undangan Lewat Link</string>
+    <string name="label_non_aktifkan_link_undangan">Non aktifkan link undangan</string>
+    <string name="deskripsi_undang_lewat_tautan">Dengan metode bagikan link undangan siapapun yg meng klik Otomatis akan menjadi anggota. Anda dapat mematikan link undangan sewaktu waktu</string>
+    <string name="logging_in_label">Logging in</string>
+    <string name="failed_login_alert">Failed to login using Symbolic</string>
+    <string name="failed_load_profile_alert">Gagal memuat data profil</string>
+    <string name="failed_update_avatar_alert">Failed to update avatar</string>
+    <string name="success_update_avatar_alert">Avatar updated</string>
+    <string name="failed_load_image_alert">Gagal memuat gambar</string>
+    <string name="batal_action">Batal</string>
+    <string name="buat_action">Buat</string>
+    <string name="failed_add_category_alert">Gagal menambah kategori baru</string>
+    <string name="kamera">Kamera</string>
+    <string name="galeri">Galeri</string>
+    <string name="ambil_gambar_dari">Ambil gambar dari :</string>
+    <string name="izinkan_akses_kamera_dan_galeri"><![CDATA[Izinkan aplikasi mengakses Kamera & Galeri pada perangkat anda]]></string>
+    <string name="ok">OK</string>
+    <string name="batal">Batal</string>
+    <string name="wajib_diisi">wajib diisi</string>
+    <string name="menghapus_janji_politik">Menghapus janji politik</string>
+    <string name="anggota">" anggota"</string>
 </resources>

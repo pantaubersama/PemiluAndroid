@@ -3,19 +3,31 @@ package com.pantaubersama.app.di.component
 import com.pantaubersama.app.di.module.ActivityModule
 import com.pantaubersama.app.di.scope.ActivityScope
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
+import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
 import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity
+import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
+import com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.login.LoginActivity
+import com.pantaubersama.app.ui.penpol.kuis.filter.FilterKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
+import com.pantaubersama.app.ui.profile.cluster.categery.ClusterCategoryActivity
+import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
+import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
+import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
+import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
+import com.pantaubersama.app.ui.profile.verifikasi.step3.Step3VerifikasiActivity
+import com.pantaubersama.app.ui.profile.verifikasi.step5.Step5VerifikasiActivity
+import com.pantaubersama.app.ui.profile.verifikasi.step7.Step7VerifikasiActivity
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import dagger.Subcomponent
 
@@ -39,5 +51,17 @@ interface ActivityComponent {
     fun inject(createJanjiPolitikActivity: CreateJanjiPolitikActivity)
     fun inject(bannerInfoActivity: BannerInfoActivity)
     fun inject(kuisFragment: KuisFragment)
+    fun inject(settingActivity: SettingActivity)
     fun inject(badgeActivity: BadgeActivity)
+    fun inject(ubahSandiActivity: UbahSandiActivity)
+    fun inject(ubahDataLaporActivity: UbahDataLaporActivity)
+    fun inject(filterKuisActivity: FilterKuisActivity)
+    fun inject(filterJanjiPolitikActivity: FilterJanjiPolitikActivity)
+    fun inject(clusterListDialog: ClusterListDialog)
+    fun inject(step1VerifikasiActivity: Step1VerifikasiActivity)
+    fun inject(step3VerifikasiActivity: Step3VerifikasiActivity)
+    fun inject(step5VerifikasiActivity: Step5VerifikasiActivity)
+    fun inject(step7VerifikasiActivity: Step7VerifikasiActivity)
+    fun inject(clusterCategoryActivity: ClusterCategoryActivity)
+    fun inject(detailJanjiPolitikActivity: DetailJanjiPolitikActivity)
 }

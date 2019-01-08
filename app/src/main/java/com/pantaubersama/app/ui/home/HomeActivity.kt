@@ -1,13 +1,13 @@
 package com.pantaubersama.app.ui.home
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.linimasa.LinimasaFragment
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
@@ -18,83 +18,61 @@ import javax.inject.Inject
 class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
     @Inject
-    lateinit var profileInteractor: ProfileInteractor
-
-    private val linimasaFragment = LinimasaFragment()
-    private val penPolFragment = PenPolFragment.newInstance()
-    private val otherFrag = Fragment() // dummy
-
-    private lateinit var activeFragment: Fragment
+    override lateinit var presenter: HomePresenter
 
     override fun statusBarColor(): Int {
         return R.color.white
     }
 
-    override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
-    }
-
-    override fun initPresenter(): HomePresenter {
-        return HomePresenter(profileInteractor)
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setSupportActionBar(toolbar_home)
-        user_avatar.setOnClickListener {
+        iv_user_avatar.setOnClickListener {
             val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
             startActivity(intent)
         }
-        supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, linimasaFragment)
-                .add(R.id.fragment_container, penPolFragment)
-                .commit()
-
-        activeFragment = linimasaFragment
+        if (savedInstanceState == null) {
+            showFragment(LinimasaFragment(), LinimasaFragment.TAG)
+        }
 
         val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_linimasa -> run {
-                    activeFragment = linimasaFragment
-                    return@run
-                }
-                R.id.navigation_penpol -> run {
-                    activeFragment = penPolFragment
-                    return@run
-                }
-                R.id.navigation_wordstadium -> run {
-                    activeFragment = otherFrag
-                    return@run
-                }
-                R.id.navigation_lapor -> run {
-                    activeFragment = otherFrag
-                    return@run
-                }
-                R.id.navigation_rekap -> run {
-                    activeFragment = otherFrag
-                    return@run
-                }
+            val (fragment, tag) = when (item.itemId) {
+                R.id.navigation_menyerap -> LinimasaFragment() to LinimasaFragment.TAG
+                R.id.navigation_menggali -> PenPolFragment.newInstance() to PenPolFragment.TAG
+                R.id.navigation_menguji -> Fragment() to ""
+                R.id.navigation_merayakan -> Fragment() to ""
+                R.id.navigation_menjaga -> Fragment() to ""
+                else -> throw IllegalStateException("unknown menu")
             }
-
-            showActiveFragment()
-
-            return@OnNavigationItemSelectedListener true
+            showFragment(fragment, tag)
+            true
         }
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        navigation.selectedItemId = R.id.navigation_linimasa
+        presenter.updateUser()
     }
 
-    private fun showActiveFragment() {
-        supportFragmentManager.beginTransaction()
-                .hide(linimasaFragment)
-                .hide(penPolFragment)
-                .show(activeFragment)
-                .commit()
+    private fun showFragment(fragment: Fragment, tag: String) = with(supportFragmentManager) {
+        val transaction = beginTransaction()
+        var nextFragment = findFragmentByTag(tag)
+
+        primaryNavigationFragment?.let {
+            transaction.hide(it)
+        }
+        if (nextFragment != null) {
+            transaction.show(nextFragment)
+        } else {
+            nextFragment = fragment
+            transaction.add(R.id.fragment_container, nextFragment, tag)
+        }
+
+        transaction.setPrimaryNavigationFragment(nextFragment)
+        transaction.setReorderingAllowed(true)
+        transaction.commit()
     }
 
     override fun setLayout(): Int {
@@ -103,11 +81,11 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
     override fun onResume() {
         super.onResume()
-        presenter?.updateUser()
+        presenter.updateUser()
     }
 
     override fun onSuccessLoadUser(profile: Profile) {
-        user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
+        iv_user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
     }
 
     override fun showLoading() {

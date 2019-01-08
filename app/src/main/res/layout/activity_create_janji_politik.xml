@@ -17,15 +17,14 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
+        android:id="@+id/page_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:layout_alignParentTop="true"
             android:layout_above="@id/question_info_container">
 
             <RelativeLayout
@@ -76,13 +75,13 @@
                         android:gravity="center_vertical">
 
                         <com.makeramen.roundedimageview.RoundedImageView
-                            android:id="@+id/user_avatar"
+                            android:id="@+id/iv_user_avatar"
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:scaleType="centerCrop"
                             app:riv_border_color="@color/white"
                             app:riv_oval="true"
-                            android:src="@drawable/dummy_avatar"/>
+                            android:src="@drawable/ic_avatar_placeholder"/>
 
                         <TextView
                             android:id="@+id/tv_user_name"
@@ -119,7 +118,7 @@
                                 android:textSize="16sp"
                                 android:fontFamily="@font/bw_modelica_bold"
                                 android:hint="@string/hint_create_janpol_title"
-                                android:maxLength="80"/>
+                                android:maxLength="160"/>
 
                             <LinearLayout
                                 android:id="@+id/length_container"
@@ -166,17 +165,33 @@
                             android:layout_marginBottom="10dp"
                             android:background="@color/pinkLight"/>
 
-                        <EditText
-                            android:id="@+id/et_create_janpol_content"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/white"
-                            android:gravity="top"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/lato_medium"
-                            android:maxLength="160"
-                            android:inputType="textMultiLine"
-                            android:hint="@string/hint_create_janpol_content"/>
+                            android:layout_height="match_parent">
+
+                            <EditText
+                                android:id="@+id/et_create_janpol_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:minLines="3"
+                                android:background="@color/white"
+                                android:gravity="top"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/lato_medium"
+                                android:inputType="textMultiLine"
+                                android:hint="@string/hint_create_janpol_content"/>
+
+                            <ImageView
+                                android:id="@+id/iv_create_janpol_image"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="120dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_below="@id/et_create_janpol_content"
+                                android:background="?selectableItemBackground"
+                                android:scaleType="fitCenter"
+                                android:adjustViewBounds="true"/>
+                        </RelativeLayout>
 
                     </LinearLayout>
 
@@ -212,5 +227,15 @@
             android:layout_centerInParent="true"/>
 
     </RelativeLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:id="@+id/lottie_loading"
+        android:scaleType="centerInside"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        app:lottie_fileName="lottie_loading.json"
+        app:lottie_autoPlay="false"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

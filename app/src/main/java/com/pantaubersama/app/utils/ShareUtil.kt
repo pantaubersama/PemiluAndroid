@@ -2,6 +2,7 @@ package com.pantaubersama.app.utils
 
 import android.content.Context
 import android.content.Intent
+import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
 
@@ -18,6 +19,7 @@ class ShareUtil() {
             val sharedItem: String = "" + when (item) {
                 is Pertanyaan -> "share/tk/" + item.id
                 is FeedsItem -> "share/pilpres/" + item.id
+                is JanjiPolitik -> "share/janpol/" + item.id
                 else -> ""
             }
             if (!resInfo!!.isEmpty()) {

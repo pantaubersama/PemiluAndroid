@@ -22,7 +22,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:theme">
-
         <meta-data
             android:name="aia-compat-api-min-version"
             android:value="1" />
@@ -38,7 +37,8 @@
         </activity>
         <activity
             android:name=".ui.home.HomeActivity"
-            android:label="@string/title_activity_home" />
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
@@ -71,12 +71,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.profile.verifikasi.step1.Step1VerifikasiActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.verifikasi.Step1VerifikasiActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.profile.verifikasi.Step2VerifikasiActivity"
+            android:name=".ui.profile.verifikasi.step2.Step2VerifikasiActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity"
@@ -88,25 +89,28 @@
             android:name=".ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.verifikasi.Step3VerifikasiActivity"
+            android:name=".ui.profile.verifikasi.step3.Step3VerifikasiActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.verifikasi.Step4VerifikasiActivity"
+            android:name=".ui.profile.verifikasi.step4.Step4VerifikasiActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.profile.verifikasi.Step5VerifikasiActivity" />
-        <activity android:name=".ui.profile.verifikasi.Step6VerifikasiActivity" />
-        <activity android:name=".ui.profile.verifikasi.Step7VerifikasiActivity" />
-        <activity android:name=".ui.profile.verifikasi.FinalScreenVerifikasiActivity" />
+        <activity android:name=".ui.profile.verifikasi.step5.Step5VerifikasiActivity" />
+        <activity android:name=".ui.profile.verifikasi.step6.Step6VerifikasiActivity" />
+        <activity android:name=".ui.profile.verifikasi.step7.Step7VerifikasiActivity" />
+        <activity android:name=".ui.profile.verifikasi.finalstep.FinalScreenVerifikasiActivity" />
         <activity android:name=".ui.profile.setting.SettingActivity" />
         <activity android:name=".ui.profile.setting.editprofile.EditProfileActivity" />
         <activity android:name=".ui.profile.setting.ubahsandi.UbahSandiActivity" />
         <activity android:name=".ui.profile.setting.ubahdatalapor.UbahDataLaporActivity" />
-        <activity android:name=".ui.profile.setting.verifikasi.VerifikasiActivity" />
         <activity android:name=".ui.profile.setting.badge.BadgeActivity" />
         <activity android:name=".ui.profile.setting.clusterundang.ClusterUndangActivity" />
         <activity android:name=".ui.profile.setting.panduankomunitas.PanduanKomunitasActivity" />
-        <activity android:name=".ui.profile.setting.tentangapp.TentangAppActivity"></activity>
+        <activity android:name=".ui.profile.setting.tentangapp.TentangAppActivity" />
         <activity android:name=".ui.profile.cluster.RequestClusterActivity" />
+        <activity android:name=".ui.profile.cluster.categery.ClusterCategoryActivity" />
+        <activity android:name=".ui.profile.connect.ConnectActivity" />
+        <activity android:name=".ui.note.CatatanPilihanActivity" />
+        <activity android:name=".ui.profile.cluster.UndangAnggotaActivity"></activity>
     </application>
 
 </manifest>

@@ -4,14 +4,16 @@ import android.content.Context
 import com.pantaubersama.app.utils.ConnectionState
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 /**
  * Created by ali on 22/11/17.
  */
 @Module
-class ConnectionModule(val context: Context) {
+class ConnectionModule {
     @Provides
-    fun provideConnection(): ConnectionState {
+    @Singleton
+    fun provideConnection(context: Context): ConnectionState {
         return ConnectionState(context)
     }
 }

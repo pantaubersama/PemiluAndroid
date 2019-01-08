@@ -28,26 +28,16 @@
             android:id="@+id/rl_cluster_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_rounded_tosca_outline"
+            android:background="@drawable/bg_rounded_primary_outline"
             android:foreground="?selectableItemBackground"
             android:layout_marginTop="10dp">
 
-            <TextView
-                android:id="@+id/tv_cluster_placeholder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="@string/txt_pilih_cluster"
-                android:textSize="14dp"
-                android:textColor="@color/black_1"
-                android:fontFamily="@font/lato_regular"/>
-
+            <include
+                android:id="@+id/layout_default_cluster_filter"
+                layout="@layout/item_default_cluster_filter"/>
 
             <include
-                android:id="@+id/layout_item_cluster"
+                android:id="@+id/item_cluster"
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,8 +45,6 @@
                 android:layout_centerVertical="true" />
 
         </RelativeLayout>
-        
-
 
     </LinearLayout>
 
@@ -76,7 +64,7 @@
             android:textSize="16sp"/>
 
         <RadioGroup
-            android:id="@+id/radio_group_pilpres"
+            android:id="@+id/radio_group_janpol"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">

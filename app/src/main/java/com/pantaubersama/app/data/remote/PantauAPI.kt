@@ -1,10 +1,17 @@
 package com.pantaubersama.app.data.remote
 
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfoResponse
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfosResponse
+import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitikResponse
+import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitiksResponse
+import com.pantaubersama.app.data.model.kuis.KuisResponse
+import com.pantaubersama.app.data.model.kuis.KuisUserResultResponse
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import io.reactivex.Completable
 import io.reactivex.Single
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.* // ktlint-disable
 
 /**
@@ -12,13 +19,41 @@ import retrofit2.http.* // ktlint-disable
  */
 interface PantauAPI {
     @GET("linimasa/v1/banner_infos")
-    fun getBannerInfos(): Single<BannerInfoResponse>
+    fun getBannerInfos(): Single<BannerInfosResponse>
+
+    @GET("linimasa/v1/banner_infos/show")
+    fun getBannerInfo(
+        @Query("page_name") pageName: String?
+    ): Single<BannerInfoResponse>
 
     @GET("linimasa/v1/feeds/pilpres")
     fun getFeeds(
+        @Query("filter_by") filterBy: String?,
         @Query("page") page: Int?,
         @Query("per_page") perPage: Int?
     ): Single<FeedsResponse>
+
+    @GET("linimasa/v1/janji_politiks")
+    fun getJanjiPolitikList(
+        @Query("q") keyword: String?,
+        @Query("cluster_id") clusterId: String?,
+        @Query("filter_by") filterBy: String?,
+        @Query("page") page: Int?,
+        @Query("per_page") perPage: Int?
+    ): Single<JanjiPolitiksResponse>
+
+    @Multipart
+    @POST("linimasa/v1/janji_politiks")
+    fun createJanjiPolitik(
+        @Part("title") title: RequestBody,
+        @Part("body") body: RequestBody,
+        @Part image: MultipartBody.Part?
+    ): Single<JanjiPolitikResponse>
+
+    @DELETE("linimasa/v1/janji_politiks")
+    fun deleteJanjiPolitik(
+        @Query("id") id: String
+    ): Completable
 
     @FormUrlEncoded
     @POST("pendidikan_politik/v1/questions")
@@ -51,4 +86,20 @@ interface PantauAPI {
     fun deleteQuestion(
         @Query("id") id: String?
     ): Completable
+
+    @DELETE("pendidikan_politik/v1/votes")
+    fun unVoteQuestion(
+        @Query("id") id: String?,
+        @Query("class_name") className: String
+    ): Completable
+
+    @GET("pendidikan_politik/v1/quizzes")
+    fun getKuisList(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("filter_by") filterBy: String? = null
+    ): Single<KuisResponse>
+
+    @GET("pendidikan_politik/v1/me/quizzes")
+    fun getKuisUserResult(): Single<KuisUserResultResponse>
 }

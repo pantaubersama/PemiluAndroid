@@ -1,53 +1,58 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
+import com.pantaubersama.app.data.local.cache.DataCache
+import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
 
 class TanyaKandidatPresenter @Inject constructor(
-    private val tanyaKandidatInteractor: TanyaKandidatInteractor
+    private val dataCache: DataCache,
+    private val tanyaKandidatInteractor: TanyaKandidatInteractor,
+    private val bannerInfoInteractor: BannerInfoInteractor
 ) : BasePresenter<TanyaKandidatView>() {
-    fun isBannerShown() {
-        if (!tanyaKandidatInteractor.isBannerShown()!!) {
-            view?.showBanner()
-        }
+    fun getList() {
+        view?.showLoading()
+        disposables?.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_TANYA)
+            ?.subscribe(
+                {
+                    view?.showBanner(it)
+                },
+                {
+                    view?.dismissLoading()
+                    view?.showError(it)
+                    view?.showFailedGetDataAlert()
+                }
+            )!!
+        )
+    }
+
+    fun getUserId(): String {
+        return dataCache.loadUserProfile().id
     }
 
     fun getTanyaKandidatList(
         page: Int?,
-        perPage: Int?,
-        orderBy: String?,
-        direction: String?,
-        filterBy: String?
+        perPage: Int?
     ) {
         if (page == 1) {
             view?.showLoading()
         }
-        view?.setIsLoading(true)
         disposables?.add(
             tanyaKandidatInteractor
                 .getTanyaKandidatlist(
                     page,
-                    perPage,
-                    orderBy,
-                    direction,
-                    filterBy
+                    perPage
             )
             .subscribe(
                 {
-                    view?.setIsLoading(false)
                     if (page == 1) {
                         view?.dismissLoading()
                         if (it.data?.questions != null) {
                             if (it.data?.questions?.size != 0) {
                                 view?.bindDataTanyaKandidat(it.data?.questions!!)
-                                if (it.data?.questions?.size!! < perPage!!) {
-                                    view?.setDataEnd(true)
-                                } else {
-                                    view?.setDataEnd(false)
-                                }
                             } else {
-                                view?.setDataEnd(true)
                                 view?.showEmptyDataAlert()
                             }
                         } else {
@@ -57,13 +62,7 @@ class TanyaKandidatPresenter @Inject constructor(
                         if (it.data?.questions != null) {
                             if (it.data?.questions?.size != 0) {
                                 view?.bindNextDataTanyaKandidat(it.data?.questions!!)
-                                if (it.data?.questions?.size!! < perPage!!) {
-                                    view?.setDataEnd(true)
-                                } else {
-                                    view?.setDataEnd(false)
-                                }
                             } else {
-                                view?.setDataEnd(true)
                                 view?.showEmptyNextDataAlert()
                             }
                         } else {
@@ -128,6 +127,22 @@ class TanyaKandidatPresenter @Inject constructor(
                     {
                         view?.showError(it)
                         view?.showFailedDeleteItemAlert()
+                    }
+                )
+        )
+    }
+
+    fun unVoteQuestion(id: String?, className: String, liked: Boolean, position: Int?) {
+        disposables?.add(
+            tanyaKandidatInteractor
+                .unVoteQuestion(id, className)
+                .subscribe(
+                    {
+                        view?.onItemUpVoted()
+                    },
+                    {
+                        view?.showError(it)
+                        view?.onFailedUpVoteItem(liked, position)
                     }
                 )
         )

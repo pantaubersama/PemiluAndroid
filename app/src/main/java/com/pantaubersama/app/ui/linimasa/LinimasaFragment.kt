@@ -7,18 +7,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.base.CommonFragment
 import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
-import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.widget.TabView
-import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_FILTER_JANPOL
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_FILTER_PILPRES
 import kotlinx.android.synthetic.main.fragment_linimasa.*
 
-class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
+class LinimasaFragment : CommonFragment() {
     private var selectedTabs: Int = 0
 
     private var pilpresFragment = PilpresFragment.newInstance()
@@ -27,24 +26,16 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
     override fun initView(view: View) {
         setupTabLayout()
         setupViewPager()
-        btn_create.setOnClickListener {
-            val intent = Intent(context, CreateJanjiPolitikActivity::class.java)
-            startActivity(intent)
-        }
         btn_filter.setOnClickListener {
             when (selectedTabs) {
                 0 -> startActivityForResult(Intent(
                     context, FilterPilpresActivity::class.java),
-                    PantauConstants.RequestCode.FILTER_PILPRES)
+                    RC_FILTER_PILPRES)
                 else -> startActivityForResult(Intent(
                     context, FilterJanjiPolitikActivity::class.java),
-                    PantauConstants.RequestCode.FILTER_JANPOL)
+                    RC_FILTER_JANPOL)
             }
         }
-    }
-
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
     }
 
     override fun setLayout(): Int {
@@ -53,7 +44,7 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
 
     fun setupTabLayout() {
         val tabPilpres = TabView(context)
-        tabPilpres.setTitleLabel(R.string.txt_tab_pilpres)
+        tabPilpres.setTitleLabel(R.string.txt_tab_linimasa)
         val tabJanPol = TabView(context)
         tabJanPol.setTitleLabel(R.string.txt_tab_janji_politik)
 
@@ -62,6 +53,7 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
 
         tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(p0: TabLayout.Tab?) {
+                pilpresFragment.scrollToTop(true)
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {
@@ -70,11 +62,6 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 selectedTabs = tab!!.position
                 view_pager.currentItem = tab.position
-                if (tab.position == 0) {
-                    btn_create.visibility = View.GONE
-                } else {
-                    btn_create.visibility = View.VISIBLE
-                }
             }
         })
     }
@@ -101,20 +88,18 @@ class LinimasaFragment : BaseFragment<BasePresenter<*>>() {
         when (resultCode) {
             Activity.RESULT_OK -> {
                 when (requestCode) {
-                    PantauConstants.RequestCode.FILTER_PILPRES -> {
+                    RC_FILTER_PILPRES -> {
                         pilpresFragment.getFeedsData()
+                    }
+                    RC_FILTER_JANPOL -> {
+                        janjiPolitikFragment.getJanjiPolitikList()
                     }
                 }
             }
         }
     }
 
-    override fun showLoading() {
-    }
-
-    override fun dismissLoading() {
-    }
-
-    override fun showError(throwable: Throwable) {
+    companion object {
+        val TAG: String = LinimasaFragment::class.java.simpleName
     }
 }
