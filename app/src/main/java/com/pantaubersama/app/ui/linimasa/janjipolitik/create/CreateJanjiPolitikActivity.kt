@@ -61,7 +61,6 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
 
         presenter.getProfile()
 
-        et_create_janpol_content.movementMethod = null
         et_create_janpol_title.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

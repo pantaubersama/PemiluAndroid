@@ -30,7 +30,7 @@ class JanjiPolitikPresenter @Inject constructor(
     fun getList() {
         view?.showLoading()
         disposables?.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_JANPOL)
-            ?.subscribe(
+            .subscribe(
                 {
                     view?.showBanner(it)
                     getJanjiPolitikList(1)
@@ -40,7 +40,7 @@ class JanjiPolitikPresenter @Inject constructor(
                     view?.showError(it)
                     view?.showFailedGetData()
                 }
-            )!!
+            )
         )
     }
 

@@ -24,9 +24,9 @@ class CreateJanjiPolitikPresenter @Inject constructor(
         disposables?.add(janjiPolitikInteractor.createJanjiPolitik(title, body, image)
             .subscribe(
                 {
-                    Handler().postDelayed({ /* @edityo 8/1/19  delayed bcs new created Janpol not showing directly on GET respoonse in fragment */
+                    Handler().postDelayed({ /* @edityo 8/1/19  delayed bcs new created Janpol not showing directly on GET respoonse in JanPolFragment */
                         view?.onSuccessCreateJanpol(it)
-                    }, 500)
+                    }, 1000)
                 },
                 {
                     view?.dismissLoading()
