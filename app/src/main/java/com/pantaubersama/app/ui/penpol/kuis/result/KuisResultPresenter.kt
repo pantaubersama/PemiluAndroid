@@ -8,7 +8,7 @@ import javax.inject.Inject
 class KuisResultPresenter @Inject constructor(
     private val kuisInteractor: KuisInteractor,
     private val profileInteractor: ProfileInteractor
-): BasePresenter<KuisResultView>() {
+) : BasePresenter<KuisResultView>() {
 
     fun getKuisResult(kuisId: String) {
         view?.showLoading()

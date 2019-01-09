@@ -58,7 +58,6 @@ build_release:
 quality_check:
     stage: quality
     only:
-        - schedules
         - master
         - develop
 
