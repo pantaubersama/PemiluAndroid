@@ -76,7 +76,11 @@
                         android:maxLines="1"
                         android:lines="1"
                         android:ellipsize="end"
-                        android:textColor="@color/black_2" />
+                        android:textColor="@color/black_2"
+                        android:layout_toStartOf="@id/question_time"
+                        android:layout_toLeftOf="@id/question_time"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"/>
 
                     <TextView
                         android:id="@+id/question_time"
@@ -89,7 +93,9 @@
                         android:textSize="12sp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true"
+                        android:maxLines="1"
+                        android:lines="1"/>
 
                 </RelativeLayout>
 
