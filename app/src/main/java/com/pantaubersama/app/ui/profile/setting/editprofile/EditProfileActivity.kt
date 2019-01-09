@@ -4,22 +4,15 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Matrix
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
-import android.view.Surface
 import android.view.View
 import android.webkit.MimeTypeMap
-import android.widget.Toast
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.widget.ImageChooserDialog
-import com.pantaubersama.app.utils.ImageTools
+import com.pantaubersama.app.ui.widget.ImageChooserTools
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Permission.GET_IMAGE_PERMISSION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
@@ -150,7 +143,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     private fun showIntentChooser() {
-        ImageChooserDialog(this).show()
+        ImageChooserTools.showDialog(this@EditProfileActivity)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -163,24 +156,19 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == PantauConstants.RequestCode.RC_CAMERA) {
-                onCaptureImageResult(data)
+                if (data != null) {
+                    updateAvatar(ImageChooserTools.proccedImageFromCamera(data, windowManager))
+                } else {
+                    ToastUtil.show(this, getString(R.string.failed_load_image_alert))
+                }
             } else if (requestCode == PantauConstants.RequestCode.RC_STORAGE) {
-                onSelectFromGalleryResult(data)
+                if (data != null) {
+                    updateAvatar(ImageChooserTools.proccedImageFromStorage(data, this@EditProfileActivity))
+                } else {
+                    ToastUtil.show(this@EditProfileActivity, getString(R.string.failed_load_image_alert))
+                }
             }
         }
-    }
-
-    private fun onCaptureImageResult(data: Intent?) {
-        var rotation = 0
-        when (windowManager.defaultDisplay.rotation) {
-            Surface.ROTATION_0 -> rotation = 90
-            Surface.ROTATION_90 -> rotation = 180
-            Surface.ROTATION_180 -> rotation = 270
-            Surface.ROTATION_270 -> rotation = 0
-        }
-        val bitmap = data?.extras?.get("data") as Bitmap
-        val rotatedBitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
-        updateAvatar(ImageTools.getImageFile(rotatedBitmap))
     }
 
     private fun updateAvatar(file: File) {
@@ -190,39 +178,6 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         val reqFile = RequestBody.create(MediaType.parse(type), file)
         val avatar = MultipartBody.Part.createFormData("avatar", file.getName(), reqFile)
         presenter.uploadAvatar(avatar)
-    }
-
-    private fun rotateImage(source: Bitmap, angle: Float): Bitmap? {
-        val matrix = Matrix()
-        matrix.postRotate(angle)
-        val bm = Bitmap.createBitmap(source, 0, 0, source.width, source.height,
-            matrix, true) as Bitmap
-        return bm
-    }
-
-    private fun getRealPathFromURI(contentUri: Uri?): String {
-        val proj = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = managedQuery(contentUri, proj, null, null, null)
-        val column_index = cursor
-            ?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        cursor?.moveToFirst()
-        return cursor?.getString(column_index!!)!!
-    }
-
-    private fun onSelectFromGalleryResult(data: Intent?) {
-        if (data == null) {
-            // Display an error
-            Toast.makeText(this@EditProfileActivity, getString(R.string.failed_load_image_alert), Toast.LENGTH_SHORT).show()
-            return
-        }
-        val selectedImage = data.data
-        val projection = arrayOf(MediaStore.MediaColumns.DATA)
-        val cursor = managedQuery(selectedImage, projection, null, null, null)
-        val column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
-        cursor.moveToFirst()
-        val path = cursor.getString(column_index)
-        val file = File(path)
-        updateAvatar(file)
     }
 
     override fun refreshProfile() {
