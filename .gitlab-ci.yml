@@ -26,6 +26,9 @@ build_onprogress:
     only:
       - schedules
       - web
+    except:
+      - develop
+      - master
     script:
       - ./gradlew assembleStagingDebug
 
@@ -36,6 +39,9 @@ build_staging:
       - develop
 #      - schedules
       - web
+    except:
+      - onprogress
+      - master
     script:
       - ./gradlew assembleStagingDebug
 
@@ -47,6 +53,9 @@ build_release:
       - master
 #      - schedules
       - web
+    except:
+      - onprogress
+      - develop
     script:
       - ./gradlew assembleProductionRelease
       
