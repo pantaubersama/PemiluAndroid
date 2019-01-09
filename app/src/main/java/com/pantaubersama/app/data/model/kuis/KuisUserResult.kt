@@ -4,7 +4,7 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.utils.PantauConstants
 import com.google.gson.annotations.SerializedName
 
-data class KuisUserResult(val percentage: Int, val team: Team, val meta: Quizzes) : ItemModel {
+data class KuisUserResult(val percentage: Float, val team: Team, val meta: Quizzes) : ItemModel {
     override fun getType(): Int = PantauConstants.ItemModel.TYPE_KUIS_RESULT
 }
 
@@ -13,7 +13,7 @@ data class KuisUserResultResponse(
 )
 
 data class KuisUserResultData(
-    @SerializedName("teams") val teams: List<Teams>,
+    @SerializedName("teams") val teams: List<TeamPercentage>,
     @SerializedName("meta") val meta: KuisMeta
 )
 
@@ -26,9 +26,9 @@ data class Quizzes(
     @SerializedName("finished") val finished: Int
 )
 
-data class Teams(
+data class TeamPercentage(
     @SerializedName("team") val team: Team,
-    @SerializedName("percentage") val percentage: Int
+    @SerializedName("percentage") val percentage: Float
 )
 
 data class Team(
