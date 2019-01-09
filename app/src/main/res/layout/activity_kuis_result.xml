@@ -66,14 +66,24 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_dummy_paslon_1"
         app:layout_constraintBottom_toBottomOf="@id/iv_arc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_arc"
         app:riv_border_color="@color/white"
         app:riv_border_width="1dp"
-        app:riv_oval="true" />
+        app:riv_oval="true"
+        tools:src="@drawable/img_dummy_paslon_1" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/iv_paslon"
+        app:layout_constraintEnd_toEndOf="@id/iv_paslon"
+        app:layout_constraintStart_toStartOf="@id/iv_paslon"
+        app:layout_constraintTop_toTopOf="@id/iv_paslon" />
 
     <TextView
         android:id="@+id/tv_percentage"
@@ -82,23 +92,23 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/bw_modelica_bold"
         android:includeFontPadding="false"
-        android:text="70%"
         android:textColor="@color/white"
         android:textSize="60sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_paslon" />
+        app:layout_constraintTop_toBottomOf="@id/iv_paslon"
+        tools:text="70%" />
 
     <TextView
         android:id="@+id/tv_paslon_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bw_modelica_bold"
-        android:text="Jokowi - Makruf"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_percentage" />
+        app:layout_constraintTop_toBottomOf="@id/tv_percentage"
+        tools:text="Jokowi - Makruf" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_share"

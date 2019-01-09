@@ -2,7 +2,9 @@ package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.kuis.KuisItem
+import com.pantaubersama.app.data.model.kuis.KuisQuestions
 import com.pantaubersama.app.data.model.kuis.KuisUserResult
+import com.pantaubersama.app.data.model.kuis.TeamPercentage
 import com.pantaubersama.app.data.remote.PantauAPI
 import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.utils.RxSchedulers
@@ -45,5 +47,31 @@ class KuisInteractor @Inject constructor(
         return Completable.fromCallable {
             dataCache.saveKuisFilter(kuisFilter!!)
         }
+    }
+
+    fun getKuisQuestions(kuisId: String): Single<KuisQuestions> {
+        return pantauAPI.getKuisQuestions(kuisId)
+            .subscribeOn(rxSchedulers.io())
+            .map {
+                KuisQuestions(it.data.questions, it.data.meta.quizzes.answeredQuestionsCount,
+                    it.data.meta.quizzes.quizQuestionsCount)
+            }
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun answerQuestion(kuisId: String, questionId: String, answerId: String): Completable {
+        return pantauAPI.answerQuestion(kuisId, questionId, answerId)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getKuisResult(kuisId: String): Single<TeamPercentage> {
+        return pantauAPI.getKuisResult(kuisId)
+            .subscribeOn(rxSchedulers.io())
+            .map { response ->
+                response.data.teams.maxBy { it.percentage }
+                    ?: throw ErrorException("Gagal mendapatkan hasil kuis")
+            }
+            .observeOn(rxSchedulers.mainThread())
     }
 }

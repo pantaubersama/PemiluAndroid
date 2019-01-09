@@ -4,7 +4,9 @@ import com.pantaubersama.app.data.model.bannerinfo.BannerInfoResponse
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfosResponse
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitikResponse
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitiksResponse
+import com.pantaubersama.app.data.model.kuis.KuisQuestionResponse
 import com.pantaubersama.app.data.model.kuis.KuisResponse
+import com.pantaubersama.app.data.model.kuis.KuisResultResponse
 import com.pantaubersama.app.data.model.kuis.KuisUserResultResponse
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
@@ -102,4 +104,18 @@ interface PantauAPI {
 
     @GET("pendidikan_politik/v1/me/quizzes")
     fun getKuisUserResult(): Single<KuisUserResultResponse>
+
+    @GET("pendidikan_politik/v1/quizzes/{id}/questions")
+    fun getKuisQuestions(@Path("id") kuisId: String): Single<KuisQuestionResponse>
+
+    @FormUrlEncoded
+    @POST("pendidikan_politik/v1/quizzes/{id}/questions")
+    fun answerQuestion(
+        @Path("id") kuisId: String,
+        @Field("question_id") questionId: String,
+        @Field("answer_id") answerId: String
+    ): Completable
+
+    @GET("pendidikan_politik/v1/quizzes/{id}/result")
+    fun getKuisResult(@Path("id") kuisId: String): Single<KuisResultResponse>
 }

@@ -50,8 +50,8 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
             override fun onClickOpenKuis(item: KuisItem) {
                 val intent = when (item.state) {
                     KuisState.NOT_PARTICIPATING -> IkutiKuisActivity.setIntent(requireContext(), item)
-                    KuisState.IN_PROGRESS -> KuisActivity.setIntent(requireContext(), item.id, 2)
-                    KuisState.FINISHED -> Intent(requireContext(), KuisResultActivity::class.java)
+                    KuisState.IN_PROGRESS -> KuisActivity.setIntent(requireContext(), item.id, item.title)
+                    KuisState.FINISHED -> KuisResultActivity.setIntent(requireContext(), item.id, item.title)
                 }
                 startActivity(intent)
             }
