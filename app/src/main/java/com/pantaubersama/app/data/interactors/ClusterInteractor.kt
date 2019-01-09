@@ -20,7 +20,7 @@ class ClusterInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
-    fun createNewCategory(categoryName: String): Completable {
+    fun createNewCategory(categoryName: String): Single<CategoryData> {
         return apiWrapper.getPantauOAuthApi().createNewCategory(categoryName)
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())

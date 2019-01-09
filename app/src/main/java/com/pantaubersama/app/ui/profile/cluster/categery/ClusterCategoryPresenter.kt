@@ -13,7 +13,7 @@ class ClusterCategoryPresenter @Inject constructor(private val clusterInteractor
                 .createNewCategory(categoryName)
                 .subscribe(
                     {
-                        view?.onSuccessAddNewCategory()
+                        view?.onSuccessAddNewCategory(it.data.category)
                     },
                     {
                         view?.dismissAddCategoryLoading()
