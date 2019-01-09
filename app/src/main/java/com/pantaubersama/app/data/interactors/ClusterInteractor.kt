@@ -6,6 +6,7 @@ import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
 import io.reactivex.Single
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class ClusterInteractor @Inject constructor(
@@ -30,6 +31,19 @@ class ClusterInteractor @Inject constructor(
         return apiWrapper
             .getPantauOAuthApi()
             .getCategories(page, perPage, query)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun requestCluster(clusterName: String, categoryId: String, clusterDescription: String, image: MultipartBody.Part?): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .requestCluster(
+                clusterName,
+                categoryId,
+                clusterDescription,
+                image
+            )
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }

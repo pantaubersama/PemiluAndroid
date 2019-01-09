@@ -176,7 +176,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         val extension = MimeTypeMap.getFileExtensionFromUrl(file.absolutePath)
         type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
         val reqFile = RequestBody.create(MediaType.parse(type), file)
-        val avatar = MultipartBody.Part.createFormData("avatar", file.getName(), reqFile)
+        val avatar = MultipartBody.Part.createFormData("avatar", file.name, reqFile)
         presenter.uploadAvatar(avatar)
     }
 
