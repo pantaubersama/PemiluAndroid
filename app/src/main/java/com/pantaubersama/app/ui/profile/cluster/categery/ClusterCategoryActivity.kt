@@ -148,23 +148,23 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
     }
 
     override fun showFailedGetCategoriesAlert() {
-        view_fail_state.failStateVisible(true)
+        view_fail_state.enableLottie(true, lottie_fail_state)
     }
 
     override fun showEmptyAlert() {
-        view_empty_state.emptyStateVisible(true)
+        view_empty_state.enableLottie(true, lottie_empty_state)
     }
 
     override fun showLoading() {
-        lottie_loading.setVisible(true)
-        view_empty_state.emptyStateVisible(false)
-        view_fail_state.failStateVisible(false)
+        lottie_loading.enableLottie(true)
+        view_empty_state.enableLottie(false, lottie_empty_state)
+        view_fail_state.enableLottie(false, lottie_fail_state)
         recycler_view.visibleIf(false)
     }
 
     override fun dismissLoading() {
         recycler_view.visibleIf(false)
-        lottie_loading.setVisible(false)
+        lottie_loading.enableLottie(false)
     }
 
     override fun bindNextData(categories: MutableList<Category>) {
