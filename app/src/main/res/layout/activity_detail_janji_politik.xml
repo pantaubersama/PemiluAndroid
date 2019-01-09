@@ -46,8 +46,11 @@
                 android:id="@+id/iv_detail_janpol_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/ic_avatar_placeholder"
                 android:scaleType="fitCenter"
-                android:adjustViewBounds="true"/>
+                android:adjustViewBounds="true"
+                android:layout_gravity="center_horizontal"/>
 
             <View
                 android:layout_marginTop="10dp"

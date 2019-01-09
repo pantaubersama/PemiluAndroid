@@ -122,7 +122,7 @@ interface PantauOAuthAPI {
     @POST("/v1/categories")
     fun createNewCategory(
         @Field("name") categoryName: String
-    ): Completable
+    ): Single<CategoryData>
 
     @GET("/v1/categories")
     fun getCategories(

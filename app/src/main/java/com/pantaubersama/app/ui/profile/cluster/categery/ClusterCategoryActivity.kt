@@ -82,16 +82,20 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
         recycler_view.adapter = adapter
         adapter.listener = object : CategoriesAdapter.Listener {
             override fun onClick(category: Category) {
-                val intent = Intent()
-                intent.putExtra(PantauConstants.Cluster.CATEGORY, category)
-                setResult(Activity.RESULT_OK, intent)
-                finish()
+                closeThisSection(category)
             }
         }
         adapter.addSupportLoadMore(recycler_view, perPage) {
             adapter.setLoading()
             presenter.getCategories(it, perPage, query)
         }
+    }
+
+    private fun closeThisSection(category: Category) {
+        val intent = Intent()
+        intent.putExtra(PantauConstants.Cluster.CATEGORY, category)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
     private fun onclickAction() {
@@ -144,23 +148,23 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
     }
 
     override fun showFailedGetCategoriesAlert() {
-        view_fail_state.failStateVisible(true)
+        view_fail_state.enableLottie(true, lottie_fail_state)
     }
 
     override fun showEmptyAlert() {
-        view_empty_state.emptyStateVisible(true)
+        view_empty_state.enableLottie(true, lottie_empty_state)
     }
 
     override fun showLoading() {
-        lottie_loading.setVisible(true)
-        view_empty_state.emptyStateVisible(false)
-        view_fail_state.failStateVisible(false)
+        lottie_loading.enableLottie(true)
+        view_empty_state.enableLottie(false, lottie_empty_state)
+        view_fail_state.enableLottie(false, lottie_fail_state)
         recycler_view.visibleIf(false)
     }
 
     override fun dismissLoading() {
         recycler_view.visibleIf(false)
-        lottie_loading.setVisible(false)
+        lottie_loading.enableLottie(false)
     }
 
     override fun bindNextData(categories: MutableList<Category>) {
@@ -180,8 +184,9 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
         newCategoryDialog.new_category_container.enable(false)
     }
 
-    override fun onSuccessAddNewCategory() {
+    override fun onSuccessAddNewCategory(category: Category) {
         newCategoryDialog.dismiss()
+        closeThisSection(category)
     }
 
     override fun enableAddCategoryView() {

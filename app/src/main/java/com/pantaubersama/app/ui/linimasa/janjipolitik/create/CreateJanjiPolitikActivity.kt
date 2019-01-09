@@ -2,9 +2,7 @@ package com.pantaubersama.app.ui.linimasa.janjipolitik.create
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
@@ -17,8 +15,7 @@ import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
-import com.pantaubersama.app.ui.widget.ImageChooserDialog
-import com.pantaubersama.app.utils.ImageTools
+import com.pantaubersama.app.ui.widget.ImageChooserTools
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_JANPOL_ITEM
 import com.pantaubersama.app.utils.PantauConstants.Permission.GET_IMAGE_PERMISSION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
@@ -126,7 +123,7 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
     @AfterPermissionGranted(RC_ASK_PERMISSIONS)
     private fun showIntentChooser() {
         if (EasyPermissions.hasPermissions(this, *GET_IMAGE_PERMISSION)) {
-            ImageChooserDialog(this).show()
+            ImageChooserTools.showDialog(this@CreateJanjiPolitikActivity)
         } else {
             EasyPermissions.requestPermissions(
                 PermissionRequest.Builder(this, RC_ASK_PERMISSIONS, *GET_IMAGE_PERMISSION)
@@ -206,16 +203,7 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
 
     private fun onCaptureImageResult(data: Intent?) {
         if (data != null) {
-//            var rotation = 0
-//            when (windowManager.defaultDisplay.rotation) {
-//                Surface.ROTATION_0 -> rotation = 90
-//                Surface.ROTATION_90 -> rotation = 180
-//                Surface.ROTATION_180 -> rotation = 270
-//                Surface.ROTATION_270 -> rotation = 0
-//            }
-            val bitmap = data.extras?.get("data") as Bitmap
-//            val rotatedBitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
-            setImage(ImageTools.getImageFile(bitmap))
+            setImage(ImageChooserTools.proccedImageFromCamera(data))
         } else {
             showError(Throwable(getString(R.string.failed_load_image_alert)))
         }
@@ -223,14 +211,7 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
 
     private fun onSelectFromGalleryResult(data: Intent?) {
         if (data != null) {
-            val selectedImage = data.data
-            val projection = arrayOf(MediaStore.MediaColumns.DATA)
-            val cursor = managedQuery(selectedImage, projection, null, null, null)
-            val column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
-            cursor.moveToFirst()
-            val path = cursor.getString(column_index)
-            val file = File(path)
-            setImage(file)
+            setImage(ImageChooserTools.proccedImageFromStorage(data, this@CreateJanjiPolitikActivity))
         } else {
             showError(Throwable(getString(R.string.failed_load_image_alert)))
         }

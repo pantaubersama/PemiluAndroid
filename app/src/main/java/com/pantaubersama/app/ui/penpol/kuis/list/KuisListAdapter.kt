@@ -66,7 +66,7 @@ class KuisListAdapter : BaseRecyclerAdapter() {
 
         fun bind(result: KuisUserResult) {
             presiden_total_kuis.text = result.meta.run { "$finished dari $total Kuis" }
-            tv_kuis_result.text = "%d%% (%s)".format(result.percentage, result.team.title)
+            tv_kuis_result.text = "%.2f%% (%s)".format(result.percentage, result.team.title)
             iv_kuis_result.loadUrl(result.team.avatar)
         }
     }

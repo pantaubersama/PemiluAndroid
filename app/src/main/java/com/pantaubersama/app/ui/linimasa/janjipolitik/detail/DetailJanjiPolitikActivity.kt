@@ -61,7 +61,7 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
         tv_detail_janpol_content.text = janpolItem.body
         if (janpolItem.image?.url != null) {
             iv_detail_janpol_image.visibleIf(true)
-            iv_detail_janpol_image.loadUrl(janpolItem.image?.url, R.color.gray_3)
+            iv_detail_janpol_image.loadUrl(janpolItem.image?.url)
         } else {
             iv_detail_janpol_image.visibleIf(false)
         }

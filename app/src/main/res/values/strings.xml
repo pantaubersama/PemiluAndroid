@@ -141,7 +141,6 @@
     <string name="label_masukkan_nama_kategori">Masukkan Nama Kategori</string>
     <string name="txt_failed_state">Oops.. ada yg salah</string>
     <string name="informasi_lebih_lengkap">Informasi lebih lengkap hubungi :</string>
-    <string name="url_pantau_bersama">www.pantaubersama.com</string>
     <string name="terapkan">TERAPKAN</string>
     <string name="label_connect_with_fb">CONNECT WITH FACEBOOK</string>
     <string name="label_click_connect_fb">Click below to connect your Symbolic account with Twitter</string>
@@ -173,4 +172,10 @@
     <string name="wajib_diisi">wajib diisi</string>
     <string name="menghapus_janji_politik">Menghapus janji politik</string>
     <string name="anggota">" anggota"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="coming_soon">Coming Soon</string>
+    <string name="pantau_terus_di_web">Pantau terus di Web dan Sosial Media  Pantau Bersama untuk info tanggal updatenya</string>
+    <string name="url_pantau_bersama">www.pantaubersama.com</string>
 </resources>

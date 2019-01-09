@@ -50,8 +50,8 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
             override fun onClickOpenKuis(item: KuisItem) {
                 val intent = when (item.state) {
                     KuisState.NOT_PARTICIPATING -> IkutiKuisActivity.setIntent(requireContext(), item)
-                    KuisState.IN_PROGRESS -> KuisActivity.setIntent(requireContext(), item.id, 2)
-                    KuisState.FINISHED -> Intent(requireContext(), KuisResultActivity::class.java)
+                    KuisState.IN_PROGRESS -> KuisActivity.setIntent(requireContext(), item.id, item.title)
+                    KuisState.FINISHED -> KuisResultActivity.setIntent(requireContext(), item.id, item.title)
                 }
                 startActivity(intent)
             }
@@ -98,19 +98,19 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     }
 
     override fun showLoading() {
-        lottie_loading.setVisible(true)
-        view_empty_state.emptyStateVisible(false)
-        view_fail_state.failStateVisible(false)
+        lottie_loading.enableLottie(true)
+        view_empty_state.enableLottie(false, lottie_empty_state)
+        view_fail_state.enableLottie(false, lottie_fail_state)
         recycler_view.visibleIf(false)
     }
 
     override fun dismissLoading() {
         recycler_view.visibleIf(true)
-        lottie_loading.setVisible(false)
+        lottie_loading.enableLottie(false)
     }
 
     override fun showFailedGetData() {
-        view_fail_state.failStateVisible(true)
+        view_fail_state.enableLottie(true, lottie_fail_state)
     }
 
     private fun shareKuis(item: KuisItem) {

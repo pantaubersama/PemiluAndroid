@@ -106,7 +106,7 @@
         <activity android:name=".ui.profile.setting.clusterundang.ClusterUndangActivity" />
         <activity android:name=".ui.profile.setting.panduankomunitas.PanduanKomunitasActivity" />
         <activity android:name=".ui.profile.setting.tentangapp.TentangAppActivity" />
-        <activity android:name=".ui.profile.cluster.RequestClusterActivity" />
+        <activity android:name=".ui.profile.cluster.requestcluster.RequestClusterActivity" />
         <activity android:name=".ui.profile.cluster.categery.ClusterCategoryActivity" />
         <activity android:name=".ui.profile.connect.ConnectActivity" />
         <activity android:name=".ui.note.CatatanPilihanActivity" />

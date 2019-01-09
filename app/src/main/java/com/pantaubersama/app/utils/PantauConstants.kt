@@ -88,12 +88,16 @@ class PantauConstants {
         val BEARER = "bearer "
 
         const val BASE_TWEET_URL = "https://twitter.com/i/web/status/"
+        const val URL_PANTAU_BERSAMA = "www.pantaubersama.com"
+        const val URL_PANTAU_BERSAMA_TWITTER = "https://twitter.com/pantaubersama"
+        const val URL_PANTAU_BERSAMA_INSTAGRAM = "https://www.instagram.com/pantaubersama/"
+        const val URL_PANTAU_BERSAMA_FACEBOOK = "https://www.facebook.com/pages/category/Internet-Company/Pantau-Bersama-735930099884846/"
     }
 
     object Kuis {
         const val KUIS_ID = "kuis_id"
         const val KUIS_ITEM = "kuis_item"
-        const val KUIS_NUMBER = "kuis_number"
+        const val KUIS_TITLE = "kuis_title"
         val KUIS_FILTER = "kuis_filter"
 
         object Filter {

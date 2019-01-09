@@ -14,6 +14,9 @@ data class Data(
     @SerializedName("categories")
     @Expose
     var categories: MutableList<Category>,
+    @SerializedName("category")
+    @Expose
+    var category: Category,
     @SerializedName("meta")
     @Expose
     val meta: Meta

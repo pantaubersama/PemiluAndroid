@@ -6,7 +6,7 @@ import com.pantaubersama.app.data.model.cluster.Category
 interface ClusterCategoryView : BaseView {
     fun showAddCategoryLoading()
     fun disableAddCategoryView()
-    fun onSuccessAddNewCategory()
+    fun onSuccessAddNewCategory(category: Category)
     fun enableAddCategoryView()
     fun showFailedAddCategoryAlert()
     fun dismissAddCategoryLoading()

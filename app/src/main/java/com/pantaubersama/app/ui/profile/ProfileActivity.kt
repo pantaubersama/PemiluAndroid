@@ -18,7 +18,7 @@ import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.profile.cluster.RequestClusterActivity
+import com.pantaubersama.app.ui.profile.cluster.requestcluster.RequestClusterActivity
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
