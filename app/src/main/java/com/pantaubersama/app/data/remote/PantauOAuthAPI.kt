@@ -130,4 +130,13 @@ interface PantauOAuthAPI {
         @Query("per_page") perPage: Int,
         @Query("name")query: String
     ): Single<CategoryData>
+
+    @Multipart
+    @POST("/v1/clusters")
+    fun requestCluster(
+        @Part("name") clusterName: String,
+        @Part("category_id") categoryId: String,
+        @Part("description") clusterDescription: String,
+        @Part image: MultipartBody.Part?
+    ): Completable
 }
