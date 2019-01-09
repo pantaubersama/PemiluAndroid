@@ -331,9 +331,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 val intent = Intent(this@ProfileActivity, SettingActivity::class.java)
                 startActivityForResult(intent, PantauConstants.RequestCode.RC_SETTINGS)
             }
-            R.id.open_cluster_action -> {
-                // open cluster
-            }
         }
         return super.onOptionsItemSelected(item)
     }
