@@ -16,7 +16,6 @@ import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.request.RequestListener
 import com.google.android.material.snackbar.Snackbar
-import com.pantaubersama.app.R
 import com.pantaubersama.app.utils.GlideApp
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
@@ -80,39 +79,22 @@ fun View.isVisible(): Boolean {
     return this.visibility == View.VISIBLE
 }
 
-fun LottieAnimationView.setVisible(isVisible: Boolean) {
-    if (isVisible) {
-        this.visibility = View.VISIBLE
+fun LottieAnimationView.enableLottie(enable: Boolean, looping: Boolean = true) {
+    this.visibleIf(enable)
+    if (enable) {
         this.playAnimation()
-        this.repeatCount = LottieDrawable.INFINITE
+        this.repeatCount = if (looping) LottieDrawable.INFINITE else 1
     } else {
-        this.visibility = View.GONE
         this.cancelAnimation()
     }
 }
 
-/* used only for layout_fail_state.xml */
-fun LinearLayout.failStateVisible(isVisible: Boolean) {
-    val lottieView = this.findViewById<LottieAnimationView>(R.id.lottie_fail_state)
-    if (isVisible) {
-        this.visibility = View.VISIBLE
+fun View.enableLottie(enable: Boolean, lottieView: LottieAnimationView, hideOrShowContainer: Boolean = true, looping: Boolean = true) {
+    if (enable) {
         lottieView.playAnimation()
-        lottieView.repeatCount = LottieDrawable.INFINITE
-    } else {
-        this.visibility = View.GONE
-        lottieView.cancelAnimation()
-    }
-}
-
-/* used only for layout_empty_state.xml */
-fun LinearLayout.emptyStateVisible(isVisible: Boolean) {
-    val lottieView = this.findViewById<LottieAnimationView>(R.id.lottie_empty_state)
-    if (isVisible) {
-        this.visibility = View.VISIBLE
-        lottieView.playAnimation()
-        lottieView.repeatCount = LottieDrawable.INFINITE
+        lottieView.repeatCount = if (looping) LottieDrawable.INFINITE else 1
     } else {
         lottieView.cancelAnimation()
-        this.visibility = View.GONE
     }
+    if (hideOrShowContainer) this.visibleIf(enable)
 }

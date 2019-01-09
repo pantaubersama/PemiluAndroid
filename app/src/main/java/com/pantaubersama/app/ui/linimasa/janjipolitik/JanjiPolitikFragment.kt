@@ -28,9 +28,7 @@ import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_JA
 import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_ITEM_JANPOL
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
-import com.pantaubersama.app.utils.extensions.emptyStateVisible
-import com.pantaubersama.app.utils.extensions.failStateVisible
-import com.pantaubersama.app.utils.extensions.setVisible
+import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_janji_politik.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
@@ -203,11 +201,11 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     override fun showEmptyData() {
-        view_empty_state.emptyStateVisible(true)
+        view_empty_state.enableLottie(true, lottie_empty_state)
     }
 
     override fun showFailedGetData() {
-        view_fail_state.failStateVisible(true)
+        view_fail_state.enableLottie(true, lottie_fail_state)
     }
 
     override fun showFailedGetMoreData() {
@@ -228,9 +226,9 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     override fun showLoading() {
-        lottie_loading.setVisible(true)
-        view_empty_state.emptyStateVisible(false)
-        view_fail_state.failStateVisible(false)
+        lottie_loading.enableLottie(true)
+        view_empty_state.enableLottie(false, lottie_empty_state)
+        view_fail_state.enableLottie(false, lottie_fail_state)
         recycler_view.visibleIf(false)
         if (presenter.isUserEligible()) {
             fab_add.hide()
@@ -239,7 +237,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
     override fun dismissLoading() {
         recycler_view.visibleIf(false)
-        lottie_loading.setVisible(false)
+        lottie_loading.enableLottie(false)
         if (presenter.isUserEligible()) {
             fab_add.show()
         }
