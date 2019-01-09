@@ -31,6 +31,7 @@ class IkutiKuisActivity : CommonActivity() {
         start_quiz_action.setOnClickListener {
             val intent = KuisActivity.setIntent(this, kuisItem.id, 1)
             startActivity(intent)
+            finish()
         }
     }
 
