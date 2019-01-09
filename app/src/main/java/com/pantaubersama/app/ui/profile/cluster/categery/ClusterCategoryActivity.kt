@@ -82,16 +82,20 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
         recycler_view.adapter = adapter
         adapter.listener = object : CategoriesAdapter.Listener {
             override fun onClick(category: Category) {
-                val intent = Intent()
-                intent.putExtra(PantauConstants.Cluster.CATEGORY, category)
-                setResult(Activity.RESULT_OK, intent)
-                finish()
+                closeThisSection(category)
             }
         }
         adapter.addSupportLoadMore(recycler_view, perPage) {
             adapter.setLoading()
             presenter.getCategories(it, perPage, query)
         }
+    }
+
+    private fun closeThisSection(category: Category) {
+        val intent = Intent()
+        intent.putExtra(PantauConstants.Cluster.CATEGORY, category)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
     private fun onclickAction() {
@@ -180,8 +184,9 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
         newCategoryDialog.new_category_container.enable(false)
     }
 
-    override fun onSuccessAddNewCategory() {
+    override fun onSuccessAddNewCategory(category: Category) {
         newCategoryDialog.dismiss()
+        closeThisSection(category)
     }
 
     override fun enableAddCategoryView() {
