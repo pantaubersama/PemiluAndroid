@@ -13,8 +13,6 @@ before_script:
 #### BUILD ####
 
 .build_template: &build_template_def
-  tags:
-    - docker
   stage: build
   artifacts:
     expire_in: 2 weeks
@@ -58,8 +56,6 @@ build_release:
 #### QUALITY ####
 
 quality_check:
-    tags:
-        - docker
     stage: quality
     only:
         - schedules
@@ -79,8 +75,6 @@ quality_check:
 #### PACKAGE ####
 
 .package_template: &package_template_def
-    tags:
-        - docker
     before_script:
         - mkdir -p deliverables
         - touch ./deliverables/info.txt
