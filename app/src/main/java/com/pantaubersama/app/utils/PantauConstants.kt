@@ -97,7 +97,7 @@ class PantauConstants {
     object Kuis {
         const val KUIS_ID = "kuis_id"
         const val KUIS_ITEM = "kuis_item"
-        const val KUIS_NUMBER = "kuis_number"
+        const val KUIS_TITLE = "kuis_title"
         val KUIS_FILTER = "kuis_filter"
 
         object Filter {

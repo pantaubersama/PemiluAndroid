@@ -20,6 +20,7 @@ class KuisActivity : BaseActivity<KuisQuestionPresenter>(), KuisQuestionView {
     override lateinit var presenter: KuisQuestionPresenter
 
     private var kuisId: String = ""
+    private var kuisTitle: String = ""
 
     override fun statusBarColor(): Int? {
         return 0
@@ -31,6 +32,7 @@ class KuisActivity : BaseActivity<KuisQuestionPresenter>(), KuisQuestionView {
 
     override fun fetchIntentExtra() {
         kuisId = intent.getStringExtra(PantauConstants.Kuis.KUIS_ID)
+        kuisTitle = intent.getStringExtra(PantauConstants.Kuis.KUIS_TITLE)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
@@ -81,16 +83,16 @@ class KuisActivity : BaseActivity<KuisQuestionPresenter>(), KuisQuestionView {
     }
 
     override fun onKuisFinished() {
-        val intent = Intent(this, KuisResultActivity::class.java)
+        val intent = KuisResultActivity.setIntent(this, kuisId, kuisTitle)
         startActivity(intent)
         finish()
     }
 
     companion object {
-        fun setIntent(context: Context, kuisId: String, questionNumber: Int): Intent {
+        fun setIntent(context: Context, kuisId: String, kuisTitle: String): Intent {
             val intent = Intent(context, KuisActivity::class.java)
             intent.putExtra(PantauConstants.Kuis.KUIS_ID, kuisId)
-            intent.putExtra(PantauConstants.Kuis.KUIS_NUMBER, questionNumber)
+            intent.putExtra(PantauConstants.Kuis.KUIS_TITLE, kuisTitle)
             return intent
         }
     }
