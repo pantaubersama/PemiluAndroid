@@ -4,7 +4,6 @@ import com.pantaubersama.app.data.model.cluster.CategoryData
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
-import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 

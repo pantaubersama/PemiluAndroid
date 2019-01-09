@@ -12,7 +12,6 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.utils.ImageTools
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_CAMERA
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_STORAGE
-import com.pantaubersama.app.utils.ToastUtil
 import java.io.File
 
 class ImageChooserTools {
