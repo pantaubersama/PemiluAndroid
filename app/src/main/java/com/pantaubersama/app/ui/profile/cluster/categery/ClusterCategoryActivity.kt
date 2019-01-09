@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.di.component.ActivityComponent
@@ -86,12 +85,10 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
                 closeThisSection(category)
             }
         }
-        adapter.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
-            override fun loadMore(page: Int) {
-                adapter.setLoading()
-                presenter.getCategories(page, perPage, query)
-            }
-        }, perPage)
+        adapter.addSupportLoadMore(recycler_view, perPage) {
+            adapter.setLoading()
+            presenter.getCategories(it, perPage, query)
+        }
     }
 
     private fun closeThisSection(category: Category) {

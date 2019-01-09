@@ -30,7 +30,6 @@ import kotlinx.android.synthetic.main.activity_edit_profile.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
@@ -179,7 +178,6 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             Surface.ROTATION_180 -> rotation = 270
             Surface.ROTATION_270 -> rotation = 0
         }
-        Timber.e("onCaptureImageResult data = $data")
         val bitmap = data?.extras?.get("data") as Bitmap
         val rotatedBitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
         updateAvatar(ImageTools.getImageFile(rotatedBitmap))

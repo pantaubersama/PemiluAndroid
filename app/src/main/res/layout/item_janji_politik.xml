@@ -92,16 +92,36 @@
             android:paddingTop="10dp"
             android:paddingBottom="4dp"/>
 
-        <TextView
-            android:id="@+id/tv_janpol_content"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/question_dummy_text"
-            android:fontFamily="@font/lato_medium"
-            android:textSize="12sp"
-            android:textColor="@color/black_1"
-            android:maxLines="6"
-            android:ellipsize="end"/>
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_janpol_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/lorem"
+                android:fontFamily="@font/lato_medium"
+                android:textSize="12sp"
+                android:textColor="@color/black_1"
+                android:maxLines="5"
+                android:ellipsize="end"/>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/riv_janpol_image"
+                android:visibility="gone"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_avatar_placeholder"
+                android:scaleType="centerCrop"
+                app:riv_border_color="@color/gray_3"
+                app:riv_border_width="2dp"/>
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <RelativeLayout

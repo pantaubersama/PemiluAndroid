@@ -14,4 +14,6 @@ interface JanjiPolitikView : BaseView {
     fun showEmptyData()
     fun showFailedGetData()
     fun showFailedGetMoreData()
+    fun onSuccessDeleteItem(position: Int)
+    fun onFailedDeleteItem(throwable: Throwable)
 }

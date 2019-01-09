@@ -1,11 +1,9 @@
 package com.pantaubersama.app.utils.extensions
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.Drawable
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,14 +78,6 @@ fun LinearLayout.enable(isEnable: Boolean) {
 
 fun View.isVisible(): Boolean {
     return this.visibility == View.VISIBLE
-}
-
-fun Int.toDP(context: Context): Float {
-    return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        this.toFloat(),
-        context.resources.displayMetrics
-    )
 }
 
 fun LottieAnimationView.setVisible(isVisible: Boolean) {

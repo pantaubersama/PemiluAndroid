@@ -71,7 +71,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.profile.verifikasi.step1.Step1VerifikasiActivity"
             android:screenOrientation="portrait" />
@@ -110,7 +111,6 @@
         <activity android:name=".ui.profile.connect.ConnectActivity" />
         <activity android:name=".ui.note.CatatanPilihanActivity" />
         <activity android:name=".ui.profile.cluster.UndangAnggotaActivity"></activity>
-        <activity android:name=".ui.profile.setting.verified.VerifiedActivity"></activity>
     </application>
 
 </manifest>

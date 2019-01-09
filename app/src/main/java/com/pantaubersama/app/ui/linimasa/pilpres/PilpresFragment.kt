@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
@@ -73,7 +72,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         recycler_view.adapter = adapter
         adapter.listener = object : PilpresAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.RC_BANNER_PILPRES)
+                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.EXTRA_TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.RC_BANNER_PILPRES)
             }
 
             override fun onClickTweetOption(item: FeedsItem) {
@@ -113,12 +112,10 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
                 shareTweet(item)
             }
         }
-        adapter.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
-            override fun loadMore(page: Int) {
-                adapter.setLoading()
-                presenter.getFeeds(page)
-            }
-        }, 10)
+        adapter.addSupportLoadMore(recycler_view, 10) {
+            adapter.setLoading()
+            presenter.getFeeds(it)
+        }
 
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false

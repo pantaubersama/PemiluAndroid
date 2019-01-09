@@ -41,14 +41,16 @@ class PantauConstants {
     }
 
     object Extra {
-        const val SELECTED_FILTER_PILPRES = "EXTRA_SELECTED_FILTER"
-        const val BANNER_INFO_TYPE = "EXTRA_BANNER_INFO_TYPE"
-        const val BANNER_INFO_DATA = "EXTRA_BANNER_INFO_DATA"
-        const val TYPE_PILPRES = 0
-        const val TYPE_JANPOL = 1
-        const val TYPE_TANYA_KANDIDAT = 2
-        const val TYPE_KUIS = 3
-        const val JANPOL_ID = "JANPOL_ID"
+        const val EXTRA_SELECTED_FILTER_PILPRES = "EXTRA_SELECTED_FILTER"
+        const val EXTRA_BANNER_INFO_TYPE = "EXTRA_BANNER_INFO_TYPE"
+        const val EXTRA_BANNER_INFO_DATA = "EXTRA_BANNER_INFO_DATA"
+        const val EXTRA_TYPE_PILPRES = 0
+        const val EXTRA_TYPE_JANPOL = 1
+        const val EXTRA_TYPE_TANYA_KANDIDAT = 2
+        const val EXTRA_TYPE_KUIS = 3
+        const val EXTRA_JANPOL_ID = "EXTRA_JANPOL_ID"
+        const val EXTRA_JANPOL_ITEM = "EXTRA_JANPOL_ITEM"
+        const val EXTRA_ITEM_POSITION = "EXTRA_ITEM_POSITION"
     }
 
     object RequestCode {
@@ -63,7 +65,13 @@ class PantauConstants {
         const val RC_ASK_PERMISSIONS = 115
         const val RC_CAMERA = 111
         const val RC_STORAGE = 112
-        const val SETTINGS = 600
+        const val RC_SETTINGS = 600
+        const val RC_CREATE_JANPOL = 1010
+        const val RC_OPEN_DETAIL_JANPOL = 1011
+    }
+
+    object ResultCode {
+        const val RESULT_DELETE_ITEM_JANPOL = 111
     }
 
     object Networking {
@@ -84,6 +92,7 @@ class PantauConstants {
 
     object Kuis {
         const val KUIS_ID = "kuis_id"
+        const val KUIS_ITEM = "kuis_item"
         const val KUIS_NUMBER = "kuis_number"
         val KUIS_FILTER = "kuis_filter"
 
@@ -111,8 +120,7 @@ class PantauConstants {
         const val TYPE_CLUSTER_ITEM = 7
         val CATEGORY_ITEM = 8
     }
-    object Profile {
-    }
+    object Profile
 
     object Filter {
         object Pilpres { // value dari backend
@@ -135,6 +143,5 @@ class PantauConstants {
 
     object Permission {
         val GET_IMAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
     }
 }

@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
@@ -81,16 +80,14 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
-        adapter?.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
-            override fun loadMore(page: Int) {
-                adapter?.setLoading()
-                presenter.getTanyaKandidatList(page, perPage)
-            }
-        }, 5)
+        adapter?.addSupportLoadMore(recycler_view, 5) {
+            adapter?.setLoading()
+            presenter.getTanyaKandidatList(it, perPage)
+        }
 
         adapter?.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.RC_BANNER_TANYA_KANDIDAT)
+                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.EXTRA_TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.RC_BANNER_TANYA_KANDIDAT)
             }
 
             override fun onClickTanyaOption(item: Pertanyaan, position: Int) {

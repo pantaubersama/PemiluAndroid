@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
@@ -23,6 +22,10 @@ import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikA
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_CREATE_JANPOL
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_JANPOL
+import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_ITEM_JANPOL
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.emptyStateVisible
@@ -62,7 +65,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             fab_add.visibleIf(true)
             fab_add.setOnClickListener {
                 val intent = Intent(context, CreateJanjiPolitikActivity::class.java)
-                startActivity(intent)
+                startActivityForResult(intent, RC_CREATE_JANPOL)
             }
         } else {
             fab_add.visibleIf(false)
@@ -83,20 +86,21 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         adapter.listener = object : JanjiPolitikAdapter.AdapterListener {
 
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivity(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_JANPOL, bannerInfo))
+                startActivity(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.EXTRA_TYPE_JANPOL, bannerInfo))
             }
 
-            override fun onClickJanPolContent(item: JanjiPolitik) {
-                startActivity(DetailJanjiPolitikActivity.setIntent(context!!, item.id!!))
+            override fun onClickJanPolContent(item: JanjiPolitik, position: Int) {
+                startActivityForResult(DetailJanjiPolitikActivity.setIntent(context!!, item, position), RC_OPEN_DETAIL_JANPOL)
             }
 
             override fun onClickJanpolOption(item: JanjiPolitik, position: Int) {
                 val dialog = OptionDialog(context!!, R.layout.layout_option_dialog_tanya_kandidat)
                 if (item.creator?.id.equals(userId)) {
-                    dialog.removeItem(R.id.report_tanya_kandidat_action)
+//                    dialog.removeItem(R.id.report_tanya_kandidat_action)
                 } else {
                     dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
                 }
+                dialog.removeItem(R.id.report_tanya_kandidat_action) // dihilangkan sementara karena belum ada endpoint @edityo 08/01/19
                 dialog.show()
                 dialog.listener = object : OptionDialog.DialogListener {
                     override fun onClick(viewId: Int) {
@@ -118,7 +122,8 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
                                 deleteDialog.show()
                                 deleteDialog.listener = object : DeleteConfimationDialog.DialogListener {
                                     override fun onClickDeleteItem(id: String, position: Int) {
-//                                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                        showProgressDialog(getString(R.string.menghapus_janji_politik))
+                                        presenter.deleteJanjiPolitik(id, position)
                                     }
                                 }
                                 dialog.dismiss()
@@ -144,12 +149,10 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             }
         }
 
-        adapter.addSupportLoadMore(recycler_view, object : BaseRecyclerAdapter.OnLoadMoreListener {
-            override fun loadMore(page: Int) {
-                adapter.setLoading()
-                presenter.getJanjiPolitikList(page)
-            }
-        }, 10)
+        adapter.addSupportLoadMore(recycler_view, 10) {
+            adapter.setLoading()
+            presenter.getJanjiPolitikList(it)
+        }
 
         if (presenter.isUserEligible()) {
             recycler_view.setPadding(0, 0, 0,
@@ -184,10 +187,10 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             val bannerInfo = adapter.get(0) as BannerInfo
             adapter.clear()
             adapter.addBanner(bannerInfo)
-            adapter.addData(janjiPolitikList as MutableList<ItemModel>)
+            adapter.addData(janjiPolitikList)
             scrollToTop(false)
         } else {
-            adapter.setDatas(janjiPolitikList as MutableList<ItemModel>)
+            adapter.setDatas(janjiPolitikList)
         }
     }
 
@@ -209,6 +212,15 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
     override fun showFailedGetMoreData() {
         adapter.setLoaded()
+    }
+
+    override fun onSuccessDeleteItem(position: Int) {
+        dismissProgressDialog()
+        adapter.deleteItem(position)
+    }
+
+    override fun onFailedDeleteItem(throwable: Throwable) {
+        dismissProgressDialog()
     }
 
     override fun setLayout(): Int {
@@ -233,14 +245,25 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         }
     }
 
-    override fun showError(throwable: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
+                RC_CREATE_JANPOL -> {
+//                    if (adapter.get(0) is BannerInfo) {
+//                        adapter.addItem(data?.getSerializableExtra(EXTRA_JANPOL_ITEM) as ItemModel, 1)
+//                    } else {
+//                        adapter.addItem(data?.getSerializableExtra(EXTRA_JANPOL_ITEM) as ItemModel, 0)
+//                        scrollToTop(false)
+//                    }
+                    getJanjiPolitikList()
+                }
+            }
+        } else if (resultCode == RESULT_DELETE_ITEM_JANPOL) {
+            if (requestCode == RC_OPEN_DETAIL_JANPOL) {
+                if (data != null && data.getIntExtra(EXTRA_ITEM_POSITION, -1) != -1) {
+                    adapter.deleteItem(data.getIntExtra(EXTRA_ITEM_POSITION, -1))
+                }
             }
         }
     }

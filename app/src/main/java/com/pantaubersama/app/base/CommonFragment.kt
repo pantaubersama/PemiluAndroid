@@ -35,6 +35,22 @@ abstract class CommonFragment : Fragment() {
     private fun initProgressDialog() {
         progressDialog = ProgressDialog(activity).apply {
             setMessage(getString(R.string.txt_mohon_tunggu))
+            setCancelable(false)
+            setCanceledOnTouchOutside(false)
+        }
+    }
+
+    fun showProgressDialog(message: String) {
+        progressDialog?.setMessage(message)
+
+        if (progressDialog?.isShowing == false) {
+            progressDialog?.show()
+        }
+    }
+
+    fun dismissProgressDialog() {
+        if (progressDialog?.isShowing == true) {
+            progressDialog?.dismiss()
         }
     }
 

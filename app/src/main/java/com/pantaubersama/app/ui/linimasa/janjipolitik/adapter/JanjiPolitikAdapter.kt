@@ -12,6 +12,7 @@ import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_BANNER
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_JANPOL
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_janji_politik.*
@@ -53,8 +54,14 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter() {
             tv_user_cluster.text = item.creator?.cluster?.name
             tv_janpol_title.text = item.title
             tv_janpol_content.text = item.body
+            if (item.image != null && item.image?.url != null) {
+                riv_janpol_image.visibleIf(true)
+                riv_janpol_image.loadUrl(item.image?.url, R.color.gray_3)
+            } else {
+                riv_janpol_image.visibleIf(false)
+            }
 
-            ll_janpol_content.setOnClickListener { listener?.onClickJanPolContent(item) }
+            ll_janpol_content.setOnClickListener { listener?.onClickJanPolContent(item, adapterPosition) }
             iv_share_button.setOnClickListener { listener?.onClickShare(item) }
             iv_options_button.setOnClickListener { listener?.onClickJanpolOption(item, adapterPosition) }
         }
@@ -71,7 +78,7 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter() {
 
     interface AdapterListener {
         fun onClickBanner(bannerInfo: BannerInfo)
-        fun onClickJanPolContent(item: JanjiPolitik)
+        fun onClickJanPolContent(item: JanjiPolitik, position: Int)
         fun onClickJanpolOption(item: JanjiPolitik, position: Int)
         fun onClickShare(item: JanjiPolitik)
         fun onClickCopyUrl(id: String?)

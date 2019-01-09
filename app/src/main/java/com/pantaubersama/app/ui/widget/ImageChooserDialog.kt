@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.widget
 
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.provider.MediaStore
@@ -15,7 +14,7 @@ class ImageChooserDialog(private val context: Context) {
     init {
         val items = arrayOf<CharSequence>(context.getString(R.string.kamera), context.getString(R.string.galeri))
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Ambil gambar dari")
+        builder.setTitle(context.getString(R.string.ambil_gambar_dari))
         builder.setItems(items) { dialog, item ->
             when (item) {
                 0 -> openCamera()
