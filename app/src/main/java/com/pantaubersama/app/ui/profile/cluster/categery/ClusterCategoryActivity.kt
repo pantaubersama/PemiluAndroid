@@ -59,6 +59,7 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
         presenter.getCategories(page, perPage, query)
         swipe_refresh.setOnRefreshListener {
             page = 1
+            adapter.setDataEnd(false)
             presenter.getCategories(page, perPage, query)
         }
         RxTextView.textChanges(cluster_category_search)
@@ -70,6 +71,7 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
             .doOnNext {
                 this.query = it
                 page = 1
+                adapter.setDataEnd(false)
                 presenter.getCategories(page, perPage, query)
             }
             .subscribe()
