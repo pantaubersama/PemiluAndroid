@@ -110,7 +110,8 @@
         <activity android:name=".ui.profile.cluster.categery.ClusterCategoryActivity" />
         <activity android:name=".ui.profile.connect.ConnectActivity" />
         <activity android:name=".ui.note.CatatanPilihanActivity" />
-        <activity android:name=".ui.profile.cluster.UndangAnggotaActivity"></activity>
+        <activity android:name=".ui.profile.cluster.UndangAnggotaActivity" />
+        <activity android:name=".ui.profile.setting.buatprofil.BuatProfilActivity"></activity>
     </application>
 
 </manifest>

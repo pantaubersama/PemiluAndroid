@@ -102,7 +102,7 @@
     <string name="label_bagikan_aplikasi">Bagikan Aplikasi Pantau Bersama</string>
     <string name="label_log_out">Log Out</string>
     <string name="submit">SUBMIT</string>
-    <string name="change_profile">Change Profile</string>
+    <string name="change_profile">Ganti Gambar Profil</string>
     <string name="label_nama">Nama</string>
     <string name="label_username">Username</string>
     <string name="label_lokasi">Lokasi</string>
@@ -181,4 +181,12 @@
     <string name="blank_alert">Tidak boleh kosong</string>
     <string name="success_create_cluster_alert">Berhasil request Cluster</string>
     <string name="failed_request_cluster_alert">Gagal request Cluster</string>
+    <string name="title_keluar_aplikasi">Keluar Aplikasi</string>
+    <string name="label_keluar">Keluar</string>
+    <string name="label_lanjut">LANJUT</string>
+    <string name="label_lokasi_sekarang">Lokasi Sekarang</string>
+    <string name="label_deskripsi_singkat">Deskripsi singkat yang menggambarkan tentang kamu</string>
+    <string name="label_pendidikan_terakhir">Pendidikan Terakhirmu</string>
+    <string name="label_pekerjaan_sekarang">Pekerjaan Sekarang</string>
+    <string name="title_buat_profilmu">Buat Profilmu</string>
 </resources>
