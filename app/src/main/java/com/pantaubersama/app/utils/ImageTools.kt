@@ -4,6 +4,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.os.Environment
+import android.view.Surface
+import android.view.WindowManager
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -27,13 +29,10 @@ class ImageTools {
             if (!file.isDirectory) {
                 file.mkdir()
             }
-
             file = File(Environment.getExternalStorageDirectory().path + "/dir", System.currentTimeMillis().toString() + ".jpg")
-
             try {
                 val fileOutputStream = FileOutputStream(file)
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
-
                 fileOutputStream.flush()
                 fileOutputStream.close()
             } catch (e: IOException) {
@@ -43,6 +42,17 @@ class ImageTools {
             }
 
             return file
+        }
+
+        fun bitmapRotation(windowManager: WindowManager): Int {
+            var rotation = 0
+            when (windowManager.defaultDisplay.rotation) {
+                Surface.ROTATION_0 -> rotation = 90
+                Surface.ROTATION_90 -> rotation = 180
+                Surface.ROTATION_180 -> rotation = 270
+                Surface.ROTATION_270 -> rotation = 0
+            }
+            return rotation
         }
     }
 }

@@ -9,7 +9,7 @@ import java.io.IOException
 
 class CameraPreview(
     context: Context,
-    private val mCamera: Camera
+    private var mCamera: Camera?
 ) : SurfaceView(context), SurfaceHolder.Callback {
 
     private val mHolder: SurfaceHolder = holder.apply {
@@ -20,8 +20,8 @@ class CameraPreview(
     override fun surfaceCreated(holder: SurfaceHolder) {
         mCamera.apply {
             try {
-                setPreviewDisplay(holder)
-                startPreview()
+                this?.setPreviewDisplay(holder)
+                this?.startPreview()
             } catch (e: IOException) {
                 Timber.e("Error setting camera preview: ${e.message}")
             }
@@ -37,17 +37,49 @@ class CameraPreview(
             return
         }
         try {
-            mCamera.stopPreview()
+            mCamera?.stopPreview()
         } catch (e: Exception) {
             e.printStackTrace()
         }
         mCamera.apply {
             try {
-                setPreviewDisplay(mHolder)
-                startPreview()
+                this?.setPreviewDisplay(mHolder)
+                this?.startPreview()
             } catch (e: Exception) {
                 Timber.e("Error starting camera preview: ${e.message}")
             }
+        }
+    }
+
+    fun refreshCamera(camera: Camera?) {
+        if (mHolder.surface == null) {
+            return
+        }
+        try {
+            mCamera?.stopPreview()
+        } catch (e: Exception) {
+        }
+        setCamera(camera)
+        try {
+            mCamera?.setPreviewDisplay(mHolder)
+            mCamera?.startPreview()
+        } catch (e: Exception) {
+            Timber.e("Error starting camera preview: ${e.message}")
+        }
+    }
+
+    private fun setCamera(camera: Camera?) {
+        if (camera != null) {
+            mCamera = camera
+        }
+    }
+
+    fun releaseCamera() {
+        if (mCamera != null) {
+            mCamera?.stopPreview()
+            mCamera?.setPreviewCallback(null)
+            mCamera?.release()
+            mCamera = null
         }
     }
 }
