@@ -181,4 +181,6 @@
     <string name="blank_alert">Tidak boleh kosong</string>
     <string name="success_create_cluster_alert">Berhasil request Cluster</string>
     <string name="failed_request_cluster_alert">Gagal request Cluster</string>
+    <string name="title_keluar_aplikasi">Keluar Aplikasi</string>
+    <string name="label_keluar">Keluar</string>
 </resources>

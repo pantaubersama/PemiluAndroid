@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -27,6 +28,7 @@ import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_setting.*
+import kotlinx.android.synthetic.main.logout_dialog.view.*
 import kotlinx.android.synthetic.main.verified_layout.*
 import javax.inject.Inject
 
@@ -160,7 +162,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             // bagikan aplikasi pantau bersama
         }
         setting_logout.setOnClickListener {
-            presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
+            logoutDialog()
         }
     }
 
@@ -177,5 +179,20 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                 setResult(Activity.RESULT_OK)
             }
         }
+    }
+
+    fun logoutDialog() {
+        val mLogoutDialog = BottomSheetDialog(this@SettingActivity)
+        val view = this.layoutInflater.inflate(R.layout.logout_dialog, null)
+        val batal = view.logout_dialog_batal
+        val keluar = view.logout_dialog_keluar
+        batal.setOnClickListener {
+            mLogoutDialog.dismiss()
+        }
+        keluar.setOnClickListener {
+            presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
+        }
+        mLogoutDialog.setContentView(view)
+        mLogoutDialog.show()
     }
 }
