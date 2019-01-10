@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_step3_verifikasi.*
 import javax.inject.Inject
 import android.webkit.MimeTypeMap
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.utils.ImageTools
+import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.utils.ToastUtil
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -110,18 +110,18 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
                     Surface.ROTATION_270 -> rotation = 180
                 }
 
-                var bitmap = ImageTools.BitmapTools.toBitmap(data)
-                bitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
+                var bitmap = ImageUtil.BitmapTools.toBitmap(data)
+                bitmap = ImageUtil.BitmapTools.rotate(bitmap, rotation)
                 image_preview_container.visibility = View.VISIBLE
                 image_preview.setImageBitmap(bitmap)
                 isPreview = true
 
                 val type: String
-                val extension = MimeTypeMap.getFileExtensionFromUrl(ImageTools.getImageFile(bitmap).absolutePath)
+                val extension = MimeTypeMap.getFileExtensionFromUrl(ImageUtil.getImageFile(bitmap).absolutePath)
                 type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
 
-                val reqFile = RequestBody.create(MediaType.parse(type), ImageTools.getImageFile(bitmap))
-                ktpSelfie = MultipartBody.Part.createFormData("ktp_selfie", ImageTools.getImageFile(bitmap).name, reqFile)
+                val reqFile = RequestBody.create(MediaType.parse(type), ImageUtil.getImageFile(bitmap))
+                ktpSelfie = MultipartBody.Part.createFormData("ktp_selfie", ImageUtil.getImageFile(bitmap).name, reqFile)
             }
             capture_button.setOnClickListener {
                 capture_button.isEnabled = false

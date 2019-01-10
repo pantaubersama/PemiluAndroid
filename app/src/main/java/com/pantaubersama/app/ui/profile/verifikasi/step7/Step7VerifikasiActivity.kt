@@ -16,7 +16,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.profile.verifikasi.finalstep.FinalScreenVerifikasiActivity
 import com.pantaubersama.app.ui.widget.CameraPreview
-import com.pantaubersama.app.utils.ImageTools
+import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_step7_verifikasi.*
@@ -110,18 +110,18 @@ class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7V
                     Surface.ROTATION_270 -> rotation = 180
                 }
 
-                var bitmap = ImageTools.BitmapTools.toBitmap(data)
-                bitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
+                var bitmap = ImageUtil.BitmapTools.toBitmap(data)
+                bitmap = ImageUtil.BitmapTools.rotate(bitmap, rotation)
                 image_preview_container.visibility = View.VISIBLE
                 image_preview.setImageBitmap(bitmap)
                 isPreview = true
 
                 val type: String
-                val extension = MimeTypeMap.getFileExtensionFromUrl(ImageTools.getImageFile(bitmap).absolutePath)
+                val extension = MimeTypeMap.getFileExtensionFromUrl(ImageUtil.getImageFile(bitmap).absolutePath)
                 type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
 
-                val reqFile = RequestBody.create(MediaType.parse(type), ImageTools.getImageFile(bitmap))
-                signPhoto = MultipartBody.Part.createFormData("signature", ImageTools.getImageFile(bitmap).name, reqFile)
+                val reqFile = RequestBody.create(MediaType.parse(type), ImageUtil.getImageFile(bitmap))
+                signPhoto = MultipartBody.Part.createFormData("signature", ImageUtil.getImageFile(bitmap).name, reqFile)
             }
             capture_button.setOnClickListener {
                 capture_button.isEnabled = false
