@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.profile.verifikasi.step3
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -8,6 +9,7 @@ import android.graphics.Point
 import android.hardware.Camera
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Surface
 import android.view.View
 import com.pantaubersama.app.R
@@ -19,11 +21,15 @@ import kotlinx.android.synthetic.main.activity_step3_verifikasi.*
 import javax.inject.Inject
 import android.webkit.MimeTypeMap
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.widget.ImageChooserTools
 import com.pantaubersama.app.utils.ImageTools
 import com.pantaubersama.app.utils.ToastUtil
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import android.graphics.BitmapFactory
+import java.io.File
+
 
 class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3VerifikasiView {
 
@@ -67,12 +73,36 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
                 requestPermissions(permission, PantauConstants.Camera.ASK_PERMISSIONS_REQUEST_CODE)
             }
         }
+        capture_button.setOnClickListener {
+            capture_button.isEnabled = false
+            mCamera?.takePicture(null, null, cameraCallback)
+        }
+        switch_camera.setOnClickListener {
+            val camerasNumber = Camera.getNumberOfCameras()
+            if (camerasNumber > 1) {
+                mPreview?.releaseCamera()
+                chooseCamera()
+            }
+        }
+        close_camera_button.setOnClickListener {
+            finish()
+        }
         next_button.setOnClickListener {
             presenter.submitSelfieKtp(ktpSelfie)
         }
         retake_button.setOnClickListener {
             image_preview_container.visibility = View.GONE
             restartActivity()
+        }
+        choose_image.setOnClickListener {
+            if (isHaveStorageAndCameraPermission()) {
+                val intentGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), PantauConstants.RequestCode.RC_STORAGE)
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(permission, PantauConstants.Camera.ASK_PERMISSIONS_REQUEST_CODE)
+                }
+            }
         }
     }
 
@@ -107,20 +137,6 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
                 camera_preview.addView(it)
             }
             cameraCallback = getCameraCallback()
-            capture_button.setOnClickListener {
-                capture_button.isEnabled = false
-                mCamera?.takePicture(null, null, cameraCallback)
-            }
-            switch_camera.setOnClickListener {
-                val camerasNumber = Camera.getNumberOfCameras()
-                if (camerasNumber > 1) {
-                    releaseCamera()
-                    chooseCamera()
-                }
-            }
-            close_camera_button.setOnClickListener {
-                finish()
-            }
         }
     }
 
@@ -168,12 +184,8 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
             image_preview.setImageBitmap(bitmap)
             isPreview = true
 
-            val type: String
-            val extension = MimeTypeMap.getFileExtensionFromUrl(ImageTools.getImageFile(bitmap).absolutePath)
-            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
-
-            val reqFile = RequestBody.create(MediaType.parse(type), ImageTools.getImageFile(bitmap))
-            ktpSelfie = MultipartBody.Part.createFormData("ktp_selfie", ImageTools.getImageFile(bitmap).name, reqFile)
+            val file = ImageTools.getImageFile(bitmap)
+            ktpSelfie = createFromFile(file)
         }
     }
 
@@ -221,15 +233,6 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
         return cameraId
     }
 
-    private fun releaseCamera() {
-        if (mCamera != null) {
-            mCamera?.stopPreview()
-            mCamera?.setPreviewCallback(null)
-            mCamera?.release()
-            mCamera = null
-        }
-    }
-
     private fun isHaveStorageAndCameraPermission(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val storagePermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -272,7 +275,7 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
     }
 
     override fun onDestroy() {
-        releaseCamera()
+        mPreview?.releaseCamera()
         super.onDestroy()
     }
 
@@ -296,5 +299,39 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
 
     override fun showFailedSubmitSelfieKtpAlert() {
         ToastUtil.show(this@Step3VerifikasiActivity, "Gagal mengunggah gambar")
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PantauConstants.RequestCode.RC_STORAGE) {
+                if (data != null) {
+                    val file = ImageChooserTools.proccedImageFromStorage(data, this@Step3VerifikasiActivity)
+                    ktpSelfie = createFromFile(file)
+                    image_preview_container.visibility = View.VISIBLE
+                    var bitmap = BitmapFactory.decodeFile(file.absolutePath)
+                    var rotation = 0
+                    when (windowManager.defaultDisplay.rotation) {
+                        Surface.ROTATION_0 -> rotation = 90
+                        Surface.ROTATION_90 -> rotation = 180
+                        Surface.ROTATION_180 -> rotation = 270
+                        Surface.ROTATION_270 -> rotation = 0
+                    }
+                    bitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
+                    image_preview.setImageBitmap(bitmap)
+                    isPreview = true
+                } else {
+                    ToastUtil.show(this@Step3VerifikasiActivity, getString(R.string.failed_load_image_alert))
+                }
+            }
+        }
+    }
+
+    private fun createFromFile(file: File): MultipartBody.Part {
+        val type: String
+        val extension = MimeTypeMap.getFileExtensionFromUrl(file.absolutePath)
+        type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
+        val reqFile = RequestBody.create(MediaType.parse(type), file)
+        val image = MultipartBody.Part.createFormData("ktp_selfie", file.name, reqFile)
+        return image
     }
 }
