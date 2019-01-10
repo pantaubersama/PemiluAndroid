@@ -10,6 +10,7 @@ import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.lapor.LaporFragment
 import com.pantaubersama.app.ui.linimasa.LinimasaFragment
+import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.quickcount.QuickCountFragment
@@ -37,6 +38,9 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
             val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
             startActivity(intent)
         }
+
+        btn_pinned.setOnClickListener { startActivity(Intent(this, CatatanPilihanActivity::class.java)) }
+
         if (savedInstanceState == null) {
             showFragment(LinimasaFragment(), LinimasaFragment.TAG)
         }
