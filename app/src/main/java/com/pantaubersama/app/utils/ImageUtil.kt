@@ -73,7 +73,6 @@ class ImageUtil {
                     }
                 )
         }
-
     }
 
     interface CompressorListener {

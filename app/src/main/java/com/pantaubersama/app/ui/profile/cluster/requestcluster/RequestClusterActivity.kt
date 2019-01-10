@@ -62,7 +62,6 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>(), RequestC
                 override fun onClickCamera(file: File) {
                     imageFile = file
                 }
-
             })
         }
         btn_send.setOnClickListener {
@@ -102,7 +101,6 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>(), RequestC
                     override fun onFailed(throwable: Throwable) {
                         iv_user_avatar.setImageDrawable(getDrawable(R.drawable.ic_avatar_placeholder))
                     }
-
                 })
             } else if (requestCode == PantauConstants.RequestCode.RC_STORAGE) {
                 if (data != null) {

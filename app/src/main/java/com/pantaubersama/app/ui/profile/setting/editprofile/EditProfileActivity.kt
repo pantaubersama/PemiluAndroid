@@ -150,7 +150,6 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             override fun onClickCamera(file: File) {
                 imageFile = file
             }
-
         })
     }
 
@@ -175,7 +174,6 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
                         showError(throwable)
                         dismissProgressDialog()
                     }
-
                 })
             } else if (requestCode == PantauConstants.RequestCode.RC_STORAGE) {
                 if (data != null) {
@@ -206,7 +204,6 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             dismissProgressDialog()
             showError(Throwable("Terjadi kesalahan pada gambar"))
         }
-
     }
 
     override fun refreshProfile() {

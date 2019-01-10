@@ -63,7 +63,7 @@ class ImageChooserTools {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             val pubDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
             val imageFile = File(pubDir, System.currentTimeMillis().toString() + ".jpg")
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID+".provider", imageFile!!))
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", imageFile!!))
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
             (context as FragmentActivity).startActivityForResult(intent, RC_CAMERA)
