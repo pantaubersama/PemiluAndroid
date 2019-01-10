@@ -30,7 +30,6 @@ import okhttp3.RequestBody
 import android.graphics.BitmapFactory
 import java.io.File
 
-
 class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3VerifikasiView {
 
     @Inject
@@ -114,7 +113,7 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
     private fun setupCamera() {
         if (checkCameraHardware(this@Step3VerifikasiActivity)) {
             try {
-                mCamera = Camera.open()
+                mCamera = Camera.open(findFrontFacingCamera())
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -215,7 +214,6 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
             }
         }
         return cameraId
-
     }
 
     private fun findBackFacingCamera(): Int {
@@ -309,14 +307,7 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
                     ktpSelfie = createFromFile(file)
                     image_preview_container.visibility = View.VISIBLE
                     var bitmap = BitmapFactory.decodeFile(file.absolutePath)
-                    var rotation = 0
-                    when (windowManager.defaultDisplay.rotation) {
-                        Surface.ROTATION_0 -> rotation = 90
-                        Surface.ROTATION_90 -> rotation = 180
-                        Surface.ROTATION_180 -> rotation = 270
-                        Surface.ROTATION_270 -> rotation = 0
-                    }
-                    bitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
+                    bitmap = ImageTools.BitmapTools.rotate(bitmap, ImageTools.bitmapRotation(windowManager))
                     image_preview.setImageBitmap(bitmap)
                     isPreview = true
                 } else {

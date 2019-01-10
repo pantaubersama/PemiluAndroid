@@ -1,13 +1,16 @@
 package com.pantaubersama.app.ui.profile.verifikasi.step5
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.graphics.Point
 import android.hardware.Camera
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Surface
 import android.view.View
 import android.webkit.MimeTypeMap
@@ -16,6 +19,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.profile.verifikasi.step6.Step6VerifikasiActivity
 import com.pantaubersama.app.ui.widget.CameraPreview
+import com.pantaubersama.app.ui.widget.ImageChooserTools
 import com.pantaubersama.app.utils.ImageTools
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
@@ -23,6 +27,7 @@ import kotlinx.android.synthetic.main.activity_step5_verifikasi.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import java.io.File
 import javax.inject.Inject
 
 class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5VerifikasiView {
@@ -41,6 +46,7 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
     private var cameraCallback: Camera.PictureCallback? = null
     private var isPreview = false
     private var ktpPhoto: MultipartBody.Part? = null
+    private var isFrontCamera = false
 
     override fun statusBarColor(): Int? {
         return 0
@@ -65,12 +71,36 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
                 requestPermissions(permission, PantauConstants.Camera.ASK_PERMISSIONS_REQUEST_CODE)
             }
         }
+        capture_button.setOnClickListener {
+            capture_button.isEnabled = false
+            mCamera?.takePicture(null, null, cameraCallback)
+        }
+        close_camera_button.setOnClickListener {
+            finish()
+        }
         next_button.setOnClickListener {
             presenter.submitKtpPhoto(ktpPhoto)
         }
         retake_button.setOnClickListener {
             image_preview_container.visibility = View.GONE
             restartActivity()
+        }
+        switch_camera.setOnClickListener {
+            val camerasNumber = Camera.getNumberOfCameras()
+            if (camerasNumber > 1) {
+                mPreview?.releaseCamera()
+                chooseCamera()
+            }
+        }
+        choose_image.setOnClickListener {
+            if (isHaveStorageAndCameraPermission()) {
+                val intentGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), PantauConstants.RequestCode.RC_STORAGE)
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(permission, PantauConstants.Camera.ASK_PERMISSIONS_REQUEST_CODE)
+                }
+            }
         }
     }
 
@@ -81,7 +111,11 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
 
     private fun setupCamera() {
         if (checkCameraHardware(this@Step5VerifikasiActivity)) {
-            mCamera = getCameraInstance()
+            try {
+                mCamera = Camera.open()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             mCamera?.setDisplayOrientation(90)
             val params = mCamera?.parameters
 
@@ -91,7 +125,7 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
             display.getSize(size)
             val height = size.y
             val chosenSize = getPictureSizeIndexForHeight(sizeList!!, height) // height from screen
-            params.setPictureSize(sizeList.get(chosenSize).width, sizeList[chosenSize].height)
+            params.setPictureSize(sizeList[chosenSize].width, sizeList[chosenSize].height)
 
             mCamera?.parameters = params
             mPreview = mCamera?.let {
@@ -100,35 +134,56 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
             mPreview?.also {
                 camera_preview.addView(it)
             }
-            cameraCallback = Camera.PictureCallback { data, camera ->
-                var rotation = 0
-                when (display.rotation) {
+            cameraCallback = getCameraCallback()
+        }
+    }
+
+    private fun chooseCamera() {
+        if (isFrontCamera) {
+            val cameraId = findBackFacingCamera()
+            if (cameraId >= 0) {
+                mCamera = Camera.open(cameraId)
+                mCamera?.setDisplayOrientation(90)
+                cameraCallback = getCameraCallback()
+                mPreview?.refreshCamera(mCamera)
+            }
+        } else {
+            val cameraId = findFrontFacingCamera()
+            if (cameraId >= 0) {
+                mCamera = Camera.open(cameraId)
+                mCamera?.setDisplayOrientation(90)
+                cameraCallback = getCameraCallback()
+                mPreview?.refreshCamera(mCamera)
+            }
+        }
+    }
+
+    private fun getCameraCallback(): Camera.PictureCallback? {
+        return Camera.PictureCallback { data, camera ->
+            var bitmap = ImageTools.BitmapTools.toBitmap(data)
+            var rotation = 0
+            if (isFrontCamera) {
+                when (windowManager.defaultDisplay.rotation) {
                     Surface.ROTATION_0 -> rotation = -90
                     Surface.ROTATION_90 -> rotation = 0
                     Surface.ROTATION_180 -> rotation = 90
                     Surface.ROTATION_270 -> rotation = 180
                 }
-
-                var bitmap = ImageTools.BitmapTools.toBitmap(data)
-                bitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
-                image_preview_container.visibility = View.VISIBLE
-                image_preview.setImageBitmap(bitmap)
-                isPreview = true
-
-                val type: String
-                val extension = MimeTypeMap.getFileExtensionFromUrl(ImageTools.getImageFile(bitmap).absolutePath)
-                type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
-
-                val reqFile = RequestBody.create(MediaType.parse(type), ImageTools.getImageFile(bitmap))
-                ktpPhoto = MultipartBody.Part.createFormData("ktp_photo", ImageTools.getImageFile(bitmap).name, reqFile)
+            } else {
+                when (windowManager.defaultDisplay.rotation) {
+                    Surface.ROTATION_0 -> rotation = 90
+                    Surface.ROTATION_90 -> rotation = 180
+                    Surface.ROTATION_180 -> rotation = 270
+                    Surface.ROTATION_270 -> rotation = 0
+                }
             }
-            capture_button.setOnClickListener {
-                capture_button.isEnabled = false
-                mCamera?.takePicture(null, null, cameraCallback)
-            }
-            close_camera_button.setOnClickListener {
-                finish()
-            }
+            bitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
+            image_preview_container.visibility = View.VISIBLE
+            image_preview.setImageBitmap(bitmap)
+            isPreview = true
+
+            val file = ImageTools.getImageFile(bitmap)
+            ktpPhoto = createFromFile(file)
         }
     }
 
@@ -147,26 +202,32 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
 
     private fun findFrontFacingCamera(): Int {
         var cameraId = -1
-        // Search for the front facing camera
         val numberOfCameras = Camera.getNumberOfCameras()
         for (i in 0 until numberOfCameras) {
             val info = Camera.CameraInfo()
             Camera.getCameraInfo(i, info)
             if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
                 cameraId = i
+                isFrontCamera = true
                 break
             }
         }
         return cameraId
     }
 
-    private fun releaseCamera() {
-        if (mCamera != null) {
-            mCamera?.stopPreview()
-            mCamera?.setPreviewCallback(null)
-            mCamera?.release()
-            mCamera = null
+    private fun findBackFacingCamera(): Int {
+        var cameraId = -1
+        val numberOfCameras = Camera.getNumberOfCameras()
+        for (i in 0 until numberOfCameras) {
+            val info = Camera.CameraInfo()
+            Camera.getCameraInfo(i, info)
+            if (info.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                cameraId = i
+                isFrontCamera = false
+                break
+            }
         }
+        return cameraId
     }
 
     private fun isHaveStorageAndCameraPermission(): Boolean {
@@ -210,17 +271,8 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
         return context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)
     }
 
-    private fun getCameraInstance(): Camera? {
-        return try {
-            Camera.open(findFrontFacingCamera())
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
     override fun onDestroy() {
-        releaseCamera()
+        mPreview?.releaseCamera()
         super.onDestroy()
     }
 
@@ -231,11 +283,6 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
             super.onBackPressed()
         }
     }
-
-    fun endActivity() {
-        finish()
-    }
-
     override fun onSuccessSubmitKtpPhoto() {
         val intent = Intent(this@Step5VerifikasiActivity, Step6VerifikasiActivity::class.java)
         startActivity(intent)
@@ -244,5 +291,32 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
 
     override fun showFailedSubmitKtpPhotoAlert() {
         ToastUtil.show(this@Step5VerifikasiActivity, "Gagal mengunggah gambar")
+    }
+
+    private fun createFromFile(file: File): MultipartBody.Part {
+        val type: String
+        val extension = MimeTypeMap.getFileExtensionFromUrl(file.absolutePath)
+        type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
+        val reqFile = RequestBody.create(MediaType.parse(type), file)
+        val image = MultipartBody.Part.createFormData("ktp_photo", file.name, reqFile)
+        return image
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PantauConstants.RequestCode.RC_STORAGE) {
+                if (data != null) {
+                    val file = ImageChooserTools.proccedImageFromStorage(data, this@Step5VerifikasiActivity)
+                    ktpPhoto = createFromFile(file)
+                    image_preview_container.visibility = View.VISIBLE
+                    var bitmap = BitmapFactory.decodeFile(file.absolutePath)
+                    bitmap = ImageTools.BitmapTools.rotate(bitmap, ImageTools.bitmapRotation(windowManager))
+                    image_preview.setImageBitmap(bitmap)
+                    isPreview = true
+                } else {
+                    ToastUtil.show(this@Step5VerifikasiActivity, getString(R.string.failed_load_image_alert))
+                }
+            }
+        }
     }
 }
