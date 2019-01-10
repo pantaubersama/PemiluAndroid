@@ -143,7 +143,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/rounded_outline_green"
-                                android:hint="123 1234 1111"
+                                android:hint="Nomor KTP Anda"
                                 android:fontFamily="@font/lato_bold"
                                 android:gravity="center_horizontal"
                                 android:layout_marginTop="12dp"
@@ -152,7 +152,10 @@
                                 android:layout_marginStart="12dp"
                                 android:layout_marginRight="12dp"
                                 android:layout_marginEnd="12dp"
-                                android:textColor="@color/black_3"/>
+                                android:textColor="@color/black_3"
+                                android:inputType="number"
+                                android:lines="1"
+                                android:maxLines="1"/>
 
                         </LinearLayout>
 

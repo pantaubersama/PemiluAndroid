@@ -8,6 +8,8 @@ import android.os.Environment
 import id.zelory.compressor.Compressor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import android.view.Surface
+import android.view.WindowManager
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -31,13 +33,10 @@ class ImageUtil {
             if (!file.isDirectory) {
                 file.mkdir()
             }
-
             file = File(Environment.getExternalStorageDirectory().path + "/dir", System.currentTimeMillis().toString() + ".jpg")
-
             try {
                 val fileOutputStream = FileOutputStream(file)
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
-
                 fileOutputStream.flush()
                 fileOutputStream.close()
             } catch (e: IOException) {
@@ -72,6 +71,17 @@ class ImageUtil {
                         listener.onFailed(Throwable("Gambar terlalu besar"))
                     }
                 )
+        }
+
+        fun bitmapRotation(windowManager: WindowManager): Int {
+            var rotation = 0
+            when (windowManager.defaultDisplay.rotation) {
+                Surface.ROTATION_0 -> rotation = 90
+                Surface.ROTATION_90 -> rotation = 180
+                Surface.ROTATION_180 -> rotation = 270
+                Surface.ROTATION_270 -> rotation = 0
+            }
+            return rotation
         }
     }
 
