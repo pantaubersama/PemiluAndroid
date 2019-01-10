@@ -17,6 +17,15 @@
         android:padding="24dp"
         android:layout_alignParentBottom="true">
 
+        <ImageView
+            android:id="@+id/switch_camera"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_camera_switch"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
