@@ -145,9 +145,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                PantauConstants.RequestCode.RC_FILTER_KUIS -> {
-                    // refresh kuis
-                }
+                PantauConstants.RequestCode.RC_FILTER_KUIS -> getTopPageItems()
             }
         }
     }

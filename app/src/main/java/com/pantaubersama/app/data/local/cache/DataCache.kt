@@ -154,12 +154,8 @@ class DataCache(context: Context) : SharedPref(context) {
         }
     }
 
-    fun getKuisFilter(): String? {
-        return if (getString(PantauConstants.Kuis.KUIS_FILTER) != null) {
-            getString(PantauConstants.Kuis.KUIS_FILTER)
-        } else {
-            PantauConstants.Kuis.Filter.KUIS_ALL
-        }
+    fun getKuisFilter(): String {
+        return getString(PantauConstants.Kuis.KUIS_FILTER) ?: PantauConstants.Kuis.Filter.KUIS_ALL
     }
 
     fun saveKuisFilter(kuisFilter: String) {

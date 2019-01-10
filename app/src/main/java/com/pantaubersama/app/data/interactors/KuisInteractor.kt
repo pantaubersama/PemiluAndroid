@@ -21,8 +21,8 @@ class KuisInteractor @Inject constructor(
         return dataCache.isBannerKuisOpened()
     }
 
-    fun getKuisList(page: Int, perPage: Int): Single<List<KuisItem>> {
-        return pantauAPI.getKuisList(page, perPage)
+    fun getKuisList(page: Int, perPage: Int, filterBy: String): Single<List<KuisItem>> {
+        return pantauAPI.getKuisList(page, perPage, filterBy)
             .subscribeOn(rxSchedulers.io())
             .map { it.data.kuisList }
             .observeOn(rxSchedulers.mainThread())
@@ -39,13 +39,13 @@ class KuisInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
-    fun getKuisFilter(): String? {
+    fun getKuisFilter(): String {
         return dataCache.getKuisFilter()
     }
 
-    fun saveKuisFilter(kuisFilter: String?): Completable {
+    fun saveKuisFilter(kuisFilter: String): Completable {
         return Completable.fromCallable {
-            dataCache.saveKuisFilter(kuisFilter!!)
+            dataCache.saveKuisFilter(kuisFilter)
         }
     }
 
