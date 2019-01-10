@@ -25,6 +25,15 @@
         <meta-data
             android:name="aia-compat-api-min-version"
             android:value="1" />
+        <provider
+            android:name=".utils.GenericFileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
 
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"

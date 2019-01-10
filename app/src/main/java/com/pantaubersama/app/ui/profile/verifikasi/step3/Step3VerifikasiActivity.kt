@@ -21,8 +21,8 @@ import kotlinx.android.synthetic.main.activity_step3_verifikasi.*
 import javax.inject.Inject
 import android.webkit.MimeTypeMap
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.ui.widget.ImageChooserTools
-import com.pantaubersama.app.utils.ImageTools
 import com.pantaubersama.app.utils.ToastUtil
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -161,7 +161,7 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
 
     private fun getCameraCallback(): Camera.PictureCallback? {
         return Camera.PictureCallback { data, camera ->
-            var bitmap = ImageTools.BitmapTools.toBitmap(data)
+            var bitmap = ImageUtil.BitmapTools.toBitmap(data)
             var rotation = 0
             if (isFrontCamera) {
                 when (windowManager.defaultDisplay.rotation) {
@@ -178,12 +178,12 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
                     Surface.ROTATION_270 -> rotation = 0
                 }
             }
-            bitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
+            bitmap = ImageUtil.BitmapTools.rotate(bitmap, rotation)
             image_preview_container.visibility = View.VISIBLE
             image_preview.setImageBitmap(bitmap)
             isPreview = true
 
-            val file = ImageTools.getImageFile(bitmap)
+            val file = ImageUtil.getImageFile(bitmap)
             ktpSelfie = createFromFile(file)
         }
     }
@@ -307,7 +307,7 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
                     ktpSelfie = createFromFile(file)
                     image_preview_container.visibility = View.VISIBLE
                     var bitmap = BitmapFactory.decodeFile(file.absolutePath)
-                    bitmap = ImageTools.BitmapTools.rotate(bitmap, ImageTools.bitmapRotation(windowManager))
+                    bitmap = ImageUtil.BitmapTools.rotate(bitmap, ImageUtil.bitmapRotation(windowManager))
                     image_preview.setImageBitmap(bitmap)
                     isPreview = true
                 } else {

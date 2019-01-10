@@ -111,6 +111,7 @@ dependencies {
     implementation chromeCustomTab
     implementation expandableLayout
     implementation rxBinding
+    implementation compressor
     kapt daggerCompiler
 
     testImplementation unitTestLibs

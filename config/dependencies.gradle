@@ -46,7 +46,8 @@ ext {
             chromeCustomTab         : "23.3.0",
             expandableLayout        : "2.9.2",
             stetho                  : "1.5.0",
-            rxbinding               : "2.0.0"
+            rxbinding               : "2.0.0",
+            compressor              : "2.1.0"
     ]
 
 
@@ -114,4 +115,6 @@ ext {
 
     expandableLayout = "net.cachapa.expandablelayout:expandablelayout:$versions.expandableLayout"
     rxBinding = "com.jakewharton.rxbinding2:rxbinding:$versions.rxbinding"
+
+    compressor = "id.zelory:compressor:$versions.compressor"
 }
