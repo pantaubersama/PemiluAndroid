@@ -53,7 +53,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
                     KuisState.IN_PROGRESS -> KuisActivity.setIntent(requireContext(), item.id, item.title)
                     KuisState.FINISHED -> KuisResultActivity.setIntent(requireContext(), item.id, item.title)
                 }
-                startActivity(intent)
+                startActivityForResult(intent, PantauConstants.RequestCode.RC_REFRESH_KUIS_ON_RESULT)
             }
 
             override fun onClickShare(item: KuisItem) {
@@ -145,7 +145,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                PantauConstants.RequestCode.RC_FILTER_KUIS -> getTopPageItems()
+                PantauConstants.RequestCode.RC_REFRESH_KUIS_ON_RESULT -> getTopPageItems()
             }
         }
     }

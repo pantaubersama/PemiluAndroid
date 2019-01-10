@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.penpol.kuis.result
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -65,11 +66,20 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
 
     override fun setLayout(): Int = R.layout.activity_kuis_result
 
+    override fun onBackPressed() {
+        if (intent.getBooleanExtra(PantauConstants.Kuis.KUIS_REFRESH, false)) {
+            setResult(Activity.RESULT_OK)
+        }
+        super.onBackPressed()
+    }
+
     companion object {
-        fun setIntent(context: Context, kuisId: String, kuisTitle: String): Intent {
+        fun setIntent(context: Context, kuisId: String, kuisTitle: String,
+                      refreshOnReturn: Boolean = false): Intent {
             val intent = Intent(context, KuisResultActivity::class.java)
             intent.putExtra(PantauConstants.Kuis.KUIS_ID, kuisId)
             intent.putExtra(PantauConstants.Kuis.KUIS_TITLE, kuisTitle)
+            intent.putExtra(PantauConstants.Kuis.KUIS_REFRESH, refreshOnReturn)
             return intent
         }
     }
