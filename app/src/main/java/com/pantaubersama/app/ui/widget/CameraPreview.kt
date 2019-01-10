@@ -9,7 +9,7 @@ import java.io.IOException
 
 class CameraPreview(
     context: Context,
-    private val mCamera: Camera
+    private var mCamera: Camera
 ) : SurfaceView(context), SurfaceHolder.Callback {
 
     private val mHolder: SurfaceHolder = holder.apply {
@@ -48,6 +48,29 @@ class CameraPreview(
             } catch (e: Exception) {
                 Timber.e("Error starting camera preview: ${e.message}")
             }
+        }
+    }
+
+    fun refreshCamera(camera: Camera?) {
+        if (mHolder.surface == null) {
+            return
+        }
+        try {
+            mCamera.stopPreview()
+        } catch (e: Exception) {
+        }
+        setCamera(camera)
+        try {
+            mCamera.setPreviewDisplay(mHolder)
+            mCamera.startPreview()
+        } catch (e: Exception) {
+            Timber.e("Error starting camera preview: ${e.message}")
+        }
+    }
+
+    private fun setCamera(camera: Camera?) {
+        if (camera != null) {
+            mCamera = camera
         }
     }
 }

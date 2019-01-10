@@ -42,6 +42,7 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
     private var mPreview: CameraPreview? = null
     private var cameraCallback: Camera.PictureCallback? = null
     private var isPreview = false
+    private var isFrontCamera = false
 
     override fun statusBarColor(): Int? {
         return 0
@@ -82,7 +83,11 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
 
     private fun setupCamera() {
         if (checkCameraHardware(this@Step3VerifikasiActivity)) {
-            mCamera = getCameraInstance()
+            try {
+                mCamera = Camera.open()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             mCamera?.setDisplayOrientation(90)
             val params = mCamera?.parameters
 
@@ -92,7 +97,7 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
             display.getSize(size)
             val height = size.y
             val chosenSize = getPictureSizeIndexForHeight(sizeList!!, height) // height from screen
-            params.setPictureSize(sizeList.get(chosenSize).width, sizeList[chosenSize].height)
+            params.setPictureSize(sizeList[chosenSize].width, sizeList[chosenSize].height)
 
             mCamera?.parameters = params
             mPreview = mCamera?.let {
@@ -101,35 +106,74 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
             mPreview?.also {
                 camera_preview.addView(it)
             }
-            cameraCallback = Camera.PictureCallback { data, camera ->
-                var rotation = 0
-                when (display.rotation) {
+            cameraCallback = getCameraCallback()
+            capture_button.setOnClickListener {
+                capture_button.isEnabled = false
+                mCamera?.takePicture(null, null, cameraCallback)
+            }
+            switch_camera.setOnClickListener {
+                val camerasNumber = Camera.getNumberOfCameras()
+                if (camerasNumber > 1) {
+                    releaseCamera()
+                    chooseCamera()
+                }
+            }
+            close_camera_button.setOnClickListener {
+                finish()
+            }
+        }
+    }
+
+    private fun chooseCamera() {
+        if (isFrontCamera) {
+            val cameraId = findBackFacingCamera()
+            if (cameraId >= 0) {
+                mCamera = Camera.open(cameraId)
+                mCamera?.setDisplayOrientation(90)
+                cameraCallback = getCameraCallback()
+                mPreview?.refreshCamera(mCamera)
+            }
+        } else {
+            val cameraId = findFrontFacingCamera()
+            if (cameraId >= 0) {
+                mCamera = Camera.open(cameraId)
+                mCamera?.setDisplayOrientation(90)
+                cameraCallback = getCameraCallback()
+                mPreview?.refreshCamera(mCamera)
+            }
+        }
+    }
+
+    private fun getCameraCallback(): Camera.PictureCallback? {
+        return Camera.PictureCallback { data, camera ->
+            var bitmap = ImageTools.BitmapTools.toBitmap(data)
+            var rotation = 0
+            if (isFrontCamera) {
+                when (windowManager.defaultDisplay.rotation) {
                     Surface.ROTATION_0 -> rotation = -90
                     Surface.ROTATION_90 -> rotation = 0
                     Surface.ROTATION_180 -> rotation = 90
                     Surface.ROTATION_270 -> rotation = 180
                 }
-
-                var bitmap = ImageTools.BitmapTools.toBitmap(data)
-                bitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
-                image_preview_container.visibility = View.VISIBLE
-                image_preview.setImageBitmap(bitmap)
-                isPreview = true
-
-                val type: String
-                val extension = MimeTypeMap.getFileExtensionFromUrl(ImageTools.getImageFile(bitmap).absolutePath)
-                type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
-
-                val reqFile = RequestBody.create(MediaType.parse(type), ImageTools.getImageFile(bitmap))
-                ktpSelfie = MultipartBody.Part.createFormData("ktp_selfie", ImageTools.getImageFile(bitmap).name, reqFile)
+            } else {
+                when (windowManager.defaultDisplay.rotation) {
+                    Surface.ROTATION_0 -> rotation = 90
+                    Surface.ROTATION_90 -> rotation = 180
+                    Surface.ROTATION_180 -> rotation = 270
+                    Surface.ROTATION_270 -> rotation = 0
+                }
             }
-            capture_button.setOnClickListener {
-                capture_button.isEnabled = false
-                mCamera?.takePicture(null, null, cameraCallback)
-            }
-            close_camera_button.setOnClickListener {
-                finish()
-            }
+            bitmap = ImageTools.BitmapTools.rotate(bitmap, rotation)
+            image_preview_container.visibility = View.VISIBLE
+            image_preview.setImageBitmap(bitmap)
+            isPreview = true
+
+            val type: String
+            val extension = MimeTypeMap.getFileExtensionFromUrl(ImageTools.getImageFile(bitmap).absolutePath)
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
+
+            val reqFile = RequestBody.create(MediaType.parse(type), ImageTools.getImageFile(bitmap))
+            ktpSelfie = MultipartBody.Part.createFormData("ktp_selfie", ImageTools.getImageFile(bitmap).name, reqFile)
         }
     }
 
@@ -148,13 +192,29 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
 
     private fun findFrontFacingCamera(): Int {
         var cameraId = -1
-        // Search for the front facing camera
         val numberOfCameras = Camera.getNumberOfCameras()
         for (i in 0 until numberOfCameras) {
             val info = Camera.CameraInfo()
             Camera.getCameraInfo(i, info)
             if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
                 cameraId = i
+                isFrontCamera = true
+                break
+            }
+        }
+        return cameraId
+
+    }
+
+    private fun findBackFacingCamera(): Int {
+        var cameraId = -1
+        val numberOfCameras = Camera.getNumberOfCameras()
+        for (i in 0 until numberOfCameras) {
+            val info = Camera.CameraInfo()
+            Camera.getCameraInfo(i, info)
+            if (info.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                cameraId = i
+                isFrontCamera = false
                 break
             }
         }
@@ -209,15 +269,6 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
 
     private fun checkCameraHardware(context: Context): Boolean {
         return context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)
-    }
-
-    private fun getCameraInstance(): Camera? {
-        return try {
-            Camera.open(findFrontFacingCamera())
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
     }
 
     override fun onDestroy() {

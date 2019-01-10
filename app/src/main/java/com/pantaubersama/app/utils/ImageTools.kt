@@ -27,13 +27,10 @@ class ImageTools {
             if (!file.isDirectory) {
                 file.mkdir()
             }
-
             file = File(Environment.getExternalStorageDirectory().path + "/dir", System.currentTimeMillis().toString() + ".jpg")
-
             try {
                 val fileOutputStream = FileOutputStream(file)
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
-
                 fileOutputStream.flush()
                 fileOutputStream.close()
             } catch (e: IOException) {
