@@ -50,7 +50,6 @@ class KuisPresenter @Inject constructor(
             }, {
                 view?.dismissLoadingMore()
                 view?.showError(it)
-                view?.showFailedGetData()
             })
         disposables?.add(disposable)
     }

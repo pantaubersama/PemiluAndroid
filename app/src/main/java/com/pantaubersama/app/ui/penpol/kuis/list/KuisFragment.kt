@@ -110,6 +110,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     }
 
     override fun showFailedGetData() {
+        recycler_view.visibleIf(false)
         view_fail_state.enableLottie(true, lottie_fail_state)
     }
 
