@@ -10,7 +10,7 @@ class Step1VerifikasiPresenter @Inject constructor(
     fun submitKtpNumber(ktpNumber: String) {
         view?.showLoading()
         view?.disableView()
-        disposables?.add(
+        disposables.add(
             verifikasiInteractor
                 .submitKtpNumber(ktpNumber)
                 .subscribe(
