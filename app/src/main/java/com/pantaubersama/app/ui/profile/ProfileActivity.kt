@@ -18,6 +18,7 @@ import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.profile.cluster.invite.UndangAnggotaActivity
 import com.pantaubersama.app.ui.profile.cluster.requestcluster.RequestClusterActivity
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
@@ -254,7 +255,9 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         lp.gravity = Gravity.BOTTOM
         window?.attributes = lp
         dialog.invite_to_cluster_action?.setOnClickListener {
-            // invite
+            val intent = Intent(this@ProfileActivity, UndangAnggotaActivity::class.java)
+            intent.putExtra(PantauConstants.Cluster.CLUSTER_URL, cluster.magicLink)
+            startActivity(intent)
         }
         dialog.leave_cluster_action?.setOnClickListener {
             showLeaveClusterConfirmationDialog(cluster)

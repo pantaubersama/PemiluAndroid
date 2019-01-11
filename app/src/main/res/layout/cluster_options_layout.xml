@@ -2,35 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
     android:background="@color/white">
 
     <TextView
         android:id="@+id/invite_to_cluster_action"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/invite_member_action"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
         android:textSize="20sp"
         android:fontFamily="@font/lato_regular"
         android:textColor="@color/black"
         android:includeFontPadding="false"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+        android:paddingBottom="10dp"
+        android:foreground="?selectableItemBackground"
+        android:padding="16dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_2"/>
 
     <TextView
         android:id="@+id/leave_cluster_action"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/leave_cluster_action"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
+        android:padding="16dp"
         android:textSize="20sp"
         android:fontFamily="@font/lato_regular"
         android:textColor="@color/black"
         android:includeFontPadding="false"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+        android:paddingBottom="10dp"
+        android:foreground="?selectableItemBackground"/>
 
 </LinearLayout>

@@ -152,7 +152,7 @@
     <string name="txt_delete_item_ini">Apakah Anda yakin akan menghapus item ini?</string>
     <string name="hint_masukkan_email_disini">Masukkan email disini</string>
     <string name="label_bagikan_undangan_lewat_link">Bagikan Undangan Lewat Link</string>
-    <string name="label_non_aktifkan_link_undangan">Non aktifkan link undangan</string>
+    <string name="label_non_aktifkan_link_undangan">Non-aktifkan link undangan</string>
     <string name="deskripsi_undang_lewat_tautan">Dengan metode bagikan link undangan siapapun yg meng klik Otomatis akan menjadi anggota. Anda dapat mematikan link undangan sewaktu waktu</string>
     <string name="logging_in_label">Logging in</string>
     <string name="failed_login_alert">Failed to login using Symbolic</string>
