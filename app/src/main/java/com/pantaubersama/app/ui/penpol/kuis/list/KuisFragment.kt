@@ -50,10 +50,10 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
             override fun onClickOpenKuis(item: KuisItem) {
                 val intent = when (item.state) {
                     KuisState.NOT_PARTICIPATING -> IkutiKuisActivity.setIntent(requireContext(), item)
-                    KuisState.IN_PROGRESS -> KuisActivity.setIntent(requireContext(), item.id, item.title)
-                    KuisState.FINISHED -> KuisResultActivity.setIntent(requireContext(), item.id, item.title)
+                    KuisState.IN_PROGRESS -> KuisActivity.setIntent(requireContext(), item)
+                    KuisState.FINISHED -> KuisResultActivity.setIntent(requireContext(), item)
                 }
-                startActivity(intent)
+                startActivityForResult(intent, PantauConstants.RequestCode.RC_REFRESH_KUIS_ON_RESULT)
             }
 
             override fun onClickShare(item: KuisItem) {
@@ -110,6 +110,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     }
 
     override fun showFailedGetData() {
+        recycler_view.visibleIf(false)
         view_fail_state.enableLottie(true, lottie_fail_state)
     }
 
@@ -145,9 +146,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                PantauConstants.RequestCode.RC_FILTER_KUIS -> {
-                    // refresh kuis
-                }
+                PantauConstants.RequestCode.RC_REFRESH_KUIS_ON_RESULT -> getTopPageItems()
             }
         }
     }

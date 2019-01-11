@@ -57,7 +57,7 @@ class PantauConstants {
         const val RC_FILTER_PILPRES = 1001
         const val RC_FILTER_JANPOL = 1002
         const val RC_FILTER_TANYA_KANDIDAT = 1003
-        const val RC_FILTER_KUIS = 1004
+        const val RC_REFRESH_KUIS_ON_RESULT = 1004
         const val RC_BANNER_PILPRES = 101
         const val RC_BANNER_JANPOL = 102
         const val RC_BANNER_TANYA_KANDIDAT = 103
@@ -98,7 +98,8 @@ class PantauConstants {
         const val KUIS_ID = "kuis_id"
         const val KUIS_ITEM = "kuis_item"
         const val KUIS_TITLE = "kuis_title"
-        val KUIS_FILTER = "kuis_filter"
+        const val KUIS_FILTER = "kuis_filter"
+        const val KUIS_REFRESH = "kuis_refresh"
 
         object Filter {
             const val KUIS_ALL = "all"
