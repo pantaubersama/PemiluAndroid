@@ -50,8 +50,8 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
             override fun onClickOpenKuis(item: KuisItem) {
                 val intent = when (item.state) {
                     KuisState.NOT_PARTICIPATING -> IkutiKuisActivity.setIntent(requireContext(), item)
-                    KuisState.IN_PROGRESS -> KuisActivity.setIntent(requireContext(), item.id, item.title)
-                    KuisState.FINISHED -> KuisResultActivity.setIntent(requireContext(), item.id, item.title)
+                    KuisState.IN_PROGRESS -> KuisActivity.setIntent(requireContext(), item)
+                    KuisState.FINISHED -> KuisResultActivity.setIntent(requireContext(), item)
                 }
                 startActivityForResult(intent, PantauConstants.RequestCode.RC_REFRESH_KUIS_ON_RESULT)
             }

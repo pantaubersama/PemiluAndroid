@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.data.model.kuis.Question
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
@@ -20,8 +21,7 @@ class KuisActivity : BaseActivity<KuisQuestionPresenter>(), KuisQuestionView {
     @Inject
     override lateinit var presenter: KuisQuestionPresenter
 
-    private var kuisId: String = ""
-    private var kuisTitle: String = ""
+    private lateinit var kuisItem: KuisItem
 
     override fun statusBarColor(): Int? {
         return 0
@@ -32,8 +32,7 @@ class KuisActivity : BaseActivity<KuisQuestionPresenter>(), KuisQuestionView {
     }
 
     override fun fetchIntentExtra() {
-        kuisId = intent.getStringExtra(PantauConstants.Kuis.KUIS_ID)
-        kuisTitle = intent.getStringExtra(PantauConstants.Kuis.KUIS_TITLE)
+        kuisItem = intent.getSerializableExtra(PantauConstants.Kuis.KUIS_ITEM) as KuisItem
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
@@ -46,7 +45,7 @@ class KuisActivity : BaseActivity<KuisQuestionPresenter>(), KuisQuestionView {
             recycle()
         }
 
-        presenter.getQuestions(kuisId)
+        presenter.getQuestions(kuisItem.id)
     }
 
     override fun setLayout(): Int {
@@ -76,15 +75,15 @@ class KuisActivity : BaseActivity<KuisQuestionPresenter>(), KuisQuestionView {
         answer_a.text = answerA.content
         answer_b.text = answerB.content
         answer_a_button.setOnClickListener {
-            presenter.answerQuestion(kuisId, question.id, answerA.id)
+            presenter.answerQuestion(kuisItem.id, question.id, answerA.id)
         }
         answer_b_button.setOnClickListener {
-            presenter.answerQuestion(kuisId, question.id, answerB.id)
+            presenter.answerQuestion(kuisItem.id, question.id, answerB.id)
         }
     }
 
     override fun onKuisFinished() {
-        val intent = KuisResultActivity.setIntent(this, kuisId, kuisTitle, true).apply {
+        val intent = KuisResultActivity.setIntent(this, kuisItem, true).apply {
             addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
         }
         startActivity(intent)
@@ -99,11 +98,9 @@ class KuisActivity : BaseActivity<KuisQuestionPresenter>(), KuisQuestionView {
     }
 
     companion object {
-        fun setIntent(context: Context, kuisId: String, kuisTitle: String,
-                      refreshOnReturn: Boolean = false): Intent {
+        fun setIntent(context: Context, kuisItem: KuisItem, refreshOnReturn: Boolean = false): Intent {
             val intent = Intent(context, KuisActivity::class.java)
-            intent.putExtra(PantauConstants.Kuis.KUIS_ID, kuisId)
-            intent.putExtra(PantauConstants.Kuis.KUIS_TITLE, kuisTitle)
+            intent.putExtra(PantauConstants.Kuis.KUIS_ITEM, kuisItem)
             intent.putExtra(PantauConstants.Kuis.KUIS_REFRESH, refreshOnReturn)
             return intent
         }

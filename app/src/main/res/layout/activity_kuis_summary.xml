@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/iv_kuis_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
@@ -20,7 +21,17 @@
         android:paddingTop="220dp"
         app:layout_constraintBottom_toTopOf="@id/close_button"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_kuis_answer_key" />
+        tools:listitem="@layout/item_kuis_summary" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/iv_kuis_image"
+        app:layout_constraintEnd_toEndOf="@id/iv_kuis_image"
+        app:layout_constraintStart_toStartOf="@id/iv_kuis_image"
+        app:layout_constraintTop_toTopOf="@id/iv_kuis_image" />
 
     <com.pantaubersama.app.ui.widget.BottomCloseButton
         android:id="@+id/close_button"

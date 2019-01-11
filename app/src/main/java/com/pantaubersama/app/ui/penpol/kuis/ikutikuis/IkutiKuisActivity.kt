@@ -29,7 +29,7 @@ class IkutiKuisActivity : CommonActivity() {
         question_count.text = "%d Pertanyaan".format(kuisItem.kuisQuestionsCount)
         quiz_long_hint.text = kuisItem.description
         start_quiz_action.setOnClickListener {
-            val intent = KuisActivity.setIntent(this, kuisItem.id, kuisItem.title, true).apply {
+            val intent = KuisActivity.setIntent(this, kuisItem, true).apply {
                 addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
             }
             startActivity(intent)
