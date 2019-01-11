@@ -17,12 +17,15 @@ class KuisPresenter @Inject constructor(
 
     val perPage = 3
 
+    val filter: String
+        get() = kuisInteractor.getKuisFilter()
+
     fun getTopPageItems() {
         view?.showLoading()
         val disposable = Singles.zip(
             bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_KUIS).optional(),
             kuisInteractor.getKuisUserSummary().optional(),
-            kuisInteractor.getKuisList(1, perPage)
+            kuisInteractor.getKuisList(1, perPage, filter)
         )
             .doOnEvent { _, _ -> view?.dismissLoading() }
             .subscribe({ (banner, kuisResult, kuisList) ->
@@ -40,14 +43,13 @@ class KuisPresenter @Inject constructor(
 
     fun getNextPage(page: Int) {
         view?.showLoadingMore()
-        val disposable = kuisInteractor.getKuisList(page, perPage)
+        val disposable = kuisInteractor.getKuisList(page, perPage, filter)
             .subscribe({
                 view?.dismissLoadingMore()
                 view?.showMoreKuis(it)
             }, {
                 view?.dismissLoadingMore()
                 view?.showError(it)
-                view?.showFailedGetData()
             })
         disposables?.add(disposable)
     }

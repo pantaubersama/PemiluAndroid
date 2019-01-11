@@ -5,19 +5,16 @@
     android:layout_height="wrap_content"
     android:background="@color/gray_2"
     android:orientation="vertical"
-    android:paddingStart="12dp"
-    android:paddingTop="16dp"
-    android:paddingEnd="12dp"
-    android:paddingBottom="16dp">
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/tv_kuis_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bw_modelica_regular"
-        android:text="Pertanyaan Pertama"
         android:textColor="@color/black"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        tools:text="Pertanyaan Pertama" />
 
     <TextView
         android:id="@+id/tv_kuis_question"
@@ -25,64 +22,68 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/bw_modelica_bold"
-        android:text="Visi untuk Indonesia kedepannya?"
         android:textColor="@color/black_3"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        tools:text="Visi untuk Indonesia kedepannya?" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="8dp"
         android:background="@color/gray_3" />
 
     <TextView
+        android:id="@+id/tv_answer_a_team"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bw_modelica_bold"
-        android:text="Jokowi - Makruf"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:text="Jokowi - Makruf" />
 
     <TextView
+        android:id="@+id/tv_answer_a_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/lato_medium"
         android:lineSpacingExtra="4sp"
-        android:text="@string/lorem"
         android:textColor="#111111"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        tools:text="@string/lorem" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="8dp"
         android:background="@color/gray_3" />
 
     <TextView
+        android:id="@+id/tv_answer_b_team"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bw_modelica_bold"
-        android:text="Prabowo - Sandi"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:text="Prabowo - Sandi" />
 
     <TextView
+        android:id="@+id/tv_answer_b_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/lato_medium"
         android:lineSpacingExtra="4sp"
-        android:text="@string/lorem"
         android:textColor="#111111"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        tools:text="@string/lorem" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="8dp"
         android:background="@color/gray_3" />
 
@@ -91,8 +92,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bw_modelica_bold"
-        android:text="Jawabanmu : Prabowo - Sandi"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:text="Jawabanmu : Prabowo - Sandi" />
 
 </LinearLayout>

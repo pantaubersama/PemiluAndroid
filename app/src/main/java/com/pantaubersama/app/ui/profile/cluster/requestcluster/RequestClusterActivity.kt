@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.profile.cluster.requestcluster
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.MimeTypeMap
@@ -13,6 +14,7 @@ import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.profile.cluster.categery.ClusterCategoryActivity
 import com.pantaubersama.app.ui.widget.ImageChooserTools
+import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
@@ -27,6 +29,7 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>(), RequestC
 
     val CHANGE_CATEGORY = 1
     private lateinit var imageToUpload: MultipartBody.Part
+    private var imageFile: File? = null
     protected var categoryId: String = ""
 
     @Inject
@@ -55,7 +58,11 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>(), RequestC
             startActivityForResult(intent, CHANGE_CATEGORY)
         }
         add_image.setOnClickListener {
-            ImageChooserTools.showDialog(this@RequestClusterActivity)
+            ImageChooserTools.showDialog(this@RequestClusterActivity, object : ImageChooserTools.ImageChooserListener {
+                override fun onClickCamera(file: File) {
+                    imageFile = file
+                }
+            })
         }
         btn_send.setOnClickListener {
             if (edit_name.text?.length != 0) {
@@ -83,11 +90,18 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>(), RequestC
                 partai_selected.text = category.name
                 categoryId = category.id
             } else if (requestCode == PantauConstants.RequestCode.RC_CAMERA) {
-                if (data != null) {
-                    val file = ImageChooserTools.proccedImageFromCamera(data)
-                    imageToUpload = createFromFile(file)
-                    iv_user_avatar.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
-                }
+                iv_user_avatar.setImageDrawable(getDrawable(R.drawable.ic_editor_image))
+                ImageUtil.compressImage(this, imageFile!!, 2, object : ImageUtil.CompressorListener {
+                    override fun onSuccess(file: File) {
+                        imageFile = file
+                        imageToUpload = createFromFile()
+                        iv_user_avatar.setImageURI(Uri.parse(imageFile?.absolutePath))
+                    }
+
+                    override fun onFailed(throwable: Throwable) {
+                        iv_user_avatar.setImageDrawable(getDrawable(R.drawable.ic_avatar_placeholder))
+                    }
+                })
             } else if (requestCode == PantauConstants.RequestCode.RC_STORAGE) {
                 if (data != null) {
                     val file = ImageChooserTools.proccedImageFromStorage(data, this@RequestClusterActivity)
@@ -98,13 +112,22 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>(), RequestC
         }
     }
 
-    private fun createFromFile(file: File): MultipartBody.Part {
-        val type: String
-        val extension = MimeTypeMap.getFileExtensionFromUrl(file.absolutePath)
-        type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
-        val reqFile = RequestBody.create(MediaType.parse(type), file)
-        val avatar = MultipartBody.Part.createFormData("image", file.name, reqFile)
-        return avatar
+    private fun createFromFile(file: File? = null): MultipartBody.Part {
+        var avatar: MultipartBody.Part? = null
+        if (file != null) {
+            val type: String
+            val extension = MimeTypeMap.getFileExtensionFromUrl(file.absolutePath)
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
+            val reqFile = RequestBody.create(MediaType.parse(type), file)
+            avatar = MultipartBody.Part.createFormData("image", file.name, reqFile)
+        } else if (imageFile != null) {
+            val type: String
+            val extension = MimeTypeMap.getFileExtensionFromUrl(imageFile?.absolutePath)
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
+            val reqFile = RequestBody.create(MediaType.parse(type), imageFile)
+            avatar = MultipartBody.Part.createFormData("image", imageFile?.name, reqFile)
+        }
+        return avatar!!
     }
 
     override fun showLoading() {

@@ -1,16 +1,20 @@
 package com.pantaubersama.app.utils
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.os.Environment
+import id.zelory.compressor.Compressor
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import android.view.Surface
 import android.view.WindowManager
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-class ImageTools {
+class ImageUtil {
     object BitmapTools {
         fun toBitmap(data: ByteArray): Bitmap {
             return BitmapFactory.decodeByteArray(data, 0, data.size)
@@ -44,6 +48,31 @@ class ImageTools {
             return file
         }
 
+        fun compressImage(context: Context, imageFile: File, maxSizeInMb: Int = 2, listener: CompressorListener) {
+//        var ITERATOR = 0
+//        val MAX_ITERATOR = 10
+//
+//        for (i in ITERATOR..MAX_ITERATOR) loop@ {
+//
+//        }
+            Compressor(context)
+                .compressToFileAsFlowable(imageFile)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        if (it.length() <= (maxSizeInMb * 1024 * 1024)) {
+                            listener.onSuccess(it)
+                        } else {
+                            listener.onFailed(Throwable("Gambar terlalu besar"))
+                        }
+                    },
+                    {
+                        listener.onFailed(Throwable("Gambar terlalu besar"))
+                    }
+                )
+        }
+
         fun bitmapRotation(windowManager: WindowManager): Int {
             var rotation = 0
             when (windowManager.defaultDisplay.rotation) {
@@ -54,5 +83,10 @@ class ImageTools {
             }
             return rotation
         }
+    }
+
+    interface CompressorListener {
+        fun onSuccess(file: File)
+        fun onFailed(throwable: Throwable)
     }
 }

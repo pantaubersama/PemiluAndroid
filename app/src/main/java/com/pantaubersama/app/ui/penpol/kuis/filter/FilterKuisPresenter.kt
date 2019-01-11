@@ -9,7 +9,7 @@ class FilterKuisPresenter @Inject constructor(private val kuisInteractor: KuisIn
         view?.setKuisFilter(kuisInteractor.getKuisFilter())
     }
 
-    fun saveKuisFilter(kuisFilter: String?) {
+    fun saveKuisFilter(kuisFilter: String) {
         disposables?.add(
             kuisInteractor
                 .saveKuisFilter(kuisFilter)
