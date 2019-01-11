@@ -45,11 +45,11 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
         adapter = TanyaKandidatAdapter()
         adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun onClickBanner(bannerInfo: BannerInfo) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun onClickShare(item: Pertanyaan?) {
@@ -61,15 +61,15 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
             }
 
             override fun onClickDeleteItem(id: String?, position: Int?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun onClickCopyUrl(id: String?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun onClickLapor(id: String?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
         }
         layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)

@@ -41,11 +41,11 @@ class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
     private fun setupPasswordField() {
         ubah_sandi_sandi_baru.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun onTextChanged(string: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -56,11 +56,11 @@ class UbahSandiActivity : BaseActivity<UbahSandiPresenter>(), UbahSandiView {
         })
         repeat_password.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun onTextChanged(string: CharSequence?, p1: Int, p2: Int, p3: Int) {

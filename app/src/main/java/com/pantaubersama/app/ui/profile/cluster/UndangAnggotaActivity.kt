@@ -11,7 +11,7 @@ class UndangAnggotaActivity : BaseActivity<UndangAnggotaPresenter>(), UndangAngg
     }
 
     override var presenter: UndangAnggotaPresenter
-        get() = TODO("not implemented") // To change initializer of created properties use File | Settings | File Templates.
+        get() = TODO("not implemented") // To change initializer of createdAt properties use File | Settings | File Templates.
         set(value) {}
 
     override fun statusBarColor(): Int? {

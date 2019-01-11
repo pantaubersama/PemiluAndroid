@@ -34,7 +34,7 @@ class PantauConstants {
                 const val USER_VERIFIED_FALSE = "user_verified_false"
             }
             object ByVotes {
-                const val LATEST = "created"
+                const val LATEST = "created_at"
                 const val MOST_VOTES = "cached_votes_up"
             }
         }

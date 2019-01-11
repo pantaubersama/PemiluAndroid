@@ -23,7 +23,7 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
     }
 
     override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
@@ -47,10 +47,10 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 }

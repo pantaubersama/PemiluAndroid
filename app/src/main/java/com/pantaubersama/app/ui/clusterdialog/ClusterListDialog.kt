@@ -75,7 +75,7 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
     private fun setupSearchEditText() {
         et_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, after: Int) {
@@ -134,7 +134,7 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
     }
 
     override fun showError(throwable: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
     interface DialogListener {

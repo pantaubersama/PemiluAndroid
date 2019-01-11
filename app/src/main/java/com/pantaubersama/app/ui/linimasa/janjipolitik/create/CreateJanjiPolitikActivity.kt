@@ -60,11 +60,11 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
 
         et_create_janpol_title.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun onTextChanged(query: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -88,7 +88,7 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
     }
 
     override fun onFailedCreateJanpol() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
     private fun setupEditor() {

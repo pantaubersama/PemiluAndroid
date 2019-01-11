@@ -31,7 +31,7 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
     }
 
     override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -43,11 +43,11 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
         presenter.getUserData()
         question?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun onTextChanged(string: CharSequence?, p1: Int, p2: Int, p3: Int) {

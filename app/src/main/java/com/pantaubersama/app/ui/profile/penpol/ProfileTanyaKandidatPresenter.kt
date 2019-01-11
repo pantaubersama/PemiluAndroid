@@ -12,7 +12,7 @@ class ProfileTanyaKandidatPresenter : BasePresenter<ProfileTanyaKandidatView>() 
 //            data.question = "Apakah ini angka $i ?"
 //            data.user?.name = "Andi $i ?"
 //            data.user?.bio = "I love Indonesia"
-//            data.createdAt = "A seconds ago"
+//            data.createdAtInWord = "A seconds ago"
 //            data.upVoteCount = 100
 //            tanyaKandidatList.add(data)
 //        }
