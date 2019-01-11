@@ -139,4 +139,10 @@ interface PantauOAuthAPI {
         @Part("description") clusterDescription: String,
         @Part image: MultipartBody.Part?
     ): Completable
+
+    @FormUrlEncoded
+    @POST("/v1/clusters/invite")
+    fun inviteToCluster(
+        @Field("emails") email: String
+    ): Completable
 }

@@ -14,10 +14,12 @@ class PantauConstants {
         const val BANNER_JANPOL = "janji politik"
         const val BANNER_TANYA = "tanya"
         const val BANNER_KUIS = "kuis"
+        const val URL = "url"
     }
 
     object Cluster {
         const val CATEGORY = "category"
+        val CLUSTER_URL = "cluster_url"
     }
 
     object TanyaKandidat {
@@ -144,6 +146,8 @@ class PantauConstants {
     object Regex {
         const val KTP =
             "^((1[1-9])|(21)|([37][1-6])|(5[1-4])|(6[1-5])|([8-9][1-2]))[0-9]{2}[0-9]{2}(([0-6][0-9])|(7[0-1]))((0[1-9])|(1[0-2]))([0-9]{2})[0-9]{4}\$"
+        const val EMAIL =
+            "^[A-Za-z][A-Za-z0-9]*([._-]?[A-Za-z0-9]+)@[A-Za-z].[A-Za-z]{0,3}?.[A-Za-z]{0,2}\$"
     }
 
     object Permission {
