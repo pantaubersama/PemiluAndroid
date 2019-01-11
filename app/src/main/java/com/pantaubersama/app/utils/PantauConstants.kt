@@ -14,6 +14,7 @@ class PantauConstants {
         const val BANNER_JANPOL = "janji politik"
         const val BANNER_TANYA = "tanya"
         const val BANNER_KUIS = "kuis"
+        const val URL = "url"
     }
 
     object Cluster {

@@ -18,6 +18,7 @@ import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.profile.cluster.invite.UndangAnggotaActivity
 import com.pantaubersama.app.ui.profile.cluster.requestcluster.RequestClusterActivity
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
@@ -37,7 +38,6 @@ import kotlinx.android.synthetic.main.layout_leave_cluster_confirmation_dialog.*
 import javax.inject.Inject
 
 class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
-
     @Inject
     override lateinit var presenter: ProfilePresenter
 
@@ -334,6 +334,15 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 val intent = Intent(this@ProfileActivity, SettingActivity::class.java)
                 startActivityForResult(intent, PantauConstants.RequestCode.RC_SETTINGS)
             }
+            android.R.id.home -> {
+                if (intent != null) {
+                    val intent = Intent(this@ProfileActivity, HomeActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                } else {
+                    onBackPressed()
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -344,6 +353,16 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
             if (requestCode == PantauConstants.RequestCode.RC_SETTINGS) {
                 presenter.refreshProfile()
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (intent != null) {
+            val intent = Intent(this@ProfileActivity, HomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        } else {
+            super.onBackPressed()
         }
     }
 }
