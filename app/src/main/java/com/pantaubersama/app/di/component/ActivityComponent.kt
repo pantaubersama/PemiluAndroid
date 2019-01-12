@@ -17,6 +17,7 @@ import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisSummaryActivity
+import com.pantaubersama.app.ui.penpol.kuis.result.KuisUserResultActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
@@ -74,4 +75,5 @@ interface ActivityComponent {
     fun inject(kuisResultActivity: KuisResultActivity)
     fun inject(kuisSummaryActivity: KuisSummaryActivity)
     fun inject(undangAnggotaActivity: UndangAnggotaActivity)
+    fun inject(kuisUserResultActivity: KuisUserResultActivity)
 }
