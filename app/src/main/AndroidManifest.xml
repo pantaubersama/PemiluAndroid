@@ -25,6 +25,7 @@
         <meta-data
             android:name="aia-compat-api-min-version"
             android:value="1" />
+
         <provider
             android:name=".utils.GenericFileProvider"
             android:authorities="${applicationId}.provider"
@@ -32,7 +33,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
 
         <activity
@@ -42,6 +43,21 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="${SYMBOLIC_URL}"
+                    android:pathPrefix="/pantaubersama"
+                    android:scheme="https" />
+                <data
+                    android:host="${SYMBOLIC_URL}"
+                    android:pathPrefix="/pantaubersama"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity
@@ -103,24 +119,61 @@
         <activity
             android:name=".ui.profile.verifikasi.step4.Step4VerifikasiActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.profile.verifikasi.step5.Step5VerifikasiActivity" />
-        <activity android:name=".ui.profile.verifikasi.step6.Step6VerifikasiActivity" />
-        <activity android:name=".ui.profile.verifikasi.step7.Step7VerifikasiActivity" />
-        <activity android:name=".ui.profile.verifikasi.finalstep.FinalScreenVerifikasiActivity" />
-        <activity android:name=".ui.profile.setting.SettingActivity" />
-        <activity android:name=".ui.profile.setting.editprofile.EditProfileActivity" />
-        <activity android:name=".ui.profile.setting.ubahsandi.UbahSandiActivity" />
-        <activity android:name=".ui.profile.setting.ubahdatalapor.UbahDataLaporActivity" />
-        <activity android:name=".ui.profile.setting.badge.BadgeActivity" />
-        <activity android:name=".ui.profile.setting.clusterundang.ClusterUndangActivity" />
-        <activity android:name=".ui.profile.setting.panduankomunitas.PanduanKomunitasActivity" />
-        <activity android:name=".ui.profile.setting.tentangapp.TentangAppActivity" />
-        <activity android:name=".ui.profile.cluster.requestcluster.RequestClusterActivity" />
-        <activity android:name=".ui.profile.cluster.categery.ClusterCategoryActivity" />
-        <activity android:name=".ui.profile.connect.ConnectActivity" />
-        <activity android:name=".ui.note.CatatanPilihanActivity" />
-        <activity android:name=".ui.profile.cluster.UndangAnggotaActivity" />
-        <activity android:name=".ui.profile.setting.buatprofil.BuatProfilActivity"></activity>
+        <activity
+            android:name=".ui.profile.verifikasi.step5.Step5VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.step6.Step6VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.step7.Step7VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.finalstep.FinalScreenVerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.editprofile.EditProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.ubahsandi.UbahSandiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.ubahdatalapor.UbahDataLaporActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.badge.BadgeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.clusterundang.ClusterUndangActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.panduankomunitas.PanduanKomunitasActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.tentangapp.TentangAppActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.cluster.requestcluster.RequestClusterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.cluster.categery.ClusterCategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.connect.ConnectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.note.CatatanPilihanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.cluster.invite.UndangAnggotaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.buatprofil.BuatProfilActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.penpol.kuis.result.KuisUserResultActivity"></activity>
     </application>
 
 </manifest>

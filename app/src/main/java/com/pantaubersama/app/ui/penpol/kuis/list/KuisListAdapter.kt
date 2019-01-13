@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.penpol.kuis.list
 
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,8 @@ import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.data.model.kuis.KuisUserResult
 import com.pantaubersama.app.data.model.kuis.KuisState
+import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
+import com.pantaubersama.app.ui.penpol.kuis.result.KuisUserResultActivity
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_BANNER
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_KUIS_ITEM
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_KUIS_RESULT
@@ -68,11 +71,15 @@ class KuisListAdapter : BaseRecyclerAdapter() {
             presiden_total_kuis.text = result.meta.run { "$finished dari $total Kuis" }
             tv_kuis_result.text = "%.2f%% (%s)".format(result.percentage, result.team.title)
             iv_kuis_result.loadUrl(result.team.avatar)
+            btn_share_result.setOnClickListener {
+                val intent = Intent(containerView.context, KuisUserResultActivity::class.java)
+                containerView.context.startActivity(intent)
+            }
         }
     }
 
     inner class BannerViewHolder(
-        override val containerView: View?
+            override val containerView: View?
     ) : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
         fun bind(item: BannerInfo) {
             tv_banner_text.text = item.body
