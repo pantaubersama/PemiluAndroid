@@ -306,24 +306,29 @@
                     android:background="@color/gray_3" />
 
                 <LinearLayout
+                    android:id="@+id/connect_fb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_outline_blue_fb"
                     android:clickable="true"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
                     <ImageView
+                        android:id="@+id/facebook_login_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_facebook" />
+                        android:src="@drawable/facebook" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/facebook_login_text"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:fontFamily="@font/lato_bold"
-                        android:text="John Doe"
-                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:text="@string/label_connect_with_fb"
+                        android:textColor="@color/white"
                         android:textSize="12sp" />
 
                 </LinearLayout>

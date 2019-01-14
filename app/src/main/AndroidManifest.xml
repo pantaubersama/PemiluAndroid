@@ -35,7 +35,22 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/facebook_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"
             android:screenOrientation="portrait">
@@ -51,11 +66,11 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="${SYMBOLIC_URL}"
+                    android:host="@string/symbolic_url"
                     android:pathPrefix="/pantaubersama"
                     android:scheme="https" />
                 <data
-                    android:host="${SYMBOLIC_URL}"
+                    android:host="@string/symbolic_url"
                     android:pathPrefix="/pantaubersama"
                     android:scheme="http" />
             </intent-filter>

@@ -26,4 +26,46 @@ class SettingPresenter @Inject constructor(
     fun getProfile() {
         view?.onSuccessGetProfile(profileInteractor.getProfile())
     }
+
+    fun connectFacebook(accountType: String, token: String?) {
+        view?.showLoading()
+        disposables.add(
+            loginInteractor
+                .connectFacebook(accountType, token)
+                .subscribe(
+                    {
+                        view?.dismissLoading()
+                        view?.showConnectedToFacebookAlert()
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showError(it)
+                        view?.showFailedToConnectFacebookAlert()
+                    }
+                )
+        )
+    }
+
+    fun connectTwitter(accountType: String, token: String, secret: String) {
+        view?.showLoading()
+        disposables.add(
+            loginInteractor
+                .connectTwitter(
+                    accountType,
+                    token,
+                    secret
+                )
+                .subscribe(
+                    {
+                        view?.dismissLoading()
+                        view?.showConnectedToTwitterAlert()
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showError(it)
+                        view?.showFailedToConnectTwitterAlert()
+                    }
+                )
+        )
+    }
 }
