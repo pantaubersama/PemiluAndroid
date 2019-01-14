@@ -60,6 +60,7 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter() {
             } else {
                 riv_janpol_image.visibleIf(false)
             }
+            tv_janpol_date.text = item.createdAtInWord?.id
 
             ll_janpol_content.setOnClickListener { listener?.onClickJanPolContent(item, adapterPosition) }
             iv_share_button.setOnClickListener { listener?.onClickShare(item) }
