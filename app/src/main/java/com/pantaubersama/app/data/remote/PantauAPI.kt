@@ -92,11 +92,24 @@ interface PantauAPI {
         @Query("class_name") className: String
     ): Completable
 
-    @GET("pendidikan_politik/v1/quizzes")
-    fun getKuisList(
+    @GET("pendidikan_politik/v1/quizzes/participated")
+    fun getKuisInProgress(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
-        @Query("filter_by") filterBy: String? = null
+        @Query("filter_by") filterBy: String = "in_progress"
+    ): Single<KuisResponse>
+
+    @GET("pendidikan_politik/v1/quizzes/participated")
+    fun getKuisFinished(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("filter_by") filterBy: String = "finished"
+    ): Single<KuisResponse>
+
+    @GET("pendidikan_politik/v1/quizzes")
+    fun getKuisNotParticipating(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
     ): Single<KuisResponse>
 
     @GET("pendidikan_politik/v1/me/quizzes")

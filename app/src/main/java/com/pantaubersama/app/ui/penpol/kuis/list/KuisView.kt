@@ -10,4 +10,5 @@ interface KuisView : BaseView {
     fun showLoadingMore()
     fun dismissLoadingMore()
     fun showMoreKuis(list: List<KuisItem>)
+    fun setNoMoreItems()
 }
