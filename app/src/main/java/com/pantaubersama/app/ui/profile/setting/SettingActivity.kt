@@ -11,9 +11,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
+import com.facebook.*
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -39,9 +37,12 @@ import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.logout_dialog.view.*
 import kotlinx.android.synthetic.main.verified_layout.*
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
+import com.facebook.GraphResponse
+import com.facebook.GraphRequest
+import org.json.JSONObject
+
 
 class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
@@ -75,7 +76,37 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_setting), R.color.white, 4f)
         onClickAction()
-        AppEventsLogger.activateApp(this)
+        setupFacebookLogin()
+        getFacebookLoginSatus()
+        presenter.getProfile()
+    }
+
+    private fun getFacebookLoginSatus() {
+        if (AccessToken.getCurrentAccessToken() != null) {
+            val request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken()
+            ) { me, response ->
+                facebook_login_text.text = me?.getString("name")
+                val request = GraphRequest.newGraphPathRequest(
+                    AccessToken.getCurrentAccessToken(),
+                    "/"+me.getString("id")+"/picture"
+                ) {
+                    try {
+                        facebook_login_icon.loadUrl(it.jsonObject.getJSONObject("data").getString("url"))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                val params = Bundle()
+                params.putBoolean("redirect", false)
+                request.parameters = params
+                request.executeAsync()
+            }
+            request.executeAsync()
+        }
+    }
+
+    private fun setupFacebookLogin() {
         callbackManager = CallbackManager.Factory.create()
         permissions = ArrayList()
         permissions.add("public_profile")
@@ -98,7 +129,6 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         connect_fb.setOnClickListener {
             LoginManager.getInstance().logInWithReadPermissions(this@SettingActivity, permissions)
         }
-        presenter.getProfile()
     }
 
     override fun onSuccessGetProfile(profile: Profile) {

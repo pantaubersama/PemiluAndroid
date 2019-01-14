@@ -39,7 +39,10 @@ class ConnectActivity : BaseActivity<ConnectPresenter>(), ConnectView {
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(false, getString(R.string.title_connet), R.color.white, 4f)
-        AppEventsLogger.activateApp(this)
+        setupFacebookLogin()
+    }
+
+    private fun setupFacebookLogin() {
         callbackManager = CallbackManager.Factory.create()
         permissions = ArrayList()
         permissions.add("public_profile")
