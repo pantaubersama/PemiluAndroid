@@ -4,6 +4,7 @@ import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.kuis.* // ktlint-disable
 import com.pantaubersama.app.data.remote.PantauAPI
 import com.pantaubersama.app.data.remote.exception.ErrorException
+import com.pantaubersama.app.utils.PantauConstants.Kuis.Filter
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -19,7 +20,11 @@ class KuisInteractor @Inject constructor(
     }
 
     fun getKuisList(page: Int, perPage: Int, filterBy: String): Single<List<KuisItem>> {
-        return pantauAPI.getKuisList(page, perPage, filterBy)
+        return when (filterBy) {
+            Filter.BELUM_SELESAI -> pantauAPI.getKuisInProgress(page, perPage)
+            Filter.SELESAI -> pantauAPI.getKuisFinished(page, perPage)
+            else -> pantauAPI.getKuisNotParticipating(page, perPage)
+        }
             .subscribeOn(rxSchedulers.io())
             .map { it.data.kuisList }
             .observeOn(rxSchedulers.mainThread())
