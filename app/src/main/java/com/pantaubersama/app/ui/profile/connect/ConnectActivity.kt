@@ -2,10 +2,7 @@ package com.pantaubersama.app.ui.profile.connect
 
 import android.content.Intent
 import android.os.Bundle
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.FacebookSdk
+import com.facebook.*
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -14,6 +11,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_connect.*
 import timber.log.Timber
 import java.util.*
@@ -39,6 +37,7 @@ class ConnectActivity : BaseActivity<ConnectPresenter>(), ConnectView {
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(false, getString(R.string.title_connet), R.color.white, 4f)
+        getFacebookLoginSatus()
         setupFacebookLogin()
     }
 
@@ -67,6 +66,31 @@ class ConnectActivity : BaseActivity<ConnectPresenter>(), ConnectView {
         }
     }
 
+    private fun getFacebookLoginSatus() {
+        if (AccessToken.getCurrentAccessToken() != null) {
+            val request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken()
+            ) { me, response ->
+                facebook_login_text.text = me?.getString("name")
+                val request = GraphRequest.newGraphPathRequest(
+                    AccessToken.getCurrentAccessToken(),
+                    "/"+me.getString("id")+"/picture"
+                ) {
+                    try {
+                        facebook_login_icon.loadUrl(it.jsonObject.getJSONObject("data").getString("url"))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                val params = Bundle()
+                params.putBoolean("redirect", false)
+                request.parameters = params
+                request.executeAsync()
+            }
+            request.executeAsync()
+        }
+    }
+
     override fun setLayout(): Int {
         return R.layout.activity_connect
     }
@@ -86,6 +110,7 @@ class ConnectActivity : BaseActivity<ConnectPresenter>(), ConnectView {
 
     override fun showConnectedToFacebookAlert() {
         ToastUtil.show(this@ConnectActivity, "Terhubung dengan Facebook")
+        getFacebookLoginSatus()
     }
 
     override fun showFailedToConnectFacebookAlert() {

@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.facebook.*
-import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -188,6 +187,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     override fun showConnectedToFacebookAlert() {
         ToastUtil.show(this@SettingActivity, "Terhubung dengan Facebook")
+        getFacebookLoginSatus()
     }
 
     override fun showFailedToConnectFacebookAlert() {
