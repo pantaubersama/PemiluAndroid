@@ -2,6 +2,7 @@ package com.pantaubersama.app.utils
 
 import android.content.Context
 import android.content.Intent
+import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
@@ -17,16 +18,16 @@ class ShareUtil() {
             shareIntent.type = "text/plain"
             val resInfo = context.packageManager?.queryIntentActivities(shareIntent, 0)
             val sharedItem: String = "" + when (item) {
-                is Pertanyaan -> "share/tk/" + item.id
-                is FeedsItem -> "share/pilpres/" + item.id
-                is JanjiPolitik -> "share/janpol/" + item.id
+                is Pertanyaan -> "\"${item.body} – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_TANYA_PATH + item.id
+                is FeedsItem -> "\"${item.source?.text} – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_FEEDS_PATH + item.id
+                is JanjiPolitik -> "\"${item.title}\" – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_JANPOL_PATH + item.id
                 else -> ""
             }
             if (!resInfo!!.isEmpty()) {
                 for (resolveInfo in resInfo) {
                     val sendIntent = Intent(Intent.ACTION_SEND)
                     sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Pantau")
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, "pantau.co.id/$sharedItem")
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, sharedItem)
                     sendIntent.type = "text/plain"
                     if (!resolveInfo.activityInfo.packageName.contains("pantaubersama")) {
                         sendIntent.`package` = resolveInfo.activityInfo.packageName

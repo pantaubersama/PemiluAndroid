@@ -59,6 +59,8 @@ class PantauConstants {
         const val EXTRA_JANPOL_ID = "EXTRA_JANPOL_ID"
         const val EXTRA_JANPOL_ITEM = "EXTRA_JANPOL_ITEM"
         const val EXTRA_ITEM_POSITION = "EXTRA_ITEM_POSITION"
+        const val EXTRA_INTENT_TYPE = "EXTRA_INTENT_TYPE"
+        const val EXTRA_INTENT_TYPE_SHARE = "EXTRA_INTENT_TYPE_SHARE"
     }
 
     object RequestCode {
@@ -163,5 +165,11 @@ class PantauConstants {
     object CONNECT {
         const val FACEBOOK = "facebook"
         const val TWITTER = "twitter"
+    }
+
+    object Share {
+        const val SHARE_FEEDS_PATH = "share/pilpres/"
+        const val SHARE_JANPOL_PATH = "share/janjipolitik/"
+        const val SHARE_TANYA_PATH = "share/tanya/"
     }
 }

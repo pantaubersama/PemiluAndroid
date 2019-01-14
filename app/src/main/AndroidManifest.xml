@@ -20,7 +20,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:theme">
         <meta-data
             android:name="aia-compat-api-min-version"
@@ -52,6 +51,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/AppTheme.Splash"
             android:name=".ui.splashscreen.SplashScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -73,6 +73,21 @@
                     android:host="@string/symbolic_url"
                     android:pathPrefix="/pantaubersama"
                     android:scheme="http" />
+            </intent-filter>
+
+            <intent-filter android:label="@string/label_intent_filter_share">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="@string/pantau_base_url_no_scheme"
+                    android:pathPrefix="/share"
+                    android:scheme="https"/>
+
+                <data android:host="@string/pantau_base_url_no_scheme"
+                    android:pathPrefix="/share"
+                    android:scheme="http"/>
+
             </intent-filter>
         </activity>
         <activity

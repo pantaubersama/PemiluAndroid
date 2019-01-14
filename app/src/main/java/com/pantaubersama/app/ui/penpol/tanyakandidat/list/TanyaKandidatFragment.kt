@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_delete_confirmation_dialog.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 import kotlin.math.roundToInt
 

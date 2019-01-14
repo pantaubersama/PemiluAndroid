@@ -6,14 +6,17 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_JANPOL_PATH
 import javax.inject.Inject
 
 class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreenView {
     private var urlAction: String? = null
     private var urlData: String? = null
+    private var urlPath: String? = null
 
     @Inject
     override lateinit var presenter: SplashScreenPresenter
@@ -30,6 +33,7 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
         if (intent != null) {
             urlAction = intent.action
             urlData = intent.data?.toString()
+            urlPath = intent.data?.path
         }
     }
 
@@ -38,19 +42,32 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
     }
 
     override fun goToHome() {
-        if (urlData != null) {
-            urlData?.let {
-                if (it.contains("invitation")) {
-                    val intent = Intent(this@SplashScreenActivity, ProfileActivity::class.java)
-                    intent.putExtra(PantauConstants.URL, urlData)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
-                }
+        when {
+            urlPath.isNullOrEmpty() -> {
+                val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                overridePendingTransition(android.R.anim.fade_out, android.R.anim.fade_in)
             }
-        } else {
-            val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
+            urlPath?.contains("invitation")!! -> {
+                val intent = Intent(this@SplashScreenActivity, ProfileActivity::class.java)
+                intent.putExtra(PantauConstants.URL, urlData)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            }
+            urlPath?.contains(SHARE_JANPOL_PATH)!! && !urlPath?.substringAfter(SHARE_JANPOL_PATH).isNullOrEmpty() -> {
+                val janpolId = urlPath?.substringAfter(SHARE_JANPOL_PATH)
+                val intent = DetailJanjiPolitikActivity.setIntent(this, janpolId!!)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+            }
+            else -> {
+                val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                overridePendingTransition(android.R.anim.fade_out, android.R.anim.fade_in)
+            }
         }
     }
 
