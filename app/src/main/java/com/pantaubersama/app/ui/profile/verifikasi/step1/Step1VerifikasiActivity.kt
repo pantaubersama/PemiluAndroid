@@ -60,7 +60,6 @@ class Step1VerifikasiActivity : BaseActivity<Step1VerifikasiPresenter>(), Step1V
                     ktp_number.error = "format nomor KTP tidak valid"
                 }
             }
-
         })
         ok_button.setOnClickListener {
             if (isInputValid) {

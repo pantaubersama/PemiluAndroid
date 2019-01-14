@@ -17,7 +17,7 @@ class DetailJanjiPolitikPresenter @Inject constructor(
     fun deleteJanjiPolitik(id: String) {
         view?.showLoading()
         disposables.add(janPolInteractor.deleteJanjiPolitik(id)
-            .doOnComplete {  }
+            .doOnComplete { }
             .subscribe(
                 {
                     view?.dismissLoading()

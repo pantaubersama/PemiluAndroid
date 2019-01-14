@@ -11,7 +11,6 @@ import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.data.model.kuis.KuisUserResult
 import com.pantaubersama.app.data.model.kuis.KuisState
-import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisUserResultActivity
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_BANNER
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_KUIS_ITEM
@@ -79,7 +78,7 @@ class KuisListAdapter : BaseRecyclerAdapter() {
     }
 
     inner class BannerViewHolder(
-            override val containerView: View?
+        override val containerView: View?
     ) : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
         fun bind(item: BannerInfo) {
             tv_banner_text.text = item.body
