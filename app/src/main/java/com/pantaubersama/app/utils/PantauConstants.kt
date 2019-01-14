@@ -20,6 +20,11 @@ class PantauConstants {
     object Cluster {
         const val CATEGORY = "category"
         val CLUSTER_URL = "cluster_url"
+        val CLUSTER_ID = "cluster_id"
+        val INVITE_LINK_ACTIVE = "invite_link_active"
+        object REQUEST_CODE {
+            const val REQUEST_CLUSTER = 2001
+        }
     }
 
     object TanyaKandidat {

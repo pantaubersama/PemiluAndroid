@@ -145,4 +145,10 @@ interface PantauOAuthAPI {
     fun inviteToCluster(
         @Field("emails") email: String
     ): Completable
+
+    @FormUrlEncoded
+    @POST("/v1/clusters/{id}/magic_link")
+    fun enableDisableCluster(
+        @Path("id") clusterId: String,
+        @Field("enable") disable: Boolean): Completable
 }
