@@ -118,14 +118,15 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
                                 dialog.dismiss()
                             }
                             R.id.delete_tanya_kandidat_item_action -> {
-                                val deleteDialog = DeleteConfimationDialog(context!!, getString(R.string.txt_delete_item_ini), position, item.id!!)
+                                val deleteDialog = DeleteConfimationDialog(
+                                    context!!, getString(R.string.txt_delete_item_ini), position, item.id!!,
+                                    listener = object : DeleteConfimationDialog.DialogListener {
+                                        override fun onClickDeleteItem(id: String, position: Int) {
+                                            showProgressDialog(getString(R.string.menghapus_janji_politik))
+                                            presenter.deleteJanjiPolitik(id, position)
+                                        }
+                                    })
                                 deleteDialog.show()
-                                deleteDialog.listener = object : DeleteConfimationDialog.DialogListener {
-                                    override fun onClickDeleteItem(id: String, position: Int) {
-                                        showProgressDialog(getString(R.string.menghapus_janji_politik))
-                                        presenter.deleteJanjiPolitik(id, position)
-                                    }
-                                }
                                 dialog.dismiss()
                             }
                         }

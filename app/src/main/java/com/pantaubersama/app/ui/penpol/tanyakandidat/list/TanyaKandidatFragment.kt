@@ -23,7 +23,9 @@ import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
+import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
+import com.pantaubersama.app.utils.CopyUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
@@ -113,7 +115,15 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                                 dialog.dismiss()
                             }
                             R.id.delete_tanya_kandidat_item_action -> {
-                                showDeleteConfirmationDialog(item.id!!, position)
+                                val deleteDialog = DeleteConfimationDialog(
+                                    context!!, getString(R.string.txt_delete_item_ini),
+                                    listener = object : DeleteConfimationDialog.DialogListener {
+                                        override fun onClickDeleteItem(p0: String, p1: Int) {
+                                            adapter?.listener?.onClickDeleteItem(item.id!!, position)
+                                        }
+                                })
+                                deleteDialog.show()
+
                                 dialog.dismiss()
                             }
                         }
@@ -138,11 +148,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             }
 
             override fun onClickCopyUrl(id: String?) {
-                val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val copyUri = Uri.parse("pantau.co.id/" + "share/tk/" + id)
-                val clip = ClipData.newUri(activity?.contentResolver, "URI", copyUri)
-                clipboard.primaryClip = clip
-                ToastUtil.show(context!!, "Copied to clipboard")
+                CopyUtil.copyTanyaKandidat(context!!, id!!)
             }
 
             override fun onClickLapor(id: String?) {
@@ -275,37 +281,5 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         } else {
             recycler_view.scrollToPosition(0)
         }
-    }
-
-    private fun showDeleteConfirmationDialog(id: String, position: Int) {
-        val dialog = Dialog(context)
-        dialog.setContentView(R.layout.layout_delete_confirmation_dialog)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setOnKeyListener { _, keyCode, _ ->
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                dialog.dismiss()
-                true
-            } else {
-                false
-            }
-        }
-
-        dialog.setCanceledOnTouchOutside(true)
-        val lp = WindowManager.LayoutParams()
-        val window = dialog.window
-        lp.copyFrom(window?.attributes)
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        window?.attributes = lp
-        lp.gravity = Gravity.CENTER
-        window?.attributes = lp
-        dialog.yes_button.setOnClickListener {
-            adapter?.listener?.onClickDeleteItem(id, position)
-            dialog.dismiss()
-        }
-        dialog.no_button.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
     }
 }

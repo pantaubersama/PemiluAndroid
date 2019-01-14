@@ -168,5 +168,9 @@ class PantauConstants {
         const val SHARE_FEEDS_PATH = "share/pilpres/"
         const val SHARE_JANPOL_PATH = "share/janjipolitik/"
         const val SHARE_TANYA_PATH = "share/tanya/"
+        const val SHARE_KUIS_PATH = "share/kuis/"
+        const val SHARE_HASIL_KUIS_PATH = "share/hasilkuis/"
+        const val SHARE_KECENDERUNGAN_PATH = "share/kecenderungan/"
+        const val SHARE_BADGE_PATH = "share/badge/"
     }
 }

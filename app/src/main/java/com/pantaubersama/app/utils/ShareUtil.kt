@@ -4,13 +4,14 @@ import android.content.Context
 import android.content.Intent
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
+import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
 
 /**
  * @author edityomurti on 25/12/2018 20:03
  */
-class ShareUtil() {
+class ShareUtil{
     companion object {
         fun shareItem(context: Context, item: Any?) {
             val targetedShareIntents: MutableList<Intent> = ArrayList()
@@ -21,6 +22,7 @@ class ShareUtil() {
                 is Pertanyaan -> "\"${item.body} – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_TANYA_PATH + item.id
                 is FeedsItem -> "\"${item.source?.text} – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_FEEDS_PATH + item.id
                 is JanjiPolitik -> "\"${item.title}\" – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_JANPOL_PATH + item.id
+                is KuisItem -> "\""
                 else -> ""
             }
             if (!resInfo!!.isEmpty()) {

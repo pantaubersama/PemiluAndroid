@@ -95,6 +95,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
                             R.id.action_open_in_app -> {
                                 val openInTwitterApp = Intent(Intent.ACTION_VIEW, Uri.parse("twitter://status?status_id=${item.source?.id}"))
                                 context!!.startActivity(openInTwitterApp)
+                                dialog.dismiss()
                             }
                         }
                     }
