@@ -13,11 +13,12 @@ import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_BANNER
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_FEEDS
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_pilpres_tweet.*
 
-class PilpresAdapter : BaseRecyclerAdapter() {
+class PilpresAdapter(private val isTwitterAvailable: Boolean) : BaseRecyclerAdapter() {
 
     var listener: PilpresAdapter.AdapterListener? = null
 
@@ -57,6 +58,8 @@ class PilpresAdapter : BaseRecyclerAdapter() {
             iv_team_avatar.loadUrl(item.team?.avatar, R.drawable.ic_avatar_placeholder)
             tv_team_name.text = itemView.context.getString(R.string.txt_disematkan_dari) + " " + item.team?.title
             rl_item_pilpres_tweet.setOnClickListener { listener?.onClickTweetContent(item) }
+
+            iv_tweet_option.visibleIf(isTwitterAvailable)
             iv_tweet_option.setOnClickListener { listener?.onClickTweetOption(item) }
             tv_tweet_date.text = item.createdAtInWord?.id
         }

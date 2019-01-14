@@ -102,6 +102,8 @@ class PantauConstants {
         const val URL_PANTAU_BERSAMA_TWITTER = "https://twitter.com/pantaubersama"
         const val URL_PANTAU_BERSAMA_INSTAGRAM = "https://www.instagram.com/pantaubersama/"
         const val URL_PANTAU_BERSAMA_FACEBOOK = "https://www.facebook.com/pages/category/Internet-Company/Pantau-Bersama-735930099884846/"
+
+        const val INVITATION_PATH = "invitation"
     }
 
     object Kuis {

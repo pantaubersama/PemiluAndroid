@@ -1,7 +1,5 @@
 package com.pantaubersama.app.ui.linimasa.janjipolitik.detail
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -11,16 +9,15 @@ import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.janjipolitik.Creator
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
-import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.CopyUtil
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_JANPOL_ID
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_JANPOL_ITEM
 import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_ITEM_JANPOL
 import com.pantaubersama.app.utils.ShareUtil
-import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -207,10 +204,7 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
     }
 
     private fun onClickCopyUrl(id: String) {
-        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, "janpol id : $id")
-        clipboard.primaryClip = clip
-        ToastUtil.show(this, "janji politik telah disalin")
+        CopyUtil.copyJanpol(this, id)
     }
 
     private fun onClickShare() {
@@ -219,7 +213,7 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
 
     override fun onBackPressed() {
         if (this.isTaskRoot) {
-            startActivity(Intent(this, HomeActivity::class.java))
+            startActivity(Intent(this, SplashScreenActivity::class.java))
             finish()
         } else {
             finish()

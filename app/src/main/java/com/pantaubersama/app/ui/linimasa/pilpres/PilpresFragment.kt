@@ -1,9 +1,6 @@
 package com.pantaubersama.app.ui.linimasa.pilpres
 
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -21,9 +18,11 @@ import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.ChromeTabUtil
-import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.CopyUtil
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_PILPRES
+import com.pantaubersama.app.utils.PantauConstants.Networking.BASE_TWEET_URL
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_BANNER_PILPRES
 import com.pantaubersama.app.utils.ShareUtil
-import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
@@ -66,28 +65,27 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
     fun setupRecyclerPilpres() {
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        adapter = PilpresAdapter()
+        adapter = PilpresAdapter(isTwitterAppInstalled())
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
         adapter.listener = object : PilpresAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.EXTRA_TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.RC_BANNER_PILPRES)
+                startActivityForResult(BannerInfoActivity.setIntent(context!!, EXTRA_TYPE_PILPRES, bannerInfo), RC_BANNER_PILPRES)
             }
 
             override fun onClickTweetOption(item: FeedsItem) {
                 val dialog = OptionDialog(context!!, R.layout.layout_option_dialog_pilpres_tweet)
-                if (!isTwitterAppInstalled()) {
-                    dialog.removeItem(R.id.action_open_in_app)
-                }
+//                if (!isTwitterAppInstalled()) {
+//                    dialog.removeItem(R.id.action_open_in_app)
+//                }
+                dialog.removeItem(R.id.action_copy_url) /* action copy & share dihilangkan @edityo 14/01/19 */
+                dialog.removeItem(R.id.action_share)
                 dialog.show()
                 dialog.listener = object : OptionDialog.DialogListener {
                     override fun onClick(viewId: Int) {
                         when (viewId) {
                             R.id.action_copy_url -> {
-                                val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                                val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, "tweet id : ${item.id}")
-                                clipboard.primaryClip = clip
-                                ToastUtil.show(context!!, "tweet copied to clipboard")
+                                CopyUtil.copyFeedsItem(context!!, item.id!!)
                                 dialog.dismiss()
                             }
                             R.id.action_share -> {
@@ -104,7 +102,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
             }
 
             override fun onClickTweetContent(item: FeedsItem) {
-                ChromeTabUtil(context!!).forceLoadUrl(PantauConstants.Networking.BASE_TWEET_URL + item.source?.id)
+                ChromeTabUtil(context!!).forceLoadUrl(BASE_TWEET_URL + item.source?.id)
             }
 
             override fun onClickShare(item: FeedsItem) {
@@ -198,7 +196,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
     }
 
     private fun isTwitterAppInstalled(): Boolean {
-        val pkManager = activity?.getPackageManager()
+        val pkManager = activity?.packageManager
         var isInstalled = false
         try {
             val pkgInfo = pkManager?.getPackageInfo("com.twitter.android", 0)

@@ -39,7 +39,9 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it, BuildConfig.SYMBOLIC_REDIRECT_URI) }
+        if (!url.isNullOrEmpty()) {
+            url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it, BuildConfig.SYMBOLIC_REDIRECT_URI) }
+        }
         symbolicScope = ArrayList()
         symbolic_login_button.configure(
             SymbolicConfig(

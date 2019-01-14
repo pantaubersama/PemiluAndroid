@@ -9,7 +9,10 @@ import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.profile.ProfileActivity
+import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Networking.INVITATION_PATH
+import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_FEEDS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_JANPOL_PATH
 import javax.inject.Inject
 
@@ -48,12 +51,14 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 overridePendingTransition(android.R.anim.fade_out, android.R.anim.fade_in)
+                finish()
             }
-            urlPath?.contains("invitation")!! -> {
+            urlPath?.contains(INVITATION_PATH)!! -> {
                 val intent = Intent(this@SplashScreenActivity, ProfileActivity::class.java)
                 intent.putExtra(PantauConstants.URL, urlData)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
+                finish()
             }
             urlPath?.contains(SHARE_JANPOL_PATH)!! && !urlPath?.substringAfter(SHARE_JANPOL_PATH).isNullOrEmpty() -> {
                 val janpolId = urlPath?.substringAfter(SHARE_JANPOL_PATH)
@@ -62,20 +67,26 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 startActivity(intent)
                 finish()
             }
+            urlPath?.contains(SHARE_FEEDS_PATH)!! && !urlPath?.substringAfter(SHARE_FEEDS_PATH).isNullOrEmpty() -> {
+                ChromeTabUtil(this).forceLoadUrl(urlData)
+                finish()
+            }
             else -> {
                 val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
-                overridePendingTransition(android.R.anim.fade_out, android.R.anim.fade_in)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                finish()
             }
         }
     }
 
     override fun goToLogin() {
         val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
-        urlData?.let { intent.putExtra(PantauConstants.URL, it) }
+        urlData?.let { if (it.contains(INVITATION_PATH)) intent.putExtra(PantauConstants.URL, it) }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+        finish()
     }
 
     override fun setLayout(): Int {

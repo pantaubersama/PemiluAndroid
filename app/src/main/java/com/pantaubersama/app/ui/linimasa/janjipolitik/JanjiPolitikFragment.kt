@@ -1,9 +1,6 @@
 package com.pantaubersama.app.ui.linimasa.janjipolitik
 
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -21,13 +18,13 @@ import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikA
 import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
+import com.pantaubersama.app.utils.CopyUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_CREATE_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_ITEM_JANPOL
 import com.pantaubersama.app.utils.ShareUtil
-import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_janji_politik.*
@@ -141,10 +138,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             }
 
             override fun onClickCopyUrl(id: String?) {
-                val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, "janpol id : $id")
-                clipboard.primaryClip = clip
-                ToastUtil.show(context!!, "janji politik telah disalin")
+                CopyUtil.copyJanpol(context!!, id!!)
             }
 
             override fun onClickLapor(id: String?) {
