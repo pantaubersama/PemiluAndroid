@@ -49,7 +49,7 @@ ext {
             rxbinding               : "2.0.0",
             compressor              : "2.1.0",
             facebook_sdk            : "[4,5)",
-            twitter_sdk             : "3.3.0@aar"
+            twitter_sdk             : "3.1.1"
     ]
 
 
@@ -121,5 +121,5 @@ ext {
     compressor = "id.zelory:compressor:$versions.compressor"
 
     facebook_sdk = "com.facebook.android:facebook-android-sdk:$versions.facebook_sdk"
-    twitter_sdk = "com.twitter.sdk.android:twitter:$versions.twitter_sdk"
+    twitter_sdk = "com.twitter.sdk.android:twitter-core:$versions.twitter_sdk"
 }

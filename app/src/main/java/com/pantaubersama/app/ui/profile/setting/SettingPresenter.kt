@@ -45,4 +45,27 @@ class SettingPresenter @Inject constructor(
                 )
         )
     }
+
+    fun connectTwitter(accountType: String, token: String, secret: String) {
+        view?.showLoading()
+        disposables.add(
+            loginInteractor
+                .connectTwitter(
+                    accountType,
+                    token,
+                    secret
+                )
+                .subscribe(
+                    {
+                        view?.dismissLoading()
+                        view?.showConnectedToTwitterAlert()
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showError(it)
+                        view?.showFailedToConnectTwitterAlert()
+                    }
+                )
+        )
+    }
 }

@@ -42,8 +42,17 @@ class LoginInteractor @Inject constructor(
     }
 
     fun connectFacebook(accountType: String, token: String?): Completable {
-        return apiWrapper.getPantauOAuthApi()
-            .connectFacebook(accountType, token)
+        return apiWrapper
+            .getPantauOAuthApi()
+            .connectSocialMedia(accountType, token)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun connectTwitter(accountType: String, token: String, secret: String): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .connectTwitter(accountType, token, secret)
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }

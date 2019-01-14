@@ -8,4 +8,6 @@ interface SettingView : BaseView {
     fun onSuccessGetProfile(profile: Profile)
     fun showConnectedToFacebookAlert()
     fun showFailedToConnectFacebookAlert()
+    fun showConnectedToTwitterAlert()
+    fun showFailedToConnectTwitterAlert()
 }

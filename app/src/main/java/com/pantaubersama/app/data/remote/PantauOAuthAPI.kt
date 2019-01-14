@@ -150,7 +150,8 @@ interface PantauOAuthAPI {
     @POST("/v1/clusters/{id}/magic_link")
     fun enableDisableCluster(
         @Path("id") clusterId: String,
-        @Field("enable") disable: Boolean): Completable
+        @Field("enable") disable: Boolean
+    ): Completable
 
     @FormUrlEncoded
     @PUT("/v1/me/username")
@@ -160,10 +161,18 @@ interface PantauOAuthAPI {
 
     @FormUrlEncoded
     @POST("/v1/accounts/connect")
-    fun connectFacebook(
+    fun connectSocialMedia(
         @Field("account_type")
         accountType: String,
         @Field("oauth_access_token")
         token: String?
+    ): Completable
+
+    @FormUrlEncoded
+    @POST("/v1/accounts/connect")
+    fun connectTwitter(
+        @Field("account_type") accountType: String,
+        @Field("oauth_access_token") token: String,
+        @Field("oauth_access_token_secret") secret: String
     ): Completable
 }

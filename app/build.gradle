@@ -36,6 +36,8 @@ android {
             resValue("string", "symbolic_url", SYMBOLIC_URL_NO_SCHEME_PROD)
             resValue("string", "facebook_app_id", FACEBOOK_APP_ID_PROD)
             resValue("string", "facebook_login_protocol_scheme", FACEBOOK_LOGIN_PROTOCOL_SCHEME_PROD)
+            resValue("string", "twitter_api_key", TWITTER_API_KEY_PROD)
+            resValue("string", "twitter_secret_key", TWITTER_SECRET_PROD)
         }
         debug {
             applicationIdSuffix ".staging"
@@ -51,6 +53,8 @@ android {
             resValue("string", "symbolic_url", SYMBOLIC_URL_NO_SCHEME_STAG)
             resValue("string", "facebook_app_id", FACEBOOK_APP_ID_STAG)
             resValue("string", "facebook_login_protocol_scheme", FACEBOOK_LOGIN_PROTOCOL_SCHEME_STAG)
+            resValue("string", "twitter_api_key", TWITTER_API_KEY_STAG)
+            resValue("string", "twitter_secret_key", TWITTER_SECRET_STAG)
         }
 
         buildTypes.each {
