@@ -76,7 +76,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     private fun setupRecyclerJanpol() {
-        val userId = presenter.getUserId()
+        val myProfile = presenter.getMyProfile()
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         adapter = JanjiPolitikAdapter()
         recycler_view.layoutManager = layoutManager
@@ -93,7 +93,11 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
             override fun onClickJanpolOption(item: JanjiPolitik, position: Int) {
                 val dialog = OptionDialog(context!!, R.layout.layout_option_dialog_tanya_kandidat)
-                if (item.creator?.id.equals(userId)) {
+                if (myProfile.cluster != null &&
+                    item.creator?.cluster != null &&
+                    item.creator?.cluster?.id?.equals(myProfile.cluster?.id)!! &&
+                    item.creator?.id.equals(myProfile.id) &&
+                    myProfile.cluster?.isEligible!!) {
 //                    dialog.removeItem(R.id.report_tanya_kandidat_action)
                 } else {
                     dialog.removeItem(R.id.delete_tanya_kandidat_item_action)

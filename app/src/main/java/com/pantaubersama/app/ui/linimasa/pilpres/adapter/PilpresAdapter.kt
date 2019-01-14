@@ -58,6 +58,7 @@ class PilpresAdapter : BaseRecyclerAdapter() {
             tv_team_name.text = itemView.context.getString(R.string.txt_disematkan_dari) + " " + item.team?.title
             rl_item_pilpres_tweet.setOnClickListener { listener?.onClickTweetContent(item) }
             iv_tweet_option.setOnClickListener { listener?.onClickTweetOption(item) }
+            tv_tweet_date.text = item.createdAtInWord?.id
         }
     }
 

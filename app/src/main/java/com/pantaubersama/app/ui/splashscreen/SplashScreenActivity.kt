@@ -1,7 +1,6 @@
 package com.pantaubersama.app.ui.splashscreen
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -10,7 +9,6 @@ import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.utils.PantauConstants
-import timber.log.Timber
 import javax.inject.Inject
 
 class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreenView {

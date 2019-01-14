@@ -6,8 +6,8 @@ import com.pantaubersama.app.data.interactors.ProfileInteractor
 import javax.inject.Inject
 
 class KuisUserResultPresenter @Inject constructor(
-        private val kuisInteractor: KuisInteractor,
-        private val profileInteractor: ProfileInteractor
+    private val kuisInteractor: KuisInteractor,
+    private val profileInteractor: ProfileInteractor
 ) : BasePresenter<KuisUserResultView>() {
     fun getKuisUserResult() {
         view?.showLoading()
