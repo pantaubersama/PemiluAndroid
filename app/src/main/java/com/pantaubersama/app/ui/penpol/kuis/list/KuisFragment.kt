@@ -21,6 +21,7 @@ import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
 class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {

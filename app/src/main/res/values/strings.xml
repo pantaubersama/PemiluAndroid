@@ -186,6 +186,7 @@
     <string name="label_pendidikan_terakhir">Pendidikan Terakhirmu</string>
     <string name="label_pekerjaan_sekarang">Pekerjaan Sekarang</string>
     <string name="title_buat_profilmu">Buat Profilmu</string>
-
+    <string name="next_action">Lanjut</string>
     <string name="label_intent_filter_share">Pantau Bersama</string>
+    <string name="janji_politik_tidak_ditemukan">Janji Politik tidak ditemukan</string>
 </resources>

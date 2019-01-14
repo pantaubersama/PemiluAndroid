@@ -15,11 +15,17 @@ class PantauConstants {
         const val BANNER_TANYA = "tanya"
         const val BANNER_KUIS = "kuis"
         const val URL = "url"
+        val PROFILE_COMPLETION = "profile_completion"
     }
 
     object Cluster {
         const val CATEGORY = "category"
         val CLUSTER_URL = "cluster_url"
+        val CLUSTER_ID = "cluster_id"
+        val INVITE_LINK_ACTIVE = "invite_link_active"
+        object REQUEST_CODE {
+            const val REQUEST_CLUSTER = 2001
+        }
     }
 
     object TanyaKandidat {
@@ -53,6 +59,8 @@ class PantauConstants {
         const val EXTRA_JANPOL_ID = "EXTRA_JANPOL_ID"
         const val EXTRA_JANPOL_ITEM = "EXTRA_JANPOL_ITEM"
         const val EXTRA_ITEM_POSITION = "EXTRA_ITEM_POSITION"
+        const val EXTRA_INTENT_TYPE = "EXTRA_INTENT_TYPE"
+        const val EXTRA_INTENT_TYPE_SHARE = "EXTRA_INTENT_TYPE_SHARE"
     }
 
     object RequestCode {
@@ -157,5 +165,6 @@ class PantauConstants {
     object Share {
         const val SHARE_FEEDS_PATH = "share/pilpres/"
         const val SHARE_JANPOL_PATH = "share/janjipolitik/"
+        const val SHARE_TANYA_PATH = "share/tanya/"
     }
 }

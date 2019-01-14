@@ -8,4 +8,9 @@ interface UndangAnggotaView : BaseView {
     fun disableView()
     fun enableView()
     fun removeEmail()
+    fun reverseView(enable: Boolean)
+    fun showSuccessDisableUrlInviteAlert()
+    fun showSuccessEnableUrlInviteAlert()
+    fun showFailedDisableUrlInviteAlert()
+    fun showFailedEnableUrlInviteAlert()
 }

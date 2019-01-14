@@ -28,7 +28,7 @@ class LoginPresenter @Inject constructor(
         val disposable = profileInteractor.refreshProfile().subscribe(
                 {
                     view?.dismissLoading()
-                    view?.openHomeActivity()
+                    view?.onSuccessGetProfile(it)
                 },
                 {
                     view?.dismissLoading()

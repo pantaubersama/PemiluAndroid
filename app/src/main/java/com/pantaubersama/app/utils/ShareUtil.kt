@@ -18,8 +18,8 @@ class ShareUtil() {
             shareIntent.type = "text/plain"
             val resInfo = context.packageManager?.queryIntentActivities(shareIntent, 0)
             val sharedItem: String = "" + when (item) {
-                is Pertanyaan -> "share/tk/" + item.id
-                is FeedsItem -> "share/pilpres/" + item.id
+                is Pertanyaan -> "\"${item.body} – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_TANYA_PATH + item.id
+                is FeedsItem -> "\"${item.source?.text} – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_FEEDS_PATH + item.id
                 is JanjiPolitik -> "\"${item.title}\" – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_JANPOL_PATH + item.id
                 else -> ""
             }

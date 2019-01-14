@@ -14,18 +14,31 @@ class DetailJanjiPolitikPresenter @Inject constructor(
         return profileInteractor.getProfile()
     }
 
-    fun deleteJanjiPolitik(id: String) {
+    fun getJanpol(id: String) {
         view?.showLoading()
-        disposables.add(janPolInteractor.deleteJanjiPolitik(id)
-            .doOnComplete { }
+        disposables.add(janPolInteractor.getJanPolById(id)
+            .doAfterTerminate { view?.dismissLoading() }
             .subscribe(
                 {
-                    view?.dismissLoading()
+                    view?.onBindData(it)
+                },
+                {
+                    view?.showError(it)
+                    view?.onFailedGetData(it)
+                }
+            )
+        )
+    }
+
+    fun deleteJanjiPolitik(id: String) {
+        disposables.add(janPolInteractor.deleteJanjiPolitik(id)
+            .subscribe(
+                {
                     view?.onSuccessDeleteItem()
                 },
                 {
-                    view?.dismissLoading()
                     view?.showError(it)
+                    view?.onFailedDeleteItem(it)
                 }
             )
         )

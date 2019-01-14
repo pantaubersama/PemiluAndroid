@@ -6,12 +6,16 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.webkit.MimeTypeMap
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.ui.profile.connect.ConnectActivity
 import com.pantaubersama.app.ui.widget.ImageChooserTools
 import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.utils.PantauConstants
@@ -20,16 +24,20 @@ import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSION
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileView {
     @Inject
     override lateinit var presenter: EditProfilePresenter
+    private var isProfileCompletion = false
 
     private var imageFile: File? = null
 
@@ -38,7 +46,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     override fun fetchIntentExtra() {
-        // ok
+        isProfileCompletion = intent.getBooleanExtra(PantauConstants.PROFILE_COMPLETION, isProfileCompletion)
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -48,9 +56,26 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_edit_profile), R.color.white, 4f)
         onClickAction()
+        if (isProfileCompletion) {
+            submit_button.text = getString(R.string.next_action)
+        }
         swipe_refresh.setOnRefreshListener {
             presenter.refreshUserData()
         }
+        setupUsername()
+    }
+
+    private fun setupUsername() {
+        RxTextView.textChanges(edit_profile_username)
+            .filter { it.isNotEmpty() }
+            .debounce(1000, TimeUnit.MILLISECONDS)
+            .map { it.toString() }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext {
+                presenter.usernameCheck(it)
+            }
+            .subscribe()
     }
 
     override fun showFailedGetUserDataAlert() {
@@ -70,7 +95,9 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         swipe_refresh.isRefreshing = false
         edit_profile_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
         edit_profile_nama.setText(profile.name)
-        edit_profile_username.setText("@%s".format(profile.username))
+        profile.username?.let {
+            edit_profile_username.setText(it)
+        }
         edit_profile_lokasi.setText(profile.location)
         edit_profile_deskripsi.setText(profile.about)
         edit_profile_pendidikan.setText(profile.education)
@@ -92,7 +119,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         edit_profile_submit.setOnClickListener {
             presenter.saveEditedUserData(
                 edit_profile_nama.text.toString(),
-                edit_profile_username.text.toString().substring(1),
+                edit_profile_username.text.toString(),
                 edit_profile_lokasi.text.toString(),
                 edit_profile_deskripsi.text.toString(),
                 edit_profile_pendidikan.text.toString(),
@@ -114,7 +141,17 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         edit_profile_container.enable(false)
     }
 
-    override fun finishThisScetion() {
+    override fun onSuccessUpdateProfile() {
+        if (isProfileCompletion) {
+            val intent = Intent(this@EditProfileActivity, ConnectActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        } else {
+            finishThisScetion()
+        }
+    }
+
+    fun finishThisScetion() {
         setResult(Activity.RESULT_OK)
         finish()
     }
@@ -218,5 +255,28 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     override fun showFailedUpdateAvatarAlert() {
         dismissProgressDialog()
         ToastUtil.show(this@EditProfileActivity, getString(R.string.failed_update_avatar_alert))
+    }
+
+    override fun onUsernameAvailable() {
+        username_check.visibility = View.VISIBLE
+        edit_profile_username.error = null
+    }
+
+    override fun onUsernameUnAvailable() {
+        username_check.visibility = View.GONE
+        edit_profile_username.error = "Username sudah digunakan"
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this@EditProfileActivity, HomeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> onBackPressed()
+        }
+        return true
     }
 }

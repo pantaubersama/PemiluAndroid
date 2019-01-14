@@ -19,6 +19,7 @@ class ConnectActivity : BaseActivity<ConnectPresenter>(), ConnectView {
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
