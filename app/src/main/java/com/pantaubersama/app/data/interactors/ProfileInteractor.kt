@@ -4,6 +4,7 @@ import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Informant
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.data.model.user.ProfileResponse
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
@@ -159,5 +160,13 @@ class ProfileInteractor @Inject constructor(
         } else {
             getProfile().cluster?.isEligible!!
         }
+    }
+
+    fun usernameCheck(username: String?): Single<ProfileResponse> {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .usernameCheck(username)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
     }
 }

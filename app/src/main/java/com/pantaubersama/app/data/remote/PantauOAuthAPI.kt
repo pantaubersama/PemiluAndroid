@@ -151,4 +151,10 @@ interface PantauOAuthAPI {
     fun enableDisableCluster(
         @Path("id") clusterId: String,
         @Field("enable") disable: Boolean): Completable
+
+    @FormUrlEncoded
+    @PUT("/v1/me/username")
+    fun usernameCheck(
+        @Field("username") username: String?
+    ): Single<ProfileResponse>
 }

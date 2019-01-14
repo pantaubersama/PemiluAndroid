@@ -120,7 +120,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:scaleType="centerInside"
-                                        android:src="@drawable/baseline_check_24_px" />
+                                        android:src="@drawable/ic_check" />
 
                                 </LinearLayout>
 
@@ -172,7 +172,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:scaleType="centerInside"
-                                        android:src="@drawable/baseline_check_24_px" />
+                                        android:src="@drawable/ic_check" />
 
                                 </LinearLayout>
 
@@ -222,7 +222,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:scaleType="centerInside"
-                                        android:src="@drawable/baseline_check_24_px" />
+                                        android:src="@drawable/ic_check" />
 
                                 </LinearLayout>
 
@@ -272,7 +272,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:scaleType="centerInside"
-                                        android:src="@drawable/baseline_check_24_px" />
+                                        android:src="@drawable/ic_check" />
 
                                 </LinearLayout>
 
@@ -322,7 +322,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:scaleType="centerInside"
-                                        android:src="@drawable/baseline_check_24_px" />
+                                        android:src="@drawable/ic_check" />
 
                                 </LinearLayout>
 
@@ -372,7 +372,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:scaleType="centerInside"
-                                        android:src="@drawable/baseline_check_24_px" />
+                                        android:src="@drawable/ic_check" />
 
                                 </LinearLayout>
 
