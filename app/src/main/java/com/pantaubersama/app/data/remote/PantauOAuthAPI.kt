@@ -157,4 +157,13 @@ interface PantauOAuthAPI {
     fun usernameCheck(
         @Field("username") username: String?
     ): Single<ProfileResponse>
+
+    @FormUrlEncoded
+    @POST("/v1/accounts/connect")
+    fun connectFacebook(
+        @Field("account_type")
+        accountType: String,
+        @Field("oauth_access_token")
+        token: String?
+    ): Completable
 }

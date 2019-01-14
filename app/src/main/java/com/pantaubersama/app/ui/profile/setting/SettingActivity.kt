@@ -11,6 +11,12 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.appevents.AppEventsLogger
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
@@ -26,17 +32,24 @@ import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
 import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
 import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
+import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.logout_dialog.view.*
 import kotlinx.android.synthetic.main.verified_layout.*
+import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     @Inject
     override lateinit var presenter: SettingPresenter
     private var verifiedDialog: Dialog? = null
+    private lateinit var callbackManager: CallbackManager
+    private lateinit var permissions: MutableList<String>
 
     companion object {
         val EDIT_PROFILE = 1
@@ -62,6 +75,29 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_setting), R.color.white, 4f)
         onClickAction()
+        AppEventsLogger.activateApp(this)
+        callbackManager = CallbackManager.Factory.create()
+        permissions = ArrayList()
+        permissions.add("public_profile")
+        permissions.add("email")
+        LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(result: LoginResult?) {
+                presenter.connectFacebook(PantauConstants.CONNECT.FACEBOOK, result?.accessToken?.token)
+            }
+
+            override fun onCancel() {
+                // not implemented yet
+            }
+
+            override fun onError(error: FacebookException?) {
+                Timber.e(error?.localizedMessage)
+                ToastUtil.show(this@SettingActivity, "Gagal mengubungkan ke Facebook")
+            }
+
+        })
+        connect_fb.setOnClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(this@SettingActivity, permissions)
+        }
         presenter.getProfile()
     }
 
@@ -113,11 +149,19 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     }
 
     override fun showLoading() {
-        // Show Loading
+        showProgressDialog("Mohon tunggu")
     }
 
     override fun dismissLoading() {
-        // Hide Loading
+        dismissProgressDialog()
+    }
+
+    override fun showConnectedToFacebookAlert() {
+        ToastUtil.show(this@SettingActivity, "Terhubung dengan Facebook")
+    }
+
+    override fun showFailedToConnectFacebookAlert() {
+        ToastUtil.show(this@SettingActivity, "Gagal menghubungkan ke Facebook")
     }
 
     fun onClickAction() {
@@ -173,6 +217,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == EDIT_PROFILE) {

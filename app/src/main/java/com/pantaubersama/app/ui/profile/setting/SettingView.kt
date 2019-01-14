@@ -6,4 +6,6 @@ import com.pantaubersama.app.data.model.user.Profile
 interface SettingView : BaseView {
     fun goToLogin()
     fun onSuccessGetProfile(profile: Profile)
+    fun showConnectedToFacebookAlert()
+    fun showFailedToConnectFacebookAlert()
 }

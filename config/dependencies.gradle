@@ -47,7 +47,8 @@ ext {
             expandableLayout        : "2.9.2",
             stetho                  : "1.5.0",
             rxbinding               : "2.0.0",
-            compressor              : "2.1.0"
+            compressor              : "2.1.0",
+            facebook_sdk            : "[4,5)"
     ]
 
 
@@ -117,4 +118,6 @@ ext {
     rxBinding = "com.jakewharton.rxbinding2:rxbinding:$versions.rxbinding"
 
     compressor = "id.zelory:compressor:$versions.compressor"
+
+    facebook_sdk = "com.facebook.android:facebook-android-sdk:$versions.facebook_sdk"
 }
