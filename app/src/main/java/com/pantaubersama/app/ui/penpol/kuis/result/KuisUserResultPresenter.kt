@@ -18,6 +18,6 @@ class KuisUserResultPresenter @Inject constructor(
                 }, {
                     view?.showError(it)
                 })
-        disposables?.add(disposable)
+        disposables.add(disposable)
     }
 }

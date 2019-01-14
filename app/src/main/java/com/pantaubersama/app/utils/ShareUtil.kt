@@ -5,6 +5,7 @@ import android.content.Intent
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.data.model.kuis.KuisItem
+import com.pantaubersama.app.data.model.kuis.KuisUserResult
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
 
@@ -22,7 +23,8 @@ class ShareUtil{
                 is Pertanyaan -> "\"${item.body} – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_TANYA_PATH + item.id
                 is FeedsItem -> "\"${item.source?.text} – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_FEEDS_PATH + item.id
                 is JanjiPolitik -> "\"${item.title}\" – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_JANPOL_PATH + item.id
-                is KuisItem -> "\""
+                is KuisItem -> "\"${item.title}\" – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_KUIS_PATH + item.id
+                is KuisUserResult -> "%.2f%% (%s) – %s".format(item.percentage, item.team.title, BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_KUIS_PATH) // kuisUserResult.id needed
                 else -> ""
             }
             if (!resInfo!!.isEmpty()) {
