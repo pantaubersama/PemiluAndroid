@@ -65,7 +65,7 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
                 .placeholder(ContextCompat.getDrawable(itemView.context, R.drawable.ic_person))
                 .into(iv_user_avatar)
             tv_user_name.text = item?.user?.fullName
-            question_time.text = item?.createdAt?.id
+            question_time.text = item?.createdAtInWord?.id
             upvote_count_text.text = item?.likeCount.toString()
             user_question.text = item?.body
             iv_options_button.setOnClickListener {

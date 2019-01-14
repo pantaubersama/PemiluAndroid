@@ -4,6 +4,7 @@ import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
 
@@ -19,8 +20,8 @@ class JanjiPolitikPresenter @Inject constructor(
 
     var perPage = 20
 
-    fun getUserId(): String {
-        return profileInteractor.getProfile().id
+    fun getMyProfile(): Profile {
+        return profileInteractor.getProfile()
     }
 
     fun isUserEligible(): Boolean {

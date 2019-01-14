@@ -71,12 +71,17 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
         tv_creator_name.text = creator.fullName
         tv_creator_description.text = creator.about
 
-        cluster = creator.cluster!!
-        tv_cluster_name.text = cluster.name
-        tv_cluster_member_count.text = cluster.memberCount.toString() + getString(R.string.anggota)
-        iv_avatar_cluster.loadUrl(cluster.image?.url, R.drawable.ic_avatar_placeholder)
+        if (creator.cluster != null) {
+            ll_cluster_container.visibleIf(true)
+            cluster = creator.cluster!!
+            tv_cluster_name.text = cluster.name
+            tv_cluster_member_count.text = cluster.memberCount.toString() + getString(R.string.anggota)
+            iv_avatar_cluster.loadUrl(cluster.image?.url, R.drawable.ic_avatar_placeholder)
+        } else {
+            ll_cluster_container.visibleIf(false)
+        }
 
-//        tv_posted_time.text =
+        tv_posted_time.text = janpolItem.createdAtInWord?.id
 
         iv_share_button.setOnClickListener { onClickShare() }
         iv_options_button.setOnClickListener { onClickOption() }
@@ -110,8 +115,13 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
     }
 
     private fun onClickOption() {
+        val myProfile = presenter.getMyProfile()
         val dialog = OptionDialog(this, R.layout.layout_option_dialog_tanya_kandidat)
-        if (janpolItem.creator?.id.equals(presenter.getUserId())) {
+        if (myProfile.cluster != null &&
+            janpolItem.creator?.cluster != null &&
+            janpolItem.creator?.cluster?.id?.equals(myProfile.cluster?.id)!! &&
+            janpolItem.creator?.id.equals(myProfile.id) &&
+            myProfile.cluster?.isEligible!!) {
 //                    dialog.removeItem(R.id.report_tanya_kandidat_action)
         } else {
             dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
@@ -137,9 +147,9 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
                         val deleteDialog = DeleteConfimationDialog(this@DetailJanjiPolitikActivity, getString(R.string.txt_delete_item_ini), 0, janpolItem.id!!)
                         deleteDialog.show()
                         deleteDialog.listener = object : DeleteConfimationDialog.DialogListener {
-                            override fun onClickDeleteItem(id: String, position: Int) {
-                                showProgressDialog(getString(R.string.menghapus_janji_politik))
-                                presenter.deleteJanjiPolitik(id)
+                                override fun onClickDeleteItem(id: String, position: Int) {
+                                    showProgressDialog(getString(R.string.menghapus_janji_politik))
+                                    presenter.deleteJanjiPolitik(id)
                             }
                         }
                         dialog.dismiss()

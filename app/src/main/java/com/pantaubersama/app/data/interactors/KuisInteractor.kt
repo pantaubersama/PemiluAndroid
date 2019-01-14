@@ -1,10 +1,7 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
-import com.pantaubersama.app.data.model.kuis.KuisItem
-import com.pantaubersama.app.data.model.kuis.KuisQuestions
-import com.pantaubersama.app.data.model.kuis.KuisUserResult
-import com.pantaubersama.app.data.model.kuis.TeamPercentage
+import com.pantaubersama.app.data.model.kuis.* // ktlint-disable
 import com.pantaubersama.app.data.remote.PantauAPI
 import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.utils.RxSchedulers
@@ -21,8 +18,8 @@ class KuisInteractor @Inject constructor(
         return dataCache.isBannerKuisOpened()
     }
 
-    fun getKuisList(page: Int, perPage: Int): Single<List<KuisItem>> {
-        return pantauAPI.getKuisList(page, perPage)
+    fun getKuisList(page: Int, perPage: Int, filterBy: String): Single<List<KuisItem>> {
+        return pantauAPI.getKuisList(page, perPage, filterBy)
             .subscribeOn(rxSchedulers.io())
             .map { it.data.kuisList }
             .observeOn(rxSchedulers.mainThread())
@@ -39,13 +36,13 @@ class KuisInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
-    fun getKuisFilter(): String? {
+    fun getKuisFilter(): String {
         return dataCache.getKuisFilter()
     }
 
-    fun saveKuisFilter(kuisFilter: String?): Completable {
+    fun saveKuisFilter(kuisFilter: String): Completable {
         return Completable.fromCallable {
-            dataCache.saveKuisFilter(kuisFilter!!)
+            dataCache.saveKuisFilter(kuisFilter)
         }
     }
 
@@ -72,6 +69,13 @@ class KuisInteractor @Inject constructor(
                 response.data.teams.maxBy { it.percentage }
                     ?: throw ErrorException("Gagal mendapatkan hasil kuis")
             }
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getKuisSummary(kuisId: String): Single<List<AnsweredQuestion>> {
+        return pantauAPI.getKuisSummary(kuisId)
+            .subscribeOn(rxSchedulers.io())
+            .map { it.data.questions }
             .observeOn(rxSchedulers.mainThread())
     }
 }

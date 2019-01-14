@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.pantaubersama.app.R
 import kotlinx.android.synthetic.main.layout_delete_confirmation_dialog.*
 
-class DeleteConfimationDialog(context: Context, message: String, position: Int, itemId: String) {
+class DeleteConfimationDialog(context: Context, message: String, position: Int = 0, itemId: String = "") {
 
     private val dialog: Dialog
 

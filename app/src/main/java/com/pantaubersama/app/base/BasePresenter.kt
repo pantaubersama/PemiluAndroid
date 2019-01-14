@@ -6,8 +6,8 @@ import io.reactivex.disposables.CompositeDisposable
  * @author edityomurti on 14/12/2018 17:35
  */
 abstract class BasePresenter<V : BaseView> {
-    var view: V? = null
-    var disposables: CompositeDisposable? = null
+    protected var view: V? = null
+    protected lateinit var disposables: CompositeDisposable
 
     @Suppress("UNCHECKED_CAST")
     fun attach(view: BaseView) {
@@ -16,6 +16,6 @@ abstract class BasePresenter<V : BaseView> {
     }
 
     fun detach() {
-        disposables?.run { if (!isDisposed) dispose() }
+        disposables.run { if (!isDisposed) dispose() }
     }
 }

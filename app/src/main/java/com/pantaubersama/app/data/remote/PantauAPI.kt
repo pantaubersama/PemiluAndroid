@@ -4,10 +4,7 @@ import com.pantaubersama.app.data.model.bannerinfo.BannerInfoResponse
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfosResponse
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitikResponse
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitiksResponse
-import com.pantaubersama.app.data.model.kuis.KuisQuestionResponse
-import com.pantaubersama.app.data.model.kuis.KuisResponse
-import com.pantaubersama.app.data.model.kuis.KuisResultResponse
-import com.pantaubersama.app.data.model.kuis.KuisUserResultResponse
+import com.pantaubersama.app.data.model.kuis.* // ktlint-disable
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import io.reactivex.Completable
@@ -118,4 +115,7 @@ interface PantauAPI {
 
     @GET("pendidikan_politik/v1/quizzes/{id}/result")
     fun getKuisResult(@Path("id") kuisId: String): Single<KuisResultResponse>
+
+    @GET("pendidikan_politik/v1/quizzes/{id}/summary")
+    fun getKuisSummary(@Path("id") kuisId: String): Single<KuisSummaryResponse>
 }

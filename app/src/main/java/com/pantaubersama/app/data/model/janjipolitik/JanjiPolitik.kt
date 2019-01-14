@@ -3,6 +3,7 @@ package com.pantaubersama.app.data.model.janjipolitik
 import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.cluster.ClusterItem
+import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
 import com.pantaubersama.app.data.model.image.Image
 import com.pantaubersama.app.data.model.meta.Meta
 import com.pantaubersama.app.utils.PantauConstants
@@ -16,6 +17,7 @@ data class JanjiPolitik(
     @SerializedName("title") var title: String? = null,
     @SerializedName("body") var body: String? = null,
     @SerializedName("created_at") var createdAt: String? = null,
+    @SerializedName("created_at_in_word") var createdAtInWord: CreatedAtInWord? = null,
     @SerializedName("image") var image: Image? = null,
     @SerializedName("creator") var creator: Creator? = null
 ) : Serializable, ItemModel {

@@ -2,6 +2,8 @@ package com.pantaubersama.app.ui.profile.verifikasi.step1
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -19,6 +21,8 @@ class Step1VerifikasiActivity : BaseActivity<Step1VerifikasiPresenter>(), Step1V
     @Inject
     override lateinit var presenter: Step1VerifikasiPresenter
 
+    private var isInputValid = false
+
     override fun statusBarColor(): Int? {
         return 0
     }
@@ -28,19 +32,41 @@ class Step1VerifikasiActivity : BaseActivity<Step1VerifikasiPresenter>(), Step1V
     }
 
     override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "", R.color.white, 4f)
         verification_step_indicator.text = "0/3"
+
+        ktp_number.error = "harus diisi"
+        ktp_number.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onTextChanged(query: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val pattern = Pattern.compile(PantauConstants.Regex.KTP)
+                val matcher = pattern.matcher(query)
+                if (matcher.matches()) {
+                    isInputValid = true
+                    ktp_number.setCompoundDrawables(null, null, getDrawable(R.drawable.check_icon), null)
+                } else {
+                    isInputValid = false
+                    ktp_number.error = "format nomor KTP tidak valid"
+                }
+            }
+
+        })
         ok_button.setOnClickListener {
-            val pattern = Pattern.compile(PantauConstants.Regex.KTP)
-            val matcher = pattern.matcher(ktp_number.text)
-            if (matcher.matches()) {
+            if (isInputValid) {
                 presenter.submitKtpNumber(ktp_number.text.toString())
             } else {
-                ktp_number.error = "Format nomor KTP tidak valid"
+                ktp_number.requestFocus()
             }
         }
     }

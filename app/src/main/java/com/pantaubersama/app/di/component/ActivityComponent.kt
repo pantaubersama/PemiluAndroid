@@ -16,11 +16,14 @@ import com.pantaubersama.app.ui.penpol.kuis.filter.FilterKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
+import com.pantaubersama.app.ui.penpol.kuis.result.KuisSummaryActivity
+import com.pantaubersama.app.ui.penpol.kuis.result.KuisUserResultActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.profile.cluster.categery.ClusterCategoryActivity
+import com.pantaubersama.app.ui.profile.cluster.invite.UndangAnggotaActivity
 import com.pantaubersama.app.ui.profile.cluster.requestcluster.RequestClusterActivity
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
@@ -70,4 +73,7 @@ interface ActivityComponent {
     fun inject(requestClusterActivity: RequestClusterActivity)
     fun inject(kuisActivity: KuisActivity)
     fun inject(kuisResultActivity: KuisResultActivity)
+    fun inject(kuisSummaryActivity: KuisSummaryActivity)
+    fun inject(undangAnggotaActivity: UndangAnggotaActivity)
+    fun inject(kuisUserResultActivity: KuisUserResultActivity)
 }

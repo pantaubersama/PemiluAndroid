@@ -33,6 +33,7 @@ android {
             it.buildConfigField("String", "SYMBOLIC_CLIENT_ID", SYMBOLIC_CLIENT_ID_STAG)
             it.buildConfigField("String", "SYMBOLIC_CLIENT_SECRET", SYMBOLIC_CLIENT_SECRET_PROD)
             it.buildConfigField("String", "SYMBOLIC_REDIRECT_URI", SYMBOLIC_REDIRECT_URI)
+            manifestPlaceholders = [SYMBOLIC_URL: SYMBOLIC_URL_NO_SCHEME_PROD]
         }
         debug {
             applicationIdSuffix ".staging"
@@ -45,6 +46,7 @@ android {
             it.buildConfigField("String", "SYMBOLIC_CLIENT_ID", SYMBOLIC_CLIENT_ID_STAG)
             it.buildConfigField("String", "SYMBOLIC_CLIENT_SECRET", SYMBOLIC_CLIENT_SECRET_STAG)
             it.buildConfigField("String", "SYMBOLIC_REDIRECT_URI", SYMBOLIC_REDIRECT_URI)
+            manifestPlaceholders = [SYMBOLIC_URL: SYMBOLIC_URL_NO_SCHEME_STAG]
         }
 
         buildTypes.each {
@@ -111,6 +113,7 @@ dependencies {
     implementation chromeCustomTab
     implementation expandableLayout
     implementation rxBinding
+    implementation compressor
     kapt daggerCompiler
 
     testImplementation unitTestLibs

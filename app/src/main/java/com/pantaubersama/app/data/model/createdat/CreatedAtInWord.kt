@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class CreatedAt(
+data class CreatedAtInWord(
     @SerializedName("iso_8601")
     @Expose
     var iso8601: String,

@@ -13,6 +13,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.widget.ImageChooserTools
+import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Permission.GET_IMAGE_PERMISSION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
@@ -29,6 +30,8 @@ import javax.inject.Inject
 class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileView {
     @Inject
     override lateinit var presenter: EditProfilePresenter
+
+    private var imageFile: File? = null
 
     override fun statusBarColor(): Int? {
         return 0
@@ -143,7 +146,11 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     private fun showIntentChooser() {
-        ImageChooserTools.showDialog(this@EditProfileActivity)
+        ImageChooserTools.showDialog(this@EditProfileActivity, object : ImageChooserTools.ImageChooserListener {
+            override fun onClickCamera(file: File) {
+                imageFile = file
+            }
+        })
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -156,11 +163,18 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == PantauConstants.RequestCode.RC_CAMERA) {
-                if (data != null) {
-                    updateAvatar(ImageChooserTools.proccedImageFromCamera(data, windowManager))
-                } else {
-                    ToastUtil.show(this, getString(R.string.failed_load_image_alert))
-                }
+                showProgressDialog("Memperbarui avatar")
+                ImageUtil.compressImage(this, imageFile!!, 2, object : ImageUtil.CompressorListener {
+                    override fun onSuccess(file: File) {
+                        imageFile = file
+                        updateAvatar()
+                    }
+
+                    override fun onFailed(throwable: Throwable) {
+                        showError(throwable)
+                        dismissProgressDialog()
+                    }
+                })
             } else if (requestCode == PantauConstants.RequestCode.RC_STORAGE) {
                 if (data != null) {
                     updateAvatar(ImageChooserTools.proccedImageFromStorage(data, this@EditProfileActivity))
@@ -171,13 +185,25 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         }
     }
 
-    private fun updateAvatar(file: File) {
-        val type: String
-        val extension = MimeTypeMap.getFileExtensionFromUrl(file.absolutePath)
-        type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
-        val reqFile = RequestBody.create(MediaType.parse(type), file)
-        val avatar = MultipartBody.Part.createFormData("avatar", file.getName(), reqFile)
-        presenter.uploadAvatar(avatar)
+    private fun updateAvatar(file: File? = null) {
+        if (file != null) {
+            val type: String
+            val extension = MimeTypeMap.getFileExtensionFromUrl(file.absolutePath)
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
+            val reqFile = RequestBody.create(MediaType.parse(type), file)
+            val avatar = MultipartBody.Part.createFormData("avatar", file.name, reqFile)
+            presenter.uploadAvatar(avatar)
+        } else if (imageFile != null) {
+            val type: String
+            val extension = MimeTypeMap.getFileExtensionFromUrl(imageFile!!.absolutePath)
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
+            val reqFile = RequestBody.create(MediaType.parse(type), imageFile!!)
+            val avatar = MultipartBody.Part.createFormData("avatar", imageFile?.name, reqFile)
+            presenter.uploadAvatar(avatar)
+        } else {
+            dismissProgressDialog()
+            showError(Throwable("Terjadi kesalahan pada gambar"))
+        }
     }
 
     override fun refreshProfile() {
@@ -185,10 +211,12 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     override fun showSuccessUpdateAvatarAlert() {
+        dismissProgressDialog()
         ToastUtil.show(this@EditProfileActivity, getString(R.string.success_update_avatar_alert))
     }
 
     override fun showFailedUpdateAvatarAlert() {
+        dismissProgressDialog()
         ToastUtil.show(this@EditProfileActivity, getString(R.string.failed_update_avatar_alert))
     }
 }

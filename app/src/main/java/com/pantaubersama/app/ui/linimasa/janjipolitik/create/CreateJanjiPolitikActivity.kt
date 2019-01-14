@@ -16,6 +16,7 @@ import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.ImageChooserTools
+import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_JANPOL_ITEM
 import com.pantaubersama.app.utils.PantauConstants.Permission.GET_IMAGE_PERMISSION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
@@ -60,11 +61,11 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
 
         et_create_janpol_title.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
             }
 
             override fun onTextChanged(query: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -88,7 +89,7 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
     }
 
     override fun onFailedCreateJanpol() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
     private fun setupEditor() {
@@ -98,7 +99,9 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
         iv_editor_numbering.setOnClickListener {}
         iv_editor_bullet.setOnClickListener {}
         iv_editor_line.setOnClickListener {}
-        iv_editor_image.setOnClickListener { showIntentChooser() }
+        iv_editor_image.setOnClickListener {
+            showIntentChooser()
+        }
     }
 
     override fun setLayout(): Int {
@@ -123,7 +126,11 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
     @AfterPermissionGranted(RC_ASK_PERMISSIONS)
     private fun showIntentChooser() {
         if (EasyPermissions.hasPermissions(this, *GET_IMAGE_PERMISSION)) {
-            ImageChooserTools.showDialog(this@CreateJanjiPolitikActivity)
+            ImageChooserTools.showDialog(this@CreateJanjiPolitikActivity, object : ImageChooserTools.ImageChooserListener {
+                override fun onClickCamera(file: File) {
+                    imageFile = file
+                }
+            })
         } else {
             EasyPermissions.requestPermissions(
                 PermissionRequest.Builder(this, RC_ASK_PERMISSIONS, *GET_IMAGE_PERMISSION)
@@ -195,18 +202,25 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                RC_CAMERA -> onCaptureImageResult(data)
+                RC_CAMERA -> onCaptureImageResult()
                 RC_STORAGE -> onSelectFromGalleryResult(data)
             }
         }
     }
 
-    private fun onCaptureImageResult(data: Intent?) {
-        if (data != null) {
-            setImage(ImageChooserTools.proccedImageFromCamera(data))
-        } else {
-            showError(Throwable(getString(R.string.failed_load_image_alert)))
-        }
+    private fun onCaptureImageResult() {
+        showImageLoading()
+        ImageUtil.compressImage(this, imageFile!!, 2, object : ImageUtil.CompressorListener {
+            override fun onSuccess(file: File) {
+                imageFile = file
+                setImage()
+            }
+
+            override fun onFailed(throwable: Throwable) {
+                onFailedCompress()
+                showError(throwable)
+            }
+        })
     }
 
     private fun onSelectFromGalleryResult(data: Intent?) {
@@ -217,21 +231,36 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
         }
     }
 
-    private fun setImage(file: File?) {
-        this.imageFile = file
-        iv_create_janpol_image.visibleIf(file != null)
-        ll_layout_editor_option.visibleIf(file == null)
+    private fun setImage(file: File? = null) {
         if (file != null) {
-            Glide.with(this).load(file).into(iv_create_janpol_image)
+            this.imageFile = file
+        }
+        iv_create_janpol_image.visibleIf(imageFile != null)
+        ll_layout_editor_option.visibleIf(imageFile == null)
+        if (imageFile != null) {
+            Glide.with(this).load(imageFile).into(iv_create_janpol_image)
             iv_create_janpol_image.setOnClickListener {
-                val dialog = DeleteConfimationDialog(this, "Hapus gambar", 0, "")
+                val dialog = DeleteConfimationDialog(this, "Hapus gambar")
                 dialog.show()
                 dialog.listener = object : DeleteConfimationDialog.DialogListener {
                     override fun onClickDeleteItem(id: String, position: Int) {
-                        setImage(null)
+                        imageFile = null
+                        setImage()
                     }
                 }
             }
         }
+    }
+
+    fun showImageLoading() {
+        iv_create_janpol_image.visibleIf(true)
+        ll_layout_editor_option.visibleIf(false)
+        iv_create_janpol_image.setImageResource(R.drawable.ic_editor_image)
+    }
+
+    fun onFailedCompress() {
+        imageFile = null
+        iv_create_janpol_image.visibleIf(true)
+        ll_layout_editor_option.visibleIf(false)
     }
 }

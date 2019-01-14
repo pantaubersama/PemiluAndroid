@@ -102,7 +102,7 @@
     <string name="label_bagikan_aplikasi">Bagikan Aplikasi Pantau Bersama</string>
     <string name="label_log_out">Log Out</string>
     <string name="submit">SUBMIT</string>
-    <string name="change_profile">Change Profile</string>
+    <string name="change_profile">Ganti Gambar Profil</string>
     <string name="label_nama">Nama</string>
     <string name="label_username">Username</string>
     <string name="label_lokasi">Lokasi</string>
@@ -152,7 +152,7 @@
     <string name="txt_delete_item_ini">Apakah Anda yakin akan menghapus item ini?</string>
     <string name="hint_masukkan_email_disini">Masukkan email disini</string>
     <string name="label_bagikan_undangan_lewat_link">Bagikan Undangan Lewat Link</string>
-    <string name="label_non_aktifkan_link_undangan">Non aktifkan link undangan</string>
+    <string name="label_non_aktifkan_link_undangan">Non-aktifkan link undangan</string>
     <string name="deskripsi_undang_lewat_tautan">Dengan metode bagikan link undangan siapapun yg meng klik Otomatis akan menjadi anggota. Anda dapat mematikan link undangan sewaktu waktu</string>
     <string name="logging_in_label">Logging in</string>
     <string name="failed_login_alert">Failed to login using Symbolic</string>
@@ -178,4 +178,15 @@
     <string name="coming_soon">Coming Soon</string>
     <string name="pantau_terus_di_web">Pantau terus di Web dan Sosial Media  Pantau Bersama untuk info tanggal updatenya</string>
     <string name="url_pantau_bersama">www.pantaubersama.com</string>
+    <string name="blank_alert">Tidak boleh kosong</string>
+    <string name="success_create_cluster_alert">Berhasil request Cluster</string>
+    <string name="failed_request_cluster_alert">Gagal request Cluster</string>
+    <string name="title_keluar_aplikasi">Keluar Aplikasi</string>
+    <string name="label_keluar">Keluar</string>
+    <string name="label_lanjut">LANJUT</string>
+    <string name="label_lokasi_sekarang">Lokasi Sekarang</string>
+    <string name="label_deskripsi_singkat">Deskripsi singkat yang menggambarkan tentang kamu</string>
+    <string name="label_pendidikan_terakhir">Pendidikan Terakhirmu</string>
+    <string name="label_pekerjaan_sekarang">Pekerjaan Sekarang</string>
+    <string name="title_buat_profilmu">Buat Profilmu</string>
 </resources>

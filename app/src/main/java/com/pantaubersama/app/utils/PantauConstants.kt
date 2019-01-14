@@ -14,10 +14,12 @@ class PantauConstants {
         const val BANNER_JANPOL = "janji politik"
         const val BANNER_TANYA = "tanya"
         const val BANNER_KUIS = "kuis"
+        const val URL = "url"
     }
 
     object Cluster {
         const val CATEGORY = "category"
+        val CLUSTER_URL = "cluster_url"
     }
 
     object TanyaKandidat {
@@ -34,7 +36,7 @@ class PantauConstants {
                 const val USER_VERIFIED_FALSE = "user_verified_false"
             }
             object ByVotes {
-                const val LATEST = "created"
+                const val LATEST = "created_at"
                 const val MOST_VOTES = "cached_votes_up"
             }
         }
@@ -57,7 +59,7 @@ class PantauConstants {
         const val RC_FILTER_PILPRES = 1001
         const val RC_FILTER_JANPOL = 1002
         const val RC_FILTER_TANYA_KANDIDAT = 1003
-        const val RC_FILTER_KUIS = 1004
+        const val RC_REFRESH_KUIS_ON_RESULT = 1004
         const val RC_BANNER_PILPRES = 101
         const val RC_BANNER_JANPOL = 102
         const val RC_BANNER_TANYA_KANDIDAT = 103
@@ -98,7 +100,8 @@ class PantauConstants {
         const val KUIS_ID = "kuis_id"
         const val KUIS_ITEM = "kuis_item"
         const val KUIS_TITLE = "kuis_title"
-        val KUIS_FILTER = "kuis_filter"
+        const val KUIS_FILTER = "kuis_filter"
+        const val KUIS_REFRESH = "kuis_refresh"
 
         object Filter {
             const val KUIS_ALL = "all"
@@ -143,6 +146,8 @@ class PantauConstants {
     object Regex {
         const val KTP =
             "^((1[1-9])|(21)|([37][1-6])|(5[1-4])|(6[1-5])|([8-9][1-2]))[0-9]{2}[0-9]{2}(([0-6][0-9])|(7[0-1]))((0[1-9])|(1[0-2]))([0-9]{2})[0-9]{4}\$"
+        const val EMAIL =
+            "^[A-Za-z][A-Za-z0-9]*([._-]?[A-Za-z0-9]+)@[A-Za-z].[A-Za-z]{0,3}?.[A-Za-z]{0,2}\$"
     }
 
     object Permission {

@@ -2,33 +2,34 @@ package com.pantaubersama.app.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import com.extrainteger.identitaslogin.Callback
-import com.extrainteger.identitaslogin.Result
-import com.extrainteger.identitaslogin.SymbolicConfig
-import com.extrainteger.identitaslogin.SymbolicException
-import com.extrainteger.identitaslogin.models.AuthToken
+import com.extrainteger.symbolic.Callback
+import com.extrainteger.symbolic.Result
+import com.extrainteger.symbolic.SymbolicConfig
+import com.extrainteger.symbolic.SymbolicException
+import com.extrainteger.symbolic.models.SymbolicToken
+import com.extrainteger.symbolic.ui.SymbolicLoginButton
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
-
     @Inject
     override lateinit var presenter: LoginPresenter
-
     private var symbolicScope: MutableList<String>? = null
+    private var url: String? = null
 
     override fun statusBarColor(): Int {
         return R.color.colorPrimaryDark
     }
 
     override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        intent?.let { url = it.getStringExtra(PantauConstants.URL) }
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -36,6 +37,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
+        url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it, BuildConfig.SYMBOLIC_REDIRECT_URI) }
         symbolicScope = ArrayList()
         symbolic_login_button.configure(
             SymbolicConfig(
@@ -47,13 +49,14 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
                 symbolicScope
             )
         )
-        symbolic_login_button.setCallback(object : Callback<AuthToken>() {
-            override fun failure(exception: SymbolicException) {
-                ToastUtil.show(this@LoginActivity, getString(R.string.failed_login_alert))
+        symbolic_login_button.setCallback(object : Callback<SymbolicToken>() {
+
+            override fun success(result: Result<SymbolicToken>) {
+                presenter.exchangeToken(result.data.accessToken, "")
             }
 
-            override fun success(result: Result<AuthToken>) {
-                presenter.exchangeToken(result.data.accessToken, "")
+            override fun failure(exception: SymbolicException) {
+                ToastUtil.show(this@LoginActivity, getString(R.string.failed_login_alert))
             }
         })
     }

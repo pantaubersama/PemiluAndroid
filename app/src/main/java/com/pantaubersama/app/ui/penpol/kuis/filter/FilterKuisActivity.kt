@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.RadioButton
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
@@ -19,8 +18,6 @@ class FilterKuisActivity : BaseActivity<FilterKuisPresenter>(), FilterKuisView {
     @Inject
     override lateinit var presenter: FilterKuisPresenter
 
-    private var kuisFilter: String? = null
-
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
@@ -30,7 +27,7 @@ class FilterKuisActivity : BaseActivity<FilterKuisPresenter>(), FilterKuisView {
     }
 
     override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
@@ -38,20 +35,18 @@ class FilterKuisActivity : BaseActivity<FilterKuisPresenter>(), FilterKuisView {
         presenter.getKuisFilterData()
         btn_terapkan.setOnClickListener {
             applyFilter()
-            presenter.saveKuisFilter(kuisFilter)
         }
     }
 
     private fun applyFilter() {
-        val kuisFilterSelectedId = radio_group_kuis.checkedRadioButtonId
-        val kuisFilterSelectedValue = findViewById<RadioButton>(kuisFilterSelectedId).text
-
-        when (kuisFilterSelectedValue) {
-            getString(R.string.filter_all_label) -> kuisFilter = PantauConstants.Kuis.Filter.KUIS_ALL
-            getString(R.string.txt_belum_diikuti) -> kuisFilter = PantauConstants.Kuis.Filter.BELUM_DIIKUTI
-            getString(R.string.txt_belum_selesai) -> kuisFilter = PantauConstants.Kuis.Filter.BELUM_SELESAI
-            getString(R.string.txt_selesai) -> kuisFilter = PantauConstants.Kuis.Filter.SELESAI
+        val filter = when (radio_group_kuis.checkedRadioButtonId) {
+            R.id.radbtn_belum_diikuti -> PantauConstants.Kuis.Filter.BELUM_DIIKUTI
+            R.id.radbtn_belum_selesai -> PantauConstants.Kuis.Filter.BELUM_SELESAI
+            R.id.radbtn_selesai -> PantauConstants.Kuis.Filter.SELESAI
+            else -> PantauConstants.Kuis.Filter.KUIS_ALL
         }
+
+        presenter.saveKuisFilter(filter)
     }
 
     override fun setLayout(): Int {
@@ -59,11 +54,11 @@ class FilterKuisActivity : BaseActivity<FilterKuisPresenter>(), FilterKuisView {
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -85,7 +80,7 @@ class FilterKuisActivity : BaseActivity<FilterKuisPresenter>(), FilterKuisView {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun setKuisFilter(kuisFilter: String?) {
+    override fun setKuisFilter(kuisFilter: String) {
         when (kuisFilter) {
             PantauConstants.Kuis.Filter.KUIS_ALL -> radbtn_semua.isChecked = true
             PantauConstants.Kuis.Filter.BELUM_DIIKUTI -> radbtn_belum_diikuti.isChecked = true
