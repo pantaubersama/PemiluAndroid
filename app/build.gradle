@@ -119,6 +119,7 @@ dependencies {
     implementation rxBinding
     implementation compressor
     implementation facebook_sdk
+    implementation twitter_sdk
     kapt daggerCompiler
 
     testImplementation unitTestLibs

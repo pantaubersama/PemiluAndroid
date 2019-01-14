@@ -62,7 +62,11 @@ class ConnectActivity : BaseActivity<ConnectPresenter>(), ConnectView {
 
         })
         connect_fb.setOnClickListener {
-            LoginManager.getInstance().logInWithReadPermissions(this@ConnectActivity, permissions)
+            if (AccessToken.getCurrentAccessToken() == null) {
+                LoginManager.getInstance().logInWithReadPermissions(this@ConnectActivity, permissions)
+            } else {
+                ToastUtil.show(this@ConnectActivity, "Anda sudah terhubung ke Facebook")
+            }
         }
     }
 

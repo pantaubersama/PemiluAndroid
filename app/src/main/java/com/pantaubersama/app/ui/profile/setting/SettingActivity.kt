@@ -75,8 +75,8 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_setting), R.color.white, 4f)
         onClickAction()
-        setupFacebookLogin()
         getFacebookLoginSatus()
+        setupFacebookLogin()
         presenter.getProfile()
     }
 
@@ -126,7 +126,11 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
         })
         connect_fb.setOnClickListener {
-            LoginManager.getInstance().logInWithReadPermissions(this@SettingActivity, permissions)
+            if (AccessToken.getCurrentAccessToken() == null) {
+                LoginManager.getInstance().logInWithReadPermissions(this@SettingActivity, permissions)
+            } else {
+                ToastUtil.show(this@SettingActivity, "Anda sudah terhubung ke Facebook")
+            }
         }
     }
 
