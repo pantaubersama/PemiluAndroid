@@ -14,7 +14,7 @@ class EditProfilePresenter @Inject constructor(
     }
 
     fun refreshUserData() {
-        disposables?.add(
+        disposables.add(
             profileInteractor.refreshProfile()
             .subscribe(
                 {
@@ -38,7 +38,7 @@ class EditProfilePresenter @Inject constructor(
     ) {
         view?.showLoading()
         view?.disableView()
-        disposables?.add(
+        disposables.add(
             profileInteractor.updateUserData(
                 name,
                 username,
@@ -51,7 +51,7 @@ class EditProfilePresenter @Inject constructor(
                     {
                         view?.dismissLoading()
                         view?.showProfileUpdatedAlert()
-                        view?.finishThisScetion()
+                        view?.onSuccessUpdateProfile()
                     },
                     {
                         view?.dismissLoading()
@@ -64,7 +64,7 @@ class EditProfilePresenter @Inject constructor(
     }
 
     fun uploadAvatar(avatar: MultipartBody.Part?) {
-        disposables?.add(
+        disposables.add(
             profileInteractor.uploadAvatar(avatar)
                 .subscribe(
                     {
@@ -73,6 +73,21 @@ class EditProfilePresenter @Inject constructor(
                     },
                     {
                         view?.showFailedUpdateAvatarAlert()
+                        view?.showError(it)
+                    }
+                )
+        )
+    }
+
+    fun usernameCheck(username: String?) {
+        disposables.add(
+            profileInteractor.usernameCheck(username)
+                .subscribe(
+                    {
+                        view?.onUsernameAvailable()
+                    },
+                    {
+                        view?.onUsernameUnAvailable()
                         view?.showError(it)
                     }
                 )

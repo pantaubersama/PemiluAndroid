@@ -257,7 +257,10 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         dialog.invite_to_cluster_action?.setOnClickListener {
             val intent = Intent(this@ProfileActivity, UndangAnggotaActivity::class.java)
             intent.putExtra(PantauConstants.Cluster.CLUSTER_URL, cluster.magicLink)
-            startActivity(intent)
+            intent.putExtra(PantauConstants.Cluster.CLUSTER_ID, cluster.id)
+            intent.putExtra(PantauConstants.Cluster.INVITE_LINK_ACTIVE, cluster.isLinkActive)
+            startActivityForResult(intent, PantauConstants.Cluster.REQUEST_CODE.REQUEST_CLUSTER)
+            dialog.dismiss()
         }
         dialog.leave_cluster_action?.setOnClickListener {
             showLeaveClusterConfirmationDialog(cluster)
@@ -351,6 +354,8 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == PantauConstants.RequestCode.RC_SETTINGS) {
+                presenter.refreshProfile()
+            } else if (requestCode == PantauConstants.Cluster.REQUEST_CODE.REQUEST_CLUSTER) {
                 presenter.refreshProfile()
             }
         }

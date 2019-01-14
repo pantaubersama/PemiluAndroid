@@ -40,13 +40,17 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
     }
 
     override fun goToHome() {
-        if (urlData == null) {
-            val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
+        if (urlData != null) {
+            urlData?.let {
+                if (it.contains("invitation")) {
+                    val intent = Intent(this@SplashScreenActivity, ProfileActivity::class.java)
+                    intent.putExtra(PantauConstants.URL, urlData)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                }
+            }
         } else {
-            val intent = Intent(this@SplashScreenActivity, ProfileActivity::class.java)
-            intent.putExtra(PantauConstants.URL, urlData)
+            val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }

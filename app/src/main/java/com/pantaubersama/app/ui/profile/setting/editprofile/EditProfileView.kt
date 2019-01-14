@@ -9,9 +9,11 @@ interface EditProfileView : BaseView {
     fun showProfileUpdatedAlert()
     fun showFailedUpdateProfileAlert()
     fun disableView()
-    fun finishThisScetion()
     fun enableView()
     fun refreshProfile()
     fun showSuccessUpdateAvatarAlert()
     fun showFailedUpdateAvatarAlert()
+    fun onSuccessUpdateProfile()
+    fun onUsernameAvailable()
+    fun onUsernameUnAvailable()
 }

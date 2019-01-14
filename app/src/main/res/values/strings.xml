@@ -189,4 +189,5 @@
     <string name="label_pendidikan_terakhir">Pendidikan Terakhirmu</string>
     <string name="label_pekerjaan_sekarang">Pekerjaan Sekarang</string>
     <string name="title_buat_profilmu">Buat Profilmu</string>
+    <string name="next_action">Lanjut</string>
 </resources>
