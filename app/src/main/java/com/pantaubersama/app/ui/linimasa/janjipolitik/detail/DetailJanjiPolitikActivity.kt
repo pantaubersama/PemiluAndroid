@@ -197,7 +197,6 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
                                     showProgressDialog(getString(R.string.menghapus_janji_politik))
                                     presenter.deleteJanjiPolitik(id)
                                 }
-
                             })
                         deleteDialog.show()
                         dialog.dismiss()

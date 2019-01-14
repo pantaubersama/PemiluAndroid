@@ -12,7 +12,7 @@ import com.pantaubersama.app.data.model.linimasa.FeedsItem
 /**
  * @author edityomurti on 25/12/2018 20:03
  */
-class ShareUtil{
+class ShareUtil {
     companion object {
         fun shareItem(context: Context, item: Any?) {
             val targetedShareIntents: MutableList<Intent> = ArrayList()

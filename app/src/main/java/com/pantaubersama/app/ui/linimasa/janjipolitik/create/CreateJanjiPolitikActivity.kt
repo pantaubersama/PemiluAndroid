@@ -245,7 +245,6 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
                         imageFile = null
                         setImage()
                     }
-
                 })
                 dialog.show()
             }
