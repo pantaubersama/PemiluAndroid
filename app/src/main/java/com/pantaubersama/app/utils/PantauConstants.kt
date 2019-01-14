@@ -153,4 +153,9 @@ class PantauConstants {
     object Permission {
         val GET_IMAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
+
+    object Share {
+        const val SHARE_FEEDS_PATH = "share/pilpres/"
+        const val SHARE_JANPOL_PATH = "share/janjipolitik/"
+    }
 }

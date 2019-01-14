@@ -37,6 +37,7 @@
         </provider>
 
         <activity
+            android:theme="@style/AppTheme.Splash"
             android:name=".ui.splashscreen.SplashScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -58,6 +59,21 @@
                     android:host="${SYMBOLIC_URL}"
                     android:pathPrefix="/pantaubersama"
                     android:scheme="http" />
+            </intent-filter>
+
+            <intent-filter android:label="@string/label_intent_filter_share">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="${PANTAU_BASE_URL_NO_SCHEME}"
+                    android:pathPrefix="/share"
+                    android:scheme="https"/>
+
+                <data android:host="${PANTAU_BASE_URL_NO_SCHEME}"
+                    android:pathPrefix="/share"
+                    android:scheme="http"/>
+
             </intent-filter>
         </activity>
         <activity

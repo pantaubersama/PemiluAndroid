@@ -38,4 +38,9 @@
         <item name="android:fontFamily">@font/lato_regular</item>
         <item name="android:buttonTint">@color/colorPrimary</item>
     </style>
+
+    <style name="AppTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>
