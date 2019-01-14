@@ -9,8 +9,12 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import com.facebook.* // ktlint-disable
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
@@ -26,17 +30,27 @@ import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
 import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
 import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
+import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.logout_dialog.view.*
 import kotlinx.android.synthetic.main.verified_layout.*
+import timber.log.Timber
 import javax.inject.Inject
+import kotlin.collections.ArrayList
+import com.facebook.GraphRequest
+import com.twitter.sdk.android.core.* // ktlint-disable
+import com.twitter.sdk.android.core.identity.TwitterAuthClient
 
 class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     @Inject
     override lateinit var presenter: SettingPresenter
     private var verifiedDialog: Dialog? = null
+    private lateinit var callbackManager: CallbackManager
+    private lateinit var permissions: MutableList<String>
+    private lateinit var twitterAuthClient: TwitterAuthClient
 
     companion object {
         val EDIT_PROFILE = 1
@@ -62,7 +76,94 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_setting), R.color.white, 4f)
         onClickAction()
+        getFacebookLoginSatus()
+        setupFacebookLogin()
+        setupTwitterLogin()
         presenter.getProfile()
+    }
+
+    private fun setupTwitterLogin() {
+        Twitter.initialize(
+            TwitterConfig.Builder(this)
+            .logger(DefaultLogger(Log.DEBUG))
+            .twitterAuthConfig(TwitterAuthConfig(getString(R.string.twitter_api_key), getString(R.string.twitter_secret_key)))
+            .debug(true)
+            .build()
+        )
+        twitterAuthClient = TwitterAuthClient()
+        setting_connect_twitter.setOnClickListener {
+            twitterAuthClient.authorize(this, object : Callback<TwitterSession>() {
+                override fun success(result: Result<TwitterSession>) {
+                    presenter.connectTwitter(PantauConstants.CONNECT.TWITTER, result.data.authToken.token, result.data.authToken.secret)
+                }
+
+                override fun failure(exception: TwitterException?) {
+                    Timber.e(exception)
+                    ToastUtil.show(this@SettingActivity, "Gagal login dengan Twitter")
+                }
+            })
+        }
+    }
+
+    override fun showConnectedToTwitterAlert() {
+        ToastUtil.show(this@SettingActivity, "Terhubung dengan Twitter")
+    }
+
+    override fun showFailedToConnectTwitterAlert() {
+        ToastUtil.show(this@SettingActivity, "Gagal menghubungkan ke Twitter")
+    }
+
+    private fun getFacebookLoginSatus() {
+        if (AccessToken.getCurrentAccessToken() != null) {
+            val request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken()
+            ) { me, _ ->
+                facebook_login_text.text = me?.getString("name")
+                val request = GraphRequest.newGraphPathRequest(
+                    AccessToken.getCurrentAccessToken(),
+                    "/" + me.getString("id") + "/picture"
+                ) {
+                    try {
+                        facebook_login_icon.loadUrl(it.jsonObject.getJSONObject("data").getString("url"))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                val params = Bundle()
+                params.putBoolean("redirect", false)
+                request.parameters = params
+                request.executeAsync()
+            }
+            request.executeAsync()
+        }
+    }
+
+    private fun setupFacebookLogin() {
+        callbackManager = CallbackManager.Factory.create()
+        permissions = ArrayList()
+        permissions.add("public_profile")
+        permissions.add("email")
+        LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(result: LoginResult?) {
+                presenter.connectFacebook(PantauConstants.CONNECT.FACEBOOK, result?.accessToken?.token)
+            }
+
+            override fun onCancel() {
+                // not implemented yet
+            }
+
+            override fun onError(error: FacebookException?) {
+                Timber.e(error?.localizedMessage)
+                ToastUtil.show(this@SettingActivity, "Gagal mengubungkan ke Facebook")
+            }
+        })
+        connect_fb.setOnClickListener {
+            if (AccessToken.getCurrentAccessToken() == null) {
+                LoginManager.getInstance().logInWithReadPermissions(this@SettingActivity, permissions)
+            } else {
+                ToastUtil.show(this@SettingActivity, "Anda sudah terhubung ke Facebook")
+            }
+        }
     }
 
     override fun onSuccessGetProfile(profile: Profile) {
@@ -113,11 +214,20 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     }
 
     override fun showLoading() {
-        // Show Loading
+        showProgressDialog("Mohon tunggu")
     }
 
     override fun dismissLoading() {
-        // Hide Loading
+        dismissProgressDialog()
+    }
+
+    override fun showConnectedToFacebookAlert() {
+        ToastUtil.show(this@SettingActivity, "Terhubung dengan Facebook")
+        getFacebookLoginSatus()
+    }
+
+    override fun showFailedToConnectFacebookAlert() {
+        ToastUtil.show(this@SettingActivity, "Gagal menghubungkan ke Facebook")
     }
 
     fun onClickAction() {
@@ -140,9 +250,6 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         setting_cluster_undang.setOnClickListener {
             val intent = Intent(this@SettingActivity, ClusterUndangActivity::class.java)
             startActivityForResult(intent, CLUSTER_UNDANG)
-        }
-        setting_connect_twitter.setOnClickListener {
-            // connect with twitter
         }
         setting_pusat_bantuan.setOnClickListener {
             // pusat bantuan
@@ -173,6 +280,8 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+        twitterAuthClient.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == EDIT_PROFILE) {

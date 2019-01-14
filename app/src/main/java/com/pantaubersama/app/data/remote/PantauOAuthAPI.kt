@@ -158,4 +158,21 @@ interface PantauOAuthAPI {
     fun usernameCheck(
         @Field("username") username: String?
     ): Single<ProfileResponse>
+
+    @FormUrlEncoded
+    @POST("/v1/accounts/connect")
+    fun connectSocialMedia(
+        @Field("account_type")
+        accountType: String,
+        @Field("oauth_access_token")
+        token: String?
+    ): Completable
+
+    @FormUrlEncoded
+    @POST("/v1/accounts/connect")
+    fun connectTwitter(
+        @Field("account_type") accountType: String,
+        @Field("oauth_access_token") token: String,
+        @Field("oauth_access_token_secret") secret: String
+    ): Completable
 }

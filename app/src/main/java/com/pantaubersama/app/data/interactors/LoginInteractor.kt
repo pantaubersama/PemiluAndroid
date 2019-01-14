@@ -10,14 +10,14 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class LoginInteractor @Inject constructor(
-    private val apiWrapper: APIWrapper?,
-    private val rxSchedulers: RxSchedulers?,
+    private val apiWrapper: APIWrapper,
+    private val rxSchedulers: RxSchedulers,
     private val dataCache: DataCache?
 ) {
     fun exchangeToken(oAuthToken: String?): Single<TokenResponse>? {
-        return apiWrapper?.getPantauOAuthApi()?.exchangeToken(oAuthToken)
-                ?.subscribeOn(rxSchedulers?.io())
-                ?.observeOn(rxSchedulers?.mainThread())
+        return apiWrapper.getPantauOAuthApi().exchangeToken(oAuthToken)
+                .subscribeOn(rxSchedulers.io())
+                .observeOn(rxSchedulers.mainThread())
     }
 
     fun saveLoginData(token: Token?) {
@@ -31,13 +31,29 @@ class LoginInteractor @Inject constructor(
     }
 
     fun logOut(clientId: String?, clientSecret: String?): Completable? {
-        return apiWrapper?.getPantauOAuthApi()
-            ?.revokeToken(clientId, clientSecret)
-            ?.subscribeOn(rxSchedulers?.io())
-            ?.observeOn(rxSchedulers?.mainThread())
+        return apiWrapper.getPantauOAuthApi()
+            .revokeToken(clientId, clientSecret)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
     }
 
     fun clearDataCache() {
         dataCache?.clear()
+    }
+
+    fun connectFacebook(accountType: String, token: String?): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .connectSocialMedia(accountType, token)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun connectTwitter(accountType: String, token: String, secret: String): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .connectTwitter(accountType, token, secret)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
     }
 }
