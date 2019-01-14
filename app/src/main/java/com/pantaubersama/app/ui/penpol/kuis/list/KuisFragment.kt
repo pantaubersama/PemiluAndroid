@@ -64,7 +64,9 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         recycler_view.layoutManager = LinearLayoutManager(requireContext())
         recycler_view.adapter = adapter
         recycler_view.addItemDecoration(LineDividerItemDecoration(color(R.color.gray_3), dip(1), dip(16)))
-        adapter.addSupportLoadMore(recycler_view, 3, presenter::getNextPage)
+        adapter.addSupportLoadMore(recycler_view, 3) {
+            presenter.getNextPage()
+        }
 
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
@@ -84,9 +86,6 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
 
     override fun showMoreKuis(list: List<KuisItem>) {
         adapter.addData(list)
-        if (list.size < presenter.perPage) {
-            adapter.setDataEnd(true)
-        }
     }
 
     override fun showLoadingMore() {
@@ -112,6 +111,10 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     override fun showFailedGetData() {
         recycler_view.visibleIf(false)
         view_fail_state.enableLottie(true, lottie_fail_state)
+    }
+
+    override fun setNoMoreItems() {
+        adapter.setDataEnd(true)
     }
 
     private fun shareKuis(item: KuisItem) {
