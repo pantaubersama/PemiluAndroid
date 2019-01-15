@@ -169,6 +169,11 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
     override fun onSuccessDeleteItem(position: Int) {
         dismissProgressDialog()
         adapter.deleteItem(position)
+        if (adapter.itemCount == 0) {
+            showLoading()
+            dismissLoading()
+            showEmptyData()
+        }
     }
 
     override fun onFailedDeleteItem(throwable: Throwable) {

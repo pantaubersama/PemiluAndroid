@@ -13,23 +13,10 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <include
-        android:id="@+id/view_empty_state"
-        layout="@layout/layout_empty_state"
-        android:visibility="gone"/>
+    <include layout="@layout/layout_empty_state"/>
 
-    <LinearLayout
-        android:id="@+id/progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:gravity="center"
-        android:visibility="gone">
+    <include layout="@layout/layout_fail_state"/>
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
+    <include layout="@layout/layout_loading_state"/>
 
 </FrameLayout>

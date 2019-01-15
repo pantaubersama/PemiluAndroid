@@ -41,6 +41,12 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     private var adapter: TanyaKandidatAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
 
+    companion object {
+        fun newInstance(): TanyaKandidatFragment {
+            return TanyaKandidatFragment()
+        }
+    }
+
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
@@ -56,7 +62,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         }
     }
 
-    fun getDataList() {
+    private fun getDataList() {
         adapter?.setDataEnd(false)
         presenter.getList()
     }
@@ -134,6 +140,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             }
 
             override fun onClickDeleteItem(id: String?, position: Int?) {
+                showProgressDialog(getString(R.string.txt_delete_item_ini))
                 presenter.deleteItem(id, position)
             }
 
@@ -237,17 +244,13 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun showFailedDeleteItemAlert() {
+        dismissProgressDialog()
         ToastUtil.show(context!!, "Gagal menghapus pertanyaan")
     }
 
     override fun onItemDeleted(position: Int?) {
+        dismissProgressDialog()
         adapter?.deleteItem(position)
-    }
-
-    companion object {
-        fun newInstance(): TanyaKandidatFragment {
-            return TanyaKandidatFragment()
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
