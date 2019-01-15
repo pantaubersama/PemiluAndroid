@@ -175,4 +175,9 @@ interface PantauOAuthAPI {
         @Field("oauth_access_token") token: String,
         @Field("oauth_access_token_secret") secret: String
     ): Completable
+
+    @DELETE("/v1/accounts/disconnect")
+    fun disconnectSocialMedia(
+        @Query("account_type") accountType: String
+    ): Completable
 }

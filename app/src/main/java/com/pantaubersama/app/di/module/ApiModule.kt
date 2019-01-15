@@ -11,6 +11,8 @@ import com.pantaubersama.app.utils.ConnectionState
 import com.pantaubersama.app.utils.CustomAuthenticator
 import com.pantaubersama.app.utils.NetworkErrorInterceptor
 import com.pantaubersama.app.utils.RequestInterceptor
+import com.twitter.sdk.android.core.TwitterCore
+import com.twitter.sdk.android.core.services.AccountService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -85,5 +87,11 @@ class ApiModule {
     @Singleton
     fun provideWordStadiumAPI(httpClient: OkHttpClient): WordStadiumAPI {
         return APIWrapper.createRetrofit(BuildConfig.WORD_STADIUM_BASE_URL, httpClient).create(WordStadiumAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTwitterAccountService(): AccountService {
+        return TwitterCore.getInstance().apiClient.accountService
     }
 }

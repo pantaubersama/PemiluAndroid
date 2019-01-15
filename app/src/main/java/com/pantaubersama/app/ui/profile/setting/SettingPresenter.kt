@@ -4,13 +4,19 @@ import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.LoginInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import javax.inject.Inject
+import com.twitter.sdk.android.core.TwitterException
+import android.R.attr.data
+import com.pantaubersama.app.utils.PantauConstants
+import com.twitter.sdk.android.core.Callback
+import com.twitter.sdk.android.core.Result
+import com.twitter.sdk.android.core.models.User
 
 class SettingPresenter @Inject constructor(
     private val loginInteractor: LoginInteractor,
     private val profileInteractor: ProfileInteractor
 ) : BasePresenter<SettingView>() {
     fun logOut(clientId: String?, clientSecret: String?) {
-        disposables?.add(
+        disposables.add(
                 loginInteractor.logOut(
                         clientId,
                         clientSecret
@@ -64,6 +70,49 @@ class SettingPresenter @Inject constructor(
                         view?.dismissLoading()
                         view?.showError(it)
                         view?.showFailedToConnectTwitterAlert()
+                    }
+                )
+        )
+    }
+
+    fun getTwitterUserData() {
+        loginInteractor.getTwitterAccountService()
+            .verifyCredentials(false, false, false)
+            .enqueue(object : Callback<User>() {
+                override fun success(result: Result<User>?) {
+                    view?.bindTwitterUserData(result?.data)
+                }
+
+                override fun failure(exception: TwitterException?) {
+                    view?.showError(exception as Throwable)
+                    view?.showFailedGetUserDataAlert()
+                }
+            })
+    }
+
+    fun disconnectSocialMedia(accountType: String) {
+        view?.showLoading()
+        disposables.add(
+            loginInteractor.disconnectSocielMedia(accountType)
+                .subscribe(
+                    {
+                        view?.dismissLoading()
+                        if (accountType == PantauConstants.CONNECT.FACEBOOK) {
+                            view?.showSuccessDisconnectFacebookAlert()
+                            view?.logoutFacebookSDK()
+                        } else if (accountType == PantauConstants.CONNECT.TWITTER) {
+                            view?.showSuccessDisconnectTwitterAlert()
+                            view?.logoutTwitterSDK()
+                        }
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showError(it)
+                        if (accountType == PantauConstants.CONNECT.FACEBOOK) {
+                            view?.showFailedDisconnectFacebookAlert()
+                        } else if (accountType == PantauConstants.CONNECT.TWITTER) {
+                            view?.showFailedDisconnectTwitterAlert()
+                        }
                     }
                 )
         )
