@@ -11,8 +11,10 @@ import com.extrainteger.symbolic.ui.SymbolicLoginButton
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
@@ -37,7 +39,9 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it, BuildConfig.SYMBOLIC_REDIRECT_URI) }
+        if (!url.isNullOrEmpty()) {
+            url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it, BuildConfig.SYMBOLIC_REDIRECT_URI) }
+        }
         symbolicScope = ArrayList()
         symbolic_login_button.configure(
             SymbolicConfig(
@@ -78,7 +82,22 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
         dismissProgressDialog()
     }
 
-    override fun openHomeActivity() {
+    override fun onSuccessGetProfile(it: Profile?) {
+        if (it?.username != null) {
+            openHomeActivity()
+        } else {
+            openEditProfileActivity()
+        }
+    }
+
+    private fun openEditProfileActivity() {
+        val intent = Intent(this@LoginActivity, EditProfileActivity::class.java)
+        intent.putExtra(PantauConstants.PROFILE_COMPLETION, true)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
+
+    private fun openHomeActivity() {
         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)

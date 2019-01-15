@@ -33,13 +33,29 @@ class JanjiPolitikInteractor @Inject constructor(
         dataCache?.saveJanpolClusterFilter(clusterFilter)
     }
 
+    fun getJanPolById(janpolId: String): Single<JanjiPolitik> {
+        return apiWrapper.getPantauApi()
+            .getJanjiPolitik(janpolId)
+            .subscribeOn(rxSchedulers.io())
+            .map { it.data.janjiPolitik!! }
+            .observeOn(rxSchedulers.mainThread())
+    }
+
     fun getJanPol(
         keyword: String?,
         page: Int?,
         perPage: Int?
-    ): Single<JanjiPolitiksData?>? {
+    ): Single<JanjiPolitiksData?> {
         return apiWrapper.getPantauApi()
             .getJanjiPolitikList(keyword, getJanpolClusterFilter()?.id ?: "", getJanpolUserFilter(), page, perPage)
+            .subscribeOn(rxSchedulers.io())
+            .map { it.data }
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getMyJanPol(keyword: String, page: Int?, perPage: Int): Single<JanjiPolitiksData?> {
+        return apiWrapper.getPantauApi()
+            .getMyJanjiPolitikList(keyword, page, perPage)
             .subscribeOn(rxSchedulers.io())
             .map { it.data }
             .observeOn(rxSchedulers.mainThread())

@@ -11,11 +11,9 @@ import android.widget.TextView
 import com.pantaubersama.app.R
 import kotlinx.android.synthetic.main.layout_delete_confirmation_dialog.*
 
-class DeleteConfimationDialog(context: Context, message: String, position: Int = 0, itemId: String = "") {
+class DeleteConfimationDialog(context: Context, message: String, position: Int = 0, itemId: String = "", listener: DialogListener) {
 
     private val dialog: Dialog
-
-    var listener: DialogListener? = null
 
     init {
         val dialog = Dialog(context)
@@ -39,7 +37,7 @@ class DeleteConfimationDialog(context: Context, message: String, position: Int =
         lp.gravity = Gravity.CENTER
         window?.attributes = lp
         dialog.yes_button.setOnClickListener {
-            listener?.onClickDeleteItem(itemId, position)
+            listener.onClickDeleteItem(itemId, position)
             dialog.dismiss()
         }
         dialog.no_button.setOnClickListener {

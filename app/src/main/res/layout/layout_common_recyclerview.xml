@@ -26,14 +26,6 @@
         </androidx.recyclerview.widget.RecyclerView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:visibility="gone"
-        android:id="@+id/lottie_loading"
-        android:scaleType="centerInside"
-        android:layout_width="300dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        app:lottie_fileName="lottie_loading.json"
-        app:lottie_autoPlay="false"/>
+    <include layout="@layout/layout_loading_state"/>
 
 </FrameLayout>

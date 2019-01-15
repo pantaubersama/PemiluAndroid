@@ -88,11 +88,6 @@ class KuisListAdapter : BaseRecyclerAdapter() {
         }
     }
 
-    fun addBanner(bannerInfo: BannerInfo) {
-        data.add(0, bannerInfo)
-        notifyItemInserted(0)
-    }
-
     fun removeBanner() {
         if (data[0] is BannerInfo) {
             data.removeAt(0)

@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.add_category_dialog.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

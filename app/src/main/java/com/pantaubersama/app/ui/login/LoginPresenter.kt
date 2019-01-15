@@ -21,14 +21,14 @@ class LoginPresenter @Inject constructor(
                 view?.showError(it!!)
                 view?.showLoginFailedAlert()
             })
-        disposables?.add(disposable!!)
+        disposables.add(disposable!!)
     }
 
     private fun getProfile() {
         val disposable = profileInteractor.refreshProfile().subscribe(
                 {
                     view?.dismissLoading()
-                    view?.openHomeActivity()
+                    view?.onSuccessGetProfile(it)
                 },
                 {
                     view?.dismissLoading()
@@ -36,6 +36,6 @@ class LoginPresenter @Inject constructor(
                     view?.showLoginFailedAlert()
                 }
             )
-        disposables?.add(disposable)
+        disposables.add(disposable)
     }
 }

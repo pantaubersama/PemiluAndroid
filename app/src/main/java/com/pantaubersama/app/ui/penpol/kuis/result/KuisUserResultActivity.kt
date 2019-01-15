@@ -1,11 +1,11 @@
 package com.pantaubersama.app.ui.penpol.kuis.result
 
-import android.content.Intent
 import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.kuis.KuisUserResult
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -54,29 +54,7 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
         tv_percentage.text = "%.2f%%".format(kuisUserResult.percentage)
         tv_paslon_name.text = kuisUserResult.team.title
         btn_share.setOnClickListener {
-            shareKuis(kuisUserResult)
-        }
-    }
-
-    private fun shareKuis(kuisUserResult: KuisUserResult) {
-        val targetedShareIntents: MutableList<Intent> = ArrayList()
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "text/plain"
-        val resInfo = this?.packageManager?.queryIntentActivities(shareIntent, 0)
-        if (!resInfo!!.isEmpty()) {
-            for (resolveInfo in resInfo) {
-                val sendIntent = Intent(Intent.ACTION_SEND)
-                sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Pantau")
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "pantau.co.id" + "/share/kecenderungan/" + kuisUserResult.team.id)
-                sendIntent.type = "text/plain"
-                if (!resolveInfo.activityInfo.packageName.contains("pantaubersama")) {
-                    sendIntent.`package` = resolveInfo.activityInfo.packageName
-                    targetedShareIntents.add(sendIntent)
-                }
-            }
-            val chooserIntent = Intent.createChooser(targetedShareIntents.removeAt(0), "Bagikan dengan")
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
-            startActivity(chooserIntent)
+            ShareUtil.shareItem(this, kuisUserResult)
         }
     }
 }

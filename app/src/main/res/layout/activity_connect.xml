@@ -21,30 +21,30 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/connect_submit"
         android:layout_below="@+id/appbar"
-        android:background="@color/gray_3"
-        android:orientation="vertical"
-        android:paddingTop="10dp">
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:background="@color/gray_3">
 
             <TextView
                 android:id="@+id/connect_page_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_regular"
-                android:lineSpacingExtra="2sp"
                 android:textColor="@color/gray_5"
                 android:textSize="10sp"
-                tools:text="Tautkan dengan social mediamu agar lebih mudah dalam berbagi dan berkontribusi di Pantau Bersama" />
+                android:text="Tautkan dengan social mediamu agar lebih mudah dalam berbagi dan berkontribusi di Pantau Bersama" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:background="@color/white"
             android:orientation="vertical"
             android:paddingLeft="16dp"
@@ -53,10 +53,10 @@
             android:paddingBottom="12dp">
 
             <TextView
+                android:id="@+id/connect_twitter_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_regular"
-                android:text="@string/label_click_connect_twitter"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
@@ -68,7 +68,7 @@
                 android:background="@color/gray_3" />
 
             <LinearLayout
-                android:id="@+id/connect_twitter"
+                android:id="@+id/setting_connect_twitter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_outline_blue_twitter"
@@ -78,11 +78,13 @@
                 android:padding="12dp">
 
                 <ImageView
+                    android:id="@+id/twitter_login_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_twitter" />
 
                 <TextView
+                    android:id="@+id/twitter_login_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_bold"
@@ -95,10 +97,14 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:background="@color/gray_3"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical"
             android:paddingLeft="16dp"
@@ -107,10 +113,10 @@
             android:paddingBottom="12dp">
 
             <TextView
+                android:id="@+id/facebook_connect_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_regular"
-                android:text="@string/label_click_connect_fb"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
@@ -132,11 +138,13 @@
                 android:padding="12dp">
 
                 <ImageView
+                    android:id="@+id/facebook_login_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/facebook" />
 
                 <TextView
+                    android:id="@+id/facebook_login_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_bold"

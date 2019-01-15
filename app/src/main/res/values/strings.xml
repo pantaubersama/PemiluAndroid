@@ -91,6 +91,7 @@
     <string name="label_verifikasi">Verifikasi</string>
     <string name="label_badge">Badge</string>
     <string name="label_click_connect_twitter">Click below to connect your Symbolic account with Twitter</string>
+    <string name="label_click_connect_facebook">Click below to connect your Symbolic account with Facebook</string>
     <string name="label_connect_with_twitter">CONNECT WITH TWITTER</string>
     <string name="label_connected_as">Connected as :</string>
     <string name="label_cluster">Cluster :</string>
@@ -150,6 +151,7 @@
     <string name="label_total_kecenderungan">Total Kecenderungamu, </string>
     <string name="title_catatan_pilihanku">Catatan Pilihanku</string>
     <string name="txt_delete_item_ini">Apakah Anda yakin akan menghapus item ini?</string>
+    <string name="logout_alert">Apakah Anda yakin akan keluar dari aplikasi Pantau Bersama?</string>
     <string name="hint_masukkan_email_disini">Masukkan email disini</string>
     <string name="label_bagikan_undangan_lewat_link">Bagikan Undangan Lewat Link</string>
     <string name="label_non_aktifkan_link_undangan">Non-aktifkan link undangan</string>
@@ -172,9 +174,6 @@
     <string name="wajib_diisi">wajib diisi</string>
     <string name="menghapus_janji_politik">Menghapus janji politik</string>
     <string name="anggota">" anggota"</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="coming_soon">Coming Soon</string>
     <string name="pantau_terus_di_web">Pantau terus di Web dan Sosial Media  Pantau Bersama untuk info tanggal updatenya</string>
     <string name="url_pantau_bersama">www.pantaubersama.com</string>
@@ -189,4 +188,7 @@
     <string name="label_pendidikan_terakhir">Pendidikan Terakhirmu</string>
     <string name="label_pekerjaan_sekarang">Pekerjaan Sekarang</string>
     <string name="title_buat_profilmu">Buat Profilmu</string>
+    <string name="next_action">Lanjut</string>
+    <string name="label_intent_filter_share">Pantau Bersama</string>
+    <string name="janji_politik_tidak_ditemukan">Janji Politik tidak ditemukan</string>
 </resources>

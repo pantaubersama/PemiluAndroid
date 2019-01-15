@@ -1,9 +1,6 @@
 package com.pantaubersama.app.ui.linimasa.janjipolitik
 
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -21,19 +18,20 @@ import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikA
 import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
+import com.pantaubersama.app.utils.CopyUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_CREATE_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_ITEM_JANPOL
 import com.pantaubersama.app.utils.ShareUtil
-import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_janji_politik.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -69,6 +67,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             fab_add.visibleIf(false)
         }
         setupRecyclerJanpol()
+        getJanjiPolitikList()
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {
@@ -77,22 +76,22 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
     private fun setupRecyclerJanpol() {
         val myProfile = presenter.getMyProfile()
-        val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         adapter = JanjiPolitikAdapter()
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
         adapter.listener = object : JanjiPolitikAdapter.AdapterListener {
 
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivity(BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.EXTRA_TYPE_JANPOL, bannerInfo))
+                startActivity(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.EXTRA_TYPE_JANPOL, bannerInfo))
             }
 
             override fun onClickJanPolContent(item: JanjiPolitik, position: Int) {
-                startActivityForResult(DetailJanjiPolitikActivity.setIntent(context!!, item, position), RC_OPEN_DETAIL_JANPOL)
+                startActivityForResult(DetailJanjiPolitikActivity.setIntent(requireContext(), item, position), RC_OPEN_DETAIL_JANPOL)
             }
 
             override fun onClickJanpolOption(item: JanjiPolitik, position: Int) {
-                val dialog = OptionDialog(context!!, R.layout.layout_option_dialog_tanya_kandidat)
+                val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
                 if (myProfile.cluster != null &&
                     item.creator?.cluster != null &&
                     item.creator?.cluster?.id?.equals(myProfile.cluster?.id)!! &&
@@ -120,14 +119,15 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
                                 dialog.dismiss()
                             }
                             R.id.delete_tanya_kandidat_item_action -> {
-                                val deleteDialog = DeleteConfimationDialog(context!!, getString(R.string.txt_delete_item_ini), position, item.id!!)
+                                val deleteDialog = DeleteConfimationDialog(
+                                    requireContext(), getString(R.string.txt_delete_item_ini), position, item.id!!,
+                                    listener = object : DeleteConfimationDialog.DialogListener {
+                                        override fun onClickDeleteItem(id: String, position: Int) {
+                                            showProgressDialog(getString(R.string.menghapus_janji_politik))
+                                            presenter.deleteJanjiPolitik(id, position)
+                                        }
+                                    })
                                 deleteDialog.show()
-                                deleteDialog.listener = object : DeleteConfimationDialog.DialogListener {
-                                    override fun onClickDeleteItem(id: String, position: Int) {
-                                        showProgressDialog(getString(R.string.menghapus_janji_politik))
-                                        presenter.deleteJanjiPolitik(id, position)
-                                    }
-                                }
                                 dialog.dismiss()
                             }
                         }
@@ -136,14 +136,11 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             }
 
             override fun onClickShare(item: JanjiPolitik) {
-                ShareUtil.shareItem(context!!, item)
+                ShareUtil.shareItem(requireContext(), item)
             }
 
             override fun onClickCopyUrl(id: String?) {
-                val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, "janpol id : $id")
-                clipboard.primaryClip = clip
-                ToastUtil.show(context!!, "janji politik telah disalin")
+                CopyUtil.copyJanpol(requireContext(), id!!)
             }
 
             override fun onClickLapor(id: String?) {
@@ -175,7 +172,6 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             getJanjiPolitikList()
             swipe_refresh.isRefreshing = false
         }
-        getJanjiPolitikList()
     }
 
     fun getJanjiPolitikList() {

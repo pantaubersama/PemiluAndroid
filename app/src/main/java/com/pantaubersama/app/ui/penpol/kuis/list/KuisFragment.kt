@@ -17,10 +17,12 @@ import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
 import com.pantaubersama.app.utils.LineDividerItemDecoration
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
 class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
@@ -57,14 +59,16 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
             }
 
             override fun onClickShare(item: KuisItem) {
-                shareKuis(item)
+                ShareUtil.shareItem(requireContext(), item)
             }
         }
 
         recycler_view.layoutManager = LinearLayoutManager(requireContext())
         recycler_view.adapter = adapter
         recycler_view.addItemDecoration(LineDividerItemDecoration(color(R.color.gray_3), dip(1), dip(16)))
-        adapter.addSupportLoadMore(recycler_view, 3, presenter::getNextPage)
+        adapter.addSupportLoadMore(recycler_view, 3) {
+            presenter.getNextPage()
+        }
 
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
@@ -84,9 +88,6 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
 
     override fun showMoreKuis(list: List<KuisItem>) {
         adapter.addData(list)
-        if (list.size < presenter.perPage) {
-            adapter.setDataEnd(true)
-        }
     }
 
     override fun showLoadingMore() {
@@ -114,26 +115,8 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         view_fail_state.enableLottie(true, lottie_fail_state)
     }
 
-    private fun shareKuis(item: KuisItem) {
-        val targetedShareIntents: MutableList<Intent> = ArrayList()
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "text/plain"
-        val resInfo = activity?.packageManager?.queryIntentActivities(shareIntent, 0)
-        if (!resInfo!!.isEmpty()) {
-            for (resolveInfo in resInfo) {
-                val sendIntent = Intent(Intent.ACTION_SEND)
-                sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Pantau")
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "pantau.co.id" + "share/q/" + item.id)
-                sendIntent.type = "text/plain"
-                if (!resolveInfo.activityInfo.packageName.contains("pantaubersama")) {
-                    sendIntent.`package` = resolveInfo.activityInfo.packageName
-                    targetedShareIntents.add(sendIntent)
-                }
-            }
-            val chooserIntent = Intent.createChooser(targetedShareIntents.removeAt(0), "Bagikan dengan")
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
-            startActivity(chooserIntent)
-        }
+    override fun setNoMoreItems() {
+        adapter.setDataEnd(true)
     }
 
     companion object {

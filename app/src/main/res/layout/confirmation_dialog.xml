@@ -13,10 +13,11 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/dialog_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato_bold"
-            android:text="@string/title_keluar_aplikasi"
+            android:text="Dialog"
             android:textColor="@color/gray_5" />
     </LinearLayout>
 
@@ -33,12 +34,13 @@
         android:padding="50dp">
 
         <TextView
+            android:id="@+id/dialog_alert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:fontFamily="@font/lato_regular"
             android:gravity="center"
-            android:text="Apakah anda yakin ingin keluar dari aplikasi Pantau Bersama?"
+            android:text="Apakah Anda yakin?"
             android:textColor="@color/gray_5" />
 
     </LinearLayout>
@@ -56,7 +58,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/logout_dialog_batal"
+            android:id="@+id/dialog_cancel_action"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -65,16 +67,17 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/cancel_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_bold"
-                android:text="@string/batal"
+                android:text="Cancel"
                 android:textColor="@color/gray_5" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/logout_dialog_keluar"
+            android:id="@+id/dialog_ok_action"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -83,10 +86,11 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/ok_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_bold"
-                android:text="@string/label_keluar"
+                android:text="OK"
                 android:textColor="@color/colorPrimary" />
 
         </LinearLayout>

@@ -10,6 +10,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.data.remote.exception.ErrorTimeoutException
+import retrofit2.HttpException
 
 class NetworkErrorInterceptor(
     private val connectionState: ConnectionState
@@ -33,6 +34,8 @@ class NetworkErrorInterceptor(
 //            if (e is ErrorInvalidUserException) throw ErrorInvalidUserException()
             if (e is ErrorException && e.getCode() > -1)
                 throw ErrorException(e.message!!)
+            if (e is HttpException)
+                throw Throwable("Error!! HttpException code: ${e.code()}")
             throw ErrorException()
         }
     }
@@ -42,7 +45,8 @@ class NetworkErrorInterceptor(
         if (jsonObject.has("error")) {
             val jsonError = jsonObject.getAsJsonObject("error")
             if (jsonError.has("errors")) {
-                return jsonError.getAsJsonArray("error").get(0).asString
+
+                return jsonError.getAsJsonArray("errors").asJsonArray.get(0).asString
             }
         }
         return "oops, terjadi kesalahan jaringan" // Unkown error

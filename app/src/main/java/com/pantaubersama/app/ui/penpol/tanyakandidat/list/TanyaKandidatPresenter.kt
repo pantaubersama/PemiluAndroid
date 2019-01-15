@@ -14,8 +14,8 @@ class TanyaKandidatPresenter @Inject constructor(
 ) : BasePresenter<TanyaKandidatView>() {
     fun getList() {
         view?.showLoading()
-        disposables?.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_TANYA)
-            ?.subscribe(
+        disposables.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_TANYA)
+            .subscribe(
                 {
                     view?.showBanner(it)
                 },
@@ -24,7 +24,7 @@ class TanyaKandidatPresenter @Inject constructor(
                     view?.showError(it)
                     view?.showFailedGetDataAlert()
                 }
-            )!!
+            )
         )
     }
 
@@ -39,7 +39,7 @@ class TanyaKandidatPresenter @Inject constructor(
         if (page == 1) {
             view?.showLoading()
         }
-        disposables?.add(
+        disposables.add(
             tanyaKandidatInteractor
                 .getTanyaKandidatlist(
                     page,
@@ -79,7 +79,7 @@ class TanyaKandidatPresenter @Inject constructor(
     }
 
     fun upVoteQuestion(id: String?, questionCalass: String?, isLiked: Boolean?, position: Int?) {
-        disposables?.add(
+        disposables.add(
             tanyaKandidatInteractor
                 .upVoteQuestion(
                     id,
@@ -98,7 +98,7 @@ class TanyaKandidatPresenter @Inject constructor(
     }
 
     fun reportQuestion(id: String?, className: String?) {
-        disposables?.add(
+        disposables.add(
             tanyaKandidatInteractor
                 .reportQuestion(
                     id,
@@ -117,7 +117,7 @@ class TanyaKandidatPresenter @Inject constructor(
     }
 
     fun deleteItem(id: String?, position: Int?) {
-        disposables?.add(
+        disposables.add(
             tanyaKandidatInteractor
                 .deleteQuestions(id)
                 .subscribe(
@@ -133,7 +133,7 @@ class TanyaKandidatPresenter @Inject constructor(
     }
 
     fun unVoteQuestion(id: String?, className: String, liked: Boolean, position: Int?) {
-        disposables?.add(
+        disposables.add(
             tanyaKandidatInteractor
                 .unVoteQuestion(id, className)
                 .subscribe(

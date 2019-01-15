@@ -240,14 +240,13 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
         if (imageFile != null) {
             Glide.with(this).load(imageFile).into(iv_create_janpol_image)
             iv_create_janpol_image.setOnClickListener {
-                val dialog = DeleteConfimationDialog(this, "Hapus gambar")
-                dialog.show()
-                dialog.listener = object : DeleteConfimationDialog.DialogListener {
+                val dialog = DeleteConfimationDialog(this, "Hapus gambar", listener = object : DeleteConfimationDialog.DialogListener {
                     override fun onClickDeleteItem(id: String, position: Int) {
                         imageFile = null
                         setImage()
                     }
-                }
+                })
+                dialog.show()
             }
         }
     }

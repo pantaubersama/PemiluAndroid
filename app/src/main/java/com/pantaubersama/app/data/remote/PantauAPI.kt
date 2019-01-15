@@ -32,11 +32,21 @@ interface PantauAPI {
         @Query("per_page") perPage: Int?
     ): Single<FeedsResponse>
 
+    @GET("linimasa/v1/janji_politiks/{id}")
+    fun getJanjiPolitik(@Path("id") janpolId: String): Single<JanjiPolitikResponse>
+
     @GET("linimasa/v1/janji_politiks")
     fun getJanjiPolitikList(
         @Query("q") keyword: String?,
         @Query("cluster_id") clusterId: String?,
         @Query("filter_by") filterBy: String?,
+        @Query("page") page: Int?,
+        @Query("per_page") perPage: Int?
+    ): Single<JanjiPolitiksResponse>
+
+    @GET("linimasa/v1/janji_politiks/me")
+    fun getMyJanjiPolitikList(
+        @Query("q") keyword: String?,
         @Query("page") page: Int?,
         @Query("per_page") perPage: Int?
     ): Single<JanjiPolitiksResponse>
@@ -67,6 +77,12 @@ interface PantauAPI {
         @Query("filter_by") filterBy: String?
     ): Single<TanyaKandidatResponse>
 
+    @GET("pendidikan_politik/v1/me/questions")
+    fun getMyTanyaKandidatList(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
+    ): Single<TanyaKandidatResponse>
+
     @FormUrlEncoded
     @POST("pendidikan_politik/v1/votes")
     fun upVoteQuestion(
@@ -92,11 +108,24 @@ interface PantauAPI {
         @Query("class_name") className: String
     ): Completable
 
-    @GET("pendidikan_politik/v1/quizzes")
-    fun getKuisList(
+    @GET("pendidikan_politik/v1/quizzes/participated")
+    fun getKuisInProgress(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
-        @Query("filter_by") filterBy: String? = null
+        @Query("filter_by") filterBy: String = "in_progress"
+    ): Single<KuisResponse>
+
+    @GET("pendidikan_politik/v1/quizzes/participated")
+    fun getKuisFinished(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("filter_by") filterBy: String = "finished"
+    ): Single<KuisResponse>
+
+    @GET("pendidikan_politik/v1/quizzes")
+    fun getKuisNotParticipating(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
     ): Single<KuisResponse>
 
     @GET("pendidikan_politik/v1/me/quizzes")

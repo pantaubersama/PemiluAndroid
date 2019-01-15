@@ -15,11 +15,17 @@ class PantauConstants {
         const val BANNER_TANYA = "tanya"
         const val BANNER_KUIS = "kuis"
         const val URL = "url"
+        val PROFILE_COMPLETION = "profile_completion"
     }
 
     object Cluster {
         const val CATEGORY = "category"
         val CLUSTER_URL = "cluster_url"
+        val CLUSTER_ID = "cluster_id"
+        val INVITE_LINK_ACTIVE = "invite_link_active"
+        object REQUEST_CODE {
+            const val REQUEST_CLUSTER = 2001
+        }
     }
 
     object TanyaKandidat {
@@ -53,6 +59,8 @@ class PantauConstants {
         const val EXTRA_JANPOL_ID = "EXTRA_JANPOL_ID"
         const val EXTRA_JANPOL_ITEM = "EXTRA_JANPOL_ITEM"
         const val EXTRA_ITEM_POSITION = "EXTRA_ITEM_POSITION"
+        const val EXTRA_INTENT_TYPE = "EXTRA_INTENT_TYPE"
+        const val EXTRA_INTENT_TYPE_SHARE = "EXTRA_INTENT_TYPE_SHARE"
     }
 
     object RequestCode {
@@ -94,6 +102,8 @@ class PantauConstants {
         const val URL_PANTAU_BERSAMA_TWITTER = "https://twitter.com/pantaubersama"
         const val URL_PANTAU_BERSAMA_INSTAGRAM = "https://www.instagram.com/pantaubersama/"
         const val URL_PANTAU_BERSAMA_FACEBOOK = "https://www.facebook.com/pages/category/Internet-Company/Pantau-Bersama-735930099884846/"
+
+        const val INVITATION_PATH = "invitation"
     }
 
     object Kuis {
@@ -152,5 +162,20 @@ class PantauConstants {
 
     object Permission {
         val GET_IMAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    }
+
+    object CONNECT {
+        const val FACEBOOK = "facebook"
+        const val TWITTER = "twitter"
+    }
+
+    object Share {
+        const val SHARE_FEEDS_PATH = "share/pilpres/"
+        const val SHARE_JANPOL_PATH = "share/janjipolitik/"
+        const val SHARE_TANYA_PATH = "share/tanya/"
+        const val SHARE_KUIS_PATH = "share/kuis/"
+        const val SHARE_HASIL_KUIS_PATH = "share/hasilkuis/"
+        const val SHARE_KECENDERUNGAN_PATH = "share/kecenderungan/"
+        const val SHARE_BADGE_PATH = "share/badge/"
     }
 }

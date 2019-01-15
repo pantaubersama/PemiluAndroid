@@ -55,4 +55,15 @@ class ClusterInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun enableDisableUlInvite(clusterId: String, disable: Boolean): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .enableDisableCluster(
+                clusterId,
+                disable
+            )
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }

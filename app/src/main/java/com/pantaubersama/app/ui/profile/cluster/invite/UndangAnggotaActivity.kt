@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.profile.cluster.invite
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
@@ -16,6 +17,8 @@ import javax.inject.Inject
 
 class UndangAnggotaActivity : BaseActivity<UndangAnggotaPresenter>(), UndangAnggotaView {
     private lateinit var clusterUrl: String
+    private lateinit var clusterId: String
+    private var urlInviteActive = false
 
     @Inject
     override lateinit var presenter: UndangAnggotaPresenter
@@ -44,10 +47,13 @@ class UndangAnggotaActivity : BaseActivity<UndangAnggotaPresenter>(), UndangAngg
 
     @SuppressLint("SetTextI18n")
     private fun setupMagicLink() {
+        undang_anggota_url_toggle.isChecked = !urlInviteActive
         cluster_url.setText("http://pantaubersama.com/cluster?=$clusterUrl")
         cluster_url.setSelectAllOnFocus(true)
-        undang_anggota_url_toggle.setOnCheckedChangeListener { compoundButton, selected ->
-            cluster_url.isEnabled = !selected
+        undang_anggota_url_toggle.setOnCheckedChangeListener { compoundButton, enable ->
+            cluster_url.isEnabled = !enable
+            presenter.enableDisableUrlInvite(clusterId, !enable)
+            setResult(Activity.RESULT_OK)
         }
     }
 
@@ -57,6 +63,8 @@ class UndangAnggotaActivity : BaseActivity<UndangAnggotaPresenter>(), UndangAngg
 
     override fun fetchIntentExtra() {
         clusterUrl = intent.getStringExtra(PantauConstants.Cluster.CLUSTER_URL)
+        clusterId = intent.getStringExtra(PantauConstants.Cluster.CLUSTER_ID)
+        urlInviteActive = intent.getBooleanExtra(PantauConstants.Cluster.INVITE_LINK_ACTIVE, urlInviteActive)
     }
 
     override fun setLayout(): Int {
@@ -91,5 +99,25 @@ class UndangAnggotaActivity : BaseActivity<UndangAnggotaPresenter>(), UndangAngg
 
     override fun removeEmail() {
         undang_anggota_text_email.setText("")
+    }
+
+    override fun showSuccessDisableUrlInviteAlert() {
+        ToastUtil.show(this@UndangAnggotaActivity, "Bagikan undangan via link dinon-aktifkan")
+    }
+
+    override fun showSuccessEnableUrlInviteAlert() {
+        ToastUtil.show(this@UndangAnggotaActivity, "Bagikan undangan via link diaktifkan")
+    }
+
+    override fun showFailedDisableUrlInviteAlert() {
+        ToastUtil.show(this@UndangAnggotaActivity, "Gagal menon-aktifkan undangan via link")
+    }
+
+    override fun showFailedEnableUrlInviteAlert() {
+        ToastUtil.show(this@UndangAnggotaActivity, "Gagal mengaktifkan undangan via link")
+    }
+
+    override fun reverseView(enable: Boolean) {
+        undang_anggota_url_toggle.isChecked = enable
     }
 }
