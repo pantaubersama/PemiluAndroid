@@ -237,10 +237,10 @@
                 android:paddingBottom="12dp">
 
                 <TextView
+                    android:id="@+id/connect_twitter_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_regular"
-                    android:text="@string/label_click_connect_twitter"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
@@ -293,10 +293,10 @@
                 android:paddingBottom="12dp">
 
                 <TextView
+                    android:id="@+id/facebook_connect_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_regular"
-                    android:text="@string/label_connected_as"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 

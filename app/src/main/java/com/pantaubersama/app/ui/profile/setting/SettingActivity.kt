@@ -85,7 +85,12 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     }
 
     private fun getTwitterUserData() {
-        presenter.getTwitterUserData()
+        if (TwitterCore.getInstance().sessionManager.activeSession != null) {
+            presenter.getTwitterUserData()
+            connect_twitter_label.text = getString(R.string.label_connected_as)
+        } else {
+            connect_twitter_label.text = getString(R.string.label_click_connect_twitter)
+        }
     }
 
     override fun bindTwitterUserData(data: User?) {
@@ -115,6 +120,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     override fun showConnectedToTwitterAlert() {
         ToastUtil.show(this@SettingActivity, "Terhubung dengan Twitter")
+        getTwitterUserData()
     }
 
     override fun showFailedToConnectTwitterAlert() {
@@ -123,6 +129,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     private fun getFacebookLoginSatus() {
         if (AccessToken.getCurrentAccessToken() != null) {
+            facebook_connect_label.text = getString(R.string.label_connected_as)
             val request = GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken()
             ) { me, _ ->
@@ -143,6 +150,8 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                 request.executeAsync()
             }
             request.executeAsync()
+        } else {
+            facebook_connect_label.text = getString(R.string.label_click_connect_facebook)
         }
     }
 

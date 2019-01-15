@@ -91,6 +91,7 @@
     <string name="label_verifikasi">Verifikasi</string>
     <string name="label_badge">Badge</string>
     <string name="label_click_connect_twitter">Click below to connect your Symbolic account with Twitter</string>
+    <string name="label_click_connect_facebook">Click below to connect your Symbolic account with Facebook</string>
     <string name="label_connect_with_twitter">CONNECT WITH TWITTER</string>
     <string name="label_connected_as">Connected as :</string>
     <string name="label_cluster">Cluster :</string>
