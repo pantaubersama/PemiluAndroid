@@ -5,20 +5,18 @@ import com.pantaubersama.app.data.interactors.LoginInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import javax.inject.Inject
 import com.twitter.sdk.android.core.TwitterException
-import com.google.gson.Gson
 import android.R.attr.data
 import com.pantaubersama.app.utils.PantauConstants
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.models.User
 
-
 class SettingPresenter @Inject constructor(
     private val loginInteractor: LoginInteractor,
     private val profileInteractor: ProfileInteractor
 ) : BasePresenter<SettingView>() {
     fun logOut(clientId: String?, clientSecret: String?) {
-        disposables?.add(
+        disposables.add(
                 loginInteractor.logOut(
                         clientId,
                         clientSecret

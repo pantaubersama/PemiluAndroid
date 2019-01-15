@@ -35,7 +35,7 @@ class ConfirmationDialog {
             this.cancelText = cancelText
         }
 
-        fun addOkListener(okListener: DialogOkListener) = apply{
+        fun addOkListener(okListener: DialogOkListener) = apply {
             this.okListener = okListener
         }
 

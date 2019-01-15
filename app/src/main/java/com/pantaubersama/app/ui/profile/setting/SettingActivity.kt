@@ -185,7 +185,6 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             }
 
             override fun onCancel() {
-
             }
 
             override fun onError(error: FacebookException?) {
