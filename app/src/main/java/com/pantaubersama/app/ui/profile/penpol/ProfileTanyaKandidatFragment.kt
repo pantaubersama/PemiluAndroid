@@ -24,6 +24,8 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     private var isLoading = false
 
     companion object {
+        val TAG = ProfileTanyaKandidatFragment::class.java.simpleName
+
         fun newInstance(): ProfileTanyaKandidatFragment {
             return ProfileTanyaKandidatFragment()
         }

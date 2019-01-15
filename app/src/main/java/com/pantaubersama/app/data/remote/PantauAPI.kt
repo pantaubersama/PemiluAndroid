@@ -44,6 +44,13 @@ interface PantauAPI {
         @Query("per_page") perPage: Int?
     ): Single<JanjiPolitiksResponse>
 
+    @GET("linimasa/v1/janji_politiks/me")
+    fun getMyJanjiPolitikList(
+        @Query("q") keyword: String?,
+        @Query("page") page: Int?,
+        @Query("per_page") perPage: Int?
+    ): Single<JanjiPolitiksResponse>
+
     @Multipart
     @POST("linimasa/v1/janji_politiks")
     fun createJanjiPolitik(

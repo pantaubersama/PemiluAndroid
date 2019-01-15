@@ -30,7 +30,7 @@ class JanjiPolitikPresenter @Inject constructor(
 
     fun getList() {
         view?.showLoading()
-        disposables?.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_JANPOL)
+        disposables.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_JANPOL)
             .subscribe(
                 {
                     view?.showBanner(it)
@@ -50,8 +50,8 @@ class JanjiPolitikPresenter @Inject constructor(
             view?.showLoading()
         }
 
-        disposables?.add(janPolInteractor.getJanPol("", page, perPage)
-            ?.subscribe(
+        disposables.add(janPolInteractor.getJanPol("", page, perPage)
+            .subscribe(
                 {
                     if (page == 1) {
                         view?.dismissLoading()
@@ -74,12 +74,12 @@ class JanjiPolitikPresenter @Inject constructor(
                     it.printStackTrace()
                     view?.showError(it)
                 }
-            )!!
+            )
         )
     }
 
     fun deleteJanjiPolitik(id: String, position: Int) {
-        disposables?.add(janPolInteractor.deleteJanjiPolitik(id)
+        disposables.add(janPolInteractor.deleteJanjiPolitik(id)
             .subscribe(
                 {
                     view?.onSuccessDeleteItem(position)
