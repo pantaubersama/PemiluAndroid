@@ -119,15 +119,12 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
             adapter.setLoading()
             presenter.getJanjiPolitikList(it)
         }
-
-
     }
 
     fun getList() {
         adapter.setDataEnd(false)
         presenter.getJanjiPolitikList(1)
     }
-
 
     override fun showLoading() {
         lottie_loading.enableLottie(true, lottie_loading)

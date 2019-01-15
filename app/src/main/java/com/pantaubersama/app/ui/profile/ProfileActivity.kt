@@ -38,7 +38,6 @@ import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.badge_item_layout.view.*
 import kotlinx.android.synthetic.main.cluster_options_layout.*
 import kotlinx.android.synthetic.main.layout_leave_cluster_confirmation_dialog.*
-import timber.log.Timber
 import java.lang.IllegalStateException
 import javax.inject.Inject
 
