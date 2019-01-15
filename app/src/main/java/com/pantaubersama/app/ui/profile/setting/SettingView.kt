@@ -13,4 +13,10 @@ interface SettingView : BaseView {
     fun showFailedToConnectTwitterAlert()
     fun bindTwitterUserData(data: User?)
     fun showFailedGetUserDataAlert()
+    fun showSuccessDisconnectFacebookAlert()
+    fun showSuccessDisconnectTwitterAlert()
+    fun showFailedDisconnectFacebookAlert()
+    fun showFailedDisconnectTwitterAlert()
+    fun logoutFacebookSDK()
+    fun logoutTwitterSDK()
 }

@@ -7,6 +7,7 @@ import javax.inject.Inject
 import com.twitter.sdk.android.core.TwitterException
 import com.google.gson.Gson
 import android.R.attr.data
+import com.pantaubersama.app.utils.PantauConstants
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.models.User
@@ -89,5 +90,33 @@ class SettingPresenter @Inject constructor(
                     view?.showFailedGetUserDataAlert()
                 }
             })
+    }
+
+    fun disconnectSocialMedia(accountType: String) {
+        view?.showLoading()
+        disposables.add(
+            loginInteractor.disconnectSocielMedia(accountType)
+                .subscribe(
+                    {
+                        view?.dismissLoading()
+                        if (accountType == PantauConstants.CONNECT.FACEBOOK) {
+                            view?.showSuccessDisconnectFacebookAlert()
+                            view?.logoutFacebookSDK()
+                        } else if (accountType == PantauConstants.CONNECT.TWITTER) {
+                            view?.showSuccessDisconnectTwitterAlert()
+                            view?.logoutTwitterSDK()
+                        }
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showError(it)
+                        if (accountType == PantauConstants.CONNECT.FACEBOOK) {
+                            view?.showFailedDisconnectFacebookAlert()
+                        } else if (accountType == PantauConstants.CONNECT.TWITTER) {
+                            view?.showFailedDisconnectTwitterAlert()
+                        }
+                    }
+                )
+        )
     }
 }

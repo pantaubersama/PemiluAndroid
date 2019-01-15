@@ -62,4 +62,12 @@ class LoginInteractor @Inject constructor(
     fun getTwitterAccountService(): AccountService {
         return accountService
     }
+
+    fun disconnectSocielMedia(accountType: String): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .disconnectSocialMedia(accountType)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }
