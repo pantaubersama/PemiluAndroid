@@ -42,6 +42,7 @@ import kotlin.collections.ArrayList
 import com.facebook.GraphRequest
 import com.twitter.sdk.android.core.* // ktlint-disable
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
+import com.twitter.sdk.android.core.models.User
 
 class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
@@ -78,18 +79,25 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         onClickAction()
         getFacebookLoginSatus()
         setupFacebookLogin()
+        getTwitterUserData()
         setupTwitterLogin()
         presenter.getProfile()
     }
 
+    private fun getTwitterUserData() {
+        presenter.getTwitterUserData()
+    }
+
+    override fun bindTwitterUserData(data: User?) {
+        data?.screenName?.let { twitter_login_text.text = it }
+        data?.profileImageUrlHttps?.let { twitter_login_icon.loadUrl(it) }
+    }
+
+    override fun showFailedGetUserDataAlert() {
+        ToastUtil.show(this@SettingActivity, "Gagal memuat data pengguna Twitter")
+    }
+
     private fun setupTwitterLogin() {
-        Twitter.initialize(
-            TwitterConfig.Builder(this)
-            .logger(DefaultLogger(Log.DEBUG))
-            .twitterAuthConfig(TwitterAuthConfig(getString(R.string.twitter_api_key), getString(R.string.twitter_secret_key)))
-            .debug(true)
-            .build()
-        )
         twitterAuthClient = TwitterAuthClient()
         setting_connect_twitter.setOnClickListener {
             twitterAuthClient.authorize(this, object : Callback<TwitterSession>() {
@@ -149,7 +157,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             }
 
             override fun onCancel() {
-                // not implemented yet
+
             }
 
             override fun onError(error: FacebookException?) {

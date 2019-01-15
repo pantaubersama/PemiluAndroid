@@ -4,6 +4,13 @@ import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.LoginInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import javax.inject.Inject
+import com.twitter.sdk.android.core.TwitterException
+import com.google.gson.Gson
+import android.R.attr.data
+import com.twitter.sdk.android.core.Callback
+import com.twitter.sdk.android.core.Result
+import com.twitter.sdk.android.core.models.User
+
 
 class SettingPresenter @Inject constructor(
     private val loginInteractor: LoginInteractor,
@@ -67,5 +74,20 @@ class SettingPresenter @Inject constructor(
                     }
                 )
         )
+    }
+
+    fun getTwitterUserData() {
+        loginInteractor.getTwitterAccountService()
+            .verifyCredentials(false, false, false)
+            .enqueue(object : Callback<User>() {
+                override fun success(result: Result<User>?) {
+                    view?.bindTwitterUserData(result?.data)
+                }
+
+                override fun failure(exception: TwitterException?) {
+                    view?.showError(exception as Throwable)
+                    view?.showFailedGetUserDataAlert()
+                }
+            })
     }
 }
