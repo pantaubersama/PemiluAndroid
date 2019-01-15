@@ -5,6 +5,7 @@ import com.pantaubersama.app.data.model.accesstoken.Token
 import com.pantaubersama.app.data.model.accesstoken.TokenResponse
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
+import com.twitter.sdk.android.core.services.AccountService
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -12,7 +13,8 @@ import javax.inject.Inject
 class LoginInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
     private val rxSchedulers: RxSchedulers,
-    private val dataCache: DataCache?
+    private val dataCache: DataCache,
+    private val accountService: AccountService
 ) {
     fun exchangeToken(oAuthToken: String?): Single<TokenResponse>? {
         return apiWrapper.getPantauOAuthApi().exchangeToken(oAuthToken)
@@ -21,13 +23,13 @@ class LoginInteractor @Inject constructor(
     }
 
     fun saveLoginData(token: Token?) {
-        dataCache?.saveToken(token?.accessToken!!)
-        dataCache?.saveRefreshToken(token?.refreshToken!!)
-        dataCache?.saveLoginState(true)
+        dataCache.saveToken(token?.accessToken!!)
+        dataCache.saveRefreshToken(token.refreshToken!!)
+        dataCache.saveLoginState(true)
     }
 
     fun getLoginState(): Boolean? {
-        return dataCache?.loadLoginState()
+        return dataCache.loadLoginState()
     }
 
     fun logOut(clientId: String?, clientSecret: String?): Completable? {
@@ -38,7 +40,7 @@ class LoginInteractor @Inject constructor(
     }
 
     fun clearDataCache() {
-        dataCache?.clear()
+        dataCache.clear()
     }
 
     fun connectFacebook(accountType: String, token: String?): Completable {
@@ -53,6 +55,18 @@ class LoginInteractor @Inject constructor(
         return apiWrapper
             .getPantauOAuthApi()
             .connectTwitter(accountType, token, secret)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getTwitterAccountService(): AccountService {
+        return accountService
+    }
+
+    fun disconnectSocielMedia(accountType: String): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .disconnectSocialMedia(accountType)
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }

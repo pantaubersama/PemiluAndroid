@@ -9,13 +9,12 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
+import android.webkit.CookieManager
 import androidx.core.content.ContextCompat
 import com.facebook.* // ktlint-disable
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -34,14 +33,15 @@ import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_setting.*
-import kotlinx.android.synthetic.main.logout_dialog.view.*
 import kotlinx.android.synthetic.main.verified_layout.*
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import com.facebook.GraphRequest
+import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.twitter.sdk.android.core.* // ktlint-disable
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
+import com.twitter.sdk.android.core.models.User
 
 class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
@@ -78,35 +78,66 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         onClickAction()
         getFacebookLoginSatus()
         setupFacebookLogin()
+        getTwitterUserData()
         setupTwitterLogin()
         presenter.getProfile()
     }
 
+    private fun getTwitterUserData() {
+        if (TwitterCore.getInstance().sessionManager.activeSession != null) {
+            presenter.getTwitterUserData()
+            connect_twitter_label.text = getString(R.string.label_connected_as)
+        } else {
+            connect_twitter_label.text = getString(R.string.label_click_connect_twitter)
+            twitter_login_text.text = getString(R.string.label_connect_with_twitter)
+            twitter_login_icon.setImageDrawable(ContextCompat.getDrawable(this@SettingActivity, R.drawable.ic_twitter))
+        }
+    }
+
+    override fun bindTwitterUserData(data: User?) {
+        data?.screenName?.let { twitter_login_text.text = it }
+        data?.profileImageUrlHttps?.let { twitter_login_icon.loadUrl(it) }
+    }
+
+    override fun showFailedGetUserDataAlert() {
+        ToastUtil.show(this@SettingActivity, "Gagal memuat data pengguna Twitter")
+    }
+
     private fun setupTwitterLogin() {
-        Twitter.initialize(
-            TwitterConfig.Builder(this)
-            .logger(DefaultLogger(Log.DEBUG))
-            .twitterAuthConfig(TwitterAuthConfig(getString(R.string.twitter_api_key), getString(R.string.twitter_secret_key)))
-            .debug(true)
-            .build()
-        )
         twitterAuthClient = TwitterAuthClient()
         setting_connect_twitter.setOnClickListener {
-            twitterAuthClient.authorize(this, object : Callback<TwitterSession>() {
-                override fun success(result: Result<TwitterSession>) {
-                    presenter.connectTwitter(PantauConstants.CONNECT.TWITTER, result.data.authToken.token, result.data.authToken.secret)
-                }
+            if (TwitterCore.getInstance().sessionManager.activeSession == null) {
+                twitterAuthClient.authorize(this, object : Callback<TwitterSession>() {
+                    override fun success(result: Result<TwitterSession>) {
+                        presenter.connectTwitter(PantauConstants.CONNECT.TWITTER, result.data.authToken.token, result.data.authToken.secret)
+                    }
 
-                override fun failure(exception: TwitterException?) {
-                    Timber.e(exception)
-                    ToastUtil.show(this@SettingActivity, "Gagal login dengan Twitter")
-                }
-            })
+                    override fun failure(exception: TwitterException?) {
+                        Timber.e(exception)
+                        ToastUtil.show(this@SettingActivity, "Gagal login dengan Twitter")
+                    }
+                })
+            } else {
+                ConfirmationDialog
+                    .Builder()
+                    .with(this@SettingActivity)
+                    .setDialogTitle("Disconnect Twitter")
+                    .setAlert("Apakah Anda yakin untuk disconnect Twitter?")
+                    .setCancelText("Batal")
+                    .setOkText("Disconnect")
+                    .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                        override fun onClickOk() {
+                            presenter.disconnectSocialMedia(PantauConstants.CONNECT.TWITTER)
+                        }
+                    })
+                    .show()
+            }
         }
     }
 
     override fun showConnectedToTwitterAlert() {
         ToastUtil.show(this@SettingActivity, "Terhubung dengan Twitter")
+        getTwitterUserData()
     }
 
     override fun showFailedToConnectTwitterAlert() {
@@ -115,6 +146,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     private fun getFacebookLoginSatus() {
         if (AccessToken.getCurrentAccessToken() != null) {
+            facebook_connect_label.text = getString(R.string.label_connected_as)
             val request = GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken()
             ) { me, _ ->
@@ -135,6 +167,10 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                 request.executeAsync()
             }
             request.executeAsync()
+        } else {
+            facebook_connect_label.text = getString(R.string.label_click_connect_facebook)
+            facebook_login_text.text = getString(R.string.label_connect_with_fb)
+            facebook_login_icon.setImageDrawable(ContextCompat.getDrawable(this@SettingActivity, R.drawable.facebook))
         }
     }
 
@@ -149,7 +185,6 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             }
 
             override fun onCancel() {
-                // not implemented yet
             }
 
             override fun onError(error: FacebookException?) {
@@ -161,7 +196,19 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             if (AccessToken.getCurrentAccessToken() == null) {
                 LoginManager.getInstance().logInWithReadPermissions(this@SettingActivity, permissions)
             } else {
-                ToastUtil.show(this@SettingActivity, "Anda sudah terhubung ke Facebook")
+                ConfirmationDialog
+                    .Builder()
+                    .with(this@SettingActivity)
+                    .setDialogTitle("Disconnect Facebook")
+                    .setAlert("Apakah Anda yakin untuk disconnect Facebook?")
+                    .setCancelText("Batal")
+                    .setOkText("Disconnect")
+                    .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                        override fun onClickOk() {
+                            presenter.disconnectSocialMedia(PantauConstants.CONNECT.FACEBOOK)
+                        }
+                    })
+                    .show()
             }
         }
     }
@@ -291,17 +338,46 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     }
 
     fun logoutDialog() {
-        val mLogoutDialog = BottomSheetDialog(this@SettingActivity)
-        val view = this.layoutInflater.inflate(R.layout.logout_dialog, null)
-        val batal = view.logout_dialog_batal
-        val keluar = view.logout_dialog_keluar
-        batal.setOnClickListener {
-            mLogoutDialog.dismiss()
-        }
-        keluar.setOnClickListener {
-            presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
-        }
-        mLogoutDialog.setContentView(view)
-        mLogoutDialog.show()
+        ConfirmationDialog
+            .Builder()
+            .with(this@SettingActivity)
+            .setDialogTitle(getString(R.string.title_keluar_aplikasi))
+            .setAlert(getString(R.string.logout_alert))
+            .setCancelText(getString(R.string.batal_action))
+            .setOkText(getString(R.string.label_keluar))
+            .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                override fun onClickOk() {
+                    presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
+                }
+            })
+            .show()
+    }
+
+    override fun showSuccessDisconnectFacebookAlert() {
+        ToastUtil.show(this@SettingActivity, "Disconnect Facebook berhasil")
+    }
+
+    override fun showSuccessDisconnectTwitterAlert() {
+        ToastUtil.show(this@SettingActivity, "Disconnect Twitter berhasil")
+    }
+
+    override fun showFailedDisconnectFacebookAlert() {
+        ToastUtil.show(this@SettingActivity, "Gagal disconnect Facebook")
+    }
+
+    override fun showFailedDisconnectTwitterAlert() {
+        ToastUtil.show(this@SettingActivity, "Gagal disconnect Twitter")
+    }
+
+    override fun logoutFacebookSDK() {
+        CookieManager.getInstance().removeAllCookies(null)
+        LoginManager.getInstance().logOut()
+        getFacebookLoginSatus()
+    }
+
+    override fun logoutTwitterSDK() {
+        CookieManager.getInstance().removeAllCookies(null)
+        TwitterCore.getInstance().sessionManager.clearActiveSession()
+        getTwitterUserData()
     }
 }
