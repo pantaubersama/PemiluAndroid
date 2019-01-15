@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
+import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatData
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
@@ -35,6 +36,16 @@ class TanyaKandidatInteractor @Inject constructor(
             dataCache.loadTanyaKandidatUserFilter()
         )
             .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getMyTanyaKandidatList(
+        page: Int,
+        perPage: Int
+    ): Single<TanyaKandidatData?> {
+        return apiWrapper.getPantauApi().getMyTanyaKandidatList(page, perPage)
+            .subscribeOn(rxSchedulers.io())
+            .map { it.data }
             .observeOn(rxSchedulers.mainThread())
     }
 

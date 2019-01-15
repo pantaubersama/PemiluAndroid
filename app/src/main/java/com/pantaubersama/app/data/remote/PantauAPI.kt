@@ -77,6 +77,12 @@ interface PantauAPI {
         @Query("filter_by") filterBy: String?
     ): Single<TanyaKandidatResponse>
 
+    @GET("pendidikan_politik/v1/me/questions")
+    fun getMyTanyaKandidatList(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
+    ): Single<TanyaKandidatResponse>
+
     @FormUrlEncoded
     @POST("pendidikan_politik/v1/votes")
     fun upVoteQuestion(

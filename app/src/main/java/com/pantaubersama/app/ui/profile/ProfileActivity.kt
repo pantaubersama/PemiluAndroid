@@ -130,7 +130,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 else -> throw IllegalStateException("unknown menu")
             }
             showFragment(fragment, tag)
-//            Timber.d("Y position : ${fragment_container.top}")
 //            nested_scroll.scrollTo(0, fragment_container.top + 30)
             true
         }
@@ -318,15 +317,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 val intent = Intent(this@ProfileActivity, SettingActivity::class.java)
                 startActivityForResult(intent, PantauConstants.RequestCode.RC_SETTINGS)
             }
-            android.R.id.home -> {
-                if (intent != null) {
-                    val intent = Intent(this@ProfileActivity, HomeActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
-                } else {
-                    onBackPressed()
-                }
-            }
+            android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -343,7 +334,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     override fun onBackPressed() {
-        if (intent != null) {
+        if (intent.getStringExtra(PantauConstants.URL) != null) {
             val intent = Intent(this@ProfileActivity, HomeActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
