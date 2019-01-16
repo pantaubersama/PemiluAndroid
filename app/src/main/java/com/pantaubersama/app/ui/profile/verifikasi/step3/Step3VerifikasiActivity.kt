@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Point
 import android.hardware.Camera
 import android.os.Build
@@ -28,6 +29,13 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import android.graphics.BitmapFactory
+import android.graphics.SurfaceTexture
+import android.hardware.camera2.CameraManager
+import android.media.Image
+import android.util.Log
+import android.view.TextureView
+import android.widget.ImageView
+import com.pantaubersama.app.utils.Camera2Tools
 import java.io.File
 
 class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3VerifikasiView {
@@ -38,16 +46,22 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
     private var ktpSelfie: MultipartBody.Part? = null
 
     private var permission =
-        arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
+            arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
     private var mCamera: Camera? = null
     private var mPreview: CameraPreview? = null
     private var cameraCallback: Camera.PictureCallback? = null
     private var isPreview = false
     private var isFrontCamera = false
+    private var mTextureView: TextureView? = null
+    private lateinit var manager: CameraManager
+    private var imageFile: File? = null
+    val CAMERA_FRONT = "1"
+    val CAMERA_BACK = "0"
+    var cameraId = CAMERA_BACK
 
     override fun statusBarColor(): Int? {
         return 0
@@ -61,26 +75,64 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
         activityComponent.inject(this)
     }
 
+    private val mSurfaceTextureListener = object : TextureView.SurfaceTextureListener {
+
+        override fun onSurfaceTextureAvailable(texture: SurfaceTexture, width: Int, height: Int) {
+            Camera2Tools.openCamera(manager, mTextureView, cameraId)
+        }
+
+        override fun onSurfaceTextureSizeChanged(texture: SurfaceTexture, width: Int, height: Int) {
+            // config
+        }
+
+        override fun onSurfaceTextureDestroyed(texture: SurfaceTexture): Boolean {
+            return true
+        }
+
+        override fun onSurfaceTextureUpdated(texture: SurfaceTexture) {}
+
+    }
+
     override fun setupUI(savedInstanceState: Bundle?) {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
 
         if (isHaveStorageAndCameraPermission()) {
-            setupCamera()
+            manager = this.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+            mTextureView = findViewById(R.id.texture)
+
+            if (mTextureView!!.isAvailable()) {
+                Camera2Tools.openCamera(manager, mTextureView, cameraId)
+            } else {
+                mTextureView!!.setSurfaceTextureListener(mSurfaceTextureListener)
+            }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(permission, PantauConstants.Camera.ASK_PERMISSIONS_REQUEST_CODE)
             }
         }
         capture_button.setOnClickListener {
-            capture_button.isEnabled = false
-            mCamera?.takePicture(null, null, cameraCallback)
+            Camera2Tools.takePicture(object : Camera2Tools.Companion.ImageHandler {
+                override fun handleImage(image: Image): Runnable {
+                    return Runnable {
+                        val bitmap = getBitmap(image)
+                        imageFile = ImageUtil.getImageFile(bitmap)
+                        ktpSelfie = createFromFile(imageFile!!)
+                        runOnUiThread(Runnable {
+                            kotlin.run {
+                                image_preview.setImageBitmap(bitmap)
+                                image_preview_container.visibility = View.VISIBLE
+                                frame_camera.visibility = View.GONE
+                            }
+                        })
+                    }
+                }
+            })
         }
         switch_camera.setOnClickListener {
             val camerasNumber = Camera.getNumberOfCameras()
             if (camerasNumber > 1) {
-                mPreview?.releaseCamera()
-                chooseCamera()
+                switchCamera()
             }
         }
         close_camera_button.setOnClickListener {
@@ -90,8 +142,10 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
             presenter.submitSelfieKtp(ktpSelfie)
         }
         retake_button.setOnClickListener {
+            frame_camera.visibility = View.VISIBLE
             image_preview_container.visibility = View.GONE
-            restartActivity()
+            Camera2Tools.unlockFocus()
+//            restartActivity()
         }
         choose_image.setOnClickListener {
             if (isHaveStorageAndCameraPermission()) {
@@ -245,14 +299,16 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PantauConstants.Camera.ASK_PERMISSIONS_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            setupCamera()
+//            setupCamera()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if (checkCameraHardware(this@Step3VerifikasiActivity)) {
-            setupCamera()
+        if (mTextureView!!.isAvailable()) {
+            Camera2Tools.openCamera(manager, mTextureView, cameraId)
+        } else {
+            mTextureView!!.setSurfaceTextureListener(mSurfaceTextureListener)
         }
     }
 
@@ -273,7 +329,8 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
     }
 
     override fun onDestroy() {
-        mPreview?.releaseCamera()
+        Camera2Tools.closeCamera()
+        Camera2Tools.stopBackgroundThread()
         super.onDestroy()
     }
 
@@ -324,5 +381,37 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
         val reqFile = RequestBody.create(MediaType.parse(type), file)
         val image = MultipartBody.Part.createFormData("ktp_selfie", file.name, reqFile)
         return image
+    }
+
+    fun getBitmap(image: Image): Bitmap {
+        val buffer = image.planes[0].buffer
+        val bytes = ByteArray(buffer.capacity())
+        buffer.get(bytes)
+        val bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.size, null)
+        image.close()
+        return bitmapImage
+    }
+
+    fun switchCamera() {
+        if (cameraId.equals(CAMERA_FRONT)) {
+            cameraId = CAMERA_BACK
+            Camera2Tools.closeCamera()
+            Camera2Tools.stopBackgroundThread()
+            if (mTextureView!!.isAvailable()) {
+                Camera2Tools.openCamera(manager, mTextureView, cameraId)
+            } else {
+                mTextureView!!.setSurfaceTextureListener(mSurfaceTextureListener)
+            }
+
+        } else if (cameraId.equals(CAMERA_BACK)) {
+            cameraId = CAMERA_FRONT
+            Camera2Tools.closeCamera()
+            Camera2Tools.stopBackgroundThread()
+            if (mTextureView!!.isAvailable()) {
+                Camera2Tools.openCamera(manager, mTextureView, cameraId)
+            } else {
+                mTextureView!!.setSurfaceTextureListener(mSurfaceTextureListener)
+            }
+        }
     }
 }
