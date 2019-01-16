@@ -44,6 +44,13 @@ interface PantauAPI {
         @Query("per_page") perPage: Int?
     ): Single<JanjiPolitiksResponse>
 
+    @GET("linimasa/v1/janji_politiks/me")
+    fun getMyJanjiPolitikList(
+        @Query("q") keyword: String?,
+        @Query("page") page: Int?,
+        @Query("per_page") perPage: Int?
+    ): Single<JanjiPolitiksResponse>
+
     @Multipart
     @POST("linimasa/v1/janji_politiks")
     fun createJanjiPolitik(
@@ -68,6 +75,12 @@ interface PantauAPI {
         @Query("order_by") orderBy: String?,
         @Query("direction") direction: String?,
         @Query("filter_by") filterBy: String?
+    ): Single<TanyaKandidatResponse>
+
+    @GET("pendidikan_politik/v1/me/questions")
+    fun getMyTanyaKandidatList(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
     ): Single<TanyaKandidatResponse>
 
     @FormUrlEncoded

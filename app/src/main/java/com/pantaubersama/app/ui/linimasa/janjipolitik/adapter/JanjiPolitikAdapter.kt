@@ -64,7 +64,9 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter() {
 
             ll_janpol_content.setOnClickListener { listener?.onClickJanPolContent(item, adapterPosition) }
             iv_share_button.setOnClickListener { listener?.onClickShare(item) }
-            iv_options_button.setOnClickListener { listener?.onClickJanpolOption(item, adapterPosition) }
+            iv_options_button.setOnClickListener {
+                listener?.onClickJanpolOption(item, adapterPosition)
+            }
         }
     }
     fun addBanner(bannerInfo: BannerInfo) {

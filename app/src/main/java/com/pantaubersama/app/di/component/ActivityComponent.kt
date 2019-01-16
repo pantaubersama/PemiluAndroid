@@ -26,6 +26,8 @@ import com.pantaubersama.app.ui.profile.cluster.categery.ClusterCategoryActivity
 import com.pantaubersama.app.ui.profile.cluster.invite.UndangAnggotaActivity
 import com.pantaubersama.app.ui.profile.cluster.requestcluster.RequestClusterActivity
 import com.pantaubersama.app.ui.profile.connect.ConnectActivity
+import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
+import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
@@ -82,4 +84,6 @@ interface ActivityComponent {
     fun inject(connectActivity: ConnectActivity)
     fun inject(tentangAppActivity: TentangAppActivity)
     fun inject(panduanKomunitasActivity: PanduanKomunitasActivity)
+    fun inject(profileJanjiPolitikFragment: ProfileJanjiPolitikFragment)
+    fun inject(profileTanyaKandidatFragment: ProfileTanyaKandidatFragment)
 }

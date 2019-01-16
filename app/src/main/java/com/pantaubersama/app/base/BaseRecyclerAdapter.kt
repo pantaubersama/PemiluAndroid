@@ -40,7 +40,7 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 })
             } else {
-                Timber.e("Only support LinearLayotManager")
+                Timber.e("Only support LinearLayoutManager")
             }
         } else {
             Timber.e("No LayoutManager found")

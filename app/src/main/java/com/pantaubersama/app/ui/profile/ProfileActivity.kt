@@ -19,6 +19,7 @@ import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.ui.lapor.LaporFragment
 import com.pantaubersama.app.ui.profile.cluster.invite.UndangAnggotaActivity
 import com.pantaubersama.app.ui.profile.cluster.requestcluster.RequestClusterActivity
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
@@ -26,6 +27,8 @@ import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
+import com.pantaubersama.app.ui.quickcount.QuickCountFragment
+import com.pantaubersama.app.ui.wordstadium.WordStadiumFragment
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.State
 import com.pantaubersama.app.utils.ToastUtil
@@ -35,6 +38,7 @@ import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.badge_item_layout.view.*
 import kotlinx.android.synthetic.main.cluster_options_layout.*
 import kotlinx.android.synthetic.main.layout_leave_cluster_confirmation_dialog.*
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
@@ -58,12 +62,14 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 //        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
+    override fun setLayout(): Int = R.layout.activity_profile
+
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "", R.color.white, 4f)
         setupClusterLayout()
         setupBiodataLayout()
         setupBadgeLayout()
-        initFragment()
+        showFragment(ProfileJanjiPolitikFragment(), ProfileJanjiPolitikFragment.TAG)
         setupNavigation()
         presenter.refreshProfile()
         presenter.getProfile()
@@ -113,60 +119,38 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         verified_button.setBackgroundResource(R.drawable.rounded_outline_green)
     }
 
-    private fun initFragment() {
-        pLinimasaFragment = ProfileJanjiPolitikFragment.newInstance()
-        pTanyaKandidatFragment = ProfileTanyaKandidatFragment.newInstance()
-        otherFrag = Fragment()
-    }
-
     private fun setupNavigation() {
-        supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, pLinimasaFragment!!)
-                .add(R.id.fragment_container, pTanyaKandidatFragment!!)
-                .commit()
-
-        activeFragment = pLinimasaFragment!!
-
         val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_menyerap -> run {
-                    activeFragment = pLinimasaFragment!!
-                    return@run
-                }
-                R.id.navigation_menggali -> run {
-                    activeFragment = pTanyaKandidatFragment!!
-                    return@run
-                }
-                R.id.navigation_menguji -> run {
-                    activeFragment = otherFrag!!
-                    return@run
-                }
-                R.id.navigation_merayakan -> run {
-                    activeFragment = otherFrag!!
-                    return@run
-                }
-                R.id.navigation_menjaga -> run {
-                    activeFragment = otherFrag!!
-                    return@run
-                }
+            val (fragment, tag) = when (item.itemId) {
+                R.id.navigation_menyerap -> ProfileJanjiPolitikFragment.newInstance() to ProfileJanjiPolitikFragment.TAG
+                R.id.navigation_menggali -> ProfileTanyaKandidatFragment.newInstance() to ProfileTanyaKandidatFragment.TAG
+                R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
+                R.id.navigation_merayakan -> LaporFragment.newInstance() to LaporFragment.TAG
+                R.id.navigation_menjaga -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
+                else -> throw IllegalStateException("unknown menu")
             }
-
-            showActiveFragment()
-
-            return@OnNavigationItemSelectedListener true
+            showFragment(fragment, tag)
+//            nested_scroll.scrollTo(0, fragment_container.top + 30)
+            true
         }
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
-        navigation.selectedItemId = R.id.navigation_menyerap
     }
 
-    private fun showActiveFragment() {
-        supportFragmentManager.beginTransaction()
-                .hide(pLinimasaFragment!!)
-                .hide(pTanyaKandidatFragment!!)
-                .show(activeFragment)
-                .commit()
+    private fun showFragment(fragment: Fragment, tag: String) = with(supportFragmentManager) {
+        val transaction = beginTransaction()
+        var nextFragment = findFragmentByTag(tag)
+
+        primaryNavigationFragment?.let { transaction.hide(it) }
+        if (nextFragment != null) {
+            transaction.show(nextFragment)
+        } else {
+            nextFragment = fragment
+            transaction.add(R.id.fragment_container, nextFragment, tag)
+        }
+        transaction.setPrimaryNavigationFragment(nextFragment)
+        transaction.setReorderingAllowed(true)
+        transaction.commit()
     }
 
     override fun showBadges(state: State, badges: List<Badge>) {
@@ -314,10 +298,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         ToastUtil.show(this@ProfileActivity, "Gagal meninggalkan cluster $name")
     }
 
-    override fun setLayout(): Int {
-        return R.layout.activity_profile
-    }
-
     override fun showLoading() {
         progress_bar.visibleIf(true)
     }
@@ -337,15 +317,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 val intent = Intent(this@ProfileActivity, SettingActivity::class.java)
                 startActivityForResult(intent, PantauConstants.RequestCode.RC_SETTINGS)
             }
-            android.R.id.home -> {
-                if (intent != null) {
-                    val intent = Intent(this@ProfileActivity, HomeActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
-                } else {
-                    onBackPressed()
-                }
-            }
+            android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -362,7 +334,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     override fun onBackPressed() {
-        if (intent != null) {
+        if (intent.getStringExtra(PantauConstants.URL) != null) {
             val intent = Intent(this@ProfileActivity, HomeActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
