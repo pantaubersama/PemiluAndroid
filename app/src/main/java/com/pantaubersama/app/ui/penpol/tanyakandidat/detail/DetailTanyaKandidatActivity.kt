@@ -12,8 +12,11 @@ import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.CopyUtil
-import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_QUESTION
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_QUESTION_ITEM
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_QUESTION_ID
+import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_ITEM_QUESTION
+import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_ITEM_CHANGED_QUESTION
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
@@ -31,6 +34,7 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
 
     private var questionId: String? = null
     private var question: Pertanyaan? = null
+    private var itemPosition: Int? = null
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -41,22 +45,24 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
     override fun setLayout(): Int = R.layout.activity_detail_tanya_kandidat
 
     companion object {
-        fun setIntent(context: Context, questionId: String): Intent {
+        fun setIntent(context: Context, question: Pertanyaan, itemPosition: Int): Intent {
             val intent = Intent(context, DetailTanyaKandidatActivity::class.java)
-            intent.putExtra(EXTRA_QUESTION_ID, questionId)
+            intent.putExtra(EXTRA_QUESTION_ITEM, question)
+            intent.putExtra(EXTRA_ITEM_POSITION, itemPosition)
             return intent
         }
 
-        fun setIntent(context: Context, question: Pertanyaan): Intent {
+        fun setIntent(context: Context, questionId: String): Intent {
             val intent = Intent(context, DetailTanyaKandidatActivity::class.java)
-            intent.putExtra(EXTRA_QUESTION, question)
+            intent.putExtra(EXTRA_QUESTION_ID, questionId)
             return intent
         }
     }
 
     override fun fetchIntentExtra() {
         intent.getStringExtra(EXTRA_QUESTION_ID)?.let { this.questionId = it }
-        intent.getSerializableExtra(EXTRA_QUESTION)?.let { this.question = it as Pertanyaan }
+        intent.getSerializableExtra(EXTRA_QUESTION_ITEM)?.let { this.question = it as Pertanyaan }
+        intent.getIntExtra(EXTRA_ITEM_POSITION, -1)?.let { this.itemPosition = it }
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
@@ -118,16 +124,11 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
         }
 
         if (!upVoted) {
-            questionId?.let { presenter.upvoteQuestion(it, upVoted) }
+            presenter.upvoteQuestion(question?.id!!, upVoted)
+        } else {
+            presenter.unvoteQuestion(question?.id!!, upVoted)
         }
-
-        question?.isliked?.let {
-            if (!it) {
-                presenter.unvoteQuestion(question?.id!!, it)
-            } else {
-                presenter.unvoteQuestion(question?.id!!, it)
-            }
-        }
+        setItemChangedResult()
     }
 
     private fun onClickOption() {
@@ -175,12 +176,19 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
     }
 
     override fun onItemUpVoted() {
-        // do noothing
+        setItemChangedResult()
     }
 
     override fun onFailedUpVoteItem(liked: Boolean?) {
         question?.isliked = liked
-        setUpvoted()
+        question?.isliked?.let {
+            if (it) {
+                upvote_animation.progress = 1.0f
+            } else {
+                upvote_animation.progress = 0.0f
+            }
+        }
+        setItemChangedResult()
     }
 
     override fun showItemReportedAlert() {
@@ -198,6 +206,24 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
 
     override fun onItemDeleted() {
         dismissProgressDialog()
+        itemPosition?.let {
+            intent.putExtra(EXTRA_ITEM_POSITION, it)
+            setResult(RESULT_DELETE_ITEM_QUESTION, intent)
+        }
+        val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
+        if (!question?.isliked!!) {
+            val loveCount = question?.likeCount!! + 1
+            question?.likeCount = loveCount
+            animator.addUpdateListener { animation -> upvote_animation.progress = animation.animatedValue as Float
+                upvote_count_text.text = question?.likeCount.toString()
+            }
+            animator.start()
+        } else {
+            val upVoteCount = question?.likeCount!! - 1
+            question?.likeCount = upVoteCount
+            upvote_count_text.text = question?.likeCount.toString()
+            upvote_animation.progress = 0.0f
+        }
         onBackPressed()
     }
 
@@ -216,6 +242,13 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
     override fun onClickDeleteItem() {
         showProgressDialog(getString(R.string.txt_delete_item_ini))
         question?.id?.let { presenter.deleteItem(it) }
+    }
+
+    private fun setItemChangedResult() {
+        val intent = Intent()
+        intent.putExtra(EXTRA_ITEM_POSITION, itemPosition)
+        intent.putExtra(EXTRA_QUESTION_ITEM, question)
+        setResult(RESULT_ITEM_CHANGED_QUESTION, intent)
     }
 
     override fun onBackPressed() {

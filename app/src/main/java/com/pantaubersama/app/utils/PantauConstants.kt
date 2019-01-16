@@ -62,7 +62,7 @@ class PantauConstants {
         const val EXTRA_INTENT_TYPE = "EXTRA_INTENT_TYPE"
         const val EXTRA_INTENT_TYPE_SHARE = "EXTRA_INTENT_TYPE_SHARE"
         const val EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID"
-        const val EXTRA_QUESTION = "EXTRA_QUESTION"
+        const val EXTRA_QUESTION_ITEM = "EXTRA_QUESTION_ITEM"
     }
 
     object RequestCode {
@@ -80,10 +80,13 @@ class PantauConstants {
         const val RC_SETTINGS = 600
         const val RC_CREATE_JANPOL = 1010
         const val RC_OPEN_DETAIL_JANPOL = 1011
+        const val RC_OPEN_DETAIL_QUESTION = 1012
     }
 
     object ResultCode {
         const val RESULT_DELETE_ITEM_JANPOL = 111
+        const val RESULT_DELETE_ITEM_QUESTION = 112
+        const val RESULT_ITEM_CHANGED_QUESTION = 113
     }
 
     object Networking {
@@ -137,7 +140,8 @@ class PantauConstants {
         const val TYPE_KUIS_RESULT = 5
         const val TYPE_KUIS_ITEM = 6
         const val TYPE_CLUSTER_ITEM = 7
-        val CATEGORY_ITEM = 8
+        const val CATEGORY_ITEM = 8
+        const val TYPE_HEADER_TANYA = 9
     }
     object Profile
 

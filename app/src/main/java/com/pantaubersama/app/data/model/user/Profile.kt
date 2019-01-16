@@ -1,8 +1,10 @@
 package com.pantaubersama.app.data.model.user
 
 import com.google.gson.annotations.SerializedName
+import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.image.Image
+import com.pantaubersama.app.utils.PantauConstants
 import java.io.Serializable
 
 val EMPTY_INFORMANT = Informant("", null, null, null, null,
@@ -39,7 +41,9 @@ data class Profile(
     @SerializedName("occupation") var occupation: String?,
     @SerializedName("avatar") var avatar: Image,
     @SerializedName("informant") var informant: Informant
-) : Serializable
+) : Serializable, ItemModel {
+    override fun getType(): Int = PantauConstants.ItemModel.TYPE_HEADER_TANYA
+}
 
 data class Informant(
     @SerializedName("user_id") var userId: String,

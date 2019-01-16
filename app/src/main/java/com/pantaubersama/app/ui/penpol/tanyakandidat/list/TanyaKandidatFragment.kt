@@ -13,10 +13,16 @@ import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
+import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.CopyUtil
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_QUESTION_ITEM
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_QUESTION
+import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_ITEM_QUESTION
+import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_ITEM_CHANGED_QUESTION
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
@@ -150,6 +156,11 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             override fun onClickLapor(id: String?) {
                 presenter.reportQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME)
             }
+
+            override fun onClickContent(item: Pertanyaan, position: Int) {
+                val intent = DetailTanyaKandidatActivity.setIntent(requireContext(), item, position)
+                startActivityForResult(intent, RC_OPEN_DETAIL_QUESTION)
+            }
         }
         recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -183,7 +194,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         } else {
             adapter?.setDatas(pertanyaanList as MutableList<ItemModel>)
         }
-        adapter?.addHeader()
+        adapter?.addHeader(presenter.getUser())
     }
 
     override fun showEmptyDataAlert() {
@@ -262,6 +273,18 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                 }
                 PantauConstants.TanyaKandidat.Filter.FILTER_TANYA_KANDIDAT_REQUEST_CODE -> {
                     refreshItem()
+                }
+            }
+        } else if (requestCode == RC_OPEN_DETAIL_QUESTION) {
+            if (resultCode == RESULT_DELETE_ITEM_QUESTION) {
+                if (data != null && data.getIntExtra(EXTRA_ITEM_POSITION, -1) != -1) {
+                    onItemDeleted(data.getIntExtra(EXTRA_ITEM_POSITION, -1))
+                }
+            } else if (resultCode == RESULT_ITEM_CHANGED_QUESTION) {
+                if (data != null && data.getIntExtra(EXTRA_ITEM_POSITION, -1) != -1 && data.getSerializableExtra(EXTRA_QUESTION_ITEM) != null) {
+                    val itemChangedPosition = data.getIntExtra(EXTRA_ITEM_POSITION, -1)
+                    val itemChanged = data.getSerializableExtra(EXTRA_QUESTION_ITEM) as Pertanyaan
+                    adapter?.changeItem(itemChanged, itemChangedPosition)
                 }
             }
         }
