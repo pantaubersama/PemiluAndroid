@@ -169,4 +169,17 @@ class ProfileInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun submitCatatanku(paslonSelected: Int): Completable {
+        return apiWrapper
+            .getPantauOAuthApi()
+            .submitCatatanku(paslonSelected)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnComplete {
+                val newProfile = dataCache.loadUserProfile()
+                newProfile.votePreference = paslonSelected
+                dataCache.saveUserProfile(newProfile)
+            }
+    }
 }

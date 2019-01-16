@@ -32,9 +32,7 @@ import android.graphics.BitmapFactory
 import android.graphics.SurfaceTexture
 import android.hardware.camera2.CameraManager
 import android.media.Image
-import android.util.Log
 import android.view.TextureView
-import android.widget.ImageView
 import com.pantaubersama.app.utils.Camera2Tools
 import java.io.File
 
@@ -90,7 +88,6 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
         }
 
         override fun onSurfaceTextureUpdated(texture: SurfaceTexture) {}
-
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
@@ -402,7 +399,6 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
             } else {
                 mTextureView!!.setSurfaceTextureListener(mSurfaceTextureListener)
             }
-
         } else if (cameraId.equals(CAMERA_BACK)) {
             cameraId = CAMERA_FRONT
             Camera2Tools.closeCamera()

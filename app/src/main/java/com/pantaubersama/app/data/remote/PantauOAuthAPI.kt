@@ -180,4 +180,10 @@ interface PantauOAuthAPI {
     fun disconnectSocialMedia(
         @Query("account_type") accountType: String
     ): Completable
+
+    @FormUrlEncoded
+    @PUT("/v1/me/vote_preference")
+    fun submitCatatanku(
+        @Field("vote_preference") paslonSelected: Int?
+    ): Completable
 }

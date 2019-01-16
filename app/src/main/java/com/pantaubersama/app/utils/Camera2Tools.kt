@@ -2,7 +2,7 @@ package com.pantaubersama.app.utils
 
 import android.annotation.SuppressLint
 import android.graphics.ImageFormat
-import android.hardware.camera2.*
+import android.hardware.camera2.* // ktlint-disable
 import android.media.Image
 import android.media.ImageReader
 import android.os.Handler
@@ -10,7 +10,7 @@ import android.os.HandlerThread
 import android.util.Size
 import android.view.Surface
 import android.view.TextureView
-import java.util.*
+import java.util.* // ktlint-disable
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 
@@ -102,11 +102,9 @@ class Camera2Tools {
                             } catch (e: CameraAccessException) {
                                 e.printStackTrace()
                             }
-
                         }
 
                         override fun onConfigureFailed(cameraCaptureSession: CameraCaptureSession) {
-
                         }
                     }, null
             )
@@ -135,7 +133,6 @@ class Camera2Tools {
             } catch (e: InterruptedException) {
                 throw RuntimeException("Interrupted while trying to lock camera opening.", e)
             }
-
         }
 
         private fun setUpCamera(manager: CameraManager) {
@@ -172,7 +169,6 @@ class Camera2Tools {
                 // We cast here to ensure the multiplications won't overflow
                 return java.lang.Long.signum(lhs.width.toLong() * lhs.height - rhs.width.toLong() * rhs.height)
             }
-
         }
 
         fun startBackgroundHandler() {
@@ -208,7 +204,6 @@ class Camera2Tools {
             } catch (e: CameraAccessException) {
                 e.printStackTrace()
             }
-
         }
 
         fun unlockFocus() {
@@ -226,7 +221,6 @@ class Camera2Tools {
             } catch (e: CameraAccessException) {
                 e.printStackTrace()
             }
-
         }
 
         private val mCaptureCallback = object : CameraCaptureSession.CaptureCallback() {
@@ -300,10 +294,11 @@ class Camera2Tools {
 
             val CaptureCallback = object : CameraCaptureSession.CaptureCallback() {
 
-                override fun onCaptureCompleted(session: CameraCaptureSession,
-                                                request: CaptureRequest,
-                                                result: TotalCaptureResult) {
-
+                override fun onCaptureCompleted(
+                    session: CameraCaptureSession,
+                    request: CaptureRequest,
+                    result: TotalCaptureResult
+                ) {
                 }
             }
 
@@ -343,7 +338,6 @@ class Camera2Tools {
             } catch (e: InterruptedException) {
                 e.printStackTrace()
             }
-
         }
     }
 }
