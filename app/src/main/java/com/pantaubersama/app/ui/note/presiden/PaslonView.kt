@@ -5,5 +5,4 @@ import com.pantaubersama.app.data.model.user.Profile
 
 interface PaslonView : BaseView {
     fun bindUserProfile(profile: Profile)
-
 }

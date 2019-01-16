@@ -8,5 +8,4 @@ class PaslonPresenter @Inject constructor(private val profileInteractor: Profile
     fun getUserProfile() {
         view?.bindUserProfile(profileInteractor.getProfile())
     }
-
 }

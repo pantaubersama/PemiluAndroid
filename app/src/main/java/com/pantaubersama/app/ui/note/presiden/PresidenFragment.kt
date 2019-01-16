@@ -14,7 +14,9 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
     private lateinit var layoutManager: StaggeredGridLayoutManager
     private lateinit var paslonAdapter: PaslonAdapter
 
-    @Inject override lateinit var presenter: PaslonPresenter
+    @Inject
+    override lateinit var presenter: PaslonPresenter
+    var listener: Listener? = null
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -58,6 +60,7 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
         paslonAdapter.listener = object : PaslonAdapter.Listener {
             override fun onSelectItem(paslonData: PaslonData) {
                 view.selected_paslon.text = paslonData.paslonName
+                listener?.onPaslonSelect(paslonData)
             }
         }
         view.presiden_recycler_view_calon.layoutManager = layoutManager
@@ -83,6 +86,10 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
     }
 
     override fun bindUserProfile(profile: Profile) {
-        paslonAdapter.setSelectedData(paslonAdapter.get(profile.votePreference-1) as PaslonData)
+        paslonAdapter.setSelectedData(paslonAdapter.get(profile.votePreference - 1) as PaslonData)
+    }
+
+    interface Listener {
+        fun onPaslonSelect(paslonData: PaslonData)
     }
 }

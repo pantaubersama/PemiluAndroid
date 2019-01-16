@@ -13,7 +13,6 @@ import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_pilihan.*
 
-
 class PaslonAdapter : BaseRecyclerAdapter() {
     var selectedItem: PaslonData? = null
     lateinit var listener: Listener
@@ -53,7 +52,6 @@ class PaslonAdapter : BaseRecyclerAdapter() {
         private fun Float.toDp(): Int {
             return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, itemView.resources.displayMetrics))
         }
-
     }
 
     fun setSelectedData(paslonData: PaslonData) {
