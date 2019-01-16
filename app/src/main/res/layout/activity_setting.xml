@@ -259,7 +259,8 @@
                     android:clickable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="12dp">
+                    android:padding="12dp"
+                    android:foreground="?selectableItemBackground">
 
                     <ImageView
                         android:id="@+id/twitter_login_icon"
@@ -315,7 +316,8 @@
                     android:clickable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="12dp">
+                    android:padding="12dp"
+                    android:foreground="?selectableItemBackground">
 
                     <ImageView
                         android:id="@+id/facebook_login_icon"
