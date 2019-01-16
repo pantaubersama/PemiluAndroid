@@ -126,6 +126,7 @@ dependencies {
     implementation compressor
     implementation facebook_sdk
     implementation twitter_sdk
+    implementation archComponentLibs
     kapt daggerCompiler
 
     testImplementation unitTestLibs
