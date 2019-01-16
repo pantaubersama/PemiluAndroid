@@ -17,13 +17,13 @@
         android:title="@string/title_navbar_menguji" />
 
     <item
-        android:id="@+id/navigation_merayakan"
-        android:icon="@drawable/ic_merayakan_inactive"
-        android:title="@string/title_navbar_merayakan"/>
-
-    <item
         android:id="@+id/navigation_menjaga"
         android:icon="@drawable/ic_menjaga_inactive"
         android:title="@string/title_navbar_menjaga"/>
+
+    <item
+        android:id="@+id/navigation_merayakan"
+        android:icon="@drawable/ic_merayakan_inactive"
+        android:title="@string/title_navbar_merayakan"/>
 
 </menu>

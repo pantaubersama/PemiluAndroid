@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.meta.Meta
 import java.io.Serializable
 
-data class TanyaKandidatData(
+data class TanyaKandidatListData(
     @SerializedName("questions")
     @Expose
     var questions: MutableList<Pertanyaan>? = null,
@@ -19,3 +19,8 @@ data class TanyaKandidatData(
     @Expose
     var question: Pertanyaan? = null
 ) : Serializable
+
+data class TanyaKandidatData(
+    @SerializedName("question")
+    var question: Pertanyaan? = null
+)

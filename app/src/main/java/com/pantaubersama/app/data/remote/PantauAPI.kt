@@ -6,6 +6,7 @@ import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitikResponse
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitiksResponse
 import com.pantaubersama.app.data.model.kuis.* // ktlint-disable
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
+import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatListResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -66,7 +67,7 @@ interface PantauAPI {
 
     @FormUrlEncoded
     @POST("pendidikan_politik/v1/questions")
-    fun createTanyaKandidat(@Field("body") body: String?): Single<TanyaKandidatResponse>
+    fun createTanyaKandidat(@Field("body") body: String?): Single<TanyaKandidatListResponse>
 
     @GET("pendidikan_politik/v1/questions")
     fun getTanyaKandidatList(
@@ -75,13 +76,16 @@ interface PantauAPI {
         @Query("order_by") orderBy: String?,
         @Query("direction") direction: String?,
         @Query("filter_by") filterBy: String?
-    ): Single<TanyaKandidatResponse>
+    ): Single<TanyaKandidatListResponse>
 
     @GET("pendidikan_politik/v1/me/questions")
     fun getMyTanyaKandidatList(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
-    ): Single<TanyaKandidatResponse>
+    ): Single<TanyaKandidatListResponse>
+
+    @GET("pendidikan_politik/v1/questions/{id}")
+    fun getTanyaKandidatById(@Path("id") questionId: String): Single<TanyaKandidatResponse>
 
     @FormUrlEncoded
     @POST("pendidikan_politik/v1/votes")

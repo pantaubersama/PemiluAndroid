@@ -3,7 +3,6 @@ package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.view.* // ktlint-disable
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
@@ -11,8 +10,8 @@ import com.pantaubersama.app.base.viewholder.LoadingViewHolder
 import com.pantaubersama.app.data.model.LoadingModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
-import com.pantaubersama.app.utils.GlideApp
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
@@ -21,7 +20,7 @@ import kotlinx.android.synthetic.main.item_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_action_post.*
 import kotlinx.android.synthetic.main.layout_tanya_kandidat_header.*
 
-class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
+class TanyaKandidatAdapter : BaseRecyclerAdapter() {
 //    private var data: MutableList<Pertanyaan> = ArrayList()
     var listener: TanyaKandidatAdapter.AdapterListener? = null
 
@@ -30,8 +29,8 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
             VIEW_TYPE_BANNER
         } else if (data[position] is LoadingModel) {
             VIEW_TYPE_LOADING
-        } else if ((data[position] as Pertanyaan).viewType != null) {
-            (data[position] as Pertanyaan).viewType!!
+        } else if (data[position] is Profile) {
+            VIEW_TYPE_HEADER
         } else {
             VIEW_TYPE_ITEM
         }
@@ -48,7 +47,7 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as? LoadingViewHolder)?.bind()
-        (holder as? HeaderViewHolder)?.onBind()
+        (holder as? HeaderViewHolder)?.onBind(data[position] as Profile)
         (holder as? BannerViewHolder)?.bind(data[position] as BannerInfo)
         (holder as? TanyaKandidatViewHolder)?.onBind(data[position] as Pertanyaan)
     }
@@ -59,11 +58,7 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         containerView!!), LayoutContainer {
 
         fun onBind(item: Pertanyaan?) {
-            GlideApp
-                .with(itemView.context)
-                .load(item?.user?.avatar?.url)
-                .placeholder(ContextCompat.getDrawable(itemView.context, R.drawable.ic_person))
-                .into(iv_user_avatar)
+            iv_user_avatar.loadUrl(item?.user?.avatar?.url, R.drawable.ic_person)
             tv_user_name.text = item?.user?.fullName
             question_time.text = item?.createdAtInWord?.id
             upvote_count_text.text = item?.likeCount.toString()
@@ -84,6 +79,9 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
             }
             upvote_container.setOnClickListener {
                 setUpvoted(item)
+            }
+            layout_item_tanya_kandidat.setOnClickListener {
+                item?.let { item -> listener?.onClickContent(item, adapterPosition) }
             }
         }
 
@@ -111,7 +109,9 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
     inner class HeaderViewHolder(
         override val containerView: View?
     ) : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
-        fun onBind() {
+        fun onBind(item: Profile) {
+            header_user_avatar.loadUrl(item.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
+            user_name.text = item.name
             question_section.setOnClickListener {
                 val intent = Intent(itemView.context, CreateTanyaKandidatActivity::class.java)
                 itemView.context.startActivity(intent)
@@ -133,39 +133,13 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         return data.size
     }
 
-    fun addHeader() {
+    fun addHeader(profile: Profile) {
         if (data.size != 0 && data[0] is BannerInfo) {
-            addItem(Pertanyaan(viewType = VIEW_TYPE_HEADER), 1)
+            addItem(profile, 1)
         } else {
-            addItem(Pertanyaan(viewType = VIEW_TYPE_HEADER), 0)
+            addItem(profile, 0)
         }
     }
-
-//    fun addItem(question: Pertanyaan, position: Int) {
-//        data.add(question)
-//        notifyItemInserted(itemCount)
-//    }
-
-//    fun setData(question: MutableList<Pertanyaan>) {
-//        data.clear()
-//        data.addAll(question)
-//        notifyDataSetChanged()
-//    }
-//
-//    fun setLoading() {
-//        data.add(Pertanyaan(viewType = VIEW_TYPE_LOADING))
-//        notifyItemInserted(data.size - 1)
-//    }
-//
-//    fun setLoaded() {
-//        data.removeAt(data.size - 1)
-//        notifyItemRemoved(data.size)
-//    }
-//
-//    fun addData(questions: MutableList<Pertanyaan>) {
-//        data.addAll(questions)
-//        notifyItemRangeInserted(itemCount, questions.size)
-//    }
 
     fun reverseVote(liked: Boolean?, position: Int?) {
         (data[position!!] as Pertanyaan).isliked = liked
@@ -202,5 +176,6 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         fun onClickCopyUrl(id: String?)
         fun onClickLapor(id: String?)
         fun onClickTanyaOption(item: Pertanyaan, position: Int)
+        fun onClickContent(item: Pertanyaan, position: Int)
     }
 }

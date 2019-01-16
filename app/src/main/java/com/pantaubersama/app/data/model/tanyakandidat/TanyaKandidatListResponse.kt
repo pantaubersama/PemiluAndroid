@@ -4,8 +4,13 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class TanyaKandidatResponse(
+class TanyaKandidatListResponse(
     @SerializedName("data")
     @Expose
-    var data: TanyaKandidatData? = null
+    var data: TanyaKandidatListData? = null
 ) : Serializable
+
+class TanyaKandidatResponse(
+    @SerializedName("data")
+    var data: TanyaKandidatData? = null
+)

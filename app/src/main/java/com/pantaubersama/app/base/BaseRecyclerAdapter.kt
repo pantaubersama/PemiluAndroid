@@ -80,6 +80,11 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyItemInserted(position)
     }
 
+    fun changeItem(item: ItemModel, position: Int) {
+        data.add(position, item)
+        notifyItemChanged(position)
+    }
+
     fun deleteItem(position: Int) {
         if (position < itemCount) {
             data.removeAt(position)

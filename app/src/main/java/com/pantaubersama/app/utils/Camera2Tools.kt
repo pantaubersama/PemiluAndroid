@@ -10,7 +10,8 @@ import android.os.HandlerThread
 import android.util.Size
 import android.view.Surface
 import android.view.TextureView
-import java.util.* // ktlint-disable
+import java.util.Collections
+import java.util.Arrays
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 

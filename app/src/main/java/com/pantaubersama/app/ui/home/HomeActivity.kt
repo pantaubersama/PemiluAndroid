@@ -50,8 +50,8 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
                 R.id.navigation_menyerap -> LinimasaFragment() to LinimasaFragment.TAG
                 R.id.navigation_menggali -> PenPolFragment.newInstance() to PenPolFragment.TAG
                 R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
-                R.id.navigation_merayakan -> LaporFragment.newInstance() to LaporFragment.TAG
-                R.id.navigation_menjaga -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
+                R.id.navigation_menjaga -> LaporFragment.newInstance() to LaporFragment.TAG
+                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
                 else -> throw IllegalStateException("unknown menu")
             }
             showFragment(fragment, tag)
