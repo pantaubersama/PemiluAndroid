@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Html
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.di.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_panduan_komunitas.*
 import javax.inject.Inject
 
@@ -19,6 +20,10 @@ class PanduanKomunitasActivity : BaseActivity<PanduanKomunitasPresenter>(), Pand
 
     override fun fetchIntentExtra() {
         // ok
+    }
+
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

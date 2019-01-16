@@ -29,6 +29,8 @@ import com.pantaubersama.app.ui.profile.connect.ConnectActivity
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
+import com.pantaubersama.app.ui.profile.setting.panduankomunitas.PanduanKomunitasActivity
+import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
 import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
 import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
@@ -78,4 +80,6 @@ interface ActivityComponent {
     fun inject(undangAnggotaActivity: UndangAnggotaActivity)
     fun inject(kuisUserResultActivity: KuisUserResultActivity)
     fun inject(connectActivity: ConnectActivity)
+    fun inject(tentangAppActivity: TentangAppActivity)
+    fun inject(panduanKomunitasActivity: PanduanKomunitasActivity)
 }
