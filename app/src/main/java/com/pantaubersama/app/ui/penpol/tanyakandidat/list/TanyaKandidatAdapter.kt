@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.item_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_action_post.*
 import kotlinx.android.synthetic.main.layout_tanya_kandidat_header.*
 
-class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
+class TanyaKandidatAdapter : BaseRecyclerAdapter() {
 //    private var data: MutableList<Pertanyaan> = ArrayList()
     var listener: TanyaKandidatAdapter.AdapterListener? = null
 

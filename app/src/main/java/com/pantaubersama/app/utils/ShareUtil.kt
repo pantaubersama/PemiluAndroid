@@ -20,9 +20,9 @@ class ShareUtil {
             shareIntent.type = "text/plain"
             val resInfo = context.packageManager?.queryIntentActivities(shareIntent, 0)
             val sharedItem: String = "" + when (item) {
-                is Pertanyaan -> "\"${item.body} – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_TANYA_PATH + item.id
-                is FeedsItem -> "\"${item.source?.text} – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_FEEDS_PATH + item.id
-                is JanjiPolitik -> "\"${item.title}\" – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_JANPOL_PATH + item.id
+                is FeedsItem -> "\"${item.source?.text} – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_FEEDS_PATH + item.id // not used
+                is Pertanyaan -> "Menurutmu gimana? " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_TANYA_PATH + item.id
+                is JanjiPolitik -> "Sudah tahu Janji yang ini, belum? Siap-siap catatan, ya! ✔ " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_JANPOL_PATH + item.id
                 is KuisItem -> "\"${item.title}\" – " + BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_KUIS_PATH + item.id
                 is KuisUserResult -> "%.2f%% (%s) – %s".format(item.percentage, item.team.title, BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_KUIS_PATH) // kuisUserResult.id needed
                 else -> ""
