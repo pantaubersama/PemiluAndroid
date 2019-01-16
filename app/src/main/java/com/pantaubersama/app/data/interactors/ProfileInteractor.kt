@@ -1,11 +1,13 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
+import com.pantaubersama.app.data.model.kuis.KuisUserResult
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Informant
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.model.user.ProfileResponse
 import com.pantaubersama.app.data.remote.APIWrapper
+import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -181,5 +183,16 @@ class ProfileInteractor @Inject constructor(
                 newProfile.votePreference = paslonSelected
                 dataCache.saveUserProfile(newProfile)
             }
+    }
+
+    fun getMyTendency(): Single<KuisUserResult> {
+        return apiWrapper.getPantauApi().getKuisUserResult()
+            .map { response ->
+                val team = response.data.teams.maxBy { it.percentage }
+                team?.let { KuisUserResult(it.percentage, it.team, response.data.meta.quizzes) }
+                    ?: throw ErrorException("Gagal mendapatkan hasil kuis")
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
     }
 }

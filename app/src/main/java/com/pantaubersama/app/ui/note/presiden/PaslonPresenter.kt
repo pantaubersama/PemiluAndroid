@@ -8,4 +8,19 @@ class PaslonPresenter @Inject constructor(private val profileInteractor: Profile
     fun getUserProfile() {
         view?.bindUserProfile(profileInteractor.getProfile())
     }
+
+    fun getMyTendency() {
+        disposables.add(
+            profileInteractor.getMyTendency()
+                .subscribe(
+                    {
+                        view?.bindMyTendency(it, profileInteractor.getProfile().name)
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedGetMyTendencyAlert()
+                    }
+                )
+        )
+    }
 }
