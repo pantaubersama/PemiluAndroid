@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.note
 import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.ui.note.presiden.PresidenFragment
 
 class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanPilihanView {
 

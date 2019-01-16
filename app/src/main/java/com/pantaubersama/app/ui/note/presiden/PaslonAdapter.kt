@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.note
+package com.pantaubersama.app.ui.note.presiden
 
 import android.util.TypedValue
 import android.view.View
@@ -46,20 +46,20 @@ class PaslonAdapter : BaseRecyclerAdapter() {
                 pilihan_nama_calon.setTextColor(ContextCompat.getColor(itemView.context, R.color.gray_5))
             }
             itemView.setOnClickListener {
-                setSelectedItem(paslonData)
+                setSelectedData(paslonData)
             }
-        }
-
-        private fun setSelectedItem(paslonData: PaslonData) {
-            selectedItem = paslonData
-            selectedItem?.let { listener.onSelectItem(it) }
-            notifyDataSetChanged()
         }
 
         private fun Float.toDp(): Int {
             return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, itemView.resources.displayMetrics))
         }
 
+    }
+
+    fun setSelectedData(paslonData: PaslonData) {
+        selectedItem = paslonData
+        selectedItem?.let { listener.onSelectItem(it) }
+        notifyDataSetChanged()
     }
 
     interface Listener {
