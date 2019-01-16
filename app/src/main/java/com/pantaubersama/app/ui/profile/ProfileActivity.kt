@@ -317,7 +317,10 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 val intent = Intent(this@ProfileActivity, SettingActivity::class.java)
                 startActivityForResult(intent, PantauConstants.RequestCode.RC_SETTINGS)
             }
-            android.R.id.home -> onBackPressed()
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }

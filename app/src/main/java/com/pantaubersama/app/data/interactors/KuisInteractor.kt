@@ -35,8 +35,19 @@ class KuisInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .map { response ->
                 val team = response.data.teams.maxBy { it.percentage }
-                team?.let { KuisUserResult(it.percentage, it.team, response.data.meta.quizzes) }
+                team?.let { KuisUserResult(it.percentage, it.team, response.data.meta.quizzes, response.data.user) }
                     ?: throw ErrorException("Gagal mendapatkan hasil kuis")
+            }
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getKuisUserSummaryByUserId(userId: String): Single<KuisUserResult> {
+        return pantauAPI.getKuisUserResultByUserId(userId)
+            .subscribeOn(rxSchedulers.io())
+            .map { response ->
+                val team = response.data.teams.maxBy { it.percentage }
+                team?.let { KuisUserResult(it.percentage, it.team, response.data.meta.quizzes, response.data.user) }
+                ?: throw ErrorException("Gagal mendapatkan hasil kuis")
             }
             .observeOn(rxSchedulers.mainThread())
     }

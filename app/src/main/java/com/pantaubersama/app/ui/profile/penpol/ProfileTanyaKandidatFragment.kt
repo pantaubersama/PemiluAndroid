@@ -64,6 +64,10 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     private fun setupTanyaKandidatList() {
         adapter = TanyaKandidatAdapter()
         adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
+            override fun onClickHeader() {
+                /* no header in this section */
+            }
+
             override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
                 val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
                 dialog.removeItem(R.id.report_tanya_kandidat_action)
