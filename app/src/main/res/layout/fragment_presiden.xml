@@ -84,7 +84,7 @@
                 android:padding="16dp">
 
                 <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/edit_profile_avatar"
+                    android:id="@+id/paslon_avatar"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:scaleType="centerCrop"
@@ -98,45 +98,44 @@
                     android:layout_marginStart="16dp"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/bw_modelica_regular"
-                            android:letterSpacing="0.02"
-                            android:lineSpacingExtra="4sp"
-                            android:text="@string/label_total_kecenderungan"
-                            android:textColor="@color/black_3"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/presiden_total_kuis"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:fontFamily="@font/bw_modelica_bold"
-                            android:letterSpacing="0.02"
-                            android:lineSpacingExtra="4sp"
-                            android:text="4 dari 6 Kuis"
-                            android:textColor="@color/black_3"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
                     <TextView
-                        android:id="@+id/presiden_total_kecenderungan"
+                        android:id="@+id/presiden_total_kuis"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/bw_modelica_bold"
-                        android:gravity="center_horizontal"
-                        android:lineSpacingExtra="0sp"
-                        android:text="70% (Jokowi - Makruf)"
+                        android:letterSpacing="0.02"
+                        android:lineSpacingExtra="4sp"
                         android:textColor="@color/black_3"
-                        android:textSize="16sp" />
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp">
+
+                        <TextView
+                            android:id="@+id/total_tendency"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:gravity="center_horizontal"
+                            android:lineSpacingExtra="0sp"
+                            android:textColor="@color/black_3"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/paslon_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:gravity="center_horizontal"
+                            android:lineSpacingExtra="0sp"
+                            android:textColor="@color/black_3"
+                            android:textSize="16sp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginStart="4dp"/>
+
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>

@@ -1,13 +1,19 @@
 package com.pantaubersama.app.ui.note.presiden
 
+import android.annotation.SuppressLint
 import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.capres.PaslonData
+import com.pantaubersama.app.data.model.kuis.KuisUserResult
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
-import kotlinx.android.synthetic.main.fragment_presiden.view.*
+import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.color
+import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.spannable
+import kotlinx.android.synthetic.main.fragment_presiden.*
 import javax.inject.Inject
 
 class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
@@ -26,6 +32,7 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
         setupRecyclerView(view)
         setData()
         presenter.getUserProfile()
+        presenter.getMyTendency()
     }
 
     private fun setData() {
@@ -59,12 +66,12 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
         paslonAdapter = PaslonAdapter()
         paslonAdapter.listener = object : PaslonAdapter.Listener {
             override fun onSelectItem(paslonData: PaslonData) {
-                view.selected_paslon.text = paslonData.paslonName
+                selected_paslon.text = paslonData.paslonName
                 listener?.onPaslonSelect(paslonData)
             }
         }
-        view.presiden_recycler_view_calon.layoutManager = layoutManager
-        view.presiden_recycler_view_calon.adapter = paslonAdapter
+        presiden_recycler_view_calon.layoutManager = layoutManager
+        presiden_recycler_view_calon.adapter = paslonAdapter
     }
 
     override fun setLayout(): Int {
@@ -89,6 +96,22 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
         if (profile.votePreference != 0) {
             paslonAdapter.setSelectedData(paslonAdapter.get(profile.votePreference - 1) as PaslonData)
         }
+    }
+
+    override fun showFailedGetMyTendencyAlert() {
+        ToastUtil.show(requireContext(), "Gagal memuat kecenderungan")
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun bindMyTendency(tendency: KuisUserResult, name: String) {
+        presiden_total_kuis.text = spannable {
+            +"Total Kecenderungan ${tendency.meta.finished} Dari ${tendency.meta.total} Kuis,\n"
+            textColor(color(R.color.black_3)) { +name }
+            +" lebih suka jawaban dari Paslon no ${tendency.team.id}"
+        }.toCharSequence()
+        paslon_avatar.loadUrl(tendency.team.avatar)
+        total_tendency.text = "%.2f%%".format(tendency.percentage)
+        paslon_name.text = tendency.team.title
     }
 
     interface Listener {
