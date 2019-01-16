@@ -92,6 +92,11 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                 startActivityForResult(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.EXTRA_TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.RC_BANNER_TANYA_KANDIDAT)
             }
 
+            override fun onClickHeader() {
+                val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
+                startActivityForResult(intent, PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE)
+            }
+
             override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
                 val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
                 if (item.user?.id.equals(presenter.getUserId())) {

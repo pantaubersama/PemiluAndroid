@@ -128,7 +128,8 @@
                 android:textSize="16sp"
                 android:textColor="@color/black_1"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp"/>
+                android:paddingBottom="16dp"
+                android:ellipsize="end"/>
 
             <include layout="@layout/layout_action_post"/>
 

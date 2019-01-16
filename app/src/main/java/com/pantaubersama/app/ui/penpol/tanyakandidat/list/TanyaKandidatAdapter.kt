@@ -1,7 +1,6 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import android.animation.ValueAnimator
-import android.content.Intent
 import android.view.* // ktlint-disable
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
@@ -11,7 +10,6 @@ import com.pantaubersama.app.data.model.LoadingModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.data.model.user.Profile
-import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
@@ -63,6 +61,7 @@ class TanyaKandidatAdapter : BaseRecyclerAdapter() {
             question_time.text = item?.createdAtInWord?.id
             upvote_count_text.text = item?.likeCount.toString()
             user_question.text = item?.body
+            user_question.maxLines = 5
             iv_options_button.setOnClickListener {
 //                showOptionsDialog(itemView)
                 listener?.onClickTanyaOption(item!!, adapterPosition)
@@ -113,8 +112,7 @@ class TanyaKandidatAdapter : BaseRecyclerAdapter() {
             header_user_avatar.loadUrl(item.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
             user_name.text = item.name
             question_section.setOnClickListener {
-                val intent = Intent(itemView.context, CreateTanyaKandidatActivity::class.java)
-                itemView.context.startActivity(intent)
+                listener?.onClickHeader()
             }
         }
     }
@@ -170,6 +168,7 @@ class TanyaKandidatAdapter : BaseRecyclerAdapter() {
 
     interface AdapterListener {
         fun onClickBanner(bannerInfo: BannerInfo)
+        fun onClickHeader()
         fun onClickShare(item: Pertanyaan?)
         fun onClickUpvote(id: String?, isLiked: Boolean, position: Int?)
         fun onClickDeleteItem(id: String?, position: Int?)
