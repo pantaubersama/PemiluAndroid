@@ -11,7 +11,7 @@ val EMPTY_INFORMANT = Informant("", null, null, null, null,
         null, null, null, null, null)
 
 val EMPTY_PROFILE = Profile("", "", "Tanpa", "", "",
-        false, false, null, null, false,
+        false, false, null, 0, false,
         null, "", "", "", "",
     Image(null), EMPTY_INFORMANT)
 
@@ -32,7 +32,7 @@ data class Profile(
     @SerializedName("is_admin") var isAdmin: Boolean,
     @SerializedName("is_moderator") var isModerator: Boolean,
     @SerializedName("cluster") var cluster: ClusterItem?,
-    @SerializedName("vote_preference") var votePreference: Any?,
+    @SerializedName("vote_preference") var votePreference: Int,
     @SerializedName("verified") var verified: Boolean,
     @SerializedName("username") var username: String?,
     @SerializedName("about") var about: String?,
