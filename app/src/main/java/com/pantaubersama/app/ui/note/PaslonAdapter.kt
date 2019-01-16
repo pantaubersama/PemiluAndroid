@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.item_pilihan.*
 
 class PaslonAdapter : BaseRecyclerAdapter() {
     var selectedItem: PaslonData? = null
+    lateinit var listener: Listener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return CapressViewHolder(parent.inflate(R.layout.item_pilihan))
@@ -51,6 +52,7 @@ class PaslonAdapter : BaseRecyclerAdapter() {
 
         private fun setSelectedItem(paslonData: PaslonData) {
             selectedItem = paslonData
+            selectedItem?.let { listener.onSelectItem(it) }
             notifyDataSetChanged()
         }
 
@@ -58,5 +60,9 @@ class PaslonAdapter : BaseRecyclerAdapter() {
             return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, itemView.resources.displayMetrics))
         }
 
+    }
+
+    interface Listener {
+        fun onSelectItem(paslonData: PaslonData)
     }
 }

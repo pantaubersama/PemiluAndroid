@@ -39,14 +39,33 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_italic"
-                    android:lineSpacingExtra="2sp"
-                    android:text="Pilih Note Calon Presidenmu saat ini :"
-                    android:textColor="@color/gray_5"
-                    android:textSize="10sp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_italic"
+                        android:lineSpacingExtra="2sp"
+                        android:text="Pilih Note Calon Presidenmu saat ini:"
+                        android:textColor="@color/gray_5"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/selected_paslon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_italic"
+                        android:lineSpacingExtra="2sp"
+                        android:textColor="@color/orange"
+                        android:textSize="10sp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginStart="4dp"/>
+
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/presiden_recycler_view_calon"

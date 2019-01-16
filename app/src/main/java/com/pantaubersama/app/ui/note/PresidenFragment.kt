@@ -45,6 +45,11 @@ class PresidenFragment : CommonFragment() {
     private fun setupRecyclerView(view: View) {
         layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         paslonAdapter = PaslonAdapter()
+        paslonAdapter.listener = object : PaslonAdapter.Listener {
+            override fun onSelectItem(paslonData: PaslonData) {
+                view.selected_paslon.text = paslonData.paslonName
+            }
+        }
         view.presiden_recycler_view_calon.layoutManager = layoutManager
         view.presiden_recycler_view_calon.adapter = paslonAdapter
     }
