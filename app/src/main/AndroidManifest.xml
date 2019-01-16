@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.penpol.tanyakandidat.detail.DetailTanyaKandidat"></activity>
+        <activity android:name=".ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity"></activity>
 
         <meta-data
             android:name="aia-compat-api-min-version"

@@ -23,7 +23,6 @@ import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
-import kotlinx.android.synthetic.main.layout_delete_confirmation_dialog.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_loading_state.*
@@ -236,16 +235,16 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun showItemReportedAlert() {
-        ToastUtil.show(context!!, "Berhasil melaporkan pertanyaan")
+        ToastUtil.show(context!!, getString(R.string.berhasil_melaporkan_pertanyaan))
     }
 
     override fun showFailedReportItem() {
-        ToastUtil.show(context!!, "Gagal melaporkan pertanyaan")
+        ToastUtil.show(context!!, getString(R.string.gagal_melaporkan_pertanyaan))
     }
 
     override fun showFailedDeleteItemAlert() {
         dismissProgressDialog()
-        ToastUtil.show(context!!, "Gagal menghapus pertanyaan")
+        ToastUtil.show(context!!, getString(R.string.gagal_menghapus_pertanyaan))
     }
 
     override fun onItemDeleted(position: Int?) {

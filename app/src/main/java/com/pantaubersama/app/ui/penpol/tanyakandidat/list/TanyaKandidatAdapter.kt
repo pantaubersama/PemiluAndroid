@@ -3,7 +3,6 @@ package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.view.* // ktlint-disable
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
@@ -12,7 +11,6 @@ import com.pantaubersama.app.data.model.LoadingModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
-import com.pantaubersama.app.utils.GlideApp
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
@@ -59,11 +57,7 @@ class TanyaKandidatAdapter : BaseRecyclerAdapter() {
         containerView!!), LayoutContainer {
 
         fun onBind(item: Pertanyaan?) {
-            GlideApp
-                .with(itemView.context)
-                .load(item?.user?.avatar?.url)
-                .placeholder(ContextCompat.getDrawable(itemView.context, R.drawable.ic_person))
-                .into(iv_user_avatar)
+            iv_user_avatar.loadUrl(item?.user?.avatar?.url, R.drawable.ic_person)
             tv_user_name.text = item?.user?.fullName
             question_time.text = item?.createdAtInWord?.id
             upvote_count_text.text = item?.likeCount.toString()

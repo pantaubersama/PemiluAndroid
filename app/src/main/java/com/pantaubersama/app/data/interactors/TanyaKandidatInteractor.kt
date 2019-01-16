@@ -1,8 +1,9 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
-import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatData
-import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
+import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatListData
+import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatListResponse
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
@@ -14,7 +15,7 @@ class TanyaKandidatInteractor @Inject constructor(
     private val rxSchedulers: RxSchedulers,
     private val dataCache: DataCache
 ) {
-    fun createTanyaKandidat(body: String?): Single<TanyaKandidatResponse> {
+    fun createTanyaKandidat(body: String?): Single<TanyaKandidatListResponse> {
         return apiWrapper
             .getPantauApi()
             .createTanyaKandidat(
@@ -27,7 +28,7 @@ class TanyaKandidatInteractor @Inject constructor(
     fun getTanyaKandidatlist(
         page: Int?,
         perPage: Int?
-    ): Single<TanyaKandidatResponse> {
+    ): Single<TanyaKandidatListResponse> {
         return apiWrapper.getPantauApi().getTanyaKandidatList(
             page,
             perPage,
@@ -42,10 +43,17 @@ class TanyaKandidatInteractor @Inject constructor(
     fun getMyTanyaKandidatList(
         page: Int,
         perPage: Int
-    ): Single<TanyaKandidatData?> {
+    ): Single<TanyaKandidatListData?> {
         return apiWrapper.getPantauApi().getMyTanyaKandidatList(page, perPage)
             .subscribeOn(rxSchedulers.io())
             .map { it.data }
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getTanyaKandidatById(questionId: String): Single<Pertanyaan?> {
+        return apiWrapper.getPantauApi().getTanyaKandidatById(questionId)
+            .subscribeOn(rxSchedulers.io())
+            .map { it.data?.question }
             .observeOn(rxSchedulers.mainThread())
     }
 

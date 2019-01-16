@@ -61,6 +61,8 @@ class PantauConstants {
         const val EXTRA_ITEM_POSITION = "EXTRA_ITEM_POSITION"
         const val EXTRA_INTENT_TYPE = "EXTRA_INTENT_TYPE"
         const val EXTRA_INTENT_TYPE_SHARE = "EXTRA_INTENT_TYPE_SHARE"
+        const val EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID"
+        const val EXTRA_QUESTION = "EXTRA_QUESTION"
     }
 
     object RequestCode {

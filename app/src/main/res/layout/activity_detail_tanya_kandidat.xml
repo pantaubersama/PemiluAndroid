@@ -4,10 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidat">
+    tools:context="com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity">
 
     <include layout="@layout/item_tanya_kandidat"/>
     <include layout="@layout/layout_loading_state"/>
     <include layout="@layout/layout_fail_state"/>
+
+    <com.pantaubersama.app.ui.widget.BottomCloseButton
+        android:id="@+id/btn_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+    </com.pantaubersama.app.ui.widget.BottomCloseButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

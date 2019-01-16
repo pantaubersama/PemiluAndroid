@@ -8,12 +8,12 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.ui.login.LoginActivity
+import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
 import com.pantaubersama.app.ui.profile.ProfileActivity
-import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Networking.INVITATION_PATH
-import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_FEEDS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_JANPOL_PATH
+import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_TANYA_PATH
 import javax.inject.Inject
 
 class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreenView {
@@ -67,8 +67,15 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 startActivity(intent)
                 finish()
             }
-            urlPath?.contains(SHARE_FEEDS_PATH)!! && !urlPath?.substringAfter(SHARE_FEEDS_PATH).isNullOrEmpty() -> {
-                ChromeTabUtil(this).forceLoadUrl(urlData)
+//            urlPath?.contains(SHARE_FEEDS_PATH)!! && !urlPath?.substringAfter(SHARE_FEEDS_PATH).isNullOrEmpty() -> {
+//                ChromeTabUtil(this).forceLoadUrl(urlData)
+//                finish()
+//            }
+            urlPath?.contains(SHARE_TANYA_PATH)!! && !urlPath?.substringAfter(SHARE_TANYA_PATH).isNullOrEmpty() -> {
+                val questionId = urlPath?.substringAfter(SHARE_TANYA_PATH)
+                val intent = DetailTanyaKandidatActivity.setIntent(this, questionId!!)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
                 finish()
             }
             else -> {

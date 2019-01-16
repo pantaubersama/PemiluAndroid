@@ -19,6 +19,7 @@ import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisSummaryActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisUserResultActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
+import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
@@ -86,4 +87,5 @@ interface ActivityComponent {
     fun inject(panduanKomunitasActivity: PanduanKomunitasActivity)
     fun inject(profileJanjiPolitikFragment: ProfileJanjiPolitikFragment)
     fun inject(profileTanyaKandidatFragment: ProfileTanyaKandidatFragment)
+    fun inject(detailTanyaKandidatActivity: DetailTanyaKandidatActivity)
 }
