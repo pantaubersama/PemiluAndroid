@@ -21,4 +21,19 @@ class KuisResultPresenter @Inject constructor(
             })
         disposables?.add(disposable)
     }
+
+    fun getKuisResultByQuizParticipationId(quizParticipationId: String) {
+        view?.showLoading()
+        disposables.add(kuisInteractor.getKuisResultByQuizParticipationId(quizParticipationId)
+            .doOnEvent { _, _ -> view?.dismissLoading() }
+            .subscribe(
+                {
+                    it.user.fullName?.let { fullName -> view?.showResult(it, fullName) }
+                },
+                {
+                    view?.showError(it)
+                }
+            )
+        )
+    }
 }
