@@ -57,6 +57,37 @@ class KuisInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
+    fun getKuisResult(kuisId: String): Single<KuisResult> {
+        return pantauAPI.getKuisResult(kuisId)
+            .subscribeOn(rxSchedulers.io())
+            .map { response ->
+                val team = response.data.teams.maxBy { it.percentage }
+                team?.let { KuisResult(it.percentage, it.team, response.data.user, response.data.quizParticipation) }
+                    ?: throw ErrorException("Gagal mendapatkan hasil kuis")
+            }
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getKuisResultByQuizParticipationId(quizParticipationId: String): Single<KuisResult> {
+        return pantauAPI.getKuisResultByQuizParticipationId(quizParticipationId)
+            .subscribeOn(rxSchedulers.io())
+            .map { response ->
+                val team = response.data.teams.maxBy { it.percentage }
+                team?.let { KuisResult(it.percentage, it.team, response.data.user, response.data.quizParticipation) }
+                    ?: throw ErrorException("Gagal mendapatkan hasil kuis")
+            }
+            .observeOn(rxSchedulers.mainThread())
+    }
+//    fun getKuisResult(kuisId: String): Single<TeamPercentage> {
+//        return pantauAPI.getKuisResult(kuisId)
+//            .subscribeOn(rxSchedulers.io())
+//            .map { response ->
+//                response.data.teams.maxBy { it.percentage }
+//                    ?: throw ErrorException("Gagal mendapatkan hasil kuis")
+//            }
+//            .observeOn(rxSchedulers.mainThread())
+//    }
+
     fun getKuisFilter(): String {
         return dataCache.getKuisFilter()
     }
@@ -80,16 +111,6 @@ class KuisInteractor @Inject constructor(
     fun answerQuestion(kuisId: String, questionId: String, answerId: String): Completable {
         return pantauAPI.answerQuestion(kuisId, questionId, answerId)
             .subscribeOn(rxSchedulers.io())
-            .observeOn(rxSchedulers.mainThread())
-    }
-
-    fun getKuisResult(kuisId: String): Single<TeamPercentage> {
-        return pantauAPI.getKuisResult(kuisId)
-            .subscribeOn(rxSchedulers.io())
-            .map { response ->
-                response.data.teams.maxBy { it.percentage }
-                    ?: throw ErrorException("Gagal mendapatkan hasil kuis")
-            }
             .observeOn(rxSchedulers.mainThread())
     }
 

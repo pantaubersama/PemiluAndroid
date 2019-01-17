@@ -5,10 +5,12 @@ import android.content.Intent
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.data.model.kuis.KuisItem
+import com.pantaubersama.app.data.model.kuis.KuisResult
 import com.pantaubersama.app.data.model.kuis.KuisUserResult
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_FEEDS_PATH
+import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_HASIL_KUIS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_JANPOL_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KECENDERUNGAN_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KUIS_PATH
@@ -30,6 +32,7 @@ class ShareUtil {
                 is JanjiPolitik -> "Sudah tahu Janji yang ini, belum? Siap-siap catatan, ya! ✔ " + BuildConfig.PANTAU_BASE_URL + SHARE_JANPOL_PATH + item.id
                 is KuisItem -> "\"${item.title}\" – " + BuildConfig.PANTAU_BASE_URL + SHARE_KUIS_PATH + item.id
                 is KuisUserResult -> "Hmm.. Ternyataa \uD83D\uDC40 %s".format(BuildConfig.PANTAU_BASE_URL + SHARE_KECENDERUNGAN_PATH + item.user.id)
+                is KuisResult -> "Kamu sudah ikut? Aku sudah dapat hasilnya \uD83D\uDE0E %s".format(BuildConfig.PANTAU_BASE_URL + SHARE_HASIL_KUIS_PATH + item.quizParticipation.id)
                 else -> ""
             }
             if (!resInfo!!.isEmpty()) {

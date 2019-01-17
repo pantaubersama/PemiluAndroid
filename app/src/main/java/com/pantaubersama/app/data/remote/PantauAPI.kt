@@ -154,6 +154,9 @@ interface PantauAPI {
     @GET("pendidikan_politik/v1/quizzes/{id}/result")
     fun getKuisResult(@Path("id") kuisId: String): Single<KuisResultResponse>
 
+    @GET("pendidikan_politik/v1/quiz_participations/{quiz_participation_id}/result")
+    fun getKuisResultByQuizParticipationId(@Path("quiz_participation_id") quizParticipationId: String): Single<KuisResultResponse>
+
     @GET("pendidikan_politik/v1/quizzes/{id}/summary")
     fun getKuisSummary(@Path("id") kuisId: String): Single<KuisSummaryResponse>
 }
