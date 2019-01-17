@@ -9,6 +9,7 @@ import com.pantaubersama.app.base.viewholder.LoadingViewHolder
 import com.pantaubersama.app.data.model.LoadingModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -18,8 +19,8 @@ import kotlinx.android.synthetic.main.item_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_action_post.*
 import kotlinx.android.synthetic.main.layout_tanya_kandidat_header.*
 
-class TanyaKandidatAdapter : BaseRecyclerAdapter() {
-//    private var data: MutableList<Pertanyaan> = ArrayList()
+class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
+    private var profile: Profile = EMPTY_PROFILE
     var listener: TanyaKandidatAdapter.AdapterListener? = null
 
     override fun getItemViewType(position: Int): Int {
@@ -77,7 +78,11 @@ class TanyaKandidatAdapter : BaseRecyclerAdapter() {
                 }
             }
             upvote_container.setOnClickListener {
-                setUpvoted(item)
+                if (profile != EMPTY_PROFILE) {
+                    setUpvoted(item)
+                } else {
+                    listener?.onclickActionUnauthorized()
+                }
             }
             layout_item_tanya_kandidat.setOnClickListener {
                 item?.let { item -> listener?.onClickContent(item, adapterPosition) }
@@ -159,6 +164,10 @@ class TanyaKandidatAdapter : BaseRecyclerAdapter() {
         }
     }
 
+    fun setHaveUser(profile: Profile) {
+        this.profile = profile
+    }
+
     companion object {
         var VIEW_TYPE_LOADING = 0
         var VIEW_TYPE_HEADER = 1
@@ -176,5 +185,6 @@ class TanyaKandidatAdapter : BaseRecyclerAdapter() {
         fun onClickLapor(id: String?)
         fun onClickTanyaOption(item: Pertanyaan, position: Int)
         fun onClickContent(item: Pertanyaan, position: Int)
+        fun onclickActionUnauthorized()
     }
 }

@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.penpol.kuis.list
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.KuisInteractor
+import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.utils.Optional
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 class KuisPresenter @Inject constructor(
     private val kuisInteractor: KuisInteractor,
-    private val bannerInfoInteractor: BannerInfoInteractor
+    private val bannerInfoInteractor: BannerInfoInteractor,
+    private val profileInteractor: ProfileInteractor
 ) : BasePresenter<KuisView>() {
 
     private val perPage = 3
@@ -94,5 +96,9 @@ class KuisPresenter @Inject constructor(
             }
             else -> view?.setNoMoreItems()
         }
+    }
+
+    fun getProfile() {
+        view?.bindProfile(profileInteractor.getProfile())
     }
 }

@@ -10,8 +10,11 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
+import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
@@ -45,6 +48,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     private var adapter: TanyaKandidatAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
+    private lateinit var profile: Profile
 
     companion object {
         fun newInstance(): TanyaKandidatFragment {
@@ -57,14 +61,28 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun initView(view: View) {
+        presenter.getProfile()
         setupTanyaKandidatList()
         getDataList()
         recycler_view.setPadding(0, 0, 0,
             (resources.getDimension(R.dimen.fab_size) + resources.getDimension(R.dimen.fab_margin)).roundToInt())
+    }
+
+    override fun bindUserData(profile: Profile) {
         fab_add.setOnClickListener {
-            val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
-            startActivityForResult(intent, PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE)
+            if (profile != EMPTY_PROFILE) {
+                val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
+                startActivityForResult(intent, PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE)
+            } else {
+                openLoginActivity()
+            }
         }
+        this.profile = profile
+    }
+
+    private fun openLoginActivity() {
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        startActivity(intent)
     }
 
     private fun getDataList() {
@@ -79,6 +97,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     private fun setupTanyaKandidatList() {
         adapter = TanyaKandidatAdapter()
+        adapter?.setHaveUser(profile)
         layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
@@ -99,7 +118,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
             override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
                 val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
-                if (item.user?.id.equals(presenter.getUserId())) {
+                if (item.user?.id.equals(profile.id)) {
                     dialog.removeItem(R.id.report_tanya_kandidat_action)
                 } else {
                     dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
@@ -166,6 +185,10 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                 val intent = DetailTanyaKandidatActivity.setIntent(requireContext(), item, position)
                 startActivityForResult(intent, RC_OPEN_DETAIL_QUESTION)
             }
+
+            override fun onclickActionUnauthorized() {
+                openLoginActivity()
+            }
         }
         recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -199,7 +222,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         } else {
             adapter?.setDatas(pertanyaanList as MutableList<ItemModel>)
         }
-        adapter?.addHeader(presenter.getUser())
+        adapter?.addHeader(profile)
     }
 
     override fun showEmptyDataAlert() {

@@ -4,7 +4,6 @@ import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
 import com.pantaubersama.app.data.local.cache.DataCache
-import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
 
@@ -29,12 +28,8 @@ class TanyaKandidatPresenter @Inject constructor(
         )
     }
 
-    fun getUser(): Profile {
-        return dataCache.loadUserProfile()
-    }
-
-    fun getUserId(): String {
-        return dataCache.loadUserProfile().id
+    fun getProfile() {
+        view?.bindUserData(dataCache.loadUserProfile())
     }
 
     fun getTanyaKandidatList(
