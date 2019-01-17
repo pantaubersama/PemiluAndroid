@@ -48,7 +48,7 @@ class KuisPresenter @Inject constructor(
             .subscribe({ (banner, kuisResult, kuisList) ->
                 val itemModels = mutableListOf<ItemModel>()
                 if (banner is Optional.Some) itemModels += banner.value
-                if (kuisResult is Optional.Some) itemModels += kuisResult.value
+                if (kuisResult is Optional.Some && kuisResult.value.meta.finished != 0) itemModels += kuisResult.value
                 itemModels += kuisList
                 view?.showTopPageItems(itemModels)
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient_orange">
+    android:background="@drawable/background_kecenderungan">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -18,14 +18,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bg_wave_orange"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:ignore="ContentDescription" />
-
         <LinearLayout
             android:id="@+id/ll_kuis_result"
             android:layout_width="match_parent"
@@ -33,6 +25,7 @@
             android:background="@color/white"
             android:gravity="center_horizontal"
             android:orientation="vertical"
+            android:paddingTop="20dp"
             android:paddingBottom="56dp"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="0dp">
@@ -60,24 +53,14 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_arc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg_arc_white"
-            app:layout_constraintTop_toBottomOf="@id/ll_kuis_result"
-            tools:ignore="ContentDescription" />
-
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_paslon"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@id/iv_arc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_arc"
+            app:layout_constraintTop_toBottomOf="@id/ll_kuis_result"
             app:riv_border_color="@color/white"
             app:riv_border_width="1dp"
             app:riv_oval="true"
@@ -113,6 +96,7 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:text="@string/share_action_label"
             android:textColor="@color/white"
             app:cornerRadius="18dp"
@@ -122,7 +106,7 @@
             app:layout_constraintBottom_toTopOf="@id/btn_see_answers"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_paslon_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_paslon_name"
             app:strokeColor="@color/white"
             app:strokeWidth="1dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
