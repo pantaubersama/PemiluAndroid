@@ -9,6 +9,7 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatAdapter
@@ -36,6 +37,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     private lateinit var layoutManager: LinearLayoutManager
     private var isDataEnd = false
     private var isLoading = false
+    private lateinit var profile: Profile
 
     companion object {
         val TAG = ProfileTanyaKandidatFragment::class.java.simpleName
@@ -52,8 +54,13 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     override fun setLayout(): Int = R.layout.fragment_profile_tanya_kandidat
 
     override fun initView(view: View) {
+        presenter.getProfile()
         setupTanyaKandidatList()
         getDataList()
+    }
+
+    override fun bindProfile(profile: Profile) {
+        this.profile = profile
     }
 
     private fun getDataList() {
@@ -63,6 +70,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
 
     private fun setupTanyaKandidatList() {
         adapter = TanyaKandidatAdapter()
+        adapter.setHaveUser(profile)
         adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickHeader() {
                 /* no header in this section */
@@ -136,6 +144,9 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
             override fun onClickContent(item: Pertanyaan, position: Int) {
                 val intent = DetailTanyaKandidatActivity.setIntent(requireContext(), item, position)
                 startActivityForResult(intent, RC_OPEN_DETAIL_QUESTION)
+            }
+
+            override fun onclickActionUnauthorized() {
             }
         }
         layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
