@@ -1,7 +1,10 @@
 package com.pantaubersama.app.ui.splashscreen
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
@@ -11,11 +14,15 @@ import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisUserResultActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
 import com.pantaubersama.app.ui.profile.ProfileActivity
+import com.pantaubersama.app.ui.widget.UpdateAppDialog
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Networking.INVITATION_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_JANPOL_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KECENDERUNGAN_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_TANYA_PATH
+import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.enableLottie
+import kotlinx.android.synthetic.main.activity_splash_screen.*
 import javax.inject.Inject
 
 class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreenView {
@@ -43,7 +50,21 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        presenter.getLoginState()
+        ToastUtil.show(this, BuildConfig.VERSION_CODE.toString())
+        presenter.checkAppVersion(BuildConfig.VERSION_CODE.toString())
+    }
+
+    override fun onForceUpdateAvailable() {
+        val dialog = UpdateAppDialog(this, object : UpdateAppDialog.DialogListener {
+            override fun onClickUpdate() {
+                try {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.airbnb.android")))
+                } catch (e: ActivityNotFoundException) {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)))
+                }
+            }
+        })
+        dialog.show()
     }
 
     override fun goToHome() {
@@ -110,10 +131,10 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
+        lottie_loading.enableLottie(true, lottie_loading)
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
+        lottie_loading.enableLottie(false, lottie_loading)
     }
 }

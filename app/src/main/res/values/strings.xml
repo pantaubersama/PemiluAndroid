@@ -194,4 +194,6 @@
     <string name="berhasil_melaporkan_pertanyaan">Berhasil melaporkan pertanyaan</string>
     <string name="gagal_melaporkan_pertanyaan">Gagal melaporkan pertanyaan</string>
     <string name="gagal_menghapus_pertanyaan">Gagal menghapus pertanyaan</string>
+    <string name="txt_force_update">Versi aplikasi yang terbaru sudah tersedia, update yuk!</string>
+    <string name="txt_update">Update</string>
 </resources>

@@ -3,8 +3,10 @@ package com.pantaubersama.app.ui.penpol.kuis.list
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.KuisInteractor
+import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.kuis.KuisItem
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.utils.Optional
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Kuis.Filter
@@ -15,6 +17,7 @@ import javax.inject.Inject
 
 class KuisPresenter @Inject constructor(
     private val kuisInteractor: KuisInteractor,
+    private val profileInteractor: ProfileInteractor,
     private val bannerInfoInteractor: BannerInfoInteractor
 ) : BasePresenter<KuisView>() {
 
@@ -30,6 +33,7 @@ class KuisPresenter @Inject constructor(
 
     val filter: String
         get() = kuisInteractor.getKuisFilter()
+            .filter { profileInteractor.getProfile() != EMPTY_PROFILE }
 
     fun getTopPageItems() {
         view?.showLoading()

@@ -34,6 +34,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setSupportActionBar(toolbar_home)
+
         iv_user_avatar.setOnClickListener {
             val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
             startActivity(intent)
