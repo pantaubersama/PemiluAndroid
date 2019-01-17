@@ -37,16 +37,16 @@ abstract class CommonActivity : AppCompatActivity() {
 
         if (statusBarColor() != 0) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = ContextCompat.getColor(this, statusBarColor()!!)
             if (statusBarColor() == R.color.white && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                window.statusBarColor = ContextCompat.getColor(this, statusBarColor()!!)
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             }
         } else if (toolbar != null) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            var toolbarColor = (toolbar?.background as ColorDrawable).color
-            window.statusBarColor = toolbarColor
+            val toolbarColor = (toolbar?.background as ColorDrawable).color
             if (toolbarColor == -1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                window.statusBarColor = toolbarColor
             }
         }
     }
