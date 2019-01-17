@@ -191,4 +191,7 @@
     <string name="next_action">Lanjut</string>
     <string name="label_intent_filter_share">Pantau Bersama</string>
     <string name="janji_politik_tidak_ditemukan">Janji Politik tidak ditemukan</string>
+    <string name="berhasil_melaporkan_pertanyaan">Berhasil melaporkan pertanyaan</string>
+    <string name="gagal_melaporkan_pertanyaan">Gagal melaporkan pertanyaan</string>
+    <string name="gagal_menghapus_pertanyaan">Gagal menghapus pertanyaan</string>
 </resources>

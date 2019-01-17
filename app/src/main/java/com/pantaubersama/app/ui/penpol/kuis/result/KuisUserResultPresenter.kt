@@ -20,4 +20,20 @@ class KuisUserResultPresenter @Inject constructor(
                 })
         disposables.add(disposable)
     }
+
+    fun getKuisUserResultByUserId(userId: String) {
+        view?.showLoading()
+        disposables.add(
+            kuisInteractor.getKuisUserSummaryByUserId(userId)
+                .doOnEvent { _, _ -> view?.dismissLoading() }
+                .subscribe(
+                    {
+                        view?.showKuisUserResult(it, it.user.fullName!!)
+                    },
+                    {
+                        view?.showError(it)
+                    }
+                )
+        )
+    }
 }

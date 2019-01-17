@@ -9,7 +9,7 @@ import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.janjipolitik.Creator
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
+import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.CopyUtil
@@ -133,8 +133,8 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
 
     override fun onSuccessDeleteItem() {
         val intent = Intent()
-        if (itemPosition != null) {
-            intent.putExtra(EXTRA_ITEM_POSITION, itemPosition?.let { it })
+        itemPosition?.let {
+            intent.putExtra(EXTRA_ITEM_POSITION, it)
             setResult(RESULT_DELETE_ITEM_JANPOL, intent)
         }
         finish()
@@ -216,7 +216,7 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
 
     override fun onBackPressed() {
         if (this.isTaskRoot) {
-            startActivity(Intent(this, SplashScreenActivity::class.java))
+            startActivity(Intent(this, HomeActivity::class.java))
             finish()
         } else {
             finish()
