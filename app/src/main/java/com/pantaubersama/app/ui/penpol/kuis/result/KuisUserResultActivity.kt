@@ -17,6 +17,7 @@ import com.pantaubersama.app.utils.extensions.visibleIf
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_kuis_user_result.*
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUserResultView {
 
@@ -74,7 +75,7 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
             +" lebih suka jawaban dari Paslon no ${kuisUserResult.team.id}"
         }.toCharSequence()
         iv_paslon.loadUrl(kuisUserResult.team.avatar)
-        tv_percentage.text = "%.2f%%".format(kuisUserResult.percentage)
+        tv_percentage.text = "%d%%".format(kuisUserResult.percentage.roundToInt())
         tv_paslon_name.text = kuisUserResult.team.title
         btn_share.setOnClickListener {
             ShareUtil.shareItem(this, kuisUserResult)

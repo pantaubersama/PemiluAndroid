@@ -77,7 +77,7 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
-                overridePendingTransition(android.R.anim.fade_out, android.R.anim.fade_in)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
             urlPath?.contains(INVITATION_PATH)!! -> {
@@ -137,7 +137,7 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
         }

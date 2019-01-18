@@ -5,6 +5,7 @@
 /build
 /captures
 .externalNativeBuild
+gradle.properties
 
 # Android Studio captures folder
 captures/
