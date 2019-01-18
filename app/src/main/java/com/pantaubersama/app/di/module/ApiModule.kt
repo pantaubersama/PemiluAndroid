@@ -11,8 +11,6 @@ import com.pantaubersama.app.utils.ConnectionState
 import com.pantaubersama.app.utils.CustomAuthenticator
 import com.pantaubersama.app.utils.NetworkErrorInterceptor
 import com.pantaubersama.app.utils.RequestInterceptor
-import com.twitter.sdk.android.core.TwitterCore
-import com.twitter.sdk.android.core.services.AccountService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

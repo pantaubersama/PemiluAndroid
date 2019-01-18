@@ -283,7 +283,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             startActivityForResult(intent, EDIT_PROFILE)
         }
         setting_ubah_sandi.setOnClickListener {
-            SymbolicLoginButton.loadPage(this, BuildConfig.SYMBOLIC_URL+"/users/edit", BuildConfig.SYMBOLIC_URL+"/")
+            SymbolicLoginButton.loadPage(this, BuildConfig.SYMBOLIC_URL + "/users/edit", BuildConfig.SYMBOLIC_URL + "/")
         }
         setting_ubah_data_lapor.setOnClickListener {
             val intent = Intent(this@SettingActivity, UbahDataLaporActivity::class.java)

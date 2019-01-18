@@ -26,10 +26,8 @@ import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_JANPOL_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KECENDERUNGAN_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KUIS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_TANYA_PATH
-import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import kotlinx.android.synthetic.main.activity_splash_screen.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreenView {
