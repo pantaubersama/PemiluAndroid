@@ -20,3 +20,5 @@ You can check code style using [`./gradlew ktlint`](https://ktlint.github.io/).
 
 * [ali](@mustofa.ali)
 * [edityo](@edityomurti)
+* [untung](@untungs)
+* [yazid](@yazid)
