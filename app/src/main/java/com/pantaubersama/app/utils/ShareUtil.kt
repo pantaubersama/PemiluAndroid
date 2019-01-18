@@ -29,8 +29,8 @@ class ShareUtil {
             val sharedItem: String = "" + when (item) {
                 is FeedsItem -> "\"${item.source?.text} – " + BuildConfig.PANTAU_BASE_URL + SHARE_FEEDS_PATH + item.id // not used
                 is Pertanyaan -> "Menurutmu gimana? " + BuildConfig.PANTAU_BASE_URL + SHARE_TANYA_PATH + item.id
-                is JanjiPolitik -> "Sudah tahu Janji yang ini, belum? Siap-siap catatan, ya! ✔ " + BuildConfig.PANTAU_BASE_URL + SHARE_JANPOL_PATH + item.id
-                is KuisItem -> "\"${item.title}\" – " + BuildConfig.PANTAU_BASE_URL + SHARE_KUIS_PATH + item.id
+                is JanjiPolitik -> "Sudah tahu Janji yang ini, belum? Siap-siap catatan, ya! ✔️ " + BuildConfig.PANTAU_BASE_URL + SHARE_JANPOL_PATH + item.id
+                is KuisItem -> "Iseng-iseng serius main Kuis ini dulu. Kira-kira masih cocok apa ternyata malah nggak cocok, yaa \uD83D\uDE36 " + BuildConfig.PANTAU_BASE_URL + SHARE_KUIS_PATH + item.id
                 is KuisUserResult -> "Hmm.. Ternyataa \uD83D\uDC40 %s".format(BuildConfig.PANTAU_BASE_URL + SHARE_KECENDERUNGAN_PATH + item.user.id)
                 is KuisResult -> "Kamu sudah ikut? Aku sudah dapat hasilnya \uD83D\uDE0E %s".format(BuildConfig.PANTAU_BASE_URL + SHARE_HASIL_KUIS_PATH + item.quizParticipation.id)
                 else -> ""

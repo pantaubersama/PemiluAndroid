@@ -8,6 +8,7 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.ui.login.LoginActivity
+import com.pantaubersama.app.ui.penpol.kuis.detail.DetailKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisUserResultActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
@@ -17,6 +18,7 @@ import com.pantaubersama.app.utils.PantauConstants.Networking.INVITATION_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_HASIL_KUIS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_JANPOL_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KECENDERUNGAN_PATH
+import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KUIS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_TANYA_PATH
 import javax.inject.Inject
 
@@ -92,6 +94,13 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
             urlPath?.contains(SHARE_HASIL_KUIS_PATH)!! && !urlPath?.substringAfter(SHARE_HASIL_KUIS_PATH).isNullOrEmpty() -> {
                 val quizParticipationId = urlPath?.substringAfter(SHARE_HASIL_KUIS_PATH)
                 val intent = KuisResultActivity.setIntent(this, quizParticipationId!!)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+            }
+            urlPath?.contains(SHARE_KUIS_PATH)!! && !urlPath?.substringAfter(SHARE_KUIS_PATH).isNullOrEmpty() -> {
+                val quizId = urlPath?.substringAfter(SHARE_KUIS_PATH)
+                val intent = DetailKuisActivity.setIntent(this, quizId!!)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()

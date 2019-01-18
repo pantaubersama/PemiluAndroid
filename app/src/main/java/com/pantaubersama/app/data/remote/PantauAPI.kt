@@ -132,6 +132,9 @@ interface PantauAPI {
         @Query("per_page") perPage: Int
     ): Single<KuisResponse>
 
+    @GET("pendidikan_politik/v1/quizzes/{id}")
+    fun getKuisById(@Path("id") quizId: String): Single<KuisItemResponse>
+
     @GET("pendidikan_politik/v1/me/quizzes")
     fun getKuisUserResult(): Single<KuisUserResultResponse>
 

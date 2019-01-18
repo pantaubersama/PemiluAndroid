@@ -35,6 +35,13 @@ class KuisInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
+    fun getKuisById(quizId: String): Single<KuisItem> {
+        return pantauAPI.getKuisById(quizId)
+            .subscribeOn(rxSchedulers.io())
+            .map { it.data.kuisItem }
+            .observeOn(rxSchedulers.mainThread())
+    }
+
     fun getKuisUserSummary(): Single<KuisUserResult> {
         return pantauAPI.getKuisUserResult()
             .subscribeOn(rxSchedulers.io())
@@ -78,15 +85,6 @@ class KuisInteractor @Inject constructor(
             }
             .observeOn(rxSchedulers.mainThread())
     }
-//    fun getKuisResult(kuisId: String): Single<TeamPercentage> {
-//        return pantauAPI.getKuisResult(kuisId)
-//            .subscribeOn(rxSchedulers.io())
-//            .map { response ->
-//                response.data.teams.maxBy { it.percentage }
-//                    ?: throw ErrorException("Gagal mendapatkan hasil kuis")
-//            }
-//            .observeOn(rxSchedulers.mainThread())
-//    }
 
     fun getKuisFilter(): String {
         return dataCache.getKuisFilter()

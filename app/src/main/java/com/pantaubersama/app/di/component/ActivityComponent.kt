@@ -14,6 +14,7 @@ import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.note.presiden.PresidenFragment
+import com.pantaubersama.app.ui.penpol.kuis.detail.DetailKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.filter.FilterKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
@@ -92,4 +93,5 @@ interface ActivityComponent {
     fun inject(presidenFragment: PresidenFragment)
     fun inject(catatanPilihanActivity: CatatanPilihanActivity)
     fun inject(detailTanyaKandidatActivity: DetailTanyaKandidatActivity)
+    fun inject(detailKuisActivity: DetailKuisActivity)
 }

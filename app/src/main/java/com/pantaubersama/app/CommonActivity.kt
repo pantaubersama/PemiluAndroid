@@ -14,7 +14,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.snackBar
-import timber.log.Timber
 
 /**
  * Extend
@@ -102,7 +101,8 @@ abstract class CommonActivity : AppCompatActivity() {
 
     open fun showError(throwable: Throwable) {
         window?.decorView?.findViewById<View>(android.R.id.content)?.snackBar(throwable.message!!)
-        Timber.e(throwable)
+//        Timber.e(throwable)
+        throwable.printStackTrace()
     }
 
     override fun onDestroy() {
