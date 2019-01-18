@@ -20,12 +20,12 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="14dp"
-        android:paddingLeft="28dp"
+        android:paddingLeft="0dp"
         android:paddingRight="20dp">
 
         <ImageView
             android:id="@+id/iv_banner_image"
-            android:scaleType="centerInside"
+            android:scaleType="fitCenter"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_banner_tanya_kandidat"/>
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="0dp"
             android:layout_toEndOf="@id/iv_banner_image"
             android:layout_toStartOf="@id/iv_banner_close"
             app:alignItems="center"
