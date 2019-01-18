@@ -41,21 +41,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_belum_diikuti"
-                android:theme="@style/RadioButtonStyle"/>
+                android:theme="@style/RadioButtonStyle"
+                android:visibility="gone"/>
             <RadioButton
                 android:id="@+id/radbtn_belum_selesai"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_belum_selesai"
-                android:theme="@style/RadioButtonStyle"/>
+                android:theme="@style/RadioButtonStyle"
+                android:visibility="gone"/>
             <RadioButton
                 android:id="@+id/radbtn_selesai"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_selesai"
-                android:theme="@style/RadioButtonStyle"/>
+                android:theme="@style/RadioButtonStyle"
+                android:visibility="gone"/>
         </RadioGroup>
 
     </LinearLayout>
