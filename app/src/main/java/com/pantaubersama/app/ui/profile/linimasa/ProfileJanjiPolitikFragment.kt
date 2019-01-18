@@ -155,7 +155,7 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
 
     override fun showEmptyData() {
         view_empty_state.enableLottie(true, lottie_empty_state)
-        tv_empty_state.text = "Hmm.. kamu belum pernah membuat postingan Janji Politik"
+        tv_empty_state.text = "Hmm.. kamu belum pernah membuat\npostingan Janji Politik"
     }
 
     override fun showFailedGetData() {
