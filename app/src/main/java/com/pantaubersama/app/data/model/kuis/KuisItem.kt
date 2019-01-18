@@ -12,9 +12,17 @@ data class KuisResponse(
     @SerializedName("data") val data: KuisData
 )
 
+data class KuisItemResponse(
+    @SerializedName("data") val data: KuisItemData
+)
+
 data class KuisData(
     @SerializedName("quizzes") val kuisList: List<KuisItem>,
     @SerializedName("meta") val meta: Meta
+)
+
+data class KuisItemData(
+    @SerializedName("quiz") val kuisItem: KuisItem
 )
 
 data class KuisItem(

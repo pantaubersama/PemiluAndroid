@@ -1,10 +1,14 @@
 package com.pantaubersama.app.ui.profile.penpol
 
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
 import javax.inject.Inject
 
-class ProfileTanyaKandidatPresenter @Inject constructor(private val tanyaKandidatInteractor: TanyaKandidatInteractor) : BasePresenter<ProfileTanyaKandidatView>() {
+class ProfileTanyaKandidatPresenter @Inject constructor(
+    private val tanyaKandidatInteractor: TanyaKandidatInteractor,
+    private val profileInteractor: ProfileInteractor
+) : BasePresenter<ProfileTanyaKandidatView>() {
     var perPage = 20
 
     fun getTanyaKandidatList(page: Int) {
@@ -108,5 +112,9 @@ class ProfileTanyaKandidatPresenter @Inject constructor(private val tanyaKandida
                     }
                 )
         )
+    }
+
+    fun getProfile() {
+        view?.bindProfile(profileInteractor.getProfile())
     }
 }

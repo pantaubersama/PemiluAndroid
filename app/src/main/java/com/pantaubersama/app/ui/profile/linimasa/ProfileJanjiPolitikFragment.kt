@@ -185,7 +185,7 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
         if (resultCode == RESULT_DELETE_ITEM_JANPOL) {
             if (requestCode == RC_OPEN_DETAIL_JANPOL) {
                 if (data != null && data.getIntExtra(EXTRA_ITEM_POSITION, -1) != -1) {
-                    adapter.deleteItem(data.getIntExtra(EXTRA_ITEM_POSITION, -1))
+                    onSuccessDeleteItem(data.getIntExtra(EXTRA_ITEM_POSITION, -1))
                 }
             }
         }

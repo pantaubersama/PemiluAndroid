@@ -7,9 +7,12 @@ import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.kuis.KuisItem
-import com.pantaubersama.app.data.model.kuis.TeamPercentage
+import com.pantaubersama.app.data.model.kuis.KuisResult
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_QUIZ_PARTICIPATION_ID
+import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -22,55 +25,67 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
     @Inject
     override lateinit var presenter: KuisResultPresenter
 
-    private lateinit var kuisItem: KuisItem
+    private var kuisItem: KuisItem? = null
+    private var quizParticipationId: String? = null
 
     override fun statusBarColor(): Int? = R.color.white
+    override fun setLayout(): Int = R.layout.activity_kuis_result
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
 
     override fun fetchIntentExtra() {
-        kuisItem = intent.getSerializableExtra(PantauConstants.Kuis.KUIS_ITEM) as KuisItem
+        intent.getSerializableExtra(PantauConstants.Kuis.KUIS_ITEM)?.let { kuisItem = it as KuisItem }
+        intent.getStringExtra(EXTRA_QUIZ_PARTICIPATION_ID)?.let { quizParticipationId = it }
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "", R.color.white, 0f)
 
-        btn_see_answers.setOnClickListener {
-            startActivity(KuisSummaryActivity.setIntent(this, kuisItem))
+        if (kuisItem != null) {
+            kuisItem?.let { presenter.getKuisResult(it.id) }
+        } else {
+            quizParticipationId?.let { presenter.getKuisResultByQuizParticipationId(it) }
+            btn_see_answers.visibleIf(false)
         }
-
-        presenter.getKuisResult(kuisItem.id)
     }
 
     override fun showLoading() {
         progress_bar.visibleIf(true)
+        constraint_layout_content.visibleIf(false)
     }
 
     override fun dismissLoading() {
         progress_bar.visibleIf(false)
     }
 
-    override fun showResult(team: TeamPercentage, userName: String) {
+    override fun showResult(kuisResult: KuisResult, userName: String) {
         tv_kuis_result.text = spannable {
-            +"Dari hasil pilhan Quiz ${kuisItem.title},\n"
+            +"Dari hasil pilhan Quiz ${kuisResult.title},\n"
             textColor(color(R.color.black_3)) { +userName }
-            +" lebih suka jawaban dari Paslon no ${team.team.id}"
+            +" lebih suka jawaban dari Paslon no ${kuisResult.team.id}"
         }.toCharSequence()
-        iv_paslon.loadUrl(team.team.avatar)
-        tv_percentage.text = "%.2f%%".format(team.percentage)
-        tv_paslon_name.text = team.team.title
+        iv_paslon.loadUrl(kuisResult.team.avatar)
+        tv_percentage.text = "%.2f%%".format(kuisResult.percentage)
+        tv_paslon_name.text = kuisResult.team.title
         btn_share.setOnClickListener {
-            shareKuis(team.team.id)
+            ShareUtil.shareItem(this, kuisResult)
         }
-    }
+        btn_see_answers.setOnClickListener {
+            kuisItem?.let { kuisItem -> startActivity(KuisSummaryActivity.setIntent(this, kuisItem)) }
+        }
 
-    override fun setLayout(): Int = R.layout.activity_kuis_result
+        constraint_layout_content.visibleIf(true)
+    }
 
     override fun onBackPressed() {
         if (intent.getBooleanExtra(PantauConstants.Kuis.KUIS_REFRESH, false)) {
             setResult(Activity.RESULT_OK)
+        } else if (isTaskRoot) {
+            val intent = Intent(this@KuisResultActivity, HomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
         super.onBackPressed()
     }
@@ -82,27 +97,11 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
             intent.putExtra(PantauConstants.Kuis.KUIS_REFRESH, refreshOnReturn)
             return intent
         }
-    }
 
-    private fun shareKuis(id: Int) {
-        val targetedShareIntents: MutableList<Intent> = ArrayList()
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "text/plain"
-        val resInfo = this?.packageManager?.queryIntentActivities(shareIntent, 0)
-        if (!resInfo!!.isEmpty()) {
-            for (resolveInfo in resInfo) {
-                val sendIntent = Intent(Intent.ACTION_SEND)
-                sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Pantau")
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "pantau.co.id" + "/share/kuis/" + id)
-                sendIntent.type = "text/plain"
-                if (!resolveInfo.activityInfo.packageName.contains("pantaubersama")) {
-                    sendIntent.`package` = resolveInfo.activityInfo.packageName
-                    targetedShareIntents.add(sendIntent)
-                }
-            }
-            val chooserIntent = Intent.createChooser(targetedShareIntents.removeAt(0), "Bagikan dengan")
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
-            startActivity(chooserIntent)
+        fun setIntent(context: Context, quizParticipationId: String): Intent {
+            val intent = Intent(context, KuisResultActivity::class.java)
+            intent.putExtra(EXTRA_QUIZ_PARTICIPATION_ID, quizParticipationId)
+            return intent
         }
     }
 }

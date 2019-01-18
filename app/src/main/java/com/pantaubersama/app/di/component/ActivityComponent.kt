@@ -14,6 +14,7 @@ import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.note.presiden.PresidenFragment
+import com.pantaubersama.app.ui.penpol.kuis.detail.DetailKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.filter.FilterKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
@@ -33,11 +34,11 @@ import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
+import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
 import com.pantaubersama.app.ui.profile.setting.panduankomunitas.PanduanKomunitasActivity
 import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
 import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
-import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step3.Step3VerifikasiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step5.Step5VerifikasiActivity
@@ -67,7 +68,6 @@ interface ActivityComponent {
     fun inject(kuisFragment: KuisFragment)
     fun inject(settingActivity: SettingActivity)
     fun inject(badgeActivity: BadgeActivity)
-    fun inject(ubahSandiActivity: UbahSandiActivity)
     fun inject(ubahDataLaporActivity: UbahDataLaporActivity)
     fun inject(filterKuisActivity: FilterKuisActivity)
     fun inject(filterJanjiPolitikActivity: FilterJanjiPolitikActivity)
@@ -92,4 +92,6 @@ interface ActivityComponent {
     fun inject(presidenFragment: PresidenFragment)
     fun inject(catatanPilihanActivity: CatatanPilihanActivity)
     fun inject(detailTanyaKandidatActivity: DetailTanyaKandidatActivity)
+    fun inject(detailKuisActivity: DetailKuisActivity)
+    fun inject(detailBadgeActivity: DetailBadgeActivity)
 }

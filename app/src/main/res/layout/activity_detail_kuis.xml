@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pantaubersama.app.ui.penpol.kuis.detail.DetailKuisActivity">
+
+    <include layout="@layout/item_kuis"/>
+
+    <com.pantaubersama.app.ui.widget.BottomCloseButton
+        android:id="@+id/btn_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+    </com.pantaubersama.app.ui.widget.BottomCloseButton>
+
+    <include layout="@layout/layout_loading_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+    <include layout="@layout/layout_fail_state"/>
+
+</RelativeLayout>

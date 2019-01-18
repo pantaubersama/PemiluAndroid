@@ -5,6 +5,7 @@ import com.pantaubersama.app.data.model.accesstoken.Token
 import com.pantaubersama.app.data.model.accesstoken.TokenResponse
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
+import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.services.AccountService
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -13,8 +14,7 @@ import javax.inject.Inject
 class LoginInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
     private val rxSchedulers: RxSchedulers,
-    private val dataCache: DataCache,
-    private val accountService: AccountService
+    private val dataCache: DataCache
 ) {
     fun exchangeToken(oAuthToken: String?): Single<TokenResponse>? {
         return apiWrapper.getPantauOAuthApi().exchangeToken(oAuthToken)
@@ -60,7 +60,7 @@ class LoginInteractor @Inject constructor(
     }
 
     fun getTwitterAccountService(): AccountService {
-        return accountService
+        return TwitterCore.getInstance().apiClient.accountService
     }
 
     fun disconnectSocielMedia(accountType: String): Completable {

@@ -17,8 +17,8 @@ import javax.inject.Inject
 
 class KuisPresenter @Inject constructor(
     private val kuisInteractor: KuisInteractor,
-    private val profileInteractor: ProfileInteractor,
-    private val bannerInfoInteractor: BannerInfoInteractor
+    private val bannerInfoInteractor: BannerInfoInteractor,
+    private val profileInteractor: ProfileInteractor
 ) : BasePresenter<KuisView>() {
 
     private val perPage = 3
@@ -98,5 +98,9 @@ class KuisPresenter @Inject constructor(
             }
             else -> view?.setNoMoreItems()
         }
+    }
+
+    fun getProfile() {
+        view?.bindProfile(profileInteractor.getProfile())
     }
 }
