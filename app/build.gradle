@@ -26,42 +26,30 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_PROD)
-            it.buildConfigField("String", "PANTAU_OAUTH_URL", PANTAU_OAUTH_URL_PROD)
-            it.buildConfigField("String", "WORD_STADIUM_BASE_URL", WORD_STADIUM_BASE_URL_PROD)
-            it.buildConfigField("String", "SYMBOLIC_URl", SYMBOLIC_URL_PROD)
-            it.buildConfigField("String", "SYMBOLIC_CLIENT_ID", SYMBOLIC_CLIENT_ID_STAG)
-            it.buildConfigField("String", "SYMBOLIC_CLIENT_SECRET", SYMBOLIC_CLIENT_SECRET_PROD)
-            it.buildConfigField("String", "SYMBOLIC_REDIRECT_URI", SYMBOLIC_REDIRECT_URI)
-            resValue("string", "symbolic_url", SYMBOLIC_URL_NO_SCHEME_PROD)
-            resValue("string", "facebook_app_id", FACEBOOK_APP_ID_PROD)
-            resValue("string", "facebook_login_protocol_scheme", FACEBOOK_LOGIN_PROTOCOL_SCHEME_PROD)
-            resValue("string", "twitter_api_key", TWITTER_API_KEY_PROD)
-            resValue("string", "twitter_secret_key", TWITTER_SECRET_PROD)
-            resValue("string", "pantau_base_url_no_scheme", PANTAU_BASE_URL_NO_SCHEME_PROD)
         }
         debug {
             applicationIdSuffix ".staging"
             minifyEnabled false
             debuggable true
-            it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL_STAG)
-            it.buildConfigField("String", "PANTAU_OAUTH_URL", PANTAU_OAUTH_URL_STAG)
-            it.buildConfigField("String", "WORD_STADIUM_BASE_URL", WORD_STADIUM_BASE_URL_STAG)
-            it.buildConfigField("String", "SYMBOLIC_URL", SYMBOLIC_URL_STAG)
-            it.buildConfigField("String", "SYMBOLIC_CLIENT_ID", SYMBOLIC_CLIENT_ID_STAG)
-            it.buildConfigField("String", "SYMBOLIC_CLIENT_SECRET", SYMBOLIC_CLIENT_SECRET_STAG)
-            it.buildConfigField("String", "SYMBOLIC_REDIRECT_URI", SYMBOLIC_REDIRECT_URI)
-            resValue("string", "symbolic_url", SYMBOLIC_URL_NO_SCHEME_STAG)
-            resValue("string", "facebook_app_id", FACEBOOK_APP_ID_STAG)
-            resValue("string", "facebook_login_protocol_scheme", FACEBOOK_LOGIN_PROTOCOL_SCHEME_STAG)
-            resValue("string", "twitter_api_key", TWITTER_API_KEY_STAG)
-            resValue("string", "twitter_secret_key", TWITTER_SECRET_STAG)
-            resValue("string", "pantau_base_url_no_scheme", PANTAU_BASE_URL_NO_SCHEME_STAG)
+
         }
 
         buildTypes.each {
             it.buildConfigField("String", "PANTAU_CLIENT_ID", PANTAU_CLIENT_ID)
             it.buildConfigField("String", "PANTAU_CLIENT_SECRET", PANTAU_CLIENT_SECRET)
+            it.buildConfigField("String", "PANTAU_BASE_URL", PANTAU_BASE_URL)
+            it.buildConfigField("String", "PANTAU_OAUTH_URL", PANTAU_OAUTH_URL)
+            it.buildConfigField("String", "WORD_STADIUM_BASE_URL", WORD_STADIUM_BASE_URL)
+            it.buildConfigField("String", "SYMBOLIC_URL", SYMBOLIC_URL)
+            it.buildConfigField("String", "SYMBOLIC_CLIENT_ID", SYMBOLIC_CLIENT_ID)
+            it.buildConfigField("String", "SYMBOLIC_CLIENT_SECRET", SYMBOLIC_CLIENT_SECRET)
+            it.buildConfigField("String", "SYMBOLIC_REDIRECT_URI", SYMBOLIC_REDIRECT_URI)
+            it.resValue("string", "symbolic_url", SYMBOLIC_URL_NO_SCHEME)
+            it.resValue("string", "facebook_app_id", FACEBOOK_APP_ID)
+            it.resValue("string", "facebook_login_protocol_scheme", FACEBOOK_LOGIN_PROTOCOL_SCHEME)
+            it.resValue("string", "twitter_api_key", TWITTER_API_KEY)
+            it.resValue("string", "twitter_secret_key", TWITTER_SECRET)
+            it.resValue("string", "pantau_base_url_no_scheme", PANTAU_BASE_URL_NO_SCHEME)
         }
     }
 

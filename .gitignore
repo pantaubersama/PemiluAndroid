@@ -6,6 +6,7 @@
 /captures
 .externalNativeBuild
 gradle.properties
+*google-services.json
 
 # Android Studio captures folder
 captures/
