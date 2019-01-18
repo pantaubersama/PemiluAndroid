@@ -4,6 +4,9 @@ import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.kuis.KuisUserResult
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.model.user.Badge
+import com.pantaubersama.app.data.model.user.AchievedBadge
+import com.pantaubersama.app.data.model.user.Informant
+import com.pantaubersama.app.data.model.user.ProfileResponse
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.utils.RxSchedulers
