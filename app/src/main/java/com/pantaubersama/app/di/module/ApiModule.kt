@@ -88,10 +88,4 @@ class ApiModule {
     fun provideWordStadiumAPI(httpClient: OkHttpClient): WordStadiumAPI {
         return APIWrapper.createRetrofit(BuildConfig.WORD_STADIUM_BASE_URL, httpClient).create(WordStadiumAPI::class.java)
     }
-
-    @Provides
-    @Singleton
-    fun provideTwitterAccountService(): AccountService {
-        return TwitterCore.getInstance().apiClient.accountService
-    }
 }
