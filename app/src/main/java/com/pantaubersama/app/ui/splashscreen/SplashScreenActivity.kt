@@ -29,6 +29,7 @@ import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_TANYA_PATH
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import kotlinx.android.synthetic.main.activity_splash_screen.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreenView {
@@ -56,15 +57,14 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        ToastUtil.show(this, BuildConfig.VERSION_CODE.toString())
-        presenter.checkAppVersion(BuildConfig.VERSION_CODE.toString())
+        presenter.checkAppVersion(BuildConfig.VERSION_CODE)
     }
 
     override fun onForceUpdateAvailable() {
         val dialog = UpdateAppDialog(this, object : UpdateAppDialog.DialogListener {
             override fun onClickUpdate() {
                 try {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.airbnb.android")))
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)))
                 } catch (e: ActivityNotFoundException) {
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)))
                 }

@@ -1,6 +1,8 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
+import com.pantaubersama.app.data.model.AppVersion
+import com.pantaubersama.app.data.model.AppVersionData
 import com.pantaubersama.app.data.model.accesstoken.Token
 import com.pantaubersama.app.data.model.accesstoken.TokenResponse
 import com.pantaubersama.app.data.remote.APIWrapper
@@ -68,6 +70,13 @@ class LoginInteractor @Inject constructor(
             .getPantauOAuthApi()
             .disconnectSocialMedia(accountType)
             .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun isForceUpdateAvalable(): Single<AppVersion> {
+        return apiWrapper.getPantauApi().getLatestAppVersion()
+            .subscribeOn(rxSchedulers.io())
+            .map { it.data.appVersion }
             .observeOn(rxSchedulers.mainThread())
     }
 }

@@ -1,5 +1,6 @@
 package com.pantaubersama.app.data.remote
 
+import com.pantaubersama.app.data.model.AppVersionResponse
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfoResponse
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfosResponse
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitikResponse
@@ -162,4 +163,7 @@ interface PantauAPI {
 
     @GET("pendidikan_politik/v1/quizzes/{id}/summary")
     fun getKuisSummary(@Path("id") kuisId: String): Single<KuisSummaryResponse>
+
+    @GET("dashboard/v1/app_versions/last_version?app_type=android")
+    fun getLatestAppVersion(): Single<AppVersionResponse>
 }
