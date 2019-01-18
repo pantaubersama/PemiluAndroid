@@ -28,8 +28,8 @@ class TanyaKandidatPresenter @Inject constructor(
         )
     }
 
-    fun getUserId(): String {
-        return dataCache.loadUserProfile().id
+    fun getProfile() {
+        view?.bindUserData(dataCache.loadUserProfile())
     }
 
     fun getTanyaKandidatList(

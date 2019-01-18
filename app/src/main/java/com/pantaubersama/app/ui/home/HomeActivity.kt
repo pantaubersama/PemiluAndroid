@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.lapor.LaporFragment
 import com.pantaubersama.app.ui.linimasa.LinimasaFragment
+import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
@@ -50,8 +52,8 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
                 R.id.navigation_menyerap -> LinimasaFragment() to LinimasaFragment.TAG
                 R.id.navigation_menggali -> PenPolFragment.newInstance() to PenPolFragment.TAG
                 R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
-                R.id.navigation_merayakan -> LaporFragment.newInstance() to LaporFragment.TAG
-                R.id.navigation_menjaga -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
+                R.id.navigation_menjaga -> LaporFragment.newInstance() to LaporFragment.TAG
+                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
                 else -> throw IllegalStateException("unknown menu")
             }
             showFragment(fragment, tag)
@@ -93,6 +95,25 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
     override fun onSuccessLoadUser(profile: Profile) {
         iv_user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
+        if (profile != EMPTY_PROFILE) {
+            iv_user_avatar.setOnClickListener {
+                val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
+                startActivity(intent)
+            }
+
+            btn_pinned.setOnClickListener { startActivity(Intent(this, CatatanPilihanActivity::class.java)) }
+        } else {
+            iv_user_avatar.setOnClickListener {
+                openLoginActivity()
+            }
+
+            btn_pinned.setOnClickListener { openLoginActivity() }
+        }
+    }
+
+    private fun openLoginActivity() {
+        val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     override fun showLoading() {

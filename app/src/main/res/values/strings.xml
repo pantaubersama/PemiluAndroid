@@ -96,7 +96,7 @@
     <string name="label_connected_as">Connected as :</string>
     <string name="label_cluster">Cluster :</string>
     <string name="label_support">SUPPORT :</string>
-    <string name="label_pusat_bantuan">Pusta Bantuan</string>
+    <string name="label_pusat_bantuan">Pusat Bantuan</string>
     <string name="label_pedoman_komunitas">Pedoman Komunitas</string>
     <string name="label_tentang_pantau_bersama">Tentang Pantau Bersama</string>
     <string name="label_berikan_nilai_kami">Berikan Nilai Kami</string>
@@ -191,4 +191,9 @@
     <string name="next_action">Lanjut</string>
     <string name="label_intent_filter_share">Pantau Bersama</string>
     <string name="janji_politik_tidak_ditemukan">Janji Politik tidak ditemukan</string>
+    <string name="berhasil_melaporkan_pertanyaan">Berhasil melaporkan pertanyaan</string>
+    <string name="gagal_melaporkan_pertanyaan">Gagal melaporkan pertanyaan</string>
+    <string name="gagal_menghapus_pertanyaan">Gagal menghapus pertanyaan</string>
+    <string name="txt_force_update">Versi aplikasi yang terbaru sudah tersedia, update yuk!</string>
+    <string name="txt_update">Update</string>
 </resources>

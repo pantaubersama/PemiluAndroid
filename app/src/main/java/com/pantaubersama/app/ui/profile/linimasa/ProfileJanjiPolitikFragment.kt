@@ -155,7 +155,7 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
 
     override fun showEmptyData() {
         view_empty_state.enableLottie(true, lottie_empty_state)
-        tv_empty_state.text = "Hmm.. kamu belum pernah membuat postingan Janji Politik"
+        tv_empty_state.text = "Hmm.. kamu belum pernah membuat\npostingan Janji Politik"
     }
 
     override fun showFailedGetData() {
@@ -185,7 +185,7 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
         if (resultCode == RESULT_DELETE_ITEM_JANPOL) {
             if (requestCode == RC_OPEN_DETAIL_JANPOL) {
                 if (data != null && data.getIntExtra(EXTRA_ITEM_POSITION, -1) != -1) {
-                    adapter.deleteItem(data.getIntExtra(EXTRA_ITEM_POSITION, -1))
+                    onSuccessDeleteItem(data.getIntExtra(EXTRA_ITEM_POSITION, -1))
                 }
             }
         }

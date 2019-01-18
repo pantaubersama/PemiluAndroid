@@ -1,12 +1,12 @@
 package com.pantaubersama.app.ui.profile.setting.badge
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_badge.*
 import javax.inject.Inject
@@ -36,7 +36,8 @@ class BadgeActivity : BaseActivity<BadgePresenter>(), BadgeView {
 
     private fun setupRecyclerView() {
         adapter = BadgeAdapter {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            it.achievedId?.let { achievedId -> startActivity(DetailBadgeActivity.setIntent(this, achievedId))
+            }
         }
         badge_recycler_view.adapter = adapter
         badge_recycler_view.layoutManager = LinearLayoutManager(this)

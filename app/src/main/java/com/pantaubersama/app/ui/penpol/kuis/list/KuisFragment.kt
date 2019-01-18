@@ -10,8 +10,11 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.data.model.kuis.KuisState
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
+import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.penpol.kuis.ikutikuis.IkutiKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
@@ -32,6 +35,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     override lateinit var presenter: KuisPresenter
 
     private lateinit var adapter: KuisListAdapter
+    private lateinit var profile: Profile
 
     override fun setLayout(): Int = R.layout.fragment_kuis
 
@@ -40,6 +44,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     }
 
     override fun initView(view: View) {
+        presenter.getProfile()
         adapter = KuisListAdapter()
         adapter.listener = object : KuisListAdapter.AdapterListener {
             override fun onClickBanner(item: BannerInfo) {
@@ -50,12 +55,16 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
             }
 
             override fun onClickOpenKuis(item: KuisItem) {
-                val intent = when (item.state) {
-                    KuisState.NOT_PARTICIPATING -> IkutiKuisActivity.setIntent(requireContext(), item)
-                    KuisState.IN_PROGRESS -> KuisActivity.setIntent(requireContext(), item)
-                    KuisState.FINISHED -> KuisResultActivity.setIntent(requireContext(), item)
+                if (profile != EMPTY_PROFILE) {
+                    val intent = when (item.state) {
+                        KuisState.NOT_PARTICIPATING -> IkutiKuisActivity.setIntent(requireContext(), item)
+                        KuisState.IN_PROGRESS -> KuisActivity.setIntent(requireContext(), item)
+                        KuisState.FINISHED -> KuisResultActivity.setIntent(requireContext(), item)
+                    }
+                    startActivityForResult(intent, PantauConstants.RequestCode.RC_REFRESH_KUIS_ON_RESULT)
+                } else {
+                    startActivity(Intent(requireContext(), LoginActivity::class.java))
                 }
-                startActivityForResult(intent, PantauConstants.RequestCode.RC_REFRESH_KUIS_ON_RESULT)
             }
 
             override fun onClickShare(item: KuisItem) {
@@ -75,6 +84,10 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
             getTopPageItems()
         }
         getTopPageItems()
+    }
+
+    override fun bindProfile(profile: Profile) {
+        this.profile = profile
     }
 
     private fun getTopPageItems() {

@@ -1,11 +1,13 @@
 package com.pantaubersama.app.data.remote
 
+import com.pantaubersama.app.data.model.AppVersionResponse
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfoResponse
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfosResponse
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitikResponse
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitiksResponse
 import com.pantaubersama.app.data.model.kuis.* // ktlint-disable
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
+import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatListResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -66,7 +68,7 @@ interface PantauAPI {
 
     @FormUrlEncoded
     @POST("pendidikan_politik/v1/questions")
-    fun createTanyaKandidat(@Field("body") body: String?): Single<TanyaKandidatResponse>
+    fun createTanyaKandidat(@Field("body") body: String?): Single<TanyaKandidatListResponse>
 
     @GET("pendidikan_politik/v1/questions")
     fun getTanyaKandidatList(
@@ -75,13 +77,16 @@ interface PantauAPI {
         @Query("order_by") orderBy: String?,
         @Query("direction") direction: String?,
         @Query("filter_by") filterBy: String?
-    ): Single<TanyaKandidatResponse>
+    ): Single<TanyaKandidatListResponse>
 
     @GET("pendidikan_politik/v1/me/questions")
     fun getMyTanyaKandidatList(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
-    ): Single<TanyaKandidatResponse>
+    ): Single<TanyaKandidatListResponse>
+
+    @GET("pendidikan_politik/v1/questions/{id}")
+    fun getTanyaKandidatById(@Path("id") questionId: String): Single<TanyaKandidatResponse>
 
     @FormUrlEncoded
     @POST("pendidikan_politik/v1/votes")
@@ -128,8 +133,16 @@ interface PantauAPI {
         @Query("per_page") perPage: Int
     ): Single<KuisResponse>
 
+    @GET("pendidikan_politik/v1/quizzes/{id}")
+    fun getKuisById(@Path("id") quizId: String): Single<KuisItemResponse>
+
     @GET("pendidikan_politik/v1/me/quizzes")
     fun getKuisUserResult(): Single<KuisUserResultResponse>
+
+    @GET("pendidikan_politik//v1/quiz_participations/quizzes")
+    fun getKuisUserResultByUserId(
+        @Query("user_id") userId: String
+    ): Single<KuisUserResultResponse>
 
     @GET("pendidikan_politik/v1/quizzes/{id}/questions")
     fun getKuisQuestions(@Path("id") kuisId: String): Single<KuisQuestionResponse>
@@ -145,6 +158,12 @@ interface PantauAPI {
     @GET("pendidikan_politik/v1/quizzes/{id}/result")
     fun getKuisResult(@Path("id") kuisId: String): Single<KuisResultResponse>
 
+    @GET("pendidikan_politik/v1/quiz_participations/{quiz_participation_id}/result")
+    fun getKuisResultByQuizParticipationId(@Path("quiz_participation_id") quizParticipationId: String): Single<KuisResultResponse>
+
     @GET("pendidikan_politik/v1/quizzes/{id}/summary")
     fun getKuisSummary(@Path("id") kuisId: String): Single<KuisSummaryResponse>
+
+    @GET("dashboard/v1/app_versions/last_version?app_type=android")
+    fun getLatestAppVersion(): Single<AppVersionResponse>
 }

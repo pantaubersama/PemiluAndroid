@@ -41,7 +41,7 @@ class TabView : LinearLayout {
     override fun setSelected(selected: Boolean) {
         super.setSelected(selected)
 
-        tvTabTitle.setTextColor(ContextCompat.getColor(context, R.color.white))
+        tvTabTitle.setTextColor(if (selected) ContextCompat.getColor(context, R.color.white) else ContextCompat.getColor(context, R.color.gray_7))
         tvTabTitle.setTypeface(null, if (selected) Typeface.BOLD else Typeface.NORMAL)
     }
 }

@@ -65,7 +65,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
             android:text="@string/question_time_dummy_text"
-            android:fontFamily="@font/lato_regular"
+            android:fontFamily="@font/lato_bold"
             android:textSize="9sp"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"/>
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/lorem"
-                android:fontFamily="@font/lato_medium"
+                android:fontFamily="@font/lato_regular"
                 android:textSize="12sp"
                 android:textColor="@color/black_1"
                 android:maxLines="5"

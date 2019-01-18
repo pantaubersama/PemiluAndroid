@@ -12,7 +12,7 @@ import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_badge.*
 
-class BadgeAdapter(private val onShareClick: (String) -> Unit)
+class BadgeAdapter(private val onShareClick: (Badge) -> Unit)
     : RecyclerView.Adapter<BadgeAdapter.ViewHolder>() {
 
     var items: List<Badge> = emptyList()
@@ -25,7 +25,7 @@ class BadgeAdapter(private val onShareClick: (String) -> Unit)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(parent.inflate(R.layout.item_badge)) {
-            onShareClick(items[it].id)
+            onShareClick(items[it])
         }
     }
 

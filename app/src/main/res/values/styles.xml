@@ -39,8 +39,9 @@
         <item name="android:buttonTint">@color/colorPrimary</item>
     </style>
 
-    <style name="AppTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Splash" parent="Theme.MaterialComponents.Light">
         <item name="android:windowBackground">@drawable/launch_screen</item>
+        <item name="android:statusBarColor">@color/white</item>
         <item name="windowNoTitle">true</item>
     </style>
 </resources>

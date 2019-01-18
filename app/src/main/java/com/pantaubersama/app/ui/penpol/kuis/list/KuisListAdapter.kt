@@ -23,6 +23,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_kuis.*
 import kotlinx.android.synthetic.main.item_kuis_result.*
+import kotlin.math.roundToInt
 
 class KuisListAdapter : BaseRecyclerAdapter() {
 
@@ -68,7 +69,7 @@ class KuisListAdapter : BaseRecyclerAdapter() {
 
         fun bind(result: KuisUserResult) {
             presiden_total_kuis.text = result.meta.run { "$finished dari $total Kuis" }
-            tv_kuis_result.text = "%.2f%% (%s)".format(result.percentage, result.team.title)
+            tv_kuis_result.text = "%d%% (%s)".format(result.percentage.roundToInt(), result.team.title)
             iv_kuis_result.loadUrl(result.team.avatar)
             btn_share_result.setOnClickListener {
                 val intent = Intent(containerView.context, KuisUserResultActivity::class.java)

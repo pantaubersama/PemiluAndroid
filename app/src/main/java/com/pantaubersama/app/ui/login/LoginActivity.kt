@@ -63,6 +63,9 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
                 ToastUtil.show(this@LoginActivity, getString(R.string.failed_login_alert))
             }
         })
+        lewati_button.setOnClickListener {
+            openHomeActivity()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

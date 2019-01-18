@@ -3,8 +3,10 @@ package com.pantaubersama.app.ui.penpol.kuis.list
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.KuisInteractor
+import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.kuis.KuisItem
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.utils.Optional
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Kuis.Filter
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 class KuisPresenter @Inject constructor(
     private val kuisInteractor: KuisInteractor,
-    private val bannerInfoInteractor: BannerInfoInteractor
+    private val bannerInfoInteractor: BannerInfoInteractor,
+    private val profileInteractor: ProfileInteractor
 ) : BasePresenter<KuisView>() {
 
     private val perPage = 3
@@ -30,6 +33,7 @@ class KuisPresenter @Inject constructor(
 
     val filter: String
         get() = kuisInteractor.getKuisFilter()
+            .filter { profileInteractor.getProfile() != EMPTY_PROFILE }
 
     fun getTopPageItems() {
         view?.showLoading()
@@ -48,7 +52,7 @@ class KuisPresenter @Inject constructor(
             .subscribe({ (banner, kuisResult, kuisList) ->
                 val itemModels = mutableListOf<ItemModel>()
                 if (banner is Optional.Some) itemModels += banner.value
-                if (kuisResult is Optional.Some) itemModels += kuisResult.value
+                if (kuisResult is Optional.Some && kuisResult.value.meta.finished != 0) itemModels += kuisResult.value
                 itemModels += kuisList
                 view?.showTopPageItems(itemModels)
 
@@ -94,5 +98,9 @@ class KuisPresenter @Inject constructor(
             }
             else -> view?.setNoMoreItems()
         }
+    }
+
+    fun getProfile() {
+        view?.bindProfile(profileInteractor.getProfile())
     }
 }

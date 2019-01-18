@@ -39,7 +39,7 @@ ext {
             daggerCompiler          : "2.19",
 
             roundedImageView        : "2.3.0",
-            symbolic                : "0.3.1",
+            symbolic                : "0.3.2",
             mockito                 : "2.18.3",
             flexbox                 : "1.1.0",
             lottie                  : "2.8.0",
@@ -49,7 +49,9 @@ ext {
             rxbinding               : "2.0.0",
             compressor              : "2.1.0",
             facebook_sdk            : "[4,5)",
-            twitter_sdk             : "3.1.1"
+            twitter_sdk             : "3.1.1",
+            navigation              : "1.0.0-alpha09"
+
     ]
 
 
@@ -90,11 +92,17 @@ ext {
             mockito: "org.mockito:mockito-core:$versions.mockito"
     ]
 
+    archComponent = [
+            navigationFragment: "android.arch.navigation:navigation-fragment-ktx:$versions.navigation",
+            navigationUI: "android.arch.navigation:navigation-ui-ktx:$versions.navigation"
+    ]
+
     designLibs = designDeps.values()
     networkLibs = retrofit.values() + okHttp.values()
     firebaseLibs = firebase.values()
     rxJavaLibs = rxJava.values()
     unitTestLibs = unitTestDeps.values()
+    archComponentLibs = archComponent.values()
 
     multidex = "com.android.support:multidex:$versions.multidexVersion"
     easyPermission = "pub.devrel:easypermissions:$versions.easyPermission"

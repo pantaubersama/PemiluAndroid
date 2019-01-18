@@ -4,6 +4,7 @@ import com.pantaubersama.app.data.model.accesstoken.Token
 import com.pantaubersama.app.data.model.accesstoken.TokenResponse
 import com.pantaubersama.app.data.model.cluster.CategoryData
 import com.pantaubersama.app.data.model.cluster.ClustersResponse
+import com.pantaubersama.app.data.model.user.AchievedBadgeResponse
 import com.pantaubersama.app.data.model.user.BadgeResponse
 import com.pantaubersama.app.data.model.user.Informant
 import com.pantaubersama.app.data.model.user.ProfileResponse
@@ -41,6 +42,9 @@ interface PantauOAuthAPI {
 
     @GET("/v1/badges")
     fun getUserBadges(): Single<BadgeResponse>
+
+    @GET("/v1/achieved_badges/{id}")
+    fun getAchievedBadgeById(@Path("id") achievedId: String): Single<AchievedBadgeResponse>
 
     @DELETE("/v1/me/clusters")
     fun leaveCluster(): Completable
@@ -179,5 +183,11 @@ interface PantauOAuthAPI {
     @DELETE("/v1/accounts/disconnect")
     fun disconnectSocialMedia(
         @Query("account_type") accountType: String
+    ): Completable
+
+    @FormUrlEncoded
+    @PUT("/v1/me/vote_preference")
+    fun submitCatatanku(
+        @Field("vote_preference") paslonSelected: Int?
     ): Completable
 }

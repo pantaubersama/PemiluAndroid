@@ -10,8 +10,8 @@
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/item_badge_icon"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:scaleType="centerInside"
         android:src="@drawable/dummy_badge"
         app:riv_oval="true" />
@@ -36,7 +36,7 @@
             android:lineSpacingExtra="3sp"
             android:text="KADET"
             android:textColor="@color/text_title_state"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/item_badge_desc"
@@ -45,14 +45,15 @@
             android:fontFamily="@font/lato_regular"
             android:text="Ikut Kuis Pendidikan Pertama Kali"
             android:textColor="@color/text_desc_state"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
     </LinearLayout>
 
     <ImageView
         android:id="@+id/item_badge_share_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:padding="8dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
@@ -62,7 +63,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="6dp"
         android:layout_below="@+id/item_badge_icon"
-        android:layout_marginLeft="76dp"
         android:background="@color/gray_3" />
 </RelativeLayout>

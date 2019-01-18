@@ -4,8 +4,11 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
@@ -32,9 +35,18 @@ class FilterKuisActivity : BaseActivity<FilterKuisPresenter>(), FilterKuisView {
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
+        presenter.getProfile()
         presenter.getKuisFilterData()
         btn_terapkan.setOnClickListener {
             applyFilter()
+        }
+    }
+
+    override fun bindProfile(profile: Profile) {
+        if (profile != EMPTY_PROFILE) {
+            radbtn_belum_diikuti.visibility = View.VISIBLE
+            radbtn_belum_selesai.visibility = View.VISIBLE
+            radbtn_selesai.visibility = View.VISIBLE
         }
     }
 
