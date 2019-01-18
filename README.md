@@ -2,7 +2,7 @@
 
 ### Configuration
 
-* Versioning in [app-version.gradle](config/app-version.gradle)
+* Versioning in [app-version.gradle](config/app-version.gradle)    • [versioning-reference](https://medium.com/@maxirosson/versioning-android-apps-d6ec171cfd82)
 * Dependencies management in [dependencies.gradle](config/dependencies.gradle)
 
 ### Code Style
