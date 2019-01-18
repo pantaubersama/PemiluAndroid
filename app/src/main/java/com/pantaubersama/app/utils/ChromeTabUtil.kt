@@ -1,6 +1,5 @@
 package com.pantaubersama.app.utils
 
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
