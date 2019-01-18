@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.webkit.CookieManager
 import androidx.core.content.ContextCompat
+import com.extrainteger.symbolic.ui.SymbolicLoginButton
 import com.facebook.* // ktlint-disable
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -27,7 +28,6 @@ import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
 import com.pantaubersama.app.ui.profile.setting.panduankomunitas.PanduanKomunitasActivity
 import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
 import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
-import com.pantaubersama.app.ui.profile.setting.ubahsandi.UbahSandiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
@@ -283,8 +283,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             startActivityForResult(intent, EDIT_PROFILE)
         }
         setting_ubah_sandi.setOnClickListener {
-            val intent = Intent(this@SettingActivity, UbahSandiActivity::class.java)
-            startActivityForResult(intent, UBAH_SANDI)
+            SymbolicLoginButton.loadPage(this, BuildConfig.SYMBOLIC_URL+"/users/edit", BuildConfig.SYMBOLIC_URL+"/")
         }
         setting_ubah_data_lapor.setOnClickListener {
             val intent = Intent(this@SettingActivity, UbahDataLaporActivity::class.java)
@@ -321,6 +320,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     }
 
     override fun goToLogin() {
+        SymbolicLoginButton.logOut(this@SettingActivity)
         val intent = Intent(this@SettingActivity, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
