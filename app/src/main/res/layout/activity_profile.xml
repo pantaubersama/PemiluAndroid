@@ -473,11 +473,13 @@
                                 android:id="@+id/tv_badge_more"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:padding="2dp"
                                 android:text="Lihat lainnya"
                                 android:fontFamily="@font/lato_regular"
                                 android:textSize="12sp"
                                 android:layout_gravity="end"
-                                android:textColor="@color/gray_dark_2" />
+                                android:textColor="@color/gray_dark_2"
+                                android:background="?selectableItemBackground"/>
 
                         </LinearLayout>
 

@@ -13,8 +13,10 @@ import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisUserResultActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
 import com.pantaubersama.app.ui.profile.ProfileActivity
+import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Networking.INVITATION_PATH
+import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_BADGE_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_HASIL_KUIS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_JANPOL_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KECENDERUNGAN_PATH
@@ -101,6 +103,13 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
             urlPath?.contains(SHARE_KUIS_PATH)!! && !urlPath?.substringAfter(SHARE_KUIS_PATH).isNullOrEmpty() -> {
                 val quizId = urlPath?.substringAfter(SHARE_KUIS_PATH)
                 val intent = DetailKuisActivity.setIntent(this, quizId!!)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+            }
+            urlPath?.contains(SHARE_BADGE_PATH)!! && !urlPath?.substringAfter(SHARE_BADGE_PATH).isNullOrEmpty() -> {
+                val achievedId = urlPath?.substringAfter(SHARE_BADGE_PATH)
+                val intent = DetailBadgeActivity.setIntent(this, achievedId!!)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()

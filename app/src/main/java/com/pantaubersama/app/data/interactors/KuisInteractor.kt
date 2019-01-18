@@ -69,7 +69,7 @@ class KuisInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .map { response ->
                 val team = response.data.teams.maxBy { it.percentage }
-                team?.let { KuisResult(it.percentage, it.team, response.data.user, response.data.quizParticipation) }
+                team?.let { KuisResult(it.percentage, it.team, response.data.user, response.data.quizParticipation, response.data.quiz.title) }
                     ?: throw ErrorException("Gagal mendapatkan hasil kuis")
             }
             .observeOn(rxSchedulers.mainThread())
@@ -80,7 +80,7 @@ class KuisInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .map { response ->
                 val team = response.data.teams.maxBy { it.percentage }
-                team?.let { KuisResult(it.percentage, it.team, response.data.user, response.data.quizParticipation) }
+                team?.let { KuisResult(it.percentage, it.team, response.data.user, response.data.quizParticipation, response.data.quiz.title) }
                     ?: throw ErrorException("Gagal mendapatkan hasil kuis")
             }
             .observeOn(rxSchedulers.mainThread())

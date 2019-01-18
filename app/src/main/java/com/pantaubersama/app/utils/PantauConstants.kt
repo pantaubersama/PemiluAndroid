@@ -64,6 +64,8 @@ class PantauConstants {
         const val EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID"
         const val EXTRA_QUESTION_ITEM = "EXTRA_QUESTION_ITEM"
         const val EXTRA_QUIZ_PARTICIPATION_ID = "EXTRA_QUIZ_PARTICIPATION_ID"
+        const val EXTRA_ACHIEVED_ID = "EXTRA_ACHIEVED_ID"
+        const val EXTRA_ACHIEVED_BADGE_ITEM = "EXTRA_ACHIEVED_BADGE_ITEM"
     }
 
     object RequestCode {

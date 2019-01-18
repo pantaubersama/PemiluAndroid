@@ -62,7 +62,7 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
 
     override fun showResult(kuisResult: KuisResult, userName: String) {
         tv_kuis_result.text = spannable {
-            +"Dari hasil pilhan Quiz ${kuisItem?.title},\n"
+            +"Dari hasil pilhan Quiz ${kuisResult.title},\n"
             textColor(color(R.color.black_3)) { +userName }
             +" lebih suka jawaban dari Paslon no ${kuisResult.team.id}"
         }.toCharSequence()
@@ -73,7 +73,7 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
             ShareUtil.shareItem(this, kuisResult)
         }
         btn_see_answers.setOnClickListener {
-            kuisItem?.let { startActivity(KuisSummaryActivity.setIntent(this, it)) }
+            kuisItem?.let { kuisItem -> startActivity(KuisSummaryActivity.setIntent(this, kuisItem)) }
         }
 
         constraint_layout_content.visibleIf(true)

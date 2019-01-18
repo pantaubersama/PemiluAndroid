@@ -9,11 +9,19 @@ data class BadgeResponse(
     @SerializedName("data") val data: BadgeData
 ) : Serializable
 
+data class AchievedBadgeResponse(
+    @SerializedName("data") val data: AchievedBadgeData
+)
+
 data class BadgeData(
     @SerializedName("achieved_badges") val achievedBadges: List<AchievedBadge>,
     @SerializedName("badges") val badges: List<Badge>,
     @SerializedName("meta") val meta: Meta
 ) : Serializable
+
+data class AchievedBadgeData(
+    @SerializedName("achieved_badge") val achievedBadge: AchievedBadge
+)
 
 data class AchievedBadge(
     @SerializedName("achieved_id") val achievedId: String,
@@ -28,5 +36,6 @@ data class Badge(
     @SerializedName("image") val image: Image,
     @SerializedName("position") val position: Int
 ) : Serializable {
+    var achievedId: String? = null
     var achieved: Boolean = false
 }
