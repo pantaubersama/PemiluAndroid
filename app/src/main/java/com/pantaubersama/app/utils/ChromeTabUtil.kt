@@ -1,5 +1,6 @@
 package com.pantaubersama.app.utils
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
@@ -34,7 +35,11 @@ class ChromeTabUtil(private val context: Context) {
     }
 
     fun forceLoadUrl(url: String?) {
-        customTabsIntent?.intent?.setPackage("com.android.chrome")
-        loadUrl(url)
+        try {
+            customTabsIntent?.intent?.setPackage("com.android.chrome")
+            loadUrl(url)
+        } catch (e: ActivityNotFoundException) {
+            loadUrl(url)
+        }
     }
 }
