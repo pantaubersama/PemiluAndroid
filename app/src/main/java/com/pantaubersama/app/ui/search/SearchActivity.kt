@@ -24,14 +24,6 @@ import com.pantaubersama.app.ui.search.history.SearchHistoryFragment
 class SearchActivity : CommonActivity() {
     private var keyword: String? = null
 
-//    private var searchPersonFragment = SearchPersonFragment()
-//    private var searchClusterFragment = SearchClusterFragment()
-//    private var searchLinimasaFragment = SearchLinimasaFragment()
-//    private var searchJanpolFragment = SearchJanjiPolitikFragment()
-//    private var searchQuestionFragment = SearchQuestionFragment()
-//    private var searchQuizFragment = SearchQuizFragment()
-//    private var searchWordstadiumFragment = SearchWordstadiumFragment()
-
     override fun statusBarColor(): Int? = R.color.white
     override fun setLayout(): Int = R.layout.activity_search
 
