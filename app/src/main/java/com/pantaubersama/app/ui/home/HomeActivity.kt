@@ -16,6 +16,7 @@ import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.quickcount.QuickCountFragment
+import com.pantaubersama.app.ui.search.SearchActivity
 import com.pantaubersama.app.ui.wordstadium.WordStadiumFragment
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_home.*
@@ -41,6 +42,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
             startActivity(intent)
         }
 
+        btn_search.setOnClickListener { startActivity(Intent(this, SearchActivity::class.java)) }
         btn_pinned.setOnClickListener { startActivity(Intent(this, CatatanPilihanActivity::class.java)) }
 
         if (savedInstanceState == null) {

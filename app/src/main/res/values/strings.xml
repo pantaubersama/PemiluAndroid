@@ -196,4 +196,15 @@
     <string name="gagal_menghapus_pertanyaan">Gagal menghapus pertanyaan</string>
     <string name="txt_force_update">Versi aplikasi yang terbaru sudah tersedia, update yuk!</string>
     <string name="txt_update">Update</string>
+    <string name="hint_cari_di_pantau_bersama"><i>Cari di Pantau Bersama</i></string>
+    <string name="txt_tab_orang">Orang</string>
+    <string name="txt_tab_cluster">Cluster</string>
+    <string name="txt_tab_tanya">Tanya</string>
+    <string name="txt_tab_quiz">Quiz</string>
+    <string name="txt_tab_wordstadium">Wordstadium</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_pencarian_terakhir">PENCARIAN TERAKHIR</string>
+    <string name="txt_hapus_semua">hapus semua</string>
 </resources>

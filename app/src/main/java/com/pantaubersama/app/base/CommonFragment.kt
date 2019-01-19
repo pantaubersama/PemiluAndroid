@@ -27,8 +27,11 @@ abstract class CommonFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initProgressDialog()
+        fetchArguments(arguments)
         initView(view)
     }
+
+    protected open fun fetchArguments(args: Bundle?) {}
 
     protected abstract fun initView(view: View)
 
