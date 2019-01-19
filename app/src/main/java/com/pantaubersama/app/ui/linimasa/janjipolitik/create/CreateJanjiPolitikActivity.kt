@@ -55,7 +55,7 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        setupToolbar(true, getString(R.string.txt_tab_janji_politik), R.color.white, 4f)
+        setupToolbar(true, getString(R.string.txt_tab_orang), R.color.white, 4f)
 
         presenter.getProfile()
 

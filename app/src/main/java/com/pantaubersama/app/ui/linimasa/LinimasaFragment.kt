@@ -42,7 +42,7 @@ class LinimasaFragment : CommonFragment() {
         return R.layout.fragment_linimasa
     }
 
-    fun setupTabLayout() {
+    private fun setupTabLayout() {
         val tabPilpres = TabView(context)
         tabPilpres.setTitleLabel(R.string.txt_tab_linimasa)
         val tabJanPol = TabView(context)
@@ -52,8 +52,8 @@ class LinimasaFragment : CommonFragment() {
         tab_layout.addTab(tab_layout.newTab().setCustomView(tabJanPol))
 
         tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(p0: TabLayout.Tab?) {
-                pilpresFragment.scrollToTop(true)
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                if (tab?.position == 0) pilpresFragment.scrollToTop(true)
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {
@@ -66,7 +66,7 @@ class LinimasaFragment : CommonFragment() {
         })
     }
 
-    fun setupViewPager() {
+    private fun setupViewPager() {
         view_pager.addOnPageChangeListener(object : TabLayout.TabLayoutOnPageChangeListener(tab_layout) {})
         view_pager.adapter = object : FragmentPagerAdapter(childFragmentManager) {
             override fun getItem(position: Int): Fragment {
