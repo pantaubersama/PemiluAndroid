@@ -57,8 +57,9 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         containerView!!), LayoutContainer {
 
         fun onBind(item: Pertanyaan?) {
-            iv_user_avatar.loadUrl(item?.user?.avatar?.url, R.drawable.ic_person)
+            iv_user_avatar.loadUrl(item?.user?.avatar?.url, R.drawable.ic_avatar_placeholder)
             tv_user_name.text = item?.user?.fullName
+            tv_user_bio.text = item?.user?.about
             question_time.text = item?.createdAtInWord?.id
             upvote_count_text.text = item?.likeCount.toString()
             user_question.text = item?.body

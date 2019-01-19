@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="?selectableItemBackground"
     android:id="@+id/layout_item_tanya_kandidat">
@@ -123,11 +124,11 @@
                 </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/user_bio"
+                    android:id="@+id/tv_user_bio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_regular"
-                    android:text="Kapan kemana Indonesia?"
+                    tools:text="Kapan kemana Indonesia?"
                     android:textSize="9sp"
                     android:lines="1"
                     android:maxLines="1"

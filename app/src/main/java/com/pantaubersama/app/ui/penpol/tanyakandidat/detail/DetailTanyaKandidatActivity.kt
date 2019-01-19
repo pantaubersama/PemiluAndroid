@@ -86,8 +86,9 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
 
     override fun bindData(question: Pertanyaan) {
         this.question = question
-        iv_user_avatar.loadUrl(question.user?.avatar?.url, R.drawable.ic_person)
+        iv_user_avatar.loadUrl(question.user?.avatar?.url, R.drawable.ic_avatar_placeholder)
         tv_user_name.text = question.user?.fullName
+        tv_user_bio.text = question.user?.about
         question_time.text = question.createdAtInWord?.id
         upvote_count_text.text = question.likeCount.toString()
         user_question.text = question.body
