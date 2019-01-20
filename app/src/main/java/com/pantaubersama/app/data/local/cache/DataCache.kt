@@ -3,6 +3,7 @@ package com.pantaubersama.app.data.local.cache
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.pantaubersama.app.data.local.SharedPref
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
@@ -44,6 +45,8 @@ class DataCache(context: Context) : SharedPref(context) {
 
         const val TANYA_KANDIDAT_USER_FILTER = "tanya_kandidat_user_filter"
         const val TANYA_KANDIDAT_ORDER_FILTER = "tanya_kandidat_order_filter"
+
+        const val KEY_SEARCH_HISTORY = "KEY_SEARCH_HISTORY"
     }
 
     override fun prefId(): String {
@@ -176,5 +179,30 @@ class DataCache(context: Context) : SharedPref(context) {
 
     fun saveJanpolClusterFilter(janpolClusterFilter: ClusterItem?) {
         putString(KEY_FILTER_JANPOL_CLUSTER, gson.toJson(janpolClusterFilter))
+    }
+
+    fun getSearchHistory(): MutableList<String> {
+        getString(KEY_SEARCH_HISTORY)?.let {
+            return gson.fromJson(it, object : TypeToken<MutableList<String>>() {}.type)
+        } ?: return ArrayList()
+    }
+
+    fun saveSearchHistory(keyword: String) {
+        val MAX_KEYWORD_HISTORY_COUNT = 10
+        val latestSearchHistory = getSearchHistory()
+        if (latestSearchHistory.contains(keyword)) latestSearchHistory.remove(keyword)
+        latestSearchHistory.add(0, keyword)
+        if (latestSearchHistory.size > MAX_KEYWORD_HISTORY_COUNT) latestSearchHistory.removeAt(MAX_KEYWORD_HISTORY_COUNT)
+        putString(KEY_SEARCH_HISTORY, gson.toJson(latestSearchHistory))
+    }
+
+    fun clearItemSearchHistory(keyword: String) {
+        val latestSearchHistory = getSearchHistory()
+        if (latestSearchHistory.contains(keyword)) latestSearchHistory.remove(keyword)
+        putString(KEY_SEARCH_HISTORY, gson.toJson(latestSearchHistory))
+    }
+
+    fun clearAllSearchHistory() {
+        putString(KEY_SEARCH_HISTORY, gson.toJson(ArrayList<String>()))
     }
 }

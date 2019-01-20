@@ -43,6 +43,8 @@ import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step3.Step3VerifikasiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step5.Step5VerifikasiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step7.Step7VerifikasiActivity
+import com.pantaubersama.app.ui.search.SearchActivity
+import com.pantaubersama.app.ui.search.history.SearchHistoryFragment
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import dagger.Subcomponent
 
@@ -94,4 +96,6 @@ interface ActivityComponent {
     fun inject(detailTanyaKandidatActivity: DetailTanyaKandidatActivity)
     fun inject(detailKuisActivity: DetailKuisActivity)
     fun inject(detailBadgeActivity: DetailBadgeActivity)
+    fun inject(searchActivity: SearchActivity)
+    fun inject(searchHistoryFragment: SearchHistoryFragment)
 }

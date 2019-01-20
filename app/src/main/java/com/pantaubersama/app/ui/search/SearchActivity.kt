@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
-import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
 import com.pantaubersama.app.ui.search.cluster.SearchClusterFragment
 import com.pantaubersama.app.ui.search.janjipolitik.SearchJanjiPolitikFragment
@@ -19,13 +18,24 @@ import kotlinx.android.synthetic.main.activity_search.*
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
+import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.base.BaseView
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.search.history.SearchHistoryFragment
+import com.pantaubersama.app.utils.extensions.visibleIf
+import javax.inject.Inject
 
-class SearchActivity : CommonActivity() {
+class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
     private var keyword: String? = null
 
     override fun statusBarColor(): Int? = R.color.white
     override fun setLayout(): Int = R.layout.activity_search
+
+    @Inject override lateinit var presenter: SearchPresenter
+
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
+    }
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupTabLayout()
@@ -34,7 +44,6 @@ class SearchActivity : CommonActivity() {
         btn_back.setOnClickListener { onBackPressed() }
         et_search.setOnEditorActionListener { textView, actionId, keyEvent ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-
                 if (textView.text.toString().isNotEmpty() && textView.text.toString().isNotBlank()) {
                     performSearch(textView.text.toString())
                     val imm = textView.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -46,11 +55,26 @@ class SearchActivity : CommonActivity() {
         }
     }
 
+    fun setKeyword(keyword: String) {
+        et_search.setText(keyword)
+        performSearch(keyword)
+    }
+
     private fun performSearch(keyword: String) {
         this.keyword = keyword
-
-        view_pager.setCurrentItem(0, false)
+//        view_pager.setCurrentItem(0, false)
+        tab_layout.visibleIf(true)
         view_pager.adapter?.notifyDataSetChanged()
+
+        presenter.saveKeyword(keyword)
+    }
+
+    override fun showLoading() {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun dismissLoading() {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun setupTabLayout() {
@@ -93,7 +117,7 @@ class SearchActivity : CommonActivity() {
         view_pager.addOnPageChangeListener(object : TabLayout.TabLayoutOnPageChangeListener(tab_layout) {})
         view_pager.adapter = object : FragmentStatePagerAdapter(supportFragmentManager) {
             override fun getCount(): Int {
-                return tab_layout.tabCount
+                return keyword?.let { tab_layout.tabCount } ?: 1
             }
 
             override fun getItem(position: Int): Fragment {

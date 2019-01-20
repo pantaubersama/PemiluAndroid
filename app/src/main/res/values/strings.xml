@@ -207,4 +207,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="txt_pencarian_terakhir">PENCARIAN TERAKHIR</string>
     <string name="txt_hapus_semua">hapus semua</string>
+    <string name="txt_riwayat_pencarian_kosong">Riwayat pencarian kosong</string>
+    <string name="txt_hapus">Hapus</string>
+    <string name="txt_hapus_kata_kunci_ini">Hapus \"%s\" dari riwayat pencarian?</string>
+    <string name="txt_hapus_riwayat_pencarian">Hapus semua riwayat pencarian?</string>
 </resources>
