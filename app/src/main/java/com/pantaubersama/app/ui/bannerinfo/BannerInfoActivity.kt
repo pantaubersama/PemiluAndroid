@@ -61,7 +61,7 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
             tv_banner_description.text = Html.fromHtml(HtmlTagHandler.customizeListTags(str), null, HtmlTagHandler())
         }
 
-        iv_banner_image.loadUrl(bannerInfo?.image?.large?.url, R.color.gray_3)
+        iv_banner_image.loadUrl(bannerInfo?.image?.url, R.color.gray_3)
         iv_banner_background.loadUrl(bannerInfo?.headerImage?.large?.url)
 
         tv_url_pantau.setOnClickListener { ChromeTabUtil(this).loadUrl(tv_url_pantau.text.toString()) }
