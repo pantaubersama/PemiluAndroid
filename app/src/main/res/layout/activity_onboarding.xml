@@ -40,7 +40,8 @@
             android:textAllCaps="true"
             android:layout_toEndOf="@id/dots_indicator"
             android:layout_toStartOf="@id/dots_indicator"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:foreground="?attr/selectableItemBackground"/>
 
         <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
             android:id="@+id/dots_indicator"
@@ -59,14 +60,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="Next"
+            android:text="@string/next_action"
             android:textColor="@color/colorPrimary"
             android:layout_alignParentEnd="true"
             android:textSize="12sp"
             android:textAllCaps="true"
             android:layout_toRightOf="@id/dots_indicator"
             android:layout_toEndOf="@id/dots_indicator"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:foreground="?attr/selectableItemBackground"/>
 
     </RelativeLayout>
 

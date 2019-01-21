@@ -13,6 +13,9 @@ class OnboardingChild5Fragment : CommonFragment() {
     }
 
     override fun initView(view: View) {
-        onboarding_5_animation.enableLottie(true)
+    }
+
+    fun startAnimation(start: Boolean) {
+        onboarding_5_animation.enableLottie(start)
     }
 }

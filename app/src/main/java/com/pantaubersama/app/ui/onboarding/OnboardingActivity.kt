@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.onboarding
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
@@ -15,6 +16,7 @@ import javax.inject.Inject
 import android.view.animation.Animation.RELATIVE_TO_PARENT
 import android.view.animation.TranslateAnimation
 import androidx.viewpager.widget.ViewPager
+import com.pantaubersama.app.ui.login.LoginActivity
 
 
 class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
@@ -41,6 +43,22 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupViewPager()
+        skip_button.setOnClickListener {
+            openLoginActivity()
+        }
+        next_button.setOnClickListener {
+            if (view_pager.currentItem != 4) {
+                view_pager.currentItem = view_pager.currentItem+1
+            } else {
+                openLoginActivity()
+            }
+        }
+    }
+
+    private fun openLoginActivity() {
+        val intent = Intent(this@OnboardingActivity, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
     private fun setupViewPager() {
@@ -61,6 +79,48 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
             }
         }
         dots_indicator.setViewPager(view_pager)
+        view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> {
+                        onBoardingChild1Fragment.startAnimation(true)
+                        onBoardingChild2Fragment.startAnimation(false)
+                    }
+                    1 -> {
+                        onBoardingChild1Fragment.startAnimation(false)
+                        onBoardingChild2Fragment.startAnimation(true)
+                        onBoardingChild3Fragment.startAnimation(false)
+                    }
+                    2 -> {
+                        onBoardingChild2Fragment.startAnimation(false)
+                        onBoardingChild3Fragment.startAnimation(true)
+                        onBoardingChild4Fragment.startAnimation(false)
+                    }
+                    3 -> {
+                        onBoardingChild3Fragment.startAnimation(false)
+                        onBoardingChild4Fragment.startAnimation(true)
+                        onBoardingChild5Fragment.startAnimation(false)
+                    }
+                    4 -> {
+                        onBoardingChild4Fragment.startAnimation(false)
+                        onBoardingChild5Fragment.startAnimation(true)
+                    }
+                }
+                if (position == 4) {
+                    next_button.text = getString(R.string.txt_selesai)
+                } else {
+                    next_button.text = getString(R.string.next_action)
+                }
+            }
+        })
     }
 
     override fun showLoading() {
