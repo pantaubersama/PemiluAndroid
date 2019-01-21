@@ -8,6 +8,11 @@ import com.pantaubersama.app.utils.extensions.enableLottie
 import kotlinx.android.synthetic.main.fragment_onboarding_child2.*
 
 class OnboardingChild2Fragment : CommonFragment() {
+    var onVisible = false
+
+    companion object {
+        val TAG = OnboardingChild2Fragment::class.java.simpleName
+    }
 
     override fun setLayout(): Int {
         return R.layout.fragment_onboarding_child2
@@ -17,6 +22,11 @@ class OnboardingChild2Fragment : CommonFragment() {
     }
 
     fun startAnimation(start: Boolean) {
-        onboarding_2_animation.enableLottie(start)
+        if (onVisible) onboarding_2_animation.enableLottie(start, false)
+    }
+
+    override fun setMenuVisibility(menuVisible: Boolean) {
+        super.setMenuVisibility(menuVisible)
+        onVisible = menuVisible
     }
 }

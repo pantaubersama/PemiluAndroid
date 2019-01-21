@@ -9,6 +9,10 @@ import kotlinx.android.synthetic.main.fragment_onboarding_child5.*
 
 class OnboardingChild5Fragment : CommonFragment() {
 
+    companion object {
+        val TAG = OnboardingChild5Fragment::class.java.simpleName
+    }
+
     override fun setLayout(): Int {
         return R.layout.fragment_onboarding_child5
     }
@@ -17,6 +21,6 @@ class OnboardingChild5Fragment : CommonFragment() {
     }
 
     fun startAnimation(start: Boolean) {
-        onboarding_5_animation.enableLottie(start)
+        onboarding_5_animation.enableLottie(start, false)
     }
 }

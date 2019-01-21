@@ -8,6 +8,15 @@ import com.pantaubersama.app.utils.extensions.enableLottie
 import kotlinx.android.synthetic.main.fragment_onboarding_child1.*
 
 class OnboardingChild1Fragment : CommonFragment() {
+
+    companion object {
+        val TAG = OnboardingChild1Fragment::class.java.simpleName
+        fun newInstance(): OnboardingChild1Fragment {
+            val fragment = OnboardingChild1Fragment()
+            return fragment
+        }
+    }
+
     override fun setLayout(): Int {
         return R.layout.fragment_onboarding_child1
     }
@@ -17,6 +26,6 @@ class OnboardingChild1Fragment : CommonFragment() {
     }
 
     fun startAnimation(start: Boolean) {
-        onboarding_1_animation.enableLottie(start)
+        onboarding_1_animation.enableLottie(start, false)
     }
 }
