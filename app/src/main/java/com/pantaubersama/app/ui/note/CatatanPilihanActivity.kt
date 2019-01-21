@@ -28,10 +28,6 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
         return 0
     }
 
-    override fun fetchIntentExtra() {
-        // ok
-    }
-
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(false, getString(R.string.title_catatan_pilihanku), R.color.white, 4f)
         presidenFragment.listener = object : PresidenFragment.Listener {

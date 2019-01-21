@@ -12,6 +12,7 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.visibleIf
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.fragment_presiden.*
 import javax.inject.Inject
@@ -23,6 +24,10 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
     @Inject
     override lateinit var presenter: PaslonPresenter
     var listener: Listener? = null
+
+    override fun setLayout(): Int {
+        return R.layout.fragment_presiden
+    }
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -74,10 +79,6 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
         presiden_recycler_view_calon.adapter = paslonAdapter
     }
 
-    override fun setLayout(): Int {
-        return R.layout.fragment_presiden
-    }
-
     companion object {
         fun newInstance(): PresidenFragment {
             return PresidenFragment()
@@ -104,6 +105,7 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
 
     @SuppressLint("SetTextI18n")
     override fun bindMyTendency(tendency: KuisUserResult, name: String) {
+        ll_kuis_result.visibleIf(tendency.meta.finished != 0)
         presiden_total_kuis.text = spannable {
             +"Total Kecenderungan ${tendency.meta.finished} Dari ${tendency.meta.total} Kuis,\n"
             textColor(color(R.color.black_3)) { +name }
