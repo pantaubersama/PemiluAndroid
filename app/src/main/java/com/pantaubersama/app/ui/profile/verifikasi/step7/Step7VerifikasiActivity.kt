@@ -7,11 +7,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.graphics.Point
+import android.graphics.SurfaceTexture
 import android.hardware.Camera
+import android.hardware.camera2.CameraManager
+import android.media.Image
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Surface
+import android.view.TextureView
 import android.view.View
 import android.webkit.MimeTypeMap
 import com.pantaubersama.app.R
@@ -21,6 +25,7 @@ import com.pantaubersama.app.ui.profile.verifikasi.finalstep.FinalScreenVerifika
 import com.pantaubersama.app.ui.widget.CameraPreview
 import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.ui.widget.ImageChooserTools
+import com.pantaubersama.app.utils.Camera2Tools
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_step7_verifikasi.*
@@ -36,11 +41,11 @@ class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7V
     override lateinit var presenter: Step7VerifikasiPresenter
 
     private var permission =
-        arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
+            arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
     private var mCamera: Camera? = null
     private var mPreview: CameraPreview? = null
     private var cameraCallback: Camera.PictureCallback? = null
@@ -48,6 +53,14 @@ class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7V
     private var isFrontCamera = false
 
     private var signaturePhoto: MultipartBody.Part? = null
+
+    private var mTextureView: TextureView? = null
+    private lateinit var manager: CameraManager
+    private var imageFile: File? = null
+    val CAMERA_FRONT = "1"
+    val CAMERA_BACK = "0"
+    var mCameraId = CAMERA_BACK
+    private var isOpenGallery = false
 
     override fun statusBarColor(): Int? {
         return 0
@@ -61,20 +74,57 @@ class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7V
 //        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
+    private val mSurfaceTextureListener = object : TextureView.SurfaceTextureListener {
+
+        override fun onSurfaceTextureAvailable(texture: SurfaceTexture, width: Int, height: Int) {
+            Camera2Tools.openCamera(manager, windowManager, mTextureView, mCameraId)
+        }
+
+        override fun onSurfaceTextureSizeChanged(texture: SurfaceTexture, width: Int, height: Int) {
+            // config
+        }
+
+        override fun onSurfaceTextureDestroyed(texture: SurfaceTexture): Boolean {
+            return true
+        }
+
+        override fun onSurfaceTextureUpdated(texture: SurfaceTexture) {}
+    }
+
     override fun setupUI(savedInstanceState: Bundle?) {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
 
         if (isHaveStorageAndCameraPermission()) {
-            setupCamera()
+            manager = this.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+            mTextureView = findViewById(R.id.texture_view)
+
+            if (mTextureView!!.isAvailable()) {
+                Camera2Tools.openCamera(manager, windowManager, mTextureView, mCameraId)
+            } else {
+                mTextureView!!.setSurfaceTextureListener(mSurfaceTextureListener)
+            }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(permission, PantauConstants.Camera.ASK_PERMISSIONS_REQUEST_CODE)
             }
         }
         capture_button.setOnClickListener {
-            capture_button.isEnabled = false
-            mCamera?.takePicture(null, null, cameraCallback)
+            Camera2Tools.takePicture(object : Camera2Tools.Companion.ImageHandler {
+                override fun handleImage(image: Image): Runnable {
+                    return Runnable {
+                        val bitmap = mTextureView!!.getBitmap(mTextureView!!.width, mTextureView!!.height)
+                        imageFile = ImageUtil.getImageFile(bitmap)
+                        signaturePhoto = createFromFile(imageFile!!)
+                        runOnUiThread(Runnable {
+                            kotlin.run {
+                                viewPreviewFromCamera()
+                                image_preview.setImageBitmap(bitmap)
+                            }
+                        })
+                    }
+                }
+            })
         }
         close_camera_button.setOnClickListener {
             finish()
@@ -83,18 +133,20 @@ class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7V
             presenter.submitSignaturePhoto(signaturePhoto)
         }
         retake_button.setOnClickListener {
-            image_preview_container.visibility = View.GONE
-            restartActivity()
+            Camera2Tools.unlockFocus()
+            openCamera()
         }
         switch_camera.setOnClickListener {
             val camerasNumber = Camera.getNumberOfCameras()
             if (camerasNumber > 1) {
-                mPreview?.releaseCamera()
                 chooseCamera()
             }
         }
         choose_image.setOnClickListener {
             if (isHaveStorageAndCameraPermission()) {
+                isOpenGallery = true
+                Camera2Tools.closeCamera()
+                Camera2Tools.stopBackgroundThread()
                 val intentGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), PantauConstants.RequestCode.RC_STORAGE)
             } else {
@@ -143,18 +195,18 @@ class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7V
         if (isFrontCamera) {
             val cameraId = findBackFacingCamera()
             if (cameraId >= 0) {
-                mCamera = Camera.open(cameraId)
-                mCamera?.setDisplayOrientation(90)
-                cameraCallback = getCameraCallback()
-                mPreview?.refreshCamera(mCamera)
+                mCameraId = cameraId.toString()
+                Camera2Tools.closeCamera()
+                Camera2Tools.stopBackgroundThread()
+                openCamera()
             }
         } else {
             val cameraId = findFrontFacingCamera()
             if (cameraId >= 0) {
-                mCamera = Camera.open(cameraId)
-                mCamera?.setDisplayOrientation(90)
-                cameraCallback = getCameraCallback()
-                mPreview?.refreshCamera(mCamera)
+                mCameraId = cameraId.toString()
+                Camera2Tools.closeCamera()
+                Camera2Tools.stopBackgroundThread()
+                openCamera()
             }
         }
     }
@@ -245,15 +297,15 @@ class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7V
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PantauConstants.Camera.ASK_PERMISSIONS_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            setupCamera()
+            openCamera()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if (checkCameraHardware(this@Step7VerifikasiActivity)) {
-            setupCamera()
-        }
+        if (!isOpenGallery)
+            openCamera()
+        isOpenGallery = false
     }
 
     override fun setLayout(): Int {
@@ -273,13 +325,15 @@ class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7V
     }
 
     override fun onDestroy() {
-        mPreview?.releaseCamera()
+        Camera2Tools.closeCamera()
+        Camera2Tools.stopBackgroundThread()
         super.onDestroy()
     }
 
     override fun onBackPressed() {
         if (isPreview) {
-            restartActivity()
+            Camera2Tools.unlockFocus()
+            openCamera()
         } else {
             super.onBackPressed()
         }
@@ -311,14 +365,50 @@ class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7V
                     val file = ImageChooserTools.proccedImageFromStorage(data, this@Step7VerifikasiActivity)
                     signaturePhoto = createFromFile(file)
                     image_preview_container.visibility = View.VISIBLE
+                    viewPreviewFromGallery()
                     var bitmap = BitmapFactory.decodeFile(file.absolutePath)
-                    bitmap = ImageUtil.BitmapTools.rotate(bitmap, ImageUtil.bitmapRotation(windowManager))
+//                    bitmap = ImageUtil.BitmapTools.rotate(bitmap, ImageUtil.bitmapRotation(windowManager))
                     image_preview.setImageBitmap(bitmap)
-                    isPreview = true
                 } else {
                     ToastUtil.show(this@Step7VerifikasiActivity, getString(R.string.failed_load_image_alert))
                 }
             }
         }
+    }
+
+    fun openCamera() {
+        viewTakeCamera()
+        if (mTextureView!!.isAvailable()) {
+            Camera2Tools.openCamera(manager, windowManager, mTextureView, mCameraId)
+        } else {
+            mTextureView!!.setSurfaceTextureListener(mSurfaceTextureListener)
+        }
+    }
+
+    fun viewTakeCamera() {
+        frame_camera.visibility = View.VISIBLE
+        camera_button_container.visibility = View.VISIBLE
+        image_preview_container.visibility = View.GONE
+        texture_view.visibility = View.VISIBLE
+        image_preview.visibility = View.GONE
+        isPreview = false
+    }
+
+    fun viewPreviewFromCamera() {
+        frame_camera.visibility = View.GONE
+        camera_button_container.visibility = View.GONE
+        image_preview_container.visibility = View.VISIBLE
+        texture_view.visibility = View.VISIBLE
+        image_preview.visibility = View.VISIBLE
+        isPreview = true
+    }
+
+    fun viewPreviewFromGallery() {
+        frame_camera.visibility = View.GONE
+        camera_button_container.visibility = View.GONE
+        image_preview_container.visibility = View.VISIBLE
+        texture_view.visibility = View.VISIBLE
+        image_preview.visibility = View.VISIBLE
+        isPreview = true
     }
 }
