@@ -2,22 +2,15 @@ package com.pantaubersama.app.ui.onboarding
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.Animation
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import com.google.android.material.tabs.TabLayout
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.widget.TabView
 import kotlinx.android.synthetic.main.activity_onboarding.*
 import javax.inject.Inject
-import android.view.animation.Animation.RELATIVE_TO_PARENT
-import android.view.animation.TranslateAnimation
 import androidx.viewpager.widget.ViewPager
 import com.pantaubersama.app.ui.login.LoginActivity
-
 
 class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
     private val onBoardingChild1Fragment: OnboardingChild1Fragment = OnboardingChild1Fragment()
@@ -48,7 +41,7 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
         }
         next_button.setOnClickListener {
             if (view_pager.currentItem != 4) {
-                view_pager.currentItem = view_pager.currentItem+1
+                view_pager.currentItem = view_pager.currentItem + 1
             } else {
                 openLoginActivity()
             }
@@ -56,6 +49,7 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
     }
 
     private fun openLoginActivity() {
+        presenter.setOnboardingComplete()
         val intent = Intent(this@OnboardingActivity, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
