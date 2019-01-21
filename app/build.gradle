@@ -7,6 +7,14 @@ apply from: "$project.rootDir/config/app-version.gradle"
 apply plugin: 'io.fabric'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'pantau_bersama'
+            keyPassword 'barokah100'
+            storePassword 'barokah100'
+            storeFile file('../pantau_bersama.keystore')
+        }
+    }
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
     flavorDimensions "default"
@@ -21,19 +29,16 @@ android {
         vectorDrawables.useSupportLibrary = true
 
     }
-
     buildTypes {
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
         debug {
             applicationIdSuffix ".staging"
             minifyEnabled false
             debuggable true
-
         }
-
         buildTypes.each {
             it.buildConfigField("String", "PANTAU_CLIENT_ID", PANTAU_CLIENT_ID)
             it.buildConfigField("String", "PANTAU_CLIENT_SECRET", PANTAU_CLIENT_SECRET)
@@ -52,19 +57,16 @@ android {
             it.resValue("string", "pantau_base_url_no_scheme", PANTAU_BASE_URL_NO_SCHEME)
         }
     }
-
     productFlavors {
         production {
         }
         staging {
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     packagingOptions {
         exclude 'LICENSE.txt'
         exclude 'META-INF/DEPENDENCIES'
@@ -72,7 +74,6 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
     }
-
 }
 
 androidExtensions {
@@ -90,7 +91,6 @@ configurations {
 dependencies {
     implementation project(':instant')
     implementation project(':base')
-
     implementation designLibs
     implementation networkLibs
     implementation firebaseLibs
@@ -116,11 +116,8 @@ dependencies {
     implementation twitter_sdk
     implementation archComponentLibs
     kapt daggerCompiler
-
     testImplementation unitTestLibs
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     ktlint "com.github.shyiko:ktlint:0.29.0"
 }
 
