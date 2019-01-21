@@ -20,6 +20,9 @@ import androidx.viewpager.widget.ViewPager
 class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
     private val onBoardingChild1Fragment: OnboardingChild1Fragment = OnboardingChild1Fragment()
     private val onBoardingChild2Fragment: OnboardingChild2Fragment = OnboardingChild2Fragment()
+    private val onBoardingChild3Fragment: OnboardingChild3Fragment = OnboardingChild3Fragment()
+    private val onBoardingChild4Fragment: OnboardingChild4Fragment = OnboardingChild4Fragment()
+    private val onBoardingChild5Fragment: OnboardingChild5Fragment = OnboardingChild5Fragment()
 
     @Inject
     override lateinit var presenter: OnBoardingPresenter
@@ -46,12 +49,15 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
                 return when (position) {
                     0 -> onBoardingChild1Fragment
                     1 -> onBoardingChild2Fragment
+                    2 -> onBoardingChild3Fragment
+                    3 -> onBoardingChild4Fragment
+                    4 -> onBoardingChild5Fragment
                     else -> Fragment()
                 }
             }
 
             override fun getCount(): Int {
-                return 2
+                return 5
             }
         }
         dots_indicator.setViewPager(view_pager)
