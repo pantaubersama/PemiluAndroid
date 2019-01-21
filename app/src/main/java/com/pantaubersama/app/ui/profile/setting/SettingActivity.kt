@@ -3,11 +3,13 @@ package com.pantaubersama.app.ui.profile.setting
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.WindowManager
 import android.webkit.CookieManager
@@ -39,6 +41,8 @@ import javax.inject.Inject
 import kotlin.collections.ArrayList
 import com.facebook.GraphRequest
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
+import com.pantaubersama.app.utils.ChromeTabUtil
+import com.pantaubersama.app.utils.ShareUtil
 import com.twitter.sdk.android.core.* // ktlint-disable
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import com.twitter.sdk.android.core.models.User
@@ -119,18 +123,18 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                 })
             } else {
                 ConfirmationDialog
-                    .Builder()
-                    .with(this@SettingActivity)
-                    .setDialogTitle("Disconnect Twitter")
-                    .setAlert("Apakah Anda yakin untuk disconnect Twitter?")
-                    .setCancelText("Batal")
-                    .setOkText("Disconnect")
-                    .addOkListener(object : ConfirmationDialog.DialogOkListener {
-                        override fun onClickOk() {
-                            presenter.disconnectSocialMedia(PantauConstants.CONNECT.TWITTER)
-                        }
-                    })
-                    .show()
+                        .Builder()
+                        .with(this@SettingActivity)
+                        .setDialogTitle("Disconnect Twitter")
+                        .setAlert("Apakah Anda yakin untuk disconnect Twitter?")
+                        .setCancelText("Batal")
+                        .setOkText("Disconnect")
+                        .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                            override fun onClickOk() {
+                                presenter.disconnectSocialMedia(PantauConstants.CONNECT.TWITTER)
+                            }
+                        })
+                        .show()
             }
         }
     }
@@ -148,12 +152,12 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         if (AccessToken.getCurrentAccessToken() != null) {
             facebook_connect_label.text = getString(R.string.label_connected_as)
             val request = GraphRequest.newMeRequest(
-                AccessToken.getCurrentAccessToken()
+                    AccessToken.getCurrentAccessToken()
             ) { me, _ ->
                 facebook_login_text.text = me?.getString("name")
                 val request = GraphRequest.newGraphPathRequest(
-                    AccessToken.getCurrentAccessToken(),
-                    "/" + me.getString("id") + "/picture"
+                        AccessToken.getCurrentAccessToken(),
+                        "/" + me.getString("id") + "/picture"
                 ) {
                     try {
                         facebook_login_icon.loadUrl(it.jsonObject.getJSONObject("data").getString("url"))
@@ -197,18 +201,18 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                 LoginManager.getInstance().logInWithReadPermissions(this@SettingActivity, permissions)
             } else {
                 ConfirmationDialog
-                    .Builder()
-                    .with(this@SettingActivity)
-                    .setDialogTitle("Disconnect Facebook")
-                    .setAlert("Apakah Anda yakin untuk disconnect Facebook?")
-                    .setCancelText("Batal")
-                    .setOkText("Disconnect")
-                    .addOkListener(object : ConfirmationDialog.DialogOkListener {
-                        override fun onClickOk() {
-                            presenter.disconnectSocialMedia(PantauConstants.CONNECT.FACEBOOK)
-                        }
-                    })
-                    .show()
+                        .Builder()
+                        .with(this@SettingActivity)
+                        .setDialogTitle("Disconnect Facebook")
+                        .setAlert("Apakah Anda yakin untuk disconnect Facebook?")
+                        .setCancelText("Batal")
+                        .setOkText("Disconnect")
+                        .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                            override fun onClickOk() {
+                                presenter.disconnectSocialMedia(PantauConstants.CONNECT.FACEBOOK)
+                            }
+                        })
+                        .show()
             }
         }
     }
@@ -298,21 +302,23 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             startActivityForResult(intent, CLUSTER_UNDANG)
         }
         setting_pusat_bantuan.setOnClickListener {
-            // pusat bantuan
+            ChromeTabUtil(this@SettingActivity).forceLoadUrl(PantauConstants.Profile.URL_PUSAT_BANTUAN)
         }
         setting_pedoman_komunitas.setOnClickListener {
-            val intent = Intent(this@SettingActivity, PanduanKomunitasActivity::class.java)
-            startActivity(intent)
+            ChromeTabUtil(this@SettingActivity).forceLoadUrl(PantauConstants.Profile.URL_PANDUAN_KOMUNITAS)
         }
         setting_tentang.setOnClickListener {
-            val intent = Intent(this@SettingActivity, TentangAppActivity::class.java)
-            startActivity(intent)
+            ChromeTabUtil(this@SettingActivity).forceLoadUrl(PantauConstants.Profile.URL_TENTANG_PANTAU_BERSAMA)
         }
         setting_berikan_nilai.setOnClickListener {
-            // berikan nikai kami
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)))
+            } catch (e: ActivityNotFoundException) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)))
+            }
         }
         setting_bagikan_aplikasi.setOnClickListener {
-            // bagikan aplikasi pantau bersama
+            ShareUtil.shareApp(this@SettingActivity, "https://play.google.com/store/apps/details?id=$packageName")
         }
         setting_logout.setOnClickListener {
             logoutDialog()
@@ -339,18 +345,18 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     fun logoutDialog() {
         ConfirmationDialog
-            .Builder()
-            .with(this@SettingActivity)
-            .setDialogTitle(getString(R.string.title_keluar_aplikasi))
-            .setAlert(getString(R.string.logout_alert))
-            .setCancelText(getString(R.string.batal_action))
-            .setOkText(getString(R.string.label_keluar))
-            .addOkListener(object : ConfirmationDialog.DialogOkListener {
-                override fun onClickOk() {
-                    presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
-                }
-            })
-            .show()
+                .Builder()
+                .with(this@SettingActivity)
+                .setDialogTitle(getString(R.string.title_keluar_aplikasi))
+                .setAlert(getString(R.string.logout_alert))
+                .setCancelText(getString(R.string.batal_action))
+                .setOkText(getString(R.string.label_keluar))
+                .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                    override fun onClickOk() {
+                        presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
+                    }
+                })
+                .show()
     }
 
     override fun showSuccessDisconnectFacebookAlert() {
