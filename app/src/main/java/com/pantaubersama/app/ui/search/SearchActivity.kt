@@ -6,13 +6,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.pantaubersama.app.R
-import com.pantaubersama.app.ui.search.cluster.SearchClusterFragment
-import com.pantaubersama.app.ui.search.janjipolitik.SearchJanjiPolitikFragment
 import com.pantaubersama.app.ui.search.linimasa.SearchLinimasaFragment
-import com.pantaubersama.app.ui.search.person.SearchPersonFragment
-import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
-import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
-import com.pantaubersama.app.ui.search.wordstadium.SearchWordstadiumFragment
 import com.pantaubersama.app.ui.widget.TabView
 import kotlinx.android.synthetic.main.activity_search.*
 import android.view.inputmethod.InputMethodManager
