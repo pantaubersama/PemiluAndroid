@@ -9,24 +9,6 @@ before_script:
   - export ANDROID_HOME="/home/gitlab-runner/android-sdk"
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - export ANDROID_APK_PATH=$PWD/app/build/outputs/apk
-  - echo "org.gradle.jvmargs=-Xmx1536m" >> gradle.properties
-  - echo "SYMBOLIC_REDIRECT_URI=$SYMBOLIC_REDIRECT_URI" >> gradle.properties
-  - echo "PANTAU_BASE_URL=$PANTAU_BASE_URL" >> gradle.properties
-  - echo "PANTAU_BASE_URL_NO_SCHEME=$PANTAU_BASE_URL_NO_SCHEME" >> gradle.properties
-  - echo "PANTAU_OAUTH_URL=$PANTAU_OAUTH_URL" >> gradle.properties
-  - echo "WORD_STADIUM_BASE_URL=$WORD_STADIUM_BASE_URL" >> gradle.properties
-  - echo "SYMBOLIC_URL=$SYMBOLIC_URL" >> gradle.properties
-  - echo "SYMBOLIC_URL_NO_SCHEME=$SYMBOLIC_URL_NO_SCHEME" >> gradle.properties
-  - echo "SYMBOLIC_CLIENT_ID=$SYMBOLIC_CLIENT_ID" >> gradle.properties
-  - echo "SYMBOLIC_CLIENT_SECRET=$SYMBOLIC_CLIENT_SECRET" >> gradle.properties
-  - echo "FACEBOOK_APP_ID=$FACEBOOK_APP_ID" >> gradle.properties
-  - echo "FACEBOOK_LOGIN_PROTOCOL_SCHEME=$FACEBOOK_LOGIN_PROTOCOL_SCHEME" >> gradle.properties
-  - echo "TWITTER_API_KEY=$TWITTER_API_KEY" >> gradle.properties
-  - echo "TWITTER_SECRET=$TWITTER_SECRET" >> gradle.properties
-  - echo "PANTAU_CLIENT_ID=$PANTAU_CLIENT_ID" >> gradle.properties
-  - echo "PANTAU_CLIENT_SECRET=$PANTAU_CLIENT_SECRET" >> gradle.properties
-  - echo "android.useAndroidX=true" >> gradle.properties
-  - echo "android.enableJetifier=true" >> gradle.properties
 
 #### BUILD ####
 
@@ -48,6 +30,24 @@ build_onprogress:
       - develop
       - master
     script:
+      - echo "org.gradle.jvmargs=-Xmx1536m" >> gradle.properties
+      - echo "SYMBOLIC_REDIRECT_URI=$SYMBOLIC_REDIRECT_URI_STAG" >> gradle.properties
+      - echo "PANTAU_BASE_URL=$PANTAU_BASE_URL_STAG" >> gradle.properties
+      - echo "PANTAU_BASE_URL_NO_SCHEME=$PANTAU_BASE_URL_NO_SCHEME_STAG" >> gradle.properties
+      - echo "PANTAU_OAUTH_URL=$PANTAU_OAUTH_URL_STAG" >> gradle.properties
+      - echo "WORD_STADIUM_BASE_URL=$WORD_STADIUM_BASE_URL_STAG" >> gradle.properties
+      - echo "SYMBOLIC_URL=$SYMBOLIC_URL_STAG" >> gradle.properties
+      - echo "SYMBOLIC_URL_NO_SCHEME=$SYMBOLIC_URL_NO_SCHEME_STAG" >> gradle.properties
+      - echo "SYMBOLIC_CLIENT_ID=$SYMBOLIC_CLIENT_ID_STAG" >> gradle.properties
+      - echo "SYMBOLIC_CLIENT_SECRET=$SYMBOLIC_CLIENT_SECRET_STAG" >> gradle.properties
+      - echo "FACEBOOK_APP_ID=$FACEBOOK_APP_ID_STAG" >> gradle.properties
+      - echo "FACEBOOK_LOGIN_PROTOCOL_SCHEME=$FACEBOOK_LOGIN_PROTOCOL_SCHEME_STAG" >> gradle.properties
+      - echo "TWITTER_API_KEY=$TWITTER_API_KEY_STAG" >> gradle.properties
+      - echo "TWITTER_SECRET=$TWITTER_SECRET_STAG" >> gradle.properties
+      - echo "PANTAU_CLIENT_ID=$PANTAU_CLIENT_ID_STAG" >> gradle.properties
+      - echo "PANTAU_CLIENT_SECRET=$PANTAU_CLIENT_SECRET_STAG" >> gradle.properties
+      - echo "android.useAndroidX=true_STAG" >> gradle.properties
+      - echo "android.enableJetifier=true_STAG" >> gradle.properties
       - ./gradlew assembleStagingDebug
 
 build_staging:
@@ -61,6 +61,24 @@ build_staging:
       - onprogress
       - master
     script:
+      - echo "org.gradle.jvmargs=-Xmx1536m" >> gradle.properties
+      - echo "SYMBOLIC_REDIRECT_URI=$SYMBOLIC_REDIRECT_URI_STAG" >> gradle.properties
+      - echo "PANTAU_BASE_URL=$PANTAU_BASE_URL_STAG" >> gradle.properties
+      - echo "PANTAU_BASE_URL_NO_SCHEME=$PANTAU_BASE_URL_NO_SCHEME_STAG" >> gradle.properties
+      - echo "PANTAU_OAUTH_URL=$PANTAU_OAUTH_URL_STAG" >> gradle.properties
+      - echo "WORD_STADIUM_BASE_URL=$WORD_STADIUM_BASE_URL_STAG" >> gradle.properties
+      - echo "SYMBOLIC_URL=$SYMBOLIC_URL_STAG" >> gradle.properties
+      - echo "SYMBOLIC_URL_NO_SCHEME=$SYMBOLIC_URL_NO_SCHEME_STAG" >> gradle.properties
+      - echo "SYMBOLIC_CLIENT_ID=$SYMBOLIC_CLIENT_ID_STAG" >> gradle.properties
+      - echo "SYMBOLIC_CLIENT_SECRET=$SYMBOLIC_CLIENT_SECRET_STAG" >> gradle.properties
+      - echo "FACEBOOK_APP_ID=$FACEBOOK_APP_ID_STAG" >> gradle.properties
+      - echo "FACEBOOK_LOGIN_PROTOCOL_SCHEME=$FACEBOOK_LOGIN_PROTOCOL_SCHEME_STAG" >> gradle.properties
+      - echo "TWITTER_API_KEY=$TWITTER_API_KEY_STAG" >> gradle.properties
+      - echo "TWITTER_SECRET=$TWITTER_SECRET_STAG" >> gradle.properties
+      - echo "PANTAU_CLIENT_ID=$PANTAU_CLIENT_ID_STAG" >> gradle.properties
+      - echo "PANTAU_CLIENT_SECRET=$PANTAU_CLIENT_SECRET_STAG" >> gradle.properties
+      - echo "android.useAndroidX=true_STAG" >> gradle.properties
+      - echo "android.enableJetifier=true_STAG" >> gradle.properties
       - ./gradlew assembleStagingDebug
 
 
@@ -75,6 +93,24 @@ build_release:
       - onprogress
       - develop
     script:
+      - echo "org.gradle.jvmargs=-Xmx1536m" >> gradle.properties
+      - echo "SYMBOLIC_REDIRECT_URI=$SYMBOLIC_REDIRECT_URI_PROD" >> gradle.properties
+      - echo "PANTAU_BASE_URL=$PANTAU_BASE_URL_PROD" >> gradle.properties
+      - echo "PANTAU_BASE_URL_NO_SCHEME=$PANTAU_BASE_URL_NO_SCHEME_PROD" >> gradle.properties
+      - echo "PANTAU_OAUTH_URL=$PANTAU_OAUTH_URL_PROD" >> gradle.properties
+      - echo "WORD_STADIUM_BASE_URL=$WORD_STADIUM_BASE_URL_PROD" >> gradle.properties
+      - echo "SYMBOLIC_URL=$SYMBOLIC_URL_PROD" >> gradle.properties
+      - echo "SYMBOLIC_URL_NO_SCHEME=$SYMBOLIC_URL_NO_SCHEME_PROD" >> gradle.properties
+      - echo "SYMBOLIC_CLIENT_ID=$SYMBOLIC_CLIENT_ID_PROD" >> gradle.properties
+      - echo "SYMBOLIC_CLIENT_SECRET=$SYMBOLIC_CLIENT_SECRET_PROD" >> gradle.properties
+      - echo "FACEBOOK_APP_ID=$FACEBOOK_APP_ID_PROD" >> gradle.properties
+      - echo "FACEBOOK_LOGIN_PROTOCOL_SCHEME=$FACEBOOK_LOGIN_PROTOCOL_SCHEME_PROD" >> gradle.properties
+      - echo "TWITTER_API_KEY=$TWITTER_API_KEY_PROD" >> gradle.properties
+      - echo "TWITTER_SECRET=$TWITTER_SECRET_PROD" >> gradle.properties
+      - echo "PANTAU_CLIENT_ID=$PANTAU_CLIENT_ID_PROD" >> gradle.properties
+      - echo "PANTAU_CLIENT_SECRET=$PANTAU_CLIENT_SECRET_PROD" >> gradle.properties
+      - echo "android.useAndroidX=true_PROD" >> gradle.properties
+      - echo "android.enableJetifier=true_PROD" >> gradle.properties
       - ./gradlew assembleProductionRelease
       
      

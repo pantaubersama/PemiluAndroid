@@ -8,11 +8,12 @@
 
     <FrameLayout
         android:id="@+id/camera_preview"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <TextureView
-        android:id="@+id/texture"
+        android:id="@+id/texture_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -67,6 +68,7 @@
 
         <RelativeLayout
             android:id="@+id/camera_button_container"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true">
@@ -108,7 +110,6 @@
         android:id="@+id/image_preview_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:visibility="gone">
 
@@ -117,12 +118,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
             <LinearLayout
