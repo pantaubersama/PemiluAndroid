@@ -118,7 +118,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
             override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
                 val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
-                if (item.user?.id.equals(profile.id)) {
+                if (item.user.id.equals(profile.id)) {
                     dialog.removeItem(R.id.report_tanya_kandidat_action)
                 } else {
                     dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
@@ -144,7 +144,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                                     context!!, getString(R.string.txt_delete_item_ini),
                                     listener = object : DeleteConfimationDialog.DialogListener {
                                         override fun onClickDeleteItem(p0: String, p1: Int) {
-                                            adapter?.listener?.onClickDeleteItem(item.id!!, position)
+                                            adapter?.listener?.onClickDeleteItem(item.id, position)
                                         }
                                 })
                                 deleteDialog.show()
@@ -160,7 +160,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                 ShareUtil.shareItem(context!!, item)
             }
 
-            override fun onClickUpvote(id: String?, isLiked: Boolean, position: Int?) {
+            override fun onClickUpvote(id: String, isLiked: Boolean, position: Int) {
                 if (!isLiked) {
                     presenter.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
                 } else {
@@ -168,16 +168,16 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                 }
             }
 
-            override fun onClickDeleteItem(id: String?, position: Int?) {
+            override fun onClickDeleteItem(id: String, position: Int) {
                 showProgressDialog(getString(R.string.txt_delete_item_ini))
                 presenter.deleteItem(id, position)
             }
 
-            override fun onClickCopyUrl(id: String?) {
-                CopyUtil.copyTanyaKandidat(context!!, id!!)
+            override fun onClickCopyUrl(id: String) {
+                CopyUtil.copyTanyaKandidat(context!!, id)
             }
 
-            override fun onClickLapor(id: String?) {
+            override fun onClickLapor(id: String) {
                 presenter.reportQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME)
             }
 
@@ -216,7 +216,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         if (adapter?.itemCount != 0 && adapter?.get(0) is BannerInfo) {
             val bannerInfo = adapter?.get(0) as BannerInfo
             adapter?.clear()
-            adapter?.addBanner(bannerInfo!!)
+            adapter?.addBanner(bannerInfo)
             adapter?.addData(pertanyaanList as MutableList<ItemModel>)
             scrollToTop(false)
         } else {
@@ -269,7 +269,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         // no need to do
     }
 
-    override fun onFailedUpVoteItem(liked: Boolean?, position: Int?) {
+    override fun onFailedUpVoteItem(liked: Boolean, position: Int) {
         adapter?.reverseVote(liked, position)
     }
 
@@ -286,7 +286,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         ToastUtil.show(context!!, getString(R.string.gagal_menghapus_pertanyaan))
     }
 
-    override fun onItemDeleted(position: Int?) {
+    override fun onItemDeleted(position: Int) {
         dismissProgressDialog()
         adapter?.deleteItem(position)
     }

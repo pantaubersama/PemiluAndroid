@@ -116,6 +116,7 @@ dependencies {
     implementation facebook_sdk
     implementation twitter_sdk
     implementation archComponentLibs
+    implementation dots_indicator
     kapt daggerCompiler
     testImplementation unitTestLibs
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

@@ -6,4 +6,5 @@ interface SplashScreenView : BaseView {
     fun onForceUpdateAvailable()
     fun goToHome()
     fun goToLogin()
+    fun isOnboardingComplete(complete: Boolean)
 }

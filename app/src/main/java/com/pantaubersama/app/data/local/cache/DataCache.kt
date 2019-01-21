@@ -48,6 +48,7 @@ class DataCache(context: Context) : SharedPref(context) {
         const val TANYA_KANDIDAT_ORDER_FILTER = "tanya_kandidat_order_filter"
 
         const val KEY_SEARCH_HISTORY = "KEY_SEARCH_HISTORY"
+        const val IS_ONBOARDING_COMPLETE = "is_onboarding_complete"
     }
 
     override fun prefId(): String {
@@ -213,5 +214,13 @@ class DataCache(context: Context) : SharedPref(context) {
 
     fun clearAllSearchHistory() {
         putString(KEY_SEARCH_HISTORY, gson.toJson(ArrayList<String>()))
+    }
+
+    fun setOnboardingComplete() {
+        putBoolean(IS_ONBOARDING_COMPLETE, true)
+    }
+
+    fun isOnBoardingComplete(): Boolean {
+        return getBoolean(IS_ONBOARDING_COMPLETE)
     }
 }
