@@ -23,7 +23,6 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
 
     @Inject
     override lateinit var presenter: PaslonPresenter
-    var listener: Listener? = null
 
     override fun setLayout(): Int {
         return R.layout.fragment_presiden
@@ -34,7 +33,7 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
     }
 
     override fun initView(view: View) {
-        setupRecyclerView(view)
+        setupRecyclerView()
         setData()
         presenter.getUserProfile()
         presenter.getMyTendency()
@@ -66,13 +65,12 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
         paslonAdapter.setDatas(paslons)
     }
 
-    private fun setupRecyclerView(view: View) {
+    private fun setupRecyclerView() {
         layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         paslonAdapter = PaslonAdapter()
         paslonAdapter.listener = object : PaslonAdapter.Listener {
             override fun onSelectItem(paslonData: PaslonData) {
                 selected_paslon.text = paslonData.paslonName
-                listener?.onPaslonSelect(paslonData)
             }
         }
         presiden_recycler_view_calon.layoutManager = layoutManager
@@ -116,7 +114,7 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
         paslon_name.text = tendency.team.title
     }
 
-    interface Listener {
-        fun onPaslonSelect(paslonData: PaslonData)
+    fun getSelectedItem(): PaslonData? {
+        return paslonAdapter.selectedItem
     }
 }

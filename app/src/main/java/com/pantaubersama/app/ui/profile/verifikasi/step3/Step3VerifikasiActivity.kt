@@ -32,7 +32,6 @@ import android.graphics.BitmapFactory
 import android.graphics.SurfaceTexture
 import android.hardware.camera2.CameraManager
 import android.media.Image
-import android.util.Log
 import android.view.TextureView
 import com.pantaubersama.app.utils.Camera2Tools
 import java.io.File
