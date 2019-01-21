@@ -48,6 +48,9 @@ class ConnectActivity : BaseActivity<ConnectPresenter>(), ConnectView {
         setupFacebookLogin()
         getTwitterUserData()
         setupTwitterLogin()
+        connect_submit.setOnClickListener {
+            openHomeActivity()
+        }
     }
 
     private fun getTwitterUserData() {
@@ -236,6 +239,10 @@ class ConnectActivity : BaseActivity<ConnectPresenter>(), ConnectView {
     }
 
     override fun onBackPressed() {
+        openHomeActivity()
+    }
+
+    private fun openHomeActivity() {
         val intent = Intent(this@ConnectActivity, HomeActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
