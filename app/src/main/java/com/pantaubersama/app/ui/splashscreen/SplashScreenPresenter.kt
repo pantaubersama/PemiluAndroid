@@ -35,4 +35,8 @@ class SplashScreenPresenter @Inject constructor(private val loginInteractor: Log
             view?.goToLogin()
         }
     }
+
+    fun getOnboardingStatus() {
+        view?.isOnboardingComplete(loginInteractor.getOnboardingStatus())
+    }
 }

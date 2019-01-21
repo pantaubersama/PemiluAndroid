@@ -11,6 +11,7 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
 import com.pantaubersama.app.ui.login.LoginActivity
+import com.pantaubersama.app.ui.onboarding.OnboardingActivity
 import com.pantaubersama.app.ui.penpol.kuis.detail.DetailKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisUserResultActivity
@@ -55,7 +56,17 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        presenter.checkAppVersion(BuildConfig.VERSION_CODE)
+        presenter.getOnboardingStatus()
+    }
+
+    override fun isOnboardingComplete(complete: Boolean) {
+        if (complete) {
+            presenter.checkAppVersion(BuildConfig.VERSION_CODE)
+        } else {
+            val intent = Intent(this@SplashScreenActivity, OnboardingActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
     }
 
     override fun onForceUpdateAvailable() {

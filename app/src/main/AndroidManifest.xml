@@ -21,10 +21,16 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.search.SearchActivity"></activity>
-        <activity android:name=".ui.profile.setting.badge.detail.DetailBadgeActivity" />
-        <activity android:name=".ui.penpol.kuis.detail.DetailKuisActivity" />
-        <activity android:name=".ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity" />
+        <activity android:name=".ui.onboarding.OnboardingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.search.SearchActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.profile.setting.badge.detail.DetailBadgeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.penpol.kuis.detail.DetailKuisActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="aia-compat-api-min-version"
@@ -64,11 +70,6 @@
             android:name=".ui.splashscreen.SplashScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -98,6 +99,11 @@
                     android:host="@string/pantau_base_url_no_scheme"
                     android:pathPrefix="/share"
                     android:scheme="http" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -176,9 +182,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.setting.editprofile.EditProfileActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.profile.setting.ubahsandi.UbahSandiActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.setting.ubahdatalapor.UbahDataLaporActivity"

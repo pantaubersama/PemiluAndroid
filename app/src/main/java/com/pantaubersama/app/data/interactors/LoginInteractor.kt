@@ -78,4 +78,12 @@ class LoginInteractor @Inject constructor(
             .map { it.data.appVersion }
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun getOnboardingStatus(): Boolean {
+        return dataCache.isOnBoardingComplete()
+    }
+
+    fun setOnboardingComplete() {
+        dataCache.setOnboardingComplete()
+    }
 }

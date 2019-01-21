@@ -13,10 +13,10 @@ interface TanyaKandidatView : BaseView {
     fun bindNextDataTanyaKandidat(questions: MutableList<Pertanyaan>)
     fun showEmptyNextDataAlert()
     fun onItemUpVoted()
-    fun onFailedUpVoteItem(liked: Boolean?, position: Int?)
+    fun onFailedUpVoteItem(liked: Boolean, position: Int)
     fun showItemReportedAlert()
     fun showFailedReportItem()
     fun showFailedDeleteItemAlert()
-    fun onItemDeleted(position: Int?)
+    fun onItemDeleted(position: Int)
     fun bindUserData(profile: Profile)
 }
