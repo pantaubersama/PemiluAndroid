@@ -27,7 +27,7 @@ class SearchWordstadiumFragment : CommonFragment(), UpdateableFragment {
         args?.getString(EXTRA_SEARCH_KEYWORD)?.let { keyword = it }
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         getData(keyword)
     }
 

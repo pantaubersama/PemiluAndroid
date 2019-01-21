@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.profile.linimasa
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -47,7 +48,7 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
 
     override fun setLayout(): Int = R.layout.fragment_profile_janji_politik
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         setupRecyclerJanpol()
         getList()
     }

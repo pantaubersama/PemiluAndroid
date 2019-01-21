@@ -56,7 +56,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         activityComponent.inject(this)
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         if (presenter.isUserEligible()) {
             fab_add.visibleIf(true)
             fab_add.setOnClickListener {

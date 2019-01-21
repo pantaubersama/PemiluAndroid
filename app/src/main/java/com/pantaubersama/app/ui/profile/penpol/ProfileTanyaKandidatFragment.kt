@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.profile.penpol
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -53,7 +54,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
 
     override fun setLayout(): Int = R.layout.fragment_profile_tanya_kandidat
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         presenter.getProfile()
         setupTanyaKandidatList()
         getDataList()

@@ -28,12 +28,12 @@ abstract class CommonFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initProgressDialog()
         fetchArguments(arguments)
-        initView(view)
+        initView(view, savedInstanceState)
     }
 
     protected open fun fetchArguments(args: Bundle?) {}
 
-    protected abstract fun initView(view: View)
+    protected abstract fun initView(view: View, savedInstanceState: Bundle?)
 
     private fun initProgressDialog() {
         progressDialog = ProgressDialog(activity).apply {

@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.penpol.kuis.list
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
@@ -43,7 +44,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         activityComponent.inject(this)
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         presenter.getProfile()
         adapter = KuisListAdapter()
         adapter.listener = object : KuisListAdapter.AdapterListener {
