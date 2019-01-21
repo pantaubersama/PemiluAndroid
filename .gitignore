@@ -46,3 +46,6 @@ captures/
 .Trashes
 ehthumbs.db
 Thumbs.db
+pantau_bersama.keystore
+app/production/
+app/release/

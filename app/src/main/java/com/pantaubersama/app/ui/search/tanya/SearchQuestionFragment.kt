@@ -33,6 +33,7 @@ class SearchQuestionFragment : CommonFragment(), UpdateableFragment {
     }
 
     override fun getData(keyword: String) {
+        this.keyword = keyword
         /* ganti dengan presenter.getData(keyword) */
         tv_keyword.text = "$keyword in $TAG"
     }

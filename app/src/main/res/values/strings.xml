@@ -21,7 +21,7 @@
     <string name="tanya_kandidat_label">Tanya Kandidat</string>
     <string name="kuis_label">Kuis</string>
     <string name="login_failed_alert">Failed to login with Symbolic</string>
-    <string name="tanya_kandidat_banner_text">Apa yang ingin kamu tanyakan kepada Capres &amp; Cawapres Jokowi-Ma\'ruf dan Prabowo-Sandi</string>
+    <string name="tanya_kandidat_banner_text">Apa yang ingin kamu tanyakan kepada Capres &amp; Cawapres Jokowi-Ma\'ruf dan Prabowo-Sandi dan juga Apa yang ingin kamu tanyakan kepada Capres &amp; Cawapres Jokowi-Ma\'ruf dan Prabowo-Sandi</string>
     <string name="pilpres_banner_text">Halaman ini berisikan informasi dari channel Resmi twitter Jokowi - Makruf dan Prabowo - Sandi yang terdaftar di Bawaslu</string>
     <string name="kuis_banner_text">Ikuti quiz pilih jawaban tanpa kamu tahu itu jawaban siapa, kemudian tunggu kejutannya dan lihat hasil dari quiz ini</string>
     <string name="janpol_banner_text">Halaman ini berisikan informasi dari para user yang menginfokan kembali janji politik dari Capres, Cawapres maupun</string>
@@ -211,4 +211,5 @@
     <string name="txt_hapus">Hapus</string>
     <string name="txt_hapus_kata_kunci_ini">Hapus \"%s\" dari riwayat pencarian?</string>
     <string name="txt_hapus_riwayat_pencarian">Hapus semua riwayat pencarian?</string>
+    <string name="pencarian_tidak_ditemukan">Pencarian tidak ditemukan</string>
 </resources>
