@@ -59,7 +59,7 @@ class SearchLinimasaFragment : BaseFragment<SearchLinimasaPresenter>(), SearchLi
         args?.getString(EXTRA_SEARCH_KEYWORD)?.let { keyword = it }
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         setupRecycler()
         getData(keyword)
         tv_filter.setOnClickListener { startActivityForResult(FilterPilpresActivity.setIntent(requireContext(), true), RC_FILTER_PILPRES) }

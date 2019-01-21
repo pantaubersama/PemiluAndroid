@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.note.partai
 
+import android.os.Bundle
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.CommonFragment
@@ -9,7 +10,7 @@ import kotlinx.android.synthetic.main.layout_coming_soon.*
 
 class PartaiFragment : CommonFragment() {
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         iv_logo_pantau_web.setOnClickListener { ChromeTabUtil(requireContext()).loadUrl(PantauConstants.Networking.URL_PANTAU_BERSAMA) }
         iv_logo_facebook.setOnClickListener { ChromeTabUtil(requireContext()).forceLoadUrl(PantauConstants.Networking.URL_PANTAU_BERSAMA_FACEBOOK) }
         iv_logo_instagram.setOnClickListener { ChromeTabUtil(requireContext()).forceLoadUrl(PantauConstants.Networking.URL_PANTAU_BERSAMA_INSTAGRAM) }

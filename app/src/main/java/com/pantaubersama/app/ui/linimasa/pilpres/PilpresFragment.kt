@@ -54,7 +54,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         activityComponent.inject(this)
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         setupRecyclerPilpres()
         getFeedsData()
     }

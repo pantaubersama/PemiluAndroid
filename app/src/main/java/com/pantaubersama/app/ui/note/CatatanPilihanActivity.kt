@@ -22,6 +22,7 @@ import javax.inject.Inject
 
 class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanPilihanView {
     var selectedItem: String = ""
+    var slectedPaslon = 0
 
     @Inject
     override lateinit var presenter: CatatanPilihanPresenter
@@ -43,8 +44,13 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
         setupToolbar(false, getString(R.string.title_catatan_pilihanku), R.color.white, 4f)
         setupViewPager()
         setupRecyclerview()
+        if (savedInstanceState != null) {
+            adapter.setSelected(savedInstanceState.getInt("tab_selected"))
+        } else {
+            adapter.setSelected(0)
+        }
         catatan_pilihanku_ok.setOnClickListener {
-            presidenFragment.getSelectedItem()?.let { presenter.submitCatatanku(it.paslonNumber) }
+            presenter.submitCatatanku(slectedPaslon)
         }
     }
 
@@ -53,7 +59,6 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
             LinearLayoutManager(this@CatatanPilihanActivity, LinearLayoutManager.HORIZONTAL, false)
         adapter = CatatanTabAdapter()
         recycler_view.adapter = adapter
-        adapter.setSelected(0)
     }
 
     inner class CatatanTabAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -104,7 +109,9 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
         catatan_pilihanku_container.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
-                    0 -> presidenFragment
+                    0 -> {
+                        presidenFragment
+                    }
                     else -> partaiFragment
                 }
             }
@@ -138,5 +145,14 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
 
     override fun showFailedSubmitCatatanAlert() {
         ToastUtil.show(this@CatatanPilihanActivity, "Gagal menyimpan pilihan")
+    }
+
+    fun setSelectedPaslon(paslon: Int) {
+        this.slectedPaslon = paslon
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("tab_selected", catatan_pilihanku_container.currentItem)
     }
 }

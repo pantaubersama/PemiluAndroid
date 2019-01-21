@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.onboarding
 
+import android.os.Bundle
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.CommonFragment
@@ -11,7 +12,7 @@ class OnboardingChild1Fragment : CommonFragment() {
         return R.layout.fragment_onboarding_child1
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         onboarding_1_animation.enableLottie(true)
     }
 

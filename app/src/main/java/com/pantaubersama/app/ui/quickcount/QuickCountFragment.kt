@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.quickcount
 
+import android.os.Bundle
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.CommonFragment
@@ -25,7 +26,7 @@ class QuickCountFragment : CommonFragment() {
         return R.layout.fragment_quick_count
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         lottie_coming_soon.enableLottie(true)
 
         iv_logo_pantau_web.setOnClickListener { ChromeTabUtil(context!!).loadUrl(URL_PANTAU_BERSAMA) }

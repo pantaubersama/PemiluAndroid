@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.linimasa
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
@@ -23,7 +24,7 @@ class LinimasaFragment : CommonFragment() {
     private var pilpresFragment = PilpresFragment.newInstance()
     private var janjiPolitikFragment = JanjiPolitikFragment()
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         setupTabLayout()
         setupViewPager()
         btn_filter.setOnClickListener {

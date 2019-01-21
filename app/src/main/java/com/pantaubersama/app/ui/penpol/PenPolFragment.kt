@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.penpol
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
@@ -24,7 +25,7 @@ class PenPolFragment : CommonFragment() {
     private var tanyaKandidatFragment: TanyaKandidatFragment? = TanyaKandidatFragment.newInstance()
     private var kuisFragment: KuisFragment? = KuisFragment.newInstance()
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         setupTabLayout()
         setupViewPager()
         btn_filter?.setOnClickListener {

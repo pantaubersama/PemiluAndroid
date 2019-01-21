@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.search.history
 
+import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,7 +36,7 @@ class SearchHistoryFragment : BaseFragment<SearchHistoryPresenter>(), SearchHist
         }
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         setupRecycler()
         presenter.getSearchHistory()
 
