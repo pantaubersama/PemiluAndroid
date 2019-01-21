@@ -1,18 +1,18 @@
 package com.pantaubersama.app.ui.onboarding
 
-
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
+import com.pantaubersama.app.base.CommonFragment
+import com.pantaubersama.app.utils.extensions.enableLottie
+import kotlinx.android.synthetic.main.fragment_onboarding_child2.*
 
-class OnboardingChild2Fragment : Fragment() {
+class OnboardingChild2Fragment : CommonFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_onboarding_child2, container, false)
+    override fun setLayout(): Int {
+        return R.layout.fragment_onboarding_child2
+    }
+
+    override fun initView(view: View) {
+        onboarding_2_animation.enableLottie(true)
     }
 }
