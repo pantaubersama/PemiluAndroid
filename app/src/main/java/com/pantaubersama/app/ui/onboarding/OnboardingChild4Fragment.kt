@@ -8,6 +8,10 @@ import kotlinx.android.synthetic.main.fragment_onboarding_child4.*
 
 class OnboardingChild4Fragment : CommonFragment() {
 
+    companion object {
+        val TAG = OnboardingChild4Fragment::class.java.simpleName
+    }
+
     override fun setLayout(): Int {
         return R.layout.fragment_onboarding_child4
     }

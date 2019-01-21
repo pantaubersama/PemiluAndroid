@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.fragment_onboarding_child1.*
 class OnboardingChild1Fragment : CommonFragment() {
 
     companion object {
+        val TAG = OnboardingChild1Fragment::class.java.simpleName
         fun newInstance(): OnboardingChild1Fragment {
             val fragment = OnboardingChild1Fragment()
             return fragment

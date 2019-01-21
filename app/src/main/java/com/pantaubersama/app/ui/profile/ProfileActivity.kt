@@ -69,7 +69,9 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         setupClusterLayout()
         setupBiodataLayout()
         setupBadgeLayout()
-        showFragment(ProfileJanjiPolitikFragment(), ProfileJanjiPolitikFragment.TAG)
+        if (savedInstanceState == null) {
+            showFragment(ProfileJanjiPolitikFragment(), ProfileJanjiPolitikFragment.TAG)
+        }
         setupNavigation()
         presenter.refreshProfile()
         presenter.getProfile()

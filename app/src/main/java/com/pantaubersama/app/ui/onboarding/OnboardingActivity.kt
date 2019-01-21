@@ -13,11 +13,11 @@ import androidx.viewpager.widget.ViewPager
 import com.pantaubersama.app.ui.login.LoginActivity
 
 class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
-    private val onBoardingChild1Fragment: OnboardingChild1Fragment = OnboardingChild1Fragment()
-    private val onBoardingChild2Fragment: OnboardingChild2Fragment = OnboardingChild2Fragment()
-    private val onBoardingChild3Fragment: OnboardingChild3Fragment = OnboardingChild3Fragment()
-    private val onBoardingChild4Fragment: OnboardingChild4Fragment = OnboardingChild4Fragment()
-    private val onBoardingChild5Fragment: OnboardingChild5Fragment = OnboardingChild5Fragment()
+    private var onBoardingChild1Fragment: OnboardingChild1Fragment = OnboardingChild1Fragment()
+    private var onBoardingChild2Fragment: OnboardingChild2Fragment = OnboardingChild2Fragment()
+    private var onBoardingChild3Fragment: OnboardingChild3Fragment = OnboardingChild3Fragment()
+    private var onBoardingChild4Fragment: OnboardingChild4Fragment = OnboardingChild4Fragment()
+    private var onBoardingChild5Fragment: OnboardingChild5Fragment = OnboardingChild5Fragment()
 
     @Inject
     override lateinit var presenter: OnBoardingPresenter
@@ -31,7 +31,18 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
     override fun setLayout(): Int = R.layout.activity_onboarding
 
     override fun setupUI(savedInstanceState: Bundle?) {
+
+        if (savedInstanceState != null) {
+            onBoardingChild1Fragment = supportFragmentManager.getFragment(savedInstanceState, OnboardingChild1Fragment.TAG) as OnboardingChild1Fragment
+            onBoardingChild2Fragment = supportFragmentManager.getFragment(savedInstanceState, OnboardingChild2Fragment.TAG) as OnboardingChild2Fragment
+            onBoardingChild3Fragment = supportFragmentManager.getFragment(savedInstanceState, OnboardingChild3Fragment.TAG) as OnboardingChild3Fragment
+            onBoardingChild4Fragment = supportFragmentManager.getFragment(savedInstanceState, OnboardingChild4Fragment.TAG) as OnboardingChild4Fragment
+            onBoardingChild5Fragment = supportFragmentManager.getFragment(savedInstanceState, OnboardingChild5Fragment.TAG) as OnboardingChild5Fragment
+        }
+
         setupViewPager()
+
+
         skip_button.setOnClickListener {
             openLoginActivity()
         }
@@ -120,5 +131,15 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
 
     override fun dismissLoading() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        supportFragmentManager.putFragment(outState, OnboardingChild1Fragment.TAG, onBoardingChild1Fragment)
+        supportFragmentManager.putFragment(outState, OnboardingChild2Fragment.TAG, onBoardingChild2Fragment)
+        supportFragmentManager.putFragment(outState, OnboardingChild3Fragment.TAG, onBoardingChild3Fragment)
+        supportFragmentManager.putFragment(outState, OnboardingChild4Fragment.TAG, onBoardingChild4Fragment)
+        supportFragmentManager.putFragment(outState, OnboardingChild5Fragment.TAG, onBoardingChild5Fragment)
     }
 }
