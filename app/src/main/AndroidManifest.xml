@@ -21,7 +21,14 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.search.SearchActivity"></activity>
+        <activity android:name=".ui.onboarding.OnboardingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.profile.setting.badge.detail.DetailBadgeActivity" />
         <activity android:name=".ui.penpol.kuis.detail.DetailKuisActivity" />
         <activity android:name=".ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity" />
@@ -64,11 +71,7 @@
             android:name=".ui.splashscreen.SplashScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -176,9 +179,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.setting.editprofile.EditProfileActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.profile.setting.ubahsandi.UbahSandiActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.setting.ubahdatalapor.UbahDataLaporActivity"

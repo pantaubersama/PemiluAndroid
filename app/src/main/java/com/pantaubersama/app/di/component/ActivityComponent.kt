@@ -14,6 +14,7 @@ import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.note.presiden.PresidenFragment
+import com.pantaubersama.app.ui.onboarding.OnboardingActivity
 import com.pantaubersama.app.ui.penpol.kuis.detail.DetailKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.filter.FilterKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
@@ -98,4 +99,5 @@ interface ActivityComponent {
     fun inject(detailBadgeActivity: DetailBadgeActivity)
     fun inject(searchActivity: SearchActivity)
     fun inject(searchHistoryFragment: SearchHistoryFragment)
+    fun inject(onboardingActivity: OnboardingActivity)
 }
