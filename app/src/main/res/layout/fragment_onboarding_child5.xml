@@ -29,6 +29,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
         android:textSize="16sp"
         android:textColor="@color/gray_dark_2"
         android:text="Rekapitulasi partisipatif real-time dan transparan."

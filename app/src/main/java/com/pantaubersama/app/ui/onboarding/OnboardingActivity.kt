@@ -26,13 +26,9 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
         activityComponent.inject(this)
     }
 
-    override fun statusBarColor(): Int? {
-        return 0
-    }
+    override fun statusBarColor(): Int? = R.color.white
 
-    override fun setLayout(): Int {
-        return R.layout.activity_onboarding
-    }
+    override fun setLayout(): Int = R.layout.activity_onboarding
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupViewPager()
@@ -72,6 +68,7 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
                 return 5
             }
         }
+        view_pager.offscreenPageLimit = 3
         dots_indicator.setViewPager(view_pager)
         view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {

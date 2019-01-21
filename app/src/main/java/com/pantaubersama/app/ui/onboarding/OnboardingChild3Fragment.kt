@@ -8,6 +8,13 @@ import kotlinx.android.synthetic.main.fragment_onboarding_child3.*
 
 class OnboardingChild3Fragment : CommonFragment() {
 
+    companion object {
+        fun newInstance(): OnboardingChild3Fragment {
+            val fragment = OnboardingChild3Fragment()
+            return fragment
+        }
+    }
+
     override fun setLayout(): Int {
         return R.layout.fragment_onboarding_child3
     }
@@ -16,6 +23,6 @@ class OnboardingChild3Fragment : CommonFragment() {
     }
 
     fun startAnimation(start: Boolean) {
-        onboarding_3_animation.enableLottie(start)
+        onboarding_3_animation.enableLottie(start, false)
     }
 }

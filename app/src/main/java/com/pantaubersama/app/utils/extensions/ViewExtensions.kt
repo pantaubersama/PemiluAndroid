@@ -79,8 +79,8 @@ fun View.isVisible(): Boolean {
     return this.visibility == View.VISIBLE
 }
 
-fun LottieAnimationView.enableLottie(enable: Boolean, looping: Boolean = true) {
-    this.visibleIf(enable)
+fun LottieAnimationView.enableLottie(enable: Boolean, isGoneOnDisable: Boolean = true, looping: Boolean = true) {
+    if (isGoneOnDisable) this.visibleIf(enable)
     if (enable) {
         this.playAnimation()
         this.repeatCount = if (looping) LottieDrawable.INFINITE else 1

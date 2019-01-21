@@ -16,6 +16,6 @@ class OnboardingChild4Fragment : CommonFragment() {
     }
 
     fun startAnimation(start: Boolean) {
-        onboarding_4_animation.enableLottie(start)
+        onboarding_4_animation.enableLottie(start, false)
     }
 }
