@@ -54,5 +54,28 @@ class ShareUtil {
                 context.startActivity(chooserIntent)
             }
         }
+
+        fun shareApp(context: Context, shareUrl: String) {
+            val targetedShareIntents: MutableList<Intent> = ArrayList()
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            val resInfo = context.packageManager?.queryIntentActivities(shareIntent, 0)
+
+            if (!resInfo!!.isEmpty()) {
+                for (resolveInfo in resInfo) {
+                    val sendIntent = Intent(Intent.ACTION_SEND)
+                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Pantau")
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, shareUrl)
+                    sendIntent.type = "text/plain"
+                    if (!resolveInfo.activityInfo.packageName.contains("pantaubersama")) {
+                        sendIntent.`package` = resolveInfo.activityInfo.packageName
+                        targetedShareIntents.add(sendIntent)
+                    }
+                }
+                val chooserIntent = Intent.createChooser(targetedShareIntents.removeAt(0), "Bagikan dengan")
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
+                context.startActivity(chooserIntent)
+            }
+        }
     }
 }
