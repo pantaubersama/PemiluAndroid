@@ -67,6 +67,7 @@ class PantauConstants {
         const val EXTRA_ACHIEVED_ID = "EXTRA_ACHIEVED_ID"
         const val EXTRA_ACHIEVED_BADGE_ITEM = "EXTRA_ACHIEVED_BADGE_ITEM"
         const val EXTRA_SEARCH_KEYWORD = "EXTRA_SEARCH_KEYWORD"
+        const val EXTRA_IS_SEARCH_FILTER = "EXTRA_IS_SEARCH_FILTER"
     }
 
     object RequestCode {

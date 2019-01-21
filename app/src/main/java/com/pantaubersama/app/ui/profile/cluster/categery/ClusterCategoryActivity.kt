@@ -159,7 +159,7 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
     }
 
     override fun showLoading() {
-        lottie_loading.enableLottie(true)
+        lottie_loading.enableLottie(true, lottie_loading)
         view_empty_state.enableLottie(false, lottie_empty_state)
         view_fail_state.enableLottie(false, lottie_fail_state)
         recycler_view.visibleIf(false)
@@ -167,7 +167,7 @@ class ClusterCategoryActivity : BaseActivity<ClusterCategoryPresenter>(), Cluste
 
     override fun dismissLoading() {
         recycler_view.visibleIf(false)
-        lottie_loading.enableLottie(false)
+        lottie_loading.enableLottie(false, lottie_loading)
     }
 
     override fun bindNextData(categories: MutableList<Category>) {

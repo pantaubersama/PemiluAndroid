@@ -73,12 +73,12 @@ class UndangAnggotaActivity : BaseActivity<UndangAnggotaPresenter>(), UndangAngg
 
     override fun showLoading() {
         loading.visibility = View.VISIBLE
-        lottie_loading.enableLottie(true)
+        lottie_loading.enableLottie(true, lottie_loading)
     }
 
     override fun dismissLoading() {
         loading.visibility = View.GONE
-        lottie_loading.enableLottie(false)
+        lottie_loading.enableLottie(false, lottie_loading)
     }
 
     override fun showSuccessInviteAlert() {

@@ -29,9 +29,10 @@ interface PantauAPI {
 
     @GET("linimasa/v1/feeds/pilpres")
     fun getFeeds(
-        @Query("filter_by") filterBy: String?,
-        @Query("page") page: Int?,
-        @Query("per_page") perPage: Int?
+        @Query("q") keyword: String,
+        @Query("filter_by") filterBy: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
     ): Single<FeedsResponse>
 
     @GET("linimasa/v1/janji_politiks/{id}")

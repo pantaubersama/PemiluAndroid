@@ -9,6 +9,7 @@ import android.view.MenuItem
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_IS_SEARCH_FILTER
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_ALL
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_1
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_2
@@ -17,6 +18,8 @@ import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
 import javax.inject.Inject
 
 class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilpresView {
+
+    private var isSearchFilter = false
 
     @Inject
     override lateinit var presenter: FilterPilpresPresenter
@@ -28,9 +31,9 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
     private var selectedFilter: String? = ""
 
     companion object {
-        fun setIntent(context: Context): Intent {
+        fun setIntent(context: Context, isSearchFilter: Boolean): Intent {
             val intent = Intent(context, FilterPilpresActivity::class.java)
-//        intent.putExtra(PantauConstants.Extra.EXTRA_SELECTED_FILTER_PILPRES, selectedFilter)
+            intent.putExtra(EXTRA_IS_SEARCH_FILTER, isSearchFilter)
             return intent
         }
     }
@@ -40,11 +43,17 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
     }
 
     override fun fetchIntentExtra() {
+        isSearchFilter = intent.getBooleanExtra(EXTRA_IS_SEARCH_FILTER, false)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
-        presenter.getFilter()
+
+        if (!isSearchFilter) {
+            presenter.getFilter()
+        } else {
+            presenter.getSearchFilter()
+        }
 
         radio_group_pilpres.setOnCheckedChangeListener { _, checkedId ->
             selectedFilter = when (checkedId) {
@@ -56,7 +65,11 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
         }
 
         btn_terapkan.setOnClickListener {
-            presenter.setFilter(selectedFilter!!)
+            if (!isSearchFilter) {
+                selectedFilter?.let { presenter.setFilter(it) }
+            } else {
+                selectedFilter?.let { presenter.setSearchFilter(it) }
+            }
         }
     }
 
