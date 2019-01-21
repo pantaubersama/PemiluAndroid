@@ -95,15 +95,13 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
             item?.isliked = !item?.isliked!!
             val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
             if (!upVoted!!) {
-                val loveCount = item.likeCount!! + 1
-                item.likeCount = loveCount
+                item.likeCount += 1
                 animator.addUpdateListener { animation -> upvote_animation.progress = animation.animatedValue as Float
                     upvote_count_text.text = item.likeCount.toString()
                 }
                 animator.start()
             } else {
-                val upVoteCount = item.likeCount!! - 1
-                item.likeCount = upVoteCount
+                item.likeCount -= 1
                 upvote_count_text.text = item.likeCount.toString()
                 upvote_animation.progress = 0.0f
             }
@@ -145,8 +143,8 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         }
     }
 
-    fun reverseVote(liked: Boolean?, position: Int?) {
-        (data[position!!] as Pertanyaan).isliked = liked
+    fun reverseVote(liked: Boolean, position: Int) {
+        (data[position] as Pertanyaan).isliked = liked
         notifyItemChanged(position)
     }
 
@@ -180,10 +178,10 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         fun onClickBanner(bannerInfo: BannerInfo)
         fun onClickHeader()
         fun onClickShare(item: Pertanyaan?)
-        fun onClickUpvote(id: String?, isLiked: Boolean, position: Int?)
-        fun onClickDeleteItem(id: String?, position: Int?)
-        fun onClickCopyUrl(id: String?)
-        fun onClickLapor(id: String?)
+        fun onClickUpvote(id: String, isLiked: Boolean, position: Int)
+        fun onClickDeleteItem(id: String, position: Int)
+        fun onClickCopyUrl(id: String)
+        fun onClickLapor(id: String)
         fun onClickTanyaOption(item: Pertanyaan, position: Int)
         fun onClickContent(item: Pertanyaan, position: Int)
         fun onclickActionUnauthorized()

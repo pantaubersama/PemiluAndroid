@@ -78,7 +78,7 @@ class TanyaKandidatPresenter @Inject constructor(
             ))
     }
 
-    fun upVoteQuestion(id: String?, questionCalass: String?, isLiked: Boolean?, position: Int?) {
+    fun upVoteQuestion(id: String?, questionCalass: String, isLiked: Boolean, position: Int) {
         disposables.add(
             tanyaKandidatInteractor
                 .upVoteQuestion(
@@ -116,7 +116,7 @@ class TanyaKandidatPresenter @Inject constructor(
         )
     }
 
-    fun deleteItem(id: String?, position: Int?) {
+    fun deleteItem(id: String, position: Int) {
         disposables.add(
             tanyaKandidatInteractor
                 .deleteQuestions(id)
@@ -132,7 +132,7 @@ class TanyaKandidatPresenter @Inject constructor(
         )
     }
 
-    fun unVoteQuestion(id: String?, className: String, liked: Boolean, position: Int?) {
+    fun unVoteQuestion(id: String, className: String, liked: Boolean, position: Int) {
         disposables.add(
             tanyaKandidatInteractor
                 .unVoteQuestion(id, className)

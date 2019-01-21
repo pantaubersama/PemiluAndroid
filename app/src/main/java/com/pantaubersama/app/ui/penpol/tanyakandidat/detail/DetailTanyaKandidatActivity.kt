@@ -180,7 +180,7 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
         setItemChangedResult()
     }
 
-    override fun onFailedUpVoteItem(liked: Boolean?) {
+    override fun onFailedUpVoteItem(liked: Boolean) {
         question?.isliked = liked
         question?.isliked?.let {
             if (it) {

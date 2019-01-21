@@ -7,7 +7,7 @@ interface DetailTanyaKandidatView : BaseView {
     fun bindData(question: Pertanyaan)
     fun onFailedGetData(throwable: Throwable)
     fun onItemUpVoted()
-    fun onFailedUpVoteItem(liked: Boolean?)
+    fun onFailedUpVoteItem(liked: Boolean)
     fun showItemReportedAlert()
     fun showFailedReportItem()
     fun showFailedDeleteItemAlert()

@@ -120,7 +120,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
                 ShareUtil.shareItem(requireContext(), item)
             }
 
-            override fun onClickUpvote(id: String?, isLiked: Boolean, position: Int?) {
+            override fun onClickUpvote(id: String, isLiked: Boolean, position: Int) {
                 if (!isLiked) {
                     presenter.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
                 } else {
@@ -128,16 +128,16 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
                 }
             }
 
-            override fun onClickDeleteItem(id: String?, position: Int?) {
+            override fun onClickDeleteItem(id: String, position: Int) {
                 showProgressDialog(getString(R.string.txt_delete_item_ini))
                 presenter.deleteItem(id, position)
             }
 
-            override fun onClickCopyUrl(id: String?) {
+            override fun onClickCopyUrl(id: String) {
                 CopyUtil.copyTanyaKandidat(requireContext(), id!!)
             }
 
-            override fun onClickLapor(id: String?) {
+            override fun onClickLapor(id: String) {
                 // lapor is hidden in this section
             }
 
@@ -158,9 +158,9 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
         }
     }
 
-    override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>?) {
+    override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>) {
         recycler_view?.visibleIf(true)
-        adapter.setDatas(pertanyaanList!! as MutableList<ItemModel>)
+        adapter.setDatas(pertanyaanList as MutableList<ItemModel>)
         if (pertanyaanList.size < presenter.perPage) {
             adapter.setDataEnd(true)
         }
@@ -194,7 +194,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
         // nothing to do
     }
 
-    override fun onFailedUpVoteItem(liked: Boolean?, position: Int?) {
+    override fun onFailedUpVoteItem(liked: Boolean, position: Int) {
         adapter.reverseVote(liked, position)
     }
 
@@ -211,7 +211,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
         ToastUtil.show(context!!, "Gagal menghapus pertanyaan")
     }
 
-    override fun onItemDeleted(position: Int?) {
+    override fun onItemDeleted(position: Int) {
         dismissProgressDialog()
         adapter.deleteItem(position)
         if (adapter.itemCount == 0) {
