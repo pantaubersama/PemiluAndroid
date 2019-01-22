@@ -319,7 +319,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         }
     }
 
-    fun scrollToTop(smoothScroll: Boolean) {
+    override fun scrollToTop(smoothScroll: Boolean) {
         if (smoothScroll) {
             recycler_view.smoothScrollToPosition(0)
         } else {

@@ -42,7 +42,6 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
 
         setupViewPager()
 
-
         skip_button.setOnClickListener {
             openLoginActivity()
         }

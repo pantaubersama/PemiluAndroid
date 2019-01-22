@@ -14,8 +14,10 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseView
+import com.pantaubersama.app.base.CommonFragment
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.search.history.SearchHistoryFragment
+import com.pantaubersama.app.ui.search.janjipolitik.SearchJanjiPolitikFragment
 import com.pantaubersama.app.utils.extensions.visibleIf
 import javax.inject.Inject
 
@@ -81,9 +83,9 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
         val tabLinimasa = TabView(this)
         tabLinimasa.setTitleLabel(R.string.txt_tab_linimasa)
         tab_layout.addTab(tab_layout.newTab().setCustomView(tabLinimasa))
-//        val tabJanPol = TabView(this)
-//        tabJanPol.setTitleLabel(R.string.txt_tab_janji_politik)
-//        tab_layout.addTab(tab_layout.newTab().setCustomView(tabJanPol))
+        val tabJanPol = TabView(this)
+        tabJanPol.setTitleLabel(R.string.txt_tab_janji_politik)
+        tab_layout.addTab(tab_layout.newTab().setCustomView(tabJanPol))
 //        val tabTanya = TabView(this)
 //        tabTanya.setTitleLabel(R.string.txt_tab_tanya)
 //        tab_layout.addTab(tab_layout.newTab().setCustomView(tabTanya))
@@ -95,7 +97,12 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
 //        tab_layout.addTab(tab_layout.newTab().setCustomView(tabWordstadium))
 
         tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(p0: TabLayout.Tab?) {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                val currentFragment = supportFragmentManager.findFragmentByTag(
+                    "android:switcher:" + R.id.view_pager + ":" + view_pager.currentItem
+                ) as CommonFragment?
+
+                currentFragment?.scrollToTop()
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {
@@ -126,6 +133,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
 //                        6 -> SearchWordstadiumFragment.newInstance(it)
 
                         0 -> SearchLinimasaFragment.newInstance(it) // sementara hanya untuk production @edityo 21/01/19
+                        1 -> SearchJanjiPolitikFragment.newInstance(it)
                         else -> Fragment()
                     }
                 } ?: return SearchHistoryFragment.newInstance()

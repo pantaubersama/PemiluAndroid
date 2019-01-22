@@ -27,8 +27,6 @@ import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.clusterundang.ClusterUndangActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
-import com.pantaubersama.app.ui.profile.setting.panduankomunitas.PanduanKomunitasActivity
-import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
 import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
 import com.pantaubersama.app.utils.PantauConstants
