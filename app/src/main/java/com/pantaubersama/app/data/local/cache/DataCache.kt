@@ -49,6 +49,8 @@ class DataCache(context: Context) : SharedPref(context) {
 
         const val KEY_SEARCH_HISTORY = "KEY_SEARCH_HISTORY"
         const val IS_ONBOARDING_COMPLETE = "is_onboarding_complete"
+
+        const val FILTER_ORANG = "filter_orang"
     }
 
     override fun prefId(): String {
@@ -222,5 +224,9 @@ class DataCache(context: Context) : SharedPref(context) {
 
     fun isOnBoardingComplete(): Boolean {
         return getBoolean(IS_ONBOARDING_COMPLETE)
+    }
+
+    fun getSearchOrangFilter(): String {
+        return getString(FILTER_ORANG) ?: PantauConstants.FILTER_ORANG_ALL
     }
 }

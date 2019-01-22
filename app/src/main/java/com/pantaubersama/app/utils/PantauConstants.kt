@@ -7,6 +7,12 @@ import android.Manifest
  */
 class PantauConstants {
 
+    object Search {
+        object Filter {
+            const val SEARCH_ORANG_REQUEST_CODE = 1111
+        }
+    }
+
     companion object {
         const val LABEL_COPY = "LABEL_COPY"
 
@@ -16,6 +22,9 @@ class PantauConstants {
         const val BANNER_KUIS = "kuis"
         const val URL = "url"
         val PROFILE_COMPLETION = "profile_completion"
+        val FILTER_ORANG_ALL = "verified_all"
+        val FILTER_ORANG_VERIFIED = "verified_true"
+        val FILTER_ORANG_UNVERIFIED = "verified_false"
     }
 
     object Cluster {
@@ -150,7 +159,7 @@ class PantauConstants {
         const val TYPE_CLUSTER_ITEM = 7
         const val CATEGORY_ITEM = 8
         const val TYPE_PASLON = 9
-        const val TYPE_HEADER_TANYA = 10
+        const val TYPE_USER = 10
     }
 
     object Profile {

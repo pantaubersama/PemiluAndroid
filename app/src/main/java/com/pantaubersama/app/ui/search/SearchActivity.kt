@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.search
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import com.pantaubersama.app.base.CommonFragment
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.search.history.SearchHistoryFragment
 import com.pantaubersama.app.ui.search.janjipolitik.SearchJanjiPolitikFragment
+import com.pantaubersama.app.ui.search.person.SearchPersonFragment
 import com.pantaubersama.app.utils.extensions.visibleIf
 import javax.inject.Inject
 
@@ -74,9 +76,9 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
     }
 
     private fun setupTabLayout() {
-//        val tabOrang = TabView(this)  // yg belum selesai di hide dulu untuk production @edityo 21/01/19
-//        tabOrang.setTitleLabel(R.string.txt_tab_orang)
-//        tab_layout.addTab(tab_layout.newTab().setCustomView(tabOrang))
+        val tabOrang = TabView(this) // yg belum selesai di hide dulu untuk production @edityo 21/01/19
+        tabOrang.setTitleLabel(R.string.txt_tab_orang)
+        tab_layout.addTab(tab_layout.newTab().setCustomView(tabOrang))
 //        val tabCluster = TabView(this)
 //        tabCluster.setTitleLabel(R.string.txt_tab_cluster)
 //        tab_layout.addTab(tab_layout.newTab().setCustomView(tabCluster))
@@ -124,7 +126,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
             override fun getItem(position: Int): Fragment {
                 keyword?.let {
                     return when (position) {
-//                        0 -> SearchPersonFragment.newInstance(it)
+                        0 -> SearchPersonFragment.newInstance(it)
 //                        1 -> SearchClusterFragment.newInstance(it)
 //                        2 -> SearchLinimasaFragment.newInstance(it)
 //                        3 -> SearchJanjiPolitikFragment.newInstance(it)
@@ -132,8 +134,8 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
 //                        5 -> SearchQuizFragment.newInstance(it)
 //                        6 -> SearchWordstadiumFragment.newInstance(it)
 
-                        0 -> SearchLinimasaFragment.newInstance(it) // sementara hanya untuk production @edityo 21/01/19
-                        1 -> SearchJanjiPolitikFragment.newInstance(it)
+                        1 -> SearchLinimasaFragment.newInstance(it) // sementara hanya untuk production @edityo 21/01/19
+                        2 -> SearchJanjiPolitikFragment.newInstance(it)
                         else -> Fragment()
                     }
                 } ?: return SearchHistoryFragment.newInstance()
@@ -148,5 +150,9 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
                 }
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

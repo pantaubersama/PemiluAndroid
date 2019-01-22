@@ -1,14 +1,31 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.pantaubersama.app.ui.search.person.SearchPersonFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/tv_keyword"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_height="wrap_content"
+        android:background="@color/gray_2">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/tv_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:padding="8dp"
+            android:gravity="center"
+            android:drawablePadding="7dp"
+            android:drawableEnd="@drawable/ic_filter_gray"
+            android:fontFamily="@font/lato_regular"
+            android:text="@string/txt_filter"
+            android:textSize="14sp"
+            android:textColor="@color/gray_4"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+    <include layout="@layout/layout_common_recyclerview"/>
+
+</LinearLayout>

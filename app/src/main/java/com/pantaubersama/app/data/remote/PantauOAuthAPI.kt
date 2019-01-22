@@ -190,4 +190,12 @@ interface PantauOAuthAPI {
     fun submitCatatanku(
         @Field("vote_preference") paslonSelected: Int?
     ): Completable
+
+    @GET("/v1/users")
+    fun searchUser(
+        @Query("q") keyword: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("filter_by") filter: String
+    ): Single<ProfileResponse>
 }
