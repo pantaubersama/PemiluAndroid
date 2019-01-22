@@ -64,7 +64,7 @@ class SearchPersonFragment : BaseFragment<SearchPersonPresenter>(), UpdateableFr
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         setupPeopleList()
-        if (savedInstanceState != null) {
+        if (savedInstanceState?.getString("keyword") != null) {
             savedInstanceState.getString("keyword")?.let { getData(it) }
         } else {
             getData(keyword)
