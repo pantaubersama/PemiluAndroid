@@ -48,6 +48,7 @@ import com.pantaubersama.app.ui.search.SearchActivity
 import com.pantaubersama.app.ui.search.history.SearchHistoryFragment
 import com.pantaubersama.app.ui.search.janjipolitik.SearchJanjiPolitikFragment
 import com.pantaubersama.app.ui.search.linimasa.SearchLinimasaFragment
+import com.pantaubersama.app.ui.search.person.SearchPersonFragment
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import dagger.Subcomponent
 
@@ -104,4 +105,5 @@ interface ActivityComponent {
     fun inject(onboardingActivity: OnboardingActivity)
     fun inject(searchLinimasaFragment: SearchLinimasaFragment)
     fun inject(searchJanjiPolitikFragment: SearchJanjiPolitikFragment)
+    fun inject(searchPersonFragment: SearchPersonFragment)
 }
