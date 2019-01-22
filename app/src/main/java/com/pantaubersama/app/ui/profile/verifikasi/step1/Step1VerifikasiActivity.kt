@@ -39,7 +39,7 @@ class Step1VerifikasiActivity : BaseActivity<Step1VerifikasiPresenter>(), Step1V
         setupToolbar(true, "", R.color.white, 4f)
         verification_step_indicator.text = "0/3"
 
-        ktp_number.error = "harus diisi"
+        ktp_number.error = "Harus diisi"
         ktp_number.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -57,7 +57,7 @@ class Step1VerifikasiActivity : BaseActivity<Step1VerifikasiPresenter>(), Step1V
                     ktp_number.setCompoundDrawables(null, null, getDrawable(R.drawable.check_icon), null)
                 } else {
                     isInputValid = false
-                    ktp_number.error = "format nomor KTP tidak valid"
+                    ktp_number.error = "Format nomor KTP tidak valid"
                 }
             }
         })
