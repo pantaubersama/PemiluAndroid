@@ -70,4 +70,6 @@ abstract class CommonFragment : Fragment() {
             }
         }
     }
+
+    open fun scrollToTop(smoothScroll: Boolean = true) {}
 }

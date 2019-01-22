@@ -57,6 +57,11 @@ class PenPolFragment : CommonFragment() {
 
         tab_layout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(p0: TabLayout.Tab?) {
+                val currentFragment = childFragmentManager.findFragmentByTag(
+                    "android:switcher:" + R.id.view_pager + ":" + view_pager.currentItem
+                ) as CommonFragment?
+
+                currentFragment?.scrollToTop()
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {

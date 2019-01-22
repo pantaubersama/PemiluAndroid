@@ -179,7 +179,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         }
     }
 
-    fun scrollToTop(smoothScroll: Boolean) {
+    override fun scrollToTop(smoothScroll: Boolean) {
         if (smoothScroll) {
             recycler_view.smoothScrollToPosition(0)
         } else {

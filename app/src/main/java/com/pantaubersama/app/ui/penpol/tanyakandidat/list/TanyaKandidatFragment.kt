@@ -323,16 +323,16 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean("is_new_instance", false)
-    }
-
-    fun scrollToTop(smoothScroll: Boolean) {
+    override fun scrollToTop(smoothScroll: Boolean) {
         if (smoothScroll) {
             recycler_view.smoothScrollToPosition(0)
         } else {
             recycler_view.scrollToPosition(0)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("is_new_instance", false)
     }
 }
