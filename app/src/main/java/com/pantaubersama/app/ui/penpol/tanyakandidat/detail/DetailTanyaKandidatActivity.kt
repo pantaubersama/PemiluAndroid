@@ -31,7 +31,7 @@ import javax.inject.Inject
 
 class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>(), DetailTanyaKandidatView {
     @Inject override lateinit var presenter: DetailTanyaKandidatPresenter
-
+    val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
     private var questionId: String? = null
     private var question: Pertanyaan? = null
     private var itemPosition: Int? = null
@@ -62,7 +62,7 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
     override fun fetchIntentExtra() {
         intent.getStringExtra(EXTRA_QUESTION_ID)?.let { this.questionId = it }
         intent.getSerializableExtra(EXTRA_QUESTION_ITEM)?.let { this.question = it as Pertanyaan }
-        intent.getIntExtra(EXTRA_ITEM_POSITION, -1)?.let { this.itemPosition = it }
+        intent.getIntExtra(EXTRA_ITEM_POSITION, -1).let { this.itemPosition = it }
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
@@ -86,22 +86,26 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
 
     override fun bindData(question: Pertanyaan) {
         this.question = question
-        iv_user_avatar.loadUrl(question.user?.avatar?.url, R.drawable.ic_avatar_placeholder)
-        tv_user_name.text = question.user?.fullName
-        tv_user_bio.text = question.user?.about
+        iv_user_avatar.loadUrl(question.user.avatar?.url, R.drawable.ic_avatar_placeholder)
+        tv_user_name.text = question.user.fullName
+        tv_user_bio.text = question.user.about
         question_time.text = question.createdAtInWord?.id
         upvote_count_text.text = question.likeCount.toString()
         user_question.text = question.body
         iv_options_button.setOnClickListener { onClickOption() }
         iv_share_button.setOnClickListener { ShareUtil.shareItem(this, question) }
-        question.isliked?.let {
+        question.isliked.let {
             if (it) {
                 upvote_animation.progress = 1.0f
             } else {
                 upvote_animation.progress = 0.0f
             }
         }
-        upvote_container.setOnClickListener { setUpvoted() }
+        upvote_container.setOnClickListener {
+            if (!animator.isRunning) {
+                setUpvoted()
+            }
+        }
 
         layout_item_tanya_kandidat.visibleIf(true)
     }
@@ -109,17 +113,14 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
     private fun setUpvoted() {
         val upVoted = question?.isliked
         question?.isliked = !question?.isliked!!
-        val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
         if (!upVoted!!) {
-            val loveCount = question?.likeCount!! + 1
-            question?.likeCount = loveCount
+            question?.likeCount = question?.likeCount?.plus(1)!!
             animator.addUpdateListener { animation -> upvote_animation.progress = animation.animatedValue as Float
                 upvote_count_text.text = question?.likeCount.toString()
             }
             animator.start()
         } else {
-            val upVoteCount = question?.likeCount!! - 1
-            question?.likeCount = upVoteCount
+            question?.likeCount = question?.likeCount?.minus(1)!!
             upvote_count_text.text = question?.likeCount.toString()
             upvote_animation.progress = 0.0f
         }
@@ -159,7 +160,7 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
                         val deleteDialog = DeleteConfimationDialog(
                             this@DetailTanyaKandidatActivity, getString(R.string.txt_delete_item_ini),
                             listener = object : DeleteConfimationDialog.DialogListener {
-                                override fun onClickDeleteItem(p0: String, p1: Int) {
+                                override fun onClickDeleteItem(id: String, position: Int) {
                                     onClickDeleteItem()
                                 }
                             })
@@ -211,20 +212,20 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
             intent.putExtra(EXTRA_ITEM_POSITION, it)
             setResult(RESULT_DELETE_ITEM_QUESTION, intent)
         }
-        val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
-        if (!question?.isliked!!) {
-            val loveCount = question?.likeCount!! + 1
-            question?.likeCount = loveCount
-            animator.addUpdateListener { animation -> upvote_animation.progress = animation.animatedValue as Float
-                upvote_count_text.text = question?.likeCount.toString()
-            }
-            animator.start()
-        } else {
-            val upVoteCount = question?.likeCount!! - 1
-            question?.likeCount = upVoteCount
-            upvote_count_text.text = question?.likeCount.toString()
-            upvote_animation.progress = 0.0f
-        }
+//        val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
+//        if (!question?.isliked!!) {
+//            val loveCount = question?.likeCount!! + 1
+//            question?.likeCount = loveCount
+//            animator.addUpdateListener { animation -> upvote_animation.progress = animation.animatedValue as Float
+//                upvote_count_text.text = question?.likeCount.toString()
+//            }
+//            animator.start()
+//        } else {
+//            val upVoteCount = question?.likeCount!! - 1
+//            question?.likeCount = upVoteCount
+//            upvote_count_text.text = question?.likeCount.toString()
+//            upvote_animation.progress = 0.0f
+//        }
         onBackPressed()
     }
 
