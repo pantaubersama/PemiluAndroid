@@ -28,10 +28,10 @@
     <string name="question_short_hint">Apa pertanyaanmu buat Capres Indonesia?</string>
     <string name="question_dummy_text">Kapan realisasi sistem tenaga kerja alih daya diterapkan seutuhnya? Kita ini insan bukan seekor sapi.</string>
     <string name="question_time_dummy_text">8 days ago</string>
-    <string name="txt_sumber_dari">Sumber dari</string>
+    <string name="txt_sumber_dari">Sumber</string>
     <string name="txt_semua">Semua</string>
-    <string name="txt_team_capres1">Team Jokowi - Makruf</string>
-    <string name="txt_team_capres2">Team Prabowo - Sandi</string>
+    <string name="txt_team_capres1">Tim Jokowi - Ma\'ruf</string>
+    <string name="txt_team_capres2">Tim Prabowo - Sandi</string>
     <string name="txt_filter">Filter</string>
     <string name="txt_reset">RESET</string>
     <string name="read_more_action">Read more…</string>
@@ -55,7 +55,7 @@
     <string name="cluster_name_dummy">Mancing Mania Jogja</string>
     <string name="cluster_info">Cluster menunjukkan preferensi kelompok kamu. Seperti wadah berisi kumpulan user yang memiliki kesamaan suatu hal; misalnya partai, alumni kampus, sekolah, organisasi, dan/atau komunitas tertentu. Dalam Cluster, kamu bisa menemukan atau mengumpulkan user-user lain dengan minat selaras.</string>
     <string name="biodata_label">Biodata</string>
-    <string name="pantau_bersama_tagline">Pantau Bersama\nuntuk Indonesia yang lebih baik</string>
+    <string name="pantau_bersama_tagline">Pantau Bersama Pemilu 2019\nRayakan Demokrasi Dengan Partisipasi!</string>
     <string name="quiz_text_dummy">Pilihlah salah satu jawaban yang paling kamu sukai dari 2 pilihan yang ada. Ikuti kuis hingga selesai dan tunggu kejutan hasilnya</string>
     <string name="question_number_info">Pertanyaan no %d dari %d pertanyaan</string>
     <string name="question_1_dummy">Visi untuk Indonesia ke depannya?</string>
@@ -69,7 +69,7 @@
     <string name="txt_buka_di_aplikasi">Buka di Aplikasi Twitter</string>
     <string name="hint_create_janpol">Bagikan Janji Politik dengan bahasa yang baik dan mudah dimengerti. Sertakan ilustrasi, gambar, tautan sumber berita, atau referensi lain sebagai tambahan informasi.</string>
     <string name="hint_create_janpol_title">Judul Janji Politik</string>
-    <string name="hint_create_janpol_content">Beri deskripsi detail lebih lanjut dari Judul</string>
+    <string name="hint_create_janpol_content">Berikan deskripsi atau detil lebih lanjut terkait Janji Politik yang akan disampaikan di kolom ini.</string>
     <string name="verification_hint">Dengan diverifikasi kamu akan…. Mendapatkan manfaat dan is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
     <string name="foto_dengan_ktp_hint">Pastikan seluruh bagian wajah dari KTP anda gerada dalam bingkai foto dan terlihat jelas. Pastikan foto yang anda kirim adalar foto asli tanpa editan</string>
     <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
@@ -141,7 +141,7 @@
     <string name="label_kategori">Kategori</string>
     <string name="label_masukkan_nama_kategori">Masukkan Nama Kategori</string>
     <string name="txt_failed_state">Oops.. ada yg salah</string>
-    <string name="informasi_lebih_lengkap">Informasi lebih lengkap hubungi :</string>
+    <string name="informasi_lebih_lengkap">Informasi lebih lengkap kunjungi:</string>
     <string name="terapkan">TERAPKAN</string>
     <string name="label_connect_with_fb">CONNECT WITH FACEBOOK</string>
     <string name="label_click_connect_fb">Click below to connect your Symbolic account with Twitter</string>
