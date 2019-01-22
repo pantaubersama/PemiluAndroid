@@ -79,7 +79,7 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
             layout_default_cluster_filter.visibleIf(false)
             item_cluster.visibleIf(true)
             tv_cluster_name.text = item.name
-            tv_cluster_member_count.text = "${item.memberCount} anggota"
+            tv_cluster_member_count.text = "${item.memberCount?.let { it } ?: "belum ada"} anggota"
             iv_avatar_cluster.loadUrl(item.image?.url, R.drawable.ic_avatar_placeholder)
         }
     }

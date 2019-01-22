@@ -14,7 +14,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_cluster.*
 import kotlinx.android.synthetic.main.item_default_cluster_filter.*
 
-class ClusterListDialogAdapter() : BaseRecyclerAdapter() {
+class ClusterListDialogAdapter : BaseRecyclerAdapter() {
 
     var listener: AdapterListener? = null
 
@@ -43,10 +43,11 @@ class ClusterListDialogAdapter() : BaseRecyclerAdapter() {
         (holder as? DefaultViewHolder)?.bind()
     }
 
-    inner class ClusterViewHolder(override val containerView: View?) : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
+    inner class ClusterViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: ClusterItem) {
             tv_cluster_name.text = item.name
-            tv_cluster_member_count.text = "${item.memberCount} anggota"
+            tv_cluster_member_count.text = "${item.memberCount?.let { it } ?: "belum ada"} anggota"
+
             iv_avatar_cluster.loadUrl(item.image?.url, R.drawable.ic_avatar_placeholder)
             ll_cluster_container.setOnClickListener { listener?.onClickItem(item) }
         }
