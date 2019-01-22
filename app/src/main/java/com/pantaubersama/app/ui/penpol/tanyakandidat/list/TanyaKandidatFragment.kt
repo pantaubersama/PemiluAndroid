@@ -126,6 +126,9 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                 } else {
                     dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
                 }
+                if (profile == EMPTY_PROFILE) {
+                    dialog.removeItem(R.id.report_tanya_kandidat_action)
+                }
                 dialog.show()
                 dialog.listener = object : OptionDialog.DialogListener {
                     override fun onClick(viewId: Int) {
