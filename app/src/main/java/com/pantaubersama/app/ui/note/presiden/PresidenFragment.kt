@@ -67,7 +67,7 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
         paslons.add(
             PaslonData(
                 3,
-                "Belum menentukan pilihan")
+                "Belum Menentukan Pilihan")
         )
         paslonAdapter.setDatas(paslons)
     }

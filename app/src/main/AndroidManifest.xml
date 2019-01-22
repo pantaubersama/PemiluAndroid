@@ -216,9 +216,6 @@
             android:name=".ui.profile.cluster.invite.UndangAnggotaActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.setting.buatprofil.BuatProfilActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.penpol.kuis.result.KuisUserResultActivity"
             android:screenOrientation="portrait" />
     </application>

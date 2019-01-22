@@ -111,7 +111,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Kenapa Akunmu Perlu Diverifikasi?"
+                                android:text="Kenapa akunmu perlu diverifikasi?"
                                 android:layout_marginTop="16dp"
                                 android:fontFamily="@font/bw_modelica_bold"
                                 android:textSize="22sp"
@@ -133,7 +133,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:fontFamily="@font/bw_modelica_bold"
-                                android:text="Masukkan No Identitas KTP"
+                                android:text="Masukkan Nomor Induk Kependudukan/Nomor KTP"
                                 android:layout_marginTop="32dp"
                                 android:textColor="@color/black_3"
                                 android:textSize="18sp"/>

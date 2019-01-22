@@ -151,7 +151,7 @@
                 android:textColor="@color/white"
                 android:letterSpacing="0.1"
                 android:lineSpacingExtra="3sp"
-                android:text="Selesaikan"
+                android:text="Lanjut"
                 android:fontFamily="@font/lato_bold"
                 android:textAllCaps="true"/>
 
