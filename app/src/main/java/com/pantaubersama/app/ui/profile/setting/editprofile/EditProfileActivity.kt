@@ -54,11 +54,15 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        setupToolbar(true, getString(R.string.title_edit_profile), R.color.white, 4f)
-        onClickAction()
+        val pageTitle: String
         if (isProfileCompletion) {
+            pageTitle = getString(R.string.title_buat_profilmu)
             submit_button.text = getString(R.string.next_action)
+        } else {
+            pageTitle = getString(R.string.title_edit_profile)
         }
+        setupToolbar(true, pageTitle, R.color.white, 4f)
+        onClickAction()
         swipe_refresh.setOnRefreshListener {
             presenter.refreshUserData()
         }

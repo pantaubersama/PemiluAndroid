@@ -37,7 +37,7 @@
                 android:fontFamily="@font/lato_regular"
                 android:textColor="@color/gray_5"
                 android:textSize="10sp"
-                android:text="Tautkan dengan social mediamu agar lebih mudah dalam berbagi dan berkontribusi di Pantau Bersama" />
+                android:text="@string/connect_hint" />
 
         </LinearLayout>
 

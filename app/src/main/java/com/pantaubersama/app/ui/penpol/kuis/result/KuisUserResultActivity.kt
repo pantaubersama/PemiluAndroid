@@ -70,7 +70,7 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
     override fun showKuisUserResult(kuisUserResult: KuisUserResult, userName: String) {
         constraint_layout_content.visibleIf(true)
         tv_kuis_result.text = spannable {
-            +"Total Kecenderungan ${kuisUserResult.meta.finished} Dari ${kuisUserResult.meta.total} Kuis,\n"
+            +"Total Kecenderungan ${kuisUserResult.meta.finished} Dari ${kuisUserResult.meta.total} Quiz,\n"
             textColor(color(R.color.black_3)) { +userName }
             +" lebih suka jawaban dari Paslon no ${kuisUserResult.team.id}"
         }.toCharSequence()

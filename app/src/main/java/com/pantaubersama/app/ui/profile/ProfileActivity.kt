@@ -45,11 +45,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     @Inject
     override lateinit var presenter: ProfilePresenter
 
-    private lateinit var activeFragment: Fragment
-    private var pLinimasaFragment: ProfileJanjiPolitikFragment? = null
-    private var pTanyaKandidatFragment: ProfileTanyaKandidatFragment? = null
-    private var otherFrag: Fragment? = null // dummy
-
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }

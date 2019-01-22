@@ -135,7 +135,7 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
     }
 
     override fun showSuccessSubmitCatatanAlert() {
-        ToastUtil.show(this@CatatanPilihanActivity, "pilihan tersimpan")
+        ToastUtil.show(this@CatatanPilihanActivity, "Pilihan tersimpan")
     }
 
     override fun finishActivity() {
