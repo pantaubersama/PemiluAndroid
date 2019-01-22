@@ -102,11 +102,14 @@ class SearchClusterFragment : BaseFragment<SearchClusterPresenter>(), SearchClus
     }
 
     override fun showEmptyData() {
-        view_empty_state.enableLottie(true, lottie_empty_state)
+        tv_empty_state.text = getString(R.string.pencarian_tidak_ditemukan)
+//        view_empty_state.enableLottie(true, lottie_empty_state)
+        view_empty_state.visibleIf(true)
     }
 
     override fun onFailedGetData(throwable: Throwable) {
-        view_fail_state.enableLottie(true, lottie_fail_state)
+//        view_fail_state.enableLottie(true, lottie_fail_state)
+        view_fail_state.visibleIf(true)
     }
 
     override fun onFailedGetMoreData() {

@@ -21,16 +21,22 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.onboarding.OnboardingActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.search.SearchActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.profile.setting.badge.detail.DetailBadgeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.penpol.kuis.detail.DetailKuisActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.search.cluster.filter.FilterClusterActivity"></activity>
+        <activity
+            android:name=".ui.onboarding.OnboardingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.badge.detail.DetailBadgeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.kuis.detail.DetailKuisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="aia-compat-api-min-version"
@@ -105,7 +111,6 @@
                     android:pathPrefix="/share"
                     android:scheme="http" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.home.HomeActivity"
@@ -207,8 +212,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.connect.ConnectActivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.note.CatatanPilihanActivity"
             android:screenOrientation="portrait" />

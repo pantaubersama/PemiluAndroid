@@ -16,6 +16,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.base.CommonFragment
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.search.cluster.SearchClusterFragment
 import com.pantaubersama.app.ui.search.history.SearchHistoryFragment
 import com.pantaubersama.app.ui.search.janjipolitik.SearchJanjiPolitikFragment
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -77,9 +78,9 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
 //        val tabOrang = TabView(this)  // yg belum selesai di hide dulu untuk production @edityo 21/01/19
 //        tabOrang.setTitleLabel(R.string.txt_tab_orang)
 //        tab_layout.addTab(tab_layout.newTab().setCustomView(tabOrang))
-//        val tabCluster = TabView(this)
-//        tabCluster.setTitleLabel(R.string.txt_tab_cluster)
-//        tab_layout.addTab(tab_layout.newTab().setCustomView(tabCluster))
+        val tabCluster = TabView(this)
+        tabCluster.setTitleLabel(R.string.txt_tab_cluster)
+        tab_layout.addTab(tab_layout.newTab().setCustomView(tabCluster))
         val tabLinimasa = TabView(this)
         tabLinimasa.setTitleLabel(R.string.txt_tab_linimasa)
         tab_layout.addTab(tab_layout.newTab().setCustomView(tabLinimasa))
@@ -132,8 +133,9 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
 //                        5 -> SearchQuizFragment.newInstance(it)
 //                        6 -> SearchWordstadiumFragment.newInstance(it)
 
-                        0 -> SearchLinimasaFragment.newInstance(it) // sementara hanya untuk production @edityo 21/01/19
-                        1 -> SearchJanjiPolitikFragment.newInstance(it)
+                        0 -> SearchClusterFragment.newInstance(it)
+                        1 -> SearchLinimasaFragment.newInstance(it) // sementara hanya untuk production @edityo 21/01/19
+                        2 -> SearchJanjiPolitikFragment.newInstance(it)
                         else -> Fragment()
                     }
                 } ?: return SearchHistoryFragment.newInstance()

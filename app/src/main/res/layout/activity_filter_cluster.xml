@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pantaubersama.app.ui.search.cluster.filter.FilterClusterActivity">
+
+    <include layout="@layout/layout_toolbar_light"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_cluster"
+        android:fontFamily="@font/bw_modelica_bold"
+        android:textColor="@color/black_3"
+        android:textSize="16sp"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_cluster_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_tosca_outline"
+        android:foreground="?selectableItemBackground"
+        android:layout_marginTop="10dp">
+
+    <include
+        android:id="@+id/layout_default_cluster_filter"
+        layout="@layout/item_default_cluster_filter"/>
+
+</RelativeLayout>
