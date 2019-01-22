@@ -11,15 +11,15 @@
     <string name="txt_tab_linimasa">Linimasa</string>
     <string name="txt_tab_janji_politik">Janji Politik</string>
     <string name="create_question">Buat Pertanyaan</string>
-    <string name="question_hint">Buat pertanyaan singkat untuk pasangan calon presiden periode 2019–2024. Pertanyaan terpilih akan disampaikan kepada kedua tim pasangan calon Presiden. Gunakan tata bahasa yang sopan.</string>
+    <string name="question_hint">Berikan pertanyaan singkat untuk kandidat Calon Presiden dan Calon Wakil Presiden 2019–2024. Gunakan bahasa yang baik dan jelas, yaa!</string>
     <string name="txt_empty_state">Oops.. data kosong</string>
     <string name="txt_disematkan_dari">Disematkan dari </string>
     <string name="done_action">Done</string>
     <string name="empty_question_alert">Cannot submit data. Question is empty!</string>
-    <string name="question_simple_hint">Ayo tanya sekarang</string>
+    <string name="question_simple_hint">Tulis pertanyaan terbaikmu di sini!</string>
     <string name="dummy_tweet_content">#SahabatBawaslu, Sentra  Gakkumdu berkomitmen untuk tidak memunculkan sikap ego sektoral antar personil, baik dari pihak Bawaslu,  Kepolisian,  maupun Kejaksaan dalam menegakkan hukum Pemilu dalam Rapat Koordinasi Nasional Sentra Gakkumdu,  di Jakarta, Rabu,  (5/12/2018).</string>
     <string name="tanya_kandidat_label">Tanya Kandidat</string>
-    <string name="kuis_label">Kuis</string>
+    <string name="kuis_label">Quiz</string>
     <string name="login_failed_alert">Failed to login with Symbolic</string>
     <string name="tanya_kandidat_banner_text">Apa yang ingin kamu tanyakan kepada Capres &amp; Cawapres Jokowi-Ma\'ruf dan Prabowo-Sandi dan juga Apa yang ingin kamu tanyakan kepada Capres &amp; Cawapres Jokowi-Ma\'ruf dan Prabowo-Sandi</string>
     <string name="pilpres_banner_text">Halaman ini berisikan informasi dari channel Resmi twitter Jokowi - Makruf dan Prabowo - Sandi yang terdaftar di Bawaslu</string>
@@ -47,7 +47,7 @@
     <string name="delete_action_label">Hapus</string>
     <string name="copy_url_action_label">Salin Tautan</string>
     <string name="share_action_label">Bagikan</string>
-    <string name="report_action_label">Laporkan</string>
+    <string name="report_action_label">Laporkan Sebagai Spam</string>
     <string name="dummy_username">\@haryono</string>
     <string name="settings_action_label">Settings</string>
     <string name="user_bio_dummy">An ordinary netizen who likes to talk a lot. Like, a lot. Who cares anyway!</string>
@@ -57,7 +57,7 @@
     <string name="biodata_label">Biodata</string>
     <string name="pantau_bersama_tagline">Pantau Bersama Pemilu 2019\nRayakan Demokrasi Dengan Partisipasi!</string>
     <string name="quiz_text_dummy">Pilihlah salah satu jawaban yang paling kamu sukai dari 2 pilihan yang ada. Ikuti kuis hingga selesai dan tunggu kejutan hasilnya</string>
-    <string name="question_number_info">Pertanyaan no %d dari %d pertanyaan</string>
+    <string name="question_number_info">Pertanyaan %d dari %d pertanyaan</string>
     <string name="question_1_dummy">Visi untuk Indonesia ke depannya?</string>
     <string name="question_2_dummy">Misi untuk Indonesia kedepannya?</string>
     <string name="question_1_a_dummy">Terwujudnya Indonesia maju yang berdaulat, mandiri, dan berkepribadian, berlandaskan gotong-royong</string>
@@ -90,12 +90,12 @@
     <string name="label_ubah_data_lapor">Ubah Data Lapor</string>
     <string name="label_verifikasi">Verifikasi</string>
     <string name="label_badge">Badge</string>
-    <string name="label_click_connect_twitter">Click below to connect your Symbolic account with Twitter</string>
-    <string name="label_click_connect_facebook">Click below to connect your Symbolic account with Facebook</string>
+    <string name="label_click_connect_twitter">Tap di bawah ini untuk mengubungkan Symbolic kamu dengan Twitter</string>
+    <string name="label_click_connect_facebook">Tap di bawah ini untuk mengubungkan Symbolic kamu dengan Facebook</string>
     <string name="label_connect_with_twitter">CONNECT WITH TWITTER</string>
-    <string name="label_connected_as">Connected as :</string>
-    <string name="label_cluster">Cluster :</string>
-    <string name="label_support">SUPPORT :</string>
+    <string name="label_connected_as">Connected as:</string>
+    <string name="label_cluster">Cluster:</string>
+    <string name="label_support">SUPPORT:</string>
     <string name="label_pusat_bantuan">Pusat Bantuan</string>
     <string name="label_pedoman_komunitas">Pedoman Komunitas</string>
     <string name="label_tentang_pantau_bersama">Tentang Pantau Bersama</string>
@@ -107,9 +107,13 @@
     <string name="label_nama">Nama</string>
     <string name="label_username">Username</string>
     <string name="label_lokasi">Lokasi</string>
-    <string name="label_deskripi_tentang_kamu">Deskripsi Tentang Kamu</string>
+    <string name="label_lokasi_placeholder">Isi sesuai domisili kamu saat ini.</string>
+    <string name="label_bio">Bio</string>
+    <string name="label_deskripi_tentang_kamu">Deskripsikan kamu dengan singkat di sini.</string>
     <string name="label_pendidikan">Pendidikan</string>
+    <string name="label_pendidikan_placeholder">Sertakan pendidikan terakhir kamu juga, ya.</string>
     <string name="label_pekerjaan">Pekerjaan</string>
+    <string name="label_pekerjaan_placeholder">Sebutkan pekerjaan aktif kamu saat ini.</string>
     <string name="title_edit_profile">Edit Profile</string>
     <string name="label_masukan_kata_sandi_lama">Masukan Kata Sandi Lama</string>
     <string name="label_kata_sandi_baru">Kata Sandi Baru</string>
@@ -191,7 +195,7 @@
     <string name="next_action">Lanjut</string>
     <string name="label_intent_filter_share">Pantau Bersama</string>
     <string name="janji_politik_tidak_ditemukan">Janji Politik tidak ditemukan</string>
-    <string name="berhasil_melaporkan_pertanyaan">Berhasil melaporkan pertanyaan</string>
+    <string name="berhasil_melaporkan_pertanyaan">Laporan Berhasil</string>
     <string name="gagal_melaporkan_pertanyaan">Gagal melaporkan pertanyaan</string>
     <string name="gagal_menghapus_pertanyaan">Gagal menghapus pertanyaan</string>
     <string name="txt_force_update">Versi aplikasi yang terbaru sudah tersedia, update yuk!</string>
@@ -212,4 +216,5 @@
     <string name="txt_hapus_kata_kunci_ini">Hapus \"%s\" dari riwayat pencarian?</string>
     <string name="txt_hapus_riwayat_pencarian">Hapus semua riwayat pencarian?</string>
     <string name="pencarian_tidak_ditemukan">Pencarian tidak ditemukan</string>
+    <string name="connect_hint">Kamu perlu terhubung dengan akun media sosial agar lebih mudah berbagi dan berkontribusi di Pantau Bersama Pemilu 2019.</string>
 </resources>
