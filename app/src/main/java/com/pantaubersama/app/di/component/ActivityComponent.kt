@@ -45,6 +45,7 @@ import com.pantaubersama.app.ui.profile.verifikasi.step3.Step3VerifikasiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step5.Step5VerifikasiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step7.Step7VerifikasiActivity
 import com.pantaubersama.app.ui.search.SearchActivity
+import com.pantaubersama.app.ui.search.cluster.SearchClusterFragment
 import com.pantaubersama.app.ui.search.history.SearchHistoryFragment
 import com.pantaubersama.app.ui.search.janjipolitik.SearchJanjiPolitikFragment
 import com.pantaubersama.app.ui.search.linimasa.SearchLinimasaFragment
@@ -104,4 +105,5 @@ interface ActivityComponent {
     fun inject(onboardingActivity: OnboardingActivity)
     fun inject(searchLinimasaFragment: SearchLinimasaFragment)
     fun inject(searchJanjiPolitikFragment: SearchJanjiPolitikFragment)
+    fun inject(searchClusterFragment: SearchClusterFragment)
 }

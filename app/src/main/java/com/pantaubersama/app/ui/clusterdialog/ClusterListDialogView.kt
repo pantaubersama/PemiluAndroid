@@ -7,7 +7,6 @@ import com.pantaubersama.app.data.model.cluster.ClusterItem
  * @author edityomurti on 27/12/2018 01:16
  */
 interface ClusterListDialogView : BaseView {
-    fun showLoadingGetMoreClusters()
     fun showClusters(clusterList: MutableList<ClusterItem>)
     fun showMoreClusters(clusterList: MutableList<ClusterItem>)
     fun showEmptyCluster()
