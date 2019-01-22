@@ -50,6 +50,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     private var adapter: TanyaKandidatAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
     private lateinit var profile: Profile
+    private var isNewInstance = true
 
     companion object {
         fun newInstance(): TanyaKandidatFragment {
@@ -62,6 +63,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
+        savedInstanceState?.getBoolean("is_new_instance")?.let { isNewInstance = it }
         presenter.getProfile()
         setupTanyaKandidatList()
         getDataList()
@@ -313,7 +315,9 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
                 if (data != null && data.getIntExtra(EXTRA_ITEM_POSITION, -1) != -1 && data.getSerializableExtra(EXTRA_QUESTION_ITEM) != null) {
                     val itemChangedPosition = data.getIntExtra(EXTRA_ITEM_POSITION, -1)
                     val itemChanged = data.getSerializableExtra(EXTRA_QUESTION_ITEM) as Pertanyaan
-                    adapter?.changeItem(itemChanged, itemChangedPosition)
+                    if (isNewInstance) {
+                        adapter?.changeItem(itemChanged, itemChangedPosition)
+                    }
                 }
             }
         }
@@ -325,5 +329,10 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         } else {
             recycler_view.scrollToPosition(0)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("is_new_instance", false)
     }
 }
