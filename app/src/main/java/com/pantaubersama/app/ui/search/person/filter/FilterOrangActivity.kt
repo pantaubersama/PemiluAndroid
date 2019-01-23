@@ -2,6 +2,8 @@ package com.pantaubersama.app.ui.search.person.filter
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.RadioButton
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -31,6 +33,7 @@ class FilterOrangActivity : BaseActivity<FilterOrangPresenter>(), FilterOrangVie
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
+        setupToolbar(true, "Filter", R.color.white, 4f)
         presenter.loadUserFilter()
         btn_terapkan.setOnClickListener {
             applyFilter()
@@ -75,5 +78,21 @@ class FilterOrangActivity : BaseActivity<FilterOrangPresenter>(), FilterOrangVie
 
     override fun dismissLoading() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_filter, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_reset -> resetFilter()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun resetFilter() {
+        presenter.saveSearchOrangFilter(PantauConstants.FILTER_ORANG_ALL)
     }
 }
