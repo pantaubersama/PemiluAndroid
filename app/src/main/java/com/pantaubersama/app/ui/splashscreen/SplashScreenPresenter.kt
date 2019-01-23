@@ -32,11 +32,11 @@ class SplashScreenPresenter @Inject constructor(private val loginInteractor: Log
         if (loginInteractor.getLoginState()!!) {
             view?.goToHome()
         } else {
-            view?.goToLogin()
+            if (loginInteractor.getOnboardingStatus()) {
+                view?.goToLogin()
+            } else {
+                view?.gotoOnboarding()
+            }
         }
-    }
-
-    fun getOnboardingStatus() {
-        view?.isOnboardingComplete(loginInteractor.getOnboardingStatus())
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.RadioButton
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_filter_orang.*
@@ -19,6 +20,10 @@ class FilterOrangActivity : BaseActivity<FilterOrangPresenter>(), FilterOrangVie
 
     override fun statusBarColor(): Int? {
         return 0
+    }
+
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun setLayout(): Int {

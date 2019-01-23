@@ -53,6 +53,7 @@ import com.pantaubersama.app.ui.search.history.SearchHistoryFragment
 import com.pantaubersama.app.ui.search.janjipolitik.SearchJanjiPolitikFragment
 import com.pantaubersama.app.ui.search.linimasa.SearchLinimasaFragment
 import com.pantaubersama.app.ui.search.person.SearchPersonFragment
+import com.pantaubersama.app.ui.search.person.filter.FilterOrangActivity
 import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
 import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
@@ -118,4 +119,5 @@ interface ActivityComponent {
     fun inject(clusterUndangActivity: ClusterUndangActivity)
     fun inject(searchQuestionFragment: SearchQuestionFragment)
     fun inject(searchQuizFragment: SearchQuizFragment)
+    fun inject(filterOrangActivity: FilterOrangActivity)
 }
