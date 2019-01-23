@@ -198,4 +198,9 @@ interface PantauOAuthAPI {
         @Query("per_page") perPage: Int,
         @Query("filter_by") filter: String
     ): Single<ProfileResponse>
+
+    @GET("/v1/users/{id}/simple")
+    fun getUserProfile(
+        @Path("id") userId: String
+    ): Single<ProfileResponse>
 }

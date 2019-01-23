@@ -34,4 +34,11 @@ class UserInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun getUserProfile(userId: String): Single<Profile> {
+        return apiWrapper.getPantauOAuthApi().getUserProfile(userId)
+            .map { it.data.user }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }
