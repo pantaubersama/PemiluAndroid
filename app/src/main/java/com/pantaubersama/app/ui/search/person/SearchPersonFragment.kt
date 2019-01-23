@@ -106,6 +106,7 @@ class SearchPersonFragment : BaseFragment<SearchPersonPresenter>(), UpdateableFr
     }
 
     override fun getData(keyword: String) {
+        this.keyword = keyword
         adapter.setDataEnd(false)
         presenter.searchPerson(keyword, 1, 20)
     }
