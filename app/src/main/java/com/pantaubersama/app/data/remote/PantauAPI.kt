@@ -118,6 +118,7 @@ interface PantauAPI {
     fun getKuisInProgress(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
+        @Query("q") keyword: String,
         @Query("filter_by") filterBy: String = "in_progress"
     ): Single<KuisResponse>
 
@@ -125,13 +126,15 @@ interface PantauAPI {
     fun getKuisFinished(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
+        @Query("q") keyword: String,
         @Query("filter_by") filterBy: String = "finished"
     ): Single<KuisResponse>
 
     @GET("pendidikan_politik/v1/quizzes")
     fun getKuisNotParticipating(
         @Query("page") page: Int,
-        @Query("per_page") perPage: Int
+        @Query("per_page") perPage: Int,
+        @Query("q") keyword: String
     ): Single<KuisResponse>
 
     @GET("pendidikan_politik/v1/quizzes/{id}")
