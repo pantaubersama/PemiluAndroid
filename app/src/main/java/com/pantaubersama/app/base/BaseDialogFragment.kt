@@ -1,10 +1,16 @@
 package com.pantaubersama.app.base
 
+import android.app.Dialog
 import android.content.Context
+import android.graphics.Point
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
+import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
+import android.view.Gravity
+import android.widget.RelativeLayout
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
 import com.pantaubersama.app.di.component.ActivityComponent
@@ -18,6 +24,9 @@ import timber.log.Timber
 abstract class BaseDialogFragment<P : BasePresenter<*>> : DialogFragment(), BaseView {
 
     protected abstract var presenter: P
+
+    @LayoutRes
+    protected abstract fun setLayout(): Int
 
     override fun onAttach(context: Context) {
         initInjection(createActivityComponent())
@@ -55,8 +64,27 @@ abstract class BaseDialogFragment<P : BasePresenter<*>> : DialogFragment(), Base
         initView(view)
     }
 
-    protected abstract fun initView(view: View)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val root = RelativeLayout(activity)
+        root.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
-    @LayoutRes
-    protected abstract fun setLayout(): Int
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(root)
+        dialog.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        return dialog
+    }
+
+    override fun onResume() {
+        val window = dialog?.window
+        val size = Point()
+        val display = window?.windowManager?.defaultDisplay
+        display?.getSize(size)
+        window?.setLayout((size.x * 0.95).toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
+        window?.setGravity(Gravity.CENTER)
+        super.onResume()
+    }
+
+    protected abstract fun initView(view: View)
 }

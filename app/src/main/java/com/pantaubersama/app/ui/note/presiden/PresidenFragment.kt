@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.note.presiden
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.pantaubersama.app.R
@@ -9,9 +10,11 @@ import com.pantaubersama.app.data.model.capres.PaslonData
 import com.pantaubersama.app.data.model.kuis.KuisUserResult
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.visibleIf
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.fragment_presiden.*
 import javax.inject.Inject
@@ -19,19 +22,27 @@ import javax.inject.Inject
 class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
     private lateinit var layoutManager: StaggeredGridLayoutManager
     private lateinit var paslonAdapter: PaslonAdapter
+    var listener: Listener? = null
 
     @Inject
     override lateinit var presenter: PaslonPresenter
-    var listener: Listener? = null
+
+    override fun setLayout(): Int {
+        return R.layout.fragment_presiden
+    }
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
 
-    override fun initView(view: View) {
-        setupRecyclerView(view)
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+        setupRecyclerView()
         setData()
-        presenter.getUserProfile()
+        if (savedInstanceState != null) {
+            paslonAdapter.setSelectedData(paslonAdapter.get(savedInstanceState.getInt("selected_paslon") - 1) as PaslonData)
+        } else {
+            presenter.getUserProfile()
+        }
         presenter.getMyTendency()
     }
 
@@ -56,26 +67,22 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
         paslons.add(
             PaslonData(
                 3,
-                "Belum menentukan pilihan")
+                "Belum Menentukan Pilihan")
         )
         paslonAdapter.setDatas(paslons)
     }
 
-    private fun setupRecyclerView(view: View) {
+    private fun setupRecyclerView() {
         layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         paslonAdapter = PaslonAdapter()
         paslonAdapter.listener = object : PaslonAdapter.Listener {
             override fun onSelectItem(paslonData: PaslonData) {
                 selected_paslon.text = paslonData.paslonName
-                listener?.onPaslonSelect(paslonData)
+                (activity as CatatanPilihanActivity).setSelectedPaslon(paslonData.paslonNumber)
             }
         }
         presiden_recycler_view_calon.layoutManager = layoutManager
         presiden_recycler_view_calon.adapter = paslonAdapter
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.fragment_presiden
     }
 
     companion object {
@@ -104,6 +111,7 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
 
     @SuppressLint("SetTextI18n")
     override fun bindMyTendency(tendency: KuisUserResult, name: String) {
+        ll_kuis_result.visibleIf(tendency.meta.finished != 0)
         presiden_total_kuis.text = spannable {
             +"Total Kecenderungan ${tendency.meta.finished} Dari ${tendency.meta.total} Kuis,\n"
             textColor(color(R.color.black_3)) { +name }
@@ -114,7 +122,12 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
         paslon_name.text = tendency.team.title
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        paslonAdapter.selectedItem?.paslonNumber?.let { outState.putInt("selected_paslon", it) }
+    }
+
     interface Listener {
-        fun onPaslonSelect(paslonData: PaslonData)
+        fun onSelectPaslon(paslonSelected: Int)
     }
 }

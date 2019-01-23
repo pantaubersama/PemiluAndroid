@@ -14,7 +14,6 @@ class ProfileJanjiPolitikPresenter @Inject constructor(private val janpolInterac
         if (page == 1) {
             view?.showLoading()
         }
-
         disposables.add(janpolInteractor.getMyJanPol("", page, perPage)
             .subscribe(
                 {
@@ -51,6 +50,38 @@ class ProfileJanjiPolitikPresenter @Inject constructor(private val janpolInterac
                 },
                 {
                     view?.onFailedDeleteItem(it)
+                    view?.showError(it)
+                }
+            )
+        )
+    }
+
+    fun getUserJanjiPolitikList(page: Int, userId: String) {
+        if (page == 1) {
+            view?.showLoading()
+        }
+        disposables.add(janpolInteractor.getUserJanpol(userId, page, perPage)
+            .subscribe(
+                {
+                    if (page == 1) {
+                        view?.dismissLoading()
+                        if (it?.size != 0) {
+                            view?.showJanpolList(it!!)
+                        } else {
+                            view?.showEmptyData()
+                        }
+                    } else {
+                        view?.showMoreJanpolList(it!!)
+                    }
+                },
+                {
+                    if (page == 1) {
+                        view?.dismissLoading()
+                        view?.showFailedGetData()
+                    } else {
+                        view?.showFailedGetMoreData()
+                    }
+                    it.printStackTrace()
                     view?.showError(it)
                 }
             )

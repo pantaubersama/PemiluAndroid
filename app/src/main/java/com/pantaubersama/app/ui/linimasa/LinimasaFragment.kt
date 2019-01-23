@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.linimasa
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
@@ -23,7 +24,7 @@ class LinimasaFragment : CommonFragment() {
     private var pilpresFragment = PilpresFragment.newInstance()
     private var janjiPolitikFragment = JanjiPolitikFragment()
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         setupTabLayout()
         setupViewPager()
         btn_filter.setOnClickListener {
@@ -42,7 +43,7 @@ class LinimasaFragment : CommonFragment() {
         return R.layout.fragment_linimasa
     }
 
-    fun setupTabLayout() {
+    private fun setupTabLayout() {
         val tabPilpres = TabView(context)
         tabPilpres.setTitleLabel(R.string.txt_tab_linimasa)
         val tabJanPol = TabView(context)
@@ -52,8 +53,12 @@ class LinimasaFragment : CommonFragment() {
         tab_layout.addTab(tab_layout.newTab().setCustomView(tabJanPol))
 
         tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(p0: TabLayout.Tab?) {
-                pilpresFragment.scrollToTop(true)
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                val currentFragment = childFragmentManager.findFragmentByTag(
+                    "android:switcher:" + R.id.view_pager + ":" + view_pager.currentItem
+                ) as CommonFragment?
+
+                currentFragment?.scrollToTop()
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {
@@ -66,7 +71,7 @@ class LinimasaFragment : CommonFragment() {
         })
     }
 
-    fun setupViewPager() {
+    private fun setupViewPager() {
         view_pager.addOnPageChangeListener(object : TabLayout.TabLayoutOnPageChangeListener(tab_layout) {})
         view_pager.adapter = object : FragmentPagerAdapter(childFragmentManager) {
             override fun getItem(position: Int): Fragment {

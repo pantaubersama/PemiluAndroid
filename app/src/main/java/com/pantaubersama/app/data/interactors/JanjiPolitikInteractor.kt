@@ -18,19 +18,32 @@ import javax.inject.Inject
 class JanjiPolitikInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
     private val rxSchedulers: RxSchedulers,
-    private val dataCache: DataCache?
+    private val dataCache: DataCache
 ) {
     fun getJanpolUserFilter(): String {
-        return dataCache?.getJanpolUserFilter()!!
+        return dataCache.getJanpolUserFilter()
+    }
+
+    fun getSearchJanpolUserFilter(): String {
+        return dataCache.getSearchJanpolUserFilter()
     }
 
     fun getJanpolClusterFilter(): ClusterItem? {
-        return dataCache?.getJanpolClusterFilter()
+        return dataCache.getJanpolClusterFilter()
+    }
+
+    fun getSearchJanpolClusterFilter(): ClusterItem? {
+        return dataCache.getSearchJanpolClusterFilter()
     }
 
     fun setJanpolFilter(userFilter: String, clusterFilter: ClusterItem?) {
-        dataCache?.saveJanpolUserFilter(userFilter)
-        dataCache?.saveJanpolClusterFilter(clusterFilter)
+        dataCache.saveJanpolUserFilter(userFilter)
+        dataCache.saveJanpolClusterFilter(clusterFilter)
+    }
+
+    fun setSearchJanpolFilter(userFilter: String, clusterFilter: ClusterItem?) {
+        dataCache.saveSearchJanpolUserFilter(userFilter)
+        dataCache.saveSearchJanpolClusterFilter(clusterFilter)
     }
 
     fun getJanPolById(janpolId: String): Single<JanjiPolitik> {
@@ -44,10 +57,12 @@ class JanjiPolitikInteractor @Inject constructor(
     fun getJanPol(
         keyword: String?,
         page: Int?,
-        perPage: Int?
+        perPage: Int?,
+        clusterId: String,
+        userType: String
     ): Single<JanjiPolitiksData?> {
         return apiWrapper.getPantauApi()
-            .getJanjiPolitikList(keyword, getJanpolClusterFilter()?.id ?: "", getJanpolUserFilter(), page, perPage)
+            .getJanjiPolitikList(keyword, clusterId, userType, page, perPage)
             .subscribeOn(rxSchedulers.io())
             .map { it.data }
             .observeOn(rxSchedulers.mainThread())
@@ -70,6 +85,13 @@ class JanjiPolitikInteractor @Inject constructor(
 
     fun deleteJanjiPolitik(id: String): Completable {
         return apiWrapper.getPantauApi().deleteJanjiPolitik(id)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getUserJanpol(userId: String, page: Int, perPage: Int): Single<MutableList<JanjiPolitik>?> {
+        return apiWrapper.getPantauApi().getUserJanpul(userId, page, perPage)
+            .map { it.data?.janjiPolitikList }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }

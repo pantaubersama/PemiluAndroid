@@ -28,7 +28,7 @@ class TanyaKandidatInteractor @Inject constructor(
     fun getTanyaKandidatlist(
         page: Int?,
         perPage: Int?
-    ): Single<TanyaKandidatListResponse> {
+    ): Single<TanyaKandidatListData> {
         return apiWrapper.getPantauApi().getTanyaKandidatList(
             page,
             perPage,
@@ -36,6 +36,7 @@ class TanyaKandidatInteractor @Inject constructor(
             dataCache.loadTanyaKandidatOrderFilterDirection(),
             dataCache.loadTanyaKandidatUserFilter()
         )
+            .map { it.data }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
@@ -53,7 +54,7 @@ class TanyaKandidatInteractor @Inject constructor(
     fun getTanyaKandidatById(questionId: String): Single<Pertanyaan?> {
         return apiWrapper.getPantauApi().getTanyaKandidatById(questionId)
             .subscribeOn(rxSchedulers.io())
-            .map { it.data?.question }
+            .map { it.data.question }
             .observeOn(rxSchedulers.mainThread())
     }
 
@@ -115,6 +116,27 @@ class TanyaKandidatInteractor @Inject constructor(
                 id,
                 className
             )
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun searchTanyaKandidat(keyword: String, page: Int, perpage: Int): Single<TanyaKandidatListData> {
+        return apiWrapper.getPantauApi().searchTanyaKandidat(
+            keyword,
+            page,
+            perpage,
+            dataCache.loadTanyaKandidatOrderFilter(),
+            dataCache.loadTanyaKandidatOrderFilterDirection(),
+            dataCache.loadTanyaKandidatUserFilter()
+        )
+            .map { it.data }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getUserTanyaKandidatList(page: Int, perPage: Int, userId: String): Single<TanyaKandidatListData> {
+        return apiWrapper.getPantauApi().getUserTanyaKandidatList(userId, page, perPage)
+            .map { it.data }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }

@@ -340,6 +340,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_setting_cluster_undang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -373,9 +374,10 @@
 
                     <TextView
                         android:id="@+id/setting_cluster_undang"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
+                        android:background="?selectableItemBackground"
                         android:text="Undang"
                         android:padding="4dp"
                         android:textColor="@color/black"

@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.penpol
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
@@ -24,7 +25,7 @@ class PenPolFragment : CommonFragment() {
     private var tanyaKandidatFragment: TanyaKandidatFragment? = TanyaKandidatFragment.newInstance()
     private var kuisFragment: KuisFragment? = KuisFragment.newInstance()
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         setupTabLayout()
         setupViewPager()
         btn_filter?.setOnClickListener {
@@ -56,6 +57,11 @@ class PenPolFragment : CommonFragment() {
 
         tab_layout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(p0: TabLayout.Tab?) {
+                val currentFragment = childFragmentManager.findFragmentByTag(
+                    "android:switcher:" + R.id.view_pager + ":" + view_pager.currentItem
+                ) as CommonFragment?
+
+                currentFragment?.scrollToTop()
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {

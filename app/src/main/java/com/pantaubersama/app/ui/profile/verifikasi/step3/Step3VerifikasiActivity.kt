@@ -59,7 +59,8 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
     private var imageFile: File? = null
     val CAMERA_FRONT = "1"
     val CAMERA_BACK = "0"
-    var cameraId = CAMERA_BACK
+    var mCameraId = CAMERA_BACK
+    private var isOpenGallery = false
 
     override fun statusBarColor(): Int? {
         return 0
@@ -76,7 +77,7 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
     private val mSurfaceTextureListener = object : TextureView.SurfaceTextureListener {
 
         override fun onSurfaceTextureAvailable(texture: SurfaceTexture, width: Int, height: Int) {
-            Camera2Tools.openCamera(manager, mTextureView, cameraId)
+            Camera2Tools.openCamera(manager, windowManager, mTextureView, mCameraId)
         }
 
         override fun onSurfaceTextureSizeChanged(texture: SurfaceTexture, width: Int, height: Int) {
@@ -96,10 +97,10 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
 
         if (isHaveStorageAndCameraPermission()) {
             manager = this.getSystemService(Context.CAMERA_SERVICE) as CameraManager
-            mTextureView = findViewById(R.id.texture)
+            mTextureView = findViewById(R.id.texture_view)
 
             if (mTextureView!!.isAvailable()) {
-                Camera2Tools.openCamera(manager, mTextureView, cameraId)
+                Camera2Tools.openCamera(manager, windowManager, mTextureView, mCameraId)
             } else {
                 mTextureView!!.setSurfaceTextureListener(mSurfaceTextureListener)
             }
@@ -112,14 +113,13 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
             Camera2Tools.takePicture(object : Camera2Tools.Companion.ImageHandler {
                 override fun handleImage(image: Image): Runnable {
                     return Runnable {
-                        val bitmap = getBitmap(image)
+                        val bitmap = mTextureView!!.getBitmap(mTextureView!!.width, mTextureView!!.height)
                         imageFile = ImageUtil.getImageFile(bitmap)
                         ktpSelfie = createFromFile(imageFile!!)
                         runOnUiThread(Runnable {
                             kotlin.run {
+                                viewPreviewFromCamera()
                                 image_preview.setImageBitmap(bitmap)
-                                image_preview_container.visibility = View.VISIBLE
-                                frame_camera.visibility = View.GONE
                             }
                         })
                     }
@@ -129,7 +129,7 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
         switch_camera.setOnClickListener {
             val camerasNumber = Camera.getNumberOfCameras()
             if (camerasNumber > 1) {
-                switchCamera()
+                chooseCamera()
             }
         }
         close_camera_button.setOnClickListener {
@@ -139,13 +139,14 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
             presenter.submitSelfieKtp(ktpSelfie)
         }
         retake_button.setOnClickListener {
-            frame_camera.visibility = View.VISIBLE
-            image_preview_container.visibility = View.GONE
             Camera2Tools.unlockFocus()
-//            restartActivity()
+            openCamera()
         }
         choose_image.setOnClickListener {
             if (isHaveStorageAndCameraPermission()) {
+                isOpenGallery = true
+                Camera2Tools.closeCamera()
+                Camera2Tools.stopBackgroundThread()
                 val intentGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), PantauConstants.RequestCode.RC_STORAGE)
             } else {
@@ -161,6 +162,7 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
         startActivity(intent)
     }
 
+    // camera 1
     private fun setupCamera() {
         if (checkCameraHardware(this@Step3VerifikasiActivity)) {
             try {
@@ -194,18 +196,18 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
         if (isFrontCamera) {
             val cameraId = findBackFacingCamera()
             if (cameraId >= 0) {
-                mCamera = Camera.open(cameraId)
-                mCamera?.setDisplayOrientation(90)
-                cameraCallback = getCameraCallback()
-                mPreview?.refreshCamera(mCamera)
+                mCameraId = cameraId.toString()
+                Camera2Tools.closeCamera()
+                Camera2Tools.stopBackgroundThread()
+                openCamera()
             }
         } else {
             val cameraId = findFrontFacingCamera()
             if (cameraId >= 0) {
-                mCamera = Camera.open(cameraId)
-                mCamera?.setDisplayOrientation(90)
-                cameraCallback = getCameraCallback()
-                mPreview?.refreshCamera(mCamera)
+                mCameraId = cameraId.toString()
+                Camera2Tools.closeCamera()
+                Camera2Tools.stopBackgroundThread()
+                openCamera()
             }
         }
     }
@@ -297,16 +299,15 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PantauConstants.Camera.ASK_PERMISSIONS_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 //            setupCamera()
+            openCamera()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if (mTextureView!!.isAvailable()) {
-            Camera2Tools.openCamera(manager, mTextureView, cameraId)
-        } else {
-            mTextureView!!.setSurfaceTextureListener(mSurfaceTextureListener)
-        }
+        if (!isOpenGallery)
+            openCamera()
+        isOpenGallery = false
     }
 
     override fun setLayout(): Int {
@@ -333,7 +334,8 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
 
     override fun onBackPressed() {
         if (isPreview) {
-            restartActivity()
+            Camera2Tools.unlockFocus()
+            openCamera()
         } else {
             super.onBackPressed()
         }
@@ -359,11 +361,10 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
                 if (data != null) {
                     val file = ImageChooserTools.proccedImageFromStorage(data, this@Step3VerifikasiActivity)
                     ktpSelfie = createFromFile(file)
-                    image_preview_container.visibility = View.VISIBLE
+                    viewPreviewFromGallery()
                     var bitmap = BitmapFactory.decodeFile(file.absolutePath)
-                    bitmap = ImageUtil.BitmapTools.rotate(bitmap, ImageUtil.bitmapRotation(windowManager))
+//                    bitmap = ImageUtil.BitmapTools.rotate(bitmap, ImageUtil.bitmapRotation(windowManager))
                     image_preview.setImageBitmap(bitmap)
-                    isPreview = true
                 } else {
                     ToastUtil.show(this@Step3VerifikasiActivity, getString(R.string.failed_load_image_alert))
                 }
@@ -390,24 +391,52 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
     }
 
     fun switchCamera() {
-        if (cameraId.equals(CAMERA_FRONT)) {
-            cameraId = CAMERA_BACK
+        if (mCameraId.equals(CAMERA_FRONT)) {
+            mCameraId = CAMERA_BACK
             Camera2Tools.closeCamera()
             Camera2Tools.stopBackgroundThread()
-            if (mTextureView!!.isAvailable()) {
-                Camera2Tools.openCamera(manager, mTextureView, cameraId)
-            } else {
-                mTextureView!!.setSurfaceTextureListener(mSurfaceTextureListener)
-            }
-        } else if (cameraId.equals(CAMERA_BACK)) {
-            cameraId = CAMERA_FRONT
+            openCamera()
+        } else if (mCameraId.equals(CAMERA_BACK)) {
+            mCameraId = CAMERA_FRONT
             Camera2Tools.closeCamera()
             Camera2Tools.stopBackgroundThread()
-            if (mTextureView!!.isAvailable()) {
-                Camera2Tools.openCamera(manager, mTextureView, cameraId)
-            } else {
-                mTextureView!!.setSurfaceTextureListener(mSurfaceTextureListener)
-            }
+            openCamera()
         }
+    }
+
+    fun openCamera() {
+        viewTakeCamera()
+        if (mTextureView!!.isAvailable()) {
+            Camera2Tools.openCamera(manager, windowManager, mTextureView, mCameraId)
+        } else {
+            mTextureView!!.setSurfaceTextureListener(mSurfaceTextureListener)
+        }
+    }
+
+    fun viewTakeCamera() {
+        frame_camera.visibility = View.VISIBLE
+        camera_button_container.visibility = View.VISIBLE
+        image_preview_container.visibility = View.GONE
+        texture_view.visibility = View.VISIBLE
+        image_preview.visibility = View.GONE
+        isPreview = false
+    }
+
+    fun viewPreviewFromCamera() {
+        frame_camera.visibility = View.GONE
+        camera_button_container.visibility = View.GONE
+        image_preview_container.visibility = View.VISIBLE
+        texture_view.visibility = View.VISIBLE
+        image_preview.visibility = View.VISIBLE
+        isPreview = true
+    }
+
+    fun viewPreviewFromGallery() {
+        frame_camera.visibility = View.GONE
+        camera_button_container.visibility = View.GONE
+        image_preview_container.visibility = View.VISIBLE
+        texture_view.visibility = View.VISIBLE
+        image_preview.visibility = View.VISIBLE
+        isPreview = true
     }
 }

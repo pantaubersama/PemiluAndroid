@@ -1,5 +1,7 @@
 package com.pantaubersama.app.data.interactors
 
+import com.pantaubersama.app.data.local.cache.DataCache
+import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.data.model.cluster.CategoryData
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.remote.APIWrapper
@@ -10,12 +12,13 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class ClusterInteractor @Inject constructor(
+    private val dataCache: DataCache,
     private val apiWrapper: APIWrapper,
     private val rxSchedulers: RxSchedulers
 ) {
-    fun getClusterList(page: Int, perPage: Int): Single<MutableList<ClusterItem>>? {
+    fun getClusterList(page: Int, perPage: Int, keyword: String, categoryId: String): Single<MutableList<ClusterItem>> {
         return apiWrapper.getPantauOAuthApi()
-            .getClusterList(page, perPage)
+            .getClusterList(page, perPage, keyword, categoryId)
             .subscribeOn(rxSchedulers.io())
             .map { it.clustersData.clusterList }
             .observeOn(rxSchedulers.mainThread())
@@ -48,10 +51,10 @@ class ClusterInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
-    fun invite(email: String): Completable {
+    fun invite(email: String, clusterId: String): Completable {
         return apiWrapper
             .getPantauOAuthApi()
-            .inviteToCluster(email)
+            .inviteToCluster(email, clusterId)
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
@@ -65,5 +68,13 @@ class ClusterInteractor @Inject constructor(
             )
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getSearchClusterFilter(): Category? {
+        return dataCache.getFilterSearchClusterCategory()
+    }
+
+    fun setSearchClusterFilter(categoryFilter: Category?) {
+        dataCache.saveFilterSearchClusterCategory(categoryFilter)
     }
 }

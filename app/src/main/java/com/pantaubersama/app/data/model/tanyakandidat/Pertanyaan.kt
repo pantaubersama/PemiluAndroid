@@ -11,26 +11,26 @@ import java.io.Serializable
 class Pertanyaan(
     @SerializedName("id")
     @Expose
-    var id: String? = null,
+    var id: String,
     @SerializedName("body")
     @Expose
-    var body: String? = null,
+    var body: String,
     @SerializedName("created_at_in_word")
     @Expose
     var createdAtInWord: CreatedAtInWord? = null,
     @SerializedName("created_at")
     @Expose
-    var createdAt: String? = null,
+    var createdAt: String,
     @SerializedName("like_count")
     @Expose
-    var likeCount: Int? = null,
+    var likeCount: Int,
     @SerializedName("user")
     @Expose
-    var user: User? = null,
+    var user: User,
     @SerializedName("is_liked")
     @Expose
-    var isliked: Boolean? = false,
-    var viewType: Int? = null
+    var isliked: Boolean = false,
+    var viewType: Int
 ) : Serializable, ItemModel {
     override fun getType(): Int = PantauConstants.ItemModel.TYPE_PERTANYAAN
 }

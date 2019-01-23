@@ -21,13 +21,13 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <FrameLayout
+        <com.pantaubersama.app.ui.widget.NonSwipeViewPager
             android:id="@+id/catatan_pilihanku_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/catatan_pilihanku_footer">
 
-        </FrameLayout>
+        </com.pantaubersama.app.ui.widget.NonSwipeViewPager>
 
         <LinearLayout
             android:id="@+id/catatan_pilihanku_footer"
@@ -48,25 +48,13 @@
                 android:gravity="center_vertical"
                 android:paddingStart="16dp">
 
-                <Button
-                    android:id="@+id/pilpress_tab"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/bw_modelica_bold"
-                    android:text="Pilpres"
-                    android:textAllCaps="false"
-                    android:textSize="16sp" />
+                    android:clipToPadding="false">
 
-                <Button
-                    android:id="@+id/partai_tab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:backgroundTint="@color/gray_dark_1"
-                    android:fontFamily="@font/bw_modelica_bold"
-                    android:text="Partai"
-                    android:textAllCaps="false"
-                    android:textSize="16sp" />
+                </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
 

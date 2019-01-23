@@ -22,7 +22,6 @@ import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_detail_janji_politik.*
-import kotlinx.android.synthetic.main.item_cluster.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_loading_state.*
@@ -37,6 +36,8 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
     private var creator: Creator? = null
     private var cluster: ClusterItem? = null
     private var itemPosition: Int? = null
+
+    override fun setLayout(): Int = R.layout.activity_detail_janji_politik
 
     companion object {
         fun setIntent(context: Context, janjiPolitik: JanjiPolitik, itemPosition: Int): Intent {
@@ -152,10 +153,6 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
     override fun onFailedGetData(throwable: Throwable) {
         view_fail_state.enableLottie(true, lottie_fail_state)
         tv_fail_state.text = throwable.message
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.activity_detail_janji_politik
     }
 
     private fun onClickOption() {

@@ -44,11 +44,7 @@ import javax.inject.Inject
 class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     @Inject
     override lateinit var presenter: ProfilePresenter
-
-    private lateinit var activeFragment: Fragment
-    private var pLinimasaFragment: ProfileJanjiPolitikFragment? = null
-    private var pTanyaKandidatFragment: ProfileTanyaKandidatFragment? = null
-    private var otherFrag: Fragment? = null // dummy
+    private var userId: String? = null
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -59,7 +55,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
+        userId = intent.getStringExtra(PantauConstants.Profile.USER_ID)
     }
 
     override fun setLayout(): Int = R.layout.activity_profile
@@ -69,11 +65,18 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         setupClusterLayout()
         setupBiodataLayout()
         setupBadgeLayout()
-        showFragment(ProfileJanjiPolitikFragment(), ProfileJanjiPolitikFragment.TAG)
+        if (savedInstanceState == null) {
+            showFragment(ProfileJanjiPolitikFragment.newInstance(userId), ProfileJanjiPolitikFragment.TAG)
+        }
         setupNavigation()
-        presenter.refreshProfile()
-        presenter.getProfile()
-        presenter.refreshBadges()
+        if (userId == null) {
+            presenter.refreshProfile()
+            presenter.getProfile()
+            presenter.refreshBadges()
+        } else {
+            userId?.let { presenter.getUserProfile(it) }
+            userId?.let { presenter.getUserBadge(it) }
+        }
     }
 
     override fun showProfile(profile: Profile) {
@@ -94,8 +97,12 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         tv_request_cluster.visibility = View.GONE
         cluster_image.loadUrl(cluster.image?.thumbnail?.url)
         cluster_name.text = cluster.name
-        cluster_options_action.setOnClickListener {
-            showClusterOptionsDialog(cluster)
+        if (userId == null) {
+            cluster_options_action.setOnClickListener {
+                showClusterOptionsDialog(cluster)
+            }
+        } else {
+            cluster_options_action.visibility = View.GONE
         }
     }
 
@@ -105,9 +112,11 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         verified_text.text = getString(R.string.txt_belum_verifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_gray)
-        verified_button.setOnClickListener {
-            val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
-            startActivity(intent)
+        if (userId == null) {
+            verified_button.setOnClickListener {
+                val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
@@ -122,8 +131,8 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     private fun setupNavigation() {
         val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
             val (fragment, tag) = when (item.itemId) {
-                R.id.navigation_menyerap -> ProfileJanjiPolitikFragment.newInstance() to ProfileJanjiPolitikFragment.TAG
-                R.id.navigation_menggali -> ProfileTanyaKandidatFragment.newInstance() to ProfileTanyaKandidatFragment.TAG
+                R.id.navigation_menyerap -> ProfileJanjiPolitikFragment.newInstance(userId) to ProfileJanjiPolitikFragment.TAG
+                R.id.navigation_menggali -> ProfileTanyaKandidatFragment.newInstance(userId) to ProfileTanyaKandidatFragment.TAG
                 R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
                 R.id.navigation_menjaga -> LaporFragment.newInstance() to LaporFragment.TAG
                 R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
@@ -206,14 +215,18 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 cluster_expandable_image.animate().rotation(180F).start()
             }
         }
-        tv_request_cluster.text = spannable {
-            +"Belum ada Cluster "
-            textColor(color(R.color.red)) {
-                underline { +"( Request Cluster? )" }
+        if (userId == null) {
+            tv_request_cluster.text = spannable {
+                +"Belum ada Cluster "
+                textColor(color(R.color.red)) {
+                    underline { +"( Request Cluster? )" }
+                }
+            }.toCharSequence()
+            tv_request_cluster.setOnClickListener {
+                startActivity(Intent(this, RequestClusterActivity::class.java))
             }
-        }.toCharSequence()
-        tv_request_cluster.setOnClickListener {
-            startActivity(Intent(this, RequestClusterActivity::class.java))
+        } else {
+            tv_request_cluster.text = "Belum ada cluster"
         }
     }
 
@@ -306,8 +319,14 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         progress_bar.visibleIf(false)
     }
 
+    override fun showFailedGetProfileAlert() {
+        ToastUtil.show(this@ProfileActivity, "Gagal memuat profil pengguna")
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_profile, menu)
+        if (userId == null) {
+            menuInflater.inflate(R.menu.menu_profile, menu)
+        }
         return true
     }
 

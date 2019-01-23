@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/white"
+    tools:context="com.pantaubersama.app.ui.onboarding.OnboardingChild3Fragment">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/onboarding_3_animation"
+        android:scaleType="centerInside"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:lottie_fileName="wordstadium_onboarding_animation.json"
+        app:lottie_autoPlay="false"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/black_3"
+        android:text="Chivalry Over Bigotry"
+        android:fontFamily="@font/bw_modelica_bold"
+        android:layout_marginTop="24dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:textSize="16sp"
+        android:textColor="@color/gray_dark_2"
+        android:text="Ruang adu argumentasi sehat dan berkualitas."
+        android:layout_marginTop="12dp"
+        android:gravity="center"/>
+
+</LinearLayout>

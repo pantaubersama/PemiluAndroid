@@ -12,7 +12,7 @@ class TanyaKandidatPresenter @Inject constructor(
     private val tanyaKandidatInteractor: TanyaKandidatInteractor,
     private val bannerInfoInteractor: BannerInfoInteractor
 ) : BasePresenter<TanyaKandidatView>() {
-    fun getList() {
+    fun getBanner() {
         view?.showLoading()
         disposables.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_TANYA)
             .subscribe(
@@ -49,24 +49,16 @@ class TanyaKandidatPresenter @Inject constructor(
                 {
                     if (page == 1) {
                         view?.dismissLoading()
-                        if (it.data?.questions != null) {
-                            if (it.data?.questions?.size != 0) {
-                                view?.bindDataTanyaKandidat(it.data?.questions!!)
-                            } else {
-                                view?.showEmptyDataAlert()
-                            }
+                        if (it.questions.size != 0) {
+                            view?.bindDataTanyaKandidat(it.questions)
                         } else {
-                            view?.showFailedGetDataAlert()
+                            view?.showEmptyDataAlert()
                         }
                     } else {
-                        if (it.data?.questions != null) {
-                            if (it.data?.questions?.size != 0) {
-                                view?.bindNextDataTanyaKandidat(it.data?.questions!!)
-                            } else {
-                                view?.showEmptyNextDataAlert()
-                            }
+                        if (it.questions.size != 0) {
+                            view?.bindNextDataTanyaKandidat(it.questions)
                         } else {
-                            view?.showFailedGetDataAlert()
+                            view?.showEmptyNextDataAlert()
                         }
                     }
                 },
@@ -78,7 +70,7 @@ class TanyaKandidatPresenter @Inject constructor(
             ))
     }
 
-    fun upVoteQuestion(id: String?, questionCalass: String?, isLiked: Boolean?, position: Int?) {
+    fun upVoteQuestion(id: String?, questionCalass: String, isLiked: Boolean, position: Int) {
         disposables.add(
             tanyaKandidatInteractor
                 .upVoteQuestion(
@@ -116,7 +108,7 @@ class TanyaKandidatPresenter @Inject constructor(
         )
     }
 
-    fun deleteItem(id: String?, position: Int?) {
+    fun deleteItem(id: String, position: Int) {
         disposables.add(
             tanyaKandidatInteractor
                 .deleteQuestions(id)
@@ -132,7 +124,7 @@ class TanyaKandidatPresenter @Inject constructor(
         )
     }
 
-    fun unVoteQuestion(id: String?, className: String, liked: Boolean, position: Int?) {
+    fun unVoteQuestion(id: String, className: String, liked: Boolean, position: Int) {
         disposables.add(
             tanyaKandidatInteractor
                 .unVoteQuestion(id, className)

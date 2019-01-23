@@ -12,7 +12,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.profile.cluster.categery.ClusterCategoryActivity
+import com.pantaubersama.app.ui.profile.cluster.category.ClusterCategoryActivity
 import com.pantaubersama.app.ui.widget.ImageChooserTools
 import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.utils.PantauConstants
@@ -22,13 +22,16 @@ import kotlinx.android.synthetic.main.activity_request_cluster.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
+import pub.devrel.easypermissions.PermissionRequest
 import java.io.File
 import javax.inject.Inject
 
 class RequestClusterActivity : BaseActivity<RequestClusterPresenter>(), RequestClusterView {
 
     val CHANGE_CATEGORY = 1
-    private lateinit var imageToUpload: MultipartBody.Part
+    private var imageToUpload: MultipartBody.Part? = null
     private var imageFile: File? = null
     protected var categoryId: String = ""
 
@@ -54,15 +57,12 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>(), RequestC
 
     private fun onClickAction() {
         request_cluster_category.setOnClickListener {
+            partai_selected.setTextColor(ContextCompat.getColor(this@RequestClusterActivity, R.color.black_3))
             val intent = Intent(this@RequestClusterActivity, ClusterCategoryActivity::class.java)
             startActivityForResult(intent, CHANGE_CATEGORY)
         }
         add_image.setOnClickListener {
-            ImageChooserTools.showDialog(this@RequestClusterActivity, object : ImageChooserTools.ImageChooserListener {
-                override fun onClickCamera(file: File) {
-                    imageFile = file
-                }
-            })
+            showImagePicker()
         }
         btn_send.setOnClickListener {
             if (edit_name.text?.length != 0) {
@@ -82,6 +82,30 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>(), RequestC
         }
     }
 
+    @AfterPermissionGranted(PantauConstants.RequestCode.RC_ASK_PERMISSIONS)
+    private fun showImagePicker() {
+        if (EasyPermissions.hasPermissions(this, *PantauConstants.Permission.GET_IMAGE_PERMISSION)) {
+            ImageChooserTools.showDialog(this@RequestClusterActivity, object : ImageChooserTools.ImageChooserListener {
+                override fun onClickCamera(file: File) {
+                    imageFile = file
+                }
+            })
+        } else {
+            EasyPermissions.requestPermissions(
+                PermissionRequest.Builder(this, PantauConstants.RequestCode.RC_ASK_PERMISSIONS, *PantauConstants.Permission.GET_IMAGE_PERMISSION)
+                    .setRationale(getString(R.string.izinkan_akses_kamera_dan_galeri))
+                    .setPositiveButtonText(getString(R.string.ok))
+                    .setNegativeButtonText(getString(R.string.batal))
+                    .build()
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -94,7 +118,7 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>(), RequestC
                 ImageUtil.compressImage(this, imageFile!!, 2, object : ImageUtil.CompressorListener {
                     override fun onSuccess(file: File) {
                         imageFile = file
-                        imageToUpload = createFromFile()
+                        imageToUpload = createFromFile(file)
                         iv_user_avatar.setImageURI(Uri.parse(imageFile?.absolutePath))
                     }
 

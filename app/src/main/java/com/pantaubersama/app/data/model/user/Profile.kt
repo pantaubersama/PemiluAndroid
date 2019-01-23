@@ -20,7 +20,8 @@ data class ProfileResponse(
 ) : Serializable
 
 data class ProfileData(
-    @SerializedName("user") val user: Profile
+    @SerializedName("user") val user: Profile,
+    @SerializedName("users") val users: MutableList<Profile>
 ) : Serializable
 
 data class Profile(
@@ -42,7 +43,7 @@ data class Profile(
     @SerializedName("avatar") var avatar: Image,
     @SerializedName("informant") var informant: Informant
 ) : Serializable, ItemModel {
-    override fun getType(): Int = PantauConstants.ItemModel.TYPE_HEADER_TANYA
+    override fun getType(): Int = PantauConstants.ItemModel.TYPE_USER
 }
 
 data class Informant(

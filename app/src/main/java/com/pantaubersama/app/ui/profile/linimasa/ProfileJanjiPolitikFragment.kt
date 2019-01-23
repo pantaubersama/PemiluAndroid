@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.profile.linimasa
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikA
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.CopyUtil
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_ITEM_JANPOL
@@ -31,13 +33,18 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
 
     @Inject
     override lateinit var presenter: ProfileJanjiPolitikPresenter
+    private var userId: String? = null
 
     private lateinit var adapter: JanjiPolitikAdapter
 
     companion object {
         val TAG = ProfileJanjiPolitikFragment::class.java.simpleName
-        fun newInstance(): ProfileJanjiPolitikFragment {
-            return ProfileJanjiPolitikFragment()
+        fun newInstance(userId: String?): ProfileJanjiPolitikFragment {
+            val fragment = ProfileJanjiPolitikFragment()
+            val bundle = Bundle()
+            bundle.putString(PantauConstants.Profile.USER_ID, userId)
+            fragment.arguments = bundle
+            return fragment
         }
     }
 
@@ -47,7 +54,8 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
 
     override fun setLayout(): Int = R.layout.fragment_profile_janji_politik
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+        userId = arguments?.getString(PantauConstants.Profile.USER_ID)
         setupRecyclerJanpol()
         getList()
     }
@@ -69,6 +77,9 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
             override fun onClickJanpolOption(item: JanjiPolitik, position: Int) {
                 val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
                 dialog.removeItem(R.id.report_tanya_kandidat_action)
+                if (userId != null) {
+                    dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
+                }
                 dialog.show()
                 dialog.listener = object : OptionDialog.DialogListener {
                     override fun onClick(viewId: Int) {
@@ -117,13 +128,21 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
 
         adapter.addSupportLoadMore(recycler_view, 10) {
             adapter.setLoading()
-            presenter.getJanjiPolitikList(it)
+            if (userId == null) {
+                presenter.getJanjiPolitikList(it)
+            } else {
+                userId?.let { id -> presenter.getUserJanjiPolitikList(it, id) }
+            }
         }
     }
 
     fun getList() {
         adapter.setDataEnd(false)
-        presenter.getJanjiPolitikList(1)
+        if (userId == null) {
+            presenter.getJanjiPolitikList(1)
+        } else {
+            userId?.let { id -> presenter.getUserJanjiPolitikList(1, id) }
+        }
     }
 
     override fun showLoading() {

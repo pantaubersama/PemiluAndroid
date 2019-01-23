@@ -23,7 +23,7 @@ class ProfileTanyaKandidatPresenter @Inject constructor(
                         if (page == 1) {
                             view?.dismissLoading()
                             if (it?.questions != null) {
-                                if (it.questions?.size != 0) {
+                                if (it.questions.size != 0) {
                                     view?.bindDataTanyaKandidat(it.questions)
                                 } else {
                                     view?.showEmptyDataAlert()
@@ -63,7 +63,7 @@ class ProfileTanyaKandidatPresenter @Inject constructor(
 //        }
     }
 
-    fun upVoteQuestion(id: String?, questionCalass: String?, isLiked: Boolean?, position: Int?) {
+    fun upVoteQuestion(id: String, questionCalass: String, isLiked: Boolean, position: Int) {
         disposables.add(
             tanyaKandidatInteractor
                 .upVoteQuestion(
@@ -82,7 +82,7 @@ class ProfileTanyaKandidatPresenter @Inject constructor(
         )
     }
 
-    fun deleteItem(id: String?, position: Int?) {
+    fun deleteItem(id: String, position: Int) {
         disposables.add(
             tanyaKandidatInteractor
                 .deleteQuestions(id)
@@ -98,7 +98,7 @@ class ProfileTanyaKandidatPresenter @Inject constructor(
         )
     }
 
-    fun unVoteQuestion(id: String?, className: String, liked: Boolean, position: Int?) {
+    fun unVoteQuestion(id: String, className: String, liked: Boolean, position: Int) {
         disposables.add(
             tanyaKandidatInteractor
                 .unVoteQuestion(id, className)
@@ -116,5 +116,37 @@ class ProfileTanyaKandidatPresenter @Inject constructor(
 
     fun getProfile() {
         view?.bindProfile(profileInteractor.getProfile())
+    }
+
+    fun getUserTanyaKandidat(page: Int, userId: String) {
+        if (page == 1) {
+            view?.showLoading()
+        }
+        disposables.add(
+            tanyaKandidatInteractor.getUserTanyaKandidatList(page, perPage, userId)
+                .subscribe(
+                    {
+                        if (page == 1) {
+                            view?.dismissLoading()
+                            if (it?.questions != null) {
+                                if (it.questions.size != 0) {
+                                    view?.bindDataTanyaKandidat(it.questions)
+                                } else {
+                                    view?.showEmptyDataAlert()
+                                }
+                            } else {
+                                view?.showFailedGetDataAlert()
+                            }
+                        } else {
+                            view?.showFailedGetDataAlert()
+                        }
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showFailedGetDataAlert()
+                        view?.showError(it)
+                    }
+                )
+        )
     }
 }

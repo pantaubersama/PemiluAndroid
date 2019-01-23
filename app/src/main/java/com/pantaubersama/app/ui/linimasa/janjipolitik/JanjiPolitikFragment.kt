@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.di.component.ActivityComponent
@@ -56,7 +55,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         activityComponent.inject(this)
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         if (presenter.isUserEligible()) {
             fab_add.visibleIf(true)
             fab_add.setOnClickListener {
@@ -140,7 +139,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             }
 
             override fun onClickCopyUrl(id: String?) {
-                CopyUtil.copyJanpol(requireContext(), id!!)
+                id?.let { CopyUtil.copyJanpol(requireContext(), it) }
             }
 
             override fun onClickLapor(id: String?) {
@@ -197,7 +196,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         if (janjiPolitikList.size < presenter.perPage) {
             adapter.setDataEnd(true)
         }
-        adapter.addData(janjiPolitikList as MutableList<ItemModel>)
+        adapter.addData(janjiPolitikList)
     }
 
     override fun showEmptyData() {
@@ -226,7 +225,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
     }
 
     override fun showLoading() {
-        lottie_loading.enableLottie(true)
+        lottie_loading.enableLottie(true, lottie_loading)
         view_empty_state.enableLottie(false, lottie_empty_state)
         view_fail_state.enableLottie(false, lottie_fail_state)
         recycler_view.visibleIf(false)
@@ -237,7 +236,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
 
     override fun dismissLoading() {
         recycler_view.visibleIf(false)
-        lottie_loading.enableLottie(false)
+        lottie_loading.enableLottie(false, lottie_loading)
         if (presenter.isUserEligible()) {
             fab_add.show()
         }
@@ -266,7 +265,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         }
     }
 
-    fun scrollToTop(smoothScroll: Boolean) {
+    override fun scrollToTop(smoothScroll: Boolean) {
         if (smoothScroll) {
             recycler_view.smoothScrollToPosition(0)
         } else {

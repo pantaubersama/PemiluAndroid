@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.layout_tanya_kandidat_header.*
 class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
     private var profile: Profile = EMPTY_PROFILE
     var listener: TanyaKandidatAdapter.AdapterListener? = null
+    val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
 
     override fun getItemViewType(position: Int): Int {
         return if (data[position] is BannerInfo) {
@@ -57,8 +58,9 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         containerView!!), LayoutContainer {
 
         fun onBind(item: Pertanyaan?) {
-            iv_user_avatar.loadUrl(item?.user?.avatar?.url, R.drawable.ic_person)
+            iv_user_avatar.loadUrl(item?.user?.avatar?.url, R.drawable.ic_avatar_placeholder)
             tv_user_name.text = item?.user?.fullName
+            tv_user_bio.text = item?.user?.about
             question_time.text = item?.createdAtInWord?.id
             upvote_count_text.text = item?.likeCount.toString()
             user_question.text = item?.body
@@ -70,16 +72,16 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
             iv_share_button.setOnClickListener {
                 listener?.onClickShare(item)
             }
-            if ((data[adapterPosition] as Pertanyaan).isliked != null) {
-                if ((data[adapterPosition] as Pertanyaan).isliked!!) {
-                    upvote_animation.progress = 1.0f
-                } else {
-                    upvote_animation.progress = 0.0f
-                }
+            if ((data[adapterPosition] as Pertanyaan).isliked) {
+                upvote_animation.progress = 1.0f
+            } else {
+                upvote_animation.progress = 0.0f
             }
             upvote_container.setOnClickListener {
                 if (profile != EMPTY_PROFILE) {
-                    setUpvoted(item)
+                    if (!animator.isRunning) {
+                        setUpvoted(item)
+                    }
                 } else {
                     listener?.onclickActionUnauthorized()
                 }
@@ -92,17 +94,15 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         private fun setUpvoted(item: Pertanyaan?) {
             val upVoted = item?.isliked
             item?.isliked = !item?.isliked!!
-            val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
             if (!upVoted!!) {
-                val loveCount = item.likeCount!! + 1
-                item.likeCount = loveCount
-                animator.addUpdateListener { animation -> upvote_animation.progress = animation.animatedValue as Float
+                item.likeCount += 1
+                animator.addUpdateListener { animation ->
+                    upvote_animation.progress = animation.animatedValue as Float
                     upvote_count_text.text = item.likeCount.toString()
                 }
                 animator.start()
             } else {
-                val upVoteCount = item.likeCount!! - 1
-                item.likeCount = upVoteCount
+                item.likeCount -= 1
                 upvote_count_text.text = item.likeCount.toString()
                 upvote_animation.progress = 0.0f
             }
@@ -144,8 +144,8 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         }
     }
 
-    fun reverseVote(liked: Boolean?, position: Int?) {
-        (data[position!!] as Pertanyaan).isliked = liked
+    fun reverseVote(liked: Boolean, position: Int) {
+        (data[position] as Pertanyaan).isliked = liked
         notifyItemChanged(position)
     }
 
@@ -179,10 +179,10 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         fun onClickBanner(bannerInfo: BannerInfo)
         fun onClickHeader()
         fun onClickShare(item: Pertanyaan?)
-        fun onClickUpvote(id: String?, isLiked: Boolean, position: Int?)
-        fun onClickDeleteItem(id: String?, position: Int?)
-        fun onClickCopyUrl(id: String?)
-        fun onClickLapor(id: String?)
+        fun onClickUpvote(id: String, isLiked: Boolean, position: Int)
+        fun onClickDeleteItem(id: String, position: Int)
+        fun onClickCopyUrl(id: String)
+        fun onClickLapor(id: String)
         fun onClickTanyaOption(item: Pertanyaan, position: Int)
         fun onClickContent(item: Pertanyaan, position: Int)
         fun onclickActionUnauthorized()

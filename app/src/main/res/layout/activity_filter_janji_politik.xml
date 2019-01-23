@@ -28,7 +28,7 @@
             android:id="@+id/rl_cluster_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_rounded_primary_outline"
+            android:background="@drawable/bg_rounded_tosca_outline"
             android:foreground="?selectableItemBackground"
             android:layout_marginTop="10dp">
 

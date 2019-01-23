@@ -27,10 +27,13 @@ abstract class CommonFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initProgressDialog()
-        initView(view)
+        fetchArguments(arguments)
+        initView(view, savedInstanceState)
     }
 
-    protected abstract fun initView(view: View)
+    protected open fun fetchArguments(args: Bundle?) {}
+
+    protected abstract fun initView(view: View, savedInstanceState: Bundle?)
 
     private fun initProgressDialog() {
         progressDialog = ProgressDialog(activity).apply {
@@ -67,4 +70,6 @@ abstract class CommonFragment : Fragment() {
             }
         }
     }
+
+    open fun scrollToTop(smoothScroll: Boolean = true) {}
 }

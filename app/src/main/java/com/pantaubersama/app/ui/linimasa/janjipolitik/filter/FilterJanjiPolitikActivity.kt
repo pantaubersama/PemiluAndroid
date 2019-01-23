@@ -1,6 +1,8 @@
 package com.pantaubersama.app.ui.linimasa.janjipolitik.filter
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -9,6 +11,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_IS_SEARCH_FILTER
 import com.pantaubersama.app.utils.PantauConstants.Filter.Janpol.USER_VERIFIED_ALL
 import com.pantaubersama.app.utils.PantauConstants.Filter.Janpol.USER_VERIFIED_FALSE
 import com.pantaubersama.app.utils.PantauConstants.Filter.Janpol.USER_VERIFIED_TRUE
@@ -23,26 +26,40 @@ import javax.inject.Inject
 
 class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), FilterJanjiPolitikView {
 
-    @Inject
-    override lateinit var presenter: FilterJanjiPolitikPresenter
+    private var isSearchFilter = false
+
+    @Inject override lateinit var presenter: FilterJanjiPolitikPresenter
 
     private var userFilter: String? = USER_VERIFIED_ALL
     private var clusterFilter: ClusterItem? = null
+
+    override fun statusBarColor(): Int? = R.color.white
+    override fun setLayout(): Int = R.layout.activity_filter_janji_politik
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
 
-    override fun statusBarColor(): Int? {
-        return R.color.white
+    companion object {
+        fun setIntent(context: Context, isSearchFilter: Boolean): Intent {
+            val intent = Intent(context, FilterJanjiPolitikActivity::class.java)
+            intent.putExtra(EXTRA_IS_SEARCH_FILTER, isSearchFilter)
+            return intent
+        }
     }
 
     override fun fetchIntentExtra() {
+        isSearchFilter = intent.getBooleanExtra(EXTRA_IS_SEARCH_FILTER, false)
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
-        presenter.getFilter()
+
+        if (!isSearchFilter) {
+            presenter.getFilter()
+        } else {
+            presenter.getSearchFilter()
+        }
 
         rl_cluster_container.setOnClickListener {
             ClusterListDialog.show(supportFragmentManager, object : ClusterListDialog.DialogListener {
@@ -66,7 +83,11 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
         }
 
         btn_terapkan.setOnClickListener {
-            presenter.setFilter(this.userFilter!!, this.clusterFilter)
+            if (!isSearchFilter) {
+                presenter.setFilter(this.userFilter!!, this.clusterFilter)
+            } else {
+                presenter.setSearchFilter(this.userFilter!!, this.clusterFilter)
+            }
         }
     }
 
@@ -79,13 +100,9 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
             layout_default_cluster_filter.visibleIf(false)
             item_cluster.visibleIf(true)
             tv_cluster_name.text = item.name
-            tv_cluster_member_count.text = "${item.memberCount} anggota"
+            tv_cluster_member_count.text = "${item.memberCount?.let { it } ?: "belum ada"} anggota"
             iv_avatar_cluster.loadUrl(item.image?.url, R.drawable.ic_avatar_placeholder)
         }
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.activity_filter_janji_politik
     }
 
     override fun showLoading() {

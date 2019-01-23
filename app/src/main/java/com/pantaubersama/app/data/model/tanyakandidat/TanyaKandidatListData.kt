@@ -8,10 +8,10 @@ import java.io.Serializable
 data class TanyaKandidatListData(
     @SerializedName("questions")
     @Expose
-    var questions: MutableList<Pertanyaan>? = null,
+    var questions: MutableList<Pertanyaan>,
     @SerializedName("meta")
     @Expose
-    var meta: Meta? = null,
+    var meta: Meta,
     @SerializedName("status")
     @Expose
     var status: Boolean? = false,

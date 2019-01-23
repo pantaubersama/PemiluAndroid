@@ -229,6 +229,7 @@
                                 android:id="@+id/cluster_options_action"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:background="?selectableItemBackgroundBorderless"
                                 android:src="@drawable/ic_more_vertical"
                                 android:layout_gravity="end"
                                 android:layout_alignParentEnd="true"

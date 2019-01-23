@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.penpol.kuis.list
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
@@ -43,7 +44,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         activityComponent.inject(this)
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         presenter.getProfile()
         adapter = KuisListAdapter()
         adapter.listener = object : KuisListAdapter.AdapterListener {
@@ -91,6 +92,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     }
 
     private fun getTopPageItems() {
+        adapter.clear()
         adapter.setDataEnd(false)
         presenter.getTopPageItems()
     }
@@ -112,7 +114,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     }
 
     override fun showLoading() {
-        lottie_loading.enableLottie(true)
+        lottie_loading.enableLottie(true, lottie_loading)
         view_empty_state.enableLottie(false, lottie_empty_state)
         view_fail_state.enableLottie(false, lottie_fail_state)
         recycler_view.visibleIf(false)
@@ -120,7 +122,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
 
     override fun dismissLoading() {
         recycler_view.visibleIf(true)
-        lottie_loading.enableLottie(false)
+        lottie_loading.enableLottie(false, lottie_loading)
     }
 
     override fun showFailedGetData() {

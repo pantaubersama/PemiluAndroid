@@ -7,10 +7,10 @@ import java.io.Serializable
 class TanyaKandidatListResponse(
     @SerializedName("data")
     @Expose
-    var data: TanyaKandidatListData? = null
+    var data: TanyaKandidatListData
 ) : Serializable
 
 class TanyaKandidatResponse(
     @SerializedName("data")
-    var data: TanyaKandidatData? = null
+    var data: TanyaKandidatData
 )

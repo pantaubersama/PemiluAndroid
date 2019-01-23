@@ -199,11 +199,10 @@
                                     android:layout_marginTop="5dp"
                                     android:background="@color/transparant"
                                     android:fontFamily="@font/lato_bold"
-                                    android:hint="@string/label_lokasi"
+                                    android:hint="@string/label_lokasi_placeholder"
                                     android:inputType="text|textNoSuggestions"
                                     android:textColor="@color/black"
                                     android:textSize="12sp"
-                                    tools:text="Bandung"
                                     android:padding="12dp"/>
 
                             </LinearLayout>
@@ -223,7 +222,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/lato_italic"
-                                    android:text="@string/label_deskripi_tentang_kamu"
+                                    android:text="@string/label_bio"
                                     android:textColor="@color/gray_4"
                                     android:textSize="10sp" />
 
@@ -238,7 +237,6 @@
                                     android:inputType="text|textNoSuggestions"
                                     android:textColor="@color/black"
                                     android:textSize="12sp"
-                                    tools:text="An ordinary netizen who likes to talk a lot. Like, a lot."
                                     android:padding="12dp"/>
 
                             </LinearLayout>
@@ -273,7 +271,6 @@
                                     android:inputType="text|textNoSuggestions|textCapWords"
                                     android:textColor="@color/black"
                                     android:textSize="12sp"
-                                    tools:text="Universitas Indonesia"
                                     android:padding="12dp"/>
 
                             </LinearLayout>

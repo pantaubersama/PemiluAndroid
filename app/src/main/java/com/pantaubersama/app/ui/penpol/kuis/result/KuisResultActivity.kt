@@ -63,7 +63,7 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
 
     override fun showResult(kuisResult: KuisResult, userName: String) {
         tv_kuis_result.text = spannable {
-            +"Dari hasil pilhan Quiz ${kuisResult.title},\n"
+            +"Dari hasil pilhan di Quiz ${kuisResult.title},\n"
             textColor(color(R.color.black_3)) { +userName }
             +" lebih suka jawaban dari Paslon no ${kuisResult.team.id}"
         }.toCharSequence()

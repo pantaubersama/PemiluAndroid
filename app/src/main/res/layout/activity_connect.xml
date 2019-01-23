@@ -37,7 +37,7 @@
                 android:fontFamily="@font/lato_regular"
                 android:textColor="@color/gray_5"
                 android:textSize="10sp"
-                android:text="Tautkan dengan social mediamu agar lebih mudah dalam berbagi dan berkontribusi di Pantau Bersama" />
+                android:text="@string/connect_hint" />
 
         </LinearLayout>
 
@@ -176,7 +176,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato_regular"
-            android:text="@string/submit"
+            android:text="@string/txt_selesai"
+            android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="12sp" />
 

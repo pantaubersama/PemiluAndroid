@@ -132,16 +132,23 @@
                     android:textSize="16sp"
                     android:text="@string/label_bagikan_undangan_lewat_link" />
 
-                <EditText
+                <TextView
                     android:id="@+id/cluster_url"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_rounded_outline_white"
                     android:layout_marginTop="12dp"
-                    android:padding="12dp"
+                    android:paddingLeft="12dp"
+                    android:paddingStart="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:textSize="14sp"
                     android:textColor="@color/gray_4"
-                    android:inputType="textUri"/>
+                    android:textIsSelectable="true"
+                    android:focusableInTouchMode="false"
+                    android:focusable="true"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -42,12 +42,14 @@
                 android:background="?selectableItemBackgroundBorderless"/>
 
             <TextView
+                android:id="@+id/btn_search"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_rounded_8dp_white"
+                android:foreground="?selectableItemBackground"
                 android:drawableStart="@drawable/ic_search_inactive"
                 android:drawablePadding="10dp"
                 android:paddingStart="10dp"
@@ -64,10 +66,11 @@
                 android:padding="2dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
-                android:src="@drawable/ic_pinned_white_outline"
+                android:src="@drawable/icon_kotak_kpu"
                 android:background="?selectableItemBackgroundBorderless"/>
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/btn_notification"
                 android:layout_width="30dp"
                 android:layout_height="30dp"

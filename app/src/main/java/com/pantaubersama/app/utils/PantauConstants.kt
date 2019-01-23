@@ -7,6 +7,12 @@ import android.Manifest
  */
 class PantauConstants {
 
+    object Search {
+        object Filter {
+            const val SEARCH_ORANG_REQUEST_CODE = 1111
+        }
+    }
+
     companion object {
         const val LABEL_COPY = "LABEL_COPY"
 
@@ -16,6 +22,9 @@ class PantauConstants {
         const val BANNER_KUIS = "kuis"
         const val URL = "url"
         val PROFILE_COMPLETION = "profile_completion"
+        val FILTER_ORANG_ALL = "verified_all"
+        val FILTER_ORANG_VERIFIED = "verified_true"
+        val FILTER_ORANG_UNVERIFIED = "verified_false"
     }
 
     object Cluster {
@@ -23,6 +32,7 @@ class PantauConstants {
         val CLUSTER_URL = "cluster_url"
         val CLUSTER_ID = "cluster_id"
         val INVITE_LINK_ACTIVE = "invite_link_active"
+
         object REQUEST_CODE {
             const val REQUEST_CLUSTER = 2001
         }
@@ -32,6 +42,7 @@ class PantauConstants {
         const val CREATE_TANYA_KANDIDAT_REQUEST_CODE = 21
         val TANYA_KANDIDAT_DATA = "tanya_kandidat_data"
         val CLASS_NAME = "Question"
+
         object Filter {
             const val FILTER_TANYA_KANDIDAT_REQUEST_CODE = 22
             val FILTER_ORDER_DIRECTION = "filter_order_direction"
@@ -41,6 +52,7 @@ class PantauConstants {
                 const val USER_VERIFIED_TRUE = "user_verified_true"
                 const val USER_VERIFIED_FALSE = "user_verified_false"
             }
+
             object ByVotes {
                 const val LATEST = "created_at"
                 const val MOST_VOTES = "cached_votes_up"
@@ -66,6 +78,8 @@ class PantauConstants {
         const val EXTRA_QUIZ_PARTICIPATION_ID = "EXTRA_QUIZ_PARTICIPATION_ID"
         const val EXTRA_ACHIEVED_ID = "EXTRA_ACHIEVED_ID"
         const val EXTRA_ACHIEVED_BADGE_ITEM = "EXTRA_ACHIEVED_BADGE_ITEM"
+        const val EXTRA_SEARCH_KEYWORD = "EXTRA_SEARCH_KEYWORD"
+        const val EXTRA_IS_SEARCH_FILTER = "EXTRA_IS_SEARCH_FILTER"
     }
 
     object RequestCode {
@@ -84,6 +98,7 @@ class PantauConstants {
         const val RC_CREATE_JANPOL = 1010
         const val RC_OPEN_DETAIL_JANPOL = 1011
         const val RC_OPEN_DETAIL_QUESTION = 1012
+        const val RC_FILTER_CLUSTER = 1013
     }
 
     object ResultCode {
@@ -97,11 +112,11 @@ class PantauConstants {
         const val GRANT_TYPE = "refresh_token"
         const val OAUTH_ACCESS_TOKEN_FIELD = "access_token"
         val NON_TOKEN_URL = arrayOf(
-            "/v1/callback",
-            "/oauth/token"
+                "/v1/callback",
+                "/oauth/token"
         )
         val OPTIONAL_TOKEN_URL = arrayOf(
-            "/v1/profile"
+                "/v1/profile"
         )
         val BEARER = "bearer "
 
@@ -111,7 +126,8 @@ class PantauConstants {
         const val URL_PANTAU_BERSAMA_INSTAGRAM = "https://www.instagram.com/pantaubersama/"
         const val URL_PANTAU_BERSAMA_FACEBOOK = "https://www.facebook.com/pages/category/Internet-Company/Pantau-Bersama-735930099884846/"
 
-        const val INVITATION_PATH = "invitation"
+        const val INVITATION_PATH = "invitation?"
+        const val ACCEPT_CLUSTER_INVITATION_PATH = "invitation/accept_existing"
     }
 
     object Kuis {
@@ -145,15 +161,25 @@ class PantauConstants {
         const val TYPE_CLUSTER_ITEM = 7
         const val CATEGORY_ITEM = 8
         const val TYPE_PASLON = 9
-        const val TYPE_HEADER_TANYA = 10
+        const val TYPE_USER = 10
     }
-    object Profile
+
+    object Profile {
+        const val BASE_URL_PUSAT_BANTUAN = "https://pantaubersama.pusatbantuan.com/"
+        const val URL_PUSAT_BANTUAN = BASE_URL_PUSAT_BANTUAN + "1/1"
+        const val URL_PANDUAN_KOMUNITAS = BASE_URL_PUSAT_BANTUAN + "2/2"
+        const val URL_TENTANG_PANTAU_BERSAMA = BASE_URL_PUSAT_BANTUAN + "3/4"
+        const val USER_ID = "user_id"
+        const val PROFILE_REQUEST_CODE = 112
+    }
 
     object Filter {
         object Pilpres { // value dari backend
             const val FILTER_ALL = "team_all"
             const val FILTER_TEAM_1 = "team_id_1"
             const val FILTER_TEAM_2 = "team_id_2"
+            const val FILTER_TEAM_3 = "team_id_3"
+            const val FILTER_TEAM_4 = "team_id_4"
         }
 
         object Janpol { // value dari backend
@@ -165,9 +191,9 @@ class PantauConstants {
 
     object Regex {
         const val KTP =
-            "^((1[1-9])|(21)|([37][1-6])|(5[1-4])|(6[1-5])|([8-9][1-2]))[0-9]{2}[0-9]{2}(([0-6][0-9])|(7[0-1]))((0[1-9])|(1[0-2]))([0-9]{2})[0-9]{4}\$"
+                "^((1[1-9])|(21)|([37][1-6])|(5[1-4])|(6[1-5])|([8-9][1-2]))[0-9]{2}[0-9]{2}(([0-6][0-9])|(7[0-1]))((0[1-9])|(1[0-2]))([0-9]{2})[0-9]{4}\$"
         const val EMAIL =
-            "^[A-Za-z][A-Za-z0-9]*([._-]?[A-Za-z0-9]+)@[A-Za-z].[A-Za-z]{0,3}?.[A-Za-z]{0,2}\$"
+                "^[A-Za-z][A-Za-z0-9]*([._-]?[A-Za-z0-9]+)@[A-Za-z].[A-Za-z]{0,3}?.[A-Za-z]{0,2}\$"
     }
 
     object Permission {

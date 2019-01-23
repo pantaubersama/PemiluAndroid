@@ -10,7 +10,7 @@ import javax.inject.Inject
  * @author edityomurti on 19/12/2018 14:45
  */
 class PilpresPresenter @Inject constructor(
-    private val pilpresInteractor: PilpresInteractor?,
+    private val pilpresInteractor: PilpresInteractor,
     private val bannerInfoInteractor: BannerInfoInteractor
 ) : BasePresenter<PilpresView>() {
 
@@ -19,8 +19,8 @@ class PilpresPresenter @Inject constructor(
     fun getList() {
         view?.showLoading()
 //        if (bannerInfoInteractor.isBannerPilpresShown()!!) {
-        disposables?.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_PILPRES)
-            ?.subscribe(
+        disposables.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_PILPRES)
+            .subscribe(
                 {
                     view?.showBanner(it)
                     getFeeds(1)
@@ -30,7 +30,7 @@ class PilpresPresenter @Inject constructor(
                     view?.showError(it)
                     view?.showFailedGetData()
                 }
-            )!!
+            )
         )
 //        } else {
 //            getFeeds(1, 20)
@@ -42,8 +42,8 @@ class PilpresPresenter @Inject constructor(
             view?.showLoading()
         }
 
-        disposables?.add(pilpresInteractor?.getFeeds(pilpresInteractor.getPilpresFilter(), page, perPage)
-            ?.subscribe(
+        disposables.add(pilpresInteractor.getFeeds("", pilpresInteractor.getPilpresFilter(), page, perPage)
+            .subscribe(
                 {
                     if (page == 1) {
                         view?.dismissLoading()
@@ -70,7 +70,7 @@ class PilpresPresenter @Inject constructor(
                     it.printStackTrace()
                     view?.showError(it)
                 }
-            )!!
+            )
         )
     }
 }

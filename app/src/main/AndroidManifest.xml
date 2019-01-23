@@ -21,9 +21,25 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.profile.setting.badge.detail.DetailBadgeActivity"></activity>
-        <activity android:name=".ui.penpol.kuis.detail.DetailKuisActivity" />
-        <activity android:name=".ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity" />
+        <activity android:name=".ui.search.cluster.filter.FilterClusterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.search.person.filter.FilterOrangActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.onboarding.OnboardingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.badge.detail.DetailBadgeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.kuis.detail.DetailKuisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="aia-compat-api-min-version"
@@ -177,9 +193,6 @@
             android:name=".ui.profile.setting.editprofile.EditProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.setting.ubahsandi.UbahSandiActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.profile.setting.ubahdatalapor.UbahDataLaporActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -198,11 +211,11 @@
             android:name=".ui.profile.cluster.requestcluster.RequestClusterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.cluster.categery.ClusterCategoryActivity"
+            android:name=".ui.profile.cluster.category.ClusterCategoryActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.connect.ConnectActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.note.CatatanPilihanActivity"
             android:screenOrientation="portrait" />
@@ -210,9 +223,8 @@
             android:name=".ui.profile.cluster.invite.UndangAnggotaActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.setting.buatprofil.BuatProfilActivity"
+            android:name=".ui.penpol.kuis.result.KuisUserResultActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.penpol.kuis.result.KuisUserResultActivity" />
     </application>
 
 </manifest>

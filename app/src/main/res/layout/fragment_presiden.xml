@@ -50,7 +50,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_italic"
                         android:lineSpacingExtra="2sp"
-                        android:text="Pilih Note Calon Presidenmu saat ini:"
+                        android:text="Siapakah yang saat ini paling cocok dengan pilihan kamu?"
                         android:textColor="@color/gray_5"
                         android:textSize="10sp" />
 
@@ -76,6 +76,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_kuis_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/gray_1"
