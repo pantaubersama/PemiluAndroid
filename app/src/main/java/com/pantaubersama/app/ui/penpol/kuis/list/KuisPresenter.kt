@@ -32,8 +32,9 @@ class KuisPresenter @Inject constructor(
         }
 
     val filter: String
-        get() = kuisInteractor.getKuisFilter()
-            .filter { profileInteractor.getProfile() != EMPTY_PROFILE }
+        get() = kuisInteractor.getKuisFilter().takeIf {
+            profileInteractor.getProfile() != EMPTY_PROFILE
+        } ?: Filter.BELUM_DIIKUTI
 
     fun getTopPageItems() {
         view?.showLoading()
