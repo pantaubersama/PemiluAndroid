@@ -20,6 +20,7 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.search.history.SearchHistoryFragment
 import com.pantaubersama.app.ui.search.janjipolitik.SearchJanjiPolitikFragment
 import com.pantaubersama.app.ui.search.person.SearchPersonFragment
+import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
 import com.pantaubersama.app.utils.extensions.visibleIf
 import javax.inject.Inject
 
@@ -88,9 +89,9 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
         val tabJanPol = TabView(this)
         tabJanPol.setTitleLabel(R.string.txt_tab_janji_politik)
         tab_layout.addTab(tab_layout.newTab().setCustomView(tabJanPol))
-//        val tabTanya = TabView(this)
-//        tabTanya.setTitleLabel(R.string.txt_tab_tanya)
-//        tab_layout.addTab(tab_layout.newTab().setCustomView(tabTanya))
+        val tabTanya = TabView(this)
+        tabTanya.setTitleLabel(R.string.txt_tab_tanya)
+        tab_layout.addTab(tab_layout.newTab().setCustomView(tabTanya))
 //        val tabQuiz = TabView(this)
 //        tabQuiz.setTitleLabel(R.string.txt_tab_quiz)
 //        tab_layout.addTab(tab_layout.newTab().setCustomView(tabQuiz))
@@ -130,12 +131,12 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
 //                        1 -> SearchClusterFragment.newInstance(it)
 //                        2 -> SearchLinimasaFragment.newInstance(it)
 //                        3 -> SearchJanjiPolitikFragment.newInstance(it)
-//                        4 -> SearchQuestionFragment.newInstance(it)
 //                        5 -> SearchQuizFragment.newInstance(it)
 //                        6 -> SearchWordstadiumFragment.newInstance(it)
 
                         1 -> SearchLinimasaFragment.newInstance(it) // sementara hanya untuk production @edityo 21/01/19
                         2 -> SearchJanjiPolitikFragment.newInstance(it)
+                        3 -> SearchQuestionFragment.newInstance(it)
                         else -> Fragment()
                     }
                 } ?: return SearchHistoryFragment.newInstance()

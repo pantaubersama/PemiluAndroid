@@ -1,73 +1,16 @@
-package com.pantaubersama.app.ui.penpol.tanyakandidat.list
+package com.pantaubersama.app.ui.search.tanya
 
 import com.pantaubersama.app.base.BasePresenter
-import com.pantaubersama.app.data.interactors.BannerInfoInteractor
+import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
-import com.pantaubersama.app.data.local.cache.DataCache
-import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
 
-class TanyaKandidatPresenter @Inject constructor(
-    private val dataCache: DataCache,
-    private val tanyaKandidatInteractor: TanyaKandidatInteractor,
-    private val bannerInfoInteractor: BannerInfoInteractor
-) : BasePresenter<TanyaKandidatView>() {
-    fun getBanner() {
-        view?.showLoading()
-        disposables.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_TANYA)
-            .subscribe(
-                {
-                    view?.showBanner(it)
-                },
-                {
-                    view?.dismissLoading()
-                    view?.showError(it)
-                    view?.showFailedGetDataAlert()
-                }
-            )
-        )
-    }
-
+class SearchQuestionPresenter @Inject constructor(
+    private val profileInteractor: ProfileInteractor,
+    private val tanyaKandidatInteractor: TanyaKandidatInteractor
+) : BasePresenter<SearchQuestionView>() {
     fun getProfile() {
-        view?.bindUserData(dataCache.loadUserProfile())
-    }
-
-    fun getTanyaKandidatList(
-        page: Int?,
-        perPage: Int?
-    ) {
-        if (page == 1) {
-            view?.showLoading()
-        }
-        disposables.add(
-            tanyaKandidatInteractor
-                .getTanyaKandidatlist(
-                    page,
-                    perPage
-            )
-            .subscribe(
-                {
-                    if (page == 1) {
-                        view?.dismissLoading()
-                        if (it.questions.size != 0) {
-                            view?.bindDataTanyaKandidat(it.questions)
-                        } else {
-                            view?.showEmptyDataAlert()
-                        }
-                    } else {
-                        if (it.questions.size != 0) {
-                            view?.bindNextDataTanyaKandidat(it.questions)
-                        } else {
-                            view?.showEmptyNextDataAlert()
-                        }
-                    }
-                },
-                {
-                    view?.dismissLoading()
-                    view?.showFailedGetDataAlert()
-                    view?.showError(it)
-                }
-            ))
+        view?.bindProfile(profileInteractor.getProfile())
     }
 
     fun upVoteQuestion(id: String?, questionCalass: String, isLiked: Boolean, position: Int) {
@@ -138,5 +81,46 @@ class TanyaKandidatPresenter @Inject constructor(
                     }
                 )
         )
+    }
+
+    fun searchQuestion(keyword: String, page: Int, perPage: Int) {
+        if (page == 1) {
+            view?.showLoading()
+        }
+        disposables.add(
+            tanyaKandidatInteractor
+                .searchTanyaKandidat(
+                    keyword,
+                    page,
+                    perPage)
+                .subscribe(
+                    {
+                        if (page == 1) {
+                            view?.dismissLoading()
+                            if (it.questions.size != 0) {
+                                view?.bindDataTanyaKandidat(it.questions)
+                                if (it.questions.size < perPage) {
+                                    view?.setDataEnd()
+                                }
+                            } else {
+                                view?.showEmptyDataAlert()
+                            }
+                        } else {
+                            if (it.questions.size != 0) {
+                                view?.bindNextDataTanyaKandidat(it.questions)
+                                if (it.questions.size < perPage) {
+                                    view?.setDataEnd()
+                                }
+                            } else {
+                                view?.showEmptyNextDataAlert()
+                            }
+                        }
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showFailedGetDataAlert()
+                        view?.showError(it)
+                    }
+                ))
     }
 }

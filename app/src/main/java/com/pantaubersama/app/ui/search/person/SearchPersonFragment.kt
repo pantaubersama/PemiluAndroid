@@ -106,7 +106,7 @@ class SearchPersonFragment : BaseFragment<SearchPersonPresenter>(), UpdateableFr
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == PantauConstants.Search.Filter.SEARCH_ORANG_REQUEST_CODE) {
-                // presenter refresh
+                getData(keyword)
             }
         }
     }

@@ -167,4 +167,14 @@ interface PantauAPI {
 
     @GET("dashboard/v1/app_versions/last_version?app_type=android")
     fun getLatestAppVersion(): Single<AppVersionResponse>
+
+    @GET("pendidikan_politik/v1/questions")
+    fun searchTanyaKandidat(
+        @Query("q") keyword: String,
+        @Query("page") page: Int,
+        @Query("per_page") perpage: Int,
+        @Query("order_by") orderBy: String?,
+        @Query("direction") direction: String?,
+        @Query("filter_by") filterBy: String?
+    ): Single<TanyaKandidatListResponse>
 }
