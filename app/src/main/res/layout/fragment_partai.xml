@@ -19,7 +19,7 @@
             android:lineSpacingExtra="2sp"
             android:textColor="@color/gray_5"
             android:textSize="10sp"
-            tools:text="@string/info_preferensi_partai" />
+            android:text="@string/info_preferensi_partai" />
 
     </LinearLayout>
 
@@ -36,7 +36,7 @@
             android:lineSpacingExtra="8sp"
             android:textColor="@color/gray_4"
             android:textSize="10sp"
-            tools:text="@string/partai_mana_yang_cocok" />
+            android:text="@string/partai_mana_yang_cocok" />
 
         <TextView
             android:id="@+id/partai_selected"
@@ -47,7 +47,7 @@
             android:lineSpacingExtra="12sp"
             android:textColor="@color/orange"
             android:textSize="12sp"
-            tools:text="(Belum menentukan pilihan)" />
+            android:text="(Belum menentukan pilihan)" />
 
     </LinearLayout>
 
