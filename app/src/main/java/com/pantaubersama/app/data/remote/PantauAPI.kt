@@ -184,4 +184,11 @@ interface PantauAPI {
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
     ): Single<TanyaKandidatListResponse>
+
+    @GET("linimasa/v1/janji_politiks/user/{id}")
+    fun getUserJanpul(
+        @Path("id") userId: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
+    ): Single<JanjiPolitiksResponse>
 }

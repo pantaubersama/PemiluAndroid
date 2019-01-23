@@ -119,6 +119,9 @@ class ProfileTanyaKandidatPresenter @Inject constructor(
     }
 
     fun getUserTanyaKandidat(page: Int, userId: String) {
+        if (page == 1) {
+            view?.showLoading()
+        }
         disposables.add(
             tanyaKandidatInteractor.getUserTanyaKandidatList(page, perPage, userId)
                 .subscribe(

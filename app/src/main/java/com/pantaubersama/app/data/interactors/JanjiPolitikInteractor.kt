@@ -73,4 +73,11 @@ class JanjiPolitikInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun getUserJanpol(userId: String, page: Int, perPage: Int): Single<MutableList<JanjiPolitik>?> {
+        return apiWrapper.getPantauApi().getUserJanpul(userId, page, perPage)
+            .map { it.data?.janjiPolitikList }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }
