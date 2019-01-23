@@ -15,7 +15,7 @@ class FilterClusterPresenter @Inject constructor(
         view?.showSelectedFilter(clusterInteractor.getSearchClusterFilter())
     }
 
-    fun setFilter(categoryItem: Category) {
+    fun setFilter(categoryItem: Category?) {
         clusterInteractor.setSearchClusterFilter(categoryItem)
         view?.onSuccessSetFilter()
     }

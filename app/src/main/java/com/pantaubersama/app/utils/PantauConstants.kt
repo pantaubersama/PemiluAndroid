@@ -89,6 +89,7 @@ class PantauConstants {
         const val RC_CREATE_JANPOL = 1010
         const val RC_OPEN_DETAIL_JANPOL = 1011
         const val RC_OPEN_DETAIL_QUESTION = 1012
+        const val RC_FILTER_CLUSTER = 1013
     }
 
     object ResultCode {

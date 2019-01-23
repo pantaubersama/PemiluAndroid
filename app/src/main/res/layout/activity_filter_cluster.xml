@@ -25,10 +25,12 @@
 
         <RelativeLayout
             android:id="@+id/rl_cluster_category_container"
+            android:foreground="?selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_rounded_tosca_outline"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:padding="2dp">
 
             <include layout="@layout/item_category"/>
 

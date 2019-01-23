@@ -41,12 +41,12 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
         btn_back.setOnClickListener { onBackPressed() }
         et_search.setOnEditorActionListener { textView, actionId, keyEvent ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                if (textView.text.toString().isNotEmpty() && textView.text.toString().isNotBlank()) {
+//                if (textView.text.toString().isNotEmpty() && textView.text.toString().isNotBlank()) {
                     performSearch(textView.text.toString())
                     val imm = textView.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(textView.windowToken, 0)
                     return@setOnEditorActionListener true
-                }
+//                }
             }
             false
         }
@@ -63,7 +63,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
         tab_layout.visibleIf(true)
         view_pager.adapter?.notifyDataSetChanged()
 
-        presenter.saveKeyword(keyword)
+        if (keyword.isNotEmpty() and keyword.isNotBlank()) presenter.saveKeyword(keyword)
     }
 
     override fun showLoading() {

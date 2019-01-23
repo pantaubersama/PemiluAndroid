@@ -36,20 +36,23 @@ class FilterClusterActivity : BaseActivity<FilterClusterPresenter>(), FilterClus
         rl_cluster_category_container.setOnClickListener {
             CategoryListDialog.show(supportFragmentManager, object : CategoryListDialog.DialogListener {
                 override fun onClickItem(item: Category) {
-
+                    selectCategory(item)
                 }
 
                 override fun onClickDefault() {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    selectCategory(null)
                 }
-
             })
+        }
+
+        btn_terapkan.setOnClickListener {
+            presenter.setFilter(categoryFilter)
         }
     }
 
     private fun selectCategory(item: Category?) {
         this.categoryFilter = item
-        category_name.text = item?.name ?: "Semua Cluster"
+        category_name.text = item?.name ?: "Semua Kategori"
     }
 
     override fun showLoading() {

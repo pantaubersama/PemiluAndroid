@@ -198,8 +198,8 @@ class DataCache(context: Context) : SharedPref(context) {
         return gson.fromJson(getString(KEY_FILTER_SEARCH_CLUSTER_CATEGORY), Category::class.java)
     }
 
-    fun saveFilterSearchClusterCategory(categoryItem: Category) {
-        putString(KEY_FILTER_SEARCH_CLUSTER_CATEGORY, gson.toJson(categoryItem))
+    fun saveFilterSearchClusterCategory(categoryItem: Category?) {
+        categoryItem?.let { putString(KEY_FILTER_SEARCH_CLUSTER_CATEGORY, gson.toJson(it)) } ?: clear(KEY_FILTER_SEARCH_CLUSTER_CATEGORY)
     }
 
     fun getSearchHistory(): MutableList<String> {

@@ -19,7 +19,10 @@ class SearchClusterPresenter @Inject constructor (
         }
 
         disposables.add(
-            clusterInteractor.getClusterList(page, perPage, keyword)
+            clusterInteractor.getClusterList(
+                page, perPage, keyword,
+                clusterInteractor.getSearchClusterFilter()?.id?.let { it } ?: ""
+            )
                 .subscribe(
                     {
                         if (page == 1) {

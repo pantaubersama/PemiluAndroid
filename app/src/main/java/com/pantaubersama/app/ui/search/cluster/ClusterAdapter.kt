@@ -25,7 +25,7 @@ class ClusterAdapter(private var listener: AdapterListener) : BaseRecyclerAdapte
     inner class ClusterViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: ClusterItem) {
             tv_cluster_name.text = item.name
-            tv_cluster_member_count.text = "Cluster ${item.category?.name.let { it }}"
+            tv_cluster_member_count.text = "Cluster ${item.category?.name.let { it } ?: "tanpa kategori"}"
 
             iv_avatar_cluster.loadUrl(item.image?.url, R.drawable.ic_avatar_placeholder)
             ll_cluster_container.setOnClickListener { listener.onClickItem(item) }

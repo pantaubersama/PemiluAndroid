@@ -1,5 +1,7 @@
 package com.pantaubersama.app.ui.search.cluster
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,7 +12,9 @@ import com.pantaubersama.app.base.CommonFragment
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.search.UpdateableFragment
+import com.pantaubersama.app.ui.search.cluster.filter.FilterClusterActivity
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_SEARCH_KEYWORD
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_FILTER_CLUSTER
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_search_cluster.*
@@ -50,6 +54,8 @@ class SearchClusterFragment : BaseFragment<SearchClusterPresenter>(), SearchClus
     override fun initView(view: View, savedInstanceState: Bundle?) {
         setupRecycler()
         getData(keyword)
+
+        tv_filter.setOnClickListener { startActivityForResult(Intent(requireContext(), FilterClusterActivity::class.java), RC_FILTER_CLUSTER) }
     }
 
     override fun getData(keyword: String) {
@@ -113,5 +119,16 @@ class SearchClusterFragment : BaseFragment<SearchClusterPresenter>(), SearchClus
 
     override fun onFailedGetMoreData() {
         adapter.setLoaded()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                when (requestCode) {
+                    RC_FILTER_CLUSTER -> { getData(keyword) }
+                }
+            }
+        }
     }
 }

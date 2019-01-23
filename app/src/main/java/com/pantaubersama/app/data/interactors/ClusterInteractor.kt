@@ -16,9 +16,9 @@ class ClusterInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
     private val rxSchedulers: RxSchedulers
 ) {
-    fun getClusterList(page: Int, perPage: Int, keyword: String): Single<MutableList<ClusterItem>> {
+    fun getClusterList(page: Int, perPage: Int, keyword: String, categoryId: String): Single<MutableList<ClusterItem>> {
         return apiWrapper.getPantauOAuthApi()
-            .getClusterList(page, perPage, keyword)
+            .getClusterList(page, perPage, keyword, categoryId)
             .subscribeOn(rxSchedulers.io())
             .map { it.clustersData.clusterList }
             .observeOn(rxSchedulers.mainThread())
@@ -74,7 +74,7 @@ class ClusterInteractor @Inject constructor(
         return dataCache.getFilterSearchClusterCategory()
     }
 
-    fun setSearchClusterFilter(categoryFilter: Category) {
+    fun setSearchClusterFilter(categoryFilter: Category?) {
         dataCache.saveFilterSearchClusterCategory(categoryFilter)
     }
 }

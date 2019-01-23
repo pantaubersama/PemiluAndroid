@@ -5,6 +5,8 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseDialogFragment
 import com.pantaubersama.app.data.model.cluster.Category
@@ -71,16 +73,18 @@ class CategoryListDialog : BaseDialogFragment<CategoryListDialogPresenter>(), Ca
 
     private fun setupRecycler() {
         adapter = CategoriesAdapter()
-        recycler_view.adapter = adapter
         adapter.listener = object : CategoriesAdapter.Listener {
             override fun onClick(category: Category) {
                 if (category.id != DEFAULT_CATEGORY) listener?.onClickItem(category) else listener?.onClickDefault()
+                dismiss()
             }
         }
         adapter.addSupportLoadMore(recycler_view, 10) {
             adapter.setLoading()
             presenter.getCategories(it, keyword)
         }
+        recycler_view.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        recycler_view.adapter = adapter
         swipe_refresh.setOnRefreshListener {
             getData()
         }
@@ -108,6 +112,7 @@ class CategoryListDialog : BaseDialogFragment<CategoryListDialogPresenter>(), Ca
     }
 
     override fun showCategory(categories: MutableList<Category>) {
+        swipe_refresh.isRefreshing = false
         recycler_view.visibleIf(true)
         if (categories.size < presenter.perPage) {
             adapter.setDataEnd(true)
