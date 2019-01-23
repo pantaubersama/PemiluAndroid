@@ -11,10 +11,7 @@ import kotlinx.android.synthetic.main.layout_coming_soon.*
 class PartaiFragment : CommonFragment() {
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        iv_logo_pantau_web.setOnClickListener { ChromeTabUtil(requireContext()).loadUrl(PantauConstants.Networking.URL_PANTAU_BERSAMA) }
-        iv_logo_facebook.setOnClickListener { ChromeTabUtil(requireContext()).forceLoadUrl(PantauConstants.Networking.URL_PANTAU_BERSAMA_FACEBOOK) }
-        iv_logo_instagram.setOnClickListener { ChromeTabUtil(requireContext()).forceLoadUrl(PantauConstants.Networking.URL_PANTAU_BERSAMA_INSTAGRAM) }
-        iv_logo_twitter.setOnClickListener { ChromeTabUtil(requireContext()).forceLoadUrl(PantauConstants.Networking.URL_PANTAU_BERSAMA_TWITTER) }
+       // lanjut
     }
 
     override fun setLayout(): Int {
