@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.profile.cluster.categery
+package com.pantaubersama.app.ui.profile.cluster.category
 
 import android.app.Activity
 import android.app.Dialog

@@ -23,21 +23,16 @@ import javax.inject.Inject
 
 class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), FilterJanjiPolitikView {
 
-    @Inject
-    override lateinit var presenter: FilterJanjiPolitikPresenter
+    @Inject override lateinit var presenter: FilterJanjiPolitikPresenter
 
     private var userFilter: String? = USER_VERIFIED_ALL
     private var clusterFilter: ClusterItem? = null
 
+    override fun statusBarColor(): Int? = R.color.white
+    override fun setLayout(): Int = R.layout.activity_filter_janji_politik
+
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
-    }
-
-    override fun statusBarColor(): Int? {
-        return R.color.white
-    }
-
-    override fun fetchIntentExtra() {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
@@ -82,10 +77,6 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
             tv_cluster_member_count.text = "${item.memberCount?.let { it } ?: "belum ada"} anggota"
             iv_avatar_cluster.loadUrl(item.image?.url, R.drawable.ic_avatar_placeholder)
         }
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.activity_filter_janji_politik
     }
 
     override fun showLoading() {

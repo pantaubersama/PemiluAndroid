@@ -1,5 +1,7 @@
 package com.pantaubersama.app.data.interactors
 
+import com.pantaubersama.app.data.local.cache.DataCache
+import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.data.model.cluster.CategoryData
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.remote.APIWrapper
@@ -10,6 +12,7 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class ClusterInteractor @Inject constructor(
+    private val dataCache: DataCache,
     private val apiWrapper: APIWrapper,
     private val rxSchedulers: RxSchedulers
 ) {
@@ -65,5 +68,13 @@ class ClusterInteractor @Inject constructor(
             )
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getSearchClusterFilter(): Category? {
+        return dataCache.getFilterSearchClusterCategory()
+    }
+
+    fun setSearchClusterFilter(categoryFilter: Category) {
+        dataCache.saveFilterSearchClusterCategory(categoryFilter)
     }
 }

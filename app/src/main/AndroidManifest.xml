@@ -208,7 +208,7 @@
             android:name=".ui.profile.cluster.requestcluster.RequestClusterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.cluster.categery.ClusterCategoryActivity"
+            android:name=".ui.profile.cluster.category.ClusterCategoryActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.connect.ConnectActivity"

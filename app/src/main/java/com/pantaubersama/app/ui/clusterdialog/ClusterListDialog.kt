@@ -4,8 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Point
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -18,14 +16,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseDialogFragment
-import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
-import kotlinx.android.synthetic.main.layout_dialog_cluster_list.*
+import kotlinx.android.synthetic.main.layout_dialog_list.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_loading_state.*
@@ -44,7 +40,7 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
     private var adapter: ClusterListDialogAdapter? = null
     private var listener: DialogListener? = null
 
-    override fun setLayout(): Int = R.layout.layout_dialog_cluster_list
+    override fun setLayout(): Int = R.layout.layout_dialog_list
 
     companion object {
         private val TAG = ClusterListDialog::class.java.simpleName
@@ -152,27 +148,5 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
     interface DialogListener {
         fun onClickItem(item: ClusterItem)
         fun onClickDefault()
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val root = RelativeLayout(activity)
-        root.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-        val dialog = Dialog(context!!)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(root)
-        dialog.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-        return dialog
-    }
-
-    override fun onResume() {
-        val window = dialog?.window
-        val size = Point()
-        val display = window?.windowManager?.defaultDisplay
-        display?.getSize(size)
-        window?.setLayout((size.x * 0.95).toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
-        window?.setGravity(Gravity.CENTER)
-        super.onResume()
     }
 }

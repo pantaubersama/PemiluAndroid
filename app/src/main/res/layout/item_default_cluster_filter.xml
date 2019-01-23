@@ -13,6 +13,8 @@
         android:paddingBottom="15dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:text="@string/txt_semua_cluster"
         android:textSize="14dp"
         android:textColor="@color/black_1"

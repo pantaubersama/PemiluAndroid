@@ -24,7 +24,6 @@ class SearchClusterFragment : BaseFragment<SearchClusterPresenter>(), SearchClus
     private lateinit var keyword: String
 
     @Inject override lateinit var presenter: SearchClusterPresenter
-
     private lateinit var adapter: ClusterAdapter
 
     override fun setLayout(): Int = R.layout.fragment_search_cluster

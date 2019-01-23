@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.pantaubersama.app.data.local.SharedPref
+import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
@@ -30,6 +31,8 @@ class DataCache(context: Context) : SharedPref(context) {
 
         const val KEY_FILTER_JANPOL_USER = "KEY_FILTER_JANPOL_USER"
         const val KEY_FILTER_JANPOL_CLUSTER = "KEY_FILTER_JANPOL_CLUSTER"
+
+        const val KEY_FILTER_SEARCH_CLUSTER_CATEGORY = "KEY_FILTER_SEARCH_CLUSTER_CATEGORY"
 
         const val IS_USER_LOGGED_IN = "is_user_logged_in"
 
@@ -189,6 +192,14 @@ class DataCache(context: Context) : SharedPref(context) {
 
     fun saveJanpolClusterFilter(janpolClusterFilter: ClusterItem?) {
         putString(KEY_FILTER_JANPOL_CLUSTER, gson.toJson(janpolClusterFilter))
+    }
+
+    fun getFilterSearchClusterCategory(): Category? {
+        return gson.fromJson(getString(KEY_FILTER_SEARCH_CLUSTER_CATEGORY), Category::class.java)
+    }
+
+    fun saveFilterSearchClusterCategory(categoryItem: Category) {
+        putString(KEY_FILTER_SEARCH_CLUSTER_CATEGORY, gson.toJson(categoryItem))
     }
 
     fun getSearchHistory(): MutableList<String> {

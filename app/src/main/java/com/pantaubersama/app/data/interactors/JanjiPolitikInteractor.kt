@@ -18,19 +18,19 @@ import javax.inject.Inject
 class JanjiPolitikInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
     private val rxSchedulers: RxSchedulers,
-    private val dataCache: DataCache?
+    private val dataCache: DataCache
 ) {
     fun getJanpolUserFilter(): String {
-        return dataCache?.getJanpolUserFilter()!!
+        return dataCache.getJanpolUserFilter()
     }
 
     fun getJanpolClusterFilter(): ClusterItem? {
-        return dataCache?.getJanpolClusterFilter()
+        return dataCache.getJanpolClusterFilter()
     }
 
     fun setJanpolFilter(userFilter: String, clusterFilter: ClusterItem?) {
-        dataCache?.saveJanpolUserFilter(userFilter)
-        dataCache?.saveJanpolClusterFilter(clusterFilter)
+        dataCache.saveJanpolUserFilter(userFilter)
+        dataCache.saveJanpolClusterFilter(clusterFilter)
     }
 
     fun getJanPolById(janpolId: String): Single<JanjiPolitik> {
