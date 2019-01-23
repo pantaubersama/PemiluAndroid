@@ -191,6 +191,7 @@ class SearchQuestionFragment : BaseFragment<SearchQuestionPresenter>(), Updateab
     }
 
     override fun getData(keyword: String) {
+        this.keyword = keyword
         adapter.setDataEnd(false)
         presenter.searchQuestion(keyword, 1, 20)
     }
