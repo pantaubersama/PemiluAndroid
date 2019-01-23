@@ -97,8 +97,12 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         tv_request_cluster.visibility = View.GONE
         cluster_image.loadUrl(cluster.image?.thumbnail?.url)
         cluster_name.text = cluster.name
-        cluster_options_action.setOnClickListener {
-            showClusterOptionsDialog(cluster)
+        if (userId == null) {
+            cluster_options_action.setOnClickListener {
+                showClusterOptionsDialog(cluster)
+            }
+        } else {
+            cluster_options_action.visibility = View.GONE
         }
     }
 
@@ -108,9 +112,11 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         verified_text.text = getString(R.string.txt_belum_verifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_gray)
-        verified_button.setOnClickListener {
-            val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
-            startActivity(intent)
+        if (userId == null) {
+            verified_button.setOnClickListener {
+                val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 

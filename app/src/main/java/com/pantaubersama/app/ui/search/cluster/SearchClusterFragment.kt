@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.base.CommonFragment
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.search.UpdateableFragment
