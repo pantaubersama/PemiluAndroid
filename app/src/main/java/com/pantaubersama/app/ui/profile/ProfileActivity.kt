@@ -66,7 +66,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         setupBiodataLayout()
         setupBadgeLayout()
         if (savedInstanceState == null) {
-            showFragment(ProfileJanjiPolitikFragment(), ProfileJanjiPolitikFragment.TAG)
+            showFragment(ProfileJanjiPolitikFragment.newInstance(userId), ProfileJanjiPolitikFragment.TAG)
         }
         setupNavigation()
         if (userId == null) {

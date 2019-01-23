@@ -180,4 +180,18 @@ interface PantauAPI {
         @Query("direction") direction: String?,
         @Query("filter_by") filterBy: String?
     ): Single<TanyaKandidatListResponse>
+
+    @GET("pendidikan_politik/v1/users/{id}/questions")
+    fun getUserTanyaKandidatList(
+        @Path("id") userId: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
+    ): Single<TanyaKandidatListResponse>
+
+    @GET("linimasa/v1/janji_politiks/user/{id}")
+    fun getUserJanpul(
+        @Path("id") userId: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
+    ): Single<JanjiPolitiksResponse>
 }

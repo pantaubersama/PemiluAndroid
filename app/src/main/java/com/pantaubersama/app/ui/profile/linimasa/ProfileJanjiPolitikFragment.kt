@@ -125,7 +125,11 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
 
         adapter.addSupportLoadMore(recycler_view, 10) {
             adapter.setLoading()
-            presenter.getJanjiPolitikList(it)
+            if (userId == null) {
+                presenter.getJanjiPolitikList(it)
+            } else {
+                userId?.let { id -> presenter.getUserJanjiPolitikList(it, id) }
+            }
         }
     }
 
@@ -134,7 +138,7 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
         if (userId == null) {
             presenter.getJanjiPolitikList(1)
         } else {
-//            presenter.getUserJanjiPolitikList(1)
+            userId?.let { id -> presenter.getUserJanjiPolitikList(1, id) }
         }
     }
 
