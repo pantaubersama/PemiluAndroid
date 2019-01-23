@@ -147,7 +147,8 @@ interface PantauOAuthAPI {
     @FormUrlEncoded
     @POST("/v1/clusters/invite")
     fun inviteToCluster(
-        @Field("emails") email: String
+        @Field("emails") email: String,
+        @Field("cluster_id") clusterId: String
     ): Completable
 
     @FormUrlEncoded

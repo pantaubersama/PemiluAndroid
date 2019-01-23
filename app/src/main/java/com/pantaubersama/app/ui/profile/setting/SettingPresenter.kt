@@ -6,6 +6,7 @@ import com.pantaubersama.app.data.interactors.ProfileInteractor
 import javax.inject.Inject
 import com.twitter.sdk.android.core.TwitterException
 import android.R.attr.data
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.PantauConstants
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
@@ -31,6 +32,10 @@ class SettingPresenter @Inject constructor(
 
     fun getProfile() {
         view?.onSuccessGetProfile(profileInteractor.getProfile())
+    }
+
+    fun getMyProfile(): Profile {
+        return profileInteractor.getProfile()
     }
 
     fun connectFacebook(accountType: String, token: String?) {
