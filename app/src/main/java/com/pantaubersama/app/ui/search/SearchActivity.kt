@@ -21,6 +21,7 @@ import com.pantaubersama.app.ui.search.history.SearchHistoryFragment
 import com.pantaubersama.app.ui.search.janjipolitik.SearchJanjiPolitikFragment
 import com.pantaubersama.app.ui.search.person.SearchPersonFragment
 import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
+import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.utils.extensions.visibleIf
 import javax.inject.Inject
 
@@ -30,7 +31,8 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
     override fun statusBarColor(): Int? = R.color.white
     override fun setLayout(): Int = R.layout.activity_search
 
-    @Inject override lateinit var presenter: SearchPresenter
+    @Inject
+    override lateinit var presenter: SearchPresenter
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -92,9 +94,9 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
         val tabTanya = TabView(this)
         tabTanya.setTitleLabel(R.string.txt_tab_tanya)
         tab_layout.addTab(tab_layout.newTab().setCustomView(tabTanya))
-//        val tabQuiz = TabView(this)
-//        tabQuiz.setTitleLabel(R.string.txt_tab_quiz)
-//        tab_layout.addTab(tab_layout.newTab().setCustomView(tabQuiz))
+        val tabQuiz = TabView(this)
+        tabQuiz.setTitleLabel(R.string.txt_tab_quiz)
+        tab_layout.addTab(tab_layout.newTab().setCustomView(tabQuiz))
 //        val tabWordstadium = TabView(this)
 //        tabWordstadium.setTitleLabel(R.string.txt_tab_wordstadium)
 //        tab_layout.addTab(tab_layout.newTab().setCustomView(tabWordstadium))
@@ -137,6 +139,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
                         1 -> SearchLinimasaFragment.newInstance(it) // sementara hanya untuk production @edityo 21/01/19
                         2 -> SearchJanjiPolitikFragment.newInstance(it)
                         3 -> SearchQuestionFragment.newInstance(it)
+                        4 -> SearchQuizFragment.newInstance(it)
                         else -> Fragment()
                     }
                 } ?: return SearchHistoryFragment.newInstance()

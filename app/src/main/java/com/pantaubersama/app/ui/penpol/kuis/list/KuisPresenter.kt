@@ -32,9 +32,9 @@ class KuisPresenter @Inject constructor(
         }
 
     val filter: String
-        get() = kuisInteractor.getKuisFilter().takeIf {
-            profileInteractor.getProfile() != EMPTY_PROFILE
-        } ?: Filter.BELUM_DIIKUTI
+        get() = kuisInteractor.getKuisFilter()
+            .takeIf { profileInteractor.getProfile() != EMPTY_PROFILE }
+            ?: Filter.BELUM_DIIKUTI
 
     fun getTopPageItems() {
         view?.showLoading()
@@ -87,15 +87,16 @@ class KuisPresenter @Inject constructor(
     private fun checkNextPageAvailable(result: List<KuisItem>) {
         when {
             result.size == perPage -> currentPage++
-            filter == Filter.KUIS_ALL -> {
-                currentFilter = when (currentFilter) {
-                    Filter.BELUM_SELESAI -> Filter.BELUM_DIIKUTI
-                    Filter.BELUM_DIIKUTI -> Filter.SELESAI
-                    else -> {
-                        view?.setNoMoreItems()
-                        return
-                    }
+            filter == Filter.KUIS_ALL -> when (currentFilter) {
+                Filter.BELUM_SELESAI -> {
+                    currentFilter = Filter.BELUM_DIIKUTI
+                    if (result.isEmpty()) getNextPage()
                 }
+                Filter.BELUM_DIIKUTI -> {
+                    currentFilter = Filter.SELESAI
+                    if (result.isEmpty()) getNextPage()
+                }
+                else -> view?.setNoMoreItems()
             }
             else -> view?.setNoMoreItems()
         }
