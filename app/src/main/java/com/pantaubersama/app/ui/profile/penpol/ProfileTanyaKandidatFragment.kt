@@ -88,6 +88,9 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
             override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
                 val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
                 dialog.removeItem(R.id.report_tanya_kandidat_action)
+                if (userId != null) {
+                    dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
+                }
                 dialog.show()
                 dialog.listener = object : OptionDialog.DialogListener {
                     override fun onClick(viewId: Int) {
