@@ -202,7 +202,8 @@ class SearchQuestionFragment : BaseFragment<SearchQuestionPresenter>(), Updateab
     }
 
     override fun showEmptyDataAlert() {
-        view_empty_state.enableLottie(true, lottie_empty_state)
+//        view_empty_state.enableLottie(true, lottie_empty_state)
+        view_empty_state.visibleIf(true)
     }
 
     override fun bindNextDataTanyaKandidat(questions: MutableList<Pertanyaan>) {
@@ -232,7 +233,8 @@ class SearchQuestionFragment : BaseFragment<SearchQuestionPresenter>(), Updateab
     }
 
     override fun showFailedGetDataAlert() {
-        view_fail_state.enableLottie(true, lottie_fail_state)
+//        view_fail_state.enableLottie(true, lottie_fail_state)
+        view_fail_state.visibleIf(true)
     }
 
     override fun onItemUpVoted() {

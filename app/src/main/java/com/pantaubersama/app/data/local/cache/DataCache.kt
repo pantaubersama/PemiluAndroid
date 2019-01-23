@@ -32,6 +32,9 @@ class DataCache(context: Context) : SharedPref(context) {
         const val KEY_FILTER_JANPOL_USER = "KEY_FILTER_JANPOL_USER"
         const val KEY_FILTER_JANPOL_CLUSTER = "KEY_FILTER_JANPOL_CLUSTER"
 
+        const val KEY_FILTER_SEARCH_JANPOL_USER = "KEY_FILTER_SEARCH_JANPOL_USER"
+        const val KEY_FILTER_SEARCH_JANPOL_CLUSTER = "KEY_FILTER_SEARCH_JANPOL_CLUSTER"
+
         const val KEY_FILTER_SEARCH_CLUSTER_CATEGORY = "KEY_FILTER_SEARCH_CLUSTER_CATEGORY"
 
         const val IS_USER_LOGGED_IN = "is_user_logged_in"
@@ -188,12 +191,28 @@ class DataCache(context: Context) : SharedPref(context) {
         putString(KEY_FILTER_JANPOL_USER, janpolUserFilter)
     }
 
+    fun getSearchJanpolUserFilter(): String {
+        return getString(KEY_FILTER_SEARCH_JANPOL_USER) ?: PantauConstants.Filter.Janpol.USER_VERIFIED_ALL
+    }
+
+    fun saveSearchJanpolUserFilter(janpolUserFilter: String) {
+        putString(KEY_FILTER_SEARCH_JANPOL_USER, janpolUserFilter)
+    }
+
     fun getJanpolClusterFilter(): ClusterItem? {
         return gson.fromJson(getString(KEY_FILTER_JANPOL_CLUSTER), ClusterItem::class.java)
     }
 
     fun saveJanpolClusterFilter(janpolClusterFilter: ClusterItem?) {
         putString(KEY_FILTER_JANPOL_CLUSTER, gson.toJson(janpolClusterFilter))
+    }
+
+    fun getSearchJanpolClusterFilter(): ClusterItem? {
+        return gson.fromJson(getString(KEY_FILTER_SEARCH_JANPOL_CLUSTER), ClusterItem::class.java)
+    }
+
+    fun saveSearchJanpolClusterFilter(janpolClusterFilter: ClusterItem?) {
+        putString(KEY_FILTER_SEARCH_JANPOL_CLUSTER, gson.toJson(janpolClusterFilter))
     }
 
     fun getFilterSearchClusterCategory(): Category? {

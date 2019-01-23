@@ -22,7 +22,11 @@ class SearchJanjiPolitikPresenter @Inject constructor(
         }
 
         disposables.add(
-            janpolInteractor.getJanPol(keyword, page, perPage)
+            janpolInteractor
+                .getJanPol(keyword, page, perPage,
+                    janpolInteractor.getSearchJanpolClusterFilter()?.id ?: "",
+                    janpolInteractor.getSearchJanpolUserFilter()
+                )
                 .subscribe(
                     {
                         if (page == 1) {

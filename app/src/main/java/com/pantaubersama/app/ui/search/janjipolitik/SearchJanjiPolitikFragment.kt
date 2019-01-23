@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.search.janjipolitik
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.linimasa.janjipolitik.adapter.JanjiPolitikAdapter
 import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity
+import com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity
 import com.pantaubersama.app.ui.search.UpdateableFragment
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
@@ -19,6 +21,7 @@ import com.pantaubersama.app.utils.CopyUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_SEARCH_KEYWORD
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_FILTER_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_JANPOL
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
@@ -61,7 +64,7 @@ class SearchJanjiPolitikFragment : BaseFragment<SearchJanjiPolitikPresenter>(), 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         setupRecycler()
         getData(keyword)
-        tv_filter.setOnClickListener { }
+        tv_filter.setOnClickListener { startActivityForResult(FilterJanjiPolitikActivity.setIntent(requireContext(), true), RC_FILTER_JANPOL) }
     }
 
     override fun getData(keyword: String) {
@@ -203,7 +206,9 @@ class SearchJanjiPolitikFragment : BaseFragment<SearchJanjiPolitikPresenter>(), 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == PantauConstants.ResultCode.RESULT_DELETE_ITEM_JANPOL) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == RC_FILTER_JANPOL) getData(keyword)
+        } else if (resultCode == PantauConstants.ResultCode.RESULT_DELETE_ITEM_JANPOL) {
             if (requestCode == RC_OPEN_DETAIL_JANPOL) {
                 if (data != null && data.getIntExtra(EXTRA_ITEM_POSITION, -1) != -1) {
                     adapter.deleteItem(data.getIntExtra(EXTRA_ITEM_POSITION, -1))

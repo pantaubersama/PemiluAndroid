@@ -12,8 +12,17 @@ class FilterJanjiPolitikPresenter @Inject constructor(
         view?.showSelectedFilter(janpolInteractor.getJanpolUserFilter(), janpolInteractor.getJanpolClusterFilter())
     }
 
+    fun getSearchFilter() {
+        view?.showSelectedFilter(janpolInteractor.getSearchJanpolUserFilter(), janpolInteractor.getSearchJanpolClusterFilter())
+    }
+
     fun setFilter(userFilter: String, clusterFilter: ClusterItem?) {
         janpolInteractor.setJanpolFilter(userFilter, clusterFilter)
+        view?.onSuccessSetFilter()
+    }
+
+    fun setSearchFilter(userFilter: String, clusterFilter: ClusterItem?) {
+        janpolInteractor.setSearchJanpolFilter(userFilter, clusterFilter)
         view?.onSuccessSetFilter()
     }
 }

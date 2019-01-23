@@ -133,8 +133,8 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
                         0 -> SearchPersonFragment.newInstance(it)
                         1 -> SearchClusterFragment.newInstance(it)
                         2 -> SearchLinimasaFragment.newInstance(it)
-                        3 -> SearchQuestionFragment.newInstance(it)
-                        4 -> SearchJanjiPolitikFragment.newInstance(it)
+                        3 -> SearchJanjiPolitikFragment.newInstance(it)
+                        4 -> SearchQuestionFragment.newInstance(it)
                         5 -> SearchQuizFragment.newInstance(it)
 //                        6 -> SearchWordstadiumFragment.newInstance(it)
 
