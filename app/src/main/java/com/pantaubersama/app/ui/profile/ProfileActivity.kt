@@ -215,14 +215,18 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 cluster_expandable_image.animate().rotation(180F).start()
             }
         }
-        tv_request_cluster.text = spannable {
-            +"Belum ada Cluster "
-            textColor(color(R.color.red)) {
-                underline { +"( Request Cluster? )" }
+        if (userId == null) {
+            tv_request_cluster.text = spannable {
+                +"Belum ada Cluster "
+                textColor(color(R.color.red)) {
+                    underline { +"( Request Cluster? )" }
+                }
+            }.toCharSequence()
+            tv_request_cluster.setOnClickListener {
+                startActivity(Intent(this, RequestClusterActivity::class.java))
             }
-        }.toCharSequence()
-        tv_request_cluster.setOnClickListener {
-            startActivity(Intent(this, RequestClusterActivity::class.java))
+        } else {
+            tv_request_cluster.text = "Belum ada cluster"
         }
     }
 
