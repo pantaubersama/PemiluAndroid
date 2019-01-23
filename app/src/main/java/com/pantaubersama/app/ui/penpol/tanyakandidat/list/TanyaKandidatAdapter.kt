@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.layout_tanya_kandidat_header.*
 class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
     private var profile: Profile = EMPTY_PROFILE
     var listener: TanyaKandidatAdapter.AdapterListener? = null
-    val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
 
     override fun getItemViewType(position: Int): Int {
         return if (data[position] is BannerInfo) {
@@ -56,18 +55,19 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         override val containerView: View?
     ) : RecyclerView.ViewHolder(
         containerView!!), LayoutContainer {
+        val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
 
-        fun onBind(item: Pertanyaan?) {
-            iv_user_avatar.loadUrl(item?.user?.avatar?.url, R.drawable.ic_avatar_placeholder)
-            tv_user_name.text = item?.user?.fullName
-            tv_user_bio.text = item?.user?.about
-            question_time.text = item?.createdAtInWord?.id
-            upvote_count_text.text = item?.likeCount.toString()
-            user_question.text = item?.body
+        fun onBind(item: Pertanyaan) {
+            iv_user_avatar.loadUrl(item.user.avatar?.url, R.drawable.ic_avatar_placeholder)
+            tv_user_name.text = item.user.fullName
+            tv_user_bio.text = item.user.about
+            question_time.text = item.createdAtInWord?.id
+            upvote_count_text.text = item.likeCount.toString()
+            user_question.text = item.body
             user_question.maxLines = 5
             iv_options_button.setOnClickListener {
 //                showOptionsDialog(itemView)
-                listener?.onClickTanyaOption(item!!, adapterPosition)
+                listener?.onClickTanyaOption(item, adapterPosition)
             }
             iv_share_button.setOnClickListener {
                 listener?.onClickShare(item)
@@ -87,14 +87,14 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
                 }
             }
             layout_item_tanya_kandidat.setOnClickListener {
-                item?.let { item -> listener?.onClickContent(item, adapterPosition) }
+                item.let { item -> listener?.onClickContent(item, adapterPosition) }
             }
         }
 
-        private fun setUpvoted(item: Pertanyaan?) {
-            val upVoted = item?.isliked
-            item?.isliked = !item?.isliked!!
-            if (!upVoted!!) {
+        private fun setUpvoted(item: Pertanyaan) {
+            val upVoted = item.isliked
+            item.isliked = !item.isliked
+            if (!upVoted) {
                 item.likeCount += 1
                 animator.addUpdateListener { animation ->
                     upvote_animation.progress = animation.animatedValue as Float
