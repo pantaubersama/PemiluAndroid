@@ -11,6 +11,7 @@ import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import android.webkit.CookieManager
 import androidx.core.content.ContextCompat
@@ -38,11 +39,9 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import com.facebook.GraphRequest
-import com.pantaubersama.app.ui.profile.cluster.invite.UndangAnggotaActivity
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.ShareUtil
-import com.pantaubersama.app.utils.extensions.visibleIf
 import com.twitter.sdk.android.core.* // ktlint-disable
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import com.twitter.sdk.android.core.models.User
@@ -85,7 +84,6 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         getTwitterUserData()
         setupTwitterLogin()
         presenter.getProfile()
-        ll_setting_cluster_undang.visibleIf(presenter.getMyProfile().cluster != null)
     }
 
     private fun getTwitterUserData() {
@@ -227,6 +225,15 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                 startActivityForResult(intent, VERIFIKASI)
             }
         }
+        if (profile.cluster != null) {
+            setting_cluster_undang.setOnClickListener {
+                val intent = Intent(this@SettingActivity, ClusterUndangActivity::class.java)
+                intent.putExtra(PantauConstants.Cluster.CLUSTER_ID, profile.cluster?.id)
+                startActivity(intent)
+            }
+        } else {
+            ll_setting_cluster_undang.visibility = View.GONE
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -297,17 +304,6 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         setting_badge.setOnClickListener {
             val intent = Intent(this@SettingActivity, BadgeActivity::class.java)
             startActivityForResult(intent, BADGE)
-        }
-        setting_cluster_undang.setOnClickListener {
-//            val intent = Intent(this@SettingActivity, ClusterUndangActivity::class.java)
-//            startActivityForResult(intent, CLUSTER_UNDANG)
-
-            val intent = Intent(this@SettingActivity, UndangAnggotaActivity::class.java)
-            val cluster = presenter.getMyProfile().cluster
-            intent.putExtra(PantauConstants.Cluster.CLUSTER_URL, cluster?.magicLink)
-            intent.putExtra(PantauConstants.Cluster.CLUSTER_ID, cluster?.id)
-            intent.putExtra(PantauConstants.Cluster.INVITE_LINK_ACTIVE, cluster?.isLinkActive)
-            startActivityForResult(intent, PantauConstants.Cluster.REQUEST_CODE.REQUEST_CLUSTER)
         }
         setting_pusat_bantuan.setOnClickListener {
             ChromeTabUtil(this@SettingActivity).forceLoadUrl(PantauConstants.Profile.URL_PUSAT_BANTUAN)

@@ -157,7 +157,7 @@ class DataCache(context: Context) : SharedPref(context) {
         return if (getString(TANYA_KANDIDAT_ORDER_FILTER) != null) {
             getString(TANYA_KANDIDAT_ORDER_FILTER)
         } else {
-            PantauConstants.TanyaKandidat.Filter.ByVotes.LATEST
+            PantauConstants.TanyaKandidat.Filter.ByVotes.MOST_VOTES
         }
     }
 

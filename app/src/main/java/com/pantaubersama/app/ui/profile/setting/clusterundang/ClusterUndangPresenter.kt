@@ -7,11 +7,11 @@ import javax.inject.Inject
 class ClusterUndangPresenter @Inject constructor(
     private val clusterInteractor: ClusterInteractor
 ) : BasePresenter<ClusterUndangView>() {
-    fun invite(email: String) {
+    fun invite(email: String, clusterId: String) {
         view?.showLoading()
         disposables.add(
             clusterInteractor
-                .invite(email)
+                .invite(email, clusterId)
                 .subscribe(
                     {
                         view?.finishThisSection()
