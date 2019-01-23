@@ -73,7 +73,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
         if (userId == null) {
             presenter.getTanyaKandidatList(1)
         } else {
-//            presenter.getUserTanyaKandidat(1)
+            userId?.let { id -> presenter.getUserTanyaKandidat(1, id) }
         }
     }
 
@@ -108,8 +108,8 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
                                 val deleteDialog = DeleteConfimationDialog(
                                     context!!, getString(R.string.txt_delete_item_ini),
                                     listener = object : DeleteConfimationDialog.DialogListener {
-                                        override fun onClickDeleteItem(p0: String, p1: Int) {
-                                            adapter.listener?.onClickDeleteItem(item.id!!, position)
+                                        override fun onClickDeleteItem(id: String, position: Int) {
+                                            adapter.listener?.onClickDeleteItem(item.id, position)
                                         }
                                     })
                                 deleteDialog.show()
@@ -143,7 +143,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
             }
 
             override fun onClickCopyUrl(id: String) {
-                CopyUtil.copyTanyaKandidat(requireContext(), id!!)
+                CopyUtil.copyTanyaKandidat(requireContext(), id)
             }
 
             override fun onClickLapor(id: String) {
@@ -163,7 +163,11 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
         recycler_view?.adapter = adapter
         adapter.addSupportLoadMore(recycler_view, 10) {
             adapter.setLoading()
-            presenter.getTanyaKandidatList(it)
+            if (userId == null) {
+                presenter.getTanyaKandidatList(it)
+            } else {
+                userId?.let { id -> presenter.getUserTanyaKandidat(it, id) }
+            }
         }
     }
 

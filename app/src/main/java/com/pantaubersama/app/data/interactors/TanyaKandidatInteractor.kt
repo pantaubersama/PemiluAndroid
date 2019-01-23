@@ -133,4 +133,11 @@ class TanyaKandidatInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun getUserTanyaKandidatList(page: Int, perPage: Int, userId: String): Single<TanyaKandidatListData> {
+        return apiWrapper.getPantauApi().getUserTanyaKandidatList(userId, page, perPage)
+            .map { it.data }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }
