@@ -1,7 +1,6 @@
 package com.pantaubersama.app.ui.search.cluster.filter
 
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem

@@ -13,6 +13,8 @@ import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_IS_SEARCH_FILTER
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_ALL
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_1
 import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_2
+import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_3
+import com.pantaubersama.app.utils.PantauConstants.Filter.Pilpres.FILTER_TEAM_4
 import kotlinx.android.synthetic.main.activity_filter_pilpres.*
 import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
 import javax.inject.Inject
@@ -60,6 +62,8 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
                 R.id.radbtn_semua -> FILTER_ALL
                 R.id.radbtn_capres1 -> FILTER_TEAM_1
                 R.id.radbtn_capres2 -> FILTER_TEAM_2
+                R.id.radbtn_kpu -> FILTER_TEAM_3
+                R.id.radbtn_bawaslu -> FILTER_TEAM_4
                 else -> FILTER_ALL
             }
         }
@@ -79,6 +83,8 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
             FILTER_ALL -> R.id.radbtn_semua
             FILTER_TEAM_1 -> R.id.radbtn_capres1
             FILTER_TEAM_2 -> R.id.radbtn_capres2
+            FILTER_TEAM_3 -> R.id.radbtn_kpu
+            FILTER_TEAM_4 -> R.id.radbtn_bawaslu
             else -> R.id.radbtn_semua
         })
     }
