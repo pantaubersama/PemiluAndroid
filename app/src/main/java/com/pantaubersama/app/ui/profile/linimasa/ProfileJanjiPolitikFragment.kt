@@ -15,6 +15,7 @@ import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikA
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.CopyUtil
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_ITEM_JANPOL
@@ -32,13 +33,18 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
 
     @Inject
     override lateinit var presenter: ProfileJanjiPolitikPresenter
+    private var userId: String? = null
 
     private lateinit var adapter: JanjiPolitikAdapter
 
     companion object {
         val TAG = ProfileJanjiPolitikFragment::class.java.simpleName
-        fun newInstance(): ProfileJanjiPolitikFragment {
-            return ProfileJanjiPolitikFragment()
+        fun newInstance(userId: String?): ProfileJanjiPolitikFragment {
+            val fragment = ProfileJanjiPolitikFragment()
+            val bundle = Bundle()
+            bundle.putString(PantauConstants.Profile.USER_ID, userId)
+            fragment.arguments = bundle
+            return fragment
         }
     }
 
@@ -49,6 +55,7 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
     override fun setLayout(): Int = R.layout.fragment_profile_janji_politik
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
+        userId = arguments?.getString(PantauConstants.Profile.USER_ID)
         setupRecyclerJanpol()
         getList()
     }
@@ -124,7 +131,11 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
 
     fun getList() {
         adapter.setDataEnd(false)
-        presenter.getJanjiPolitikList(1)
+        if (userId == null) {
+            presenter.getJanjiPolitikList(1)
+        } else {
+//            presenter.getUserJanjiPolitikList(1)
+        }
     }
 
     override fun showLoading() {

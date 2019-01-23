@@ -9,6 +9,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.search.UpdateableFragment
 import com.pantaubersama.app.ui.search.person.filter.FilterOrangActivity
 import com.pantaubersama.app.utils.PantauConstants
@@ -84,7 +85,9 @@ class SearchPersonFragment : BaseFragment<SearchPersonPresenter>(), UpdateableFr
         adapter = PersonAdapter()
         adapter.listener = object : PersonAdapter.Listener {
             override fun onClickItem(profile: Profile) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                val intent = Intent(requireContext(), ProfileActivity::class.java)
+                intent.putExtra(PantauConstants.Profile.USER_ID, profile.id)
+                startActivityForResult(intent, PantauConstants.Profile.PROFILE_REQUEST_CODE)
             }
         }
         recycler_view.adapter = adapter

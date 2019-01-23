@@ -168,6 +168,8 @@ class PantauConstants {
         const val URL_PUSAT_BANTUAN = BASE_URL_PUSAT_BANTUAN + "1/1"
         const val URL_PANDUAN_KOMUNITAS = BASE_URL_PUSAT_BANTUAN + "2/2"
         const val URL_TENTANG_PANTAU_BERSAMA = BASE_URL_PUSAT_BANTUAN + "3/4"
+        const val USER_ID = "user_id"
+        const val PROFILE_REQUEST_CODE = 112
     }
 
     object Filter {

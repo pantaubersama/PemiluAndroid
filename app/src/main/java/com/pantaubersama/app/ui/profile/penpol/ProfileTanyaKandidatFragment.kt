@@ -36,15 +36,18 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
 
     private lateinit var adapter: TanyaKandidatAdapter
     private lateinit var layoutManager: LinearLayoutManager
-    private var isDataEnd = false
-    private var isLoading = false
     private lateinit var profile: Profile
+    private var userId: String? = null
 
     companion object {
         val TAG = ProfileTanyaKandidatFragment::class.java.simpleName
 
-        fun newInstance(): ProfileTanyaKandidatFragment {
-            return ProfileTanyaKandidatFragment()
+        fun newInstance(userId: String?): ProfileTanyaKandidatFragment {
+            val fragment = ProfileTanyaKandidatFragment()
+            val bundle = Bundle()
+            bundle.putString(PantauConstants.Profile.USER_ID, userId)
+            fragment.arguments = bundle
+            return fragment
         }
     }
 
@@ -55,6 +58,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     override fun setLayout(): Int = R.layout.fragment_profile_tanya_kandidat
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
+        userId = arguments?.getString(PantauConstants.Profile.USER_ID)
         presenter.getProfile()
         setupTanyaKandidatList()
         getDataList()
@@ -66,7 +70,11 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
 
     private fun getDataList() {
         adapter.setDataEnd(false)
-        presenter.getTanyaKandidatList(1)
+        if (userId == null) {
+            presenter.getTanyaKandidatList(1)
+        } else {
+//            presenter.getUserTanyaKandidat(1)
+        }
     }
 
     private fun setupTanyaKandidatList() {

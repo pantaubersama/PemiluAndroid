@@ -36,6 +36,7 @@ import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
+import com.pantaubersama.app.ui.profile.setting.clusterundang.ClusterUndangActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
 import com.pantaubersama.app.ui.profile.setting.panduankomunitas.PanduanKomunitasActivity
 import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
@@ -106,4 +107,5 @@ interface ActivityComponent {
     fun inject(searchLinimasaFragment: SearchLinimasaFragment)
     fun inject(searchJanjiPolitikFragment: SearchJanjiPolitikFragment)
     fun inject(searchPersonFragment: SearchPersonFragment)
+    fun inject(clusterUndangActivity: ClusterUndangActivity)
 }

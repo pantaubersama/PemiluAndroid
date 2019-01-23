@@ -11,4 +11,5 @@ interface ProfileView : BaseView {
     fun showSuccessLeaveClusterAlert(name: String?)
     fun showRequestClusterLayout()
     fun showFailedLeaveClusterAlert(name: String?)
+    fun showFailedGetProfileAlert()
 }

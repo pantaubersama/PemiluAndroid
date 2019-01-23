@@ -2,11 +2,13 @@ package com.pantaubersama.app.ui.profile
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.ProfileInteractor
+import com.pantaubersama.app.data.interactors.UserInteractor
 import com.pantaubersama.app.utils.State
 import javax.inject.Inject
 
 class ProfilePresenter @Inject constructor(
-    private val profileInteractor: ProfileInteractor
+    private val profileInteractor: ProfileInteractor,
+    private val userInteractor: UserInteractor
 ) : BasePresenter<ProfileView>() {
 
     fun getProfile() {
@@ -22,7 +24,7 @@ class ProfilePresenter @Inject constructor(
                 }, {
                     view?.showError(it)
                 })
-        disposables?.add(disposable)
+        disposables.add(disposable)
     }
 
     fun refreshBadges() {
@@ -33,11 +35,11 @@ class ProfilePresenter @Inject constructor(
                 }, {
                     view?.showBadges(State.Error(it.message))
                 })
-        disposables?.add(disposable)
+        disposables.add(disposable)
     }
 
     fun leaveCluster(name: String?) {
-        disposables?.add(
+        disposables.add(
             profileInteractor.leaveCluster()
                 .subscribe(
                     {
@@ -49,6 +51,18 @@ class ProfilePresenter @Inject constructor(
                         view?.showFailedLeaveClusterAlert(name)
                     }
                 )
+        )
+    }
+
+    fun getUserProfile(userId: String) {
+        disposables.add(
+            userInteractor.getUserProfile(userId)
+                .subscribe({
+                    view?.showProfile(it)
+                }, {
+                    view?.showError(it)
+                    view?.showFailedGetProfileAlert()
+                })
         )
     }
 }
