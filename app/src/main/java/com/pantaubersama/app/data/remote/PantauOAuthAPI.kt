@@ -204,4 +204,9 @@ interface PantauOAuthAPI {
     fun getUserProfile(
         @Path("id") userId: String
     ): Single<ProfileResponse>
+
+    @GET("/v1/badges/user/{id}")
+    fun getUserBadges(
+        @Path("id") userId: String
+    ): Single<BadgeResponse>
 }

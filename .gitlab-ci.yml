@@ -46,8 +46,8 @@ build_onprogress:
       - echo "TWITTER_SECRET=$TWITTER_SECRET_STAG" >> gradle.properties
       - echo "PANTAU_CLIENT_ID=$PANTAU_CLIENT_ID_STAG" >> gradle.properties
       - echo "PANTAU_CLIENT_SECRET=$PANTAU_CLIENT_SECRET_STAG" >> gradle.properties
-      - echo "android.useAndroidX=true_STAG" >> gradle.properties
-      - echo "android.enableJetifier=true_STAG" >> gradle.properties
+      - echo "android.useAndroidX=true" >> gradle.properties
+      - echo "android.enableJetifier=true" >> gradle.properties
       - ./gradlew assembleStagingDebug
 
 build_staging:

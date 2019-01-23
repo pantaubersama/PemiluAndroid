@@ -178,6 +178,8 @@ class PantauConstants {
             const val FILTER_ALL = "team_all"
             const val FILTER_TEAM_1 = "team_id_1"
             const val FILTER_TEAM_2 = "team_id_2"
+            const val FILTER_TEAM_3 = "team_id_3"
+            const val FILTER_TEAM_4 = "team_id_4"
         }
 
         object Janpol { // value dari backend

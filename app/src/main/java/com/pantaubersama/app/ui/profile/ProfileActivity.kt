@@ -75,6 +75,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
             presenter.refreshBadges()
         } else {
             userId?.let { presenter.getUserProfile(it) }
+            userId?.let { presenter.getUserBadge(it) }
         }
     }
 
@@ -96,8 +97,12 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         tv_request_cluster.visibility = View.GONE
         cluster_image.loadUrl(cluster.image?.thumbnail?.url)
         cluster_name.text = cluster.name
-        cluster_options_action.setOnClickListener {
-            showClusterOptionsDialog(cluster)
+        if (userId == null) {
+            cluster_options_action.setOnClickListener {
+                showClusterOptionsDialog(cluster)
+            }
+        } else {
+            cluster_options_action.visibility = View.GONE
         }
     }
 
@@ -107,9 +112,11 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         verified_text.text = getString(R.string.txt_belum_verifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_gray)
-        verified_button.setOnClickListener {
-            val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
-            startActivity(intent)
+        if (userId == null) {
+            verified_button.setOnClickListener {
+                val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
@@ -208,14 +215,18 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 cluster_expandable_image.animate().rotation(180F).start()
             }
         }
-        tv_request_cluster.text = spannable {
-            +"Belum ada Cluster "
-            textColor(color(R.color.red)) {
-                underline { +"( Request Cluster? )" }
+        if (userId == null) {
+            tv_request_cluster.text = spannable {
+                +"Belum ada Cluster "
+                textColor(color(R.color.red)) {
+                    underline { +"( Request Cluster? )" }
+                }
+            }.toCharSequence()
+            tv_request_cluster.setOnClickListener {
+                startActivity(Intent(this, RequestClusterActivity::class.java))
             }
-        }.toCharSequence()
-        tv_request_cluster.setOnClickListener {
-            startActivity(Intent(this, RequestClusterActivity::class.java))
+        } else {
+            tv_request_cluster.text = "Belum ada cluster"
         }
     }
 

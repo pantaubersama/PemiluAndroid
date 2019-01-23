@@ -27,6 +27,7 @@ import javax.inject.Inject
 class SearchPersonFragment : BaseFragment<SearchPersonPresenter>(), UpdateableFragment, SearchPersonView {
     private lateinit var keyword: String
     private lateinit var adapter: PersonAdapter
+    private lateinit var profile: Profile
 
     override fun setLayout(): Int = R.layout.fragment_search_person
 
@@ -64,6 +65,7 @@ class SearchPersonFragment : BaseFragment<SearchPersonPresenter>(), UpdateableFr
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
+        presenter.getProfile()
         setupPeopleList()
         if (savedInstanceState?.getString("keyword") != null) {
             savedInstanceState.getString("keyword")?.let { getData(it) }
@@ -80,13 +82,19 @@ class SearchPersonFragment : BaseFragment<SearchPersonPresenter>(), UpdateableFr
         }
     }
 
+    override fun bindProfile(profile: Profile) {
+        this.profile = profile
+    }
+
     private fun setupPeopleList() {
         recycler_view.layoutManager = LinearLayoutManager(requireContext())
         adapter = PersonAdapter()
         adapter.listener = object : PersonAdapter.Listener {
             override fun onClickItem(profile: Profile) {
                 val intent = Intent(requireContext(), ProfileActivity::class.java)
-                intent.putExtra(PantauConstants.Profile.USER_ID, profile.id)
+                if (this@SearchPersonFragment.profile.id != profile.id) {
+                    intent.putExtra(PantauConstants.Profile.USER_ID, profile.id)
+                }
                 startActivityForResult(intent, PantauConstants.Profile.PROFILE_REQUEST_CODE)
             }
         }
@@ -98,6 +106,7 @@ class SearchPersonFragment : BaseFragment<SearchPersonPresenter>(), UpdateableFr
     }
 
     override fun getData(keyword: String) {
+        this.keyword = keyword
         adapter.setDataEnd(false)
         presenter.searchPerson(keyword, 1, 20)
     }

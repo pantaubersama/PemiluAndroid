@@ -10,4 +10,5 @@ interface SearchPersonView : BaseView {
     fun setDataEnd()
     fun showEmptyData()
     fun bindMoreData(users: MutableList<Profile>)
+    fun bindProfile(profile: Profile)
 }
