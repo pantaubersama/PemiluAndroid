@@ -87,7 +87,7 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
     }
 
     private fun resetFilter() {
-        presenter.saveTanyaKandidatFilter(PantauConstants.TanyaKandidat.Filter.ByVerified.USER_VERIFIED_ALL, PantauConstants.TanyaKandidat.Filter.ByVotes.LATEST)
+        presenter.saveTanyaKandidatFilter(PantauConstants.TanyaKandidat.Filter.ByVerified.USER_VERIFIED_ALL, PantauConstants.TanyaKandidat.Filter.ByVotes.MOST_VOTES)
     }
 
     override fun onSuccessSaveFilter() {
