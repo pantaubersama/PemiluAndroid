@@ -1,10 +1,14 @@
 package com.pantaubersama.app.ui.search.person
 
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.UserInteractor
 import javax.inject.Inject
 
-class SearchPersonPresenter @Inject constructor(private val userInteractor: UserInteractor) : BasePresenter<SearchPersonView>() {
+class SearchPersonPresenter @Inject constructor(
+    private val userInteractor: UserInteractor,
+    private val profileInteractor: ProfileInteractor
+) : BasePresenter<SearchPersonView>() {
     fun searchPerson(keyword: String, page: Int, perPage: Int) {
         view?.showLoading()
         disposables.add(
@@ -40,5 +44,9 @@ class SearchPersonPresenter @Inject constructor(private val userInteractor: User
                     }
                 )
         )
+    }
+
+    fun getProfile() {
+        view?.bindProfile(profileInteractor.getProfile())
     }
 }

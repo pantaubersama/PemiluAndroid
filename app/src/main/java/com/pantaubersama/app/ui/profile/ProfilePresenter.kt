@@ -65,4 +65,15 @@ class ProfilePresenter @Inject constructor(
                 })
         )
     }
+
+    fun getUserBadge(userId: String) {
+        view?.showBadges(State.Loading)
+        val disposable = userInteractor.getBadges(userId)
+            .subscribe({
+                view?.showBadges(State.Success, it.take(3))
+            }, {
+                view?.showBadges(State.Error(it.message))
+            })
+        disposables.add(disposable)
+    }
 }

@@ -12,5 +12,4 @@ interface SearchQuizView : BaseView {
     fun showLoadingMore()
     fun dismissLoadingMore()
     fun setNoMoreData()
-
 }

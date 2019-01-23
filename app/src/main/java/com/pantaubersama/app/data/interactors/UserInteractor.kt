@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
+import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
@@ -39,6 +40,22 @@ class UserInteractor @Inject constructor(
         return apiWrapper.getPantauOAuthApi().getUserProfile(userId)
             .map { it.data.user }
             .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getBadges(userId: String): Single<List<Badge>> {
+        return apiWrapper.getPantauOAuthApi().getUserBadges(userId)
+            .subscribeOn(rxSchedulers.io())
+            .map { response ->
+                val achievedBadges = response.data.achievedBadges
+                    .map {
+                        it.badge.apply {
+                            achievedId = it.achievedId
+                            achieved = true
+                        }
+                    }
+                achievedBadges + response.data.badges
+            }
             .observeOn(rxSchedulers.mainThread())
     }
 }

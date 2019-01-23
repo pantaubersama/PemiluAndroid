@@ -75,6 +75,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
             presenter.refreshBadges()
         } else {
             userId?.let { presenter.getUserProfile(it) }
+            userId?.let { presenter.getUserBadge(it) }
         }
     }
 
