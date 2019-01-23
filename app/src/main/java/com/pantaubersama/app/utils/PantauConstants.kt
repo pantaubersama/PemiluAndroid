@@ -7,6 +7,12 @@ import android.Manifest
  */
 class PantauConstants {
 
+    object Search {
+        object Filter {
+            const val SEARCH_ORANG_REQUEST_CODE = 1111
+        }
+    }
+
     companion object {
         const val LABEL_COPY = "LABEL_COPY"
 
@@ -16,6 +22,9 @@ class PantauConstants {
         const val BANNER_KUIS = "kuis"
         const val URL = "url"
         val PROFILE_COMPLETION = "profile_completion"
+        val FILTER_ORANG_ALL = "verified_all"
+        val FILTER_ORANG_VERIFIED = "verified_true"
+        val FILTER_ORANG_UNVERIFIED = "verified_false"
     }
 
     object Cluster {
@@ -117,7 +126,8 @@ class PantauConstants {
         const val URL_PANTAU_BERSAMA_INSTAGRAM = "https://www.instagram.com/pantaubersama/"
         const val URL_PANTAU_BERSAMA_FACEBOOK = "https://www.facebook.com/pages/category/Internet-Company/Pantau-Bersama-735930099884846/"
 
-        const val INVITATION_PATH = "invitation"
+        const val INVITATION_PATH = "invitation?"
+        const val ACCEPT_CLUSTER_INVITATION_PATH = "invitation/accept_existing"
     }
 
     object Kuis {
@@ -151,7 +161,7 @@ class PantauConstants {
         const val TYPE_CLUSTER_ITEM = 7
         const val CATEGORY_ITEM = 8
         const val TYPE_PASLON = 9
-        const val TYPE_HEADER_TANYA = 10
+        const val TYPE_USER = 10
     }
 
     object Profile {
@@ -159,6 +169,8 @@ class PantauConstants {
         const val URL_PUSAT_BANTUAN = BASE_URL_PUSAT_BANTUAN + "1/1"
         const val URL_PANDUAN_KOMUNITAS = BASE_URL_PUSAT_BANTUAN + "2/2"
         const val URL_TENTANG_PANTAU_BERSAMA = BASE_URL_PUSAT_BANTUAN + "3/4"
+        const val USER_ID = "user_id"
+        const val PROFILE_REQUEST_CODE = 112
     }
 
     object Filter {

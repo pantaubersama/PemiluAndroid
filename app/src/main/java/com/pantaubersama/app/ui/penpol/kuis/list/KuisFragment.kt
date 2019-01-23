@@ -92,6 +92,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
     }
 
     private fun getTopPageItems() {
+        adapter.clear()
         adapter.setDataEnd(false)
         presenter.getTopPageItems()
     }

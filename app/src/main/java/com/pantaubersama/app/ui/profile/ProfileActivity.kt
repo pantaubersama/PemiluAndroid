@@ -44,6 +44,7 @@ import javax.inject.Inject
 class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     @Inject
     override lateinit var presenter: ProfilePresenter
+    private var userId: String? = null
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -54,7 +55,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
+        userId = intent.getStringExtra(PantauConstants.Profile.USER_ID)
     }
 
     override fun setLayout(): Int = R.layout.activity_profile
@@ -68,9 +69,13 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
             showFragment(ProfileJanjiPolitikFragment(), ProfileJanjiPolitikFragment.TAG)
         }
         setupNavigation()
-        presenter.refreshProfile()
-        presenter.getProfile()
-        presenter.refreshBadges()
+        if (userId == null) {
+            presenter.refreshProfile()
+            presenter.getProfile()
+            presenter.refreshBadges()
+        } else {
+            userId?.let { presenter.getUserProfile(it) }
+        }
     }
 
     override fun showProfile(profile: Profile) {
@@ -119,8 +124,8 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     private fun setupNavigation() {
         val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
             val (fragment, tag) = when (item.itemId) {
-                R.id.navigation_menyerap -> ProfileJanjiPolitikFragment.newInstance() to ProfileJanjiPolitikFragment.TAG
-                R.id.navigation_menggali -> ProfileTanyaKandidatFragment.newInstance() to ProfileTanyaKandidatFragment.TAG
+                R.id.navigation_menyerap -> ProfileJanjiPolitikFragment.newInstance(userId) to ProfileJanjiPolitikFragment.TAG
+                R.id.navigation_menggali -> ProfileTanyaKandidatFragment.newInstance(userId) to ProfileTanyaKandidatFragment.TAG
                 R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
                 R.id.navigation_menjaga -> LaporFragment.newInstance() to LaporFragment.TAG
                 R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
@@ -303,8 +308,14 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         progress_bar.visibleIf(false)
     }
 
+    override fun showFailedGetProfileAlert() {
+        ToastUtil.show(this@ProfileActivity, "Gagal memuat profil pengguna")
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_profile, menu)
+        if (userId == null) {
+            menuInflater.inflate(R.menu.menu_profile, menu)
+        }
         return true
     }
 

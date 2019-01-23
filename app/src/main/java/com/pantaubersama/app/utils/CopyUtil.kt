@@ -7,11 +7,11 @@ import com.pantaubersama.app.BuildConfig
 
 class CopyUtil {
     companion object {
-        fun copyToClipBoard(context: Context, message: String) {
+        fun copyToClipBoard(context: Context, message: String, alert: String) {
             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, message)
             clipboard.primaryClip = clip
-            ToastUtil.show(context, "tautan telah tersalin")
+            ToastUtil.show(context, alert)
         }
 
         fun copyJanpol(context: Context, janpolId: String) {

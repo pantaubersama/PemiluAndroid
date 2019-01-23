@@ -90,7 +90,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
     private fun getDataList() {
         adapter?.setDataEnd(false)
-        presenter.getList()
+        presenter.getBanner()
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {

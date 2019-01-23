@@ -37,6 +37,7 @@ import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
+import com.pantaubersama.app.ui.profile.setting.clusterundang.ClusterUndangActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
 import com.pantaubersama.app.ui.profile.setting.panduankomunitas.PanduanKomunitasActivity
 import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
@@ -51,6 +52,9 @@ import com.pantaubersama.app.ui.search.cluster.filter.FilterClusterActivity
 import com.pantaubersama.app.ui.search.history.SearchHistoryFragment
 import com.pantaubersama.app.ui.search.janjipolitik.SearchJanjiPolitikFragment
 import com.pantaubersama.app.ui.search.linimasa.SearchLinimasaFragment
+import com.pantaubersama.app.ui.search.person.SearchPersonFragment
+import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
+import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import dagger.Subcomponent
 
@@ -110,4 +114,8 @@ interface ActivityComponent {
     fun inject(searchClusterFragment: SearchClusterFragment)
     fun inject(filterClusterActivity: FilterClusterActivity)
     fun inject(categoryListDialog: CategoryListDialog)
+    fun inject(searchPersonFragment: SearchPersonFragment)
+    fun inject(clusterUndangActivity: ClusterUndangActivity)
+    fun inject(searchQuestionFragment: SearchQuestionFragment)
+    fun inject(searchQuizFragment: SearchQuizFragment)
 }

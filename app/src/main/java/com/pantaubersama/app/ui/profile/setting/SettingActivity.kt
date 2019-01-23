@@ -11,6 +11,7 @@ import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import android.webkit.CookieManager
 import androidx.core.content.ContextCompat
@@ -224,6 +225,15 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                 startActivityForResult(intent, VERIFIKASI)
             }
         }
+        if (profile.cluster != null) {
+            setting_cluster_undang.setOnClickListener {
+                val intent = Intent(this@SettingActivity, ClusterUndangActivity::class.java)
+                intent.putExtra(PantauConstants.Cluster.CLUSTER_ID, profile.cluster?.id)
+                startActivity(intent)
+            }
+        } else {
+            ll_setting_cluster_undang.visibility = View.GONE
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -294,10 +304,6 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         setting_badge.setOnClickListener {
             val intent = Intent(this@SettingActivity, BadgeActivity::class.java)
             startActivityForResult(intent, BADGE)
-        }
-        setting_cluster_undang.setOnClickListener {
-            val intent = Intent(this@SettingActivity, ClusterUndangActivity::class.java)
-            startActivityForResult(intent, CLUSTER_UNDANG)
         }
         setting_pusat_bantuan.setOnClickListener {
             ChromeTabUtil(this@SettingActivity).forceLoadUrl(PantauConstants.Profile.URL_PUSAT_BANTUAN)

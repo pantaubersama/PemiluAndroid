@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class FilterTanyaKandidatPresenter @Inject constructor(private val tanyaKandidatInteractor: TanyaKandidatInteractor) : BasePresenter<FilterTanyaKandidatView>() {
     fun saveTanyaKandidatFilter(userFilter: String?, orderFilter: String?) {
-        disposables?.add(
+        disposables.add(
             tanyaKandidatInteractor.saveTanyaKandidatFilter(userFilter, orderFilter)
                 .subscribe(
                     {
@@ -22,7 +22,7 @@ class FilterTanyaKandidatPresenter @Inject constructor(private val tanyaKandidat
     }
 
     fun loadTanyaKandidatUserFilter() {
-        disposables?.add(
+        disposables.add(
             tanyaKandidatInteractor
                 .loadTanyaKandidatUserFilter()
                 .subscribe(
@@ -38,7 +38,7 @@ class FilterTanyaKandidatPresenter @Inject constructor(private val tanyaKandidat
     }
 
     fun loadTanyaKandidatOrderFilter() {
-        disposables?.add(
+        disposables.add(
             tanyaKandidatInteractor
                 .loadTanyaKandidatOrderFilter()
                 .subscribe(

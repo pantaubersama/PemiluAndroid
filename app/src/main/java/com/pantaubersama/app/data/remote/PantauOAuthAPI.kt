@@ -147,7 +147,8 @@ interface PantauOAuthAPI {
     @FormUrlEncoded
     @POST("/v1/clusters/invite")
     fun inviteToCluster(
-        @Field("emails") email: String
+        @Field("emails") email: String,
+        @Field("cluster_id") clusterId: String
     ): Completable
 
     @FormUrlEncoded
@@ -190,4 +191,17 @@ interface PantauOAuthAPI {
     fun submitCatatanku(
         @Field("vote_preference") paslonSelected: Int?
     ): Completable
+
+    @GET("/v1/users")
+    fun searchUser(
+        @Query("q") keyword: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("filter_by") filter: String
+    ): Single<ProfileResponse>
+
+    @GET("/v1/users/{id}/simple")
+    fun getUserProfile(
+        @Path("id") userId: String
+    ): Single<ProfileResponse>
 }
