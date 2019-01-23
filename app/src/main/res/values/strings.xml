@@ -220,4 +220,6 @@
     <string name="txt_filter_cluster">Filter Cluster</string>
     <string name="kpu_label">KPU</string>
     <string name="bawaslu_label">Bawaslu</string>
+    <string name="info_preferensi_partai">Halaman preferensi partai ini adalah catatan pribadi dan tidak akan ditampilkan pada profile kamu.</string>
+    <string name="partai_mana_yang_cocok">Partai mana yang paling cocok dengan pilihan kamu?</string>
 </resources>
