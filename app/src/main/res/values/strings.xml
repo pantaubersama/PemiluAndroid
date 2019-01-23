@@ -158,7 +158,7 @@
     <string name="logout_alert">Apakah Anda yakin akan keluar dari aplikasi Pantau Bersama?</string>
     <string name="hint_masukkan_email_disini">Masukkan email di sini</string>
     <string name="label_bagikan_undangan_lewat_link">Bagikan Undangan Lewat Link</string>
-    <string name="label_non_aktifkan_link_undangan">Non-aktifkan link undangan</string>
+    <string name="label_non_aktifkan_link_undangan">Aktifkan link undangan</string>
     <string name="deskripsi_undang_lewat_tautan">Link di bawah ini dapat digunakan untuk menambah anggota secara otomatis apabila di-klik oleh penerima.\nKamu bisa non-aktifkan link undangan sewaktu-waktu.</string>
     <string name="logging_in_label">Logging in</string>
     <string name="failed_login_alert">Failed to login using Symbolic</string>

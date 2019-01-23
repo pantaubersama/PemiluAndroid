@@ -8,6 +8,7 @@ import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.utils.CopyUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
@@ -18,7 +19,7 @@ import javax.inject.Inject
 class UndangAnggotaActivity : BaseActivity<UndangAnggotaPresenter>(), UndangAnggotaView {
     private lateinit var clusterUrl: String
     private lateinit var clusterId: String
-    private var urlInviteActive = false
+    private var isUrlActive = false
 
     @Inject
     override lateinit var presenter: UndangAnggotaPresenter
@@ -47,12 +48,12 @@ class UndangAnggotaActivity : BaseActivity<UndangAnggotaPresenter>(), UndangAngg
 
     @SuppressLint("SetTextI18n")
     private fun setupMagicLink() {
-        undang_anggota_url_toggle.isChecked = !urlInviteActive
-        cluster_url.setText("https://app.pantaubersama.com/cluster?=$clusterUrl")
+        undang_anggota_url_toggle.isChecked = isUrlActive
+        cluster_url.text = "https://app.pantaubersama.com/cluster?=$clusterUrl"
         cluster_url.setSelectAllOnFocus(true)
         undang_anggota_url_toggle.setOnCheckedChangeListener { compoundButton, enable ->
-            cluster_url.isEnabled = !enable
-            presenter.enableDisableUrlInvite(clusterId, !enable)
+            cluster_url.isEnabled = enable
+            presenter.enableDisableUrlInvite(clusterId, enable)
             setResult(Activity.RESULT_OK)
         }
     }
@@ -64,7 +65,7 @@ class UndangAnggotaActivity : BaseActivity<UndangAnggotaPresenter>(), UndangAngg
     override fun fetchIntentExtra() {
         clusterUrl = intent.getStringExtra(PantauConstants.Cluster.CLUSTER_URL)
         clusterId = intent.getStringExtra(PantauConstants.Cluster.CLUSTER_ID)
-        urlInviteActive = intent.getBooleanExtra(PantauConstants.Cluster.INVITE_LINK_ACTIVE, urlInviteActive)
+        isUrlActive = intent.getBooleanExtra(PantauConstants.Cluster.INVITE_LINK_ACTIVE, isUrlActive)
     }
 
     override fun setLayout(): Int {
@@ -103,10 +104,12 @@ class UndangAnggotaActivity : BaseActivity<UndangAnggotaPresenter>(), UndangAngg
 
     override fun showSuccessDisableUrlInviteAlert() {
         ToastUtil.show(this@UndangAnggotaActivity, "Bagikan undangan via link dinon-aktifkan")
+        cluster_url.clearFocus()
     }
 
     override fun showSuccessEnableUrlInviteAlert() {
-        ToastUtil.show(this@UndangAnggotaActivity, "Bagikan undangan via link diaktifkan")
+        cluster_url.requestFocus()
+        CopyUtil.copyToClipBoard(this@UndangAnggotaActivity, cluster_url.text.toString(), "Tautan berhasil disalin")
     }
 
     override fun showFailedDisableUrlInviteAlert() {
