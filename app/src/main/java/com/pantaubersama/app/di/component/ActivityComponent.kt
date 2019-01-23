@@ -3,6 +3,7 @@ package com.pantaubersama.app.di.component
 import com.pantaubersama.app.di.module.ActivityModule
 import com.pantaubersama.app.di.scope.ActivityScope
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
+import com.pantaubersama.app.ui.categorydialog.CategoryListDialog
 import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
@@ -108,4 +109,5 @@ interface ActivityComponent {
     fun inject(searchJanjiPolitikFragment: SearchJanjiPolitikFragment)
     fun inject(searchClusterFragment: SearchClusterFragment)
     fun inject(filterClusterActivity: FilterClusterActivity)
+    fun inject(categoryListDialog: CategoryListDialog)
 }

@@ -30,7 +30,7 @@
             android:background="@drawable/bg_rounded_tosca_outline"
             android:layout_marginTop="10dp">
 
-            <include layout="@layout/item_default_cluster_filter"/>
+            <include layout="@layout/item_category"/>
 
         </RelativeLayout>
 

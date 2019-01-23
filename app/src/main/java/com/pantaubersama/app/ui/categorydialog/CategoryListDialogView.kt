@@ -10,5 +10,6 @@ interface CategoryListDialogView : BaseView {
     fun showCategory(categories: MutableList<Category>)
     fun showMoreCategory(categories: MutableList<Category>)
     fun onEmptyData()
-    fun onFailedGetCategoriesAlert()
+    fun onFailedGetCategory()
+    fun onFailedGetMoreCategory()
 }

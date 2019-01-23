@@ -29,7 +29,7 @@ class ClusterCategoryPresenter @Inject constructor(private val clusterInteractor
         if (page == 1) {
             view?.showLoading()
         }
-        disposables?.add(
+        disposables.add(
             clusterInteractor
                 .getCategories(
                     page,

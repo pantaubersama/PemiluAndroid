@@ -31,7 +31,6 @@ import javax.inject.Inject
  * @author edityomurti on 26/12/2018 23:57
  */
 class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), ClusterListDialogView {
-
     private var keyword: String = ""
 
     @Inject
@@ -57,7 +56,6 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
     }
 
     override fun initView(view: View) {
-        lottie_loading.visibility = View.GONE
         setupRecyclerView()
         getData()
         setupSearchEditText()
