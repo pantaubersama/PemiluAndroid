@@ -12,7 +12,6 @@ import com.pantaubersama.app.base.BaseDialogFragment
 import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.profile.cluster.category.CategoriesAdapter
-import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_search.*

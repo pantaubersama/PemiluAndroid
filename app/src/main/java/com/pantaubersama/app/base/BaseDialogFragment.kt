@@ -4,7 +4,12 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Point
 import android.os.Bundle
-import android.view.*
+import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
+import android.view.Gravity
 import android.widget.RelativeLayout
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment

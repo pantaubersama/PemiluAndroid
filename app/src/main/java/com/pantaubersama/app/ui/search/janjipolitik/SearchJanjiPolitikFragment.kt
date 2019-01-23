@@ -208,8 +208,7 @@ class SearchJanjiPolitikFragment : BaseFragment<SearchJanjiPolitikPresenter>(), 
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == RC_FILTER_JANPOL) getData(keyword)
-        } else
-        if (resultCode == PantauConstants.ResultCode.RESULT_DELETE_ITEM_JANPOL) {
+        } else if (resultCode == PantauConstants.ResultCode.RESULT_DELETE_ITEM_JANPOL) {
             if (requestCode == RC_OPEN_DETAIL_JANPOL) {
                 if (data != null && data.getIntExtra(EXTRA_ITEM_POSITION, -1) != -1) {
                     adapter.deleteItem(data.getIntExtra(EXTRA_ITEM_POSITION, -1))

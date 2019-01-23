@@ -11,7 +11,6 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
-import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_IS_SEARCH_FILTER
 import com.pantaubersama.app.utils.PantauConstants.Filter.Janpol.USER_VERIFIED_ALL
 import com.pantaubersama.app.utils.PantauConstants.Filter.Janpol.USER_VERIFIED_FALSE
@@ -23,7 +22,6 @@ import kotlinx.android.synthetic.main.activity_filter_janji_politik.*
 import kotlinx.android.synthetic.main.item_cluster.*
 import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), FilterJanjiPolitikView {
@@ -90,7 +88,6 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
             } else {
                 presenter.setSearchFilter(this.userFilter!!, this.clusterFilter)
             }
-
         }
     }
 

@@ -10,7 +10,6 @@ import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.PantauConstants
-import timber.log.Timber
 
 /**
  * @author edityomurti on 21/12/2018 18:05

@@ -3,7 +3,6 @@ package com.pantaubersama.app.ui.linimasa.janjipolitik.filter
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
 import com.pantaubersama.app.data.model.cluster.ClusterItem
-import timber.log.Timber
 import javax.inject.Inject
 
 class FilterJanjiPolitikPresenter @Inject constructor(
@@ -26,5 +25,4 @@ class FilterJanjiPolitikPresenter @Inject constructor(
         janpolInteractor.setSearchJanpolFilter(userFilter, clusterFilter)
         view?.onSuccessSetFilter()
     }
-
 }
