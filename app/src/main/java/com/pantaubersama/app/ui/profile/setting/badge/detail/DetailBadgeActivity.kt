@@ -75,7 +75,7 @@ class DetailBadgeActivity : BaseActivity<DetailBadgePresenter>(), DetailBadgeVie
         item.user.fullName?.let { tv_user_fullname.text = it }
         item.user.about?.let { tv_user_bio.text = it }
 
-        iv_badge.loadUrl(item.badge.image.thumbnail?.url, R.drawable.dummy_badge)
+        iv_badge.loadUrl(item.badge.image.url, R.drawable.dummy_badge)
 
         tv_badge_name.text = item.badge.name
         tv_badge_desc.text = item.badge.description
