@@ -1,6 +1,8 @@
 package com.pantaubersama.app.ui.linimasa.janjipolitik.filter
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -9,6 +11,8 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
+import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_IS_SEARCH_FILTER
 import com.pantaubersama.app.utils.PantauConstants.Filter.Janpol.USER_VERIFIED_ALL
 import com.pantaubersama.app.utils.PantauConstants.Filter.Janpol.USER_VERIFIED_FALSE
 import com.pantaubersama.app.utils.PantauConstants.Filter.Janpol.USER_VERIFIED_TRUE
@@ -19,9 +23,12 @@ import kotlinx.android.synthetic.main.activity_filter_janji_politik.*
 import kotlinx.android.synthetic.main.item_cluster.*
 import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), FilterJanjiPolitikView {
+
+    private var isSearchFilter = false
 
     @Inject override lateinit var presenter: FilterJanjiPolitikPresenter
 
@@ -35,9 +42,26 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
         activityComponent.inject(this)
     }
 
+    companion object {
+        fun setIntent(context: Context, isSearchFilter: Boolean): Intent {
+            val intent = Intent(context, FilterJanjiPolitikActivity::class.java)
+            intent.putExtra(EXTRA_IS_SEARCH_FILTER, isSearchFilter)
+            return intent
+        }
+    }
+
+    override fun fetchIntentExtra() {
+        isSearchFilter = intent.getBooleanExtra(EXTRA_IS_SEARCH_FILTER, false)
+    }
+
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
-        presenter.getFilter()
+
+        if (!isSearchFilter) {
+            presenter.getFilter()
+        } else {
+            presenter.getSearchFilter()
+        }
 
         rl_cluster_container.setOnClickListener {
             ClusterListDialog.show(supportFragmentManager, object : ClusterListDialog.DialogListener {
@@ -61,7 +85,12 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
         }
 
         btn_terapkan.setOnClickListener {
-            presenter.setFilter(this.userFilter!!, this.clusterFilter)
+            if (!isSearchFilter) {
+                presenter.setFilter(this.userFilter!!, this.clusterFilter)
+            } else {
+                presenter.setSearchFilter(this.userFilter!!, this.clusterFilter)
+            }
+
         }
     }
 

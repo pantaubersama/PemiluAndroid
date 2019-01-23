@@ -50,7 +50,11 @@ class JanjiPolitikPresenter @Inject constructor(
             view?.showLoading()
         }
 
-        disposables.add(janPolInteractor.getJanPol("", page, perPage)
+        disposables.add(janPolInteractor
+            .getJanPol("", page, perPage,
+                janPolInteractor.getJanpolClusterFilter()?.id ?: "",
+                janPolInteractor.getJanpolUserFilter()
+            )
             .subscribe(
                 {
                     if (page == 1) {

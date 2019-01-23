@@ -10,6 +10,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -24,13 +25,26 @@ class JanjiPolitikInteractor @Inject constructor(
         return dataCache.getJanpolUserFilter()
     }
 
+    fun getSearchJanpolUserFilter(): String {
+        return dataCache.getSearchJanpolUserFilter()
+    }
+
     fun getJanpolClusterFilter(): ClusterItem? {
         return dataCache.getJanpolClusterFilter()
+    }
+
+    fun getSearchJanpolClusterFilter(): ClusterItem? {
+        return dataCache.getSearchJanpolClusterFilter()
     }
 
     fun setJanpolFilter(userFilter: String, clusterFilter: ClusterItem?) {
         dataCache.saveJanpolUserFilter(userFilter)
         dataCache.saveJanpolClusterFilter(clusterFilter)
+    }
+
+    fun setSearchJanpolFilter(userFilter: String, clusterFilter: ClusterItem?) {
+        dataCache.saveSearchJanpolUserFilter(userFilter)
+        dataCache.saveSearchJanpolClusterFilter(clusterFilter)
     }
 
     fun getJanPolById(janpolId: String): Single<JanjiPolitik> {
@@ -44,10 +58,12 @@ class JanjiPolitikInteractor @Inject constructor(
     fun getJanPol(
         keyword: String?,
         page: Int?,
-        perPage: Int?
+        perPage: Int?,
+        clusterId: String,
+        userType: String
     ): Single<JanjiPolitiksData?> {
         return apiWrapper.getPantauApi()
-            .getJanjiPolitikList(keyword, getJanpolClusterFilter()?.id ?: "", getJanpolUserFilter(), page, perPage)
+            .getJanjiPolitikList(keyword, clusterId, userType, page, perPage)
             .subscribeOn(rxSchedulers.io())
             .map { it.data }
             .observeOn(rxSchedulers.mainThread())

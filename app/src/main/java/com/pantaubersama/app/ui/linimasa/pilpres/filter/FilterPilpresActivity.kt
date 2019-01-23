@@ -24,6 +24,9 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
     @Inject
     override lateinit var presenter: FilterPilpresPresenter
 
+    override fun statusBarColor(): Int? = R.color.white
+    override fun setLayout(): Int = R.layout.activity_filter_pilpres
+
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
@@ -36,10 +39,6 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
             intent.putExtra(EXTRA_IS_SEARCH_FILTER, isSearchFilter)
             return intent
         }
-    }
-
-    override fun statusBarColor(): Int? {
-        return R.color.white
     }
 
     override fun fetchIntentExtra() {
@@ -86,10 +85,6 @@ class FilterPilpresActivity : BaseActivity<FilterPilpresPresenter>(), FilterPilp
     override fun onSuccessSetFilter() {
         setResult(Activity.RESULT_OK)
         finish()
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.activity_filter_pilpres
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
