@@ -48,10 +48,10 @@ class ClusterInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
-    fun invite(email: String): Completable {
+    fun invite(email: String, clusterId: String): Completable {
         return apiWrapper
             .getPantauOAuthApi()
-            .inviteToCluster(email)
+            .inviteToCluster(email, clusterId)
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }

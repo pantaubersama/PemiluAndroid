@@ -48,7 +48,7 @@ class UndangAnggotaActivity : BaseActivity<UndangAnggotaPresenter>(), UndangAngg
     @SuppressLint("SetTextI18n")
     private fun setupMagicLink() {
         undang_anggota_url_toggle.isChecked = !urlInviteActive
-        cluster_url.setText("http://pantaubersama.com/cluster?=$clusterUrl")
+        cluster_url.setText("https://app.pantaubersama.com/cluster?=$clusterUrl")
         cluster_url.setSelectAllOnFocus(true)
         undang_anggota_url_toggle.setOnCheckedChangeListener { compoundButton, enable ->
             cluster_url.isEnabled = !enable

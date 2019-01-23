@@ -19,7 +19,9 @@ import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatA
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.widget.UpdateAppDialog
 import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
+import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Networking.ACCEPT_CLUSTER_INVITATION_PATH
 import com.pantaubersama.app.utils.PantauConstants.Networking.INVITATION_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_BADGE_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_HASIL_KUIS_PATH
@@ -92,6 +94,10 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 startActivity(intent)
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
+            }
+            urlPath?.contains(ACCEPT_CLUSTER_INVITATION_PATH)!! && !urlPath?.substringAfter(SHARE_BADGE_PATH).isNullOrEmpty() -> {
+                finish()
+                ChromeTabUtil(this).forceLoadUrl(urlData)
             }
             urlPath?.contains(INVITATION_PATH)!! -> {
                 val intent = Intent(this@SplashScreenActivity, ProfileActivity::class.java)
