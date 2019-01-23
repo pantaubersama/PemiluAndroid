@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.profile.cluster.categery
+package com.pantaubersama.app.ui.profile.cluster.category
 
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +10,14 @@ import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.category_item.*
+import kotlinx.android.synthetic.main.item_category.*
 
 class CategoriesAdapter : BaseRecyclerAdapter() {
     var listener: CategoriesAdapter.Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == PantauConstants.ItemModel.CATEGORY_ITEM) {
-            CategoriesViewHolder(parent.inflate(R.layout.category_item))
+            CategoriesViewHolder(parent.inflate(R.layout.item_category))
         } else {
             LoadingViewHolder(parent.inflate(R.layout.item_loading))
         }

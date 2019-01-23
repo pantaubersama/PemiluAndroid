@@ -21,7 +21,10 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.search.person.filter.FilterOrangActivity"></activity>
+        <activity android:name=".ui.search.cluster.filter.FilterClusterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.search.person.filter.FilterOrangActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.onboarding.OnboardingActivity"
             android:screenOrientation="portrait" />
@@ -208,7 +211,7 @@
             android:name=".ui.profile.cluster.requestcluster.RequestClusterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.cluster.categery.ClusterCategoryActivity"
+            android:name=".ui.profile.cluster.category.ClusterCategoryActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.connect.ConnectActivity"

@@ -17,7 +17,9 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingBottom="20dp"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:inputType="text"
+        android:imeOptions="actionSearch"/>
 
     <include layout="@layout/layout_common_recyclerview"/>
 

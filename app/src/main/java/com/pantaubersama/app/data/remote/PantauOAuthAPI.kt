@@ -93,9 +93,9 @@ interface PantauOAuthAPI {
     fun getClusterList(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
-        @Query("q") keyword: String? = "",
-        @Query("filter_by") filterBy: String? = "category_id",
-        @Query("filter_value") filterValue: String = ""
+        @Query("q") keyword: String,
+        @Query("filter_value") filterValue: String,
+        @Query("filter_by") filterBy: String? = "category_id"
     ): Single<ClustersResponse>
 
     @FormUrlEncoded

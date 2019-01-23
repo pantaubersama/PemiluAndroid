@@ -1,25 +1,29 @@
 package com.pantaubersama.app.ui.clusterdialog
 
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Point
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.Gravity
 import android.view.Window
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.RelativeLayout
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseDialogFragment
-import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.utils.extensions.enableLottie
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
-import kotlinx.android.synthetic.main.layout_dialog_cluster_list.*
+import kotlinx.android.synthetic.main.layout_dialog_list.*
+import kotlinx.android.synthetic.main.layout_empty_state.*
+import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
@@ -27,12 +31,15 @@ import javax.inject.Inject
  * @author edityomurti on 26/12/2018 23:57
  */
 class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), ClusterListDialogView {
+    private var keyword: String = ""
 
     @Inject
     override lateinit var presenter: ClusterListDialogPresenter
 
     private var adapter: ClusterListDialogAdapter? = null
     private var listener: DialogListener? = null
+
+    override fun setLayout(): Int = R.layout.layout_dialog_list
 
     companion object {
         private val TAG = ClusterListDialog::class.java.simpleName
@@ -49,10 +56,14 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
     }
 
     override fun initView(view: View) {
-        lottie_loading.visibility = View.GONE
         setupRecyclerView()
-        presenter.getClusterList(1)
+        getData()
         setupSearchEditText()
+    }
+
+    private fun getData() {
+        adapter?.setDataEnd(false)
+        presenter.getClusterList(keyword, 1)
     }
 
     private fun setupRecyclerView() {
@@ -69,99 +80,71 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
                 dismiss()
             }
         }
+        adapter?.addSupportLoadMore(recycler_view, 10) {
+            adapter?.setLoading()
+            presenter.getClusterList(keyword, it)
+        }
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
+        swipe_refresh.setOnRefreshListener {
+            swipe_refresh.isRefreshing = false
+            getData()
+        }
     }
 
     private fun setupSearchEditText() {
-        et_search.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-//                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
+        et_search.setOnEditorActionListener { textView, actionId, keyEvent ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (textView.text.toString().isNotEmpty() && textView.text.toString().isNotBlank()) {
+                    this.keyword = textView.text.toString()
+                    getData()
+                    val imm = textView.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(textView.windowToken, 0)
+                    return@setOnEditorActionListener true
+                }
             }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//                adapter?.filter?.filter(s)
-            }
-        })
-    }
-
-    override fun showLoadingGetMoreClusters() {
-        adapter?.setLoading()
+            false
+        }
     }
 
     override fun showClusters(clusterList: MutableList<ClusterItem>) {
-        recycler_view.visibility = View.VISIBLE
-        adapter?.setLoaded()
-        adapter?.setDatas(clusterList as MutableList<ItemModel>)
+        recycler_view.visibleIf(true)
+        adapter?.setDatas(clusterList)
     }
 
     override fun showMoreClusters(clusterList: MutableList<ClusterItem>) {
         adapter?.setLoaded()
-        if (clusterList.size < presenter.perPage!!) {
+        if (clusterList.size < presenter.perPage) {
             adapter?.setDataEnd(true)
         }
+        adapter?.addData(clusterList)
     }
 
     override fun showEmptyCluster() {
-//        view_empty_state.visibleIf(true)
+        view_empty_state.enableLottie(true, lottie_empty_state)
     }
 
     override fun showFailedGetClusters() {
-//        view_fail_state.visibleIf(true)
+        view_fail_state.enableLottie(true, lottie_fail_state)
     }
 
     override fun showFailedGetMoreClusters() {
         adapter?.setLoaded()
     }
 
-    override fun setLayout(): Int {
-        return R.layout.layout_dialog_cluster_list
-    }
-
     override fun showLoading() {
-        adapter?.setLoading()
-//        view_empty_state.visibility = View.GONE
-//        view_fail_state.visibility = View.GONE
-        recycler_view.visibility = View.INVISIBLE
+        lottie_loading.enableLottie(true)
+        view_empty_state.enableLottie(false, lottie_empty_state)
+        view_fail_state.enableLottie(false, lottie_fail_state)
+        recycler_view.visibleIf(false)
     }
 
     override fun dismissLoading() {
-        adapter?.setLoaded()
-        recycler_view.visibility = View.GONE
-        lottie_loading.visibility = View.GONE
-    }
-
-    override fun showError(throwable: Throwable) {
-//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
+        lottie_loading.enableLottie(false)
     }
 
     interface DialogListener {
         fun onClickItem(item: ClusterItem)
         fun onClickDefault()
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val root = RelativeLayout(activity)
-        root.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-        val dialog = Dialog(context!!)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(root)
-        dialog.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-        return dialog
-    }
-
-    override fun onResume() {
-        val window = dialog?.window
-        val size = Point()
-        val display = window?.windowManager?.defaultDisplay
-        display?.getSize(size)
-        window?.setLayout((size.x * 0.95).toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
-        window?.setGravity(Gravity.CENTER)
-        super.onResume()
     }
 }

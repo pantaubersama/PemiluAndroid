@@ -7,28 +7,20 @@ import javax.inject.Inject
 /**
  * @author edityomurti on 27/12/2018 01:18
  */
-class ClusterListDialogPresenter @Inject constructor(private val clusterInteractor: ClusterInteractor)
+class ClusterListDialogPresenter @Inject constructor(
+    private val clusterInteractor: ClusterInteractor
+)
     : BasePresenter<ClusterListDialogView>() {
 
     var perPage = 20
 
-    fun getClusterList(page: Int) {
+    fun getClusterList(keyword: String, page: Int) {
         if (page == 1) {
             view?.showLoading()
         }
-//        val clusterList: MutableList<ClusterItem> = ArrayList()
-//
-//        for (i in 1..10) {
-//            val cluster = ClusterItem()
-//            cluster.id = "123$i"
-//            cluster.name = "Cluster $i"
-//            cluster.memberCount = i
-//            clusterList.add(cluster)
-//        }
-//        view?.showClusters(clusterList)
 
-        disposables?.add(clusterInteractor.getClusterList(page, perPage)
-            ?.subscribe(
+        disposables.add(clusterInteractor.getClusterList(page, perPage, keyword, "")
+            .subscribe(
                 {
                     if (page == 1) {
                         view?.dismissLoading()
@@ -51,7 +43,7 @@ class ClusterListDialogPresenter @Inject constructor(private val clusterInteract
                     it.printStackTrace()
                     view?.showError(it)
                 }
-            )!!
+            )
         )
     }
 }

@@ -22,7 +22,6 @@ import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_detail_janji_politik.*
-import kotlinx.android.synthetic.main.item_cluster.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_loading_state.*

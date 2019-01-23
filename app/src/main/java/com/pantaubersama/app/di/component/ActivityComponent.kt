@@ -3,6 +3,7 @@ package com.pantaubersama.app.di.component
 import com.pantaubersama.app.di.module.ActivityModule
 import com.pantaubersama.app.di.scope.ActivityScope
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
+import com.pantaubersama.app.ui.categorydialog.CategoryListDialog
 import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
@@ -27,7 +28,7 @@ import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatA
 import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
-import com.pantaubersama.app.ui.profile.cluster.categery.ClusterCategoryActivity
+import com.pantaubersama.app.ui.profile.cluster.category.ClusterCategoryActivity
 import com.pantaubersama.app.ui.profile.cluster.invite.UndangAnggotaActivity
 import com.pantaubersama.app.ui.profile.cluster.requestcluster.RequestClusterActivity
 import com.pantaubersama.app.ui.profile.connect.ConnectActivity
@@ -46,6 +47,8 @@ import com.pantaubersama.app.ui.profile.verifikasi.step3.Step3VerifikasiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step5.Step5VerifikasiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step7.Step7VerifikasiActivity
 import com.pantaubersama.app.ui.search.SearchActivity
+import com.pantaubersama.app.ui.search.cluster.SearchClusterFragment
+import com.pantaubersama.app.ui.search.cluster.filter.FilterClusterActivity
 import com.pantaubersama.app.ui.search.history.SearchHistoryFragment
 import com.pantaubersama.app.ui.search.janjipolitik.SearchJanjiPolitikFragment
 import com.pantaubersama.app.ui.search.linimasa.SearchLinimasaFragment
@@ -108,6 +111,9 @@ interface ActivityComponent {
     fun inject(onboardingActivity: OnboardingActivity)
     fun inject(searchLinimasaFragment: SearchLinimasaFragment)
     fun inject(searchJanjiPolitikFragment: SearchJanjiPolitikFragment)
+    fun inject(searchClusterFragment: SearchClusterFragment)
+    fun inject(filterClusterActivity: FilterClusterActivity)
+    fun inject(categoryListDialog: CategoryListDialog)
     fun inject(searchPersonFragment: SearchPersonFragment)
     fun inject(clusterUndangActivity: ClusterUndangActivity)
     fun inject(searchQuestionFragment: SearchQuestionFragment)

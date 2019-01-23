@@ -6,14 +6,14 @@ import com.pantaubersama.app.data.model.cluster.ClusterItem
 import javax.inject.Inject
 
 class FilterJanjiPolitikPresenter @Inject constructor(
-    private val janpolInteractor: JanjiPolitikInteractor?
+    private val janpolInteractor: JanjiPolitikInteractor
 ) : BasePresenter<FilterJanjiPolitikView>() {
     fun getFilter() {
-        view?.showSelectedFilter(janpolInteractor?.getJanpolUserFilter()!!, janpolInteractor.getJanpolClusterFilter())
+        view?.showSelectedFilter(janpolInteractor.getJanpolUserFilter(), janpolInteractor.getJanpolClusterFilter())
     }
 
     fun setFilter(userFilter: String, clusterFilter: ClusterItem?) {
-        janpolInteractor?.setJanpolFilter(userFilter, clusterFilter)
+        janpolInteractor.setJanpolFilter(userFilter, clusterFilter)
         view?.onSuccessSetFilter()
     }
 }

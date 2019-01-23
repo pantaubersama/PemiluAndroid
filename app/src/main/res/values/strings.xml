@@ -217,4 +217,5 @@
     <string name="txt_hapus_riwayat_pencarian">Hapus semua riwayat pencarian?</string>
     <string name="pencarian_tidak_ditemukan">Pencarian tidak ditemukan</string>
     <string name="connect_hint">Kamu perlu terhubung dengan akun media sosial agar lebih mudah berbagi dan berkontribusi di Pantau Bersama Pemilu 2019.</string>
+    <string name="txt_filter_cluster">Filter Cluster</string>
 </resources>

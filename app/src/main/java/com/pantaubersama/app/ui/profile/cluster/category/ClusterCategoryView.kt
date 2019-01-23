@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.profile.cluster.categery
+package com.pantaubersama.app.ui.profile.cluster.category
 
 import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.data.model.cluster.Category

@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.profile.cluster.categery
+package com.pantaubersama.app.ui.profile.cluster.category
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.ClusterInteractor
@@ -29,7 +29,7 @@ class ClusterCategoryPresenter @Inject constructor(private val clusterInteractor
         if (page == 1) {
             view?.showLoading()
         }
-        disposables?.add(
+        disposables.add(
             clusterInteractor
                 .getCategories(
                     page,

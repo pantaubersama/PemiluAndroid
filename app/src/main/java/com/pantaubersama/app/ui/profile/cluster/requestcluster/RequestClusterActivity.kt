@@ -12,7 +12,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.profile.cluster.categery.ClusterCategoryActivity
+import com.pantaubersama.app.ui.profile.cluster.category.ClusterCategoryActivity
 import com.pantaubersama.app.ui.widget.ImageChooserTools
 import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.utils.PantauConstants
