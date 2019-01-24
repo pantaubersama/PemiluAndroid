@@ -33,18 +33,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bw_modelica_bold"
-            android:lineSpacingExtra="20sp"
             android:textColor="@color/gray_dark_3"
-            android:textSize="13sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/partai_pilihan_no_urut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato_medium"
-            android:lineSpacingExtra="21sp"
             android:textColor="@color/gray_dark_3"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
     </LinearLayout>
 

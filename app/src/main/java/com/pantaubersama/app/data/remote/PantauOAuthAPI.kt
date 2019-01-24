@@ -4,6 +4,7 @@ import com.pantaubersama.app.data.model.accesstoken.Token
 import com.pantaubersama.app.data.model.accesstoken.TokenResponse
 import com.pantaubersama.app.data.model.cluster.CategoryData
 import com.pantaubersama.app.data.model.cluster.ClustersResponse
+import com.pantaubersama.app.data.model.partai.PoliticalPartiesResponse
 import com.pantaubersama.app.data.model.user.AchievedBadgeResponse
 import com.pantaubersama.app.data.model.user.BadgeResponse
 import com.pantaubersama.app.data.model.user.Informant
@@ -189,7 +190,8 @@ interface PantauOAuthAPI {
     @FormUrlEncoded
     @PUT("/v1/me/vote_preference")
     fun submitCatatanku(
-        @Field("vote_preference") paslonSelected: Int?
+        @Field("vote_preference") paslonSelected: Int?,
+        @Field("political_party_id") partySelected: String
     ): Completable
 
     @GET("/v1/users")
@@ -209,4 +211,8 @@ interface PantauOAuthAPI {
     fun getUserBadges(
         @Path("id") userId: String
     ): Single<BadgeResponse>
+
+    @GET("/v1/political_parties")
+    fun getPartai(@Query("page") page: Int, @Query("per_page") perPage: Int
+    ): Single<PoliticalPartiesResponse>
 }

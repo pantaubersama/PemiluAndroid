@@ -163,6 +163,7 @@ class PantauConstants {
         const val CATEGORY_ITEM = 8
         const val TYPE_PASLON = 9
         const val TYPE_USER = 10
+        const val TYPE_PARTAI = 11
     }
 
     object Profile {
