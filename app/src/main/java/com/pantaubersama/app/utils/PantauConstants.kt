@@ -81,6 +81,10 @@ class PantauConstants {
         const val EXTRA_ACHIEVED_BADGE_ITEM = "EXTRA_ACHIEVED_BADGE_ITEM"
         const val EXTRA_SEARCH_KEYWORD = "EXTRA_SEARCH_KEYWORD"
         const val EXTRA_IS_SEARCH_FILTER = "EXTRA_IS_SEARCH_FILTER"
+        const val EXTRA_LOTTIE_FILE_NAME = "EXTRA_LOTTIE_FILE_NAME"
+        const val EXTRA_LOTTIE_AUTOPLAY = "EXTRA_LOTTIE_AUTOPLAY"
+        const val EXTRA_ONBOARDING_TITLE = "EXTRA_ONBOARDING_TITLE"
+        const val EXTRA_ONBOARDING_DESC = "EXTRA_ONBOARDING_DESC"
     }
 
     object RequestCode {
@@ -215,5 +219,23 @@ class PantauConstants {
         const val SHARE_HASIL_KUIS_PATH = "share/hasilkuis/"
         const val SHARE_KECENDERUNGAN_PATH = "share/kecenderungan/"
         const val SHARE_BADGE_PATH = "share/badge/"
+    }
+
+    object Onboarding {
+        const val ONBOARDING_1_TITLE = "Voice Over Noise"
+        const val ONBOARDING_1_DESC = "Linimasa konten kampanye resmi tanpa sampah Informasi."
+        const val ONBOARDING_1_FILE_NAME = "lottie_onboarding_1_linimasa.json"
+        const val ONBOARDING_2_TITLE = "Understanding Over Branding"
+        const val ONBOARDING_2_DESC = "Fleksibilitas uji preferensi kebijakan kandidat calon pemimpin."
+        const val ONBOARDING_2_FILE_NAME = "lottie_onboarding_2_penpol.json"
+        const val ONBOARDING_3_TITLE = "Chivalry Over Bigotry"
+        const val ONBOARDING_3_DESC = "Ruang adu argumentasi sehat dan berkualitas."
+        const val ONBOARDING_3_FILE_NAME = "lottie_onboarding_3_wordstadium.json"
+        const val ONBOARDING_4_TITLE = "Inspector Over Spectator"
+        const val ONBOARDING_4_DESC = "Kemudahan pelaporan dugaan pelanggaran Pemilu 2019."
+        const val ONBOARDING_4_FILE_NAME = "lottie_onboarding_4_lapor.json"
+        const val ONBOARDING_5_TITLE = "Festivity Over Apathy"
+        const val ONBOARDING_5_DESC = "Rekapitulasi partisipatif real-time dan transparan."
+        const val ONBOARDING_5_FILE_NAME = "lottie_onboarding_5_perhitungan.json"
     }
 }

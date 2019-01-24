@@ -37,7 +37,7 @@
             android:layout_toEndOf="@id/dots_indicator"
             android:layout_toStartOf="@id/dots_indicator"
             android:gravity="center"
-            android:foreground="?attr/selectableItemBackground"
+            android:background="?selectableItemBackgroundBorderless"
             android:layout_marginRight="16dp"
             android:layout_marginEnd="16dp"/>
 
@@ -67,7 +67,7 @@
             android:layout_toRightOf="@id/dots_indicator"
             android:layout_toEndOf="@id/dots_indicator"
             android:gravity="center"
-            android:foreground="?attr/selectableItemBackground"
+            android:background="?selectableItemBackgroundBorderless"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"/>
 

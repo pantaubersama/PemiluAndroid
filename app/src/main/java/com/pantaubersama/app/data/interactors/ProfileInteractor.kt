@@ -17,9 +17,9 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class ProfileInteractor @Inject constructor(
-        private val apiWrapper: APIWrapper,
-        private val rxSchedulers: RxSchedulers,
-        private val dataCache: DataCache
+    private val apiWrapper: APIWrapper,
+    private val rxSchedulers: RxSchedulers,
+    private val dataCache: DataCache
 ) {
 
     fun refreshProfile(): Single<Profile> {
@@ -70,12 +70,12 @@ class ProfileInteractor @Inject constructor(
     }
 
     fun updateUserData(
-            name: String?,
-            username: String?,
-            location: String?,
-            description: String?,
-            education: String?,
-            occupation: String?
+        name: String?,
+        username: String?,
+        location: String?,
+        description: String?,
+        education: String?,
+        occupation: String?
     ): Completable {
         return apiWrapper
                 .getPantauOAuthApi()
@@ -129,14 +129,14 @@ class ProfileInteractor @Inject constructor(
     }
 
     fun updateDataLapor(
-            idNumber: String?,
-            pob: String?,
-            dob: String?,
-            gender: Int?,
-            occupation: String?,
-            nationality: String?,
-            address: String?,
-            phoneNumber: String?
+        idNumber: String?,
+        pob: String?,
+        dob: String?,
+        gender: Int?,
+        occupation: String?,
+        nationality: String?,
+        address: String?,
+        phoneNumber: String?
     ): Completable {
         return apiWrapper
                 .getPantauOAuthApi()
