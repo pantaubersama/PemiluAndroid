@@ -63,10 +63,15 @@ class ProfileInteractor @Inject constructor(
 
     fun leaveCluster(): Completable {
         return apiWrapper
-                .getPantauOAuthApi()
-                .leaveCluster()
-                .subscribeOn(rxSchedulers.io())
-                .observeOn(rxSchedulers.mainThread())
+            .getPantauOAuthApi()
+            .leaveCluster()
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnComplete {
+                val newProfile = dataCache.loadUserProfile()
+                newProfile.cluster = null
+                dataCache.saveUserProfile(newProfile)
+            }
     }
 
     fun updateUserData(

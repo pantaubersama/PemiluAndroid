@@ -45,6 +45,7 @@ class ProfilePresenter @Inject constructor(
                     {
                         view?.showSuccessLeaveClusterAlert(name)
                         view?.showRequestClusterLayout()
+                        view?.showProfile(profileInteractor.getProfile())
                     },
                     {
                         view?.showError(it)
