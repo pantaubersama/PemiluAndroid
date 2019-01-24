@@ -38,6 +38,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     @Inject
     override lateinit var presenter: EditProfilePresenter
     private var isProfileCompletion = false
+    private var isUsernameComplete = false
 
     private var imageFile: File? = null
 
@@ -122,10 +123,10 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         }
         edit_profile_submit.setOnClickListener {
             if (isProfileCompletion) {
-                if (edit_profile_username.text.isNotEmpty()) {
+                if (isUsernameComplete) {
                     saveData()
                 } else {
-                    setUsernameAlert("Username harus diisi")
+                    setUsernameAlert("Mohon lengkapi username")
                 }
             } else {
                 saveData()
@@ -276,6 +277,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     override fun onUsernameAvailable() {
         username_check.visibility = View.VISIBLE
         edit_profile_username.error = null
+        isUsernameComplete = true
     }
 
     override fun onUsernameUnAvailable() {
