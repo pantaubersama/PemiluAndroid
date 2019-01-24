@@ -112,12 +112,12 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         verified_text.text = getString(R.string.txt_belum_verifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_gray)
-        if (userId == null) {
-            verified_button.setOnClickListener {
-                val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
-                startActivity(intent)
-            }
-        }
+//        if (userId == null) {
+//            verified_button.setOnClickListener {
+//                val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
+//                startActivity(intent)
+//            }
+//        }
     }
 
     private fun setVerified() {
