@@ -16,6 +16,7 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Companion.CONFIRMATION_PATH
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
@@ -40,7 +41,11 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
 
     override fun setupUI(savedInstanceState: Bundle?) {
         if (!url.isNullOrEmpty()) {
-            url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it, BuildConfig.SYMBOLIC_REDIRECT_URI) }
+            if (url?.contains(PantauConstants.Networking.INVITATION_PATH)!!) {
+                url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it, BuildConfig.SYMBOLIC_REDIRECT_URI) }
+            } else if (url?.contains(CONFIRMATION_PATH)!!) {
+                url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it) }
+            }
         }
         symbolicScope = ArrayList()
         symbolic_login_button.configure(
