@@ -109,8 +109,8 @@ build_release:
       - echo "TWITTER_SECRET=$TWITTER_SECRET_PROD" >> gradle.properties
       - echo "PANTAU_CLIENT_ID=$PANTAU_CLIENT_ID_PROD" >> gradle.properties
       - echo "PANTAU_CLIENT_SECRET=$PANTAU_CLIENT_SECRET_PROD" >> gradle.properties
-      - echo "android.useAndroidX=true_PROD" >> gradle.properties
-      - echo "android.enableJetifier=true_PROD" >> gradle.properties
+      - echo "android.useAndroidX=true" >> gradle.properties
+      - echo "android.enableJetifier=true" >> gradle.properties
       - ./gradlew assembleProductionRelease
       
      
@@ -156,6 +156,7 @@ package_onprogress:
     script:
         - mv $ANDROID_APK_PATH/staging/debug/app-staging-debug*.apk $ANDROID_APK_PATH/staging/debug/app-onprogress-${CI_COMMIT_SHA}.apk
         - curl -F file=@$ANDROID_APK_PATH/staging/debug/app-onprogress-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
+          - curl -F file=@$ANDROID_APK_PATH/staging/debug/app-onprogress-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_LAPORAN_BUG -F token=$SLACK_TOKEN https://slack.com/api/files.upload
 
 package_staging:
     <<: *package_template_def
