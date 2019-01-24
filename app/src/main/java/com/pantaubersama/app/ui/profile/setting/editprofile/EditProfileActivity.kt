@@ -38,7 +38,6 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     @Inject
     override lateinit var presenter: EditProfilePresenter
     private var isProfileCompletion = false
-    private var isUsernameComplete = false
 
     private var imageFile: File? = null
 
@@ -78,7 +77,6 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext {
-                isUsernameComplete = false
                 presenter.usernameCheck(it)
             }
             .subscribe()
@@ -123,15 +121,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             showImageChooserDialog()
         }
         edit_profile_submit.setOnClickListener {
-            if (isProfileCompletion) {
-                if (isUsernameComplete) {
-                    saveData()
-                } else {
-                    setUsernameAlert()
-                }
-            } else {
-                saveData()
-            }
+            saveData()
         }
     }
 
@@ -291,13 +281,9 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
 
     override fun onBackPressed() {
         if (isProfileCompletion) {
-            if (isUsernameComplete) {
-                val intent = Intent(this@EditProfileActivity, HomeActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            } else {
-                setUsernameAlert()
-            }
+            val intent = Intent(this@EditProfileActivity, HomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         } else {
             super.onBackPressed()
         }
