@@ -156,7 +156,7 @@ package_onprogress:
     script:
         - mv $ANDROID_APK_PATH/staging/debug/app-staging-debug*.apk $ANDROID_APK_PATH/staging/debug/app-onprogress-${CI_COMMIT_SHA}.apk
         - curl -F file=@$ANDROID_APK_PATH/staging/debug/app-onprogress-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
-          - curl -F file=@$ANDROID_APK_PATH/staging/debug/app-onprogress-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_LAPORAN_BUG -F token=$SLACK_TOKEN https://slack.com/api/files.upload
+        - curl -F file=@$ANDROID_APK_PATH/staging/debug/app-onprogress-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_LAPORAN_BUG -F token=$SLACK_TOKEN https://slack.com/api/files.upload
 
 package_staging:
     <<: *package_template_def
