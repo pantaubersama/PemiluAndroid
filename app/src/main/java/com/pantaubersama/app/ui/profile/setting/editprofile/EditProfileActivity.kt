@@ -121,15 +121,19 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             showImageChooserDialog()
         }
         edit_profile_submit.setOnClickListener {
-            presenter.saveEditedUserData(
-                edit_profile_nama.text.toString(),
-                edit_profile_username.text.toString(),
-                edit_profile_lokasi.text.toString(),
-                edit_profile_deskripsi.text.toString(),
-                edit_profile_pendidikan.text.toString(),
-                edit_profile_pekerjaan.text.toString()
-            )
+            saveData()
         }
+    }
+
+    private fun saveData() {
+        presenter.saveEditedUserData(
+            edit_profile_nama.text.toString(),
+            edit_profile_username.text.toString(),
+            edit_profile_lokasi.text.toString(),
+            edit_profile_deskripsi.text.toString(),
+            edit_profile_pendidikan.text.toString(),
+            edit_profile_pekerjaan.text.toString()
+        )
     }
 
     override fun showProfileUpdatedAlert() {
@@ -267,6 +271,10 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     override fun onUsernameUnAvailable() {
+        setUsernameAlert()
+    }
+
+    private fun setUsernameAlert() {
         username_check.visibility = View.GONE
         edit_profile_username.error = "Username sudah digunakan"
     }

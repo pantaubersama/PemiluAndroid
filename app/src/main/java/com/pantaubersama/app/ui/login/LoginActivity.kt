@@ -86,7 +86,10 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     }
 
     override fun onSuccessGetProfile(it: Profile?) {
-        if (it?.username != null) {
+        if (it?.username != null &&
+            it.education != null &&
+            it.location != null &&
+            it.occupation != null) {
             openHomeActivity()
         } else {
             openEditProfileActivity()
