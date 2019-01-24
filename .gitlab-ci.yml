@@ -109,8 +109,8 @@ build_release:
       - echo "TWITTER_SECRET=$TWITTER_SECRET_PROD" >> gradle.properties
       - echo "PANTAU_CLIENT_ID=$PANTAU_CLIENT_ID_PROD" >> gradle.properties
       - echo "PANTAU_CLIENT_SECRET=$PANTAU_CLIENT_SECRET_PROD" >> gradle.properties
-      - echo "android.useAndroidX=true_PROD" >> gradle.properties
-      - echo "android.enableJetifier=true_PROD" >> gradle.properties
+      - echo "android.useAndroidX=true" >> gradle.properties
+      - echo "android.enableJetifier=true" >> gradle.properties
       - ./gradlew assembleProductionRelease
       
      
@@ -125,6 +125,24 @@ quality_check:
         - develop
 
     script:
+        - echo "org.gradle.jvmargs=-Xmx1536m" >> gradle.properties
+        - echo "SYMBOLIC_REDIRECT_URI=$SYMBOLIC_REDIRECT_URI_PROD" >> gradle.properties
+        - echo "PANTAU_BASE_URL=$PANTAU_BASE_URL_PROD" >> gradle.properties
+        - echo "PANTAU_BASE_URL_NO_SCHEME=$PANTAU_BASE_URL_NO_SCHEME_PROD" >> gradle.properties
+        - echo "PANTAU_OAUTH_URL=$PANTAU_OAUTH_URL_PROD" >> gradle.properties
+        - echo "WORD_STADIUM_BASE_URL=$WORD_STADIUM_BASE_URL_PROD" >> gradle.properties
+        - echo "SYMBOLIC_URL=$SYMBOLIC_URL_PROD" >> gradle.properties
+        - echo "SYMBOLIC_URL_NO_SCHEME=$SYMBOLIC_URL_NO_SCHEME_PROD" >> gradle.properties
+        - echo "SYMBOLIC_CLIENT_ID=$SYMBOLIC_CLIENT_ID_PROD" >> gradle.properties
+        - echo "SYMBOLIC_CLIENT_SECRET=$SYMBOLIC_CLIENT_SECRET_PROD" >> gradle.properties
+        - echo "FACEBOOK_APP_ID=$FACEBOOK_APP_ID_PROD" >> gradle.properties
+        - echo "FACEBOOK_LOGIN_PROTOCOL_SCHEME=$FACEBOOK_LOGIN_PROTOCOL_SCHEME_PROD" >> gradle.properties
+        - echo "TWITTER_API_KEY=$TWITTER_API_KEY_PROD" >> gradle.properties
+        - echo "TWITTER_SECRET=$TWITTER_SECRET_PROD" >> gradle.properties
+        - echo "PANTAU_CLIENT_ID=$PANTAU_CLIENT_ID_PROD" >> gradle.properties
+        - echo "PANTAU_CLIENT_SECRET=$PANTAU_CLIENT_SECRET_PROD" >> gradle.properties
+        - echo "android.useAndroidX=true" >> gradle.properties
+        - echo "android.enableJetifier=true" >> gradle.properties
         - ./gradlew ktlint
     
     artifacts:
@@ -156,6 +174,7 @@ package_onprogress:
     script:
         - mv $ANDROID_APK_PATH/staging/debug/app-staging-debug*.apk $ANDROID_APK_PATH/staging/debug/app-onprogress-${CI_COMMIT_SHA}.apk
         - curl -F file=@$ANDROID_APK_PATH/staging/debug/app-onprogress-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
+        - curl -F file=@$ANDROID_APK_PATH/staging/debug/app-onprogress-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_LAPORAN_BUG -F token=$SLACK_TOKEN https://slack.com/api/files.upload
 
 package_staging:
     <<: *package_template_def

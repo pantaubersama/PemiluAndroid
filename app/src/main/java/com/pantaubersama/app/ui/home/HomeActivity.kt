@@ -46,7 +46,8 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         btn_pinned.setOnClickListener { startActivity(Intent(this, CatatanPilihanActivity::class.java)) }
 
         if (savedInstanceState == null) {
-            showFragment(LinimasaFragment(), LinimasaFragment.TAG)
+            showFragment(PenPolFragment.newInstance(), PenPolFragment.TAG)
+            navigation.selectedItemId = R.id.navigation_menggali
         }
 
         val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

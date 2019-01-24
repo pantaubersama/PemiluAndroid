@@ -85,10 +85,10 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         user_username.text = profile.username?.takeIf { it.isNotBlank() }?.let { "@%s".format(it) }
         user_bio.text = profile.about
         if (profile.verified) setVerified() else setUnverified()
-
-        user_location.text = profile.location
-        user_education.text = profile.education
-        user_work.text = profile.occupation
+        empty_data_alert.visibleIf(profile.occupation == null && profile.education == null && profile.location == null)
+        if (profile.occupation != null) user_location.text = profile.location else location_container.visibility = View.GONE
+        if (profile.education != null) user_education.text = profile.education else education_container.visibility = View.GONE
+        if (profile.occupation != null) user_work.text = profile.occupation else work_container.visibility = View.GONE
         if (profile.cluster != null) parseCluster(profile.cluster!!)
     }
 
@@ -112,12 +112,12 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         verified_text.text = getString(R.string.txt_belum_verifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_gray)
-        if (userId == null) {
-            verified_button.setOnClickListener {
-                val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
-                startActivity(intent)
-            }
-        }
+//        if (userId == null) {
+//            verified_button.setOnClickListener {
+//                val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
+//                startActivity(intent)
+//            }
+//        }
     }
 
     private fun setVerified() {

@@ -2,6 +2,7 @@ package com.pantaubersama.app.base
 
 import android.util.Log
 import androidx.multidex.MultiDexApplication
+import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
@@ -13,6 +14,7 @@ import com.twitter.sdk.android.core.DefaultLogger
 import com.twitter.sdk.android.core.Twitter
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterConfig
+import io.fabric.sdk.android.Fabric
 import timber.log.Timber
 
 /**
@@ -25,6 +27,7 @@ class BaseApp : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        Fabric.with(this, Crashlytics())
         Twitter.initialize(
             TwitterConfig.Builder(this)
                 .logger(DefaultLogger(Log.DEBUG))

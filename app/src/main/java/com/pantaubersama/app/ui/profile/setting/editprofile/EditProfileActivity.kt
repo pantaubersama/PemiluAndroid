@@ -38,6 +38,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     @Inject
     override lateinit var presenter: EditProfilePresenter
     private var isProfileCompletion = false
+    private var isUsernameComplete = false
 
     private var imageFile: File? = null
 
@@ -121,15 +122,27 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             showImageChooserDialog()
         }
         edit_profile_submit.setOnClickListener {
-            presenter.saveEditedUserData(
-                edit_profile_nama.text.toString(),
-                edit_profile_username.text.toString(),
-                edit_profile_lokasi.text.toString(),
-                edit_profile_deskripsi.text.toString(),
-                edit_profile_pendidikan.text.toString(),
-                edit_profile_pekerjaan.text.toString()
-            )
+            if (isProfileCompletion) {
+                if (isUsernameComplete) {
+                    saveData()
+                } else {
+                    setUsernameAlert("Mohon lengkapi username")
+                }
+            } else {
+                saveData()
+            }
         }
+    }
+
+    private fun saveData() {
+        presenter.saveEditedUserData(
+            edit_profile_nama.text.toString(),
+            edit_profile_username.text.toString(),
+            edit_profile_lokasi.text.toString(),
+            edit_profile_deskripsi.text.toString(),
+            edit_profile_pendidikan.text.toString(),
+            edit_profile_pekerjaan.text.toString()
+        )
     }
 
     override fun showProfileUpdatedAlert() {
@@ -264,11 +277,16 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     override fun onUsernameAvailable() {
         username_check.visibility = View.VISIBLE
         edit_profile_username.error = null
+        isUsernameComplete = true
     }
 
     override fun onUsernameUnAvailable() {
+        setUsernameAlert("Username sudah digunakan")
+    }
+
+    private fun setUsernameAlert(alert: String) {
         username_check.visibility = View.GONE
-        edit_profile_username.error = "Username sudah digunakan"
+        edit_profile_username.error = alert
     }
 
     override fun onBackPressed() {
