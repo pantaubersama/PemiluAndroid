@@ -11,11 +11,11 @@ data class PoliticalPartiesResponse(
 ) : Serializable
 
 data class PoliticalPartiesData(
-    @SerializedName("political_parties") val politicalParties: List<PoliticalParties>,
+    @SerializedName("political_parties") val politicalParties: List<PoliticalParty>,
     @SerializedName("meta") val meta: Meta
 ) : Serializable
 
-data class PoliticalParties(
+data class PoliticalParty(
     @SerializedName("id")
     var id: String,
     @SerializedName("image")

@@ -2,7 +2,7 @@ package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.kuis.KuisUserResult
-import com.pantaubersama.app.data.model.partai.PoliticalParties
+import com.pantaubersama.app.data.model.partai.PoliticalParty
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.AchievedBadge
@@ -63,10 +63,15 @@ class ProfileInteractor @Inject constructor(
 
     fun leaveCluster(): Completable {
         return apiWrapper
-                .getPantauOAuthApi()
-                .leaveCluster()
-                .subscribeOn(rxSchedulers.io())
-                .observeOn(rxSchedulers.mainThread())
+            .getPantauOAuthApi()
+            .leaveCluster()
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnComplete {
+                val newProfile = dataCache.loadUserProfile()
+                newProfile.cluster = null
+                dataCache.saveUserProfile(newProfile)
+            }
     }
 
     fun updateUserData(
@@ -195,7 +200,7 @@ class ProfileInteractor @Inject constructor(
                 .doOnComplete {
                     val newProfile = dataCache.loadUserProfile()
                     newProfile.votePreference = paslonSelected
-                    newProfile.politicalParty = partySelected
+                    newProfile.politicalParty?.id = partySelected
                     dataCache.saveUserProfile(newProfile)
                 }
     }
@@ -211,7 +216,7 @@ class ProfileInteractor @Inject constructor(
                 .observeOn(rxSchedulers.mainThread())
     }
 
-    fun getPartai(page: Int, perPage: Int): Single<List<PoliticalParties>> {
+    fun getPartai(page: Int, perPage: Int): Single<List<PoliticalParty>> {
         return apiWrapper.getPantauOAuthApi().getPartai(page, perPage)
                 .subscribeOn(rxSchedulers.io())
                 .map { response ->

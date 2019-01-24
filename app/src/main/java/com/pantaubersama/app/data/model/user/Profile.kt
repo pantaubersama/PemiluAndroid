@@ -4,16 +4,17 @@ import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.image.Image
+import com.pantaubersama.app.data.model.partai.PoliticalParty
 import com.pantaubersama.app.utils.PantauConstants
 import java.io.Serializable
 
 val EMPTY_INFORMANT = Informant("", null, null, null, null,
-        null, null, null, null, null)
+    null, null, null, null, null)
 
 val EMPTY_PROFILE = Profile("", "", "Anda", "", "",
-        false, false, null, 0, null, false,
-        null, "", "", "", "",
-        Image(null), EMPTY_INFORMANT)
+    false, false, null, 0, null, false,
+    null, "", "", "", "",
+    Image(null), EMPTY_INFORMANT)
 
 data class ProfileResponse(
     @SerializedName("data") val data: ProfileData
@@ -34,7 +35,7 @@ data class Profile(
     @SerializedName("is_moderator") var isModerator: Boolean,
     @SerializedName("cluster") var cluster: ClusterItem?,
     @SerializedName("vote_preference") var votePreference: Int,
-    @SerializedName("political_party") var politicalParty: String?,
+    @SerializedName("political_party") var politicalParty: PoliticalParty?,
     @SerializedName("verified") var verified: Boolean,
     @SerializedName("username") var username: String?,
     @SerializedName("about") var about: String?,
