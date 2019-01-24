@@ -25,6 +25,7 @@ class PantauConstants {
         val FILTER_ORANG_ALL = "verified_all"
         val FILTER_ORANG_VERIFIED = "verified_true"
         val FILTER_ORANG_UNVERIFIED = "verified_false"
+        val CONFIRMATION_PATH = "confirmation"
     }
 
     object Cluster {
@@ -166,7 +167,7 @@ class PantauConstants {
 
     object Profile {
         const val BASE_URL_PUSAT_BANTUAN = "https://pantaubersama.pusatbantuan.com/"
-        const val URL_PUSAT_BANTUAN = BASE_URL_PUSAT_BANTUAN + "1/1"
+        const val URL_PUSAT_BANTUAN = BASE_URL_PUSAT_BANTUAN
         const val URL_PANDUAN_KOMUNITAS = BASE_URL_PUSAT_BANTUAN + "2/2"
         const val URL_TENTANG_PANTAU_BERSAMA = BASE_URL_PUSAT_BANTUAN + "3/4"
         const val USER_ID = "user_id"

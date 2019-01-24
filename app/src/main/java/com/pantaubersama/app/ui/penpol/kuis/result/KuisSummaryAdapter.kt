@@ -1,10 +1,12 @@
 package com.pantaubersama.app.ui.penpol.kuis.result
 
+import android.text.Html
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.kuis.AnsweredQuestion
+import com.pantaubersama.app.utils.HtmlTagHandler
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.spannable
@@ -38,9 +40,16 @@ class KuisSummaryAdapter : RecyclerView.Adapter<KuisSummaryAdapter.ViewHolder>()
             tv_kuis_title.text = "Pertanyaan ke-%s".format(questionNo)
             tv_kuis_question.text = item.content
             tv_answer_a_team.text = answerA?.team?.title
-            tv_answer_a_content.text = answerA?.content
             tv_answer_b_team.text = answerB?.team?.title
-            tv_answer_b_content.text = answerB?.content
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                tv_answer_a_content.text = Html.fromHtml(HtmlTagHandler.customizeListTags(answerA?.content), Html.FROM_HTML_MODE_LEGACY, null, HtmlTagHandler())
+                tv_answer_b_content.text = Html.fromHtml(HtmlTagHandler.customizeListTags(answerB?.content), Html.FROM_HTML_MODE_LEGACY, null, HtmlTagHandler())
+            } else {
+                tv_answer_a_content.text = Html.fromHtml(HtmlTagHandler.customizeListTags(answerA?.content), null, HtmlTagHandler())
+                tv_answer_b_content.text = Html.fromHtml(HtmlTagHandler.customizeListTags(answerB?.content), null, HtmlTagHandler())
+            }
+
             tv_user_answer.text = spannable {
                 +"Jawabanmu : "
                 textColor(containerView.context.color(R.color.orange)) { +item.answered.team.title }

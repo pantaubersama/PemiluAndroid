@@ -4,12 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.data.model.kuis.Question
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
+import com.pantaubersama.app.utils.HtmlTagHandler
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_kuis.*
@@ -72,8 +74,13 @@ class KuisActivity : BaseActivity<KuisQuestionPresenter>(), KuisQuestionView {
 
         number_of_question_info.text = getString(R.string.question_number_info, questionNo, total)
         tv_question.text = question.content
-        answer_a.text = answerA.content
-        answer_b.text = answerB.content
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            answer_a.text = Html.fromHtml(HtmlTagHandler.customizeListTags(answerA.content), Html.FROM_HTML_MODE_LEGACY, null, HtmlTagHandler())
+            answer_b.text = Html.fromHtml(HtmlTagHandler.customizeListTags(answerB.content), Html.FROM_HTML_MODE_LEGACY, null, HtmlTagHandler())
+        } else {
+            answer_a.text = Html.fromHtml(HtmlTagHandler.customizeListTags(answerA.content), null, HtmlTagHandler())
+            answer_b.text = Html.fromHtml(HtmlTagHandler.customizeListTags(answerB.content), null, HtmlTagHandler())
+        }
         answer_a_button.setOnClickListener {
             presenter.answerQuestion(kuisItem.id, question.id, answerA.id)
         }

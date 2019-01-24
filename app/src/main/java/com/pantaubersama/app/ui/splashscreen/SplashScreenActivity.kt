@@ -21,6 +21,7 @@ import com.pantaubersama.app.ui.widget.UpdateAppDialog
 import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Companion.CONFIRMATION_PATH
 import com.pantaubersama.app.utils.PantauConstants.Networking.ACCEPT_CLUSTER_INVITATION_PATH
 import com.pantaubersama.app.utils.PantauConstants.Networking.INVITATION_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_BADGE_PATH
@@ -31,6 +32,7 @@ import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KUIS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_TANYA_PATH
 import com.pantaubersama.app.utils.extensions.enableLottie
 import kotlinx.android.synthetic.main.activity_splash_screen.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreenView {
@@ -160,7 +162,8 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
 
     override fun goToLogin() {
         val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
-        urlData?.let { if (it.contains(INVITATION_PATH)) intent.putExtra(PantauConstants.URL, it) }
+        Timber.d("symbolic_url" + urlData)
+        urlData?.let { if (it.contains(INVITATION_PATH) || it.contains(CONFIRMATION_PATH)) intent.putExtra(PantauConstants.URL, it) }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
