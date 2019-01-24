@@ -7,6 +7,7 @@ import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
@@ -38,7 +39,7 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
     private var questionId: String? = null
     private var question: Pertanyaan? = null
     private var itemPosition: Int? = null
-    private var profile: Profile? = null
+    private lateinit var profile: Profile
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -80,7 +81,7 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
     }
 
     override fun bindProfile(profile: Profile) {
-        this.profile
+        this.profile = profile
     }
 
     override fun showLoading() {
@@ -151,10 +152,13 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
 
     private fun onClickOption() {
         val dialog = OptionDialog(this, R.layout.layout_option_dialog_tanya_kandidat)
-        if (question?.user?.id.equals(profile?.id)) {
+        if (question?.user?.id.equals(profile.id)) {
             dialog.removeItem(R.id.report_tanya_kandidat_action)
         } else {
             dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
+        }
+        if (profile == EMPTY_PROFILE) {
+            dialog.removeItem(R.id.report_tanya_kandidat_action)
         }
         dialog.show()
         dialog.listener = object : OptionDialog.DialogListener {

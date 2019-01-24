@@ -39,7 +39,7 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
     private var creator: Creator? = null
     private var cluster: ClusterItem? = null
     private var itemPosition: Int? = null
-    private var profile: Profile? = null
+    private lateinit var profile: Profile
 
     override fun setLayout(): Int = R.layout.activity_detail_janji_politik
 
@@ -141,7 +141,7 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
 
     private fun openProfile(janjiPolitik: JanjiPolitik) {
         val intent = Intent(this@DetailJanjiPolitikActivity, ProfileActivity::class.java)
-        if (profile?.id != janjiPolitik.creator?.id) {
+        if (profile.id != janjiPolitik.creator?.id) {
             intent.putExtra(PantauConstants.Profile.USER_ID, janjiPolitik.creator?.id)
         }
         startActivityForResult(intent, PantauConstants.Profile.PROFILE_REQUEST_CODE)
@@ -183,11 +183,11 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
 
     private fun onClickOption() {
         val dialog = OptionDialog(this, R.layout.layout_option_dialog_tanya_kandidat)
-        if (profile?.cluster != null &&
+        if (profile.cluster != null &&
             janpolItem?.creator?.cluster != null &&
-            janpolItem?.creator?.cluster?.id?.equals(profile?.cluster?.id)!! &&
-            janpolItem?.creator?.id.equals(profile?.id) &&
-            profile?.cluster?.isEligible!!) {
+            janpolItem?.creator?.cluster?.id?.equals(profile.cluster?.id)!! &&
+            janpolItem?.creator?.id.equals(profile.id) &&
+            profile.cluster?.isEligible!!) {
 //                    dialog.removeItem(R.id.report_tanya_kandidat_action)
         } else {
             dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
