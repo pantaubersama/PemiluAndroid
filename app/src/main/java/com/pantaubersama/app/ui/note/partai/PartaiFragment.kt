@@ -8,7 +8,7 @@ import com.pantaubersama.app.base.CommonFragment
 class PartaiFragment : CommonFragment() {
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-       // lanjut
+        // lanjut
     }
 
     override fun setLayout(): Int {
