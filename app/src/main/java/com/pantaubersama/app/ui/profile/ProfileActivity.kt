@@ -26,7 +26,6 @@ import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
-import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
 import com.pantaubersama.app.ui.quickcount.QuickCountFragment
 import com.pantaubersama.app.ui.wordstadium.WordStadiumFragment
 import com.pantaubersama.app.utils.PantauConstants
