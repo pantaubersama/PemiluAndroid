@@ -121,7 +121,15 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             showImageChooserDialog()
         }
         edit_profile_submit.setOnClickListener {
-            saveData()
+            if (isProfileCompletion) {
+                if (edit_profile_username.text.isNotEmpty()) {
+                    saveData()
+                } else {
+                    setUsernameAlert("Username harus diisi")
+                }
+            } else {
+                saveData()
+            }
         }
     }
 
@@ -271,12 +279,12 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     override fun onUsernameUnAvailable() {
-        setUsernameAlert()
+        setUsernameAlert("Username sudah digunakan")
     }
 
-    private fun setUsernameAlert() {
+    private fun setUsernameAlert(alert: String) {
         username_check.visibility = View.GONE
-        edit_profile_username.error = "Username sudah digunakan"
+        edit_profile_username.error = alert
     }
 
     override fun onBackPressed() {
