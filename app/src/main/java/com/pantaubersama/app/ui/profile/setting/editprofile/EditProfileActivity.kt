@@ -38,6 +38,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     @Inject
     override lateinit var presenter: EditProfilePresenter
     private var isProfileCompletion = false
+    private var isUsernameComplete = false
 
     private var imageFile: File? = null
 
@@ -77,6 +78,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext {
+                isUsernameComplete = false
                 presenter.usernameCheck(it)
             }
             .subscribe()
@@ -121,15 +123,27 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             showImageChooserDialog()
         }
         edit_profile_submit.setOnClickListener {
-            presenter.saveEditedUserData(
-                edit_profile_nama.text.toString(),
-                edit_profile_username.text.toString(),
-                edit_profile_lokasi.text.toString(),
-                edit_profile_deskripsi.text.toString(),
-                edit_profile_pendidikan.text.toString(),
-                edit_profile_pekerjaan.text.toString()
-            )
+            if (isProfileCompletion) {
+                if (isUsernameComplete) {
+                    saveData()
+                } else {
+                    setUsernameAlert()
+                }
+            } else {
+                saveData()
+            }
         }
+    }
+
+    private fun saveData() {
+        presenter.saveEditedUserData(
+            edit_profile_nama.text.toString(),
+            edit_profile_username.text.toString(),
+            edit_profile_lokasi.text.toString(),
+            edit_profile_deskripsi.text.toString(),
+            edit_profile_pendidikan.text.toString(),
+            edit_profile_pekerjaan.text.toString()
+        )
     }
 
     override fun showProfileUpdatedAlert() {
@@ -267,15 +281,23 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     override fun onUsernameUnAvailable() {
+        setUsernameAlert()
+    }
+
+    private fun setUsernameAlert() {
         username_check.visibility = View.GONE
         edit_profile_username.error = "Username sudah digunakan"
     }
 
     override fun onBackPressed() {
         if (isProfileCompletion) {
-            val intent = Intent(this@EditProfileActivity, HomeActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
+            if (isUsernameComplete) {
+                val intent = Intent(this@EditProfileActivity, HomeActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            } else {
+                setUsernameAlert()
+            }
         } else {
             super.onBackPressed()
         }
