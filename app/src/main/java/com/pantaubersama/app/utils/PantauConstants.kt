@@ -25,6 +25,7 @@ class PantauConstants {
         val FILTER_ORANG_ALL = "verified_all"
         val FILTER_ORANG_VERIFIED = "verified_true"
         val FILTER_ORANG_UNVERIFIED = "verified_false"
+        val CONFIRMATION_PATH = "confirmation"
     }
 
     object Cluster {
