@@ -23,6 +23,7 @@ import javax.inject.Inject
 class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanPilihanView {
     var selectedItem: String = ""
     var slectedPaslon = 0
+    var selectedPartai: String = ""
 
     @Inject
     override lateinit var presenter: CatatanPilihanPresenter
@@ -50,19 +51,20 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
             adapter.setSelected(0)
         }
         catatan_pilihanku_ok.setOnClickListener {
-            presenter.submitCatatanku(slectedPaslon)
+            presenter.submitCatatanku(slectedPaslon, selectedPartai)
         }
     }
 
     private fun setupRecyclerview() {
         recycler_view.layoutManager =
-            LinearLayoutManager(this@CatatanPilihanActivity, LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(this@CatatanPilihanActivity, LinearLayoutManager.HORIZONTAL, false)
         adapter = CatatanTabAdapter()
         recycler_view.adapter = adapter
     }
 
     inner class CatatanTabAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val tabs: MutableList<String> = ArrayList()
+
         init {
             tabs.add("Pilpres")
             tabs.add("Partai")
@@ -149,6 +151,10 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
 
     fun setSelectedPaslon(paslon: Int) {
         this.slectedPaslon = paslon
+    }
+
+    fun setSelectedParty(partai: String) {
+        this.selectedPartai = partai
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
