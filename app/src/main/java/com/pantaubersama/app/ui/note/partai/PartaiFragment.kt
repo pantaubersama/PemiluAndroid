@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.data.model.partai.PoliticalParties
+import com.pantaubersama.app.data.model.partai.PoliticalParty
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
@@ -24,7 +24,7 @@ class PartaiFragment : BaseFragment<PartaiPresenter>(), PartaiView {
     override fun initView(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
         if (savedInstanceState != null) {
-            partaiAdapter.setSelectedData(PoliticalParties(savedInstanceState.getString("selected_partai"),
+            partaiAdapter.setSelectedData(PoliticalParty(savedInstanceState.getString("selected_partai"),
                     null, null, null))
         } else {
             presenter.getUserProfile()
@@ -50,17 +50,17 @@ class PartaiFragment : BaseFragment<PartaiPresenter>(), PartaiView {
 
     override fun bindUserProfile(profile: Profile) {
         if (profile.politicalParty != null) {
-            partaiAdapter.setSelectedData(PoliticalParties(profile.politicalParty!!, null, null, null))
+            profile.politicalParty?.id?.let { PoliticalParty(it, null, null, null) }?.let { partaiAdapter.setSelectedData(it) }
         }
     }
 
-    override fun showPartai(politicalParties: List<PoliticalParties>) {
-        val parties: MutableList<PoliticalParties> = ArrayList()
+    override fun showPartai(politicalParties: List<PoliticalParty>) {
+        val parties: MutableList<PoliticalParty> = ArrayList()
         for (party in politicalParties) {
             parties.add(party)
         }
         val totalNumber = parties.size
-        parties.add(PoliticalParties(
+        parties.add(PoliticalParty(
                 "",
                 null,
                 "Belum menentukan pilihan",
@@ -73,9 +73,9 @@ class PartaiFragment : BaseFragment<PartaiPresenter>(), PartaiView {
         layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         partaiAdapter = PartaiAdapter()
         partaiAdapter.listener = object : PartaiAdapter.Listener {
-            override fun onSelectItem(politicalParties: PoliticalParties) {
-                partai_selected.text = politicalParties.name
-                (activity as CatatanPilihanActivity).setSelectedParty(politicalParties.id)
+            override fun onSelectItem(politicalParty: PoliticalParty) {
+                partai_selected.text = politicalParty.name
+                (activity as CatatanPilihanActivity).setSelectedParty(politicalParty.id)
             }
         }
         partai_rv_view.layoutManager = layoutManager

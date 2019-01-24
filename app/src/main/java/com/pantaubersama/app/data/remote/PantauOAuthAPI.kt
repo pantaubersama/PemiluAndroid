@@ -213,6 +213,8 @@ interface PantauOAuthAPI {
     ): Single<BadgeResponse>
 
     @GET("/v1/political_parties")
-    fun getPartai(@Query("page") page: Int, @Query("per_page") perPage: Int
+    fun getPartai(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
     ): Single<PoliticalPartiesResponse>
 }

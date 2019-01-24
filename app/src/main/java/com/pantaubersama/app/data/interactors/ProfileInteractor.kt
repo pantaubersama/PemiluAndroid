@@ -2,7 +2,7 @@ package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.kuis.KuisUserResult
-import com.pantaubersama.app.data.model.partai.PoliticalParties
+import com.pantaubersama.app.data.model.partai.PoliticalParty
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.AchievedBadge
@@ -17,9 +17,9 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class ProfileInteractor @Inject constructor(
-        private val apiWrapper: APIWrapper,
-        private val rxSchedulers: RxSchedulers,
-        private val dataCache: DataCache
+    private val apiWrapper: APIWrapper,
+    private val rxSchedulers: RxSchedulers,
+    private val dataCache: DataCache
 ) {
 
     fun refreshProfile(): Single<Profile> {
@@ -63,19 +63,24 @@ class ProfileInteractor @Inject constructor(
 
     fun leaveCluster(): Completable {
         return apiWrapper
-                .getPantauOAuthApi()
-                .leaveCluster()
-                .subscribeOn(rxSchedulers.io())
-                .observeOn(rxSchedulers.mainThread())
+            .getPantauOAuthApi()
+            .leaveCluster()
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnComplete {
+                val newProfile = dataCache.loadUserProfile()
+                newProfile.cluster = null
+                dataCache.saveUserProfile(newProfile)
+            }
     }
 
     fun updateUserData(
-            name: String?,
-            username: String?,
-            location: String?,
-            description: String?,
-            education: String?,
-            occupation: String?
+        name: String?,
+        username: String?,
+        location: String?,
+        description: String?,
+        education: String?,
+        occupation: String?
     ): Completable {
         return apiWrapper
                 .getPantauOAuthApi()
@@ -129,14 +134,14 @@ class ProfileInteractor @Inject constructor(
     }
 
     fun updateDataLapor(
-            idNumber: String?,
-            pob: String?,
-            dob: String?,
-            gender: Int?,
-            occupation: String?,
-            nationality: String?,
-            address: String?,
-            phoneNumber: String?
+        idNumber: String?,
+        pob: String?,
+        dob: String?,
+        gender: Int?,
+        occupation: String?,
+        nationality: String?,
+        address: String?,
+        phoneNumber: String?
     ): Completable {
         return apiWrapper
                 .getPantauOAuthApi()
@@ -195,7 +200,7 @@ class ProfileInteractor @Inject constructor(
                 .doOnComplete {
                     val newProfile = dataCache.loadUserProfile()
                     newProfile.votePreference = paslonSelected
-                    newProfile.politicalParty = partySelected
+                    newProfile.politicalParty?.id = partySelected
                     dataCache.saveUserProfile(newProfile)
                 }
     }
@@ -211,7 +216,7 @@ class ProfileInteractor @Inject constructor(
                 .observeOn(rxSchedulers.mainThread())
     }
 
-    fun getPartai(page: Int, perPage: Int): Single<List<PoliticalParties>> {
+    fun getPartai(page: Int, perPage: Int): Single<List<PoliticalParty>> {
         return apiWrapper.getPantauOAuthApi().getPartai(page, perPage)
                 .subscribeOn(rxSchedulers.io())
                 .map { response ->
