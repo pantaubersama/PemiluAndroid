@@ -10,7 +10,7 @@ import java.io.Serializable
 val EMPTY_INFORMANT = Informant("", null, null, null, null,
         null, null, null, null, null)
 
-val EMPTY_PROFILE = Profile("", "", "Tanpa", "", "",
+val EMPTY_PROFILE = Profile("", "", "Anda", "", "",
         false, false, null, 0, null, false,
         null, "", "", "", "",
         Image(null), EMPTY_INFORMANT)

@@ -39,7 +39,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginStart="12dp"
                 android:textSize="9sp"
-                android:text="Budi Santoso"
+                android:text="Anda"
                 android:fontFamily="@font/lato_bold"/>
 
         </LinearLayout>
