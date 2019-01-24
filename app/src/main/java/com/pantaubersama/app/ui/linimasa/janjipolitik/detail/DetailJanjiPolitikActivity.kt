@@ -8,11 +8,14 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.janjipolitik.Creator
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.CopyUtil
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_JANPOL_ID
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_JANPOL_ITEM
@@ -36,6 +39,7 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
     private var creator: Creator? = null
     private var cluster: ClusterItem? = null
     private var itemPosition: Int? = null
+    private var profile: Profile? = null
 
     override fun setLayout(): Int = R.layout.activity_detail_janji_politik
 
@@ -72,6 +76,7 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
+        presenter.getProfile()
         janpolItem?.let {
             onBindData(it)
         } ?: run {
@@ -83,6 +88,10 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
         btn_close.setOnClickListener {
             onBackPressed()
         }
+    }
+
+    override fun bindProfile(profile: Profile) {
+        this.profile = profile
     }
 
     override fun onBindData(janjiPolitik: JanjiPolitik) {
@@ -100,8 +109,17 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
         creator = janpolItem?.creator
         creator?.let {
             iv_creator_avatar.loadUrl(it.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+            iv_creator_avatar.setOnClickListener {
+                openProfile(janjiPolitik)
+            }
             tv_creator_name.text = it.fullName
+            tv_creator_name.setOnClickListener {
+                openProfile(janjiPolitik)
+            }
             tv_creator_description.text = it.about
+            tv_creator_description.setOnClickListener {
+                openProfile(janjiPolitik)
+            }
         }
         if (creator?.cluster != null) {
             ll_cluster_container.visibleIf(true)
@@ -119,6 +137,14 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
 
         iv_share_button.setOnClickListener { onClickShare() }
         iv_options_button.setOnClickListener { onClickOption() }
+    }
+
+    private fun openProfile(janjiPolitik: JanjiPolitik) {
+        val intent = Intent(this@DetailJanjiPolitikActivity, ProfileActivity::class.java)
+        if (profile?.id != janjiPolitik.creator?.id) {
+            intent.putExtra(PantauConstants.Profile.USER_ID, janjiPolitik.creator?.id)
+        }
+        startActivityForResult(intent, PantauConstants.Profile.PROFILE_REQUEST_CODE)
     }
 
     override fun showLoading() {
@@ -156,13 +182,12 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
     }
 
     private fun onClickOption() {
-        val myProfile = presenter.getMyProfile()
         val dialog = OptionDialog(this, R.layout.layout_option_dialog_tanya_kandidat)
-        if (myProfile.cluster != null &&
+        if (profile?.cluster != null &&
             janpolItem?.creator?.cluster != null &&
-            janpolItem?.creator?.cluster?.id?.equals(myProfile.cluster?.id)!! &&
-            janpolItem?.creator?.id.equals(myProfile.id) &&
-            myProfile.cluster?.isEligible!!) {
+            janpolItem?.creator?.cluster?.id?.equals(profile?.cluster?.id)!! &&
+            janpolItem?.creator?.id.equals(profile?.id) &&
+            profile?.cluster?.isEligible!!) {
 //                    dialog.removeItem(R.id.report_tanya_kandidat_action)
         } else {
             dialog.removeItem(R.id.delete_tanya_kandidat_item_action)

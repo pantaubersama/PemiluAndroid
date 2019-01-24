@@ -7,11 +7,14 @@ import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.CopyUtil
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_QUESTION_ITEM
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_QUESTION_ID
@@ -35,6 +38,7 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
     private var questionId: String? = null
     private var question: Pertanyaan? = null
     private var itemPosition: Int? = null
+    private var profile: Profile? = null
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -66,12 +70,17 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
+        presenter.getProfile()
         if (question != null) {
             question?.let { bindData(it) }
         } else {
             questionId?.let { presenter.getData(it) }
         }
         btn_close.setOnClickListener { onBackPressed() }
+    }
+
+    override fun bindProfile(profile: Profile) {
+        this.profile
     }
 
     override fun showLoading() {
@@ -89,6 +98,13 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
         iv_user_avatar.loadUrl(question.user.avatar?.url, R.drawable.ic_avatar_placeholder)
         tv_user_name.text = question.user.fullName
         tv_user_bio.text = question.user.about
+        user_container.setOnClickListener {
+            val intent = Intent(this@DetailTanyaKandidatActivity, ProfileActivity::class.java)
+            if (profile?.id != question.user.id) {
+                intent.putExtra(PantauConstants.Profile.USER_ID, question.user.id)
+            }
+            startActivityForResult(intent, PantauConstants.Profile.PROFILE_REQUEST_CODE)
+        }
         question_time.text = question.createdAtInWord?.id
         upvote_count_text.text = question.likeCount.toString()
         user_question.text = question.body
@@ -135,7 +151,7 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
 
     private fun onClickOption() {
         val dialog = OptionDialog(this, R.layout.layout_option_dialog_tanya_kandidat)
-        if (question?.user?.id.equals(presenter.getUserId())) {
+        if (question?.user?.id.equals(profile?.id)) {
             dialog.removeItem(R.id.report_tanya_kandidat_action)
         } else {
             dialog.removeItem(R.id.delete_tanya_kandidat_item_action)

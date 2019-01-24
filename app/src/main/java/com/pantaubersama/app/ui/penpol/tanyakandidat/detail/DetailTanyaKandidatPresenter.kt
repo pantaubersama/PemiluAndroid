@@ -1,19 +1,15 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.detail
 
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
-import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
 
 class DetailTanyaKandidatPresenter @Inject constructor(
-    private val dataCache: DataCache,
+    private val profileInteractor: ProfileInteractor,
     private val interactor: TanyaKandidatInteractor
 ) : BasePresenter<DetailTanyaKandidatView>() {
-
-    fun getUserId(): String {
-        return dataCache.loadUserProfile().id
-    }
 
     fun getData(questionId: String) {
         view?.showLoading()
@@ -89,5 +85,9 @@ class DetailTanyaKandidatPresenter @Inject constructor(
                     }
                 )
         )
+    }
+
+    fun getProfile() {
+        view?.bindProfile(profileInteractor.getProfile())
     }
 }
