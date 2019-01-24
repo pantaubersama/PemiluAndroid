@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_2"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_kuis_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bw_modelica_regular"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        tools:text="Pertanyaan Pertama" />
+
+    <TextView
+        android:id="@+id/tv_kuis_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/bw_modelica_bold"
+        android:textColor="@color/black_3"
+        android:textSize="12sp"
+        tools:text="Visi untuk Indonesia kedepannya?" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/gray_3" />
+
+    <TextView
+        android:id="@+id/tv_answer_a_team"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bw_modelica_bold"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        tools:text="Jokowi - Makruf" />
+
+    <TextView
+        android:id="@+id/tv_answer_a_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/lato_medium"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#111111"
+        android:textSize="12sp"
+        tools:text="@string/lorem" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/gray_3" />
+
+    <TextView
+        android:id="@+id/tv_answer_b_team"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bw_modelica_bold"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        tools:text="Prabowo - Sandi" />
+
+    <TextView
+        android:id="@+id/tv_answer_b_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/lato_medium"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#111111"
+        android:textSize="12sp"
+        tools:text="@string/lorem" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/gray_3" />
+
+    <TextView
+        android:id="@+id/tv_user_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bw_modelica_bold"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        tools:text="Jawabanmu : Prabowo - Sandi" />
+
+</LinearLayout>

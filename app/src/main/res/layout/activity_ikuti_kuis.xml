@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.pantaubersama.app.ui.penpol.kuis.ikutikuis.IkutiKuisActivity">
+
+    <ImageView
+        android:id="@+id/iv_kuis_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:contentDescription="Ikuti kuis"
+        tools:src="@drawable/ikuti_quiz_banner" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:orientation="vertical"
+        android:paddingTop="240dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/gray_2"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
+
+            <TextView
+                android:id="@+id/quiz_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bw_modelica_bold"
+                android:includeFontPadding="false"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                tools:text="Kuis minggu ke-2" />
+
+            <TextView
+                android:id="@+id/question_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bw_modelica_regular"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                tools:text="7 Pertanyaan" />
+
+            <TextView
+                android:id="@+id/quiz_long_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
+                android:fontFamily="@font/lato_medium"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                tools:text="@string/quiz_text_dummy" />
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/start_quiz_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="Mulai"
+            android:textSize="18sp"
+            app:backgroundTint="@color/purple"
+            app:cornerRadius="0dp" />
+
+    </LinearLayout>
+
+</FrameLayout>

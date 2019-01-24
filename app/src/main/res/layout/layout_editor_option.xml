@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/ll_layout_editor_option"
+    android:visibility="gone"
+    android:layout_gravity="bottom"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_3" />
+
+    <LinearLayout
+        android:id="@+id/text_editor_button_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="start"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingRight="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_editor_capital"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_editor_capital"/>
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_editor_bold"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_editor_bold"
+            android:layout_marginStart="14dp"/>
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_editor_italic"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_editor_italic"
+            android:layout_marginStart="14dp"/>
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_editor_numbering"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_editor_numbering"
+            android:layout_marginStart="14dp"/>
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_editor_bullet"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_editor_bullet"
+            android:layout_marginStart="14dp"/>
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_editor_line"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_editor_line"
+            android:layout_marginStart="14dp"/>
+
+        <ImageView
+            android:id="@+id/iv_editor_image"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_editor_image"
+            android:layout_marginStart="14dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"/>
+
+</LinearLayout>

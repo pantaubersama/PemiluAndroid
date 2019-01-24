@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="?selectableItemBackground"
+    android:id="@+id/layout_item_tanya_kandidat">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/upvote_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="8dp"
+            android:background="@color/gray_1">
+
+            <View
+                android:id="@+id/upvote_guide_view"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_centerInParent="true"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/upvote_animation"
+                android:scaleType="centerCrop"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:lottie_fileName="upvote.json"
+                android:layout_centerHorizontal="true"
+                android:layout_above="@id/upvote_guide_view"/>
+
+            <TextView
+                android:id="@+id/upvote_count_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textSize="12sp"
+                android:fontFamily="@font/lato_medium"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/upvote_guide_view"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal">
+
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/iv_user_avatar"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:scaleType="centerCrop"
+                    app:riv_border_color="@color/white"
+                    app:riv_oval="true"
+                    android:src="@drawable/ic_avatar_placeholder"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"/>
+
+                <RelativeLayout
+                    android:id="@+id/username_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/iv_user_avatar"
+                    android:layout_toRightOf="@id/iv_user_avatar">
+
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Budi Santoso"
+                        android:fontFamily="@font/lato_bold"
+                        android:maxLines="1"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/black_2"
+                        android:layout_toStartOf="@id/question_time"
+                        android:layout_toLeftOf="@id/question_time"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/question_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/question_time_dummy_text"
+                        android:fontFamily="@font/lato_bold"
+                        android:textSize="9sp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_centerVertical="true"
+                        android:maxLines="1"
+                        android:lines="1"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_user_bio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_regular"
+                    tools:text="Kapan kemana Indonesia?"
+                    android:textSize="9sp"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/gray_dark_3"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/iv_user_avatar"
+                    android:layout_toRightOf="@id/iv_user_avatar"
+                    android:layout_below="@id/username_container"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/user_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/question_dummy_text"
+                android:fontFamily="@font/bw_modelica_bold"
+                android:textSize="12sp"
+                android:textColor="@color/black_1"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:ellipsize="end"/>
+
+            <include layout="@layout/layout_action_post"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_3"/>
+
+</LinearLayout>

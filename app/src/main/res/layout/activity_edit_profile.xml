@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <include layout="@layout/layout_toolbar_light"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/edit_profile_submit">
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/edit_profile_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/gray_3"
+                        android:orientation="vertical"
+                        android:paddingTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:id="@+id/edit_profile_avatar"
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:scaleType="centerCrop"
+                                app:riv_border_color="@color/white"
+                                app:riv_oval="true"
+                                tools:src="@drawable/ic_avatar_placeholder" />
+
+                            <TextView
+                                android:id="@+id/edit_profile_change_profile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:fontFamily="@font/lato_italic"
+                                android:lineSpacingExtra="3sp"
+                                android:text="@string/change_profile"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:background="@color/white"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/lato_italic"
+                                    android:text="@string/label_nama"
+                                    android:textColor="@color/gray_4"
+                                    android:textSize="10sp" />
+
+                                <EditText
+                                    android:id="@+id/edit_profile_nama"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:background="@color/transparant"
+                                    android:fontFamily="@font/lato_bold"
+                                    android:hint="@string/label_nama"
+                                    android:inputType="textPersonName"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"
+                                    tools:text="John Doe"
+                                    android:padding="12dp"/>
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray_3" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/lato_italic"
+                                    android:text="@string/label_username"
+                                    android:textColor="@color/gray_4"
+                                    android:textSize="10sp" />
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="\@"
+                                        android:layout_gravity="center_vertical|start"
+                                        android:textColor="@color/black"
+                                        android:layout_marginLeft="12dp"
+                                        android:layout_marginStart="12dp"/>
+
+                                    <EditText
+                                        android:id="@+id/edit_profile_username"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@color/transparant"
+                                        android:fontFamily="@font/lato_bold"
+                                        android:hint="@string/label_username"
+                                        android:inputType="text|textNoSuggestions"
+                                        android:textColor="@color/black"
+                                        android:textSize="12sp"
+                                        tools:text="jhon"
+                                        android:paddingTop="12dp"
+                                        android:paddingBottom="12dp"
+                                        android:paddingStart="26dp"
+                                        android:paddingLeft="26dp"
+                                        android:paddingRight="12dp"
+                                        android:paddingEnd="12dp"/>
+
+                                    <ImageView
+                                        android:id="@+id/username_check"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
+                                        android:src="@drawable/ic_check"
+                                        android:layout_gravity="center_vertical|end"
+                                        android:visibility="gone"/>
+
+                                </FrameLayout>
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray_3" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/lato_italic"
+                                    android:text="@string/label_lokasi"
+                                    android:textColor="@color/gray_4"
+                                    android:textSize="10sp" />
+
+                                <EditText
+                                    android:id="@+id/edit_profile_lokasi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:background="@color/transparant"
+                                    android:fontFamily="@font/lato_bold"
+                                    android:hint="@string/label_lokasi_placeholder"
+                                    android:inputType="text|textNoSuggestions"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"
+                                    android:padding="12dp"/>
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray_3" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/lato_italic"
+                                    android:text="@string/label_bio"
+                                    android:textColor="@color/gray_4"
+                                    android:textSize="10sp" />
+
+                                <EditText
+                                    android:id="@+id/edit_profile_deskripsi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:background="@color/transparant"
+                                    android:fontFamily="@font/lato_bold"
+                                    android:hint="@string/label_deskripi_tentang_kamu"
+                                    android:inputType="text|textNoSuggestions"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"
+                                    android:padding="12dp"/>
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray_3" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/lato_italic"
+                                    android:text="@string/label_pendidikan"
+                                    android:textColor="@color/gray_4"
+                                    android:textSize="10sp" />
+
+                                <EditText
+                                    android:id="@+id/edit_profile_pendidikan"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:background="@color/transparant"
+                                    android:fontFamily="@font/lato_bold"
+                                    android:hint="@string/label_pendidikan"
+                                    android:inputType="text|textNoSuggestions|textCapWords"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"
+                                    android:padding="12dp"/>
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray_3" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/lato_italic"
+                                    android:text="@string/label_pekerjaan"
+                                    android:textColor="@color/gray_4"
+                                    android:textSize="10sp" />
+
+                                <EditText
+                                    android:id="@+id/edit_profile_pekerjaan"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:background="@color/transparant"
+                                    android:fontFamily="@font/lato_bold"
+                                    android:hint="@string/label_pekerjaan"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"
+                                    android:inputType="text|textNoSuggestions"
+                                    tools:text="Opinium Social"
+                                    android:padding="12dp"/>
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray_3" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.core.widget.NestedScrollView>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/progress_bar"
+                android:background="@color/white"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/edit_profile_submit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/submit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_regular"
+                android:text="@string/submit"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

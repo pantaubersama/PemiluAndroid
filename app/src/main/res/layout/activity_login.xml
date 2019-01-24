@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.LoginActivity">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/upvote_animation"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_fileName="login_background_animation.json"
+        app:lottie_autoPlay="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pantau_icon"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pantau_bersama_tagline"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:fontFamily="@font/bw_modelica_regular"
+            android:textSize="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <com.extrainteger.symbolic.ui.SymbolicLoginButton
+            android:id="@+id/symbolic_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="\t\t\t\tMulai\t\t\t\t"
+            android:background="@drawable/rounded_outline_red"
+            android:textColor="@color/white"
+            android:layout_marginTop="48dp"/>
+
+        <TextView
+            android:id="@+id/lewati_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lewati"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/lato_bold"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+</FrameLayout>

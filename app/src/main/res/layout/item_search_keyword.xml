@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/tv_search_keyword"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:text="Keyword"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp"
+    android:paddingStart="18dp"
+    android:paddingEnd="18dp"
+    android:fontFamily="@font/lato_medium"
+    android:textColor="@color/gray_4"
+    android:textSize="12sp"
+    android:background="?selectableItemBackground">
+
+</TextView>

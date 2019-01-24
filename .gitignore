@@ -5,6 +5,8 @@
 /build
 /captures
 .externalNativeBuild
+gradle.properties
+*google-services.json
 
 # Android Studio captures folder
 captures/
@@ -33,6 +35,7 @@ captures/
 .idea/modules.xml
 .idea/scopes/scope_settings.xml
 .idea/vcs.xml
+.idea/codeStyles/codeStyleConfig.xml
 *.iml
 
 # OS-specific files
@@ -43,3 +46,6 @@ captures/
 .Trashes
 ehthumbs.db
 Thumbs.db
+pantau_bersama.keystore
+app/production/
+app/release/

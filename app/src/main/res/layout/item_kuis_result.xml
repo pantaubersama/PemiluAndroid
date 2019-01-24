@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_1"
+    android:paddingTop="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bw_modelica_regular"
+                android:text="@string/label_total_kecenderungan"
+                android:textColor="@color/black_3"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/presiden_total_kuis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/bw_modelica_bold"
+                android:textColor="@color/black_3"
+                android:textSize="12sp"
+                tools:text="4 dari 6 Kuis" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_kuis_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bw_modelica_bold"
+            android:gravity="center_horizontal"
+            android:textColor="@color/black_3"
+            android:textSize="16sp"
+            tools:text="70% (Jokowi - Makruf)" />
+
+        <ImageButton
+            android:id="@+id/btn_share_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="4dp"
+            android:src="@drawable/ic_share"
+            tools:ignore="ContentDescription,RelativeOverlap" />
+
+    </LinearLayout>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iv_kuis_result"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_oval="true"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/img_dummy_kuis_result" />
+
+</FrameLayout>

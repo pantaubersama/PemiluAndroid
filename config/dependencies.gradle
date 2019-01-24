@@ -5,81 +5,131 @@ repositories {
 }
 
 ext {
-    androidMinSdkVersion = 19
+    androidMinSdkVersion = 21
     androidTargetSdkVersion = 28
     androidCompileSdkVersion = 28
 
     versions = [
             support                 : "28.0.0",
-            supportConstraintLayout : "1.1.3",
 
             retrofit                : "2.4.0",
+            scalarsConverter        : "2.1.0",
             okHttp                  : "3.10.0",
             playService             : "12.0.1",
             firebaseCore            : "16.0.6",
             firebaseMessaging       : "17.3.4",
+            crashlytic              : "2.9.7",
 
-            rxJava                  : "2.1.5",
-            rxJavaAndroid           : "2.0.1",
+            rxJava                  : "2.2.5",
+            rxKotlin                : "2.3.0",
+            rxJavaAndroid           : "2.1.0",
 
             multidexVersion         : "1.0.3",
 
             junit                   : "4.12",
 
-            easyPermission          : "1.2.0",
+            easyPermission          : "2.0.0",
 
             timber                  : "4.7.1",
 
             glide                   : "4.8.0",
+            glideCompiler           : "4.8.0",
 
-            dagger                  : "2.12",
-            daggerCompiler          : "2.12"
+            dagger                  : "2.19",
+            daggerCompiler          : "2.19",
+
+            roundedImageView        : "2.3.0",
+            symbolic                : "0.3.2",
+            mockito                 : "2.18.3",
+            flexbox                 : "1.1.0",
+            lottie                  : "2.8.0",
+            chromeCustomTab         : "23.3.0",
+            expandableLayout        : "2.9.2",
+            stetho                  : "1.5.0",
+            rxbinding               : "2.0.0",
+            compressor              : "2.1.0",
+            facebook_sdk            : "[4,5)",
+            twitter_sdk             : "3.1.1",
+            navigation              : "1.0.0-alpha09",
+            dots_indicator          : "2.1.2"
+
     ]
 
 
-    supportDeps = [
-            design          : "com.android.support:design:$versions.support",
-            vectorDrawable  : "com.android.support:support-vector-drawable:$versions.support",
-            constraintLayout: "com.android.support.constraint:constraint-layout:$versions.supportConstraintLayout"
+    designDeps = [
+            material        : "com.google.android.material:material:1.1.0-alpha02",
+            vectorDrawable  : "androidx.vectordrawable:vectordrawable:1.0.1",
+            constraintLayout: "androidx.constraintlayout:constraintlayout:2.0.0-alpha2"
     ]
 
     retrofit = [
             retrofit     : "com.squareup.retrofit2:retrofit:$versions.retrofit",
             rxAdapter    : "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit",
             gsonConverter: "com.squareup.retrofit2:converter-gson:$versions.retrofit",
+            scalarsConverter: "com.squareup.retrofit2:converter-scalars:$versions.scalarsConverter"
     ]
 
     okHttp = [
             logger: "com.squareup.okhttp3:logging-interceptor:$versions.okHttp",
-            okhttp: "com.squareup.okhttp3:okhttp:$versions.okHttp"
+            okhttp: "com.squareup.okhttp3:okhttp:$versions.okHttp",
+            stetho: "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
     ]
 
     firebase = [
-            firebaseCore       : "com.google.firebase:firebase-core:$versions.playService",
-            firebaseMessaging  : "com.google.firebase:firebase-messaging:$versions.playService"
+            firebaseCore        : "com.google.firebase:firebase-core:$versions.playService",
+            firebaseMessaging   : "com.google.firebase:firebase-messaging:$versions.playService",
+            crashlytic          : "com.crashlytics.sdk.android:crashlytics:$versions.crashlytic"
     ]
 
     rxJava = [
             rxJava   : "io.reactivex.rxjava2:rxjava:$versions.rxJava",
+            rxKotlin : "io.reactivex.rxjava2:rxkotlin:$versions.rxKotlin",
             rxAndroid: "io.reactivex.rxjava2:rxandroid:$versions.rxJavaAndroid"
     ]
 
 
     unitTestDeps = [
-            junit: "junit:junit:$versions.junit"
+            junit: "junit:junit:$versions.junit",
+            mockito: "org.mockito:mockito-core:$versions.mockito"
     ]
 
-    supportLibs = supportDeps.values()
+    archComponent = [
+            navigationFragment: "android.arch.navigation:navigation-fragment-ktx:$versions.navigation",
+            navigationUI: "android.arch.navigation:navigation-ui-ktx:$versions.navigation"
+    ]
+
+    designLibs = designDeps.values()
     networkLibs = retrofit.values() + okHttp.values()
     firebaseLibs = firebase.values()
     rxJavaLibs = rxJava.values()
     unitTestLibs = unitTestDeps.values()
+    archComponentLibs = archComponent.values()
 
     multidex = "com.android.support:multidex:$versions.multidexVersion"
     easyPermission = "pub.devrel:easypermissions:$versions.easyPermission"
     timber = "com.jakewharton.timber:timber:$versions.timber"
     glide = "com.github.bumptech.glide:glide:$versions.glide"
+    glideCompiler = "com.github.bumptech.glide:compiler:$versions.glideCompiler"
 
     dagger = "com.google.dagger:dagger:$versions.dagger"
     daggerCompiler = "com.google.dagger:dagger-compiler:$versions.daggerCompiler"
+
+    roundedImageView = "com.makeramen:roundedimageview:$versions.roundedImageView"
+
+    symbolic = "com.github.extrainteger:android-identitas-client:$versions.symbolic"
+
+    flexbox = "com.google.android:flexbox:$versions.flexbox"
+
+    lottie = "com.airbnb.android:lottie:$versions.lottie"
+
+    chromeCustomTab = "com.android.support:customtabs:$versions.chromeCustomTab"
+
+    expandableLayout = "net.cachapa.expandablelayout:expandablelayout:$versions.expandableLayout"
+    rxBinding = "com.jakewharton.rxbinding2:rxbinding:$versions.rxbinding"
+
+    compressor = "id.zelory:compressor:$versions.compressor"
+
+    facebook_sdk = "com.facebook.android:facebook-android-sdk:$versions.facebook_sdk"
+    twitter_sdk = "com.twitter.sdk.android:twitter-core:$versions.twitter_sdk"
+    dots_indicator = "com.tbuonomo.andrui:viewpagerdotsindicator:$versions.dots_indicator"
 }

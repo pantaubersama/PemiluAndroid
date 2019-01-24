@@ -1,27 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.pantaubersama.app">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.location.gps" />
+
     <application
+        android:name=".base.BaseApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:theme">
+        <activity android:name=".ui.search.cluster.filter.FilterClusterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.search.person.filter.FilterOrangActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.onboarding.OnboardingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.badge.detail.DetailBadgeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.kuis.detail.DetailKuisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="aia-compat-api-min-version"
             android:value="1" />
 
+        <provider
+            android:name=".utils.GenericFileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
         <activity
-            android:name=".ui.MainActivity"
-            android:label="@string/title_activity_main">
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/facebook_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.splashscreen.SplashScreenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/symbolic_url"
+                    android:pathPrefix="/pantaubersama"
+                    android:scheme="https" />
+                <data
+                    android:host="@string/symbolic_url"
+                    android:pathPrefix="/pantaubersama"
+                    android:scheme="http" />
+                <data
+                    android:host="@string/symbolic_url"
+                    android:pathPrefix="/confirmation"
+                    android:scheme="https" />
+                <data
+                    android:host="@string/symbolic_url"
+                    android:pathPrefix="/confirmation"
+                    android:scheme="http" />
+            </intent-filter>
+            <intent-filter android:label="@string/label_intent_filter_share">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/pantau_base_url_no_scheme"
+                    android:pathPrefix="/share"
+                    android:scheme="https" />
+                <data
+                    android:host="@string/pantau_base_url_no_scheme"
+                    android:pathPrefix="/share"
+                    android:scheme="http" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.linimasa.pilpres.filter.FilterPilpresActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.bannerinfo.BannerInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.kuis.ikutikuis.IkutiKuisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.kuis.result.KuisResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.kuis.kuisstart.KuisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.kuis.result.KuisSummaryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.profile.verifikasi.step1.Step1VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.step2.Step2VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.kuis.filter.FilterKuisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.step3.Step3VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.step4.Step4VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.step5.Step5VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.step6.Step6VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.step7.Step7VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.finalstep.FinalScreenVerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.editprofile.EditProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.ubahdatalapor.UbahDataLaporActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.badge.BadgeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.clusterundang.ClusterUndangActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.panduankomunitas.PanduanKomunitasActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.setting.tentangapp.TentangAppActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.cluster.requestcluster.RequestClusterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.cluster.category.ClusterCategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.connect.ConnectActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ui.note.CatatanPilihanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.cluster.invite.UndangAnggotaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.penpol.kuis.result.KuisUserResultActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

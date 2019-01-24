@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <include layout="@layout/layout_toolbar_light"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/page_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/question_info_container">
+
+            <RelativeLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
+
+                <View
+                    android:id="@+id/top_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:background="@color/gray_3"
+                    android:layout_alignParentTop="true"/>
+
+                <LinearLayout
+                    android:id="@+id/question_hint_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray_2"
+                    android:padding="16dp"
+                    android:layout_below="@id/top_line">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hint_create_janpol"
+                        android:fontFamily="@font/lato_regular"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/question_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:padding="16dp"
+                    android:layout_below="@id/question_hint_container">
+
+                    <LinearLayout
+                        android:id="@+id/user_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center_vertical">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/iv_user_avatar"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:scaleType="centerCrop"
+                            app:riv_border_color="@color/white"
+                            app:riv_oval="true"
+                            android:src="@drawable/ic_avatar_placeholder"/>
+
+                        <TextView
+                            android:id="@+id/tv_user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:lines="1"
+                            android:ellipsize="end"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginStart="12dp"
+                            android:textSize="11sp"
+                            android:text="Budi Santoso"
+                            android:fontFamily="@font/lato_bold"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="16dp">
+                        
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/et_create_janpol_title"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/bw_modelica_bold"
+                                android:hint="@string/hint_create_janpol_title"
+                                android:maxLength="160"/>
+
+                            <LinearLayout
+                                android:id="@+id/length_container"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end|bottom"
+                                android:paddingStart="4dp">
+
+                                <TextView
+                                    android:id="@+id/tv_current_length"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0"
+                                    android:textSize="10sp"
+                                    android:fontFamily="@font/lato_medium"/>
+
+                                <TextView
+                                    android:id="@+id/question_length_separator"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="/"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginStart="4dp"
+                                    android:textSize="10sp"
+                                    android:fontFamily="@font/lato_medium"/>
+
+                                <TextView
+                                    android:id="@+id/tv_max_length"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="160"
+                                    android:textSize="10sp"
+                                    android:layout_marginStart="4dp"
+                                    android:fontFamily="@font/lato_medium"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/pinkLight"/>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <EditText
+                                android:id="@+id/et_create_janpol_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:minLines="3"
+                                android:background="@color/white"
+                                android:gravity="top"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/lato_medium"
+                                android:inputType="textMultiLine"
+                                android:hint="@string/hint_create_janpol_content"/>
+
+                            <ImageView
+                                android:id="@+id/iv_create_janpol_image"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="120dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_below="@id/et_create_janpol_content"
+                                android:background="?selectableItemBackground"
+                                android:scaleType="fitCenter"
+                                android:adjustViewBounds="true"/>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/question_info_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
+
+            <include layout="@layout/layout_editor_option"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/page_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:id="@+id/lottie_loading"
+        android:scaleType="centerInside"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        app:lottie_fileName="lottie_loading.json"
+        app:lottie_autoPlay="false"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
