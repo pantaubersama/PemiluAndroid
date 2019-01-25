@@ -1,5 +1,6 @@
 package com.pantaubersama.app.di.component
 
+import com.pantaubersama.app.background.firebase.PantauFirebaseMessagingService
 import com.pantaubersama.app.di.module.ServiceModule
 import com.pantaubersama.app.di.scope.ServiceScope
 import dagger.Subcomponent
@@ -10,5 +11,5 @@ import dagger.Subcomponent
 @ServiceScope
 @Subcomponent(modules = [ServiceModule::class])
 interface ServiceComponent {
-    // injection
+    fun inject(pantauFirebaseMessagingService: PantauFirebaseMessagingService)
 }

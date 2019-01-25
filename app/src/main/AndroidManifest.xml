@@ -21,6 +21,14 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
+        <service android:name=".background.firebase.PantauFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_channel_id"
+                android:value="@string/default_notification_channel_id" />
+        </service>
         <activity android:name=".ui.search.cluster.filter.FilterClusterActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.search.person.filter.FilterOrangActivity"
@@ -114,13 +122,23 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="@string/pantau_base_url_no_scheme"
+                    android:host="@string/pantau_web_url_no_scheme"
                     android:pathPrefix="/share"
                     android:scheme="https" />
                 <data
-                    android:host="@string/pantau_base_url_no_scheme"
+                    android:host="@string/pantau_web_url_no_scheme"
                     android:pathPrefix="/share"
                     android:scheme="http" />
+
+                <data
+                    android:host="@string/pantau_web_url_no_scheme"
+                    android:pathPrefix="/cluster"
+                    android:scheme="https" />
+                <data
+                    android:host="@string/pantau_web_url_no_scheme"
+                    android:pathPrefix="/cluster"
+                    android:scheme="http" />
+
             </intent-filter>
         </activity>
         <activity

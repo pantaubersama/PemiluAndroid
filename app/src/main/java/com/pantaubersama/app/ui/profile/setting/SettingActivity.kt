@@ -11,7 +11,6 @@ import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
 import android.webkit.CookieManager
 import androidx.core.content.ContextCompat
@@ -39,9 +38,11 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import com.facebook.GraphRequest
+import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.ShareUtil
+import com.pantaubersama.app.utils.extensions.visibleIf
 import com.twitter.sdk.android.core.* // ktlint-disable
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import com.twitter.sdk.android.core.models.User
@@ -57,11 +58,9 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     companion object {
         val EDIT_PROFILE = 1
-        val UBAH_SANDI = 2
         val UBAH_DATA_LAPOR = 3
         val VERIFIKASI = 4
         val BADGE = 5
-        val CLUSTER_UNDANG = 6
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -136,6 +135,10 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                         .show()
             }
         }
+    }
+
+    override fun onFailedConnectTwitter() {
+        logoutTwitterSDK()
     }
 
     override fun showConnectedToTwitterAlert() {
@@ -216,6 +219,10 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         }
     }
 
+    override fun onFailedConnectFacebook() {
+        logoutFacebookSDK()
+    }
+
     override fun onSuccessGetProfile(profile: Profile) {
         setting_verifikasi.setOnClickListener {
             if (profile.verified) {
@@ -225,14 +232,14 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                 startActivityForResult(intent, VERIFIKASI)
             }
         }
-        if (profile.cluster != null) {
+        if (profile.cluster != null && profile.isModerator) {
             setting_cluster_undang.setOnClickListener {
                 val intent = Intent(this@SettingActivity, ClusterUndangActivity::class.java)
                 intent.putExtra(PantauConstants.Cluster.CLUSTER_ID, profile.cluster?.id)
                 startActivity(intent)
             }
         } else {
-            ll_setting_cluster_undang.visibility = View.GONE
+            ll_setting_cluster_undang.visibleIf(false)
         }
     }
 
@@ -312,7 +319,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             ChromeTabUtil(this@SettingActivity).forceLoadUrl(PantauConstants.Profile.URL_PANDUAN_KOMUNITAS)
         }
         setting_tentang.setOnClickListener {
-            ChromeTabUtil(this@SettingActivity).forceLoadUrl(PantauConstants.Profile.URL_TENTANG_PANTAU_BERSAMA)
+            startActivity(Intent(this@SettingActivity, TentangAppActivity::class.java))
         }
         setting_berikan_nilai.setOnClickListener {
             try {
@@ -330,6 +337,8 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     }
 
     override fun goToLogin() {
+        logoutFacebookSDK()
+        logoutTwitterSDK()
         SymbolicLoginButton.logOut(this@SettingActivity)
         val intent = Intent(this@SettingActivity, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -357,10 +366,18 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                 .setOkText(getString(R.string.label_keluar))
                 .addOkListener(object : ConfirmationDialog.DialogOkListener {
                     override fun onClickOk() {
-                        presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
+                        presenter.revokeFirebaseToken()
                     }
                 })
                 .show()
+    }
+
+    override fun onSuccessRevokeFirebaseToken() {
+        presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
+    }
+
+    override fun showLogoutFailedAlert() {
+        ToastUtil.show(this@SettingActivity, "Gagal logout")
     }
 
     override fun showSuccessDisconnectFacebookAlert() {

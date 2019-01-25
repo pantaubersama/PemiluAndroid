@@ -1,12 +1,9 @@
 package com.pantaubersama.app.ui.profile
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.* // ktlint-disable
 import androidx.core.content.ContextCompat
@@ -26,8 +23,9 @@ import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
-import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
 import com.pantaubersama.app.ui.quickcount.QuickCountFragment
+import com.pantaubersama.app.ui.widget.ConfirmationDialog
+import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.ui.wordstadium.WordStadiumFragment
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.State
@@ -50,15 +48,12 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         activityComponent.inject(this)
     }
 
-    override fun statusBarColor(): Int? {
-        return 0
-    }
+    override fun statusBarColor(): Int? = 0
+    override fun setLayout(): Int = R.layout.activity_profile
 
     override fun fetchIntentExtra() {
         userId = intent.getStringExtra(PantauConstants.Profile.USER_ID)
     }
-
-    override fun setLayout(): Int = R.layout.activity_profile
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "", R.color.white, 4f)
@@ -112,12 +107,12 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         verified_text.text = getString(R.string.txt_belum_verifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_gray)
-        if (userId == null) {
-            verified_button.setOnClickListener {
-                val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
-                startActivity(intent)
-            }
-        }
+//        if (userId == null) {
+//            verified_button.setOnClickListener {
+//                val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
+//                startActivity(intent)
+//            }
+//        }
     }
 
     private fun setVerified() {
@@ -231,71 +226,76 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     private fun showClusterOptionsDialog(cluster: ClusterItem) {
-        val dialog = Dialog(this@ProfileActivity)
-        dialog.setContentView(R.layout.cluster_options_layout)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setOnKeyListener { _, i, _ ->
-            if (i == KeyEvent.KEYCODE_BACK) {
-                dialog.dismiss()
-                true
-            } else {
-                false
+        val dialog = OptionDialog(this, R.layout.cluster_options_layout)
+        dialog.show()
+        dialog.listener = object : OptionDialog.DialogListener {
+            override fun onClick(viewId: Int) {
+                when (viewId) {
+                    R.id.invite_to_cluster_action -> {
+//                        val intent = Intent(this@ProfileActivity, UndangAnggotaActivity::class.java)
+//                        intent.putExtra(PantauConstants.Cluster.CLUSTER_URL, cluster.magicLink)
+//                        intent.putExtra(PantauConstants.Cluster.CLUSTER_ID, cluster.id)
+//                        intent.putExtra(PantauConstants.Cluster.INVITE_LINK_ACTIVE, cluster.isLinkActive)
+//                        intent.putExtra(EXTRA_IS_MODERATOR, presenter.getMyProfile().isModerator)
+
+                        startActivityForResult(UndangAnggotaActivity.setIntent(this@ProfileActivity, cluster.magicLink, cluster.id, cluster.isLinkActive, presenter.getMyProfile().isModerator), PantauConstants.Cluster.REQUEST_CODE.REQUEST_CLUSTER)
+                        dialog.dismiss()
+                    }
+                    R.id.leave_cluster_action -> {
+                        showLeaveClusterConfirmationDialog(cluster)
+                        dialog.dismiss()
+                    }
+                }
             }
         }
-        dialog.setCanceledOnTouchOutside(true)
-        val lp = WindowManager.LayoutParams()
-        val window = dialog.window
-        lp.copyFrom(window?.attributes)
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        window?.attributes = lp
-        lp.gravity = Gravity.BOTTOM
-        window?.attributes = lp
-        dialog.invite_to_cluster_action?.setOnClickListener {
-            val intent = Intent(this@ProfileActivity, UndangAnggotaActivity::class.java)
-            intent.putExtra(PantauConstants.Cluster.CLUSTER_URL, cluster.magicLink)
-            intent.putExtra(PantauConstants.Cluster.CLUSTER_ID, cluster.id)
-            intent.putExtra(PantauConstants.Cluster.INVITE_LINK_ACTIVE, cluster.isLinkActive)
-            startActivityForResult(intent, PantauConstants.Cluster.REQUEST_CODE.REQUEST_CLUSTER)
-            dialog.dismiss()
-        }
-        dialog.leave_cluster_action?.setOnClickListener {
-            showLeaveClusterConfirmationDialog(cluster)
-            dialog.dismiss()
-        }
-        dialog.show()
+//        val dialog = Dialog(this@ProfileActivity)
+//        dialog.setContentView(R.layout.cluster_options_layout)
+//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        dialog.setOnKeyListener { _, i, _ ->
+//            if (i == KeyEvent.KEYCODE_BACK) {
+//                dialog.dismiss()
+//                true
+//            } else {
+//                false
+//            }
+//        }
+//        dialog.setCanceledOnTouchOutside(true)
+//        val lp = WindowManager.LayoutParams()
+//        val window = dialog.window
+//        lp.copyFrom(window?.attributes)
+//        lp.width = WindowManager.LayoutParams.MATCH_PARENT
+//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+//        window?.attributes = lp
+//        lp.gravity = Gravity.BOTTOM
+//        window?.attributes = lp
+//        dialog.invite_to_cluster_action?.setOnClickListener {
+//            val intent = Intent(this@ProfileActivity, UndangAnggotaActivity::class.java)
+//            intent.putExtra(PantauConstants.Cluster.CLUSTER_URL, cluster.magicLink)
+//            intent.putExtra(PantauConstants.Cluster.CLUSTER_ID, cluster.id)
+//            intent.putExtra(PantauConstants.Cluster.INVITE_LINK_ACTIVE, cluster.isLinkActive)
+//            startActivityForResult(intent, PantauConstants.Cluster.REQUEST_CODE.REQUEST_CLUSTER)
+//            dialog.dismiss()
+//        }
+//        dialog.leave_cluster_action?.setOnClickListener {
+//            showLeaveClusterConfirmationDialog(cluster)
+//            dialog.dismiss()
+//        }
+//        dialog.show()
     }
 
     private fun showLeaveClusterConfirmationDialog(cluster: ClusterItem) {
-        val dialog = Dialog(this@ProfileActivity)
-        dialog.setContentView(R.layout.layout_leave_cluster_confirmation_dialog)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setOnKeyListener { _, keyCode, _ ->
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                dialog.dismiss()
-                true
-            } else {
-                false
-            }
-        }
-
-        dialog.setCanceledOnTouchOutside(true)
-        val lp = WindowManager.LayoutParams()
-        val window = dialog.window
-        lp.copyFrom(window?.attributes)
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        window?.attributes = lp
-        lp.gravity = Gravity.CENTER
-        window?.attributes = lp
-        dialog.yes_button.setOnClickListener {
-            presenter.leaveCluster(cluster.name)
-            dialog.dismiss()
-        }
-        dialog.no_button.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
+        ConfirmationDialog.Builder()
+            .with(this@ProfileActivity)
+            .setDialogTitle("Tinggalkan Cluster?")
+            .setAlert("Apakah Anda yakin akan meninggalkan cluster ini?")
+            .setCancelText("Batal")
+            .setOkText("Ya, Tinggalkan")
+            .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                override fun onClickOk() {
+                    presenter.leaveCluster(cluster.name)
+                }
+            })
+            .show()
     }
 
     override fun showSuccessLeaveClusterAlert(name: String?) {

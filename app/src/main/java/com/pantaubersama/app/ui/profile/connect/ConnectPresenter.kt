@@ -24,6 +24,7 @@ class ConnectPresenter @Inject constructor(private val loginInteractor: LoginInt
                         view?.dismissLoading()
                         view?.showError(it)
                         view?.showFailedToConnectFacebookAlert()
+                        view?.onFailedConnectFacebook()
                     }
                 )
         )
@@ -47,6 +48,7 @@ class ConnectPresenter @Inject constructor(private val loginInteractor: LoginInt
                         view?.dismissLoading()
                         view?.showError(it)
                         view?.showFailedToConnectTwitterAlert()
+                        view?.onFailedConnectTwitter()
                     }
                 )
         )

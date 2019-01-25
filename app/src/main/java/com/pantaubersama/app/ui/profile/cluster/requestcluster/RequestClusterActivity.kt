@@ -67,10 +67,14 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>(), RequestC
         btn_send.setOnClickListener {
             if (edit_name.text?.length != 0) {
                 if (categoryId != "") {
-                    if (edit_description.text?.length != 0) {
-                        presenter.requestCluster(edit_name.text.toString(), categoryId, edit_description.text.toString(), imageToUpload)
+                    if (imageToUpload != null) {
+                        if (edit_description.text?.length != 0) {
+                            presenter.requestCluster(edit_name.text.toString(), categoryId, edit_description.text.toString(), imageToUpload)
+                        } else {
+                            edit_description.error = getString(R.string.blank_alert)
+                        }
                     } else {
-                        edit_description.error = getString(R.string.blank_alert)
+                        cluster_image_alert.visibility = View.VISIBLE
                     }
                 } else {
                     partai_selected.text = getString(R.string.blank_alert)
@@ -126,12 +130,14 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>(), RequestC
                         iv_user_avatar.setImageDrawable(getDrawable(R.drawable.ic_avatar_placeholder))
                     }
                 })
+                cluster_image_alert.visibility = View.GONE
             } else if (requestCode == PantauConstants.RequestCode.RC_STORAGE) {
                 if (data != null) {
                     val file = ImageChooserTools.proccedImageFromStorage(data, this@RequestClusterActivity)
                     imageToUpload = createFromFile(file)
                     iv_user_avatar.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
                 }
+                cluster_image_alert.visibility = View.GONE
             }
         }
     }

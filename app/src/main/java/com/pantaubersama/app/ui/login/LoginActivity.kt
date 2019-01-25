@@ -8,6 +8,7 @@ import com.extrainteger.symbolic.SymbolicConfig
 import com.extrainteger.symbolic.SymbolicException
 import com.extrainteger.symbolic.models.SymbolicToken
 import com.extrainteger.symbolic.ui.SymbolicLoginButton
+import com.google.firebase.iid.FirebaseInstanceId
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -61,7 +62,14 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
         symbolic_login_button.setCallback(object : Callback<SymbolicToken>() {
 
             override fun success(result: Result<SymbolicToken>) {
-                presenter.exchangeToken(result.data.accessToken, "")
+                FirebaseInstanceId.getInstance().instanceId
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            presenter.exchangeToken(result.data.accessToken, task.result?.token)
+                        } else {
+                            task.exception?.let { showError(it) }
+                        }
+                    }
             }
 
             override fun failure(exception: SymbolicException) {

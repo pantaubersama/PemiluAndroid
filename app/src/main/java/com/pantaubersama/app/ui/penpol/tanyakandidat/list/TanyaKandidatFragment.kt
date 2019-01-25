@@ -72,15 +72,14 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
     }
 
     override fun bindUserData(profile: Profile) {
+        this.profile = profile
         fab_add.setOnClickListener {
             if (profile != EMPTY_PROFILE) {
-                val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
-                startActivityForResult(intent, PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE)
+                openCreatePertanyaan()
             } else {
                 openLoginActivity()
             }
         }
-        this.profile = profile
     }
 
     private fun openLoginActivity() {
@@ -115,8 +114,11 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             }
 
             override fun onClickHeader() {
-                val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
-                startActivityForResult(intent, PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE)
+                if (profile != EMPTY_PROFILE) {
+                    openCreatePertanyaan()
+                } else {
+                    openLoginActivity()
+                }
             }
 
             override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
@@ -209,6 +211,11 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
             swipe_refresh?.isRefreshing = false
             getDataList()
         }
+    }
+
+    private fun openCreatePertanyaan() {
+        val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
+        startActivityForResult(intent, PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE)
     }
 
     private fun refreshItem() {

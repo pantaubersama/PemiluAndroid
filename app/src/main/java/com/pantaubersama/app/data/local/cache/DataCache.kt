@@ -57,6 +57,7 @@ class DataCache(context: Context) : SharedPref(context) {
         const val IS_ONBOARDING_COMPLETE = "is_onboarding_complete"
 
         const val FILTER_ORANG = "filter_orang"
+        const val FIREBASE_TOKEN = "firebase_token"
     }
 
     override fun prefId(): String {
@@ -258,5 +259,13 @@ class DataCache(context: Context) : SharedPref(context) {
 
     fun getSearchOrangFilter(): String {
         return getString(FILTER_ORANG) ?: PantauConstants.FILTER_ORANG_ALL
+    }
+
+    fun saveFirebaseToken(firebaseToken: String?) {
+        firebaseToken?.let { putString(FIREBASE_TOKEN, it) }
+    }
+
+    fun loadFirebaseToken(): String? {
+        return getString(FIREBASE_TOKEN)
     }
 }

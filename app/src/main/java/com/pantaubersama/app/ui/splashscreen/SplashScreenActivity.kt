@@ -23,6 +23,7 @@ import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Companion.CONFIRMATION_PATH
 import com.pantaubersama.app.utils.PantauConstants.Networking.ACCEPT_CLUSTER_INVITATION_PATH
+import com.pantaubersama.app.utils.PantauConstants.Networking.CLUSTER_INVITATION_BY_LINK_PATH
 import com.pantaubersama.app.utils.PantauConstants.Networking.INVITATION_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_BADGE_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_HASIL_KUIS_PATH
@@ -93,7 +94,11 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
-            urlPath?.contains(ACCEPT_CLUSTER_INVITATION_PATH)!! && !urlPath?.substringAfter(SHARE_BADGE_PATH).isNullOrEmpty() -> {
+            urlPath?.contains(ACCEPT_CLUSTER_INVITATION_PATH)!! && !urlPath?.substringAfter(ACCEPT_CLUSTER_INVITATION_PATH).isNullOrEmpty() -> {
+                finish()
+                ChromeTabUtil(this).forceLoadUrl(urlData)
+            }
+            urlData?.contains(CLUSTER_INVITATION_BY_LINK_PATH)!! && !urlPath?.substringAfter(CLUSTER_INVITATION_BY_LINK_PATH).isNullOrEmpty() -> {
                 finish()
                 ChromeTabUtil(this).forceLoadUrl(urlData)
             }

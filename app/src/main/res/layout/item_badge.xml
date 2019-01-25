@@ -13,7 +13,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:scaleType="centerInside"
-        android:src="@drawable/dummy_badge"
+        android:src="@color/gray_3"
         app:riv_oval="true" />
 
     <LinearLayout

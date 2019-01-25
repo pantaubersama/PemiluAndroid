@@ -87,6 +87,15 @@
                         android:textAllCaps="false"
                         android:textColor="@color/colorAccent" />
 
+                    <TextView
+                        android:id="@+id/cluster_image_alert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
+                        android:text="Gambar cluster wajib diisi"
+                        android:fontFamily="@font/lato_regular"
+                        android:visibility="gone"/>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"

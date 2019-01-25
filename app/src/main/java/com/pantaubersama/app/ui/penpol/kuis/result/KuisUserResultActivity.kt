@@ -95,8 +95,7 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
     override fun onBackPressed() {
         if (this.isTaskRoot) {
             startActivity(Intent(this, HomeActivity::class.java))
-        } else {
-            super.onBackPressed()
         }
+        super.onBackPressed()
     }
 }

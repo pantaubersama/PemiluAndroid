@@ -35,6 +35,8 @@
                 android:background="@color/gray_3"/>
 
             <FrameLayout
+                android:id="@+id/fl_invite_email"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -104,6 +106,7 @@
             </FrameLayout>
 
             <TextView
+                android:id="@+id/tv_magic_lick_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/gray_3"
@@ -111,7 +114,7 @@
                 android:fontFamily="@font/lato_regular"
                 android:textColor="@color/gray_5"
                 android:textSize="10sp"
-                android:text="@string/deskripsi_undang_lewat_tautan" />
+                android:text="@string/deskripsi_undang_lewat_tautan_moderator" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -137,6 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_rounded_outline_white"
+                    android:foreground="?selectableItemBackground"
                     android:layout_marginTop="12dp"
                     android:paddingLeft="12dp"
                     android:paddingStart="12dp"
@@ -145,10 +149,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:textSize="14sp"
-                    android:textColor="@color/gray_4"
-                    android:textIsSelectable="true"
-                    android:focusableInTouchMode="false"
-                    android:focusable="true"/>
+                    android:textColor="@color/gray_4"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -165,6 +166,7 @@
                         android:scaleType="centerInside" />
 
                     <TextView
+                        android:id="@+id/tv_link_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"

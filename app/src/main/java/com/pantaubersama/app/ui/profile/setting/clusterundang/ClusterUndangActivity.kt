@@ -16,9 +16,8 @@ class ClusterUndangActivity : BaseActivity<ClusterUndangPresenter>(), ClusterUnd
     @Inject
     override lateinit var presenter: ClusterUndangPresenter
 
-    override fun statusBarColor(): Int? {
-        return 0
-    }
+    override fun statusBarColor(): Int? = 0
+    override fun setLayout(): Int = R.layout.activity_cluster_undang
 
     override fun fetchIntentExtra() {
         clusterId = intent.getStringExtra(PantauConstants.Cluster.CLUSTER_ID)
@@ -31,10 +30,6 @@ class ClusterUndangActivity : BaseActivity<ClusterUndangPresenter>(), ClusterUnd
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_undang_anggota), R.color.white, 4f)
         onClickAction()
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.activity_cluster_undang
     }
 
     override fun showLoading() {

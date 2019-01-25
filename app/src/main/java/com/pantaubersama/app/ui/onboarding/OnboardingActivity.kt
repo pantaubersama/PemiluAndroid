@@ -11,13 +11,34 @@ import kotlinx.android.synthetic.main.activity_onboarding.*
 import javax.inject.Inject
 import androidx.viewpager.widget.ViewPager
 import com.pantaubersama.app.ui.login.LoginActivity
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_1_DESC
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_1_FILE_NAME
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_1_TITLE
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_2_DESC
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_2_FILE_NAME
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_2_TITLE
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_3_DESC
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_3_FILE_NAME
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_3_TITLE
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_4_DESC
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_4_FILE_NAME
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_4_TITLE
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_5_DESC
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_5_FILE_NAME
+import com.pantaubersama.app.utils.PantauConstants.Onboarding.ONBOARDING_5_TITLE
 
 class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
-    private var onBoardingChild1Fragment: OnboardingChild1Fragment = OnboardingChild1Fragment()
-    private var onBoardingChild2Fragment: OnboardingChild2Fragment = OnboardingChild2Fragment()
-    private var onBoardingChild3Fragment: OnboardingChild3Fragment = OnboardingChild3Fragment()
-    private var onBoardingChild4Fragment: OnboardingChild4Fragment = OnboardingChild4Fragment()
-    private var onBoardingChild5Fragment: OnboardingChild5Fragment = OnboardingChild5Fragment()
+
+    private var onBoardingChildFragment: OnboardingChildFragment = OnboardingChildFragment.newInstance(
+        ONBOARDING_1_TITLE, ONBOARDING_1_DESC, ONBOARDING_1_FILE_NAME, true)
+    private var onBoardingChild2Fragment: OnboardingChildFragment = OnboardingChildFragment.newInstance(
+        ONBOARDING_2_TITLE, ONBOARDING_2_DESC, ONBOARDING_2_FILE_NAME)
+    private var onBoardingChild3Fragment: OnboardingChildFragment = OnboardingChildFragment.newInstance(
+        ONBOARDING_3_TITLE, ONBOARDING_3_DESC, ONBOARDING_3_FILE_NAME)
+    private var onBoardingChild4Fragment: OnboardingChildFragment = OnboardingChildFragment.newInstance(
+        ONBOARDING_4_TITLE, ONBOARDING_4_DESC, ONBOARDING_4_FILE_NAME)
+    private var onBoardingChild5Fragment: OnboardingChildFragment = OnboardingChildFragment.newInstance(
+        ONBOARDING_5_TITLE, ONBOARDING_5_DESC, ONBOARDING_5_FILE_NAME)
 
     @Inject
     override lateinit var presenter: OnBoardingPresenter
@@ -33,11 +54,11 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
     override fun setupUI(savedInstanceState: Bundle?) {
 
         if (savedInstanceState != null) {
-            onBoardingChild1Fragment = supportFragmentManager.getFragment(savedInstanceState, OnboardingChild1Fragment.TAG) as OnboardingChild1Fragment
-            onBoardingChild2Fragment = supportFragmentManager.getFragment(savedInstanceState, OnboardingChild2Fragment.TAG) as OnboardingChild2Fragment
-            onBoardingChild3Fragment = supportFragmentManager.getFragment(savedInstanceState, OnboardingChild3Fragment.TAG) as OnboardingChild3Fragment
-            onBoardingChild4Fragment = supportFragmentManager.getFragment(savedInstanceState, OnboardingChild4Fragment.TAG) as OnboardingChild4Fragment
-            onBoardingChild5Fragment = supportFragmentManager.getFragment(savedInstanceState, OnboardingChild5Fragment.TAG) as OnboardingChild5Fragment
+            onBoardingChildFragment = supportFragmentManager.getFragment(savedInstanceState, "1") as OnboardingChildFragment
+            onBoardingChild2Fragment = supportFragmentManager.getFragment(savedInstanceState, "2") as OnboardingChildFragment
+            onBoardingChild3Fragment = supportFragmentManager.getFragment(savedInstanceState, "3") as OnboardingChildFragment
+            onBoardingChild4Fragment = supportFragmentManager.getFragment(savedInstanceState, "4") as OnboardingChildFragment
+            onBoardingChild5Fragment = supportFragmentManager.getFragment(savedInstanceState, "5") as OnboardingChildFragment
         }
 
         setupViewPager()
@@ -65,7 +86,7 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
         view_pager.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
-                    0 -> onBoardingChild1Fragment
+                    0 -> onBoardingChildFragment
                     1 -> onBoardingChild2Fragment
                     2 -> onBoardingChild3Fragment
                     3 -> onBoardingChild4Fragment
@@ -92,11 +113,11 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> {
-                        onBoardingChild1Fragment.startAnimation(true)
+                        onBoardingChildFragment.startAnimation(true)
                         onBoardingChild2Fragment.startAnimation(false)
                     }
                     1 -> {
-                        onBoardingChild1Fragment.startAnimation(false)
+                        onBoardingChildFragment.startAnimation(false)
                         onBoardingChild2Fragment.startAnimation(true)
                         onBoardingChild3Fragment.startAnimation(false)
                     }
@@ -135,10 +156,10 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        supportFragmentManager.putFragment(outState, OnboardingChild1Fragment.TAG, onBoardingChild1Fragment)
-        supportFragmentManager.putFragment(outState, OnboardingChild2Fragment.TAG, onBoardingChild2Fragment)
-        supportFragmentManager.putFragment(outState, OnboardingChild3Fragment.TAG, onBoardingChild3Fragment)
-        supportFragmentManager.putFragment(outState, OnboardingChild4Fragment.TAG, onBoardingChild4Fragment)
-        supportFragmentManager.putFragment(outState, OnboardingChild5Fragment.TAG, onBoardingChild5Fragment)
+        supportFragmentManager.putFragment(outState, "1", onBoardingChildFragment)
+        supportFragmentManager.putFragment(outState, "2", onBoardingChild2Fragment)
+        supportFragmentManager.putFragment(outState, "3", onBoardingChild3Fragment)
+        supportFragmentManager.putFragment(outState, "4", onBoardingChild4Fragment)
+        supportFragmentManager.putFragment(outState, "5", onBoardingChild5Fragment)
     }
 }

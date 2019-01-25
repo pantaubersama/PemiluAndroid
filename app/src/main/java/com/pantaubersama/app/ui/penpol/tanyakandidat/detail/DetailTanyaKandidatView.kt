@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.penpol.tanyakandidat.detail
 
 import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.data.model.user.Profile
 
 interface DetailTanyaKandidatView : BaseView {
     fun bindData(question: Pertanyaan)
@@ -16,4 +17,5 @@ interface DetailTanyaKandidatView : BaseView {
     fun onClickShare()
     fun onClickLapor()
     fun onClickDeleteItem()
+    fun bindProfile(profile: Profile)
 }

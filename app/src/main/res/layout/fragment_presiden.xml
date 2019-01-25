@@ -82,7 +82,8 @@
                 android:background="@color/gray_1"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="16dp"
+                android:visibility="gone">
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/paslon_avatar"
