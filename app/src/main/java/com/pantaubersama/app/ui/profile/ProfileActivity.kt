@@ -1,12 +1,9 @@
 package com.pantaubersama.app.ui.profile
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.* // ktlint-disable
 import androidx.core.content.ContextCompat
