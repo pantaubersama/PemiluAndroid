@@ -20,12 +20,16 @@ class SettingPresenter @Inject constructor(
                 loginInteractor.logOut(
                         clientId,
                         clientSecret
-                )?.doOnComplete {
-                    loginInteractor.clearDataCache()
-                    view?.goToLogin()
-                }?.doOnError {
-                    view?.showError(it)
-                }!!.subscribe()
+                ).subscribe(
+                    {
+                        loginInteractor.clearDataCache()
+                        view?.goToLogin()
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showLogoutFailedAlert()
+                    }
+                )
         )
     }
 
@@ -115,6 +119,21 @@ class SettingPresenter @Inject constructor(
                         } else if (accountType == PantauConstants.CONNECT.TWITTER) {
                             view?.showFailedDisconnectTwitterAlert()
                         }
+                    }
+                )
+        )
+    }
+
+    fun revokeFirebaseToken() {
+        disposables.add(
+            loginInteractor.revokeFirebaseToken()
+                .subscribe(
+                    {
+                        view?.onSuccessRevokeFirebaseToken()
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showLogoutFailedAlert()
                     }
                 )
         )

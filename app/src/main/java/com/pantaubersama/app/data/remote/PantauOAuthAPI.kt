@@ -221,4 +221,11 @@ interface PantauOAuthAPI {
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
     ): Single<PoliticalPartiesResponse>
+
+    @FormUrlEncoded
+    @PUT("/v1/me/firebase_keys")
+    fun revokeFirebaseToken(
+        @Field("firebase_key") firebaseKey: String,
+        @Field("firebase_key_type") firebaseKeyType: String
+    ): Completable
 }

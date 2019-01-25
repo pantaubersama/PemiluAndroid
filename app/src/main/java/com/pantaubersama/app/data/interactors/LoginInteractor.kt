@@ -33,7 +33,7 @@ class LoginInteractor @Inject constructor(
         return dataCache.loadLoginState()
     }
 
-    fun logOut(clientId: String?, clientSecret: String?): Completable? {
+    fun logOut(clientId: String?, clientSecret: String?): Completable {
         return apiWrapper.getPantauOAuthApi()
             .revokeToken(clientId, clientSecret)
             .subscribeOn(rxSchedulers.io())
@@ -93,5 +93,11 @@ class LoginInteractor @Inject constructor(
 
     fun getSavedToken(): String? {
         return dataCache.loadToken()
+    }
+
+    fun revokeFirebaseToken(): Completable {
+        return apiWrapper.getPantauOAuthApi().revokeFirebaseToken("", "android")
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
     }
 }
