@@ -105,6 +105,14 @@ class ConnectActivity : BaseActivity<ConnectPresenter>(), ConnectView {
         }
     }
 
+    override fun onFailedConnectTwitter() {
+        logoutTwitterSDK()
+    }
+
+    override fun onFailedConnectFacebook() {
+        logoutFacebookSDK()
+    }
+
     override fun showConnectedToTwitterAlert() {
         ToastUtil.show(this@ConnectActivity, "Terhubung dengan Twitter")
         getTwitterUserData()

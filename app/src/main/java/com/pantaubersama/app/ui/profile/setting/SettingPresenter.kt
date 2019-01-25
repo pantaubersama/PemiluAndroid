@@ -47,6 +47,7 @@ class SettingPresenter @Inject constructor(
                         view?.dismissLoading()
                         view?.showError(it)
                         view?.showFailedToConnectFacebookAlert()
+                        view?.onFailedConnectFacebook()
                     }
                 )
         )
@@ -70,6 +71,7 @@ class SettingPresenter @Inject constructor(
                         view?.dismissLoading()
                         view?.showError(it)
                         view?.showFailedToConnectTwitterAlert()
+                        view?.onFailedConnectTwitter()
                     }
                 )
         )

@@ -57,11 +57,9 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     companion object {
         val EDIT_PROFILE = 1
-        val UBAH_SANDI = 2
         val UBAH_DATA_LAPOR = 3
         val VERIFIKASI = 4
         val BADGE = 5
-        val CLUSTER_UNDANG = 6
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -136,6 +134,10 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                         .show()
             }
         }
+    }
+
+    override fun onFailedConnectTwitter() {
+        logoutTwitterSDK()
     }
 
     override fun showConnectedToTwitterAlert() {
@@ -214,6 +216,10 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                         .show()
             }
         }
+    }
+
+    override fun onFailedConnectFacebook() {
+        logoutFacebookSDK()
     }
 
     override fun onSuccessGetProfile(profile: Profile) {

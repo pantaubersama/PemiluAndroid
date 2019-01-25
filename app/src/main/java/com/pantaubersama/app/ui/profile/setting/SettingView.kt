@@ -19,4 +19,6 @@ interface SettingView : BaseView {
     fun showFailedDisconnectTwitterAlert()
     fun logoutFacebookSDK()
     fun logoutTwitterSDK()
+    fun onFailedConnectFacebook()
+    fun onFailedConnectTwitter()
 }
