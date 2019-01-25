@@ -366,10 +366,18 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                 .setOkText(getString(R.string.label_keluar))
                 .addOkListener(object : ConfirmationDialog.DialogOkListener {
                     override fun onClickOk() {
-                        presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
+                        presenter.revokeFirebaseToken()
                     }
                 })
                 .show()
+    }
+
+    override fun onSuccessRevokeFirebaseToken() {
+        presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
+    }
+
+    override fun showLogoutFailedAlert() {
+        ToastUtil.show(this@SettingActivity, "Gagal logout")
     }
 
     override fun showSuccessDisconnectFacebookAlert() {

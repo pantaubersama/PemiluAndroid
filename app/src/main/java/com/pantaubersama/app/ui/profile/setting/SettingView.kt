@@ -21,4 +21,6 @@ interface SettingView : BaseView {
     fun logoutTwitterSDK()
     fun onFailedConnectFacebook()
     fun onFailedConnectTwitter()
+    fun onSuccessRevokeFirebaseToken()
+    fun showLogoutFailedAlert()
 }
