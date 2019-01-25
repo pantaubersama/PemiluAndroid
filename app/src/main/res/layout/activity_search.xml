@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.pantaubersama.app.ui.search.SearchActivity">
+
+    <RelativeLayout
+        android:id="@+id/view_searchbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_8dp_white">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_marginStart="10dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="?attr/homeAsUpIndicator"
+                tools:ignore="ContentDescription" />
+
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/btn_back"
+                android:layout_marginStart="2dp"
+                android:textSize="12sp"
+                android:hint="@string/hint_cari_di_pantau_bersama"
+                android:background="@null"
+                android:inputType="text"
+                android:textColor="@color/black_2"
+                tools:ignore="Autofill"
+                android:imeOptions="actionSearch"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:visibility="gone"
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:tabMode="scrollable"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="3dp">
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.viewpager.widget.ViewPager>
+
+</LinearLayout>

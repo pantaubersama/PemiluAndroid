@@ -1,12 +1,12 @@
 package com.pantaubersama.app.ui.profile.setting.badge
 
-import android.widget.Toast
+import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.user.Badge
+import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_badge.*
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class BadgeActivity : BaseActivity<BadgePresenter>(), BadgeView {
 
     @Inject
-    lateinit var interactor: ProfileInteractor
+    override lateinit var presenter: BadgePresenter
 
     private lateinit var adapter: BadgeAdapter
 
@@ -24,29 +24,26 @@ class BadgeActivity : BaseActivity<BadgePresenter>(), BadgeView {
         // ok
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun initPresenter(): BadgePresenter? {
-        return BadgePresenter(interactor)
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupRecyclerView()
         onClickAction()
-        presenter?.refreshBadges()
+        presenter.refreshBadges()
     }
 
     private fun setupRecyclerView() {
         adapter = BadgeAdapter {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            it.achievedId?.let { achievedId -> startActivity(DetailBadgeActivity.setIntent(this, achievedId))
+            }
         }
         badge_recycler_view.adapter = adapter
         badge_recycler_view.layoutManager = LinearLayoutManager(this)
 
         badge_swipe_refresh.setOnRefreshListener {
-            presenter?.refreshBadges()
+            presenter.refreshBadges()
             badge_swipe_refresh.isRefreshing = false
         }
     }

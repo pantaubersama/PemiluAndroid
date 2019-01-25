@@ -28,7 +28,6 @@
             android:fontFamily="@font/lato_bold"
             android:gravity="center_horizontal"
             android:lineSpacingExtra="6sp"
-            android:text="Versi 1.0"
             android:textColor="@color/black_3"
             android:textSize="14sp" />
 
@@ -67,6 +66,7 @@
             android:text="@string/all_rights_reserved" />
 
         <TextView
+            android:id="@+id/license_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

@@ -2,17 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_item_kuis"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingTop="24dp"
+    android:paddingBottom="30dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
 
     <ImageView
+        android:id="@+id/iv_kuis_image"
         android:layout_width="match_parent"
         android:layout_height="240dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_dummy_kuis_item"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/img_dummy_kuis_item" />
 
     <TextView
         android:id="@+id/tv_kuis_title"

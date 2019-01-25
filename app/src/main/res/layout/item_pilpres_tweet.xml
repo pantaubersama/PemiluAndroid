@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_item_pilpres_tweet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -25,8 +26,8 @@
                 android:layout_width="12dp"
                 android:layout_height="12dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/dummy_avatar"
-                app:riv_border_width="1dp"
+                android:src="@drawable/ic_avatar_placeholder"
+                app:riv_border_width="0.3dp"
                 app:riv_border_color="@color/colorPrimary"
                 app:riv_corner_radius="3dp"/>
             <TextView
@@ -52,7 +53,7 @@
                     android:id="@+id/iv_tweet_avatar"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/dummy_avatar"
+                    android:src="@drawable/ic_avatar_placeholder"
                     android:scaleType="centerCrop"
                     app:riv_oval="true"/>
 
@@ -103,7 +104,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="2dp"
                             android:textSize="12sp"
-                            android:text=" @Toranta"
+                            tools:text=" @Toranta"
                             android:textColor="@color/gray_4"
                             android:maxLength="15"
                             android:singleLine="true"
@@ -123,12 +124,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
-                            android:text=" 5 Des"
+                            tools:text=" 5 Des"
                             android:textColor="@color/gray_4"/>
 
                     </LinearLayout>
                     <ImageView
-                        android:id="@+id/iv_option"
+                        android:id="@+id/iv_tweet_option"
                         android:layout_width="30dp"
                         android:layout_height="24dp"
                         android:background="?selectableItemBackgroundBorderless"
@@ -140,8 +141,8 @@
                     android:id="@+id/tv_tweet_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:lines="3"
-                    android:maxLines="4"
+                    android:minLines="2"
+                    android:maxLength="280"
                     android:textSize="12sp"
                     android:textColor="@color/black_1"
                     android:ellipsize="end"

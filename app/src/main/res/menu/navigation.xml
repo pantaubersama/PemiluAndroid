@@ -2,28 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_linimasa"
-        android:icon="@drawable/ic_linimasa_active"
-        android:title="@string/title_navbar_linimasa" />
+        android:id="@+id/navigation_menyerap"
+        android:icon="@drawable/ic_menyerap_active"
+        android:title="@string/title_navbar_menyerap" />
 
     <item
-        android:id="@+id/navigation_penpol"
-        android:icon="@drawable/ic_pendidikan_politik_inactive"
-        android:title="@string/title_navbar_penpol" />
+        android:id="@+id/navigation_menggali"
+        android:icon="@drawable/ic_menggali_inactive"
+        android:title="@string/title_navbar_menggali" />
 
     <item
-        android:id="@+id/navigation_wordstadium"
-        android:icon="@drawable/ic_wordstadium_inactive"
-        android:title="@string/title_navbar_wordstadium" />
+        android:id="@+id/navigation_menguji"
+        android:icon="@drawable/ic_menguji_inactive"
+        android:title="@string/title_navbar_menguji" />
 
     <item
-        android:id="@+id/navigation_lapor"
-        android:icon="@drawable/ic_lapor_inactive"
-        android:title="@string/title_navbar_lapor"/>
+        android:id="@+id/navigation_menjaga"
+        android:icon="@drawable/ic_menjaga_inactive"
+        android:title="@string/title_navbar_menjaga"/>
 
     <item
-        android:id="@+id/navigation_rekap"
-        android:icon="@drawable/ic_hitung_suara_inactive"
-        android:title="@string/title_navbar_rekap"/>
+        android:id="@+id/navigation_merayakan"
+        android:icon="@drawable/ic_merayakan_inactive"
+        android:title="@string/title_navbar_merayakan"/>
 
 </menu>

@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:transitionName="Background"
     tools:context="com.pantaubersama.app.ui.splashscreen.SplashScreenActivity">
 
     <ImageView
+        android:id="@+id/iv_splash_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/pantau_icon_with_text"
-        android:layout_gravity="center"/>
+        android:src="@drawable/icon_pantau_bersama_with_text"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/pantau_bersama_tagline" />
 
-</FrameLayout>
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:id="@+id/lottie_loading"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/iv_splash_logo"
+        app:lottie_fileName="lottie_loading.json"
+        android:layout_centerHorizontal="true"
+        app:lottie_autoPlay="false"/>
+
+</RelativeLayout>

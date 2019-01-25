@@ -27,7 +27,7 @@
                 android:scaleType="centerCrop"
                 app:riv_border_color="@color/white"
                 app:riv_oval="true"
-                android:src="@drawable/dummy_avatar"/>
+                android:src="@drawable/ic_avatar_placeholder"/>
 
             <TextView
                 android:id="@+id/user_name"
@@ -38,8 +38,8 @@
                 android:ellipsize="end"
                 android:layout_marginLeft="12dp"
                 android:layout_marginStart="12dp"
-                android:textSize="11sp"
-                android:text="Budi Santoso"
+                android:textSize="9sp"
+                android:text="Anda"
                 android:fontFamily="@font/lato_bold"/>
 
         </LinearLayout>
@@ -51,7 +51,7 @@
             android:textSize="16sp"
             android:fontFamily="@font/bw_modelica_bold"
             android:layout_marginTop="6dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="12dp"/>
 
     </LinearLayout>
 

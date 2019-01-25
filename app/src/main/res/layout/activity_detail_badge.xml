@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_share_badge"
+    tools:context="com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"/>
+
+    <LinearLayout
+        android:id="@+id/ll_badge_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_user_avatar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_avatar_placeholder"
+            android:layout_marginTop="30dp"
+            android:scaleType="centerCrop"
+            app:riv_oval="true"/>
+
+        <TextView
+            android:id="@+id/tv_user_fullname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/lato_bold"
+            android:textSize="14sp"
+            android:textColor="@color/black_2"
+            tools:text="Aniah Muanjani"/>
+
+        <TextView
+            android:id="@+id/tv_user_bio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="12sp"
+            android:textColor="@color/gray_dark_3"
+            tools:text="Aniah Muanjani"/>
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_badge"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="65dp"/>
+
+        <TextView
+            android:id="@+id/tv_badge_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:fontFamily="@font/lato_bold"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            tools:text="KADET"/>
+
+        <TextView
+            android:id="@+id/tv_badge_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/lato_regular"
+            android:textColor="@color/gray_2"
+            android:textSize="14sp"
+            tools:text="Ikut Kuis Pendidikan Pertama Kali"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_share"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:text="@string/share_action_label"
+            android:textColor="@color/white"
+            app:cornerRadius="18dp"
+            app:icon="@drawable/ic_share"
+            app:iconPadding="12dp"
+            app:iconTint="@color/white"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1dp" />
+    </LinearLayout>
+
+    <include layout="@layout/layout_loading_state"/>
+
+    <include layout="@layout/layout_fail_state"/>
+
+</RelativeLayout>

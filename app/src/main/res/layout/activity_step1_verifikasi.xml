@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.pantaubersama.app.ui.profile.verifikasi.Step1VerifikasiActivity">
+    tools:context="com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -22,140 +22,164 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/ok_button"
-            android:orientation="vertical">
+            android:layout_above="@id/ok_button">
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Verifikasi akun"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="24sp"
-                    android:fontFamily="@font/lato_bold"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"/>
-
-                <TextView
-                    android:id="@+id/verification_step_indicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="24sp"
-                    android:fontFamily="@font/lato_bold"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"/>
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray_3"/>
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <FrameLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp">
 
-                    <LinearLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Verifikasi akun"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="24sp"
+                        android:fontFamily="@font/lato_bold"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"/>
+
+                    <TextView
+                        android:id="@+id/verification_step_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="24sp"
+                        android:fontFamily="@font/lato_bold"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_3"/>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_gray_3"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp">
+                        android:padding="16dp">
 
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_gray_2"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="center_horizontal"
-                        android:padding="16dp"
-                        android:orientation="vertical"
-                        android:focusableInTouchMode="true"
-                        android:focusable="true">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_verified_48dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Kenapa Akunmu Perlu Diverifikasi?"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/bw_modelica_bold"
-                            android:textSize="22sp"
-                            android:textColor="@color/black_3"
-                            android:gravity="center_horizontal"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/verification_hint"
-                            android:gravity="center_horizontal"
-                            android:layout_marginTop="12dp"
-                            android:fontFamily="@font/lato_medium"
-                            android:textColor="@color/gray_dark_2"
-                            android:textSize="16sp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:fontFamily="@font/bw_modelica_bold"
-                            android:text="Masukkan No Identitas KTP"
-                            android:layout_marginTop="32dp"
-                            android:textColor="@color/black_3"
-                            android:textSize="18sp"/>
-
-                        <EditText
-                            android:id="@+id/ktp_number"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_outline_green"
-                            android:hint="123 1234 1111"
-                            android:fontFamily="@font/lato_bold"
+                            android:background="@drawable/rounded_gray_3"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp">
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_gray_2"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginEnd="8dp"
                             android:gravity="center_horizontal"
-                            android:layout_marginTop="12dp"
-                            android:padding="12dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginEnd="12dp"
-                            android:textColor="@color/black_3"/>
+                            android:padding="16dp"
+                            android:orientation="vertical"
+                            android:focusableInTouchMode="true"
+                            android:focusable="true">
 
-                    </LinearLayout>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_verified_48dp"/>
 
-                </FrameLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Kenapa akunmu perlu diverifikasi?"
+                                android:layout_marginTop="16dp"
+                                android:fontFamily="@font/bw_modelica_bold"
+                                android:textSize="22sp"
+                                android:textColor="@color/black_3"
+                                android:gravity="center_horizontal"/>
 
-            </ScrollView>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/verification_hint"
+                                android:gravity="center_horizontal"
+                                android:layout_marginTop="12dp"
+                                android:fontFamily="@font/lato_medium"
+                                android:textColor="@color/gray_dark_2"
+                                android:textSize="16sp"/>
 
-        </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:fontFamily="@font/bw_modelica_bold"
+                                android:text="Masukkan Nomor Induk Kependudukan/Nomor KTP"
+                                android:layout_marginTop="32dp"
+                                android:textColor="@color/black_3"
+                                android:textSize="18sp"/>
+
+                            <EditText
+                                android:id="@+id/ktp_number"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_outline_green"
+                                android:hint="Nomor KTP Anda"
+                                android:fontFamily="@font/lato_bold"
+                                android:gravity="center_horizontal"
+                                android:layout_marginTop="12dp"
+                                android:padding="12dp"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginRight="12dp"
+                                android:layout_marginEnd="12dp"
+                                android:textColor="@color/black_3"
+                                android:inputType="number"
+                                android:lines="1"
+                                android:maxLines="1"/>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                </ScrollView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/loading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@color/white"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/ok_button"

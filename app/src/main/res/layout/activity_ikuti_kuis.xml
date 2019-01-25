@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,29 +8,27 @@
     tools:context="com.pantaubersama.app.ui.penpol.kuis.ikutikuis.IkutiKuisActivity">
 
     <ImageView
+        android:id="@+id/iv_kuis_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ikuti_quiz_banner"
         android:adjustViewBounds="true"
-        android:contentDescription="Ikuti kuis"/>
+        android:contentDescription="Ikuti kuis"
+        tools:src="@drawable/ikuti_quiz_banner" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="16dp"
         android:orientation="vertical"
-        android:paddingTop="240dp"
-        android:paddingRight="16dp"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp"
-        android:paddingLeft="16dp"
-        android:layout_above="@id/start_quiz_action">
+        android:paddingTop="240dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="@color/gray_2"
             android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:paddingTop="16dp"
             android:paddingBottom="16dp">
 
@@ -38,63 +36,47 @@
                 android:id="@+id/quiz_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kuis minggu ke-2"
                 android:fontFamily="@font/bw_modelica_bold"
-                android:textSize="24sp"
+                android:includeFontPadding="false"
                 android:textColor="@color/black"
-                android:includeFontPadding="false"/>
+                android:textSize="24sp"
+                tools:text="Kuis minggu ke-2" />
 
             <TextView
                 android:id="@+id/question_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="7 Pertanyaan"
-                android:textColor="@color/black"
                 android:fontFamily="@font/bw_modelica_regular"
-                android:gravity="center_horizontal"/>
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                tools:text="7 Pertanyaan" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/quiz_long_hint"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/quiz_long_hint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_medium"
-                    android:textColor="@color/black"
-                    android:text="@string/quiz_text_dummy"
-                    android:gravity="center_horizontal"/>
-
-            </LinearLayout>
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
+                android:fontFamily="@font/lato_medium"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                tools:text="@string/quiz_text_dummy" />
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/start_quiz_action"
-        android:background="@color/purple"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:foreground="?selectableItemBackground"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/start_quiz_action"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:letterSpacing="0.1"
-            android:lineSpacingExtra="3sp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="Mulai"
-            android:fontFamily="@font/lato_bold"
-            android:textAllCaps="true"/>
+            android:textSize="18sp"
+            app:backgroundTint="@color/purple"
+            app:cornerRadius="0dp" />
 
     </LinearLayout>
 
-</RelativeLayout>
+</FrameLayout>

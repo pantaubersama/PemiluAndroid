@@ -9,8 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.request.RequestListener
 import com.google.android.material.snackbar.Snackbar
 import com.pantaubersama.app.utils.GlideApp
@@ -54,4 +57,44 @@ fun ImageView.setGrayScale(isGray: Boolean) {
         ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
     else
         null
+}
+
+fun LinearLayout.enable(isEnable: Boolean) {
+    if (isEnable) {
+        this.isEnabled = true
+        for (i in 0 until this.childCount) {
+            val child = this.getChildAt(i)
+            child.isEnabled = true
+        }
+    } else {
+        this.isEnabled = false
+        for (i in 0 until this.childCount) {
+            val child = this.getChildAt(i)
+            child.isEnabled = false
+        }
+    }
+}
+
+fun View.isVisible(): Boolean {
+    return this.visibility == View.VISIBLE
+}
+
+fun LottieAnimationView.enableLottie(enable: Boolean, isGoneOnDisable: Boolean = true, looping: Boolean = true) {
+    if (isGoneOnDisable) this.visibleIf(enable)
+    if (enable) {
+        this.playAnimation()
+        this.repeatCount = if (looping) LottieDrawable.INFINITE else 1
+    } else {
+        this.cancelAnimation()
+    }
+}
+
+fun View.enableLottie(enable: Boolean, lottieView: LottieAnimationView, hideOrShowContainer: Boolean = true, looping: Boolean = true) {
+    if (enable) {
+        lottieView.playAnimation()
+        lottieView.repeatCount = if (looping) LottieDrawable.INFINITE else 1
+    } else {
+        lottieView.cancelAnimation()
+    }
+    if (hideOrShowContainer) this.visibleIf(enable)
 }

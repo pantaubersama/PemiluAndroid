@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_cluster_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
+    android:paddingTop="14dp"
+    android:paddingBottom="14dp"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     android:gravity="center_vertical"
-    android:foreground="?selectableItemBackground">
+    android:background="?selectableItemBackground">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/iv_avatar_cluster"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/dummy_avatar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/ic_avatar_placeholder"
         android:scaleType="centerCrop"
         app:riv_oval="true"/>
     <LinearLayout
@@ -29,17 +29,17 @@
             android:id="@+id/tv_cluster_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Partai Pedang Panjang"
-            android:textSize="10sp"
+            tools:text="Partai Pedang Panjang"
+            android:textSize="14sp"
             android:textColor="@color/black"
             android:fontFamily="@font/lato_bold"/>
         <TextView
             android:id="@+id/tv_cluster_member_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10 anggota"
-            android:textSize="9sp"
-            android:textColor="@color/gray_4"
+            tools:text="10 anggota"
+            android:textSize="14sp"
+            android:textColor="@color/gray_8"
             android:fontFamily="@font/lato_regular"/>
     </LinearLayout>
 </LinearLayout>

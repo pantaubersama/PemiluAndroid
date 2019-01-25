@@ -65,4 +65,8 @@ abstract class SharedPref(var context: Context) {
     fun clear() {
         edit().clear().apply()
     }
+
+    fun clear(key: String) {
+        edit().remove(key).apply()
+    }
 }

@@ -1,7 +1,9 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
-import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
+import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatListData
+import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatListResponse
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
@@ -13,11 +15,7 @@ class TanyaKandidatInteractor @Inject constructor(
     private val rxSchedulers: RxSchedulers,
     private val dataCache: DataCache
 ) {
-    fun isBannerShown(): Boolean? {
-        return dataCache.isBannerTanyaKandidatOpened()
-    }
-
-    fun createTanyaKandidat(body: String?): Single<TanyaKandidatResponse> {
+    fun createTanyaKandidat(body: String?): Single<TanyaKandidatListResponse> {
         return apiWrapper
             .getPantauApi()
             .createTanyaKandidat(
@@ -29,19 +27,34 @@ class TanyaKandidatInteractor @Inject constructor(
 
     fun getTanyaKandidatlist(
         page: Int?,
-        perPage: Int?,
-        orderBy: String?,
-        direction: String?,
-        filterBy: String?
-    ): Single<TanyaKandidatResponse> {
+        perPage: Int?
+    ): Single<TanyaKandidatListData> {
         return apiWrapper.getPantauApi().getTanyaKandidatList(
             page,
             perPage,
-            orderBy,
-            direction,
-            filterBy
+            dataCache.loadTanyaKandidatOrderFilter(),
+            dataCache.loadTanyaKandidatOrderFilterDirection(),
+            dataCache.loadTanyaKandidatUserFilter()
         )
+            .map { it.data }
             .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getMyTanyaKandidatList(
+        page: Int,
+        perPage: Int
+    ): Single<TanyaKandidatListData?> {
+        return apiWrapper.getPantauApi().getMyTanyaKandidatList(page, perPage)
+            .subscribeOn(rxSchedulers.io())
+            .map { it.data }
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getTanyaKandidatById(questionId: String): Single<Pertanyaan?> {
+        return apiWrapper.getPantauApi().getTanyaKandidatById(questionId)
+            .subscribeOn(rxSchedulers.io())
+            .map { it.data.question }
             .observeOn(rxSchedulers.mainThread())
     }
 
@@ -94,5 +107,37 @@ class TanyaKandidatInteractor @Inject constructor(
         return Single.fromCallable {
             dataCache.loadTanyaKandidatOrderFilter()
         }
+    }
+
+    fun unVoteQuestion(id: String?, className: String): Completable {
+        return apiWrapper
+            .getPantauApi()
+            .unVoteQuestion(
+                id,
+                className
+            )
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun searchTanyaKandidat(keyword: String, page: Int, perpage: Int): Single<TanyaKandidatListData> {
+        return apiWrapper.getPantauApi().searchTanyaKandidat(
+            keyword,
+            page,
+            perpage,
+            dataCache.loadTanyaKandidatOrderFilter(),
+            dataCache.loadTanyaKandidatOrderFilterDirection(),
+            dataCache.loadTanyaKandidatUserFilter()
+        )
+            .map { it.data }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getUserTanyaKandidatList(page: Int, perPage: Int, userId: String): Single<TanyaKandidatListData> {
+        return apiWrapper.getPantauApi().getUserTanyaKandidatList(userId, page, perPage)
+            .map { it.data }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
     }
 }

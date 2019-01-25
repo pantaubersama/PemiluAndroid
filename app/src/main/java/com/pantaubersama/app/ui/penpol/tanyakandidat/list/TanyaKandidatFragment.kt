@@ -1,203 +1,56 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.list
 
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.base.BaseFragment
-import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
-import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
-import com.pantaubersama.app.data.local.cache.DataCache
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
-import com.pantaubersama.app.utils.OnScrollListener
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
+import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
+import com.pantaubersama.app.ui.login.LoginActivity
+import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity
+import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
+import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
+import com.pantaubersama.app.ui.widget.OptionDialog
+import com.pantaubersama.app.utils.CopyUtil
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_QUESTION_ITEM
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_QUESTION
+import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_ITEM_QUESTION
+import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_ITEM_CHANGED_QUESTION
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.enableLottie
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
-import kotlinx.android.synthetic.main.layout_banner_container.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import kotlinx.android.synthetic.main.layout_empty_state.*
+import kotlinx.android.synthetic.main.layout_fail_state.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
+
     @Inject
-    lateinit var interactor: TanyaKandidatInteractor
-    @Inject
-    lateinit var dataCache: DataCache
+    override lateinit var presenter: TanyaKandidatPresenter
+
     private var page = 1
     private var perPage = 10
 
     private var adapter: TanyaKandidatAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
-    private var isDataEnd = false
-    private var isLoading = false
-
-    override fun initInjection() {
-        (activity?.application as BaseApp).createActivityComponent(activity)?.inject(this)
-    }
-
-    override fun initPresenter(): TanyaKandidatPresenter? {
-        return TanyaKandidatPresenter(interactor)
-    }
-
-    override fun initView(view: View) {
-        presenter
-        setupBanner()
-        setupTanyaKandidatList()
-        presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
-    }
-
-    private fun setupBanner() {
-        presenter?.isBannerShown()
-    }
-
-    override fun showBanner() {
-        layout_banner_tanya_kandidat.visibility = View.VISIBLE
-        tv_banner_text.text = getString(R.string.tanya_kandidat_banner_text)
-        iv_banner_image.setImageResource(R.drawable.ic_banner_tanya_kandidat)
-        fl_banner.setOnClickListener {
-            val intent = BannerInfoActivity.setIntent(context!!, PantauConstants.Extra.TYPE_TANYA_KANDIDAT)
-            startActivityForResult(intent, PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT)
-        }
-        iv_banner_close.setOnClickListener {
-            layout_banner_tanya_kandidat.visibility = View.GONE
-        }
-    }
-
-    override fun hideBanner() {
-        layout_banner_tanya_kandidat.visibility = View.GONE
-    }
-
-    private fun setupTanyaKandidatList() {
-        adapter = TanyaKandidatAdapter(dataCache.loadUserProfile().id)
-        adapter?.listener = object : TanyaKandidatAdapter.AdapterListener {
-            override fun onClickShare(item: Pertanyaan?) {
-                ShareUtil.shareItem(context!!, item)
-            }
-
-            override fun onClickUpvote(id: String?, isLiked: Boolean?, position: Int?) {
-                presenter?.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
-            }
-
-            override fun onClickDeleteItem(id: String?, position: Int?) {
-                presenter?.deleteItem(id, position)
-            }
-
-            override fun onClickCopyUrl(id: String?) {
-                val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val copyUri = Uri.parse("pantau.co.id/" + "share/tk/" + id)
-                val clip = ClipData.newUri(activity?.contentResolver, "URI", copyUri)
-                clipboard.primaryClip = clip
-                ToastUtil.show(context!!, "Copied to clipboard")
-            }
-
-            override fun onClickLapor(id: String?) {
-                presenter?.reportQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME)
-            }
-        }
-        layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        recycler_view.layoutManager = layoutManager
-        recycler_view.adapter = adapter
-        recycler_view.addOnScrollListener(object : OnScrollListener(layoutManager) {
-            override fun loadMoreItem() {
-                adapter?.setLoading()
-                page += 1
-                presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
-            }
-
-            override fun isDataEnd(): Boolean {
-                return isDataEnd
-            }
-
-            override fun isLoading(): Boolean {
-                return isLoading
-            }
-        })
-        swipe_refresh.setOnRefreshListener {
-            swipe_refresh?.isRefreshing = false
-            refreshItem()
-        }
-    }
-
-    private fun refreshItem() {
-        page = 1
-        presenter?.getTanyaKandidatList(page, perPage, dataCache.loadTanyaKandidatOrderFilter(), "desc", dataCache.loadTanyaKandidatUserFilter())
-    }
-
-    override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>) {
-        recycler_view.visibility = View.VISIBLE
-        adapter?.setData(pertanyaanList)
-        adapter?.addHeader()
-    }
-
-    override fun showEmptyDataAlert() {
-        view_empty_state.visibility = View.VISIBLE
-    }
-
-    override fun bindNextDataTanyaKandidat(questions: MutableList<Pertanyaan>) {
-        adapter?.setLoaded()
-        adapter?.addData(questions)
-    }
-
-    override fun showEmptyNextDataAlert() {
-        ToastUtil.show(context!!, "Gagal memuat lebih banyak pertanyaan")
-    }
-
-    override fun setIsLoading(isLoading: Boolean) {
-        this.isLoading = isLoading
-    }
-
-    override fun setDataEnd(isDataEnd: Boolean) {
-        this.isDataEnd = isDataEnd
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.fragment_tanya_kandidat
-    }
-
-    override fun showLoading() {
-        view_empty_state.visibility = View.GONE
-        recycler_view.visibility = View.INVISIBLE
-        progress_bar.visibility = View.VISIBLE
-    }
-
-    override fun dismissLoading() {
-        progress_bar.visibility = View.GONE
-    }
-
-    override fun showFailedGetDataAlert() {
-        ToastUtil.show(context!!, "Gagal memuat daftar pertanyaan")
-    }
-
-    override fun onItemUpVoted() {
-        // no need to do
-    }
-
-    override fun onFailedUpVoteItem(liked: Boolean?, position: Int?) {
-        adapter?.reverseVote(liked, position)
-    }
-
-    override fun showItemReportedAlert() {
-        ToastUtil.show(context!!, "Berhasil melaporkan pertanyaan")
-    }
-
-    override fun showFailedReportItem() {
-        ToastUtil.show(context!!, "Gagal melaporkan pertanyaan")
-    }
-
-    override fun showFailedDeleteItemAlert() {
-        ToastUtil.show(context!!, "Gagal menghapus pertanyaan")
-    }
-
-    override fun onItemDeleted(position: Int?) {
-        adapter?.deleteItem(position)
-    }
+    private lateinit var profile: Profile
+    private var isNewInstance = true
 
     companion object {
         fun newInstance(): TanyaKandidatFragment {
@@ -205,9 +58,250 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         }
     }
 
-    override fun onDestroy() {
-        (activity?.application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
+    }
+
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+        savedInstanceState?.getBoolean("is_new_instance")?.let { isNewInstance = it }
+        presenter.getProfile()
+        setupTanyaKandidatList()
+        getDataList()
+        recycler_view.setPadding(0, 0, 0,
+            (resources.getDimension(R.dimen.fab_size) + resources.getDimension(R.dimen.fab_margin)).roundToInt())
+    }
+
+    override fun bindUserData(profile: Profile) {
+        this.profile = profile
+        fab_add.setOnClickListener {
+            if (profile != EMPTY_PROFILE) {
+                openCreatePertanyaan()
+            } else {
+                openLoginActivity()
+            }
+        }
+    }
+
+    private fun openLoginActivity() {
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun getDataList() {
+        adapter?.setDataEnd(false)
+        presenter.getBanner()
+    }
+
+    override fun showBanner(bannerInfo: BannerInfo) {
+        adapter?.addBanner(bannerInfo)
+        refreshItem()
+    }
+
+    private fun setupTanyaKandidatList() {
+        adapter = TanyaKandidatAdapter()
+        adapter?.setHaveUser(profile)
+        layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recycler_view.layoutManager = layoutManager
+        recycler_view.adapter = adapter
+        adapter?.addSupportLoadMore(recycler_view, 5) {
+            adapter?.setLoading()
+            presenter.getTanyaKandidatList(it, perPage)
+        }
+
+        adapter?.listener = object : TanyaKandidatAdapter.AdapterListener {
+            override fun onClickBanner(bannerInfo: BannerInfo) {
+                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.EXTRA_TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.RC_BANNER_TANYA_KANDIDAT)
+            }
+
+            override fun onClickHeader() {
+                if (profile != EMPTY_PROFILE) {
+                    openCreatePertanyaan()
+                } else {
+                    openLoginActivity()
+                }
+            }
+
+            override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
+                val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
+                if (item.user.id.equals(profile.id)) {
+                    dialog.removeItem(R.id.report_tanya_kandidat_action)
+                } else {
+                    dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
+                }
+                if (profile == EMPTY_PROFILE) {
+                    dialog.removeItem(R.id.report_tanya_kandidat_action)
+                }
+                dialog.show()
+                dialog.listener = object : OptionDialog.DialogListener {
+                    override fun onClick(viewId: Int) {
+                        when (viewId) {
+                            R.id.copy_url_tanya_kandidat_action -> {
+                                onClickCopyUrl(item.id)
+                                dialog.dismiss()
+                            }
+                            R.id.share_tanya_kandidat_action -> {
+                                onClickShare(item)
+                                dialog.dismiss()
+                            }
+                            R.id.report_tanya_kandidat_action -> {
+                                onClickLapor(item.id)
+                                dialog.dismiss()
+                            }
+                            R.id.delete_tanya_kandidat_item_action -> {
+                                val deleteDialog = DeleteConfimationDialog(
+                                    context!!, getString(R.string.txt_delete_item_ini),
+                                    listener = object : DeleteConfimationDialog.DialogListener {
+                                        override fun onClickDeleteItem(p0: String, p1: Int) {
+                                            adapter?.listener?.onClickDeleteItem(item.id, position)
+                                        }
+                                })
+                                deleteDialog.show()
+
+                                dialog.dismiss()
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onClickShare(item: Pertanyaan?) {
+                ShareUtil.shareItem(context!!, item)
+            }
+
+            override fun onClickUpvote(id: String, isLiked: Boolean, position: Int) {
+                if (!isLiked) {
+                    presenter.upVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
+                } else {
+                    presenter.unVoteQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME, isLiked, position)
+                }
+            }
+
+            override fun onClickDeleteItem(id: String, position: Int) {
+                showProgressDialog(getString(R.string.txt_delete_item_ini))
+                presenter.deleteItem(id, position)
+            }
+
+            override fun onClickCopyUrl(id: String) {
+                CopyUtil.copyTanyaKandidat(context!!, id)
+            }
+
+            override fun onClickLapor(id: String) {
+                presenter.reportQuestion(id, PantauConstants.TanyaKandidat.CLASS_NAME)
+            }
+
+            override fun onClickContent(item: Pertanyaan, position: Int) {
+                val intent = DetailTanyaKandidatActivity.setIntent(requireContext(), item, position)
+                startActivityForResult(intent, RC_OPEN_DETAIL_QUESTION)
+            }
+
+            override fun onclickActionUnauthorized() {
+                openLoginActivity()
+            }
+        }
+        recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                when (newState) {
+                    RecyclerView.SCROLL_STATE_IDLE -> fab_add.show()
+                    else -> fab_add.hide()
+                }
+            }
+        })
+        swipe_refresh.setOnRefreshListener {
+            swipe_refresh?.isRefreshing = false
+            getDataList()
+        }
+    }
+
+    private fun openCreatePertanyaan() {
+        val intent = Intent(context, CreateTanyaKandidatActivity::class.java)
+        startActivityForResult(intent, PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE)
+    }
+
+    private fun refreshItem() {
+        page = 1
+        adapter?.setDataEnd(false)
+        presenter.getTanyaKandidatList(page, perPage)
+    }
+
+    override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>) {
+        recycler_view.visibleIf(true)
+        if (adapter?.itemCount != 0 && adapter?.get(0) is BannerInfo) {
+            val bannerInfo = adapter?.get(0) as BannerInfo
+            adapter?.clear()
+            adapter?.addBanner(bannerInfo)
+            adapter?.addData(pertanyaanList as MutableList<ItemModel>)
+            scrollToTop(false)
+        } else {
+            adapter?.setDatas(pertanyaanList as MutableList<ItemModel>)
+        }
+        adapter?.addHeader(profile)
+    }
+
+    override fun showEmptyDataAlert() {
+        view_empty_state.enableLottie(true, lottie_empty_state)
+    }
+
+    override fun bindNextDataTanyaKandidat(questions: MutableList<Pertanyaan>) {
+        adapter?.setLoaded()
+        if (questions.size < perPage) {
+            adapter?.setDataEnd(true)
+        }
+        adapter?.addData(questions as MutableList<ItemModel>)
+    }
+
+    override fun showEmptyNextDataAlert() {
+//        ToastUtil.show(context!!, "Gagal memuat lebih banyak pertanyaan")
+        adapter?.setLoaded()
+        adapter?.setDataEnd(true)
+    }
+
+    override fun setLayout(): Int {
+        return R.layout.fragment_tanya_kandidat
+    }
+
+    override fun showLoading() {
+        lottie_loading.enableLottie(true, lottie_loading)
+        view_empty_state.enableLottie(false, lottie_empty_state)
+        view_fail_state.enableLottie(false, lottie_fail_state)
+        recycler_view.visibleIf(false)
+        fab_add.hide()
+    }
+
+    override fun dismissLoading() {
+        lottie_loading.enableLottie(false, lottie_loading)
+        recycler_view.visibleIf(false)
+        fab_add.show()
+    }
+
+    override fun showFailedGetDataAlert() {
+        view_fail_state.enableLottie(true, lottie_fail_state)
+    }
+
+    override fun onItemUpVoted() {
+        // no need to do
+    }
+
+    override fun onFailedUpVoteItem(liked: Boolean, position: Int) {
+        adapter?.reverseVote(liked, position)
+    }
+
+    override fun showItemReportedAlert() {
+        ToastUtil.show(context!!, getString(R.string.berhasil_melaporkan_pertanyaan))
+    }
+
+    override fun showFailedReportItem() {
+        ToastUtil.show(context!!, getString(R.string.gagal_melaporkan_pertanyaan))
+    }
+
+    override fun showFailedDeleteItemAlert() {
+        dismissProgressDialog()
+        ToastUtil.show(context!!, getString(R.string.gagal_menghapus_pertanyaan))
+    }
+
+    override fun onItemDeleted(position: Int) {
+        dismissProgressDialog()
+        adapter?.deleteItem(position)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -215,14 +309,40 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 PantauConstants.TanyaKandidat.CREATE_TANYA_KANDIDAT_REQUEST_CODE -> {
-                    adapter?.addItem((data?.getSerializableExtra(PantauConstants.TanyaKandidat.TANYA_KANDIDAT_DATA) as Pertanyaan), 0)
+                    adapter?.addItem((data?.getSerializableExtra(PantauConstants.TanyaKandidat.TANYA_KANDIDAT_DATA) as Pertanyaan), 2)
                     recycler_view.smoothScrollToPosition(0)
                 }
-                PantauConstants.RequestCode.BANNER_TANYA_KANDIDAT -> hideBanner()
                 PantauConstants.TanyaKandidat.Filter.FILTER_TANYA_KANDIDAT_REQUEST_CODE -> {
                     refreshItem()
                 }
             }
+        } else if (requestCode == RC_OPEN_DETAIL_QUESTION) {
+            if (resultCode == RESULT_DELETE_ITEM_QUESTION) {
+                if (data != null && data.getIntExtra(EXTRA_ITEM_POSITION, -1) != -1) {
+                    onItemDeleted(data.getIntExtra(EXTRA_ITEM_POSITION, -1))
+                }
+            } else if (resultCode == RESULT_ITEM_CHANGED_QUESTION) {
+                if (data != null && data.getIntExtra(EXTRA_ITEM_POSITION, -1) != -1 && data.getSerializableExtra(EXTRA_QUESTION_ITEM) != null) {
+                    val itemChangedPosition = data.getIntExtra(EXTRA_ITEM_POSITION, -1)
+                    val itemChanged = data.getSerializableExtra(EXTRA_QUESTION_ITEM) as Pertanyaan
+                    if (isNewInstance) {
+                        adapter?.changeItem(itemChanged, itemChangedPosition)
+                    }
+                }
+            }
         }
+    }
+
+    override fun scrollToTop(smoothScroll: Boolean) {
+        if (smoothScroll) {
+            recycler_view.smoothScrollToPosition(0)
+        } else {
+            recycler_view.scrollToPosition(0)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("is_new_instance", false)
     }
 }

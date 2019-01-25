@@ -17,6 +17,6 @@
         android:letterSpacing="0.1"
         android:lineSpacingExtra="3sp"
         android:layout_centerInParent="true"
-        android:text="TERAPKAN"/>
+        android:text="@string/terapkan"/>
 
 </RelativeLayout>

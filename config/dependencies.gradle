@@ -18,16 +18,17 @@ ext {
             playService             : "12.0.1",
             firebaseCore            : "16.0.6",
             firebaseMessaging       : "17.3.4",
-            crashlytic              : "2.9.7",
+            crashlytic              : "2.9.8",
 
-            rxJava                  : "2.1.5",
-            rxJavaAndroid           : "2.0.1",
+            rxJava                  : "2.2.5",
+            rxKotlin                : "2.3.0",
+            rxJavaAndroid           : "2.1.0",
 
             multidexVersion         : "1.0.3",
 
             junit                   : "4.12",
 
-            easyPermission          : "1.2.0",
+            easyPermission          : "2.0.0",
 
             timber                  : "4.7.1",
 
@@ -38,13 +39,20 @@ ext {
             daggerCompiler          : "2.19",
 
             roundedImageView        : "2.3.0",
-            symbolic                : "0.2.9",
+            symbolic                : "0.3.2",
             mockito                 : "2.18.3",
             flexbox                 : "1.1.0",
             lottie                  : "2.8.0",
             chromeCustomTab         : "23.3.0",
             expandableLayout        : "2.9.2",
-            stetho                 : "1.5.0"
+            stetho                  : "1.5.0",
+            rxbinding               : "2.0.0",
+            compressor              : "2.1.0",
+            facebook_sdk            : "[4,5)",
+            twitter_sdk             : "3.1.1",
+            navigation              : "1.0.0-alpha09",
+            dots_indicator          : "2.1.2"
+
     ]
 
 
@@ -68,13 +76,14 @@ ext {
     ]
 
     firebase = [
-            firebaseCore        : "com.google.firebase:firebase-core:$versions.playService",
-            firebaseMessaging   : "com.google.firebase:firebase-messaging:$versions.playService",
+            firebaseCore        : "com.google.firebase:firebase-core:$versions.firebaseCore",
+            firebaseMessaging   : "com.google.firebase:firebase-messaging:$versions.firebaseMessaging",
             crashlytic          : "com.crashlytics.sdk.android:crashlytics:$versions.crashlytic"
     ]
 
     rxJava = [
             rxJava   : "io.reactivex.rxjava2:rxjava:$versions.rxJava",
+            rxKotlin : "io.reactivex.rxjava2:rxkotlin:$versions.rxKotlin",
             rxAndroid: "io.reactivex.rxjava2:rxandroid:$versions.rxJavaAndroid"
     ]
 
@@ -84,11 +93,17 @@ ext {
             mockito: "org.mockito:mockito-core:$versions.mockito"
     ]
 
+    archComponent = [
+            navigationFragment: "android.arch.navigation:navigation-fragment-ktx:$versions.navigation",
+            navigationUI: "android.arch.navigation:navigation-ui-ktx:$versions.navigation"
+    ]
+
     designLibs = designDeps.values()
     networkLibs = retrofit.values() + okHttp.values()
     firebaseLibs = firebase.values()
     rxJavaLibs = rxJava.values()
     unitTestLibs = unitTestDeps.values()
+    archComponentLibs = archComponent.values()
 
     multidex = "com.android.support:multidex:$versions.multidexVersion"
     easyPermission = "pub.devrel:easypermissions:$versions.easyPermission"
@@ -110,4 +125,11 @@ ext {
     chromeCustomTab = "com.android.support:customtabs:$versions.chromeCustomTab"
 
     expandableLayout = "net.cachapa.expandablelayout:expandablelayout:$versions.expandableLayout"
+    rxBinding = "com.jakewharton.rxbinding2:rxbinding:$versions.rxbinding"
+
+    compressor = "id.zelory:compressor:$versions.compressor"
+
+    facebook_sdk = "com.facebook.android:facebook-android-sdk:$versions.facebook_sdk"
+    twitter_sdk = "com.twitter.sdk.android:twitter-core:$versions.twitter_sdk"
+    dots_indicator = "com.tbuonomo.andrui:viewpagerdotsindicator:$versions.dots_indicator"
 }

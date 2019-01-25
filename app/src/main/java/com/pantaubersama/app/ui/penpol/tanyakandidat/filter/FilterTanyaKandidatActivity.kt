@@ -1,21 +1,24 @@
 package com.pantaubersama.app.ui.penpol.tanyakandidat.filter
 
 import android.app.Activity
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.RadioButton
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.TanyaKandidatInteractor
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_filter_tanya_kandidat.*
+import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
 import javax.inject.Inject
 
 class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>(), FilterTanyaKandidatView {
+
     @Inject
-    lateinit var interactor: TanyaKandidatInteractor
+    override lateinit var presenter: FilterTanyaKandidatPresenter
+
     private var userFilter: String? = null
     private var orderFilter: String? = null
 
@@ -24,24 +27,20 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
     }
 
     override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun initPresenter(): FilterTanyaKandidatPresenter? {
-        return FilterTanyaKandidatPresenter(interactor)
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Filter", R.color.white, 4f)
-        presenter?.loadTanyaKandidatUserFilter()
-        presenter?.loadTanyaKandidatOrderFilter()
-        apply_filter_button.setOnClickListener {
+        presenter.loadTanyaKandidatUserFilter()
+        presenter.loadTanyaKandidatOrderFilter()
+        btn_terapkan.setOnClickListener {
             applyFilter()
-            presenter?.saveTanyaKandidatFilter(userFilter, orderFilter)
+            presenter.saveTanyaKandidatFilter(userFilter, orderFilter)
         }
     }
 
@@ -68,11 +67,11 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -88,9 +87,7 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
     }
 
     private fun resetFilter() {
-        userFilter = PantauConstants.TanyaKandidat.Filter.ByVerified.USER_VERIFIED_ALL
-        orderFilter = PantauConstants.TanyaKandidat.Filter.ByVotes.LATEST
-        presenter?.saveTanyaKandidatFilter(userFilter, orderFilter)
+        presenter.saveTanyaKandidatFilter(PantauConstants.TanyaKandidat.Filter.ByVerified.USER_VERIFIED_ALL, PantauConstants.TanyaKandidat.Filter.ByVotes.MOST_VOTES)
     }
 
     override fun onSuccessSaveFilter() {

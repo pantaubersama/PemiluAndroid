@@ -6,8 +6,9 @@
 
     <ImageView
         android:id="@+id/iv_share_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="6dp"
         android:src="@drawable/ic_share"
         android:layout_toStartOf="@id/iv_options_button"
         android:layout_toLeftOf="@id/iv_options_button"
@@ -17,8 +18,9 @@
 
     <ImageView
         android:id="@+id/iv_options_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="6dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:src="@drawable/ic_more_horiz"

@@ -1,12 +1,18 @@
 package com.pantaubersama.app.ui.profile.setting.panduankomunitas
 
 import android.os.Build
+import android.os.Bundle
 import android.text.Html
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.di.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_panduan_komunitas.*
+import javax.inject.Inject
 
 class PanduanKomunitasActivity : BaseActivity<PanduanKomunitasPresenter>(), PanduangKomunitasView {
+
+    @Inject
+    override lateinit var presenter: PanduanKomunitasPresenter
 
     override fun statusBarColor(): Int? {
         return 0
@@ -16,11 +22,11 @@ class PanduanKomunitasActivity : BaseActivity<PanduanKomunitasPresenter>(), Pand
         // ok
     }
 
-    override fun initPresenter(): PanduanKomunitasPresenter? {
-        return PanduanKomunitasPresenter()
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             panduan_komunitas_panduan.text = Html.fromHtml("Ini nanti teks statis, pake html view aja\n" +
                     "Pantau Bersama diharapkan cluster is simply dummy text of the printing and typesetting industry. " +

@@ -1,49 +1,53 @@
 package com.pantaubersama.app.ui.penpol.kuis.kuisstart
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import android.text.Html
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.model.kuis.KuisItem
+import com.pantaubersama.app.data.model.kuis.Question
+import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
+import com.pantaubersama.app.utils.HtmlTagHandler
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_kuis.*
+import javax.inject.Inject
+import kotlin.random.Random
 
-class KuisActivity : BaseActivity<BasePresenter<*>>() {
+class KuisActivity : BaseActivity<KuisQuestionPresenter>(), KuisQuestionView {
 
-    private var questionNumber: Int = 0
+    @Inject
+    override lateinit var presenter: KuisQuestionPresenter
+
+    private lateinit var kuisItem: KuisItem
 
     override fun statusBarColor(): Int? {
         return 0
     }
 
-    override fun initPresenter(): BasePresenter<*>? {
-        return null
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     override fun fetchIntentExtra() {
-        questionNumber = intent.getIntExtra(PantauConstants.Kuis.KUIS_NUMBER, 0)
+        kuisItem = intent.getSerializableExtra(PantauConstants.Kuis.KUIS_ITEM) as KuisItem
     }
 
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
         back_icon.setOnClickListener {
-            finish()
+            onBackPressed()
         }
-
         with(resources.obtainTypedArray(R.array.bg_kuis)) {
-            val bgResource = getResourceId(questionNumber - 1, R.drawable.kuis_background_1)
+            val bgResource = getResourceId(Random.nextInt(1), R.drawable.kuis_background_1)
             iv_background.setImageResource(bgResource)
             recycle()
         }
-        number_of_question_info.text = getString(R.string.question_number_info, questionNumber, 10)
 
-        val questionAnswerList = listOf(
-                Triple(R.string.question_1_dummy, R.string.question_1_a_dummy, R.string.question_1_b_dummy),
-                Triple(R.string.question_2_dummy, R.string.question_2_a_dummy, R.string.question_2_b_dummy))
-        val (question, answerA, answerB) = questionAnswerList[questionNumber - 1]
-
-        tv_question.text = getString(question)
-        answer_a.text = getString(answerA)
-        answer_b.text = getString(answerB)
+        presenter.getQuestions(kuisItem.id)
     }
 
     override fun setLayout(): Int {
@@ -51,18 +55,60 @@ class KuisActivity : BaseActivity<BasePresenter<*>>() {
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        tv_question.visibleIf(false)
+        progress_bar.visibleIf(true)
+        answer_a_button.isEnabled = false
+        answer_b_button.isEnabled = false
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        tv_question.visibleIf(true)
+        progress_bar.visibleIf(false)
+        answer_a_button.isEnabled = true
+        answer_b_button.isEnabled = true
+    }
+
+    override fun showQuestion(question: Question, questionNo: Int, total: Int) {
+        val answerA = question.answers.firstOrNull() ?: return
+        val answerB = question.answers.getOrNull(1) ?: return
+
+        number_of_question_info.text = getString(R.string.question_number_info, questionNo, total)
+        tv_question.text = question.content
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            answer_a.text = Html.fromHtml(HtmlTagHandler.customizeListTags(answerA.content), Html.FROM_HTML_MODE_LEGACY, null, HtmlTagHandler())
+            answer_b.text = Html.fromHtml(HtmlTagHandler.customizeListTags(answerB.content), Html.FROM_HTML_MODE_LEGACY, null, HtmlTagHandler())
+        } else {
+            answer_a.text = Html.fromHtml(HtmlTagHandler.customizeListTags(answerA.content), null, HtmlTagHandler())
+            answer_b.text = Html.fromHtml(HtmlTagHandler.customizeListTags(answerB.content), null, HtmlTagHandler())
+        }
+        answer_a_button.setOnClickListener {
+            presenter.answerQuestion(kuisItem.id, question.id, answerA.id)
+        }
+        answer_b_button.setOnClickListener {
+            presenter.answerQuestion(kuisItem.id, question.id, answerB.id)
+        }
+    }
+
+    override fun onKuisFinished() {
+        val intent = KuisResultActivity.setIntent(this, kuisItem, true).apply {
+            addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
+        }
+        startActivity(intent)
+        finish()
+    }
+
+    override fun onBackPressed() {
+        if (intent.getBooleanExtra(PantauConstants.Kuis.KUIS_REFRESH, false)) {
+            setResult(Activity.RESULT_OK)
+        }
+        super.onBackPressed()
     }
 
     companion object {
-        fun setIntent(context: Context, kuisId: Int, questionNumber: Int): Intent {
+        fun setIntent(context: Context, kuisItem: KuisItem, refreshOnReturn: Boolean = false): Intent {
             val intent = Intent(context, KuisActivity::class.java)
-            intent.putExtra(PantauConstants.Kuis.KUIS_ID, kuisId)
-            intent.putExtra(PantauConstants.Kuis.KUIS_NUMBER, questionNumber)
+            intent.putExtra(PantauConstants.Kuis.KUIS_ITEM, kuisItem)
+            intent.putExtra(PantauConstants.Kuis.KUIS_REFRESH, refreshOnReturn)
             return intent
         }
     }

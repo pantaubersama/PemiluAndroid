@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.pantaubersama.app.ui.profile.verifikasi.Step2VerifikasiActivity">
+    tools:context="com.pantaubersama.app.ui.profile.verifikasi.step2.Step2VerifikasiActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -104,13 +104,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:lottie_fileName="selfie_with_id_card.json"
-                            app:lottie_autoPlay="true"
-                            app:lottie_loop="true"/>
+                            app:lottie_autoPlay="false"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Foto Diri Bersama Dengan KTP"
+                            android:text="Foto Diri Bersama KTP"
                             android:fontFamily="@font/bw_modelica_bold"
                             android:textSize="18sp"
                             android:textColor="@color/black_3"

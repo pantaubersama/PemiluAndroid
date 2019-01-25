@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.penpol.tanyakandidat.create
 
 import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.data.model.user.Profile
 
 interface CreateTanyaKandidatView : BaseView {
     fun showEmptyQuestionAlert()
@@ -9,5 +10,6 @@ interface CreateTanyaKandidatView : BaseView {
     fun finishActivity(question: Pertanyaan?)
     fun showFailedCreateTanyaKandidatAlert()
     fun hideActions()
+    fun bindProfileData(profile: Profile?)
     // method
 }

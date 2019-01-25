@@ -1,62 +1,84 @@
 package com.pantaubersama.app.ui.login
 
 import android.content.Intent
-import com.extrainteger.identitaslogin.Callback
-import com.extrainteger.identitaslogin.Result
-import com.extrainteger.identitaslogin.SymbolicConfig
-import com.extrainteger.identitaslogin.SymbolicException
-import com.extrainteger.identitaslogin.models.AuthToken
+import android.os.Bundle
+import com.extrainteger.symbolic.Callback
+import com.extrainteger.symbolic.Result
+import com.extrainteger.symbolic.SymbolicConfig
+import com.extrainteger.symbolic.SymbolicException
+import com.extrainteger.symbolic.models.SymbolicToken
+import com.extrainteger.symbolic.ui.SymbolicLoginButton
+import com.google.firebase.iid.FirebaseInstanceId
+import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.BaseApp
-import com.pantaubersama.app.data.interactors.LoginInteractor
+import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
+import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Companion.CONFIRMATION_PATH
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     @Inject
-    lateinit var interactor: LoginInteractor
+    override lateinit var presenter: LoginPresenter
     private var symbolicScope: MutableList<String>? = null
+    private var url: String? = null
 
     override fun statusBarColor(): Int {
         return R.color.colorPrimaryDark
     }
 
     override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        intent?.let { url = it.getStringExtra(PantauConstants.URL) }
     }
 
-    override fun initInjection() {
-        (application as BaseApp).createActivityComponent(this)?.inject(this)
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
-    override fun initPresenter(): LoginPresenter? {
-        return LoginPresenter(interactor)
-    }
-
-    override fun setupUI() {
+    override fun setupUI(savedInstanceState: Bundle?) {
+        if (!url.isNullOrEmpty()) {
+            if (url?.contains(PantauConstants.Networking.INVITATION_PATH)!!) {
+                url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it, BuildConfig.SYMBOLIC_REDIRECT_URI) }
+            } else if (url?.contains(CONFIRMATION_PATH)!!) {
+                url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it) }
+            }
+        }
         symbolicScope = ArrayList()
         symbolic_login_button.configure(
             SymbolicConfig(
                 this@LoginActivity,
-                "https://identitas.extrainteger.com",
-                "ad68192bfcfe8085492dc82af35e26c8ca92a8d08db9e9d7820e054a849d5add",
-                "bd09ebed07d20d7b438d96d7f8507922b25511887781740bbbb7ddb9a1055469",
-                "com.pantaubersama.app://oauth",
+                BuildConfig.SYMBOLIC_URL,
+                BuildConfig.SYMBOLIC_CLIENT_ID,
+                BuildConfig.SYMBOLIC_CLIENT_SECRET,
+                BuildConfig.SYMBOLIC_REDIRECT_URI,
                 symbolicScope
-                )
+            )
         )
-        symbolic_login_button.setCallback(object : Callback<AuthToken>() {
-            override fun failure(exception: SymbolicException) {
-                ToastUtil.show(this@LoginActivity, "Failed to login using Symbolic")
+        symbolic_login_button.setCallback(object : Callback<SymbolicToken>() {
+
+            override fun success(result: Result<SymbolicToken>) {
+                FirebaseInstanceId.getInstance().instanceId
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            presenter.exchangeToken(result.data.accessToken, task.result?.token)
+                        } else {
+                            task.exception?.let { showError(it) }
+                        }
+                    }
             }
 
-            override fun success(result: Result<AuthToken>) {
-                presenter?.exchangeToken(result.data.accessToken, "")
+            override fun failure(exception: SymbolicException) {
+                ToastUtil.show(this@LoginActivity, getString(R.string.failed_login_alert))
             }
         })
+        lewati_button.setOnClickListener {
+            openHomeActivity()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -69,18 +91,32 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     }
 
     override fun showLoading() {
-        showProgressDialog("Logging in")
+        showProgressDialog(getString(R.string.logging_in_label))
     }
 
     override fun dismissLoading() {
         dismissProgressDialog()
     }
 
-    override fun showError(throwable: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onSuccessGetProfile(it: Profile?) {
+        if (it?.username != null &&
+            it.education != null &&
+            it.location != null &&
+            it.occupation != null) {
+            openHomeActivity()
+        } else {
+            openEditProfileActivity()
+        }
     }
 
-    override fun openHomeActivity() {
+    private fun openEditProfileActivity() {
+        val intent = Intent(this@LoginActivity, EditProfileActivity::class.java)
+        intent.putExtra(PantauConstants.PROFILE_COMPLETION, true)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
+
+    private fun openHomeActivity() {
         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
@@ -88,10 +124,5 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
 
     override fun showLoginFailedAlert() {
         ToastUtil.show(this@LoginActivity, getString(R.string.login_failed_alert))
-    }
-
-    override fun onDestroy() {
-        (application as BaseApp).releaseActivityComponent()
-        super.onDestroy()
     }
 }

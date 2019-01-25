@@ -25,10 +25,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/bw_modelica_bold"
+            android:gravity="center"
             android:textColor="@color/white"
             android:textSize="20sp"
             tools:text="@string/question_1_dummy" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
 
     </FrameLayout>
 
@@ -61,7 +71,7 @@
                     android:id="@+id/answer_a"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
+                    android:gravity="left"
                     android:fontFamily="@font/lato_medium"
                     android:textColor="@color/black_3"
                     tools:text="@string/question_1_a_dummy" />
@@ -84,7 +94,7 @@
                     android:id="@+id/answer_b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
+                    android:gravity="left"
                     android:fontFamily="@font/lato_medium"
                     android:textColor="@color/black_3"
                     tools:text="@string/question_1_b_dummy" />
@@ -107,56 +117,38 @@
         android:baselineAligned="false"
         android:layout_alignParentBottom="true">
 
-        <LinearLayout
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/answer_a_button"
             android:layout_width="0dp"
             android:layout_weight="10"
-            android:orientation="vertical"
-            android:background="@color/purple"
-            android:layout_height="47dp"
-            android:foreground="?selectableItemBackground"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="A"
+            android:fontFamily="@font/lato_bold"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/purple"
+            app:cornerRadius="0dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:letterSpacing="0.1"
-                android:lineSpacingExtra="3sp"
-                android:text="A"
-                android:fontFamily="@font/lato_bold"
-                android:textAllCaps="true"/>
-
-        </LinearLayout>
-
-        <RelativeLayout
+        <Space
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"/>
 
-        <LinearLayout
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/answer_b_button"
             android:layout_width="0dp"
             android:layout_weight="10"
-            android:orientation="vertical"
-            android:background="@color/purple"
-            android:layout_height="47dp"
-            android:foreground="?selectableItemBackground"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:letterSpacing="0.1"
-                android:lineSpacingExtra="3sp"
-                android:text="B"
-                android:fontFamily="@font/lato_bold"
-                android:textAllCaps="true"/>
-
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="B"
+            android:fontFamily="@font/lato_bold"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/purple"
+            app:cornerRadius="0dp" />
 
     </LinearLayout>
 
@@ -198,19 +190,5 @@
         </LinearLayout>
 
     </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_centerInParent="true"
-        android:visibility="gone">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
 
 </RelativeLayout>

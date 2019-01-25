@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.pantaubersama.app.ui.profile.verifikasi.FinalScreenVerifikasiActivity">
+    tools:context="com.pantaubersama.app.ui.profile.verifikasi.finalstep.FinalScreenVerifikasiActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,14 +21,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:lottie_fileName="complete_verification_animation.json"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"/>
+            app:lottie_autoPlay="false"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Yapp, Selamat \n Akunmu telah terverifikasi"
+            android:text="Yaay! Akunmu sudah lengkap untuk proses verifikasi!"
             android:textSize="24sp"
             android:fontFamily="@font/lato_bold"
             android:textColor="@color/black_3"

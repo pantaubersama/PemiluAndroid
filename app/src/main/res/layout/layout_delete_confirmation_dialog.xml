@@ -15,10 +15,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/delete_post_alert"
+            android:id="@+id/tv_delete_confirmation_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Apakah Anda yakin akan menghapus item ini?"
+            android:text="@string/txt_delete_item_ini"
             android:fontFamily="@font/lato_regular"
             android:textSize="16sp"/>
 

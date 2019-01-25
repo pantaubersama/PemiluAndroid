@@ -36,7 +36,7 @@
             android:textSize="16dp"
             android:layout_marginTop="16dp"/>
 
-        <com.extrainteger.identitaslogin.ui.SymbolicLoginButton
+        <com.extrainteger.symbolic.ui.SymbolicLoginButton
             android:id="@+id/symbolic_login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,6 +47,7 @@
             android:layout_marginTop="48dp"/>
 
         <TextView
+            android:id="@+id/lewati_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Lewati"

@@ -1,86 +1,104 @@
 package com.pantaubersama.app.ui.penpol.kuis.list
 
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
-import com.pantaubersama.app.data.model.kuis.KuisListItem
+import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.base.viewholder.LoadingViewHolder
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
+import com.pantaubersama.app.data.model.kuis.KuisItem
+import com.pantaubersama.app.data.model.kuis.KuisUserResult
 import com.pantaubersama.app.data.model.kuis.KuisState
+import com.pantaubersama.app.ui.penpol.kuis.result.KuisUserResultActivity
+import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_BANNER
+import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_KUIS_ITEM
+import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_KUIS_RESULT
+import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_LOADING
 import com.pantaubersama.app.utils.extensions.inflate
+import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.setBackgroundTint
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_kuis.*
 import kotlinx.android.synthetic.main.item_kuis_result.*
+import kotlin.math.roundToInt
 
-class KuisListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    var data: List<KuisListItem> = emptyList()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+class KuisListAdapter : BaseRecyclerAdapter() {
 
     var listener: KuisListAdapter.AdapterListener? = null
 
-    override fun getItemCount(): Int = data.size
-
-    override fun getItemViewType(position: Int): Int {
-        return if (data[position] is KuisListItem.Result) TYPE_RESULT else TYPE_ITEM
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == TYPE_RESULT) ResultViewHolder(parent.inflate(R.layout.item_kuis_result))
-        else ItemViewHolder(parent.inflate(R.layout.item_kuis))
+        return when (viewType) {
+            TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
+            TYPE_KUIS_RESULT -> ResultViewHolder(parent.inflate(R.layout.item_kuis_result))
+            TYPE_KUIS_ITEM -> ItemViewHolder(parent.inflate(R.layout.item_kuis))
+            TYPE_LOADING -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
+            else -> throw IllegalArgumentException("unknown view type $viewType")
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as? ItemViewHolder)?.bind(data[position] as KuisListItem.Item)
-        (holder as? ResultViewHolder)?.bind(data[position] as KuisListItem.Result)
+        (holder as? BannerViewHolder)?.bind(data[position] as BannerInfo)
+        (holder as? ResultViewHolder)?.bind(data[position] as KuisUserResult)
+        (holder as? ItemViewHolder)?.bind(data[position] as KuisItem)
     }
 
     inner class ItemViewHolder(override val containerView: View)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        fun bind(item: KuisListItem.Item) {
+        fun bind(item: KuisItem) {
             val (buttonText, buttonColor) = when (item.state) {
-                KuisState.NOT_TAKEN -> "IKUTI" to R.color.orange
-                KuisState.COMPLETED -> "HASIL" to R.color.colorAccent
-                KuisState.INCOMPLETE -> "LANJUT" to R.color.red_2
+                KuisState.NOT_PARTICIPATING -> "IKUTI" to R.color.orange
+                KuisState.FINISHED -> "HASIL" to R.color.colorAccent
+                KuisState.IN_PROGRESS -> "LANJUT" to R.color.red_2
             }
-            tv_kuis_title.text = "Kuis Minggu ke-${item.week}"
-            tv_kuis_count.text = "${item.count} Pertanyaan"
+            iv_kuis_image.loadUrl(item.image.url)
+            tv_kuis_title.text = item.title
+            tv_kuis_count.text = "${item.kuisQuestionsCount} Pertanyaan"
             btn_kuis_open.text = "$buttonText >>"
             btn_kuis_open.setBackgroundTint(buttonColor)
-            btn_kuis_open.setOnClickListener {
-                when {
-                    item.state == KuisState.NOT_TAKEN -> listener?.onClickIkuti(item)
-                    item.state == KuisState.INCOMPLETE -> listener?.onClickLanjut(item)
-                    item.state == KuisState.COMPLETED -> listener?.onClickHasil(item)
-                }
-            }
-            btn_share.setOnClickListener {
-                listener?.onClickShare(item)
-            }
+            btn_kuis_open.setOnClickListener { listener?.onClickOpenKuis(item) }
+            btn_share.setOnClickListener { listener?.onClickShare(item) }
         }
     }
 
     class ResultViewHolder(override val containerView: View)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        fun bind(result: KuisListItem.Result) {
-            tv_kuis_result.text = "${result.percentage}% (${result.candidate})"
+        fun bind(result: KuisUserResult) {
+            presiden_total_kuis.text = result.meta.run { "$finished dari $total Kuis" }
+            tv_kuis_result.text = "%d%% (%s)".format(result.percentage.roundToInt(), result.team.title)
+            iv_kuis_result.loadUrl(result.team.avatar)
+            btn_share_result.setOnClickListener {
+                val intent = Intent(containerView.context, KuisUserResultActivity::class.java)
+                containerView.context.startActivity(intent)
+            }
         }
     }
 
-    companion object {
-        private const val TYPE_RESULT = 0
-        private const val TYPE_ITEM = 1
+    inner class BannerViewHolder(
+        override val containerView: View?
+    ) : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
+        fun bind(item: BannerInfo) {
+            tv_banner_text.text = item.body
+            iv_banner_image.loadUrl(item.headerImage?.url)
+            rl_banner_container.setOnClickListener { listener?.onClickBanner(item) }
+            iv_banner_close.setOnClickListener { removeBanner() }
+        }
+    }
+
+    fun removeBanner() {
+        if (data[0] is BannerInfo) {
+            data.removeAt(0)
+            notifyItemRemoved(0)
+        }
     }
 
     interface AdapterListener {
-        fun onClickIkuti(item: KuisListItem.Item)
-        fun onClickLanjut(item: KuisListItem.Item)
-        fun onClickHasil(item: KuisListItem.Item)
-        fun onClickShare(item: KuisListItem.Item)
+        fun onClickBanner(item: BannerInfo)
+        fun onClickOpenKuis(item: KuisItem)
+        fun onClickShare(item: KuisItem)
     }
 }

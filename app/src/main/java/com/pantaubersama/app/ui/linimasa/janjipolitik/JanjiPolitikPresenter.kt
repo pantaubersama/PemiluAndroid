@@ -1,8 +1,11 @@
 package com.pantaubersama.app.ui.linimasa.janjipolitik
 
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.JanjiPolitikInteractor
-import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
+import com.pantaubersama.app.data.interactors.ProfileInteractor
+import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
 
 /**
@@ -10,28 +13,86 @@ import javax.inject.Inject
  */
 
 class JanjiPolitikPresenter @Inject constructor(
-    private val janjiPolitikInteractor: JanjiPolitikInteractor?
+    private val janPolInteractor: JanjiPolitikInteractor,
+    private val bannerInfoInteractor: BannerInfoInteractor,
+    private val profileInteractor: ProfileInteractor
 ) : BasePresenter<JanjiPolitikView>() {
-    fun isBannerShown() {
-        if (!janjiPolitikInteractor?.isBannerShown()!!) {
-            view?.showBanner()
-        }
+
+    var perPage = 20
+
+    fun getMyProfile(): Profile {
+        return profileInteractor.getProfile()
     }
 
-    fun getJanjiPolitikList() {
+    fun isUserEligible(): Boolean {
+        return profileInteractor.isEligible()
+    }
+
+    fun getList() {
         view?.showLoading()
+        disposables.add(bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_JANPOL)
+            .subscribe(
+                {
+                    view?.showBanner(it)
+                    getJanjiPolitikList(1)
+                },
+                {
+                    view?.dismissLoading()
+                    view?.showError(it)
+                    view?.showFailedGetData()
+                }
+            )
+        )
+    }
 
-        val janPolList: MutableList<JanjiPolitik> = ArrayList()
-
-        for (i in 1..20) {
-            val janpol = JanjiPolitik()
-            janpol.id = "777$i"
-            janpol.title = "Jan Pol $i"
-            janpol.content = "Dukung partai nomer $i !!"
-            janPolList.add(janpol)
+    fun getJanjiPolitikList(page: Int) {
+        if (page == 1) {
+            view?.showLoading()
         }
 
-        view?.dismissLoading()
-        view?.showJanjiPolitikList(janPolList)
+        disposables.add(janPolInteractor
+            .getJanPol("", page, perPage,
+                janPolInteractor.getJanpolClusterFilter()?.id ?: "",
+                janPolInteractor.getJanpolUserFilter()
+            )
+            .subscribe(
+                {
+                    if (page == 1) {
+                        view?.dismissLoading()
+                        if (it?.janjiPolitikList?.size != 0) {
+                            view?.showJanpolList(it?.janjiPolitikList!!)
+                        } else {
+                            view?.showEmptyData()
+                        }
+                    } else {
+                        view?.showMoreJanpolList(it?.janjiPolitikList!!)
+                    }
+                },
+                {
+                    if (page == 1) {
+                        view?.dismissLoading()
+                        view?.showFailedGetData()
+                    } else {
+                        view?.showFailedGetMoreData()
+                    }
+                    it.printStackTrace()
+                    view?.showError(it)
+                }
+            )
+        )
+    }
+
+    fun deleteJanjiPolitik(id: String, position: Int) {
+        disposables.add(janPolInteractor.deleteJanjiPolitik(id)
+            .subscribe(
+                {
+                    view?.onSuccessDeleteItem(position)
+                },
+                {
+                    view?.onFailedDeleteItem(it)
+                    view?.showError(it)
+                }
+            )
+        )
     }
 }

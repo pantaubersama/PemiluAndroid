@@ -8,4 +8,8 @@ import com.pantaubersama.app.utils.State
 interface ProfileView : BaseView {
     fun showProfile(profile: Profile)
     fun showBadges(state: State, badges: List<Badge> = emptyList())
+    fun showSuccessLeaveClusterAlert(name: String?)
+    fun showRequestClusterLayout()
+    fun showFailedLeaveClusterAlert(name: String?)
+    fun showFailedGetProfileAlert()
 }

@@ -48,6 +48,20 @@
                 android:layout_height="wrap_content"
                 android:text="@string/txt_team_capres2"
                 android:theme="@style/RadioButtonStyle"/>
+            <RadioButton
+                android:id="@+id/radbtn_kpu"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/kpu_label"
+                android:theme="@style/RadioButtonStyle"/>
+            <RadioButton
+                android:id="@+id/radbtn_bawaslu"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/bawaslu_label"
+                android:theme="@style/RadioButtonStyle"/>
         </RadioGroup>
 
     </LinearLayout>
