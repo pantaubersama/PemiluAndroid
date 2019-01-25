@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.profile
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.UserInteractor
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.State
 import javax.inject.Inject
 
@@ -10,6 +11,10 @@ class ProfilePresenter @Inject constructor(
     private val profileInteractor: ProfileInteractor,
     private val userInteractor: UserInteractor
 ) : BasePresenter<ProfileView>() {
+
+    fun getMyProfile(): Profile {
+        return profileInteractor.getProfile()
+    }
 
     fun getProfile() {
         view?.showProfile(profileInteractor.getProfile())

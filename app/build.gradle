@@ -50,12 +50,14 @@ android {
             it.buildConfigField("String", "SYMBOLIC_CLIENT_ID", SYMBOLIC_CLIENT_ID)
             it.buildConfigField("String", "SYMBOLIC_CLIENT_SECRET", SYMBOLIC_CLIENT_SECRET)
             it.buildConfigField("String", "SYMBOLIC_REDIRECT_URI", SYMBOLIC_REDIRECT_URI)
+            it.buildConfigField("String", "PANTAU_WEB_URL", PANTAU_WEB_URL)
             it.resValue("string", "symbolic_url", SYMBOLIC_URL_NO_SCHEME)
             it.resValue("string", "facebook_app_id", FACEBOOK_APP_ID)
             it.resValue("string", "facebook_login_protocol_scheme", FACEBOOK_LOGIN_PROTOCOL_SCHEME)
             it.resValue("string", "twitter_api_key", TWITTER_API_KEY)
             it.resValue("string", "twitter_secret_key", TWITTER_SECRET)
             it.resValue("string", "pantau_base_url_no_scheme", PANTAU_BASE_URL_NO_SCHEME)
+            it.resValue("string", "pantau_web_url_no_scheme", PANTAU_WEB_URL_NO_SCHEME)
         }
     }
     productFlavors {

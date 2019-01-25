@@ -11,7 +11,6 @@ import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
 import android.webkit.CookieManager
 import androidx.core.content.ContextCompat
@@ -42,6 +41,7 @@ import com.facebook.GraphRequest
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.ShareUtil
+import com.pantaubersama.app.utils.extensions.visibleIf
 import com.twitter.sdk.android.core.* // ktlint-disable
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import com.twitter.sdk.android.core.models.User
@@ -225,14 +225,14 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                 startActivityForResult(intent, VERIFIKASI)
             }
         }
-        if (profile.cluster != null) {
+        if (profile.cluster != null && profile.isModerator) {
             setting_cluster_undang.setOnClickListener {
                 val intent = Intent(this@SettingActivity, ClusterUndangActivity::class.java)
                 intent.putExtra(PantauConstants.Cluster.CLUSTER_ID, profile.cluster?.id)
                 startActivity(intent)
             }
         } else {
-            ll_setting_cluster_undang.visibility = View.GONE
+            ll_setting_cluster_undang.visibleIf(false)
         }
     }
 

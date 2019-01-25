@@ -85,6 +85,7 @@ class PantauConstants {
         const val EXTRA_LOTTIE_AUTOPLAY = "EXTRA_LOTTIE_AUTOPLAY"
         const val EXTRA_ONBOARDING_TITLE = "EXTRA_ONBOARDING_TITLE"
         const val EXTRA_ONBOARDING_DESC = "EXTRA_ONBOARDING_DESC"
+        const val EXTRA_IS_MODERATOR = "EXTRA_IS_MODERATOR"
     }
 
     object RequestCode {
@@ -133,6 +134,7 @@ class PantauConstants {
 
         const val INVITATION_PATH = "invitation?"
         const val ACCEPT_CLUSTER_INVITATION_PATH = "invitation/accept_existing"
+        const val CLUSTER_INVITATION_BY_LINK_PATH = "/cluster?="
     }
 
     object Kuis {
