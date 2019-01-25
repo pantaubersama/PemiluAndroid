@@ -39,6 +39,7 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import com.facebook.GraphRequest
+import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.ShareUtil
@@ -318,7 +319,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             ChromeTabUtil(this@SettingActivity).forceLoadUrl(PantauConstants.Profile.URL_PANDUAN_KOMUNITAS)
         }
         setting_tentang.setOnClickListener {
-            ChromeTabUtil(this@SettingActivity).forceLoadUrl(PantauConstants.Profile.URL_TENTANG_PANTAU_BERSAMA)
+            startActivity(Intent(this@SettingActivity, TentangAppActivity::class.java))
         }
         setting_berikan_nilai.setOnClickListener {
             try {
