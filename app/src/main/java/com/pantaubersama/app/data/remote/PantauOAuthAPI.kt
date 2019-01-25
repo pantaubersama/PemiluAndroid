@@ -20,7 +20,11 @@ import retrofit2.http.* // ktlint-disable
  */
 interface PantauOAuthAPI {
     @GET("/v1/callback")
-    fun exchangeToken(@Query("provider_token") oAuthToken: String?): Single<TokenResponse>
+    fun exchangeToken(
+        @Query("provider_token") oAuthToken: String?,
+        @Query("firebase_key") firebaseToken: String?,
+        @Query("firebase_key_type") firebaseKeyType: String?
+    ): Single<TokenResponse>
 
     @FormUrlEncoded
     @POST("/oauth/token")

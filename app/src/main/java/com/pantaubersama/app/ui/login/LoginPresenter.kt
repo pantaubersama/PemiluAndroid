@@ -10,11 +10,12 @@ class LoginPresenter @Inject constructor(
     private val profileInteractor: ProfileInteractor
 ) : BasePresenter<LoginView>() {
 
-    fun exchangeToken(oAuthToken: String?, registrationId: String?) {
+    fun exchangeToken(oAuthToken: String?, firebaseToken: String?) {
         view?.showLoading()
-        val disposable = loginInteractor?.exchangeToken(oAuthToken)
+        val disposable = loginInteractor?.exchangeToken(oAuthToken, firebaseToken)
             ?.subscribe({
                 loginInteractor.saveLoginData(it.token)
+                loginInteractor.saveFirebaseToken(firebaseToken)
                 getProfile()
             }, {
                 view?.dismissLoading()

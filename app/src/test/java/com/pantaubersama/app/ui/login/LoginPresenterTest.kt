@@ -40,14 +40,14 @@ class LoginPresenterTest {
         val registrationId = ""
         presenter?.exchangeToken(oAuthToken, registrationId)
         verify(view, times(1))?.showLoading()
-        verify(loginInteractor, times(1))?.exchangeToken(oAuthToken)
+        verify(loginInteractor, times(1))?.exchangeToken(oAuthToken, firebaseToken)
     }
 
     @Test
     fun loginSuccess() {
         val oAuthToken = "token"
         val registrationId = ""
-        doReturn(Single.just(token)).`when`(loginInteractor)?.exchangeToken(oAuthToken)
+        doReturn(Single.just(token)).`when`(loginInteractor)?.exchangeToken(oAuthToken, firebaseToken)
         presenter?.exchangeToken(oAuthToken, registrationId)
         verify(view, times(1))?.openHomeActivity()
         verify(view, times(1))?.dismissLoading()
