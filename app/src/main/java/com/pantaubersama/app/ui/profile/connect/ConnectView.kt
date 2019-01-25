@@ -16,4 +16,6 @@ interface ConnectView : BaseView {
     fun showFailedDisconnectTwitterAlert()
     fun logoutFacebookSDK()
     fun logoutTwitterSDK()
+    fun onFailedConnectTwitter()
+    fun onFailedConnectFacebook()
 }

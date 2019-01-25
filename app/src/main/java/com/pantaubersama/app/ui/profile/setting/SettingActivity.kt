@@ -38,6 +38,7 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import com.facebook.GraphRequest
+import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.ShareUtil
@@ -57,11 +58,9 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     companion object {
         val EDIT_PROFILE = 1
-        val UBAH_SANDI = 2
         val UBAH_DATA_LAPOR = 3
         val VERIFIKASI = 4
         val BADGE = 5
-        val CLUSTER_UNDANG = 6
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -136,6 +135,10 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                         .show()
             }
         }
+    }
+
+    override fun onFailedConnectTwitter() {
+        logoutTwitterSDK()
     }
 
     override fun showConnectedToTwitterAlert() {
@@ -214,6 +217,10 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                         .show()
             }
         }
+    }
+
+    override fun onFailedConnectFacebook() {
+        logoutFacebookSDK()
     }
 
     override fun onSuccessGetProfile(profile: Profile) {
@@ -312,7 +319,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             ChromeTabUtil(this@SettingActivity).forceLoadUrl(PantauConstants.Profile.URL_PANDUAN_KOMUNITAS)
         }
         setting_tentang.setOnClickListener {
-            ChromeTabUtil(this@SettingActivity).forceLoadUrl(PantauConstants.Profile.URL_TENTANG_PANTAU_BERSAMA)
+            startActivity(Intent(this@SettingActivity, TentangAppActivity::class.java))
         }
         setting_berikan_nilai.setOnClickListener {
             try {
@@ -359,10 +366,18 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
                 .setOkText(getString(R.string.label_keluar))
                 .addOkListener(object : ConfirmationDialog.DialogOkListener {
                     override fun onClickOk() {
-                        presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
+                        presenter.revokeFirebaseToken()
                     }
                 })
                 .show()
+    }
+
+    override fun onSuccessRevokeFirebaseToken() {
+        presenter.logOut(BuildConfig.PANTAU_CLIENT_ID, BuildConfig.PANTAU_CLIENT_SECRET)
+    }
+
+    override fun showLogoutFailedAlert() {
+        ToastUtil.show(this@SettingActivity, "Gagal logout")
     }
 
     override fun showSuccessDisconnectFacebookAlert() {
