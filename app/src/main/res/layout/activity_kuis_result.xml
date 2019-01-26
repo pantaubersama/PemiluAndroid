@@ -122,7 +122,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_paslon_name"
             app:strokeColor="@color/white"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1dp"
+            app:rippleColor="@null"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_see_answers"

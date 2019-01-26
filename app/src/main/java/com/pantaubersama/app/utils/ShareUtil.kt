@@ -2,7 +2,9 @@ package com.pantaubersama.app.utils
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import com.pantaubersama.app.BuildConfig
+import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.data.model.kuis.KuisResult
@@ -17,6 +19,7 @@ import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_JANPOL_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KECENDERUNGAN_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KUIS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_TANYA_PATH
+import java.io.File
 
 /**
  * @author edityomurti on 25/12/2018 20:03
@@ -34,6 +37,7 @@ class ShareUtil {
                 is JanjiPolitik -> "Sudah tahu Janji yang ini, belum? Siap-siap catatan, ya! ✔️ " + BuildConfig.PANTAU_WEB_URL + SHARE_JANPOL_PATH + item.id
                 is KuisItem -> "Iseng-iseng serius main Kuis ini dulu. Kira-kira masih cocok apa ternyata malah nggak cocok, yaa \uD83D\uDE36 " + BuildConfig.PANTAU_WEB_URL + SHARE_KUIS_PATH + item.id
                 is KuisUserResult -> "Hmm.. Ternyataa \uD83D\uDC40 %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + item.user.id)
+                is KuisUserResult -> context.getString(R.string.share_wording_kecenderungan).format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + item.user.id)
                 is KuisResult -> "Kamu sudah ikut? Aku sudah dapat hasilnya \uD83D\uDE0E %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_HASIL_KUIS_PATH + item.quizParticipation.id)
                 is AchievedBadge -> "Yeay! I got the badge \uD83E\uDD18 " + BuildConfig.PANTAU_WEB_URL + SHARE_BADGE_PATH + item.achievedId
                 else -> ""
@@ -76,6 +80,17 @@ class ShareUtil {
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
                 context.startActivity(chooserIntent)
             }
+        }
+
+        fun shareImage(context: Context, message: String, imageFile: File) {
+            val imageUri = Uri.parse(imageFile.absolutePath)
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.type = "image/*"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, message)
+            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            context.startActivity(Intent.createChooser(shareIntent, "Bagikan ke .."));
         }
     }
 }

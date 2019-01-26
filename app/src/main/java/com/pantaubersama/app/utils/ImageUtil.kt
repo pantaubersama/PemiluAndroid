@@ -3,12 +3,14 @@ package com.pantaubersama.app.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.Matrix
 import android.os.Environment
 import id.zelory.compressor.Compressor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import android.view.Surface
+import android.view.View
 import android.view.WindowManager
 import java.io.File
 import java.io.FileOutputStream
@@ -82,6 +84,13 @@ class ImageUtil {
                 Surface.ROTATION_270 -> rotation = 0
             }
             return rotation
+        }
+
+        fun getScreenshotAsFile(rootView: View) : File {
+            val bitmap = Bitmap.createBitmap(rootView.width, rootView.height, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+            rootView.draw(canvas)
+            return getImageFile(bitmap)
         }
     }
 
