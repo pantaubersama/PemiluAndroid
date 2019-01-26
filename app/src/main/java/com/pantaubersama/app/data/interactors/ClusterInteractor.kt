@@ -77,4 +77,11 @@ class ClusterInteractor @Inject constructor(
     fun setSearchClusterFilter(categoryFilter: Category?) {
         dataCache.saveFilterSearchClusterCategory(categoryFilter)
     }
+
+    fun getClusterById(clusterId: String): Single<ClusterItem> {
+        return apiWrapper.getPantauOAuthApi().getClusterById(clusterId)
+            .subscribeOn(rxSchedulers.io())
+            .map { it.clustersData.cluster }
+            .observeOn(rxSchedulers.mainThread())
+    }
 }

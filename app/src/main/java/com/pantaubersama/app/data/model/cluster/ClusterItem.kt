@@ -33,7 +33,8 @@ data class ClustersResponse(
 )
 
 data class ClustersData(
-    @SerializedName("clusters") var clusterList: MutableList<ClusterItem>
+    @SerializedName("clusters") var clusterList: MutableList<ClusterItem>,
+    @SerializedName("cluster") var cluster: ClusterItem
 )
 
 data class Category(

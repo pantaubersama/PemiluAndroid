@@ -10,6 +10,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.clusterdetail.ClusterDetailActivity
 import com.pantaubersama.app.ui.search.UpdateableFragment
 import com.pantaubersama.app.ui.search.cluster.filter.FilterClusterActivity
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_SEARCH_KEYWORD
@@ -66,7 +67,7 @@ class SearchClusterFragment : BaseFragment<SearchClusterPresenter>(), SearchClus
     private fun setupRecycler() {
         adapter = ClusterAdapter(object : ClusterAdapter.AdapterListener {
             override fun onClickItem(item: ClusterItem) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                item.id?.let { ClusterDetailActivity.start(requireContext(), it) }
             }
         })
         adapter.addSupportLoadMore(recycler_view, 10) {
