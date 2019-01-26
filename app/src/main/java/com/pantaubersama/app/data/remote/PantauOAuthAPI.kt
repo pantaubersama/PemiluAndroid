@@ -228,4 +228,9 @@ interface PantauOAuthAPI {
         @Field("firebase_key") firebaseKey: String,
         @Field("firebase_key_type") firebaseKeyType: String
     ): Completable
+
+    @GET("/v1/clusters/{id}")
+    fun getClusterById(
+        @Path("id") clusterId: String
+    ): Single<ClustersResponse>
 }

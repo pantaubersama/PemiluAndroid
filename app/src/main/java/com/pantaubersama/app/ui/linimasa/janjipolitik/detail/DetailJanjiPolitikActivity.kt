@@ -10,6 +10,7 @@ import com.pantaubersama.app.data.model.janjipolitik.Creator
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.clusterdetail.ClusterDetailActivity
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
@@ -128,6 +129,9 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
                 tv_cluster_name.text = it.name
                 tv_cluster_member_count.text = it.memberCount.toString() + getString(R.string.anggota)
                 iv_avatar_cluster.loadUrl(it.image?.url, R.drawable.ic_avatar_placeholder)
+            }
+            ll_cluster_container.setOnClickListener {
+                cluster?.id?.let { it1 -> ClusterDetailActivity.start(this@DetailJanjiPolitikActivity, it1) }
             }
         } else {
             ll_cluster_container.visibleIf(false)

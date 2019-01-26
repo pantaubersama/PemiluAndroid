@@ -226,7 +226,7 @@ class PantauConstants {
 
     object Onboarding {
         const val ONBOARDING_1_TITLE = "Voice Over Noise"
-        const val ONBOARDING_1_DESC = "Linimasa konten kampanye resmi tanpa sampah Informasi."
+        const val ONBOARDING_1_DESC = "Linimasa konten kampanye resmi tanpa sampah informasi."
         const val ONBOARDING_1_FILE_NAME = "lottie_onboarding_1_linimasa.json"
         const val ONBOARDING_2_TITLE = "Understanding Over Branding"
         const val ONBOARDING_2_DESC = "Fleksibilitas uji preferensi kebijakan kandidat calon pemimpin."
