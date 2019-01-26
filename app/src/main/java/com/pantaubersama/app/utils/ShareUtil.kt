@@ -90,7 +90,7 @@ class ShareUtil {
             shareIntent.putExtra(Intent.EXTRA_TEXT, message)
             shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            context.startActivity(Intent.createChooser(shareIntent, "Bagikan ke .."));
+            context.startActivity(Intent.createChooser(shareIntent, "Bagikan ke .."))
         }
     }
 }
