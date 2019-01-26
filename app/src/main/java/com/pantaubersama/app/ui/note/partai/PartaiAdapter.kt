@@ -57,7 +57,6 @@ class PartaiAdapter : BaseRecyclerAdapter() {
 
     fun setSelectedData(politicalParty: PoliticalParty) {
         selectedItem = politicalParty
-        println("${selectedItem?.id} : ${politicalParty.id}")
         selectedItem?.let { listener.onSelectItem(it) }
         notifyDataSetChanged()
     }
