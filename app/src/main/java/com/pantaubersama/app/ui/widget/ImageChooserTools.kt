@@ -3,7 +3,6 @@ package com.pantaubersama.app.ui.widget
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.provider.MediaStore
 import android.view.Surface
 import android.view.WindowManager

@@ -87,10 +87,10 @@ class ImageUtil {
             return rotation
         }
 
-        fun getScreenshotAsFile(context: Context, rootView: View): File {
-            val bitmap = Bitmap.createBitmap(rootView.width, rootView.height, Bitmap.Config.ARGB_8888)
+        fun getScreenshotAsFile(context: Context, view: View): File {
+            val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
-            rootView.draw(canvas)
+            view.draw(canvas)
             return getImageFile(context, bitmap)
         }
     }

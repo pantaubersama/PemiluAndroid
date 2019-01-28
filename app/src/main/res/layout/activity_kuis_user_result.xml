@@ -89,7 +89,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/bw_modelica_bold"
             android:includeFontPadding="false"
-            android:textColor="@color/white"
+            android:textColor="@color/brownLight"
             android:textSize="60sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -133,5 +133,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_centerInParent="true"/>
+
+    <include layout="@layout/layout_share_kuis_user_result"/>
 
 </RelativeLayout>

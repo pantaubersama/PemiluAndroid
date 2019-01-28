@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.LabeledIntent
 import androidx.core.content.FileProvider
+import androidx.fragment.app.FragmentActivity
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
@@ -13,6 +14,7 @@ import com.pantaubersama.app.data.model.kuis.KuisUserResult
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
 import com.pantaubersama.app.data.model.user.AchievedBadge
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_SHARE
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_BADGE_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_FEEDS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_HASIL_KUIS_PATH
@@ -116,7 +118,8 @@ class ShareUtil {
                 targetedShareIntents.add(1, LabeledIntent(downloadIntent, context.packageName, "Simpan", R.drawable.ic_download))
                 val chooserIntent = Intent.createChooser(targetedShareIntents.removeAt(0), "Bagikan ke ..")
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
-                context.startActivity(Intent.createChooser(chooserIntent, "Bagikan ke .."))
+//                context.startActivity(Intent.createChooser(chooserIntent, "Bagikan ke .."))
+                (context as FragmentActivity).startActivityForResult(chooserIntent, RC_SHARE)
             } else {
                 context.startActivity(Intent.createChooser(shareIntent, "Bagikan ke .."))
             }
