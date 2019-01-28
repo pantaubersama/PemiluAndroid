@@ -86,11 +86,11 @@ class SearchQuizPresenter @Inject constructor(
             filter == Filter.KUIS_ALL -> when (currentFilter) {
                 Filter.BELUM_SELESAI -> {
                     currentFilter = Filter.BELUM_DIIKUTI
-                    if (result.isEmpty()) getNextPage(keyword)
+                    if (result.size < perPage) getNextPage(keyword)
                 }
                 Filter.BELUM_DIIKUTI -> {
                     currentFilter = Filter.SELESAI
-                    if (result.isEmpty()) getNextPage(keyword)
+                    if (result.size < perPage) getNextPage(keyword)
                 }
                 else -> view?.setNoMoreData()
             }

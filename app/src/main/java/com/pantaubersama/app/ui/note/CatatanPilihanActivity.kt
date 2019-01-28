@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.partai.PoliticalParty
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.note.partai.PartaiFragment
 import com.pantaubersama.app.ui.note.presiden.PresidenFragment
@@ -23,7 +24,7 @@ import javax.inject.Inject
 class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanPilihanView {
     var selectedItem: String = ""
     var slectedPaslon = 0
-    var selectedPartai: String = ""
+    var selectedPartai: PoliticalParty? = null
 
     @Inject
     override lateinit var presenter: CatatanPilihanPresenter
@@ -51,7 +52,7 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
             adapter.setSelected(0)
         }
         catatan_pilihanku_ok.setOnClickListener {
-            presenter.submitCatatanku(slectedPaslon, selectedPartai)
+            selectedPartai?.let { it1 -> presenter.submitCatatanku(slectedPaslon, it1) }
         }
     }
 
@@ -153,7 +154,7 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
         this.slectedPaslon = paslon
     }
 
-    fun setSelectedParty(partai: String) {
+    fun setSelectedParty(partai: PoliticalParty) {
         this.selectedPartai = partai
     }
 

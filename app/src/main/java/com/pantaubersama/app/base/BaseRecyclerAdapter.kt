@@ -124,6 +124,10 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
         return isDataEnd
     }
 
+    fun getListData(): MutableList<ItemModel> {
+        return data
+    }
+
     override fun getItemViewType(position: Int): Int {
         return data[position].getType()
     }

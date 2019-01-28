@@ -186,7 +186,11 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         }
         tv_retry_badge.setOnClickListener { presenter.refreshBadges() }
         tv_badge_more.setOnClickListener {
-            startActivity(Intent(this, BadgeActivity::class.java))
+            if (userId != null) {
+                BadgeActivity.start(this@ProfileActivity, userId)
+            } else {
+                BadgeActivity.start(this@ProfileActivity)
+            }
         }
     }
 

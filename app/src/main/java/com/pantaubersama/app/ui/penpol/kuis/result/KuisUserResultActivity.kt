@@ -119,38 +119,11 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
         shareIntent.putExtra(Intent.EXTRA_TEXT, "SHARE")
         shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//        val targetedShareIntents: MutableList<Intent> = ArrayList()
-//        val resInfo = packageManager?.queryIntentActivities(shareIntent, 0)
 
         setupToolbar(true, "", R.color.white, 0f)
         btn_share.visibleIf(true)
         dismissProgressDialog()
         ShareUtil.shareImage(this, "Hmm.. Ternyataa \uD83D\uDC40 %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + userId), imageFile)
-
-//        try {
-//            if (!resInfo!!.isEmpty()) {
-//                for (resolveInfo in resInfo) {
-//                    val sendIntent = Intent(Intent.ACTION_SEND)
-//                    sendIntent.type = "image/*"
-//                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Hmm.. Ternyataa \uD83D\uDC40 %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + userId))
-//                    sendIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
-//                    sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//                    if (!resolveInfo.activityInfo.packageName.contains("pantaubersama")) {
-//                        sendIntent.`package` = resolveInfo.activityInfo.packageName
-//                        targetedShareIntents.add(sendIntent)
-//                    }
-//                }
-//                val downloadIntent = DownloadActivity.setIntent(this, imageFile.absolutePath)
-//                targetedShareIntents.add(1, LabeledIntent(downloadIntent, packageName, "Simpan", R.drawable.ic_download))
-//                val chooserIntent = Intent.createChooser(targetedShareIntents.removeAt(0), "Bagikan ke ..")
-//                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
-//                startActivity(Intent.createChooser(chooserIntent, "Bagikan ke .."))
-//            }
-// //            startActivity(shareIntent)
-//        } catch (e: ActivityNotFoundException) {
-//            e.printStackTrace()
-//            ToastUtil.show(this, "Oops.. ada yang salah nih")
-//        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

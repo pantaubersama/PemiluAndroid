@@ -21,6 +21,15 @@ class ClusterInteractor @Inject constructor(
             .getClusterList(page, perPage, keyword, categoryId)
             .subscribeOn(rxSchedulers.io())
             .map { it.clustersData.clusterList }
+            .map {
+                val eligibleCluster: MutableList<ClusterItem> = ArrayList()
+                for (cluster in it) {
+                    if (cluster.isEligible) {
+                        eligibleCluster.add(cluster)
+                    }
+                }
+                eligibleCluster
+            }
             .observeOn(rxSchedulers.mainThread())
     }
 
