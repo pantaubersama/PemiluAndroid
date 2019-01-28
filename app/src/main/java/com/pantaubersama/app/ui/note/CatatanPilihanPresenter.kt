@@ -2,10 +2,11 @@ package com.pantaubersama.app.ui.note
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.ProfileInteractor
+import com.pantaubersama.app.data.model.partai.PoliticalParty
 import javax.inject.Inject
 
 class CatatanPilihanPresenter @Inject constructor(private val profileInteractor: ProfileInteractor) : BasePresenter<CatatanPilihanView>() {
-    fun submitCatatanku(paslonSelected: Int, partySelected: String) {
+    fun submitCatatanku(paslonSelected: Int, partySelected: PoliticalParty) {
         view?.showLoading()
         disposables.add(
                 profileInteractor.submitCatatanku(paslonSelected, partySelected)

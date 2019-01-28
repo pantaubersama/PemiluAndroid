@@ -185,7 +185,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
 
     override fun showEmptyDataAlert() {
         view_empty_state.enableLottie(true, lottie_empty_state)
-        tv_empty_state.text = "Hmm.. kamu belum pernah membuat pertanyaan"
+        tv_empty_state.text = "Belum pernah membuat pertanyaan"
     }
 
     override fun showFailedGetDataAlert() {

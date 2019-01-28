@@ -9,6 +9,7 @@ import com.extrainteger.symbolic.SymbolicException
 import com.extrainteger.symbolic.models.SymbolicToken
 import com.extrainteger.symbolic.ui.SymbolicLoginButton
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -20,6 +21,7 @@ import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Companion.CONFIRMATION_PATH
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
@@ -62,14 +64,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
         symbolic_login_button.setCallback(object : Callback<SymbolicToken>() {
 
             override fun success(result: Result<SymbolicToken>) {
-                FirebaseInstanceId.getInstance().instanceId
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            presenter.exchangeToken(result.data.accessToken, task.result?.token)
-                        } else {
-                            task.exception?.let { showError(it) }
-                        }
-                    }
+                presenter.exchangeToken(result.data.accessToken)
             }
 
             override fun failure(exception: SymbolicException) {
@@ -79,6 +74,18 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
         lewati_button.setOnClickListener {
             openHomeActivity()
         }
+    }
+
+    override fun onSuccessLogin() {
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Timber.d(task.result?.token)
+                    task.result?.token?.let { presenter.saveFirebaseKey(it) }
+                } else {
+                    task.exception?.let { showError(it) }
+                }
+            }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -99,6 +106,14 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     }
 
     override fun onSuccessGetProfile(it: Profile?) {
+        FirebaseMessaging.getInstance().subscribeToTopic("broadcasts-activity")
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Timber.d("Subscribing to broadcast channel")
+                } else {
+                    Timber.d("Failed to subscribe to broadcast channel")
+                }
+            }
         if (it?.username != null &&
             it.education != null &&
             it.location != null &&

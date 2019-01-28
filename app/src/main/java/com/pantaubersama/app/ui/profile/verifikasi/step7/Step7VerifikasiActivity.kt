@@ -114,7 +114,7 @@ class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7V
                 override fun handleImage(image: Image): Runnable {
                     return Runnable {
                         val bitmap = mTextureView!!.getBitmap(mTextureView!!.width, mTextureView!!.height)
-                        imageFile = ImageUtil.getImageFile(bitmap)
+                        imageFile = ImageUtil.getImageFile(this@Step7VerifikasiActivity, bitmap)
                         signaturePhoto = createFromFile(imageFile!!)
                         runOnUiThread(Runnable {
                             kotlin.run {
@@ -235,7 +235,7 @@ class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7V
             image_preview.setImageBitmap(bitmap)
             isPreview = true
 
-            val file = ImageUtil.getImageFile(bitmap)
+            val file = ImageUtil.getImageFile(this, bitmap)
             signaturePhoto = createFromFile(file)
         }
     }

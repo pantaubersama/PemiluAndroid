@@ -1,5 +1,7 @@
 package com.pantaubersama.app.ui.profile.setting.badge
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
@@ -7,6 +9,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_badge.*
 import javax.inject.Inject
@@ -17,11 +20,12 @@ class BadgeActivity : BaseActivity<BadgePresenter>(), BadgeView {
     override lateinit var presenter: BadgePresenter
 
     private lateinit var adapter: BadgeAdapter
+    private var userId: String? = null
 
     override fun statusBarColor(): Int? = R.color.white
 
     override fun fetchIntentExtra() {
-        // ok
+        userId = intent.getStringExtra(PantauConstants.Profile.USER_ID)
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -31,7 +35,11 @@ class BadgeActivity : BaseActivity<BadgePresenter>(), BadgeView {
     override fun setupUI(savedInstanceState: Bundle?) {
         setupRecyclerView()
         onClickAction()
-        presenter.refreshBadges()
+        if (userId != null) {
+            userId?.let { presenter.getUserBadges(it) }
+        } else {
+            presenter.refreshBadges()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -68,5 +76,15 @@ class BadgeActivity : BaseActivity<BadgePresenter>(), BadgeView {
 
     override fun dismissLoading() {
         badge_progress_bar.visibleIf(false)
+    }
+
+    companion object {
+        fun start(context: Context, userId: String? = null) {
+            val intent = Intent(context, BadgeActivity::class.java)
+            if (userId != null) {
+                intent.putExtra(PantauConstants.Profile.USER_ID, userId)
+            }
+            context.startActivity(intent)
+        }
     }
 }

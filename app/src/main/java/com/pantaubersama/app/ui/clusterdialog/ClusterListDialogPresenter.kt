@@ -19,7 +19,8 @@ class ClusterListDialogPresenter @Inject constructor(
             view?.showLoading()
         }
 
-        disposables.add(clusterInteractor.getClusterList(page, perPage, keyword, "")
+        disposables.add(
+            clusterInteractor.getClusterList(page, perPage, keyword, "")
             .subscribe(
                 {
                     if (page == 1) {

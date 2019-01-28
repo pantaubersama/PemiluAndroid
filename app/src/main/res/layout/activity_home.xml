@@ -91,7 +91,6 @@
         android:background="@color/white"
         android:layout_alignParentBottom="true"
         app:menu="@menu/navigation"
-        app:itemIconTint="@drawable/selector_nav_bar_text_color"
         app:itemTextColor="@drawable/selector_nav_bar_text_color"/>
 
     <FrameLayout

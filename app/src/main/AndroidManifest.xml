@@ -21,18 +21,31 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
+        <activity android:name=".utils.download.DownloadActivity"></activity>
+        <activity android:name=".ui.clusterdetail.ClusterDetailActivity" />
+
         <service android:name=".background.firebase.PantauFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
+
             <meta-data
                 android:name="com.google.firebase.messaging.default_notification_channel_id"
                 android:value="@string/default_notification_channel_id" />
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_icon"
+                android:resource="@drawable/ic_notification_icon" />
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_color"
+                android:resource="@color/colorPrimary" />
         </service>
-        <activity android:name=".ui.search.cluster.filter.FilterClusterActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.search.person.filter.FilterOrangActivity"
-            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.search.cluster.filter.FilterClusterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.search.person.filter.FilterOrangActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.onboarding.OnboardingActivity"
             android:screenOrientation="portrait" />
@@ -129,7 +142,6 @@
                     android:host="@string/pantau_web_url_no_scheme"
                     android:pathPrefix="/share"
                     android:scheme="http" />
-
                 <data
                     android:host="@string/pantau_web_url_no_scheme"
                     android:pathPrefix="/cluster"
@@ -138,7 +150,6 @@
                     android:host="@string/pantau_web_url_no_scheme"
                     android:pathPrefix="/cluster"
                     android:scheme="http" />
-
             </intent-filter>
         </activity>
         <activity
@@ -241,7 +252,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.connect.ConnectActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.note.CatatanPilihanActivity"
             android:screenOrientation="portrait" />

@@ -17,18 +17,15 @@ class PartaiFragment : BaseFragment<PartaiPresenter>(), PartaiView {
 
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var partaiAdapter: PartaiAdapter
+    private lateinit var noParty: PoliticalParty
+    private var savedInstanceState: Bundle? = null
 
     @Inject
     override lateinit var presenter: PartaiPresenter
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
+        this.savedInstanceState = savedInstanceState
         setupRecyclerView()
-        if (savedInstanceState != null) {
-            partaiAdapter.setSelectedData(PoliticalParty(savedInstanceState.getString("selected_partai"),
-                    null, null, null))
-        } else {
-            presenter.getUserProfile()
-        }
         presenter.getPartai(1, 20)
     }
 
@@ -50,7 +47,13 @@ class PartaiFragment : BaseFragment<PartaiPresenter>(), PartaiView {
 
     override fun bindUserProfile(profile: Profile) {
         if (profile.politicalParty != null) {
-            profile.politicalParty?.id?.let { PoliticalParty(it, null, null, null) }?.let { partaiAdapter.setSelectedData(it) }
+            for (partai in partaiAdapter.getListData() as MutableList<PoliticalParty>) {
+                if (partai == profile.politicalParty) {
+                    partaiAdapter.setSelectedData(partai)
+                }
+            }
+        } else {
+            partaiAdapter.setSelectedData(noParty)
         }
     }
 
@@ -59,14 +62,27 @@ class PartaiFragment : BaseFragment<PartaiPresenter>(), PartaiView {
         for (party in politicalParties) {
             parties.add(party)
         }
-        val totalNumber = parties.size
-        parties.add(PoliticalParty(
-                "",
-                null,
-                "Belum menentukan pilihan",
-                totalNumber + 1
-        ))
+        noParty = PoliticalParty(
+            "",
+            null,
+            "Belum menentukan pilihan",
+            parties.size + 1
+        )
+        parties.add(noParty)
         partaiAdapter.setDatas(parties)
+        setSelectedParty()
+    }
+
+    private fun setSelectedParty() {
+        if (savedInstanceState != null) {
+            for (partai in partaiAdapter.getListData() as MutableList<PoliticalParty>) {
+                if (partai == savedInstanceState?.getSerializable("selected_partai") as PoliticalParty) {
+                    partaiAdapter.setSelectedData(partai)
+                }
+            }
+        } else {
+            presenter.getUserProfile()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -75,7 +91,7 @@ class PartaiFragment : BaseFragment<PartaiPresenter>(), PartaiView {
         partaiAdapter.listener = object : PartaiAdapter.Listener {
             override fun onSelectItem(politicalParty: PoliticalParty) {
                 partai_selected.text = politicalParty.name
-                (activity as CatatanPilihanActivity).setSelectedParty(politicalParty.id)
+                (activity as CatatanPilihanActivity).setSelectedParty(politicalParty)
             }
         }
         partai_rv_view.layoutManager = layoutManager
@@ -84,7 +100,7 @@ class PartaiFragment : BaseFragment<PartaiPresenter>(), PartaiView {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        partaiAdapter.selectedItem?.id?.let { outState.putString("selected_partai", it) }
+        partaiAdapter.selectedItem?.let { outState.putSerializable("selected_partai", it) }
     }
 
     companion object {

@@ -5,7 +5,6 @@ import com.pantaubersama.app.data.interactors.LoginInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import javax.inject.Inject
 import com.twitter.sdk.android.core.TwitterException
-import android.R.attr.data
 import com.pantaubersama.app.utils.PantauConstants
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
@@ -126,7 +125,7 @@ class SettingPresenter @Inject constructor(
 
     fun revokeFirebaseToken() {
         disposables.add(
-            loginInteractor.revokeFirebaseToken()
+            loginInteractor.updateFirebaseToken("")
                 .subscribe(
                     {
                         view?.onSuccessRevokeFirebaseToken()

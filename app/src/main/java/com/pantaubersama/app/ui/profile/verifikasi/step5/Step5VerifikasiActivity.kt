@@ -112,7 +112,7 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
                 override fun handleImage(image: Image): Runnable {
                     return Runnable {
                         val bitmap = mTextureView!!.getBitmap(mTextureView!!.width, mTextureView!!.height)
-                        imageFile = ImageUtil.getImageFile(bitmap)
+                        imageFile = ImageUtil.getImageFile(this@Step5VerifikasiActivity, bitmap)
                         ktpPhoto = createFromFile(imageFile!!)
                         runOnUiThread(Runnable {
                             kotlin.run {
@@ -233,7 +233,7 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
             image_preview.setImageBitmap(bitmap)
             isPreview = true
 
-            val file = ImageUtil.getImageFile(bitmap)
+            val file = ImageUtil.getImageFile(this, bitmap)
             ktpPhoto = createFromFile(file)
         }
     }
