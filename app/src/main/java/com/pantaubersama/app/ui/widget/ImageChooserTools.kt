@@ -64,7 +64,6 @@ class ImageChooserTools {
             val cacheDir = context.cacheDir
             val imageFile = File(cacheDir, "image/" + System.currentTimeMillis().toString() + ".jpg")
             intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", imageFile))
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile))
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
             (context as FragmentActivity).startActivityForResult(intent, RC_CAMERA)
