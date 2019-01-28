@@ -14,7 +14,7 @@ import java.io.Serializable
 data class ClusterItem(
     @SerializedName("id") var id: String? = null,
     @SerializedName("name") var name: String? = null,
-    @SerializedName("is_eligible") var isEligible: Boolean? = false,
+    @SerializedName("is_eligible") var isEligible: Boolean = false,
     @SerializedName("image") var image: Image? = Image(),
     @SerializedName("is_displayed") var isDisplayed: Boolean? = true,
     @SerializedName("category_id") var categoryId: String? = null,
@@ -33,7 +33,8 @@ data class ClustersResponse(
 )
 
 data class ClustersData(
-    @SerializedName("clusters") var clusterList: MutableList<ClusterItem>
+    @SerializedName("clusters") var clusterList: MutableList<ClusterItem>,
+    @SerializedName("cluster") var cluster: ClusterItem
 )
 
 data class Category(

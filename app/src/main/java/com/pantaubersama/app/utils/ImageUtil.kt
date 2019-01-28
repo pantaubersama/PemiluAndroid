@@ -1,14 +1,16 @@
 package com.pantaubersama.app.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.Matrix
-import android.os.Environment
 import id.zelory.compressor.Compressor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import android.view.Surface
+import android.view.View
 import android.view.WindowManager
 import java.io.File
 import java.io.FileOutputStream
@@ -28,12 +30,12 @@ class ImageUtil {
     }
 
     companion object {
-        fun getImageFile(bitmap: Bitmap): File {
-            var file = File(Environment.getExternalStorageDirectory().path + "/dir")
+        fun getImageFile(context: Context, bitmap: Bitmap): File {
+            var file = File(context.cacheDir.absolutePath + "/image/")
             if (!file.isDirectory) {
                 file.mkdir()
             }
-            file = File(Environment.getExternalStorageDirectory().path + "/dir", System.currentTimeMillis().toString() + ".jpg")
+            file = File(context.cacheDir, "image/" + System.currentTimeMillis().toString() + ".jpg")
             try {
                 val fileOutputStream = FileOutputStream(file)
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
@@ -48,6 +50,7 @@ class ImageUtil {
             return file
         }
 
+        @SuppressLint("CheckResult")
         fun compressImage(context: Context, imageFile: File, maxSizeInMb: Int = 2, listener: CompressorListener) {
 //        var ITERATOR = 0
 //        val MAX_ITERATOR = 10
@@ -82,6 +85,13 @@ class ImageUtil {
                 Surface.ROTATION_270 -> rotation = 0
             }
             return rotation
+        }
+
+        fun getScreenshotAsFile(context: Context, view: View): File {
+            val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+            view.draw(canvas)
+            return getImageFile(context, bitmap)
         }
     }
 

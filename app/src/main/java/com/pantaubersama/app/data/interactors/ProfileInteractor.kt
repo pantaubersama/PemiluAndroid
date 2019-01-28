@@ -191,16 +191,16 @@ class ProfileInteractor @Inject constructor(
                 .observeOn(rxSchedulers.mainThread())
     }
 
-    fun submitCatatanku(paslonSelected: Int, partySelected: String): Completable {
+    fun submitCatatanku(paslonSelected: Int, partySelected: PoliticalParty): Completable {
         return apiWrapper
                 .getPantauOAuthApi()
-                .submitCatatanku(paslonSelected, partySelected)
+                .submitCatatanku(paslonSelected, partySelected.id)
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
                 .doOnComplete {
                     val newProfile = dataCache.loadUserProfile()
                     newProfile.votePreference = paslonSelected
-                    newProfile.politicalParty?.id = partySelected
+                    newProfile.politicalParty = partySelected
                     dataCache.saveUserProfile(newProfile)
                 }
     }
