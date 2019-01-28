@@ -80,6 +80,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    Timber.d(task.result?.token)
                     task.result?.token?.let { presenter.saveFirebaseKey(it) }
                 } else {
                     task.exception?.let { showError(it) }
