@@ -57,6 +57,19 @@
             tools:ignore="ContentDescription" />
 
         <ImageView
+            android:id="@+id/frame_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/signature_or_id_card"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/capture_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
             android:id="@+id/close_camera_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

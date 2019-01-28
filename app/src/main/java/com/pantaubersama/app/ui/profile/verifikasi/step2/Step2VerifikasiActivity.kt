@@ -35,8 +35,7 @@ class Step2VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
         setupToolbar(true, "", R.color.white, 4f)
         verification_step_indicator.text = "1/3"
         next_button.setOnClickListener {
-            val intent = Intent(this, VerificationCameraActivity::class.java)
-            startActivityForResult(intent, RequestCode.RC_CAMERA)
+            VerificationCameraActivity.start(this, true, RequestCode.RC_CAMERA)
         }
     }
 

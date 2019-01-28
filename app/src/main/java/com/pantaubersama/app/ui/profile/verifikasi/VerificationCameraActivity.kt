@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.profile.verifikasi
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,11 @@ class VerificationCameraActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verification_camera)
+
+        val showSelfieFrame = intent.getBooleanExtra(EXTRA_SHOW_SELFIE_FRAME, false)
+        frame_1.visibleIf(showSelfieFrame)
+        frame_2.visibleIf(showSelfieFrame)
+        frame_3.visibleIf(!showSelfieFrame)
 
         setupListeners()
     }
@@ -117,5 +123,15 @@ class VerificationCameraActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         camera.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    companion object {
+        private const val EXTRA_SHOW_SELFIE_FRAME = "EXTRA_SHOW_SELFIE_FRAME"
+
+        fun start(activity: Activity, showSelfieFrame: Boolean, requestCode: Int) {
+            activity.startActivityForResult(Intent(activity, VerificationCameraActivity::class.java)
+                .putExtra(EXTRA_SHOW_SELFIE_FRAME, showSelfieFrame),
+                requestCode)
+        }
     }
 }

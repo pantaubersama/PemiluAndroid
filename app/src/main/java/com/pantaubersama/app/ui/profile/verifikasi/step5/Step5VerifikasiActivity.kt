@@ -128,7 +128,7 @@ class Step5VerifikasiActivity : BaseActivity<Step5VerifikasiPresenter>(), Step5V
             finish()
         }
         next_button.setOnClickListener {
-            presenter.submitKtpPhoto(ktpPhoto)
+//            presenter.submitKtpPhoto(ktpPhoto)
         }
         retake_button.setOnClickListener {
             Camera2Tools.unlockFocus()
