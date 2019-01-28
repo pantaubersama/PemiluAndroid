@@ -130,7 +130,7 @@ class Step7VerifikasiActivity : BaseActivity<Step7VerifikasiPresenter>(), Step7V
             finish()
         }
         next_button.setOnClickListener {
-            presenter.submitSignaturePhoto(signaturePhoto)
+//            presenter.submitSignaturePhoto(signaturePhoto)
         }
         retake_button.setOnClickListener {
             Camera2Tools.unlockFocus()
