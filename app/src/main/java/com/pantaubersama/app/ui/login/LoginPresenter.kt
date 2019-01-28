@@ -6,23 +6,23 @@ import com.pantaubersama.app.data.interactors.ProfileInteractor
 import javax.inject.Inject
 
 class LoginPresenter @Inject constructor(
-    private val loginInteractor: LoginInteractor?,
+    private val loginInteractor: LoginInteractor,
     private val profileInteractor: ProfileInteractor
 ) : BasePresenter<LoginView>() {
 
-    fun exchangeToken(oAuthToken: String?, firebaseToken: String?) {
+    fun exchangeToken(oAuthToken: String?) {
         view?.showLoading()
-        val disposable = loginInteractor?.exchangeToken(oAuthToken, firebaseToken)
-            ?.subscribe({
+        disposables.add(
+            loginInteractor.exchangeToken(oAuthToken)
+            .subscribe({
                 loginInteractor.saveLoginData(it.token)
-                loginInteractor.saveFirebaseToken(firebaseToken)
+                view?.onSuccessLogin()
                 getProfile()
             }, {
                 view?.dismissLoading()
-                view?.showError(it!!)
+                view?.showError(it)
                 view?.showLoginFailedAlert()
-            })
-        disposables.add(disposable!!)
+            }))
     }
 
     private fun getProfile() {
@@ -38,5 +38,21 @@ class LoginPresenter @Inject constructor(
                 }
             )
         disposables.add(disposable)
+    }
+
+    fun saveFirebaseKey(firebaseToken: String) {
+        disposables.add(
+            loginInteractor.updateFirebaseToken(firebaseToken)
+                .subscribe(
+                    {
+                        getProfile()
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showError(it!!)
+                        view?.showLoginFailedAlert()
+                    }
+                )
+        )
     }
 }
