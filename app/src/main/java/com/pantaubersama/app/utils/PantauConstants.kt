@@ -86,6 +86,7 @@ class PantauConstants {
         const val EXTRA_ONBOARDING_TITLE = "EXTRA_ONBOARDING_TITLE"
         const val EXTRA_ONBOARDING_DESC = "EXTRA_ONBOARDING_DESC"
         const val EXTRA_IS_MODERATOR = "EXTRA_IS_MODERATOR"
+        const val EXTRA_IMAGE_PATH = "EXTRA_IMAGE_PATH"
     }
 
     object RequestCode {
@@ -206,7 +207,7 @@ class PantauConstants {
 
     object Permission {
         val GET_IMAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        val WRITE_FILE_PERMISSION =  arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val WRITE_FILE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
     object CONNECT {

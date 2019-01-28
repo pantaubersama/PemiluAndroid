@@ -2,7 +2,8 @@ package com.pantaubersama.app.utils
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.content.pm.LabeledIntent
+import androidx.core.content.FileProvider
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
@@ -19,6 +20,8 @@ import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_JANPOL_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KECENDERUNGAN_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KUIS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_TANYA_PATH
+import com.pantaubersama.app.utils.download.DownloadActivity
+import timber.log.Timber
 import java.io.File
 
 /**
@@ -83,14 +86,40 @@ class ShareUtil {
         }
 
         fun shareImage(context: Context, message: String, imageFile: File) {
-            val imageUri = Uri.parse(imageFile.absolutePath)
+//            val imageUri = Uri.parse(imageFile.absolutePath)
+            val imageUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", imageFile)
+            Timber.d("edityo imageFilePath = ${imageFile.absolutePath}")
+            Timber.d("edityo imageUri = $imageUri")
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND
             shareIntent.type = "image/*"
             shareIntent.putExtra(Intent.EXTRA_TEXT, message)
             shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            context.startActivity(Intent.createChooser(shareIntent, "Bagikan ke .."));
+
+            val targetedShareIntents: MutableList<Intent> = ArrayList()
+            val resInfo = context.packageManager?.queryIntentActivities(shareIntent, 0)
+
+            if (!resInfo!!.isEmpty()) {
+                for (resolveInfo in resInfo) {
+                    val sendIntent = Intent(Intent.ACTION_SEND)
+                    sendIntent.type = "image/*"
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, message)
+                    sendIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
+                    sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    if (!resolveInfo.activityInfo.packageName.contains("pantaubersama")) {
+                        sendIntent.`package` = resolveInfo.activityInfo.packageName
+                        targetedShareIntents.add(sendIntent)
+                    }
+                }
+                val downloadIntent = DownloadActivity.setIntent(context, imageFile.absolutePath)
+                targetedShareIntents.add(1, LabeledIntent(downloadIntent, context.packageName, "Simpan", R.drawable.ic_download))
+                val chooserIntent = Intent.createChooser(targetedShareIntents.removeAt(0), "Bagikan ke ..")
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
+                context.startActivity(Intent.createChooser(chooserIntent, "Bagikan ke .."))
+            } else {
+                context.startActivity(Intent.createChooser(shareIntent, "Bagikan ke .."))
+            }
         }
     }
 }

@@ -81,7 +81,6 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
         tv_percentage.text = "%d%%".format(kuisResult.percentage.roundToInt())
         tv_paslon_name.text = kuisResult.team.title
         btn_share.setOnClickListener {
-//            ShareUtil.shareItem(this, kuisResult)
             takeScreenShot()
         }
         btn_see_answers.setOnClickListener {
@@ -96,8 +95,9 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
         if (EasyPermissions.hasPermissions(this, *WRITE_FILE_PERMISSION)) {
             showProgressDialog("Tunggu yakk ...")
             setupToolbar(false, "", R.color.white, 0f)
+            btn_share.visibleIf(false)
             btn_see_answers.visibleIf(false)
-            share(ImageUtil.getScreenshotAsFile(window.decorView.rootView))
+            share(ImageUtil.getScreenshotAsFile(this@KuisResultActivity, window.decorView.rootView))
         } else {
             EasyPermissions.requestPermissions(
                 PermissionRequest.Builder(this, RC_ASK_PERMISSIONS, *WRITE_FILE_PERMISSION)
@@ -111,6 +111,7 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
 
     private fun share(imageFile: File) {
         setupToolbar(true, "", R.color.white, 0f)
+        btn_share.visibleIf(true)
         btn_see_answers.visibleIf(true)
         dismissProgressDialog()
         ShareUtil.shareImage(

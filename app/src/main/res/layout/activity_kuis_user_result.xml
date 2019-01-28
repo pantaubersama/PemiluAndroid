@@ -123,8 +123,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_paslon_name"
             app:strokeColor="@color/white"
-            app:strokeWidth="1dp"
-            app:rippleColor="@null"/>
+            app:strokeWidth="1dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

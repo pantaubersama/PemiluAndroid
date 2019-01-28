@@ -3,7 +3,7 @@ package com.pantaubersama.app.ui.widget
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.os.Environment
+import android.net.Uri
 import android.provider.MediaStore
 import android.view.Surface
 import android.view.WindowManager
@@ -21,7 +21,7 @@ class ImageChooserTools {
 
     companion object {
         @Deprecated("changed to ImageUtil#compressImage")
-        fun proccedImageFromCamera(data: Intent, windowManager: WindowManager? = null): File {
+        fun proccedImageFromCamera(context: Context, data: Intent, windowManager: WindowManager? = null): File {
             var rotation = 0
             if (windowManager != null) {
                 when (windowManager.defaultDisplay?.rotation) {
@@ -33,7 +33,7 @@ class ImageChooserTools {
             }
             val bitmap = data.extras?.get("data") as Bitmap
             val rotatedBitmap = ImageUtil.BitmapTools.rotate(bitmap, rotation)
-            return ImageUtil.getImageFile(rotatedBitmap)
+            return ImageUtil.getImageFile(context, rotatedBitmap)
         }
 
         fun proccedImageFromStorage(data: Intent, context: Context): File {
@@ -61,9 +61,10 @@ class ImageChooserTools {
 
         private fun openCamera(context: Context): File {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            val pubDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-            val imageFile = File(pubDir, System.currentTimeMillis().toString() + ".jpg")
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", imageFile!!))
+            val cacheDir = context.cacheDir
+            val imageFile = File(cacheDir, "image/" + System.currentTimeMillis().toString() + ".jpg")
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", imageFile))
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile))
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
             (context as FragmentActivity).startActivityForResult(intent, RC_CAMERA)
