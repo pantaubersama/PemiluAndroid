@@ -10,6 +10,7 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
@@ -185,7 +186,12 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
 
     override fun showEmptyDataAlert() {
         view_empty_state.enableLottie(true, lottie_empty_state)
-        tv_empty_state.text = "Hmm.. kamu belum pernah membuat pertanyaan"
+        if (userId == null) {
+            tv_empty_state.text = "Hmm.. kamu belum pernah membuat pertanyaan"
+        } else {
+            tv_empty_state.text = "Hmm.. ${profile.name} belum pernah membuat pertanyaan"
+        }
+
     }
 
     override fun showFailedGetDataAlert() {
