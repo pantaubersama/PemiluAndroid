@@ -86,6 +86,7 @@ class PantauConstants {
         const val EXTRA_ONBOARDING_TITLE = "EXTRA_ONBOARDING_TITLE"
         const val EXTRA_ONBOARDING_DESC = "EXTRA_ONBOARDING_DESC"
         const val EXTRA_IS_MODERATOR = "EXTRA_IS_MODERATOR"
+        const val EXTRA_IMAGE_PATH = "EXTRA_IMAGE_PATH"
     }
 
     object RequestCode {

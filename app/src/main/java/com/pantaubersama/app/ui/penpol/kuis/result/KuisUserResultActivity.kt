@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.penpol.kuis.result
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import com.facebook.internal.NativeProtocol.EXTRA_USER_ID
@@ -88,7 +89,6 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
         tv_percentage.text = "%d%%".format(kuisUserResult.percentage.roundToInt())
         tv_paslon_name.text = kuisUserResult.team.title
         btn_share.setOnClickListener {
-//            ShareUtil.shareItem(this, kuisUserResult)
             takeScreenShot()
         }
     }
@@ -98,7 +98,8 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
         if (EasyPermissions.hasPermissions(this, *WRITE_FILE_PERMISSION)) {
             showProgressDialog("Tunggu yakk ...")
             setupToolbar(false, "", R.color.white, 0f)
-            share(ImageUtil.getScreenshotAsFile(window.decorView.rootView))
+            btn_share.visibleIf(false)
+            share(ImageUtil.getScreenshotAsFile(this@KuisUserResultActivity, window.decorView.rootView))
         } else {
             EasyPermissions.requestPermissions(
                 PermissionRequest.Builder(this, RC_ASK_PERMISSIONS, *WRITE_FILE_PERMISSION)
@@ -111,36 +112,18 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
     }
 
     private fun share(imageFile: File) {
-//        val targetedShareIntents: MutableList<Intent> = ArrayList()
-//        val resInfo = packageManager?.queryIntentActivities(shareIntent, 0)
+        val imageUri = Uri.parse(imageFile.absolutePath)
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.type = "image/*"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "SHARE")
+        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
         setupToolbar(true, "", R.color.white, 0f)
+        btn_share.visibleIf(true)
         dismissProgressDialog()
         ShareUtil.shareImage(this, "Hmm.. Ternyataa \uD83D\uDC40 %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + userId), imageFile)
-
-//        try {
-// //            if (!resInfo!!.isEmpty()) {
-// //                for (resolveInfo in resInfo) {
-// //                    val sendIntent = Intent(Intent.ACTION_SEND)
-// //                    sendIntent.type = "image/*"
-// //                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Hmm.. Ternyataa \uD83D\uDC40 %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + userId))
-// //                    sendIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
-// //                    sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-// //                    if (!resolveInfo.activityInfo.packageName.contains("pantaubersama")) {
-// //                        sendIntent.`package` = resolveInfo.activityInfo.packageName
-// //                        targetedShareIntents.add(sendIntent)
-// //                    }
-// //                }
-// ////                targetedShareIntents.add(LabeledIntent(this, ))
-// //                val chooserIntent = Intent.createChooser(targetedShareIntents.removeAt(0), "Bagikan dengan")
-// //                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
-// //            }
-// //            startActivity(Intent.createChooser(shareIntent, "Bagikan ke .."));
-// //            startActivity(shareIntent)
-//        } catch (e: ActivityNotFoundException) {
-//            e.printStackTrace()
-//            ToastUtil.show(this, "Oops.. ada yang salah nih")
-//        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

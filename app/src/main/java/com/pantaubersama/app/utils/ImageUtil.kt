@@ -1,11 +1,11 @@
 package com.pantaubersama.app.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Matrix
-import android.os.Environment
 import id.zelory.compressor.Compressor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -30,12 +30,12 @@ class ImageUtil {
     }
 
     companion object {
-        fun getImageFile(bitmap: Bitmap): File {
-            var file = File(Environment.getExternalStorageDirectory().path + "/dir")
+        fun getImageFile(context: Context, bitmap: Bitmap): File {
+            var file = File(context.cacheDir.absolutePath + "/image/")
             if (!file.isDirectory) {
                 file.mkdir()
             }
-            file = File(Environment.getExternalStorageDirectory().path + "/dir", System.currentTimeMillis().toString() + ".jpg")
+            file = File(context.cacheDir, "image/" + System.currentTimeMillis().toString() + ".jpg")
             try {
                 val fileOutputStream = FileOutputStream(file)
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
@@ -50,6 +50,7 @@ class ImageUtil {
             return file
         }
 
+        @SuppressLint("CheckResult")
         fun compressImage(context: Context, imageFile: File, maxSizeInMb: Int = 2, listener: CompressorListener) {
 //        var ITERATOR = 0
 //        val MAX_ITERATOR = 10
@@ -86,11 +87,11 @@ class ImageUtil {
             return rotation
         }
 
-        fun getScreenshotAsFile(rootView: View): File {
+        fun getScreenshotAsFile(context: Context, rootView: View): File {
             val bitmap = Bitmap.createBitmap(rootView.width, rootView.height, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
             rootView.draw(canvas)
-            return getImageFile(bitmap)
+            return getImageFile(context, bitmap)
         }
     }
 
