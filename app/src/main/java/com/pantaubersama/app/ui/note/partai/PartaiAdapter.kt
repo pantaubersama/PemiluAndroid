@@ -31,7 +31,7 @@ class PartaiAdapter : BaseRecyclerAdapter() {
                 partai_pilihan_nama_container.gravity = Gravity.CENTER_VERTICAL
                 partai_pilihan_foto_partai.visibility = View.VISIBLE
                 partai_pilihan_no_urut.visibility = View.VISIBLE
-                partai_pilihan_foto_partai.loadUrl(politicalParty.image?.url, R.drawable.ic_avatar_placeholder)
+                partai_pilihan_foto_partai.loadUrl(politicalParty.image?.medium?.url, R.drawable.ic_avatar_placeholder)
                 partai_pilihan_nama.text = politicalParty.name
                 partai_pilihan_no_urut.text = "No Urut ${politicalParty.number}"
             } else {
