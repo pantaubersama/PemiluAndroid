@@ -115,7 +115,8 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
                     0 -> {
                         presidenFragment
                     }
-                    else -> partaiFragment
+                    1 -> partaiFragment
+                    else -> Fragment()
                 }
             }
 
