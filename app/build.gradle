@@ -114,6 +114,7 @@ dependencies {
     implementation chromeCustomTab
     implementation expandableLayout
     implementation rxBinding
+    implementation cameraKitLibs
     implementation compressor
     implementation facebook_sdk
     implementation twitter_sdk
@@ -122,6 +123,7 @@ dependencies {
     kapt daggerCompiler
     testImplementation unitTestLibs
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
     ktlint "com.github.shyiko:ktlint:0.29.0"
 }
 

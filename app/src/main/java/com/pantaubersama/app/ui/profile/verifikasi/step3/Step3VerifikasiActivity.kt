@@ -136,7 +136,7 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
             finish()
         }
         next_button.setOnClickListener {
-            presenter.submitSelfieKtp(ktpSelfie)
+//            presenter.submitSelfieKtp(ktpSelfie)
         }
         retake_button.setOnClickListener {
             Camera2Tools.unlockFocus()

@@ -40,6 +40,10 @@
             android:name=".ui.search.person.filter.FilterOrangActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.profile.verifikasi.VerificationCameraActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity
             android:name=".ui.onboarding.OnboardingActivity"
             android:screenOrientation="portrait" />
         <activity
