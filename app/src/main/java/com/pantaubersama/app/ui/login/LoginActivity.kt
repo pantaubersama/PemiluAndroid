@@ -62,14 +62,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
         symbolic_login_button.setCallback(object : Callback<SymbolicToken>() {
 
             override fun success(result: Result<SymbolicToken>) {
-                FirebaseInstanceId.getInstance().instanceId
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            presenter.exchangeToken(result.data.accessToken, task.result?.token)
-                        } else {
-                            task.exception?.let { showError(it) }
-                        }
-                    }
+                presenter.exchangeToken(result.data.accessToken)
             }
 
             override fun failure(exception: SymbolicException) {
@@ -79,6 +72,17 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
         lewati_button.setOnClickListener {
             openHomeActivity()
         }
+    }
+
+    override fun onSuccessLogin() {
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    task.result?.token?.let { presenter.saveFirebaseKey(it) }
+                } else {
+                    task.exception?.let { showError(it) }
+                }
+            }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

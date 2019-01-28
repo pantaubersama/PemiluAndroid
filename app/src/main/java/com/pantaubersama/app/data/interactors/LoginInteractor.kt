@@ -17,10 +17,10 @@ class LoginInteractor @Inject constructor(
     private val rxSchedulers: RxSchedulers,
     private val dataCache: DataCache
 ) {
-    fun exchangeToken(oAuthToken: String?, firebaseToken: String?): Single<TokenResponse> {
-        return apiWrapper.getPantauOAuthApi().exchangeToken(oAuthToken, firebaseToken, "android")
-                .subscribeOn(rxSchedulers.io())
-                .observeOn(rxSchedulers.mainThread())
+    fun exchangeToken(oAuthToken: String?): Single<TokenResponse> {
+        return apiWrapper.getPantauOAuthApi().exchangeToken(oAuthToken)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
     }
 
     fun saveLoginData(token: Token?) {
@@ -87,17 +87,16 @@ class LoginInteractor @Inject constructor(
         dataCache.setOnboardingComplete()
     }
 
-    fun saveFirebaseToken(firebaseToken: String?) {
-        dataCache.saveFirebaseToken(firebaseToken)
-    }
-
     fun getSavedToken(): String? {
         return dataCache.loadToken()
     }
 
-    fun revokeFirebaseToken(): Completable {
-        return apiWrapper.getPantauOAuthApi().revokeFirebaseToken("", "android")
+    fun updateFirebaseToken(firebaseToken: String): Completable {
+        return apiWrapper.getPantauOAuthApi().updateFirebaseKeys(firebaseToken, "android")
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
+            .doOnComplete {
+                dataCache.saveFirebaseToken(firebaseToken)
+            }
     }
 }
