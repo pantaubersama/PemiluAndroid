@@ -49,13 +49,11 @@ class PartaiFragment : BaseFragment<PartaiPresenter>(), PartaiView {
         if (profile.politicalParty != null) {
             for (partai in partaiAdapter.getListData() as MutableList<PoliticalParty>) {
                 if (partai == profile.politicalParty) {
-                    if (profile.politicalParty != null) {
-                        partaiAdapter.setSelectedData(partai)
-                    } else {
-                        partaiAdapter.setSelectedData(noParty)
-                    }
+                    partaiAdapter.setSelectedData(partai)
                 }
             }
+        } else {
+            partaiAdapter.setSelectedData(noParty)
         }
     }
 

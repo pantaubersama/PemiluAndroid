@@ -22,9 +22,9 @@ import kotlinx.android.synthetic.main.catatan_tab_item.*
 import javax.inject.Inject
 
 class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanPilihanView {
-    var selectedItem: String = ""
+    var selectedTab: String = ""
     var slectedPaslon = 0
-    var selectedPartai: PoliticalParty? = null
+    lateinit var selectedPartai: PoliticalParty
 
     @Inject
     override lateinit var presenter: CatatanPilihanPresenter
@@ -44,15 +44,15 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(false, getString(R.string.title_catatan_pilihanku), R.color.white, 4f)
-        setupViewPager()
         setupRecyclerview()
+        setupViewPager()
         if (savedInstanceState != null) {
             adapter.setSelected(savedInstanceState.getInt("tab_selected"))
         } else {
             adapter.setSelected(0)
         }
         catatan_pilihanku_ok.setOnClickListener {
-            selectedPartai?.let { it1 -> presenter.submitCatatanku(slectedPaslon, it1) }
+            presenter.submitCatatanku(slectedPaslon, selectedPartai)
         }
     }
 
@@ -84,19 +84,19 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
         }
 
         fun setSelected(i: Int) {
-            selectedItem = tabs[i]
+            selectedTab = tabs[i]
         }
 
         inner class CatatanTabViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
             fun bind(data: String, position: Int) {
                 tab_text.text = data
-                if (data == selectedItem) {
+                if (data == selectedTab) {
                     item.setBackgroundResource(R.drawable.rounded_outline_red)
                 } else {
                     item.setBackgroundResource(R.drawable.rounded_gray_dark_1)
                 }
                 itemView.setOnClickListener {
-                    selectedItem = data
+                    selectedTab = data
                     notifyDataSetChanged()
                     setPage(position)
                 }
@@ -115,12 +115,13 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
                     0 -> {
                         presidenFragment
                     }
-                    else -> partaiFragment
+                    1 -> partaiFragment
+                    else -> Fragment()
                 }
             }
 
             override fun getCount(): Int {
-                return 2
+                return adapter.itemCount
             }
         }
     }
