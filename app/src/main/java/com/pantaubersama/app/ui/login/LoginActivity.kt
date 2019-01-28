@@ -9,6 +9,7 @@ import com.extrainteger.symbolic.SymbolicException
 import com.extrainteger.symbolic.models.SymbolicToken
 import com.extrainteger.symbolic.ui.SymbolicLoginButton
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -20,6 +21,7 @@ import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Companion.CONFIRMATION_PATH
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
@@ -103,6 +105,14 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     }
 
     override fun onSuccessGetProfile(it: Profile?) {
+        FirebaseMessaging.getInstance().subscribeToTopic("broadcasts-activity")
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Timber.d("Subscribing to broadcast channel")
+                } else {
+                    Timber.d("Failed to subscribe to broadcast channel")
+                }
+            }
         if (it?.username != null &&
             it.education != null &&
             it.location != null &&
