@@ -3,27 +3,27 @@
 
     <item
         android:id="@+id/navigation_menyerap"
-        android:icon="@drawable/ic_menyerap_active"
+        android:icon="@drawable/selector_ic_menyerap"
         android:title="@string/title_navbar_menyerap" />
 
     <item
         android:id="@+id/navigation_menggali"
-        android:icon="@drawable/ic_menggali_inactive"
+        android:icon="@drawable/selector_ic_menggali"
         android:title="@string/title_navbar_menggali" />
 
     <item
         android:id="@+id/navigation_menguji"
-        android:icon="@drawable/ic_menguji_inactive"
+        android:icon="@drawable/selector_ic_menguji"
         android:title="@string/title_navbar_menguji" />
 
     <item
         android:id="@+id/navigation_menjaga"
-        android:icon="@drawable/ic_menjaga_inactive"
+        android:icon="@drawable/selector_ic_menjaga"
         android:title="@string/title_navbar_menjaga"/>
 
     <item
         android:id="@+id/navigation_merayakan"
-        android:icon="@drawable/ic_merayakan_inactive"
+        android:icon="@drawable/selector_ic_merayakan"
         android:title="@string/title_navbar_merayakan"/>
 
 </menu>

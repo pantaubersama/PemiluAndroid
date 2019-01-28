@@ -123,7 +123,7 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
         setupToolbar(true, "", R.color.white, 0f)
         btn_share.visibleIf(true)
         dismissProgressDialog()
-        ShareUtil.shareImage(this, "Hmm.. Ternyataa \uD83D\uDC40 %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + userId), imageFile)
+        ShareUtil.shareImage(this, "Hmm.. Ternyata begini kecenderunganku \uD83D\uDC40 %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + userId), imageFile)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
