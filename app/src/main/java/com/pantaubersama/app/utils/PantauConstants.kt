@@ -20,12 +20,17 @@ class PantauConstants {
         const val BANNER_JANPOL = "janji politik"
         const val BANNER_TANYA = "tanya"
         const val BANNER_KUIS = "kuis"
+        const val BANNER_LAPOR = "lapor"
         const val URL = "url"
         val PROFILE_COMPLETION = "profile_completion"
         val FILTER_ORANG_ALL = "verified_all"
         val FILTER_ORANG_VERIFIED = "verified_true"
         val FILTER_ORANG_UNVERIFIED = "verified_false"
         val CONFIRMATION_PATH = "confirmation"
+    }
+
+    object Lapor {
+        const val LAPOR_FILTER_REQUEST_CODE = 177
     }
 
     object Cluster {
@@ -48,12 +53,6 @@ class PantauConstants {
             const val FILTER_TANYA_KANDIDAT_REQUEST_CODE = 22
             val FILTER_ORDER_DIRECTION = "filter_order_direction"
 
-            object ByVerified {
-                const val USER_VERIFIED_ALL = "user_verified_all"
-                const val USER_VERIFIED_TRUE = "user_verified_true"
-                const val USER_VERIFIED_FALSE = "user_verified_false"
-            }
-
             object ByVotes {
                 const val LATEST = "created_at"
                 const val MOST_VOTES = "cached_votes_up"
@@ -69,6 +68,7 @@ class PantauConstants {
         const val EXTRA_TYPE_JANPOL = 1
         const val EXTRA_TYPE_TANYA_KANDIDAT = 2
         const val EXTRA_TYPE_KUIS = 3
+        const val EXTRA_TYPE_LAPOR = 4
         const val EXTRA_JANPOL_ID = "EXTRA_JANPOL_ID"
         const val EXTRA_JANPOL_ITEM = "EXTRA_JANPOL_ITEM"
         const val EXTRA_ITEM_POSITION = "EXTRA_ITEM_POSITION"
@@ -99,6 +99,7 @@ class PantauConstants {
         const val RC_BANNER_JANPOL = 102
         const val RC_BANNER_TANYA_KANDIDAT = 103
         const val RC_BANNER_KUIS = 104
+        const val RC_BANNER_LAPOR = 105
         const val RC_ASK_PERMISSIONS = 115
         const val RC_CAMERA = 111
         const val RC_STORAGE = 112
@@ -193,11 +194,9 @@ class PantauConstants {
             const val FILTER_TEAM_4 = "team_id_4"
         }
 
-        object Janpol { // value dari backend
-            const val USER_VERIFIED_ALL = "user_verified_all"
-            const val USER_VERIFIED_TRUE = "user_verified_true"
-            const val USER_VERIFIED_FALSE = "user_verified_false"
-        }
+        const val USER_VERIFIED_ALL = "user_verified_all"
+        const val USER_VERIFIED_TRUE = "user_verified_true"
+        const val USER_VERIFIED_FALSE = "user_verified_false"
     }
 
     object Regex {

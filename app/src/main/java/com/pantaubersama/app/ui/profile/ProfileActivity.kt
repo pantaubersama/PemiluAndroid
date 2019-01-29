@@ -16,7 +16,6 @@ import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
-import com.pantaubersama.app.ui.lapor.LaporFragment
 import com.pantaubersama.app.ui.profile.cluster.invite.UndangAnggotaActivity
 import com.pantaubersama.app.ui.profile.cluster.requestcluster.RequestClusterActivity
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
@@ -34,8 +33,6 @@ import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.badge_item_layout.view.*
-import kotlinx.android.synthetic.main.cluster_options_layout.*
-import kotlinx.android.synthetic.main.layout_leave_cluster_confirmation_dialog.*
 import java.lang.IllegalStateException
 import javax.inject.Inject
 
@@ -129,7 +126,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 R.id.navigation_menyerap -> ProfileJanjiPolitikFragment.newInstance(userId) to ProfileJanjiPolitikFragment.TAG
                 R.id.navigation_menggali -> ProfileTanyaKandidatFragment.newInstance(userId) to ProfileTanyaKandidatFragment.TAG
                 R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
-                R.id.navigation_menjaga -> LaporFragment.newInstance() to LaporFragment.TAG
+                R.id.navigation_menjaga -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
                 R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
                 else -> throw IllegalStateException("unknown menu")
             }
