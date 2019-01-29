@@ -82,8 +82,9 @@ fun View.isVisible(): Boolean {
 fun LottieAnimationView.enableLottie(enable: Boolean, isGoneOnDisable: Boolean = true, looping: Boolean = true) {
     if (isGoneOnDisable) this.visibleIf(enable)
     if (enable) {
+        this.enableMergePathsForKitKatAndAbove(true)
         this.playAnimation()
-        this.repeatCount = if (looping) LottieDrawable.INFINITE else 1
+        this.repeatCount = if (looping) LottieDrawable.INFINITE else 0
     } else {
         this.cancelAnimation()
     }
