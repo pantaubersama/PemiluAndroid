@@ -12,6 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import android.view.Surface
 import android.view.View
 import android.view.WindowManager
+import io.reactivex.disposables.Disposable
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -50,14 +51,14 @@ class ImageUtil {
             return file
         }
 
-        fun compressImage(context: Context, imageFile: File, maxSizeInMb: Int = 2, listener: CompressorListener) {
+        fun compressImage(context: Context, imageFile: File, maxSizeInMb: Int = 2, listener: CompressorListener): Disposable {
 //        var ITERATOR = 0
 //        val MAX_ITERATOR = 10
 //
 //        for (i in ITERATOR..MAX_ITERATOR) loop@ {
 //
 //        }
-            Compressor(context)
+            return Compressor(context)
                 .compressToFileAsFlowable(imageFile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

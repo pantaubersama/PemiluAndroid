@@ -15,11 +15,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.pantaubersama.app.R
 import com.pantaubersama.app.ui.widget.ImageChooserTools
 import com.pantaubersama.app.utils.GlideApp
+import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.utils.PantauConstants.RequestCode
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.checkPermission
 import com.pantaubersama.app.utils.extensions.openAppSettings
 import com.pantaubersama.app.utils.extensions.visibleIf
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_verification_camera.*
 import okio.Okio
 import java.io.File
@@ -29,6 +31,7 @@ class VerifikasiCameraActivity : AppCompatActivity() {
     private var imageUri: Uri? = null
 
     private var alertDialog: AlertDialog? = null
+    private var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,8 +70,7 @@ class VerifikasiCameraActivity : AppCompatActivity() {
             camera_overlay.visibleIf(true)
         }
         next_button.setOnClickListener {
-            setResult(Activity.RESULT_OK, Intent().setData(imageUri))
-            finish()
+            imageUri?.let(::returnResult)
         }
     }
 
@@ -96,6 +98,21 @@ class VerifikasiCameraActivity : AppCompatActivity() {
     private fun pickFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(Intent.createChooser(intent, "Pilih"), RequestCode.RC_STORAGE)
+    }
+
+    private fun returnResult(uri: Uri) {
+        disposable = ImageUtil.compressImage(this, File(uri.path),
+            listener = object : ImageUtil.CompressorListener {
+                override fun onSuccess(file: File) {
+                    setResult(Activity.RESULT_OK, Intent().setData(Uri.fromFile(file)))
+                    finish()
+                }
+
+                override fun onFailed(throwable: Throwable) {
+                    Toast.makeText(this@VerifikasiCameraActivity, "Terjadi error",
+                        Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -129,6 +146,7 @@ class VerifikasiCameraActivity : AppCompatActivity() {
     override fun onStop() {
         camera.onStop()
         alertDialog?.dismiss()
+        disposable?.dispose()
         super.onStop()
     }
 
