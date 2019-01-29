@@ -11,7 +11,7 @@ data class PoliticalPartiesResponse(
 ) : Serializable
 
 data class PoliticalPartiesData(
-    @SerializedName("political_parties") val politicalParties: List<PoliticalParty>,
+    @SerializedName("political_parties") val politicalParties: MutableList<PoliticalParty>,
     @SerializedName("meta") val meta: Meta
 ) : Serializable
 
@@ -21,9 +21,9 @@ data class PoliticalParty(
     @SerializedName("image")
     var image: Image?,
     @SerializedName("name")
-    var name: String?,
+    var name: String,
     @SerializedName("number")
-    var number: Int?
+    var number: Int
 ) : ItemModel, Serializable {
     override fun getType(): Int {
         return PantauConstants.ItemModel.TYPE_PARTAI

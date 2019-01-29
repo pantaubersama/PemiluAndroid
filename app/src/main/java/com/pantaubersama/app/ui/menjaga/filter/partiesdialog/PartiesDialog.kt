@@ -88,8 +88,9 @@ class PartiesDialog : BaseDialogFragment<PartiesDialogPresenter>(), PartiesDialo
         lottie_loading.enableLottie(false)
     }
 
-    override fun showPartai(parties: List<PoliticalParty>) {
+    override fun showPartai(parties: MutableList<PoliticalParty>) {
         recycler_view.visibleIf(true)
+        parties.add(0, PoliticalParty("", null, getString(R.string.txt_semua_partai), 0))
         adapter.setDatas(parties)
     }
 

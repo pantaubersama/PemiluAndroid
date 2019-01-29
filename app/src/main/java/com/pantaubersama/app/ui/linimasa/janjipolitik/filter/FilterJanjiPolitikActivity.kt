@@ -20,6 +20,7 @@ import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_filter_janji_politik.*
 import kotlinx.android.synthetic.main.item_cluster.*
+import kotlinx.android.synthetic.main.item_default_dropdown_filter.*
 import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
 import javax.inject.Inject
 
@@ -53,6 +54,7 @@ class FilterJanjiPolitikActivity : BaseActivity<FilterJanjiPolitikPresenter>(), 
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
+        tv_cluster_or_party_placeholder.text = getString(R.string.txt_semua_cluster)
         if (!isSearchFilter) {
             presenter.getFilter()
         } else {

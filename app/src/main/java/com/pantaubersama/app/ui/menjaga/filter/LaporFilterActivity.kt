@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.menjaga.filter
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.partai.PoliticalParty
@@ -88,7 +89,15 @@ class LaporFilterActivity : BaseActivity<LaporFilterPresenter>(), LaporFilterVie
             layout_default_dropdown_filter.visibleIf(false)
             item_cluster.visibleIf(true)
             partai_pilihan_nama.text = item.name
-            partai_pilihan_foto_partai.loadUrl(item.image?.url, R.drawable.ic_avatar_placeholder)
+            if (item.name != getString(R.string.txt_semua_partai)) {
+                partai_pilihan_foto_partai.visibility = View.VISIBLE
+                partai_pilihan_no_urut.visibility = View.VISIBLE
+                partai_pilihan_foto_partai.loadUrl(item.image?.url, R.drawable.ic_avatar_placeholder)
+                partai_pilihan_no_urut.text = "Nomor urut ${item.number}"
+            } else {
+                partai_pilihan_foto_partai.visibility = View.GONE
+                partai_pilihan_no_urut.visibility = View.GONE
+            }
         }
     }
 

@@ -4,5 +4,5 @@ import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.data.model.partai.PoliticalParty
 
 interface PartiesDialogView : BaseView {
-    fun showPartai(parties: List<PoliticalParty>)
+    fun showPartai(parties: MutableList<PoliticalParty>)
 }

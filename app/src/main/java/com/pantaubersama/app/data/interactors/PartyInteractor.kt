@@ -12,7 +12,7 @@ class PartyInteractor @Inject constructor(
     private val rxSchedulers: RxSchedulers,
     private val apiWrapper: APIWrapper
 ) {
-    fun getParties(page: Int, perPage: Int): Single<List<PoliticalParty>> {
+    fun getParties(page: Int, perPage: Int): Single<MutableList<PoliticalParty>> {
         return apiWrapper.getPantauOAuthApi().getPartai(page, perPage)
             .subscribeOn(rxSchedulers.io())
             .map { response ->
