@@ -47,10 +47,10 @@ import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
 import com.pantaubersama.app.ui.profile.setting.panduankomunitas.PanduanKomunitasActivity
 import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
 import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
+import com.pantaubersama.app.ui.profile.verifikasi.step0.Step0VerifikasiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
+import com.pantaubersama.app.ui.profile.verifikasi.step2.Step2VerifikasiActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step3.Step3VerifikasiActivity
-import com.pantaubersama.app.ui.profile.verifikasi.step5.Step5VerifikasiActivity
-import com.pantaubersama.app.ui.profile.verifikasi.step7.Step7VerifikasiActivity
 import com.pantaubersama.app.ui.search.SearchActivity
 import com.pantaubersama.app.ui.search.cluster.SearchClusterFragment
 import com.pantaubersama.app.ui.search.cluster.filter.FilterClusterActivity
@@ -90,10 +90,10 @@ interface ActivityComponent {
     fun inject(filterKuisActivity: FilterKuisActivity)
     fun inject(filterJanjiPolitikActivity: FilterJanjiPolitikActivity)
     fun inject(clusterListDialog: ClusterListDialog)
+    fun inject(step0VerifikasiActivity: Step0VerifikasiActivity)
     fun inject(step1VerifikasiActivity: Step1VerifikasiActivity)
+    fun inject(step2VerifikasiActivity: Step2VerifikasiActivity)
     fun inject(step3VerifikasiActivity: Step3VerifikasiActivity)
-    fun inject(step5VerifikasiActivity: Step5VerifikasiActivity)
-    fun inject(step7VerifikasiActivity: Step7VerifikasiActivity)
     fun inject(clusterCategoryActivity: ClusterCategoryActivity)
     fun inject(detailJanjiPolitikActivity: DetailJanjiPolitikActivity)
     fun inject(requestClusterActivity: RequestClusterActivity)

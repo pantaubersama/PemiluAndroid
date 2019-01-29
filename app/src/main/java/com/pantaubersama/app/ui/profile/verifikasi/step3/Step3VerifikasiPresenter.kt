@@ -1,26 +1,31 @@
-package com.pantaubersama.app.ui.profile.verifikasi.step3
+package com.pantaubersama.app.ui.profile.verifikasi.step6
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.VerifikasiInteractor
+import io.reactivex.rxkotlin.plusAssign
+import okhttp3.MediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import javax.inject.Inject
 
-class Step3VerifikasiPresenter @Inject constructor(private val verifikasiInteractor: VerifikasiInteractor) : BasePresenter<Step3VerifikasiView>() {
-    fun submitSelfieKtp(ktpSelfie: MultipartBody.Part?) {
+class Step3VerifikasiPresenter @Inject constructor(
+    private val verifikasiInteractor: VerifikasiInteractor
+) : BasePresenter<Step3VerifikasiView>() {
+
+    fun submitSignaturePhoto(file: File) {
+        val reqFile = RequestBody.create(MediaType.parse("image/*"), file)
+        val formData = MultipartBody.Part.createFormData("signature", file.name, reqFile)
+
         view?.showLoading()
-        disposables?.add(
-            verifikasiInteractor.submitSelfieKtp(ktpSelfie)
-                .subscribe(
-                    {
-                        view?.dismissLoading()
-                        view?.onSuccessSubmitSelfieKtp()
-                    },
-                    {
-                        view?.showError(it)
-                        view?.dismissLoading()
-                        view?.showFailedSubmitSelfieKtpAlert()
-                    }
-                )
-        )
+        disposables += verifikasiInteractor.submitSignaturePhoto(formData)
+                .subscribe({
+                    view?.dismissLoading()
+                    view?.onSuccessSignature()
+                }, {
+                    view?.showError(it)
+                    view?.dismissLoading()
+                    view?.showFailedSubmitSignatureAlert()
+                })
     }
 }
