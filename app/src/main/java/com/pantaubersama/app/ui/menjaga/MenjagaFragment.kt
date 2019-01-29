@@ -6,8 +6,10 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.CommonFragment
+import com.pantaubersama.app.ui.menjaga.filter.LaporFilterActivity
 import com.pantaubersama.app.ui.menjaga.lapor.LaporFragment
 import com.pantaubersama.app.ui.widget.TabView
+import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.fragment_menjaga.*
 
 class MenjagaFragment : CommonFragment() {
@@ -29,6 +31,9 @@ class MenjagaFragment : CommonFragment() {
     override fun initView(view: View, savedInstanceState: Bundle?) {
         setupTabLayout()
         setupViewPager()
+        btn_filter.setOnClickListener {
+            LaporFilterActivity.start(requireActivity(), PantauConstants.Lapor.LAPOR_FILTER_REQUEST_CODE)
+        }
     }
 
     private fun setupTabLayout() {

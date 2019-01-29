@@ -12,7 +12,7 @@ import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_cluster.*
-import kotlinx.android.synthetic.main.item_default_cluster_filter.*
+import kotlinx.android.synthetic.main.item_default_dropdown_filter.*
 
 class ClusterListDialogAdapter : BaseRecyclerAdapter() {
 
@@ -33,7 +33,7 @@ class ClusterListDialogAdapter : BaseRecyclerAdapter() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_DEFAULT -> DefaultViewHolder(parent.inflate(R.layout.item_default_cluster_filter))
+            TYPE_DEFAULT -> DefaultViewHolder(parent.inflate(R.layout.item_default_dropdown_filter))
             else -> ClusterViewHolder(parent.inflate(R.layout.item_cluster))
         }
     }
@@ -55,7 +55,8 @@ class ClusterListDialogAdapter : BaseRecyclerAdapter() {
 
     inner class DefaultViewHolder(override val containerView: View?) : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
         fun bind() {
-            ll_default_cluster_filter.setOnClickListener { listener?.onClickDefault() }
+            tv_cluster_or_party_placeholder.text = itemView.context.getString(R.string.txt_semua_cluster)
+            ll_default_filter.setOnClickListener { listener?.onClickDefault() }
         }
     }
 

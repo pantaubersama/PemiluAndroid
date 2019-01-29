@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity">
+    tools:context="com.pantaubersama.app.ui.menjaga.filter.LaporFilterActivity">
 
     <include layout="@layout/layout_toolbar_light"/>
 
     <LinearLayout
-        android:id="@+id/ll_cluster_container"
+        android:id="@+id/ll_partay_container"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,13 +19,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_cluster"
+            android:text="Partai"
             android:fontFamily="@font/bw_modelica_bold"
             android:textColor="@color/black_3"
             android:textSize="16sp"/>
 
         <RelativeLayout
-            android:id="@+id/rl_cluster_container"
+            android:id="@+id/rl_party_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_rounded_tosca_outline"
@@ -33,7 +33,7 @@
             android:layout_marginTop="10dp">
 
             <include
-                android:id="@+id/layout_default_cluster_filter"
+                android:id="@+id/layout_default_dropdown_filter"
                 layout="@layout/item_default_dropdown_filter"/>
 
             <include
@@ -41,7 +41,7 @@
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/item_cluster"
+                layout="@layout/item_partai_pilihan"
                 android:layout_centerVertical="true" />
 
         </RelativeLayout>
@@ -52,7 +52,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll_cluster_container"
+        android:layout_below="@id/ll_partay_container"
         android:padding="22dp">
 
         <TextView
@@ -64,7 +64,7 @@
             android:textSize="16sp"/>
 
         <RadioGroup
-            android:id="@+id/radio_group_janpol"
+            android:id="@+id/radio_group_lapor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">

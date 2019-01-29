@@ -14,6 +14,8 @@ import com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikA
 import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.login.LoginActivity
+import com.pantaubersama.app.ui.menjaga.filter.LaporFilterActivity
+import com.pantaubersama.app.ui.menjaga.filter.partiesdialog.PartiesDialog
 import com.pantaubersama.app.ui.menjaga.lapor.LaporFragment
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.note.partai.PartaiFragment
@@ -126,4 +128,6 @@ interface ActivityComponent {
     fun inject(partaiFragment: PartaiFragment)
     fun inject(clusterDetailActivity: ClusterDetailActivity)
     fun inject(laporFragment: LaporFragment)
+    fun inject(laporFilterActivity: LaporFilterActivity)
+    fun inject(partiesDialog: PartiesDialog)
 }

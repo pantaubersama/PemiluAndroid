@@ -84,6 +84,7 @@
     <string name="txt_belum_verifikasi">Belum Verifikasi</string>
     <string name="txt_terverifikasi">Terverifikasi</string>
     <string name="txt_semua_cluster">Semua Cluster</string>
+    <string name="txt_semua_partai">Partai</string>
     <string name="foto_ktp_hint">Potret foto KTP asli kamu dan pastikan semua terlihat jelas dalam satu frame.</string>
     <string name="foto_tanda_tangan_hint">Langkah terakhir verifikasi! Foto tandatangan kamu yang sama dengan KTP asli di atas kertas putih.</string>
     <string name="title_setting">Setting</string>

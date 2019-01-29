@@ -21,7 +21,8 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".utils.download.DownloadActivity"></activity>
+        <activity android:name=".ui.menjaga.filter.LaporFilterActivity"></activity>
+        <activity android:name=".utils.download.DownloadActivity" />
         <activity android:name=".ui.clusterdetail.ClusterDetailActivity" />
 
         <service android:name=".background.firebase.PantauFirebaseMessagingService">

@@ -29,6 +29,10 @@ class PantauConstants {
         val CONFIRMATION_PATH = "confirmation"
     }
 
+    object Lapor {
+        const val LAPOR_FILTER_REQUEST_CODE = 177
+    }
+
     object Cluster {
         const val CATEGORY = "category"
         val CLUSTER_URL = "cluster_url"
@@ -48,12 +52,6 @@ class PantauConstants {
         object Filter {
             const val FILTER_TANYA_KANDIDAT_REQUEST_CODE = 22
             val FILTER_ORDER_DIRECTION = "filter_order_direction"
-
-            object ByVerified {
-                const val USER_VERIFIED_ALL = "user_verified_all"
-                const val USER_VERIFIED_TRUE = "user_verified_true"
-                const val USER_VERIFIED_FALSE = "user_verified_false"
-            }
 
             object ByVotes {
                 const val LATEST = "created_at"
@@ -195,11 +193,9 @@ class PantauConstants {
             const val FILTER_TEAM_4 = "team_id_4"
         }
 
-        object Janpol { // value dari backend
-            const val USER_VERIFIED_ALL = "user_verified_all"
-            const val USER_VERIFIED_TRUE = "user_verified_true"
-            const val USER_VERIFIED_FALSE = "user_verified_false"
-        }
+        const val USER_VERIFIED_ALL = "user_verified_all"
+        const val USER_VERIFIED_TRUE = "user_verified_true"
+        const val USER_VERIFIED_FALSE = "user_verified_false"
     }
 
     object Regex {
