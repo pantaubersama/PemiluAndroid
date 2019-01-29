@@ -1,6 +1,6 @@
 package com.pantaubersama.app.ui.profile.verifikasi
 
-import android.Manifest
+import android.Manifest.permission
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import com.pantaubersama.app.R
 import com.pantaubersama.app.ui.widget.ImageChooserTools
@@ -55,8 +56,7 @@ class VerificationCameraActivity : AppCompatActivity() {
             }
         }
         choose_image.setOnClickListener {
-            checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, RequestCode.RC_STORAGE,
-                ::pickFromGallery)
+            checkPermission(permission.READ_EXTERNAL_STORAGE, RequestCode.RC_STORAGE, ::pickFromGallery)
         }
         retake_button.setOnClickListener {
             image_preview.setImageDrawable(null)
@@ -108,7 +108,7 @@ class VerificationCameraActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        camera.onStart()
+        checkPermission(permission.CAMERA, RequestCode.RC_CAMERA, camera::onStart)
     }
 
     override fun onResume() {
@@ -132,17 +132,33 @@ class VerificationCameraActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        camera.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (requestCode == RequestCode.RC_STORAGE) {
-            if (grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED) {
-                pickFromGallery()
-            } else if (!ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                // user selected never show again on permission popup
-                ToastUtil.show(this, "Anda harus mengijinkan aplikasi mengakses storage")
-                openAppSettings()
-            }
+        val isCameraRequest = requestCode == RequestCode.RC_CAMERA
+        val alertMessage = if (isCameraRequest)
+            "Anda harus mengijinkan aplikasi untuk mengakses kamera"
+        else
+            "Anda harus mengijinkan aplikasi untuk mengakses penyimpanan"
+
+        handlePermissionsResult(permissions.firstOrNull(), grantResults.firstOrNull(), alertMessage) {
+            if (isCameraRequest) camera.onStart() else pickFromGallery()
+        }
+    }
+
+    private inline fun handlePermissionsResult(permission: String?, grantResult: Int?,
+                                               alertMessage: String, onGranted: () -> Unit) {
+        if (permission == null || grantResult == null) return
+
+        if (grantResult == PackageManager.PERMISSION_GRANTED) {
+            onGranted()
+        } else if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+            // user selected never show again on permission popup,
+            // so user have to grant permission manually through app setting
+            AlertDialog.Builder(this)
+                .setTitle("Permintaan Akses")
+                .setMessage(alertMessage)
+                .setPositiveButton("Buka Pengaturan") { _, _ -> openAppSettings() }
+                .setNegativeButton("Batal", null)
+                .show()
         }
     }
 
