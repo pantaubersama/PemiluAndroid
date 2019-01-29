@@ -20,6 +20,7 @@ class PantauConstants {
         const val BANNER_JANPOL = "janji politik"
         const val BANNER_TANYA = "tanya"
         const val BANNER_KUIS = "kuis"
+        const val BANNER_LAPOR = "lapor"
         const val URL = "url"
         val PROFILE_COMPLETION = "profile_completion"
         val FILTER_ORANG_ALL = "verified_all"
@@ -69,6 +70,7 @@ class PantauConstants {
         const val EXTRA_TYPE_JANPOL = 1
         const val EXTRA_TYPE_TANYA_KANDIDAT = 2
         const val EXTRA_TYPE_KUIS = 3
+        const val EXTRA_TYPE_LAPOR = 4
         const val EXTRA_JANPOL_ID = "EXTRA_JANPOL_ID"
         const val EXTRA_JANPOL_ITEM = "EXTRA_JANPOL_ITEM"
         const val EXTRA_ITEM_POSITION = "EXTRA_ITEM_POSITION"
@@ -98,6 +100,7 @@ class PantauConstants {
         const val RC_BANNER_JANPOL = 102
         const val RC_BANNER_TANYA_KANDIDAT = 103
         const val RC_BANNER_KUIS = 104
+        const val RC_BANNER_LAPOR = 105
         const val RC_ASK_PERMISSIONS = 115
         const val RC_CAMERA = 111
         const val RC_STORAGE = 112
