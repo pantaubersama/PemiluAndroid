@@ -45,9 +45,9 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/header_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/question_short_hint"
             android:textSize="16sp"
             android:fontFamily="@font/bw_modelica_bold"
             android:layout_marginTop="6dp"
