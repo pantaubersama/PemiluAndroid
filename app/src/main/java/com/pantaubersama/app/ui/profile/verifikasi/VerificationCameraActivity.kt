@@ -1,17 +1,21 @@
 package com.pantaubersama.app.ui.profile.verifikasi
 
+import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.pantaubersama.app.R
 import com.pantaubersama.app.ui.widget.ImageChooserTools
 import com.pantaubersama.app.utils.PantauConstants.RequestCode
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.checkPermission
+import com.pantaubersama.app.utils.extensions.openAppSettings
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_verification_camera.*
 import okio.Okio
@@ -45,14 +49,13 @@ class VerificationCameraActivity : AppCompatActivity() {
                 try {
                     showPreview(storeTemporaryImage(bytes))
                 } catch (error: Exception) {
-                    Toast.makeText(this, error.message
-                        ?: "Terjadi error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Terjadi error", Toast.LENGTH_SHORT).show()
                 }
             }
         }
         choose_image.setOnClickListener {
-            val intentGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), RequestCode.RC_STORAGE)
+            checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, RequestCode.RC_STORAGE,
+                ::pickFromGallery)
         }
         retake_button.setOnClickListener {
             image_preview.setImageDrawable(null)
@@ -66,8 +69,7 @@ class VerificationCameraActivity : AppCompatActivity() {
     }
 
     private fun storeTemporaryImage(bytes: ByteArray): Uri {
-        val file = cacheDir?.let { File(it.path, "tempImage.jpg") }
-            ?: throw IllegalStateException("Cannot create temporary image")
+        val file = File(cacheDir.path, "camera.jpg")
 
         with(Okio.buffer(Okio.sink(file))) {
             write(bytes)
@@ -81,6 +83,11 @@ class VerificationCameraActivity : AppCompatActivity() {
         image_preview.setImageURI(imageUri)
         image_preview_container.visibleIf(true)
         camera_overlay.visibleIf(false)
+    }
+
+    private fun pickFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(Intent.createChooser(intent, "Pilih"), RequestCode.RC_STORAGE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -123,6 +130,17 @@ class VerificationCameraActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         camera.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == RequestCode.RC_STORAGE) {
+            if (grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED) {
+                pickFromGallery()
+            } else if (!ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // user selected never show again on permission popup
+                ToastUtil.show(this, "Anda harus mengijinkan aplikasi mengakses storage")
+                openAppSettings()
+            }
+        }
     }
 
     companion object {
