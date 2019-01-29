@@ -109,7 +109,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         verified_button.setBackgroundResource(R.drawable.rounded_outline_gray)
 //        if (userId == null) {
 //            verified_button.setOnClickListener {
-//                val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
+//                val intent = Intent(this@ProfileActivity, Step0VerifikasiActivity::class.java)
 //                startActivity(intent)
 //            }
 //        }

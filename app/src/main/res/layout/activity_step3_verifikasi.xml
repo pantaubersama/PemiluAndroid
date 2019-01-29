@@ -1,185 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.pantaubersama.app.ui.profile.verifikasi.step3.Step3VerifikasiActivity">
 
-    <FrameLayout
-        android:id="@+id/camera_preview"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <TextureView
-        android:id="@+id/texture_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <RelativeLayout
-        android:id="@+id/frame_camera"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:padding="24dp"
-        android:visibility="visible">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <ImageView
-            android:id="@+id/switch_camera"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/ic_camera_switch"
-            android:tint="@color/white" />
+        <include layout="@layout/layout_toolbar_light"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/camera_button_container">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <ImageView
-                    android:layout_width="200dp"
-                    android:layout_height="250dp"
-                    android:layout_gravity="center"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/verify_face" />
-
-                <ImageView
-                    android:layout_width="230dp"
-                    android:layout_height="140dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginBottom="20dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/verify_id" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/camera_button_container"
-            android:visibility="visible"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
-
-            <ImageView
-                android:id="@+id/close_camera_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:src="@drawable/close_camera_button" />
-
-            <ImageView
-                android:id="@+id/capture_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/camera_button" />
-
-            <ImageView
-                android:id="@+id/choose_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="24dp"
-                android:layout_marginRight="24dp"
-                android:src="@drawable/camera_show_image_button" />
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/image_preview_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/image_preview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:visibility="visible" />
+            android:layout_above="@id/next_button"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Verifikasi akun"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:id="@+id/verification_step_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_3"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rounded_gray_3"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp">
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_gray_2"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center_horizontal"
+                        android:padding="16dp"
+                        android:orientation="vertical"
+                        android:focusableInTouchMode="true"
+                        android:focusable="true">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/selfie_with_id_card_animation"
+                            android:scaleType="centerCrop"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:lottie_fileName="tanda_tangan_animation.json"
+                            app:lottie_autoPlay="false"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Foto Tanda Tangan"
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:textSize="18sp"
+                            android:textColor="@color/black_3"
+                            android:gravity="center_horizontal"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/foto_tanda_tangan_hint"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/lato_medium"
+                            android:textColor="@color/gray_dark_2"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="16dp"/>
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/next_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:background="@color/colorPrimary"
+            android:layout_height="47dp"
+            android:foreground="?selectableItemBackground"
+            android:gravity="center"
+            android:layout_alignParentBottom="true">
 
-            <LinearLayout
-                android:id="@+id/retake_button"
-                android:layout_width="0dp"
-                android:layout_height="47dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="0.5dp"
-                android:layout_marginRight="0.5dp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimaryTransparent"
-                android:foreground="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
-                    android:letterSpacing="0.1"
-                    android:lineSpacingExtra="3sp"
-                    android:text="Ambil ulang"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/next_button"
-                android:layout_width="0dp"
-                android:layout_height="47dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="0.5dp"
-                android:layout_marginLeft="0.5dp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimaryTransparent"
-                android:foreground="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
-                    android:letterSpacing="0.1"
-                    android:lineSpacingExtra="3sp"
-                    android:text="Lanjut"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:letterSpacing="0.1"
+                android:lineSpacingExtra="3sp"
+                android:text="Lanjut"
+                android:fontFamily="@font/lato_bold"
+                android:textAllCaps="true"/>
 
         </LinearLayout>
 
     </RelativeLayout>
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

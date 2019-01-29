@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.profile.verifikasi.step5
+package com.pantaubersama.app.ui.profile.verifikasi.step2
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.VerifikasiInteractor
@@ -9,9 +9,9 @@ import okhttp3.RequestBody
 import java.io.File
 import javax.inject.Inject
 
-class Step5VerifikasiPresenter @Inject constructor(
+class Step2VerifikasiPresenter @Inject constructor(
     private val verifikasiInteractor: VerifikasiInteractor
-) : BasePresenter<Step5VerifikasiView>() {
+) : BasePresenter<Step2VerifikasiView>() {
 
     fun submitKtpPhoto(file: File) {
         val reqFile = RequestBody.create(MediaType.parse("image/*"), file)
