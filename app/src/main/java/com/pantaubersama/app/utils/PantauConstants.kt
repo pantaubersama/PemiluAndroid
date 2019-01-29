@@ -244,4 +244,10 @@ class PantauConstants {
         const val ONBOARDING_5_DESC = "Rekapitulasi partisipatif real-time dan transparan."
         const val ONBOARDING_5_FILE_NAME = "lottie_onboarding_5_perhitungan.json"
     }
+
+    object Notification {
+        const val NOTIFICATION_CHANNEL_ID_BROADCAST = "1"
+        const val NOTIFICATION_CHANNEL_NAME_BROADCAST = "Broadcast"
+        const val NOTIFICATION_CHANNEL_DESC_BROADCAST = "Broadcast"
+    }
 }
