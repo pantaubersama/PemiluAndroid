@@ -14,6 +14,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestListener
 import com.google.android.material.snackbar.Snackbar
 import com.pantaubersama.app.utils.GlideApp
@@ -38,11 +39,13 @@ fun Button.setBackgroundTint(@ColorRes color: Int) {
 fun ImageView.loadUrl(
     url: String?,
     placeholderResId: Int? = null,
+    caching: Boolean? = false,
     errorResId: Int? = null,
     requestListener: RequestListener<Drawable>? = null
 ) {
     GlideApp.with(this)
             .load(url)
+            .diskCacheStrategy(caching?.let { if (it) DiskCacheStrategy.ALL else DiskCacheStrategy.AUTOMATIC } ?: DiskCacheStrategy.AUTOMATIC)
             .optionalFitCenter()
             .apply {
                 placeholderResId?.let { placeholder(it) }
@@ -82,8 +85,9 @@ fun View.isVisible(): Boolean {
 fun LottieAnimationView.enableLottie(enable: Boolean, isGoneOnDisable: Boolean = true, looping: Boolean = true) {
     if (isGoneOnDisable) this.visibleIf(enable)
     if (enable) {
+        this.enableMergePathsForKitKatAndAbove(true)
         this.playAnimation()
-        this.repeatCount = if (looping) LottieDrawable.INFINITE else 1
+        this.repeatCount = if (looping) LottieDrawable.INFINITE else 0
     } else {
         this.cancelAnimation()
     }

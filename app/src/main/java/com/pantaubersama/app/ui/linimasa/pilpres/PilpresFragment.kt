@@ -15,6 +15,7 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.ui.widget.OptionDialog
+import com.pantaubersama.app.ui.widget.imagepreview.ImagePreviewFragment
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.CopyUtil
 import com.pantaubersama.app.utils.PackageCheckerUtil
@@ -105,6 +106,10 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
 
             override fun onClickShare(item: FeedsItem) {
                 ShareUtil.shareItem(requireContext(), item)
+            }
+
+            override fun onClickImage(imageUrl: String) {
+                ImagePreviewFragment.show(imageUrl, childFragmentManager)
             }
         }
         adapter.addSupportLoadMore(recycler_view, 10) {
