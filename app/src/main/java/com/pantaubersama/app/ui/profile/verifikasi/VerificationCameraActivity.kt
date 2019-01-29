@@ -27,6 +27,8 @@ class VerificationCameraActivity : AppCompatActivity() {
 
     private var imageUri: Uri? = null
 
+    private var alertDialog: AlertDialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verification_camera)
@@ -123,6 +125,7 @@ class VerificationCameraActivity : AppCompatActivity() {
 
     override fun onStop() {
         camera.onStop()
+        alertDialog?.dismiss()
         super.onStop()
     }
 
@@ -153,7 +156,7 @@ class VerificationCameraActivity : AppCompatActivity() {
         } else if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
             // user selected never show again on permission popup,
             // so user have to grant permission manually through app setting
-            AlertDialog.Builder(this)
+            alertDialog = AlertDialog.Builder(this)
                 .setTitle("Permintaan Akses")
                 .setMessage(alertMessage)
                 .setPositiveButton("Buka Pengaturan") { _, _ -> openAppSettings() }
