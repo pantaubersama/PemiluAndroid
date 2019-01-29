@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.pantaubersama.app.R
 import com.pantaubersama.app.ui.widget.ImageChooserTools
 import com.pantaubersama.app.utils.GlideApp
@@ -87,6 +88,8 @@ class VerifikasiCameraActivity : AppCompatActivity() {
         camera_overlay.visibleIf(false)
         GlideApp.with(this)
             .load(uri)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
             .into(image_preview)
     }
 
