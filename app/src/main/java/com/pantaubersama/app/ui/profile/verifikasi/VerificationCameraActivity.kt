@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.pantaubersama.app.R
 import com.pantaubersama.app.ui.widget.ImageChooserTools
+import com.pantaubersama.app.utils.GlideApp
 import com.pantaubersama.app.utils.PantauConstants.RequestCode
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.checkPermission
@@ -80,9 +81,11 @@ class VerificationCameraActivity : AppCompatActivity() {
 
     private fun showPreview(uri: Uri) {
         imageUri = uri
-        image_preview.setImageURI(imageUri)
         image_preview_container.visibleIf(true)
         camera_overlay.visibleIf(false)
+        GlideApp.with(this)
+            .load(uri)
+            .into(image_preview)
     }
 
     private fun pickFromGallery() {
