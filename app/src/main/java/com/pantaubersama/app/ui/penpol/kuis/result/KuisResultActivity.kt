@@ -11,18 +11,21 @@ import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.data.model.kuis.KuisResult
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.utils.spannable
 import com.pantaubersama.app.utils.ImageUtil
-import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_QUIZ_PARTICIPATION_ID
+import com.pantaubersama.app.utils.PantauConstants.Kuis.KUIS_ITEM
+import com.pantaubersama.app.utils.PantauConstants.Kuis.KUIS_REFRESH
 import com.pantaubersama.app.utils.PantauConstants.Permission.WRITE_FILE_PERMISSION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_SHARE
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_HASIL_KUIS_PATH
-import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.visibleIf
-import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_kuis_result.*
+import kotlinx.android.synthetic.main.layout_share_kuis_result.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
@@ -46,7 +49,7 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
     }
 
     override fun fetchIntentExtra() {
-        intent.getSerializableExtra(PantauConstants.Kuis.KUIS_ITEM)?.let { kuisItem = it as KuisItem }
+        intent.getSerializableExtra(KUIS_ITEM)?.let { kuisItem = it as KuisItem }
         intent.getStringExtra(EXTRA_QUIZ_PARTICIPATION_ID)?.let { quizParticipationId = it }
     }
 
@@ -72,16 +75,28 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
 
     override fun showResult(kuisResult: KuisResult, userName: String) {
         quizParticipationId = kuisResult.quizParticipation.id
-        tv_kuis_result.text = spannable {
+        val resultSummary = spannable {
             +"Dari hasil pilihan di Quiz ${kuisResult.title},\n"
             textColor(color(R.color.black_3)) { +userName }
             +" lebih suka jawaban dari Paslon no ${kuisResult.team.id}"
         }.toCharSequence()
-        iv_paslon.loadUrl(kuisResult.team.avatar)
-        tv_percentage.text = "%d%%".format(kuisResult.percentage.roundToInt())
-        tv_paslon_name.text = kuisResult.team.title
+        resultSummary.let {
+            tv_kuis_result.text = it
+            tv_kuis_result_share.text = it
+        }
+        kuisResult.team.avatar.let {
+            iv_paslon.loadUrl(it)
+            iv_paslon_share.loadUrl(it)
+        }
+        kuisResult.percentage.roundToInt().let {
+            tv_percentage.text = "%d%%".format(it)
+            tv_percentage_share.text = "%d%%".format(it)
+        }
+        kuisResult.team.title.let {
+            tv_paslon_name.text = it
+            tv_paslon_name_share.text = it
+        }
         btn_share.setOnClickListener {
-//            ShareUtil.shareItem(this, kuisResult)
             takeScreenShot()
         }
         btn_see_answers.setOnClickListener {
@@ -95,9 +110,10 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
     private fun takeScreenShot() {
         if (EasyPermissions.hasPermissions(this, *WRITE_FILE_PERMISSION)) {
             showProgressDialog("Tunggu yakk ...")
-            setupToolbar(false, "", R.color.white, 0f)
-            btn_see_answers.visibleIf(false)
-            share(ImageUtil.getScreenshotAsFile(window.decorView.rootView))
+            layout_share_kuis_result.visibleIf(true)
+            layout_share_kuis_result.post {
+                share(ImageUtil.getScreenshotAsFile(this@KuisResultActivity, layout_share_kuis_result))
+            }
         } else {
             EasyPermissions.requestPermissions(
                 PermissionRequest.Builder(this, RC_ASK_PERMISSIONS, *WRITE_FILE_PERMISSION)
@@ -110,8 +126,9 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
     }
 
     private fun share(imageFile: File) {
-        setupToolbar(true, "", R.color.white, 0f)
-        btn_see_answers.visibleIf(true)
+//        setupToolbar(true, "", R.color.white, 0f)
+//        btn_share.visibleIf(true)
+//        btn_see_answers.visibleIf(true)
         dismissProgressDialog()
         ShareUtil.shareImage(
             this,
@@ -119,7 +136,7 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
     }
 
     override fun onBackPressed() {
-        if (intent.getBooleanExtra(PantauConstants.Kuis.KUIS_REFRESH, false)) {
+        if (intent.getBooleanExtra(KUIS_REFRESH, false)) {
             setResult(Activity.RESULT_OK)
         } else if (isTaskRoot) {
             val intent = Intent(this@KuisResultActivity, HomeActivity::class.java)
@@ -132,8 +149,8 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
     companion object {
         fun setIntent(context: Context, kuisItem: KuisItem, refreshOnReturn: Boolean = false): Intent {
             val intent = Intent(context, KuisResultActivity::class.java)
-            intent.putExtra(PantauConstants.Kuis.KUIS_ITEM, kuisItem)
-            intent.putExtra(PantauConstants.Kuis.KUIS_REFRESH, refreshOnReturn)
+            intent.putExtra(KUIS_ITEM, kuisItem)
+            intent.putExtra(KUIS_REFRESH, refreshOnReturn)
             return intent
         }
 
@@ -147,5 +164,12 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            RC_SHARE -> layout_share_kuis_result.visibleIf(false)
+        }
     }
 }

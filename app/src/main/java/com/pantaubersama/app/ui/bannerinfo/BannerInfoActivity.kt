@@ -62,7 +62,7 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
         }
 
         iv_banner_image.loadUrl(bannerInfo?.image?.url, R.color.gray_3)
-        iv_banner_background.loadUrl(bannerInfo?.headerImage?.large?.url)
+        iv_banner_background.loadUrl(bannerInfo?.headerImage?.url)
 
         tv_url_pantau.setOnClickListener { ChromeTabUtil(this).loadUrl(tv_url_pantau.text.toString()) }
     }

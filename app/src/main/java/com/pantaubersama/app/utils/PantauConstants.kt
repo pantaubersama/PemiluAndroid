@@ -86,6 +86,8 @@ class PantauConstants {
         const val EXTRA_ONBOARDING_TITLE = "EXTRA_ONBOARDING_TITLE"
         const val EXTRA_ONBOARDING_DESC = "EXTRA_ONBOARDING_DESC"
         const val EXTRA_IS_MODERATOR = "EXTRA_IS_MODERATOR"
+        const val EXTRA_IMAGE_PATH = "EXTRA_IMAGE_PATH"
+        const val EXTRA_IMAGE_URL = "EXTRA_IMAGE_URL"
     }
 
     object RequestCode {
@@ -105,6 +107,7 @@ class PantauConstants {
         const val RC_OPEN_DETAIL_JANPOL = 1011
         const val RC_OPEN_DETAIL_QUESTION = 1012
         const val RC_FILTER_CLUSTER = 1013
+        const val RC_SHARE = 1014
     }
 
     object ResultCode {

@@ -18,6 +18,7 @@ import com.pantaubersama.app.utils.extensions.visibleIf
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.fragment_presiden.*
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
     private lateinit var layoutManager: StaggeredGridLayoutManager
@@ -118,7 +119,7 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
             +" lebih suka jawaban dari Paslon no ${tendency.team.id}"
         }.toCharSequence()
         paslon_avatar.loadUrl(tendency.team.avatar)
-        total_tendency.text = "%.2f%%".format(tendency.percentage)
+        total_tendency.text = "%d%%".format(tendency.percentage.roundToInt())
         paslon_name.text = tendency.team.title
     }
 

@@ -6,5 +6,7 @@ data class Source(
     @SerializedName("id")
     var id: String? = null,
     @SerializedName("text")
-    var text: String? = null
+    var text: String? = null,
+    @SerializedName("media")
+    var media: MutableList<String>? = null
 )

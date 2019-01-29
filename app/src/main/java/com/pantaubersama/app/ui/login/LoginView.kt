@@ -6,4 +6,5 @@ import com.pantaubersama.app.data.model.user.Profile
 interface LoginView : BaseView {
     fun showLoginFailedAlert()
     fun onSuccessGetProfile(it: Profile?)
+    fun onSuccessLogin()
 }

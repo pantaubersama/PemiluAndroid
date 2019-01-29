@@ -148,6 +148,16 @@
                     android:ellipsize="end"
                     android:paddingEnd="10dp"
                     android:text="@string/dummy_tweet_content"/>
+                
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:visibility="gone"
+                    android:id="@+id/iv_tweet_media"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="centerCrop"
+                    app:riv_corner_radius="6dp"
+                    android:foreground="?selectableItemBackground"/>
 
             </LinearLayout>
         </RelativeLayout>

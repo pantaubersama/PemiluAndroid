@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.penpol.kuis.result
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import com.facebook.internal.NativeProtocol.EXTRA_USER_ID
@@ -14,6 +15,7 @@ import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.utils.PantauConstants.Permission.WRITE_FILE_PERMISSION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_SHARE
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KECENDERUNGAN_PATH
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.extensions.color
@@ -21,6 +23,7 @@ import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.visibleIf
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_kuis_user_result.*
+import kotlinx.android.synthetic.main.layout_share_kuis_user_result.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
@@ -79,16 +82,29 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
     override fun showKuisUserResult(kuisUserResult: KuisUserResult, userName: String) {
         userId = kuisUserResult.user.id
         constraint_layout_content.visibleIf(true)
-        tv_kuis_result.text = spannable {
+        val resultSummary = spannable {
             +"Total Kecenderungan ${kuisUserResult.meta.finished} Dari ${kuisUserResult.meta.total} Quiz,\n"
             textColor(color(R.color.black_3)) { +userName }
             +" lebih suka jawaban dari Paslon no ${kuisUserResult.team.id}"
         }.toCharSequence()
-        iv_paslon.loadUrl(kuisUserResult.team.avatar)
-        tv_percentage.text = "%d%%".format(kuisUserResult.percentage.roundToInt())
-        tv_paslon_name.text = kuisUserResult.team.title
+        resultSummary.let {
+            tv_kuis_result.text = it
+            tv_kuis_result_share.text = it
+        }
+        kuisUserResult.team.avatar.let {
+            iv_paslon.loadUrl(it)
+            iv_paslon_share.loadUrl(it)
+        }
+        "%d%%".format(kuisUserResult.percentage.roundToInt()).let {
+            tv_percentage.text = it
+            tv_percentage_share.text = it
+        }
+        kuisUserResult.team.title.let {
+            tv_paslon_name.text = it
+            tv_paslon_name_share.text = it
+        }
+
         btn_share.setOnClickListener {
-//            ShareUtil.shareItem(this, kuisUserResult)
             takeScreenShot()
         }
     }
@@ -97,8 +113,10 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
     private fun takeScreenShot() {
         if (EasyPermissions.hasPermissions(this, *WRITE_FILE_PERMISSION)) {
             showProgressDialog("Tunggu yakk ...")
-            setupToolbar(false, "", R.color.white, 0f)
-            share(ImageUtil.getScreenshotAsFile(window.decorView.rootView))
+            layout_share_user_kuis_result.visibleIf(true)
+            layout_share_user_kuis_result.post {
+                share(ImageUtil.getScreenshotAsFile(this@KuisUserResultActivity, layout_share_user_kuis_result))
+            }
         } else {
             EasyPermissions.requestPermissions(
                 PermissionRequest.Builder(this, RC_ASK_PERMISSIONS, *WRITE_FILE_PERMISSION)
@@ -111,36 +129,16 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
     }
 
     private fun share(imageFile: File) {
-//        val targetedShareIntents: MutableList<Intent> = ArrayList()
-//        val resInfo = packageManager?.queryIntentActivities(shareIntent, 0)
+        val imageUri = Uri.parse(imageFile.absolutePath)
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.type = "image/*"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "SHARE")
+        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-        setupToolbar(true, "", R.color.white, 0f)
         dismissProgressDialog()
-        ShareUtil.shareImage(this, "Hmm.. Ternyataa \uD83D\uDC40 %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + userId), imageFile)
-
-//        try {
-// //            if (!resInfo!!.isEmpty()) {
-// //                for (resolveInfo in resInfo) {
-// //                    val sendIntent = Intent(Intent.ACTION_SEND)
-// //                    sendIntent.type = "image/*"
-// //                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Hmm.. Ternyataa \uD83D\uDC40 %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + userId))
-// //                    sendIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
-// //                    sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-// //                    if (!resolveInfo.activityInfo.packageName.contains("pantaubersama")) {
-// //                        sendIntent.`package` = resolveInfo.activityInfo.packageName
-// //                        targetedShareIntents.add(sendIntent)
-// //                    }
-// //                }
-// ////                targetedShareIntents.add(LabeledIntent(this, ))
-// //                val chooserIntent = Intent.createChooser(targetedShareIntents.removeAt(0), "Bagikan dengan")
-// //                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toTypedArray())
-// //            }
-// //            startActivity(Intent.createChooser(shareIntent, "Bagikan ke .."));
-// //            startActivity(shareIntent)
-//        } catch (e: ActivityNotFoundException) {
-//            e.printStackTrace()
-//            ToastUtil.show(this, "Oops.. ada yang salah nih")
-//        }
+        ShareUtil.shareImage(this, "Hmm.. Ternyata begini kecenderunganku \uD83D\uDC40 %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + userId), imageFile)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -163,5 +161,12 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            RC_SHARE -> layout_share_user_kuis_result.visibleIf(false)
+        }
     }
 }
