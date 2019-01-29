@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken
 import com.pantaubersama.app.data.local.SharedPref
 import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.data.model.cluster.ClusterItem
+import com.pantaubersama.app.data.model.partai.PoliticalParty
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.PantauConstants
@@ -61,6 +62,8 @@ class DataCache(context: Context) : SharedPref(context) {
 
         const val LAPOR_USER_FILTER = "lapor_user_filter"
         const val LAPOR_USER_FILTER_SEARCH = "lapor_user_filter_search"
+        const val LAPOR_PARTY_FILTER = "lapor_party_filter"
+        const val LAPOR_PARTY_FILTER_SEARCH = "lapor_party_filter_search"
     }
 
     override fun prefId(): String {
@@ -286,5 +289,21 @@ class DataCache(context: Context) : SharedPref(context) {
 
     fun saveLaporUserFilterSearch(userFilter: String) {
         putString(LAPOR_USER_FILTER_SEARCH, userFilter)
+    }
+
+    fun saveLaporPartyFilter(partyFilter: PoliticalParty) {
+        putString(LAPOR_PARTY_FILTER, gson.toJson(partyFilter))
+    }
+
+    fun saveLaporPartyFilterSearch(partyFilterSearch: PoliticalParty) {
+        putString(LAPOR_PARTY_FILTER_SEARCH, gson.toJson(partyFilterSearch))
+    }
+
+    fun loadLaporPartyFilter(): PoliticalParty? {
+        return gson.fromJson(getString(LAPOR_PARTY_FILTER), PoliticalParty::class.java)
+    }
+
+    fun loadLaporPartyFilterSearch(): PoliticalParty? {
+        return gson.fromJson(getString(LAPOR_PARTY_FILTER_SEARCH), PoliticalParty::class.java)
     }
 }

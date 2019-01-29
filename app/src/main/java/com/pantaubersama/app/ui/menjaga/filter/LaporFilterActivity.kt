@@ -43,7 +43,6 @@ class LaporFilterActivity : BaseActivity<LaporFilterPresenter>(), LaporFilterVie
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.txt_filter), R.color.white, 4f)
-        tv_cluster_or_party_placeholder.text = getString(R.string.txt_semua_partai)
         if (!isSearchFilter) {
             presenter.getFilter()
         } else {
@@ -72,12 +71,16 @@ class LaporFilterActivity : BaseActivity<LaporFilterPresenter>(), LaporFilterVie
         }
 
         btn_terapkan.setOnClickListener {
-//            if (!isSearchFilter) {
-//                presenter.setFilter(userFilter, this.clusterFilter)
-//            } else {
-//                presenter.setSearchFilter(userFilter, this.clusterFilter)
-//            }
+            if (!isSearchFilter) {
+                partyFilter?.let { it1 -> userFilter?.let { it2 -> presenter.saveLaporFilter(it2, it1) } }
+            } else {
+                partyFilter?.let { it1 -> userFilter?.let { it2 -> presenter.setSearchFilter(it2, it1) } }
+            }
         }
+    }
+
+    override fun bindLaporPartyFilter(partyFilter: PoliticalParty?) {
+        setParty(partyFilter)
     }
 
     private fun setParty(item: PoliticalParty?) {
@@ -85,6 +88,7 @@ class LaporFilterActivity : BaseActivity<LaporFilterPresenter>(), LaporFilterVie
         if (item == null) {
             layout_default_dropdown_filter.visibleIf(true)
             item_cluster.visibleIf(false)
+            tv_cluster_or_party_placeholder.text = getString(R.string.txt_semua_partai)
         } else {
             layout_default_dropdown_filter.visibleIf(false)
             item_cluster.visibleIf(true)
@@ -101,14 +105,20 @@ class LaporFilterActivity : BaseActivity<LaporFilterPresenter>(), LaporFilterVie
         }
     }
 
-    override fun bindLaporUserFilter(loadLaporUserFilter: String) {
+    override fun bindLaporUserFilter(userFilter: String) {
+        this.userFilter = userFilter
         radio_group_lapor.check(
-            when (userFilter) {
+            when (this.userFilter) {
                 PantauConstants.Filter.USER_VERIFIED_TRUE -> R.id.radbtn_terverifikasi
                 PantauConstants.Filter.USER_VERIFIED_FALSE -> R.id.radbtn_belum_verifikasi
                 else -> R.id.radbtn_semua
             }
         )
+    }
+
+    override fun onSuccessSaveFilter() {
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 
     override fun showLoading() {
