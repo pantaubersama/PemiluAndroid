@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.profile.verifikasi.VerificationCameraActivity
+import com.pantaubersama.app.ui.profile.verifikasi.VerifikasiCameraActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step2.Step2VerifikasiActivity
 import com.pantaubersama.app.utils.PantauConstants.RequestCode
 import com.pantaubersama.app.utils.ToastUtil
@@ -33,7 +33,7 @@ class Step1VerifikasiActivity : BaseActivity<Step1VerifikasiPresenter>(), Step1V
         setupToolbar(true, "", R.color.white, 4f)
         verification_step_indicator.text = "1/3"
         next_button.setOnClickListener {
-            VerificationCameraActivity.start(this, true, RequestCode.RC_CAMERA)
+            VerifikasiCameraActivity.start(this, true, RequestCode.RC_CAMERA)
         }
     }
 

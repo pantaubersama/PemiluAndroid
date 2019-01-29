@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_verification_camera.*
 import okio.Okio
 import java.io.File
 
-class VerificationCameraActivity : AppCompatActivity() {
+class VerifikasiCameraActivity : AppCompatActivity() {
 
     private var imageUri: Uri? = null
 
@@ -137,10 +137,10 @@ class VerificationCameraActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         val isCameraRequest = requestCode == RequestCode.RC_CAMERA
-        val alertMessage = if (isCameraRequest)
-            "Anda harus mengijinkan aplikasi untuk mengakses kamera"
-        else
-            "Anda harus mengijinkan aplikasi untuk mengakses penyimpanan"
+        val alertMessage = getString(
+            if (isCameraRequest) R.string.izinkan_akses_kamera
+            else R.string.izinkan_akses_penyimpanan
+        )
 
         handlePermissionsResult(permissions.firstOrNull(), grantResults.firstOrNull(), alertMessage) {
             if (isCameraRequest) camera.onStart() else pickFromGallery()
@@ -157,10 +157,10 @@ class VerificationCameraActivity : AppCompatActivity() {
             // user selected never show again on permission popup,
             // so user have to grant permission manually through app setting
             alertDialog = AlertDialog.Builder(this)
-                .setTitle("Permintaan Akses")
+                .setTitle(R.string.permintaan_akses)
                 .setMessage(alertMessage)
-                .setPositiveButton("Buka Pengaturan") { _, _ -> openAppSettings() }
-                .setNegativeButton("Batal", null)
+                .setPositiveButton(R.string.buka_pengaturan) { _, _ -> openAppSettings() }
+                .setNegativeButton(R.string.batal, null)
                 .show()
         }
     }
@@ -169,7 +169,7 @@ class VerificationCameraActivity : AppCompatActivity() {
         private const val EXTRA_SHOW_SELFIE_FRAME = "EXTRA_SHOW_SELFIE_FRAME"
 
         fun start(activity: Activity, showSelfieFrame: Boolean, requestCode: Int) {
-            activity.startActivityForResult(Intent(activity, VerificationCameraActivity::class.java)
+            activity.startActivityForResult(Intent(activity, VerifikasiCameraActivity::class.java)
                 .putExtra(EXTRA_SHOW_SELFIE_FRAME, showSelfieFrame),
                 requestCode)
         }

@@ -43,10 +43,6 @@
             android:name=".ui.search.person.filter.FilterOrangActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.verifikasi.VerificationCameraActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen" />
-        <activity
             android:name=".ui.onboarding.OnboardingActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -203,6 +199,13 @@
             android:name=".ui.profile.verifikasi.step3.Step3VerifikasiActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.profile.verifikasi.finalstep.FinalScreenVerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.VerifikasiCameraActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity
             android:name=".ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -210,9 +213,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.profile.verifikasi.finalstep.FinalScreenVerifikasiActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.setting.SettingActivity"

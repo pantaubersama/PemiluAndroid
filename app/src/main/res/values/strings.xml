@@ -178,6 +178,10 @@
     <string name="ambil_gambar_dari">Ambil gambar dari :</string>
     <string name="izinkan_akses_kamera_dan_galeri"><![CDATA[Izinkan aplikasi mengakses Kamera & Galeri pada perangkat anda]]></string>
     <string name="izinkan_akses_file"><![CDATA[Izinkan aplikasi mengakses Galeri pada perangkat anda]]></string>
+    <string name="izinkan_akses_kamera">Anda harus mengizinkan aplikasi untuk mengakses kamera</string>
+    <string name="izinkan_akses_penyimpanan">Anda harus mengijinkan aplikasi untuk mengakses penyimpanan</string>
+    <string name="permintaan_akses">Permintaan Akses</string>
+    <string name="buka_pengaturan">Buka Pengaturan</string>
     <string name="ok">OK</string>
     <string name="batal">Batal</string>
     <string name="wajib_diisi">wajib diisi</string>
