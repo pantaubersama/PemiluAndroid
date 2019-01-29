@@ -10,7 +10,12 @@ import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.extensions.enableLottie
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import kotlinx.android.synthetic.main.layout_empty_state.*
+import kotlinx.android.synthetic.main.layout_fail_state.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
 class LaporFragment : BaseFragment<LaporPresenter>(), LaporView {
@@ -45,7 +50,7 @@ class LaporFragment : BaseFragment<LaporPresenter>(), LaporView {
     }
 
     override fun showFailedGetDataAlert() {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+        view_fail_state.enableLottie(true, lottie_fail_state)
     }
 
     override fun bindProfile(profile: Profile) {
@@ -78,10 +83,14 @@ class LaporFragment : BaseFragment<LaporPresenter>(), LaporView {
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        lottie_loading.enableLottie(true, lottie_loading)
+        view_empty_state.enableLottie(false, lottie_empty_state)
+        view_fail_state.enableLottie(false, lottie_fail_state)
+        recycler_view.visibleIf(false)
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        lottie_loading.enableLottie(false, lottie_loading)
+        recycler_view.visibleIf(false)
     }
 }
