@@ -5,10 +5,7 @@ import com.pantaubersama.app.data.model.accesstoken.TokenResponse
 import com.pantaubersama.app.data.model.cluster.CategoryData
 import com.pantaubersama.app.data.model.cluster.ClustersResponse
 import com.pantaubersama.app.data.model.partai.PoliticalPartiesResponse
-import com.pantaubersama.app.data.model.user.AchievedBadgeResponse
-import com.pantaubersama.app.data.model.user.BadgeResponse
-import com.pantaubersama.app.data.model.user.Informant
-import com.pantaubersama.app.data.model.user.ProfileResponse
+import com.pantaubersama.app.data.model.user.*
 import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -100,6 +97,9 @@ interface PantauOAuthAPI {
         @Query("filter_value") filterValue: String,
         @Query("filter_by") filterBy: String? = "category_id"
     ): Single<ClustersResponse>
+
+    @GET("v1/me/verifications")
+    fun getVerificationStatus(): Single<VerificationResponse>
 
     @FormUrlEncoded
     @PUT("v1/verifications/ktp_number")

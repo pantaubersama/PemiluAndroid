@@ -10,6 +10,7 @@ import com.pantaubersama.app.ui.profile.verifikasi.VerifikasiCameraActivity
 import com.pantaubersama.app.ui.profile.verifikasi.step2.Step2VerifikasiActivity
 import com.pantaubersama.app.utils.PantauConstants.RequestCode
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.enableLottie
 import kotlinx.android.synthetic.main.activity_step1_verifikasi.*
 import java.io.File
 import javax.inject.Inject
@@ -32,6 +33,7 @@ class Step1VerifikasiActivity : BaseActivity<Step1VerifikasiPresenter>(), Step1V
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "", R.color.white, 4f)
         verification_step_indicator.text = "1/3"
+        selfie_with_id_card_animation.enableLottie(true)
         next_button.setOnClickListener {
             VerifikasiCameraActivity.start(this, true, RequestCode.RC_CAMERA)
         }

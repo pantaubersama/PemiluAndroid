@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.profile.setting
 
 import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.data.model.user.VerificationStep
 import com.twitter.sdk.android.core.models.User
 
 interface SettingView : BaseView {
@@ -23,4 +24,6 @@ interface SettingView : BaseView {
     fun onFailedConnectTwitter()
     fun onSuccessRevokeFirebaseToken()
     fun showLogoutFailedAlert()
+    fun showVerifikasiScreen(step: VerificationStep)
+    fun showFailedGetVerifikasi()
 }

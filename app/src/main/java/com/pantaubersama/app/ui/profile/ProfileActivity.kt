@@ -14,6 +14,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.data.model.user.VerificationStep
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.profile.cluster.invite.UndangAnggotaActivity
@@ -22,6 +23,7 @@ import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
+import com.pantaubersama.app.ui.profile.verifikasi.VerifikasiNavigator
 import com.pantaubersama.app.ui.quickcount.QuickCountFragment
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
@@ -104,12 +106,9 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         verified_text.text = getString(R.string.txt_belum_verifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_gray)
-//        if (userId == null) {
-//            verified_button.setOnClickListener {
-//                val intent = Intent(this@ProfileActivity, Step0VerifikasiActivity::class.java)
-//                startActivity(intent)
-//            }
-//        }
+        verified_button.setOnClickListener {
+            presenter.getStatusVerifikasi()
+        }
     }
 
     private fun setVerified() {
@@ -118,6 +117,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         verified_text.text = getString(R.string.txt_terverifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.colorAccent))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_green)
+        verified_button.setOnClickListener(null)
     }
 
     private fun setupNavigation() {
@@ -322,6 +322,14 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     override fun showFailedGetProfileAlert() {
         ToastUtil.show(this@ProfileActivity, "Gagal memuat profil pengguna")
+    }
+
+    override fun showVerifikasiScreen(step: VerificationStep) {
+        VerifikasiNavigator.start(this, step)
+    }
+
+    override fun showFailedGetVerifikasi() {
+        ToastUtil.show(this, "Gagal mendapatkan status verifikasi")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
