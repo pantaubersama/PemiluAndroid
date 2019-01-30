@@ -192,12 +192,12 @@ package_staging:
         - mv $ANDROID_APK_PATH/staging/debug/app-staging-debug*.apk $ANDROID_APK_PATH/staging/debug/app-staging-${CI_COMMIT_SHA}.apk
         - curl -F file=@$ANDROID_APK_PATH/staging/debug/app-staging-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
         
-package_release:
-    <<: *package_template_def
-    stage: package
-    environment: Release
-    only:
-#        - master
-    script:
-        - mv $ANDROID_APK_PATH/production/release/app-production-release*.apk $ANDROID_APK_PATH/production/release/app-production-${CI_COMMIT_SHA}.apk
-        - curl -F file=@$ANDROID_APK_PATH/production/release/app-production-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
+#package_release:
+#    <<: *package_template_def
+#    stage: package
+#    environment: Release
+#    only:
+##        - master
+#    script:
+#        - mv $ANDROID_APK_PATH/production/release/app-production-release*.apk $ANDROID_APK_PATH/production/release/app-production-${CI_COMMIT_SHA}.apk
+#        - curl -F file=@$ANDROID_APK_PATH/production/release/app-production-${CI_COMMIT_SHA}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
