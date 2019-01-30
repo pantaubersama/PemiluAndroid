@@ -5,7 +5,11 @@ import com.pantaubersama.app.data.model.accesstoken.TokenResponse
 import com.pantaubersama.app.data.model.cluster.CategoryData
 import com.pantaubersama.app.data.model.cluster.ClustersResponse
 import com.pantaubersama.app.data.model.partai.PoliticalPartiesResponse
-import com.pantaubersama.app.data.model.user.*
+import com.pantaubersama.app.data.model.user.ProfileResponse
+import com.pantaubersama.app.data.model.user.BadgeResponse
+import com.pantaubersama.app.data.model.user.AchievedBadgeResponse
+import com.pantaubersama.app.data.model.user.Informant
+import com.pantaubersama.app.data.model.user.VerificationResponse
 import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.MultipartBody

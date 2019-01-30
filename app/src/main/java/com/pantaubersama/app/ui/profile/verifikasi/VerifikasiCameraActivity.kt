@@ -168,8 +168,12 @@ class VerifikasiCameraActivity : AppCompatActivity() {
         }
     }
 
-    private inline fun handlePermissionsResult(permission: String?, grantResult: Int?,
-                                               alertMessage: String, onGranted: () -> Unit) {
+    private inline fun handlePermissionsResult(
+        permission: String?,
+        grantResult: Int?,
+        alertMessage: String,
+        onGranted: () -> Unit
+    ) {
         if (permission == null || grantResult == null) return
 
         if (grantResult == PackageManager.PERMISSION_GRANTED) {
