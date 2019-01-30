@@ -1,8 +1,8 @@
-package com.pantaubersama.app.ui.profile.verifikasi.step3
+package com.pantaubersama.app.ui.profile.verifikasi.step6
 
 import com.pantaubersama.app.base.BaseView
 
 interface Step3VerifikasiView : BaseView {
-    fun onSuccessSubmitSelfieKtp()
-    fun showFailedSubmitSelfieKtpAlert()
+    fun onSuccessSignature()
+    fun showFailedSubmitSignatureAlert()
 }

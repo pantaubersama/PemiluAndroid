@@ -18,6 +18,8 @@ class OnboardingChildFragment : CommonFragment() {
     private var onboardingDesc: String? = null
     private var isAutoPlay = false
 
+    override fun setLayout(): Int = R.layout.fragment_onboarding_child
+
     companion object {
         val TAG = OnboardingChildFragment::class.java.simpleName
         fun newInstance(onboardingTitle: String, onboardingDesc: String, lottieFile: String, autoPlay: Boolean = false): OnboardingChildFragment {
@@ -37,10 +39,6 @@ class OnboardingChildFragment : CommonFragment() {
         args?.getString(EXTRA_ONBOARDING_TITLE, null)?.let { onboardingTitle = it }
         args?.getString(EXTRA_ONBOARDING_DESC, null)?.let { onboardingDesc = it }
         args?.getBoolean(EXTRA_LOTTIE_AUTOPLAY, false)?.let { isAutoPlay = it }
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.fragment_onboarding_child
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {

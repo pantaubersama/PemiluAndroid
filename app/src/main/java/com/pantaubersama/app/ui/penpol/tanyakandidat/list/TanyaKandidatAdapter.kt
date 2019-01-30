@@ -17,7 +17,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_action_post.*
-import kotlinx.android.synthetic.main.layout_tanya_kandidat_header.*
+import kotlinx.android.synthetic.main.header_item_layout.*
 
 class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
     private var profile: Profile = EMPTY_PROFILE
@@ -38,7 +38,7 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_LOADING -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
-            VIEW_TYPE_HEADER -> HeaderViewHolder(parent.inflate(R.layout.layout_tanya_kandidat_header))
+            VIEW_TYPE_HEADER -> HeaderViewHolder(parent.inflate(R.layout.header_item_layout))
             VIEW_TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
             else -> TanyaKandidatViewHolder(parent.inflate(R.layout.item_tanya_kandidat))
         }
@@ -116,6 +116,7 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         fun onBind(item: Profile) {
             header_user_avatar.loadUrl(item.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
             user_name.text = item.name
+            header_hint.text = itemView.context.getString(R.string.question_short_hint)
             question_section.setOnClickListener {
                 listener?.onClickHeader()
             }
