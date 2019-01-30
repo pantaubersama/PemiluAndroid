@@ -35,7 +35,7 @@ class Step3VerifikasiActivity : BaseActivity<Step3VerifikasiPresenter>(), Step3V
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "", R.color.white, 4f)
         verification_step_indicator.text = "3/3"
-        selfie_with_id_card_animation.enableLottie(true)
+        selfie_with_id_card_animation.enableLottie(true, looping = false)
         next_button.setOnClickListener {
             VerifikasiCameraActivity.start(this, false, RequestCode.RC_CAMERA)
         }
