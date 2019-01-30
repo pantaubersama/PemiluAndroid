@@ -54,11 +54,11 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
     override fun setupUI(savedInstanceState: Bundle?) {
 
         if (savedInstanceState != null) {
-            onBoardingChildFragment = supportFragmentManager.getFragment(savedInstanceState, "1") as OnboardingChildFragment
-            onBoardingChild2Fragment = supportFragmentManager.getFragment(savedInstanceState, "2") as OnboardingChildFragment
-            onBoardingChild3Fragment = supportFragmentManager.getFragment(savedInstanceState, "3") as OnboardingChildFragment
-            onBoardingChild4Fragment = supportFragmentManager.getFragment(savedInstanceState, "4") as OnboardingChildFragment
-            onBoardingChild5Fragment = supportFragmentManager.getFragment(savedInstanceState, "5") as OnboardingChildFragment
+            supportFragmentManager.getFragment(savedInstanceState, "1")?.let { onBoardingChildFragment = it as OnboardingChildFragment }
+            supportFragmentManager.getFragment(savedInstanceState, "2")?.let { onBoardingChild2Fragment = it as OnboardingChildFragment }
+            supportFragmentManager.getFragment(savedInstanceState, "3")?.let { onBoardingChild3Fragment = it as OnboardingChildFragment }
+            supportFragmentManager.getFragment(savedInstanceState, "4")?.let { onBoardingChild4Fragment = it as OnboardingChildFragment }
+            supportFragmentManager.getFragment(savedInstanceState, "5")?.let { onBoardingChild5Fragment = it as OnboardingChildFragment }
         }
 
         setupViewPager()
@@ -155,11 +155,10 @@ class OnboardingActivity : BaseActivity<OnBoardingPresenter>() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
-        supportFragmentManager.putFragment(outState, "1", onBoardingChildFragment)
-        supportFragmentManager.putFragment(outState, "2", onBoardingChild2Fragment)
-        supportFragmentManager.putFragment(outState, "3", onBoardingChild3Fragment)
-        supportFragmentManager.putFragment(outState, "4", onBoardingChild4Fragment)
-        supportFragmentManager.putFragment(outState, "5", onBoardingChild5Fragment)
+        if (onBoardingChildFragment.isAdded) supportFragmentManager.putFragment(outState, "1", onBoardingChildFragment)
+        if (onBoardingChild2Fragment.isAdded) supportFragmentManager.putFragment(outState, "2", onBoardingChild2Fragment)
+        if (onBoardingChild3Fragment.isAdded) supportFragmentManager.putFragment(outState, "3", onBoardingChild3Fragment)
+        if (onBoardingChild4Fragment.isAdded) supportFragmentManager.putFragment(outState, "4", onBoardingChild4Fragment)
+        if (onBoardingChild5Fragment.isAdded) supportFragmentManager.putFragment(outState, "5", onBoardingChild5Fragment)
     }
 }
