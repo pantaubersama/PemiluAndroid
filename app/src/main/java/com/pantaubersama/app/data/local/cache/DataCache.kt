@@ -267,6 +267,10 @@ class DataCache(context: Context) : SharedPref(context) {
         return getString(FILTER_ORANG) ?: PantauConstants.FILTER_ORANG_ALL
     }
 
+    fun saveSearchOrangFilter(searchOrangFilter: String) {
+        putString(FILTER_ORANG, searchOrangFilter)
+    }
+
     fun saveFirebaseToken(firebaseToken: String?) {
         firebaseToken?.let { putString(FIREBASE_TOKEN, it) }
     }
