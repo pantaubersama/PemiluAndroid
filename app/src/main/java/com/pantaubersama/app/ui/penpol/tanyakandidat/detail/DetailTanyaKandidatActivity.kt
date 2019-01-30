@@ -277,8 +277,7 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
         if (this.isTaskRoot) {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
-        } else {
-            super.onBackPressed()
         }
+        super.onBackPressed()
     }
 }

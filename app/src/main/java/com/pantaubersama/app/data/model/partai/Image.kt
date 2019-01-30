@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.model.partai
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Image(
     @SerializedName("medium")
@@ -13,4 +14,4 @@ data class Image(
     var thumbnailSquare: ThumbnailSquare?,
     @SerializedName("url")
     var url: String?
-)
+) : Serializable
