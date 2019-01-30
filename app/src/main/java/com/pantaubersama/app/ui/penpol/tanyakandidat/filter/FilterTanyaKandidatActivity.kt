@@ -24,13 +24,14 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
 
     private var userFilter: String? = null
     private var orderFilter: String? = null
+    private var isFromSearch = false
 
     override fun statusBarColor(): Int? {
         return 0
     }
 
     override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
+        isFromSearch = intent.getBooleanExtra(PantauConstants.TanyaKandidat.Filter.IS_FROM_SEARCH, isFromSearch)
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -39,11 +40,20 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Filter", R.color.white, 4f)
-        presenter.loadTanyaKandidatUserFilter()
-        presenter.loadTanyaKandidatOrderFilter()
+        if (!isFromSearch) {
+            presenter.loadTanyaKandidatUserFilter()
+            presenter.loadTanyaKandidatOrderFilter()
+        } else {
+            presenter.loadTanyaKandidatUserFilterSearch()
+            presenter.loadTanyaKandidatOrderFilterSearch()
+        }
         btn_terapkan.setOnClickListener {
             applyFilter()
-            presenter.saveTanyaKandidatFilter(userFilter, orderFilter)
+            if (!isFromSearch) {
+                presenter.saveTanyaKandidatFilter(userFilter, orderFilter)
+            } else {
+                presenter.saveTanyaKandidatFilterSaerch(userFilter, orderFilter)
+            }
         }
     }
 
