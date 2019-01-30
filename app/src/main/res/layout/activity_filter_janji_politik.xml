@@ -34,7 +34,7 @@
 
             <include
                 android:id="@+id/layout_default_cluster_filter"
-                layout="@layout/item_default_cluster_filter"/>
+                layout="@layout/item_default_dropdown_filter"/>
 
             <include
                 android:id="@+id/item_cluster"

@@ -34,7 +34,8 @@ class ApiModule {
     @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
+        logging.level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else
+            HttpLoggingInterceptor.Level.NONE
         return logging
     }
 
@@ -62,9 +63,9 @@ class ApiModule {
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
             .addNetworkInterceptor(StethoInterceptor())
+            .addInterceptor(requestInterceptor)
             .addInterceptor(networkErrorInterceptor)
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(requestInterceptor)
             .authenticator(customAuthenticator)
             .build()
     }

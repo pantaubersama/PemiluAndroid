@@ -3,13 +3,16 @@ package com.pantaubersama.app.ui.profile
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.UserInteractor
+import com.pantaubersama.app.data.interactors.VerifikasiInteractor
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.State
+import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
 class ProfilePresenter @Inject constructor(
     private val profileInteractor: ProfileInteractor,
-    private val userInteractor: UserInteractor
+    private val userInteractor: UserInteractor,
+    private val verifikasiInteractor: VerifikasiInteractor
 ) : BasePresenter<ProfileView>() {
 
     fun getMyProfile(): Profile {
@@ -81,5 +84,15 @@ class ProfilePresenter @Inject constructor(
                 view?.showBadges(State.Error(it.message))
             })
         disposables.add(disposable)
+    }
+
+    fun getStatusVerifikasi() {
+        disposables += verifikasiInteractor.getStatusVerifikasi()
+            .subscribe({
+                view?.showVerifikasiScreen(it)
+            }, {
+                view?.showError(it)
+                view?.showFailedGetVerifikasi()
+            })
     }
 }

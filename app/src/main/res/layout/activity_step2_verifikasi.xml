@@ -103,13 +103,13 @@
                             android:scaleType="centerCrop"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:lottie_fileName="selfie_with_id_card.json"
+                            app:lottie_fileName="id_card_animation.json"
                             app:lottie_autoPlay="false"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Foto Diri Bersama KTP"
+                            android:text="Foto KTP"
                             android:fontFamily="@font/bw_modelica_bold"
                             android:textSize="18sp"
                             android:textColor="@color/black_3"
@@ -118,7 +118,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/foto_dengan_ktp_hint"
+                            android:text="@string/foto_ktp_hint"
                             android:gravity="center_horizontal"
                             android:layout_marginTop="12dp"
                             android:fontFamily="@font/lato_medium"

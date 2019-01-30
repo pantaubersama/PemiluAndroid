@@ -215,13 +215,4 @@ class ProfileInteractor @Inject constructor(
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
     }
-
-    fun getPartai(page: Int, perPage: Int): Single<List<PoliticalParty>> {
-        return apiWrapper.getPantauOAuthApi().getPartai(page, perPage)
-                .subscribeOn(rxSchedulers.io())
-                .map { response ->
-                    response.data.politicalParties
-                }
-                .observeOn(rxSchedulers.mainThread())
-    }
 }

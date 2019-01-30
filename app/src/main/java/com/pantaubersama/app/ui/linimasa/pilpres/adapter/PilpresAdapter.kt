@@ -1,9 +1,14 @@
 package com.pantaubersama.app.ui.linimasa.pilpres.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.base.viewholder.LoadingViewHolder
@@ -62,6 +67,19 @@ class PilpresAdapter(private val isTwitterAvailable: Boolean) : BaseRecyclerAdap
             iv_tweet_option.visibleIf(isTwitterAvailable)
             iv_tweet_option.setOnClickListener { listener?.onClickTweetOption(item) }
             tv_tweet_date.text = item.createdAtInWord?.id
+            iv_tweet_media.visibleIf(item.source?.media != null)
+            item.source?.media?.get(0)?.let { url -> iv_tweet_media.loadUrl(url, R.color.gray_3, true, requestListener = object : RequestListener<Drawable> {
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                    iv_tweet_media.visibleIf(false)
+                    return true
+                }
+
+                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    iv_tweet_media.setImageDrawable(resource)
+                    iv_tweet_media.setOnClickListener { listener?.onClickImage(url) }
+                    return true
+                }
+            }) }
         }
     }
 
@@ -80,5 +98,6 @@ class PilpresAdapter(private val isTwitterAvailable: Boolean) : BaseRecyclerAdap
         fun onClickTweetContent(item: FeedsItem)
         fun onClickTweetOption(item: FeedsItem)
         fun onClickShare(item: FeedsItem)
+        fun onClickImage(imageUrl: String)
     }
 }

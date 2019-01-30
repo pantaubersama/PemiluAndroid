@@ -3,8 +3,6 @@ package com.pantaubersama.app.ui.profile.verifikasi.step1
 import com.pantaubersama.app.base.BaseView
 
 interface Step1VerifikasiView : BaseView {
-    fun onKtpNumberSubmited()
-    fun showFailedSubmitKtpNumberAlert()
-    fun disableView()
-    fun enableView()
+    fun onSuccessSubmitSelfieKtp()
+    fun showFailedSubmitSelfieKtpAlert()
 }
