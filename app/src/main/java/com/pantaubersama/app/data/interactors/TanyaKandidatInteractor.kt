@@ -91,9 +91,9 @@ class TanyaKandidatInteractor @Inject constructor(
     }
 
     fun saveTanyaKandidatFilter(userFilter: String?, orderFilter: String?): Completable {
-        return Completable.fromCallable { dataCache.saveTanyaKandidatUserFilter(userFilter!!) }
+        return Completable.fromCallable { dataCache.saveTanyaKandidatUserFilter(userFilter) }
             .andThen(
-                Completable.fromCallable { dataCache.saveTanyaKandidatOrderFilter(orderFilter!!) }
+                Completable.fromCallable { dataCache.saveTanyaKandidatOrderFilter(orderFilter) }
             )
     }
 
@@ -125,9 +125,9 @@ class TanyaKandidatInteractor @Inject constructor(
             keyword,
             page,
             perpage,
-            dataCache.loadTanyaKandidatOrderFilter(),
+            dataCache.loadTanyaKandidatOrderFilterSearch(),
             dataCache.loadTanyaKandidatOrderFilterDirection(),
-            dataCache.loadTanyaKandidatUserFilter()
+            dataCache.loadTanyaKandidatUserFilterSearch()
         )
             .map { it.data }
             .subscribeOn(rxSchedulers.io())
@@ -139,5 +139,24 @@ class TanyaKandidatInteractor @Inject constructor(
             .map { it.data }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun saveTanyaKandidatFilterSearch(userFilter: String?, orderFilter: String?): Completable {
+        return Completable.fromCallable { dataCache.saveTanyaKandidatUserFilterSearch(userFilter) }
+            .andThen(
+                Completable.fromCallable { dataCache.saveTanyaKandidatOrderFilterSearch(orderFilter) }
+            )
+    }
+
+    fun loadTanyaKandidatUserFilterSearch(): Single<String> {
+        return Single.fromCallable {
+            dataCache.loadTanyaKandidatUserFilterSearch()
+        }
+    }
+
+    fun loadTanyaKandidatOrderFilterSearch(): Single<String> {
+        return Single.fromCallable {
+            dataCache.loadTanyaKandidatOrderFilterSearch()
+        }
     }
 }

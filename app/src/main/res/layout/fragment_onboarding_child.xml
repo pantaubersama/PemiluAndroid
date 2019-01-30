@@ -42,14 +42,15 @@
 
         <TextView
             android:id="@+id/tv_onboarding_desc"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="50dp"
             android:paddingEnd="50dp"
             android:textSize="16sp"
             android:textColor="@color/gray_dark_2"
-            tools:text="Linimasa konten kampanye resmi tanpa sampah Informasi."
+            tools:text="Linimasa konten kampanye resmi"
             android:layout_marginTop="12dp"
+            android:textAlignment="center"
             android:gravity="center"/>
     </LinearLayout>
 

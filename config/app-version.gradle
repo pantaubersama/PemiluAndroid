@@ -1,8 +1,8 @@
 ext {
     majorVersion = 1
     minorVersion = 0
-    patchVersion = 6
-    preRelease = "beta"
+    patchVersion = 8
+    preRelease = null
 
     appApplicationId = "com.pantaubersama"
     appVersionCode = generateVersionCode()

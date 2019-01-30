@@ -53,6 +53,8 @@ class DataCache(context: Context) : SharedPref(context) {
 
         const val TANYA_KANDIDAT_USER_FILTER = "tanya_kandidat_user_filter"
         const val TANYA_KANDIDAT_ORDER_FILTER = "tanya_kandidat_order_filter"
+        const val TANYA_KANDIDAT_USER_FILTER_SEARCH = "tanya_kandidat_user_filter_search"
+        const val TANYA_KANDIDAT_ORDER_FILTER_SEARCH = "tanya_kandidat_order_filter_search"
 
         const val KEY_SEARCH_HISTORY = "KEY_SEARCH_HISTORY"
         const val IS_ONBOARDING_COMPLETE = "is_onboarding_complete"
@@ -150,12 +152,12 @@ class DataCache(context: Context) : SharedPref(context) {
         return gson.fromJson(getString(USER_PROFILE), Profile::class.java) ?: EMPTY_PROFILE
     }
 
-    fun saveTanyaKandidatUserFilter(userFilter: String) {
-        putString(TANYA_KANDIDAT_USER_FILTER, userFilter)
+    fun saveTanyaKandidatUserFilter(userFilter: String?) {
+        userFilter?.let { putString(TANYA_KANDIDAT_USER_FILTER, it) }
     }
 
-    fun saveTanyaKandidatOrderFilter(orderFilter: String) {
-        putString(TANYA_KANDIDAT_ORDER_FILTER, orderFilter)
+    fun saveTanyaKandidatOrderFilter(orderFilter: String?) {
+        orderFilter?.let { putString(TANYA_KANDIDAT_ORDER_FILTER, it) }
     }
 
     fun loadTanyaKandidatUserFilter(): String? {
@@ -267,6 +269,10 @@ class DataCache(context: Context) : SharedPref(context) {
         return getString(FILTER_ORANG) ?: PantauConstants.FILTER_ORANG_ALL
     }
 
+    fun saveSearchOrangFilter(searchOrangFilter: String) {
+        putString(FILTER_ORANG, searchOrangFilter)
+    }
+
     fun saveFirebaseToken(firebaseToken: String?) {
         firebaseToken?.let { putString(FIREBASE_TOKEN, it) }
     }
@@ -305,5 +311,29 @@ class DataCache(context: Context) : SharedPref(context) {
 
     fun loadLaporPartyFilterSearch(): PoliticalParty? {
         return gson.fromJson(getString(LAPOR_PARTY_FILTER_SEARCH), PoliticalParty::class.java)
+    }
+
+    fun saveTanyaKandidatUserFilterSearch(userFilter: String?) {
+        userFilter?.let { putString(TANYA_KANDIDAT_USER_FILTER_SEARCH, it) }
+    }
+
+    fun saveTanyaKandidatOrderFilterSearch(orderFilter: String?) {
+        orderFilter?.let { putString(TANYA_KANDIDAT_ORDER_FILTER_SEARCH, it) }
+    }
+
+    fun loadTanyaKandidatUserFilterSearch(): String? {
+        return if (getString(TANYA_KANDIDAT_USER_FILTER_SEARCH) != null) {
+            getString(TANYA_KANDIDAT_USER_FILTER_SEARCH)
+        } else {
+            PantauConstants.Filter.USER_VERIFIED_ALL
+        }
+    }
+
+    fun loadTanyaKandidatOrderFilterSearch(): String? {
+        return if (getString(TANYA_KANDIDAT_ORDER_FILTER_SEARCH) != null) {
+            getString(TANYA_KANDIDAT_ORDER_FILTER_SEARCH)
+        } else {
+            PantauConstants.TanyaKandidat.Filter.ByVotes.MOST_VOTES
+        }
     }
 }

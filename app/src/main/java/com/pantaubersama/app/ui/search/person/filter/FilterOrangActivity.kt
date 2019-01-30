@@ -59,16 +59,16 @@ class FilterOrangActivity : BaseActivity<FilterOrangPresenter>(), FilterOrangVie
         val userFilterSelectedValue = findViewById<RadioButton>(userFilterSelectedId).text
         when (userFilterSelectedValue) {
             getString(R.string.filter_all_label) -> searchOrangFilter = PantauConstants.FILTER_ORANG_ALL
-            getString(R.string.filter_unverified_label) -> searchOrangFilter = PantauConstants.FILTER_ORANG_VERIFIED
-            getString(R.string.filter_verified_label) -> searchOrangFilter = PantauConstants.FILTER_ORANG_UNVERIFIED
+            getString(R.string.filter_unverified_label) -> searchOrangFilter = PantauConstants.FILTER_ORANG_UNVERIFIED
+            getString(R.string.filter_verified_label) -> searchOrangFilter = PantauConstants.FILTER_ORANG_VERIFIED
         }
     }
 
     override fun setFilter(searchOrangFilter: String) {
         when (searchOrangFilter) {
             PantauConstants.FILTER_ORANG_ALL -> filter_all.isChecked = true
-            PantauConstants.FILTER_ORANG_VERIFIED -> filter_unverified.isChecked = true
-            PantauConstants.FILTER_ORANG_UNVERIFIED -> filter_verified.isChecked = true
+            PantauConstants.FILTER_ORANG_UNVERIFIED -> filter_unverified.isChecked = true
+            PantauConstants.FILTER_ORANG_VERIFIED -> filter_verified.isChecked = true
         }
     }
 

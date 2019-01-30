@@ -249,6 +249,6 @@
     <string name="onboarding_5_title">Festivity Over Apathy</string>
     <string name="onboarding_5_desc">Rekapitulasi partisipatif real-time dan transparan.</string>
     <string name="onboarding_5_file_name">lottie_onboarding_5_perhitungan.json</string>
-    <string name="share_wording_kecenderungan">Hmm.. Ternyata begini kecenderunganku \uD83D\uDC40 %s</string>
+    <string name="share_wording_kecenderungan">Hmm.. Ternyata begini kecenderunganku \uD83D\uDC40 #PantauBersama %s</string>
     <string name="lapor_label">Lapor</string>
 </resources>

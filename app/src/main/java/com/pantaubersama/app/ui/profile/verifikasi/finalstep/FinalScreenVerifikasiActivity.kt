@@ -17,7 +17,7 @@ class FinalScreenVerifikasiActivity : CommonActivity() {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        selfie_with_id_card_animation.enableLottie(true)
+        selfie_with_id_card_animation.enableLottie(true, looping = false)
         finish_button.setOnClickListener {
             finish()
         }
