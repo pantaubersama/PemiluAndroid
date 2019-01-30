@@ -52,4 +52,52 @@ class FilterTanyaKandidatPresenter @Inject constructor(private val tanyaKandidat
                 )
         )
     }
+
+    fun loadTanyaKandidatUserFilterSearch() {
+        disposables.add(
+            tanyaKandidatInteractor
+                .loadTanyaKandidatUserFilterSearch()
+                .subscribe(
+                    {
+                        view?.setUserFilter(it)
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedLoadUserfilter()
+                    }
+                )
+        )
+    }
+
+    fun loadTanyaKandidatOrderFilterSearch() {
+        disposables.add(
+            tanyaKandidatInteractor
+                .loadTanyaKandidatOrderFilterSearch()
+                .subscribe(
+                    {
+                        view?.setOrderFilter(it)
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedLoadOrderfilter()
+                    }
+                )
+        )
+    }
+
+    fun saveTanyaKandidatFilterSaerch(userFilter: String?, orderFilter: String?) {
+        disposables.add(
+            tanyaKandidatInteractor.saveTanyaKandidatFilterSearch(userFilter, orderFilter)
+                .subscribe(
+                    {
+                        view?.onSuccessSaveFilter()
+                        view?.showSuccessSaveFilterAlert()
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedSaveFilterAlert()
+                    }
+                )
+        )
+    }
 }

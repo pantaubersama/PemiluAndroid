@@ -51,7 +51,8 @@ class PantauConstants {
 
         object Filter {
             const val FILTER_TANYA_KANDIDAT_REQUEST_CODE = 22
-            val FILTER_ORDER_DIRECTION = "filter_order_direction"
+            const val FILTER_ORDER_DIRECTION = "filter_order_direction"
+            const val IS_FROM_SEARCH = "is_from_search"
 
             object ByVotes {
                 const val LATEST = "created_at"
