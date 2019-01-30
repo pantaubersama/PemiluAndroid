@@ -11,7 +11,6 @@ import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.linimasa.LinimasaFragment
 import com.pantaubersama.app.ui.login.LoginActivity
-import com.pantaubersama.app.ui.menjaga.MenjagaFragment
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
