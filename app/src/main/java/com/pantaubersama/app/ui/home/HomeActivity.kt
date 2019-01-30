@@ -11,7 +11,6 @@ import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.linimasa.LinimasaFragment
 import com.pantaubersama.app.ui.login.LoginActivity
-import com.pantaubersama.app.ui.menjaga.MenjagaFragment
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
@@ -55,7 +54,8 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
                 R.id.navigation_menyerap -> LinimasaFragment() to LinimasaFragment.TAG
                 R.id.navigation_menggali -> PenPolFragment.newInstance() to PenPolFragment.TAG
                 R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
-                R.id.navigation_menjaga -> MenjagaFragment.newInstance() to MenjagaFragment.TAG
+                R.id.navigation_menjaga -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
+//                R.id.navigation_menjaga -> MenjagaFragment.newInstance() to MenjagaFragment.TAG   // di hide dulu, production belum ada api nya @edityo 30/01/19
                 R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
                 else -> throw IllegalStateException("unknown menu")
             }
