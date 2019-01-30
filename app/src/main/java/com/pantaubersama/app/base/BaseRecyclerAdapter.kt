@@ -109,7 +109,9 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
     fun setLoaded() {
         if (isLoadingMore) {
             isLoadingMore = false
-            if (data[itemCount - 1] is LoadingModel) deleteItem(itemCount - 1)
+            if (itemCount > 0) {
+                if (data[itemCount - 1] is LoadingModel) deleteItem(itemCount - 1)
+            }
         }
     }
 
