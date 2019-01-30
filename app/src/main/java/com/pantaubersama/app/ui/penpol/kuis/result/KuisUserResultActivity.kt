@@ -138,7 +138,7 @@ class KuisUserResultActivity : BaseActivity<KuisUserResultPresenter>(), KuisUser
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
         dismissProgressDialog()
-        ShareUtil.shareImage(this, "Hmm.. Ternyata begini kecenderunganku \uD83D\uDC40 %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + userId), imageFile)
+        ShareUtil.shareImage(this, "Hmm.. Ternyata begini kecenderunganku \uD83D\uDC40 #PantauBersama %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + userId), imageFile)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -50,6 +50,7 @@
             android:textColor="@color/gray_dark_2"
             tools:text="Linimasa konten kampanye resmi tanpa sampah Informasi."
             android:layout_marginTop="12dp"
+            android:textAlignment="center"
             android:gravity="center"/>
     </LinearLayout>
 
