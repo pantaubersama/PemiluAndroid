@@ -16,6 +16,7 @@ import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.model.user.VerificationStep
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.clusterdetail.ClusterDetailActivity
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.profile.cluster.invite.UndangAnggotaActivity
 import com.pantaubersama.app.ui.profile.cluster.requestcluster.RequestClusterActivity
@@ -88,6 +89,9 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     private fun parseCluster(cluster: ClusterItem) {
         layout_cluster.visibility = View.VISIBLE
+        layout_cluster.setOnClickListener {
+            cluster.id?.let { it1 -> ClusterDetailActivity.start(this@ProfileActivity, it1) }
+        }
         tv_request_cluster.visibility = View.GONE
         cluster_image.loadUrl(cluster.image?.thumbnail?.url)
         cluster_name.text = cluster.name
