@@ -132,7 +132,7 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
         dismissProgressDialog()
         ShareUtil.shareImage(
             this,
-            "Kamu sudah ikut? Aku sudah dapat hasilnya \uD83D\uDE0E %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_HASIL_KUIS_PATH + quizParticipationId), imageFile)
+            "Kamu sudah ikut? Aku sudah dapat hasilnya \uD83D\uDE0E #PantauBersama %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_HASIL_KUIS_PATH + quizParticipationId), imageFile)
     }
 
     override fun onBackPressed() {

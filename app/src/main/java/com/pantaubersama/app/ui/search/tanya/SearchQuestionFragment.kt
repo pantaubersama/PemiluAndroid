@@ -79,6 +79,7 @@ class SearchQuestionFragment : BaseFragment<SearchQuestionPresenter>(), Updateab
         }
         tv_filter.setOnClickListener {
             val intent = Intent(requireContext(), FilterTanyaKandidatActivity::class.java)
+            intent.putExtra(PantauConstants.TanyaKandidat.Filter.IS_FROM_SEARCH, true)
             startActivityForResult(intent, PantauConstants.TanyaKandidat.Filter.FILTER_TANYA_KANDIDAT_REQUEST_CODE)
         }
     }

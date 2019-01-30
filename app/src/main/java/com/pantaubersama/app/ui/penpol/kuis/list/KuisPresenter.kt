@@ -48,6 +48,7 @@ class KuisPresenter @Inject constructor(
         )
             .doOnEvent { _, _ ->
                 view?.dismissLoading()
+                view?.dismissLoadingMore()
                 isRunning = false
             }
             .subscribe({ (banner, kuisResult, kuisList) ->
