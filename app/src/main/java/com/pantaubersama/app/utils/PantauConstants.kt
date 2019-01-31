@@ -249,5 +249,15 @@ class PantauConstants {
         const val NOTIFICATION_CHANNEL_ID_BROADCAST = "1"
         const val NOTIFICATION_CHANNEL_NAME_BROADCAST = "Broadcast"
         const val NOTIFICATION_CHANNEL_DESC_BROADCAST = "Broadcast"
+
+        const val NOTIFICATION_TOPIC_BROADCAST = "android-broadcasts-activity"
+        const val NOTIFICATION_TOPIC_JANPOL = "android-janji_politik-report"
+        const val NOTIFICATION_TOPIC_FEED = "android-feed-report"
+        const val NOTIFICATION_TOPIC_QUIZ = "android-quiz-created_quiz"
+        const val NOTIFICATION_TYPE = "notif_type"
+        const val NOTIFICATION_TYPE_BROADCAST = "broadcasts"
+        const val NOTIFICATION_TYPE_JANPOL = "janji_politik"
+        const val NOTIFICATION_TYPE_FEED = "feed"
+        const val NOTIFICATION_TYPE_QUIZ = "quiz"
     }
 }

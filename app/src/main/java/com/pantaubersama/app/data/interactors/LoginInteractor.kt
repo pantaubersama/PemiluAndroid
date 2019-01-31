@@ -64,7 +64,7 @@ class LoginInteractor @Inject constructor(
         return TwitterCore.getInstance().apiClient.accountService
     }
 
-    fun disconnectSocielMedia(accountType: String): Completable {
+    fun disconnectSocialMedia(accountType: String): Completable {
         return apiWrapper
             .getPantauOAuthApi()
             .disconnectSocialMedia(accountType)
@@ -72,7 +72,7 @@ class LoginInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
-    fun isForceUpdateAvalable(): Single<AppVersion> {
+    fun isForceUpdateAvailable(): Single<AppVersion> {
         return apiWrapper.getPantauApi().getLatestAppVersion()
             .subscribeOn(rxSchedulers.io())
             .map { it.data.appVersion }

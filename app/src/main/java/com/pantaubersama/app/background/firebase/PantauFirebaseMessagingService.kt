@@ -21,12 +21,17 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.di.module.ServiceModule
 import javax.inject.Inject
 import androidx.core.content.ContextCompat
+import com.orhanobut.logger.Logger
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
+import com.pantaubersama.app.data.model.notification.PemiluBroadcast
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_DESC_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_NAME_BROADCAST
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_BROADCAST
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.Calendar
 
@@ -45,73 +50,29 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
-        val mBuilder = NotificationCompat.Builder(this, remoteMessage?.messageId.toString())
-//            .setSmallIcon(R.drawable.ic_notification_icon)
-            .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setLargeIcon(BitmapFactory.decodeResource(applicationContext.resources, R.drawable.ic_notification_icon))
-            .setContentTitle(remoteMessage?.notification?.title)
-            .setContentText(remoteMessage?.notification?.body)
-            .setWhen(Calendar.getInstance().timeInMillis)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(remoteMessage?.notification?.body))
-            .setAutoCancel(true)
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            mBuilder.color = resources.getColor(R.color.colorPrimary)
-//        }
-//        with(NotificationManagerCompat.from(this)) {
-//            notify(NotificationID.id, mBuilder.build())
-//            Timber.d("edityo notif NotificationManagerCompat.notify")
-//        }
-//        val title = remoteMessage?.notification?.title
-//        val message = remoteMessage?.notification?.body
-        val title = remoteMessage?.data?.getValue("title")
-        val message = remoteMessage?.data?.getValue("body")
-        createNotif(Intent(this, HomeActivity::class.java), title, message)
-//        notif()
-        Timber.d("edityo notif remoteMessage : $remoteMessage")
-        Timber.d("edityo notif data : ${remoteMessage?.data}")
-    }
+        var intent: Intent? = null
+        var title: String? = null
+        var message: String? = null
+        var largeIcon: String? = null
 
-    private fun notif() {
-        val mBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_NAME_BROADCAST)
+        var notifType = ""
+        val payload = JSONObject(remoteMessage?.data?.get("payload"))
+        payload.optString(NOTIFICATION_TYPE)?.let { notifType = it }
 
-        val bigText = NotificationCompat.BigTextStyle()
-        bigText.bigText("OYYYY")
-        bigText.setBigContentTitle("Today's Bible Verse")
-        bigText.setSummaryText("Text in detail")
-
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.androidauthority.com/"))
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-        mBuilder.setContentIntent(pendingIntent)
-        mBuilder.setSmallIcon(R.mipmap.ic_launcher_round)
-        mBuilder.setContentTitle("My notification")
-        mBuilder.setContentText("Hello World!")
-        mBuilder.setStyle(bigText)
-
-        val mNotificationManager =  getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(
-                NOTIFICATION_CHANNEL_ID_BROADCAST,
-                NOTIFICATION_CHANNEL_NAME_BROADCAST,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            notificationChannel.description = NOTIFICATION_CHANNEL_DESC_BROADCAST
-            mNotificationManager.createNotificationChannel(notificationChannel)
-            mBuilder.setChannelId(NOTIFICATION_CHANNEL_ID_BROADCAST)
-            Timber.d("edityo notif channel added")
+        when (notifType) {
+            NOTIFICATION_TYPE_BROADCAST -> {
+//                var pemiluBroadcast = ge
+            }
         }
-
-        mNotificationManager.notify(0, mBuilder.build())
-
-        Timber.d("edityo notif notify notif created()")
-
+//        val title = remoteMessage?.data?.getValue("title")
+//        val message = remoteMessage?.data?.getValue("body")
+//        createNotif(Intent(this, HomeActivity::class.java), title, message)
     }
 
     private fun createNotif(intent: Intent, title: String?, message: String?, largeIcon: Bitmap? = null) {
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_NAME_BROADCAST)
-//            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setSmallIcon(R.drawable.ic_notification_icon)
             .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
             .setContentTitle(title)
             .setContentInfo(BuildConfig.APPLICATION_ID)
@@ -123,20 +84,13 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setDefaults(Notification.DEFAULT_ALL)
 
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            notificationBuilder.setSmallIcon(R.drawable.ic_logo_notification_transparent_in)
-        } else {
-            notificationBuilder.setSmallIcon(R.drawable.ic_notification_icon)
-        }
-
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
                 NOTIFICATION_CHANNEL_ID_BROADCAST,
                 NOTIFICATION_CHANNEL_NAME_BROADCAST,
-                NotificationManager.IMPORTANCE_MAX
+                NotificationManager.IMPORTANCE_DEFAULT
                 )
             notificationChannel.description = NOTIFICATION_CHANNEL_DESC_BROADCAST
             notificationChannel.enableVibration(true)
@@ -148,9 +102,7 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
             notificationChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), audioAttributes)
             notificationManager.createNotificationChannel(notificationChannel)
             notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_ID_BROADCAST)
-            Timber.d("edityo notif channel added")
         }
         notificationManager.notify(NotificationID.id, notificationBuilder.build())
-        Timber.d("edityo notif notif created()")
     }
 }

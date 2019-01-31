@@ -121,6 +121,7 @@ dependencies {
     implementation twitter_sdk
     implementation archComponentLibs
     implementation dots_indicator
+    implementation "com.orhanobut:logger:2.2.0"
     kapt daggerCompiler
     testImplementation unitTestLibs
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
