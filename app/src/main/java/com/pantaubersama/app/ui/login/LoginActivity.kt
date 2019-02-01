@@ -125,33 +125,32 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
         FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_BROADCAST)
             .addOnCompleteListener {
                 if (!it.isSuccessful) {
-                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_BROADCAST – ${it.exception.toString()}"
+                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_BROADCAST – ${it.exception}"
                     Timber.e(msg)
                 }
             }
         FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_FEED)
             .addOnCompleteListener {
                 if (!it.isSuccessful) {
-                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_FEED – ${it.exception.toString()}"
+                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_FEED – ${it.exception}"
                     Timber.e(msg)
                 }
             }
         FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_JANPOL)
             .addOnCompleteListener {
                 if (!it.isSuccessful) {
-                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_JANPOL – ${it.exception.toString()}"
+                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_JANPOL – ${it.exception}"
                     Timber.e(msg)
                 }
             }
         FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_QUIZ)
             .addOnCompleteListener {
                 if (!it.isSuccessful) {
-                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_QUIZ – ${it.exception.toString()}"
+                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_QUIZ – ${it.exception}"
                     Timber.e(msg)
                 }
             }
     }
-
 
     private fun openEditProfileActivity() {
         val intent = Intent(this@LoginActivity, EditProfileActivity::class.java)

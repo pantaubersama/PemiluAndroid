@@ -18,9 +18,6 @@ import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterConfig
 import io.fabric.sdk.android.Fabric
 import timber.log.Timber
-import com.orhanobut.logger.DiskLogAdapter
-
-
 
 /**
  * @author edityomurti on 14/12/2018 14:55

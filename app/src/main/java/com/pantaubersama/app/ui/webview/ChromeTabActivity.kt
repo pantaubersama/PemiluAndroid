@@ -8,7 +8,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_BROADCAST_URL
-import timber.log.Timber
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_CHROME_TAB
 
 class ChromeTabActivity : CommonActivity() {
     private var url: String? = null
@@ -32,28 +32,33 @@ class ChromeTabActivity : CommonActivity() {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        Timber.d("ChromeTabActivity setupUI")
         url?.let { launchCustomTabs() }
     }
 
     private fun launchCustomTabs() {
         isCustomTabsOpened = true
-        ChromeTabUtil(this).forceLoadUrl(url)
+//        ChromeTabUtil(this).forceLoadUrl(url)
+        url?.let { startActivityForResult(ChromeTabUtil(this).getIntent(it), RC_OPEN_CHROME_TAB) }
     }
 
-    override fun onResume() {
-        super.onResume()
-        Timber.d("ChromeTabActivity onResume")
-        if (isCustomTabsOpened) {
-            Timber.d("ChromeTabActivity onResume isCustomTabsOpened")
+//    override fun onResume() {
+//        super.onResume()
+//        Timber.d("ChromeTabActivity onResume")
+//        if (isCustomTabsOpened) {
+//            Timber.d("ChromeTabActivity onResume isCustomTabsOpened")
+//            onBackPressed()
+//        }
+//    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_OPEN_CHROME_TAB) {
             onBackPressed()
         }
     }
 
     override fun onBackPressed() {
-        Timber.d("ChromeTabActivity onBackPressed")
         if (isTaskRoot) {
-            Timber.d("ChromeTabActivity isTaskRoot")
             val intent = Intent(this@ChromeTabActivity, HomeActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)

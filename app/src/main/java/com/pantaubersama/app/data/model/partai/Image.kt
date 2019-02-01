@@ -14,4 +14,4 @@ data class Image(
     var thumbnailSquare: ThumbnailSquare?,
     @SerializedName("url")
     var url: String?
-): Serializable
+) : Serializable

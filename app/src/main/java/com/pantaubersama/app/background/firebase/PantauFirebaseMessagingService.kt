@@ -7,14 +7,10 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.RingtoneManager
-import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.pantaubersama.app.base.BaseApp
@@ -27,7 +23,6 @@ import com.orhanobut.logger.Logger
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.notification.PemiluBroadcast
-import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.webview.ChromeTabActivity
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_DESC_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_BROADCAST
@@ -35,8 +30,6 @@ import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHA
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_BROADCAST
 import org.json.JSONObject
-import timber.log.Timber
-import java.util.Calendar
 
 class PantauFirebaseMessagingService : FirebaseMessagingService() {
     @Inject
