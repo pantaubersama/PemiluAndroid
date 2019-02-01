@@ -139,7 +139,7 @@ class PantauConstants {
         const val URL_PANTAU_BERSAMA_INSTAGRAM = "https://www.instagram.com/pantaubersama/"
         const val URL_PANTAU_BERSAMA_FACEBOOK = "https://www.facebook.com/pages/category/Internet-Company/Pantau-Bersama-735930099884846/"
 
-        const val INVITATION_PATH = "invitation?"
+        const val INVITATION_PATH = "invitation/accept?"
         const val ACCEPT_CLUSTER_INVITATION_PATH = "invitation/accept_existing"
         const val CLUSTER_INVITATION_BY_LINK_PATH = "/cluster?="
     }
