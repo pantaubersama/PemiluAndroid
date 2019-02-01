@@ -18,6 +18,7 @@ class ChromeTabUtil(private val context: Context) {
     init {
         builder = CustomTabsIntent.Builder()
         builder?.setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+        builder?.setShowTitle(true)
         customTabsIntent = builder?.build()
     }
     fun loadUrl(url: String?) {

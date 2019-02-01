@@ -11,10 +11,12 @@ data class Notificatioon(
 
 data class PemiluBroadcast(
     @SerializedName("id") val id: String = "",
+    @SerializedName("title") val title: String = "",
     @SerializedName("description") val description: String = "",
-    @SerializedName("notif_type") val notifType: String = "",
     @SerializedName("event_type") val eventType: String = "",
     @SerializedName("link") val link: String = "pantaubersama.com"
 ) {
-    val TAG = "pemilu_broadcast"
+    companion object {
+        val TAG = "pemilu_broadcast"
+    }
 }

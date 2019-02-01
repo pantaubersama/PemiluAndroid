@@ -21,11 +21,14 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.di.module.ServiceModule
 import javax.inject.Inject
 import androidx.core.content.ContextCompat
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.notification.PemiluBroadcast
 import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.ui.webview.ChromeTabActivity
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_DESC_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_NAME_BROADCAST
@@ -50,10 +53,13 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
+        val gson: Gson = GsonBuilder().setFieldNamingPolicy(com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
         var intent: Intent? = null
         var title: String? = null
         var message: String? = null
         var largeIcon: String? = null
+
+        Logger.json(remoteMessage?.data.toString())
 
         var notifType = ""
         val payload = JSONObject(remoteMessage?.data?.get("payload"))
@@ -61,12 +67,16 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
 
         when (notifType) {
             NOTIFICATION_TYPE_BROADCAST -> {
-//                var pemiluBroadcast = ge
+                Logger.d(payload)
+                val pemiluBroadcast = gson.fromJson(payload.getJSONObject(PemiluBroadcast.TAG).toString(), PemiluBroadcast::class.java)
+                Logger.d(pemiluBroadcast)
+                title = pemiluBroadcast.title
+                message = pemiluBroadcast.description
+                val broadcastUrl = pemiluBroadcast.link
+                intent = ChromeTabActivity.setIntent(this, broadcastUrl)
+                createNotif(intent, title, message)
             }
         }
-//        val title = remoteMessage?.data?.getValue("title")
-//        val message = remoteMessage?.data?.getValue("body")
-//        createNotif(Intent(this, HomeActivity::class.java), title, message)
     }
 
     private fun createNotif(intent: Intent, title: String?, message: String?, largeIcon: Bitmap? = null) {

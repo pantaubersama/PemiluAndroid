@@ -3,9 +3,7 @@ package com.pantaubersama.app.ui.home
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.crashlytics.android.Crashlytics
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.messaging.FirebaseMessaging
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
@@ -20,13 +18,8 @@ import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.quickcount.QuickCountFragment
 import com.pantaubersama.app.ui.search.SearchActivity
 import com.pantaubersama.app.ui.wordstadium.WordStadiumFragment
-import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TOPIC_BROADCAST
-import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TOPIC_FEED
-import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TOPIC_JANPOL
-import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TOPIC_QUIZ
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_home.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
@@ -34,9 +27,8 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     @Inject
     override lateinit var presenter: HomePresenter
 
-    override fun statusBarColor(): Int {
-        return R.color.white
-    }
+    override fun statusBarColor(): Int = R.color.white
+    override fun setLayout(): Int = R.layout.activity_home
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -73,7 +65,6 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         presenter.updateUser()
-        subscribeFCM()
     }
 
     private fun showFragment(fragment: Fragment, tag: String) = with(supportFragmentManager) {
@@ -93,10 +84,6 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         transaction.setPrimaryNavigationFragment(nextFragment)
         transaction.setReorderingAllowed(true)
         transaction.commit()
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.activity_home
     }
 
     override fun onResume() {
@@ -125,37 +112,6 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     private fun openLoginActivity() {
         val intent = Intent(this@HomeActivity, LoginActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun subscribeFCM() {
-        FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_BROADCAST)
-            .addOnCompleteListener {
-                if (!it.isSuccessful) {
-                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_BROADCAST – ${it.exception.toString()}"
-                    Timber.e(msg)
-                }
-            }
-        FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_FEED)
-            .addOnCompleteListener {
-                if (!it.isSuccessful) {
-                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_FEED – ${it.exception.toString()}"
-                    Timber.e(msg)
-                }
-            }
-        FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_JANPOL)
-            .addOnCompleteListener {
-                if (!it.isSuccessful) {
-                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_JANPOL – ${it.exception.toString()}"
-                    Timber.e(msg)
-                }
-            }
-        FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_QUIZ)
-            .addOnCompleteListener {
-                if (!it.isSuccessful) {
-                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_QUIZ – ${it.exception.toString()}"
-                    Timber.e(msg)
-                }
-            }
     }
 
     override fun showLoading() {

@@ -19,6 +19,10 @@ import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Companion.CONFIRMATION_PATH
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TOPIC_BROADCAST
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TOPIC_FEED
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TOPIC_JANPOL
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TOPIC_QUIZ
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import timber.log.Timber
@@ -106,14 +110,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     }
 
     override fun onSuccessGetProfile(it: Profile?) {
-        FirebaseMessaging.getInstance().subscribeToTopic("broadcasts-activity")
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Timber.d("Subscribing to broadcast channel")
-                } else {
-                    Timber.d("Failed to subscribe to broadcast channel")
-                }
-            }
+        subscribeFCM()
         if (it?.username != null &&
             it.education != null &&
             it.location != null &&
@@ -123,6 +120,38 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
             openEditProfileActivity()
         }
     }
+
+    private fun subscribeFCM() {
+        FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_BROADCAST)
+            .addOnCompleteListener {
+                if (!it.isSuccessful) {
+                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_BROADCAST – ${it.exception.toString()}"
+                    Timber.e(msg)
+                }
+            }
+        FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_FEED)
+            .addOnCompleteListener {
+                if (!it.isSuccessful) {
+                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_FEED – ${it.exception.toString()}"
+                    Timber.e(msg)
+                }
+            }
+        FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_JANPOL)
+            .addOnCompleteListener {
+                if (!it.isSuccessful) {
+                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_JANPOL – ${it.exception.toString()}"
+                    Timber.e(msg)
+                }
+            }
+        FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_QUIZ)
+            .addOnCompleteListener {
+                if (!it.isSuccessful) {
+                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_QUIZ – ${it.exception.toString()}"
+                    Timber.e(msg)
+                }
+            }
+    }
+
 
     private fun openEditProfileActivity() {
         val intent = Intent(this@LoginActivity, EditProfileActivity::class.java)

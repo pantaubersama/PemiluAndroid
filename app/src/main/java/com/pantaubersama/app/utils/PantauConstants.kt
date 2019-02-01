@@ -88,6 +88,7 @@ class PantauConstants {
         const val EXTRA_IS_MODERATOR = "EXTRA_IS_MODERATOR"
         const val EXTRA_IMAGE_PATH = "EXTRA_IMAGE_PATH"
         const val EXTRA_IMAGE_URL = "EXTRA_IMAGE_URL"
+        const val EXTRA_BROADCAST_URL = "EXTRA_BROADCAST_URL"
     }
 
     object RequestCode {
