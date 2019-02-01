@@ -21,6 +21,7 @@ class Step0VerifikasiActivity : BaseActivity<Step0VerifikasiPresenter>(), Step0V
     @Inject
     override lateinit var presenter: Step0VerifikasiPresenter
 
+    private val pattern = Pattern.compile(PantauConstants.Regex.KTP)
     private var isInputValid = false
 
     override fun statusBarColor(): Int? {
@@ -31,33 +32,24 @@ class Step0VerifikasiActivity : BaseActivity<Step0VerifikasiPresenter>(), Step0V
         activityComponent.inject(this)
     }
 
-    override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
-    }
+    override fun fetchIntentExtra() {}
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "", R.color.white, 4f)
         verification_step_indicator.text = "0/3"
 
-        ktp_number.error = "Harus diisi"
         ktp_number.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
+            override fun afterTextChanged(p0: Editable?) {}
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(query: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val pattern = Pattern.compile(PantauConstants.Regex.KTP)
                 val matcher = pattern.matcher(query)
-                if (matcher.matches()) {
-                    isInputValid = true
-                    ktp_number.setCompoundDrawables(null, null, getDrawable(R.drawable.check_icon), null)
-                } else {
-                    isInputValid = false
-                    ktp_number.error = "Format nomor KTP tidak valid"
+                isInputValid = matcher.matches()
+
+                val icon = if (isInputValid) getDrawable(R.drawable.check_icon_green) else null
+                ktp_number.setCompoundDrawablesWithIntrinsicBounds(null, null, icon, null)
+                ktp_number_layout.error = if (!isInputValid) "Format nomor KTP tidak valid" else null
+                if (!isInputValid) {
+                    scroll_view.smoothScrollTo(0, ktp_number_layout.bottom)
                 }
             }
         })
