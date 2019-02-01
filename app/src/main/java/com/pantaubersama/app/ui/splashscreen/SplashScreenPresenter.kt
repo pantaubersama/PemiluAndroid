@@ -9,7 +9,7 @@ class SplashScreenPresenter @Inject constructor(private val loginInteractor: Log
     fun checkAppVersion(currentVersionCode: Int) {
         view?.showLoading()
         disposables.add(
-            loginInteractor.isForceUpdateAvalable()
+            loginInteractor.isForceUpdateAvailable()
                 .timeout(5000, TimeUnit.MILLISECONDS)
                 .doOnEvent { _, _ -> view?.dismissLoading() }
                 .subscribe(

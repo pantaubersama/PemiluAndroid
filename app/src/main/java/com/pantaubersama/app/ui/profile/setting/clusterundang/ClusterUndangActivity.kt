@@ -45,7 +45,7 @@ class ClusterUndangActivity : BaseActivity<ClusterUndangPresenter>(), ClusterUnd
             if (cluster_undang_email.text.isNotEmpty()) {
                 val pattern = Patterns.EMAIL_ADDRESS
                 val matcher = pattern.matcher(cluster_undang_email.text)
-                if (matcher.matches()) {
+                if (matcher.matches() || cluster_undang_email.text.contains(",")) {
                     presenter.invite(cluster_undang_email.text.toString(), clusterId)
                 } else {
                     cluster_undang_email.error = "Email tidak valid"

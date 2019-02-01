@@ -27,7 +27,6 @@ import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.clusterundang.ClusterUndangActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
-import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -302,12 +301,12 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             startActivityForResult(intent, EDIT_PROFILE)
         }
         setting_ubah_sandi.setOnClickListener {
-            SymbolicLoginButton.loadPage(this, BuildConfig.SYMBOLIC_URL + "/users/edit", BuildConfig.SYMBOLIC_URL + "/")
+            SymbolicLoginButton.loadPage(this, BuildConfig.SYMBOLIC_URL + "/users/edit")
         }
-        setting_ubah_data_lapor.setOnClickListener {
-            val intent = Intent(this@SettingActivity, UbahDataLaporActivity::class.java)
-            startActivityForResult(intent, UBAH_DATA_LAPOR)
-        }
+//        setting_ubah_data_lapor.setOnClickListener {
+//            val intent = Intent(this@SettingActivity, UbahDataLaporActivity::class.java)
+//            startActivityForResult(intent, UBAH_DATA_LAPOR)
+//        }
         setting_badge.setOnClickListener {
             val intent = Intent(this@SettingActivity, BadgeActivity::class.java)
             startActivityForResult(intent, BADGE)

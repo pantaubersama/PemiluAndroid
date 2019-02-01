@@ -61,12 +61,16 @@ class ImageChooserTools {
         private fun openCamera(context: Context): File {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             val cacheDir = context.cacheDir
-            val imageFile = File(cacheDir, "image/" + System.currentTimeMillis().toString() + ".jpg")
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", imageFile))
+            var file = File(cacheDir.absolutePath + "/image/")
+            if (!file.isDirectory) {
+                file.mkdir()
+            }
+            file = File(cacheDir, "image/" + System.currentTimeMillis().toString() + ".jpg")
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", file))
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
             (context as FragmentActivity).startActivityForResult(intent, RC_CAMERA)
-            return imageFile
+            return file
         }
 
         private fun openGallery(context: Context) {

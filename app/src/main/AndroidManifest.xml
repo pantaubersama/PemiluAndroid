@@ -24,9 +24,14 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.menjaga.filter.LaporFilterActivity"></activity>
-        <activity android:name=".utils.download.DownloadActivity" />
-        <activity android:name=".ui.clusterdetail.ClusterDetailActivity" />
+        <activity android:name=".ui.webview.ChromeTabActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.menjaga.filter.LaporFilterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".utils.download.DownloadActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.clusterdetail.ClusterDetailActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".background.firebase.PantauFirebaseMessagingService">
             <intent-filter>

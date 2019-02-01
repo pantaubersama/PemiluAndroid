@@ -72,7 +72,7 @@ class ConnectPresenter @Inject constructor(private val loginInteractor: LoginInt
     fun disconnectSocialMedia(accountType: String) {
         view?.showLoading()
         disposables.add(
-            loginInteractor.disconnectSocielMedia(accountType)
+            loginInteractor.disconnectSocialMedia(accountType)
                 .subscribe(
                     {
                         view?.dismissLoading()

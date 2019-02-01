@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.home
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.extrainteger.symbolic.ui.SymbolicLoginButton
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -14,9 +15,8 @@ import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
-import com.pantaubersama.app.ui.quickcount.QuickCountFragment
 import com.pantaubersama.app.ui.search.SearchActivity
-import com.pantaubersama.app.ui.wordstadium.WordStadiumFragment
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
@@ -25,9 +25,13 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
     @Inject
     override lateinit var presenter: HomePresenter
+    private var url: String? = null
 
-    override fun statusBarColor(): Int {
-        return R.color.white
+    override fun statusBarColor(): Int = R.color.white
+    override fun setLayout(): Int = R.layout.activity_home
+
+    override fun fetchIntentExtra() {
+        url = intent.getStringExtra(PantauConstants.URL)
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -53,10 +57,10 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
             val (fragment, tag) = when (item.itemId) {
                 R.id.navigation_menyerap -> LinimasaFragment() to LinimasaFragment.TAG
                 R.id.navigation_menggali -> PenPolFragment.newInstance() to PenPolFragment.TAG
-                R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
-                R.id.navigation_menjaga -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
+//                R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
+//                R.id.navigation_menjaga -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
 //                R.id.navigation_menjaga -> MenjagaFragment.newInstance() to MenjagaFragment.TAG   // di hide dulu, production belum ada api nya @edityo 30/01/19
-                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
+//                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
                 else -> throw IllegalStateException("unknown menu")
             }
             showFragment(fragment, tag)
@@ -66,6 +70,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         presenter.updateUser()
+        url?.let { SymbolicLoginButton.loadPage(this@HomeActivity, it) }
     }
 
     private fun showFragment(fragment: Fragment, tag: String) = with(supportFragmentManager) {
@@ -85,10 +90,6 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         transaction.setPrimaryNavigationFragment(nextFragment)
         transaction.setReorderingAllowed(true)
         transaction.commit()
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.activity_home
     }
 
     override fun onResume() {

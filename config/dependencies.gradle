@@ -40,7 +40,7 @@ ext {
             daggerCompiler          : "2.19",
 
             roundedImageView        : "2.3.0",
-            symbolic                : "0.3.2",
+            symbolic                : "0.3.3",
             mockito                 : "2.18.3",
             flexbox                 : "1.1.0",
             lottie                  : "2.8.0",
@@ -114,6 +114,7 @@ ext {
     multidex = "com.android.support:multidex:$versions.multidexVersion"
     easyPermission = "pub.devrel:easypermissions:$versions.easyPermission"
     timber = "com.jakewharton.timber:timber:$versions.timber"
+
     glide = "com.github.bumptech.glide:glide:$versions.glide"
     glideCompiler = "com.github.bumptech.glide:compiler:$versions.glideCompiler"
 

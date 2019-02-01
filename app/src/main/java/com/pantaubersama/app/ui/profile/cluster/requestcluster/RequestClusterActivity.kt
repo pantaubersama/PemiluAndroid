@@ -187,6 +187,6 @@ class RequestClusterActivity : BaseActivity<RequestClusterPresenter>(), RequestC
     }
 
     override fun showFailedRequestClusterAlert() {
-        ToastUtil.show(this@RequestClusterActivity, getString(R.string.failed_request_cluster_alert))
+//        ToastUtil.show(this@RequestClusterActivity, getString(R.string.failed_request_cluster_alert))
     }
 }
