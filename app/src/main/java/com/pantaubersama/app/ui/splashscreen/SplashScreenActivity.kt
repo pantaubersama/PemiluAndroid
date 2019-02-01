@@ -19,7 +19,6 @@ import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatA
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.widget.UpdateAppDialog
 import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
-import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Companion.CONFIRMATION_PATH
 import com.pantaubersama.app.utils.PantauConstants.Networking.ACCEPT_CLUSTER_INVITATION_PATH
@@ -33,7 +32,6 @@ import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KUIS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_TANYA_PATH
 import com.pantaubersama.app.utils.extensions.enableLottie
 import kotlinx.android.synthetic.main.activity_splash_screen.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreenView {
@@ -94,13 +92,12 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
-            urlPath?.contains(ACCEPT_CLUSTER_INVITATION_PATH)!! && !urlPath?.substringAfter(ACCEPT_CLUSTER_INVITATION_PATH).isNullOrEmpty() -> {
+            urlPath?.contains(ACCEPT_CLUSTER_INVITATION_PATH)!! || urlData?.contains(CLUSTER_INVITATION_BY_LINK_PATH)!! -> {
+                val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
+                intent.putExtra(PantauConstants.URL, urlData)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
                 finish()
-                ChromeTabUtil(this).forceLoadUrl(urlData)
-            }
-            urlData?.contains(CLUSTER_INVITATION_BY_LINK_PATH)!! && !urlPath?.substringAfter(CLUSTER_INVITATION_BY_LINK_PATH).isNullOrEmpty() -> {
-                finish()
-                ChromeTabUtil(this).forceLoadUrl(urlData)
             }
             urlPath?.contains(INVITATION_PATH)!! -> {
                 val intent = Intent(this@SplashScreenActivity, ProfileActivity::class.java)
@@ -116,10 +113,6 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 startActivity(intent)
                 finish()
             }
-//            urlPath?.contains(SHARE_FEEDS_PATH)!! && !urlPath?.substringAfter(SHARE_FEEDS_PATH).isNullOrEmpty() -> {
-//                ChromeTabUtil(this).forceLoadUrl(urlData)
-//                finish()
-//            }
             urlPath?.contains(SHARE_TANYA_PATH)!! && !urlPath?.substringAfter(SHARE_TANYA_PATH).isNullOrEmpty() -> {
                 val questionId = urlPath?.substringAfter(SHARE_TANYA_PATH)
                 val intent = DetailTanyaKandidatActivity.setIntent(this, questionId!!)
@@ -167,7 +160,6 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
 
     override fun goToLogin() {
         val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
-        Timber.d("symbolic_url" + urlData)
         urlData?.let { if (it.contains(INVITATION_PATH) || it.contains(CONFIRMATION_PATH)) intent.putExtra(PantauConstants.URL, it) }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)

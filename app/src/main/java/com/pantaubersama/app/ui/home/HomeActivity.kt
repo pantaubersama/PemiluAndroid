@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.home
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.extrainteger.symbolic.ui.SymbolicLoginButton
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -15,6 +16,7 @@ import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.search.SearchActivity
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
@@ -23,9 +25,14 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
     @Inject
     override lateinit var presenter: HomePresenter
+    private var url: String? = null
 
     override fun statusBarColor(): Int {
         return R.color.white
+    }
+
+    override fun fetchIntentExtra() {
+        url = intent.getStringExtra(PantauConstants.URL)
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -64,6 +71,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         presenter.updateUser()
+        url?.let { SymbolicLoginButton.loadPage(this@HomeActivity, it) }
     }
 
     private fun showFragment(fragment: Fragment, tag: String) = with(supportFragmentManager) {
