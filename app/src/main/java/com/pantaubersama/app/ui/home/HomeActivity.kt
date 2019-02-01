@@ -14,9 +14,7 @@ import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
-import com.pantaubersama.app.ui.quickcount.QuickCountFragment
 import com.pantaubersama.app.ui.search.SearchActivity
-import com.pantaubersama.app.ui.wordstadium.WordStadiumFragment
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
@@ -53,10 +51,10 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
             val (fragment, tag) = when (item.itemId) {
                 R.id.navigation_menyerap -> LinimasaFragment() to LinimasaFragment.TAG
                 R.id.navigation_menggali -> PenPolFragment.newInstance() to PenPolFragment.TAG
-                R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
-                R.id.navigation_menjaga -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
+//                R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
+//                R.id.navigation_menjaga -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
 //                R.id.navigation_menjaga -> MenjagaFragment.newInstance() to MenjagaFragment.TAG   // di hide dulu, production belum ada api nya @edityo 30/01/19
-                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
+//                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
                 else -> throw IllegalStateException("unknown menu")
             }
             showFragment(fragment, tag)

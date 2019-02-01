@@ -51,7 +51,11 @@ class BadgeActivity : BaseActivity<BadgePresenter>(), BadgeView {
         badge_recycler_view.layoutManager = LinearLayoutManager(this)
 
         badge_swipe_refresh.setOnRefreshListener {
-            presenter.refreshBadges()
+            if (userId != null) {
+                userId?.let { presenter.getUserBadges(it) }
+            } else {
+                presenter.refreshBadges()
+            }
             badge_swipe_refresh.isRefreshing = false
         }
     }
