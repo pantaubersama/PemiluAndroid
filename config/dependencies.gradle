@@ -114,6 +114,7 @@ ext {
     multidex = "com.android.support:multidex:$versions.multidexVersion"
     easyPermission = "pub.devrel:easypermissions:$versions.easyPermission"
     timber = "com.jakewharton.timber:timber:$versions.timber"
+
     glide = "com.github.bumptech.glide:glide:$versions.glide"
     glideCompiler = "com.github.bumptech.glide:compiler:$versions.glideCompiler"
 

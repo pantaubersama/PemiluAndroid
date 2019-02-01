@@ -1,6 +1,7 @@
 package com.pantaubersama.app.utils
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
@@ -18,21 +19,11 @@ class ChromeTabUtil(private val context: Context) {
     init {
         builder = CustomTabsIntent.Builder()
         builder?.setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+        builder?.setShowTitle(true)
         customTabsIntent = builder?.build()
     }
     fun loadUrl(url: String?) {
-        if (!url!!.startsWith("http")) {
-            if (url.startsWith("//")) {
-                val trimmedUrl = url.substring(2)
-                val newUrl = "http://$trimmedUrl"
-                customTabsIntent?.launchUrl(context, Uri.parse(StringUtil.pullUrlFromString(newUrl)))
-            } else {
-                val newUrl = "http://$url"
-                customTabsIntent?.launchUrl(context, Uri.parse(StringUtil.pullUrlFromString(newUrl)))
-            }
-        } else {
-            customTabsIntent?.launchUrl(context, Uri.parse(StringUtil.pullUrlFromString(url)))
-        }
+        url?.let { customTabsIntent?.launchUrl(context, Uri.parse(StringUtil.pullUrlFromString(invalidateUrl(it)))) }
     }
 
     fun forceLoadUrl(url: String?) {
@@ -42,6 +33,11 @@ class ChromeTabUtil(private val context: Context) {
         } else {
             loadUrl(url)
         }
+    }
+
+    fun getIntent(url: String): Intent? {
+        customTabsIntent?.intent?.data = Uri.parse(invalidateUrl(url))
+        return customTabsIntent?.intent
     }
 
     private fun isChromeAppInstalled(): Boolean {
@@ -62,5 +58,20 @@ class ChromeTabUtil(private val context: Context) {
             isInstalled = false
         }
         return isInstalled
+    }
+
+    private fun invalidateUrl(url: String): String {
+        return if (!url.startsWith("http")) {
+            if (url.startsWith("//")) {
+                val trimmedUrl = url.substring(2)
+                val newUrl = "http://$trimmedUrl"
+                StringUtil.pullUrlFromString(newUrl)
+            } else {
+                val newUrl = "http://$url"
+                StringUtil.pullUrlFromString(newUrl)
+            }
+        } else {
+            StringUtil.pullUrlFromString(url)
+        }
     }
 }

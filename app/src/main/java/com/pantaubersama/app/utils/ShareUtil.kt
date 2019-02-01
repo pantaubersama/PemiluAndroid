@@ -23,7 +23,6 @@ import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KECENDERUNGAN_PAT
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_KUIS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_TANYA_PATH
 import com.pantaubersama.app.utils.download.DownloadActivity
-import timber.log.Timber
 import java.io.File
 
 /**
@@ -90,8 +89,6 @@ class ShareUtil {
         fun shareImage(context: Context, message: String, imageFile: File) {
 //            val imageUri = Uri.parse(imageFile.absolutePath)
             val imageUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", imageFile)
-            Timber.d("edityo imageFilePath = ${imageFile.absolutePath}")
-            Timber.d("edityo imageUri = $imageUri")
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND
             shareIntent.type = "image/*"

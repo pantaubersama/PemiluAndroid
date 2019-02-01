@@ -89,6 +89,7 @@ class PantauConstants {
         const val EXTRA_IS_MODERATOR = "EXTRA_IS_MODERATOR"
         const val EXTRA_IMAGE_PATH = "EXTRA_IMAGE_PATH"
         const val EXTRA_IMAGE_URL = "EXTRA_IMAGE_URL"
+        const val EXTRA_BROADCAST_URL = "EXTRA_BROADCAST_URL"
     }
 
     object RequestCode {
@@ -110,6 +111,7 @@ class PantauConstants {
         const val RC_OPEN_DETAIL_QUESTION = 1012
         const val RC_FILTER_CLUSTER = 1013
         const val RC_SHARE = 1014
+        const val RC_OPEN_CHROME_TAB = 1015
     }
 
     object ResultCode {
@@ -243,5 +245,21 @@ class PantauConstants {
         const val ONBOARDING_5_TITLE = "Festivity Over Apathy"
         const val ONBOARDING_5_DESC = "Rekapitulasi partisipatif real-time dan transparan."
         const val ONBOARDING_5_FILE_NAME = "lottie_onboarding_5_perhitungan.json"
+    }
+
+    object Notification {
+        const val NOTIFICATION_CHANNEL_ID_BROADCAST = "1"
+        const val NOTIFICATION_CHANNEL_NAME_BROADCAST = "Broadcast"
+        const val NOTIFICATION_CHANNEL_DESC_BROADCAST = "Broadcast"
+
+        const val NOTIFICATION_TOPIC_BROADCAST = "android-broadcasts-activity"
+        const val NOTIFICATION_TOPIC_JANPOL = "android-janji_politik-report"
+        const val NOTIFICATION_TOPIC_FEED = "android-feed-report"
+        const val NOTIFICATION_TOPIC_QUIZ = "android-quiz-created_quiz"
+        const val NOTIFICATION_TYPE = "notif_type"
+        const val NOTIFICATION_TYPE_BROADCAST = "broadcasts"
+        const val NOTIFICATION_TYPE_JANPOL = "janji_politik"
+        const val NOTIFICATION_TYPE_FEED = "feed"
+        const val NOTIFICATION_TYPE_QUIZ = "quiz"
     }
 }

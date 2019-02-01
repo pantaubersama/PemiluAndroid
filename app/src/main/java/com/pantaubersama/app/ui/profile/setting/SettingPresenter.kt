@@ -101,7 +101,7 @@ class SettingPresenter @Inject constructor(
     fun disconnectSocialMedia(accountType: String) {
         view?.showLoading()
         disposables.add(
-            loginInteractor.disconnectSocielMedia(accountType)
+            loginInteractor.disconnectSocialMedia(accountType)
                 .subscribe(
                     {
                         view?.dismissLoading()

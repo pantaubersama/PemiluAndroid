@@ -27,9 +27,8 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     override lateinit var presenter: HomePresenter
     private var url: String? = null
 
-    override fun statusBarColor(): Int {
-        return R.color.white
-    }
+    override fun statusBarColor(): Int = R.color.white
+    override fun setLayout(): Int = R.layout.activity_home
 
     override fun fetchIntentExtra() {
         url = intent.getStringExtra(PantauConstants.URL)
@@ -91,10 +90,6 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         transaction.setPrimaryNavigationFragment(nextFragment)
         transaction.setReorderingAllowed(true)
         transaction.commit()
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.activity_home
     }
 
     override fun onResume() {

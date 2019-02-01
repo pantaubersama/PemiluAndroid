@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.multidex.MultiDexApplication
 import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.di.component.AppComponent
@@ -40,7 +42,12 @@ class BaseApp : MultiDexApplication() {
                 .appModule(AppModule(this))
                 .build()
         if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
+            Logger.addLogAdapter(AndroidLogAdapter())
+            Timber.plant(object : Timber.DebugTree() {
+                override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+                    Logger.log(priority, tag, message, t)
+                }
+            })
             Stetho.initializeWithDefaults(this)
         } else {
             Timber.plant(TimberUtil())
