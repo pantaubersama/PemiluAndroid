@@ -24,8 +24,8 @@ class SettingPresenter @Inject constructor(
                         clientSecret
                 ).subscribe(
                     {
-
                         loginInteractor.clearDataCache()
+                        loginInteractor.setOnboardingComplete()
                         view?.goToLogin()
                     },
                     {
