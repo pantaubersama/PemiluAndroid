@@ -9,6 +9,9 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Filter.USER_VERIFIED_ALL
+import com.pantaubersama.app.utils.PantauConstants.Filter.USER_VERIFIED_FALSE
+import com.pantaubersama.app.utils.PantauConstants.Filter.USER_VERIFIED_TRUE
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_filter_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_button_terapkan_filter.*
@@ -21,13 +24,14 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
 
     private var userFilter: String? = null
     private var orderFilter: String? = null
+    private var isFromSearch = false
 
     override fun statusBarColor(): Int? {
         return 0
     }
 
     override fun fetchIntentExtra() {
-//        TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
+        isFromSearch = intent.getBooleanExtra(PantauConstants.TanyaKandidat.Filter.IS_FROM_SEARCH, isFromSearch)
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -36,11 +40,20 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Filter", R.color.white, 4f)
-        presenter.loadTanyaKandidatUserFilter()
-        presenter.loadTanyaKandidatOrderFilter()
+        if (!isFromSearch) {
+            presenter.loadTanyaKandidatUserFilter()
+            presenter.loadTanyaKandidatOrderFilter()
+        } else {
+            presenter.loadTanyaKandidatUserFilterSearch()
+            presenter.loadTanyaKandidatOrderFilterSearch()
+        }
         btn_terapkan.setOnClickListener {
             applyFilter()
-            presenter.saveTanyaKandidatFilter(userFilter, orderFilter)
+            if (!isFromSearch) {
+                presenter.saveTanyaKandidatFilter(userFilter, orderFilter)
+            } else {
+                presenter.saveTanyaKandidatFilterSaerch(userFilter, orderFilter)
+            }
         }
     }
 
@@ -52,9 +65,9 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
         val orderFilterSelectedValue = findViewById<RadioButton>(orderFilterSelectedId).text
 
         when (userFilterSelectedValue) {
-            getString(R.string.filter_all_label) -> userFilter = PantauConstants.TanyaKandidat.Filter.ByVerified.USER_VERIFIED_ALL
-            getString(R.string.filter_unverified_label) -> userFilter = PantauConstants.TanyaKandidat.Filter.ByVerified.USER_VERIFIED_FALSE
-            getString(R.string.filter_verified_label) -> userFilter = PantauConstants.TanyaKandidat.Filter.ByVerified.USER_VERIFIED_TRUE
+            getString(R.string.filter_all_label) -> userFilter = USER_VERIFIED_ALL
+            getString(R.string.filter_unverified_label) -> userFilter = USER_VERIFIED_FALSE
+            getString(R.string.filter_verified_label) -> userFilter = USER_VERIFIED_TRUE
         }
         when (orderFilterSelectedValue) {
             getString(R.string.filter_latest_label) -> orderFilter = PantauConstants.TanyaKandidat.Filter.ByVotes.LATEST
@@ -87,7 +100,7 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
     }
 
     private fun resetFilter() {
-        presenter.saveTanyaKandidatFilter(PantauConstants.TanyaKandidat.Filter.ByVerified.USER_VERIFIED_ALL, PantauConstants.TanyaKandidat.Filter.ByVotes.MOST_VOTES)
+        presenter.saveTanyaKandidatFilter(USER_VERIFIED_ALL, PantauConstants.TanyaKandidat.Filter.ByVotes.MOST_VOTES)
     }
 
     override fun onSuccessSaveFilter() {
@@ -105,9 +118,9 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
 
     override fun setUserFilter(userfilter: String?) {
         when (userfilter) {
-            PantauConstants.TanyaKandidat.Filter.ByVerified.USER_VERIFIED_ALL -> filter_all.isChecked = true
-            PantauConstants.TanyaKandidat.Filter.ByVerified.USER_VERIFIED_FALSE -> filter_unverified.isChecked = true
-            PantauConstants.TanyaKandidat.Filter.ByVerified.USER_VERIFIED_TRUE -> filter_verified.isChecked = true
+            USER_VERIFIED_ALL -> filter_all.isChecked = true
+            USER_VERIFIED_FALSE -> filter_unverified.isChecked = true
+            USER_VERIFIED_TRUE -> filter_verified.isChecked = true
         }
     }
 

@@ -3,16 +3,19 @@ package com.pantaubersama.app.ui.profile.setting
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.LoginInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
+import com.pantaubersama.app.data.interactors.VerifikasiInteractor
 import javax.inject.Inject
 import com.twitter.sdk.android.core.TwitterException
 import com.pantaubersama.app.utils.PantauConstants
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.models.User
+import io.reactivex.rxkotlin.plusAssign
 
 class SettingPresenter @Inject constructor(
     private val loginInteractor: LoginInteractor,
-    private val profileInteractor: ProfileInteractor
+    private val profileInteractor: ProfileInteractor,
+    private val verifikasiInteractor: VerifikasiInteractor
 ) : BasePresenter<SettingView>() {
     fun logOut(clientId: String?, clientSecret: String?) {
         disposables.add(
@@ -136,5 +139,17 @@ class SettingPresenter @Inject constructor(
                     }
                 )
         )
+    }
+
+    fun getStatusVerifikasi() {
+        view?.showLoading()
+        disposables += verifikasiInteractor.getStatusVerifikasi()
+            .doOnEvent { _, _ -> view?.dismissLoading() }
+            .subscribe({
+                view?.showVerifikasiScreen(it)
+            }, {
+                view?.showError(it)
+                view?.showFailedGetVerifikasi()
+            })
     }
 }

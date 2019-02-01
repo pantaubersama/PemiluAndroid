@@ -103,6 +103,8 @@ class PresidenFragment : BaseFragment<PaslonPresenter>(), PaslonView {
     override fun bindUserProfile(profile: Profile) {
         if (profile.votePreference != 0) {
             paslonAdapter.setSelectedData(paslonAdapter.get(profile.votePreference - 1) as PaslonData)
+        } else {
+            paslonAdapter.setSelectedData(paslonAdapter.get(2) as PaslonData)
         }
     }
 

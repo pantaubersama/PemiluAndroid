@@ -36,14 +36,14 @@ class ShareUtil {
             shareIntent.type = "text/plain"
             val resInfo = context.packageManager?.queryIntentActivities(shareIntent, 0)
             val sharedItem: String = "" + when (item) {
-                is FeedsItem -> "\"${item.source?.text} – " + BuildConfig.PANTAU_WEB_URL + SHARE_FEEDS_PATH + item.id // not used
-                is Pertanyaan -> "Kamu setuju pertanyaan ini? Upvote dulu, dong ⬆️ " + BuildConfig.PANTAU_WEB_URL + SHARE_TANYA_PATH + item.id
-                is JanjiPolitik -> "Sudah tahu Janji yang ini, belum? Siap-siap catatan, ya! ✔️ " + BuildConfig.PANTAU_WEB_URL + SHARE_JANPOL_PATH + item.id
-                is KuisItem -> "Iseng-iseng serius main Quiz ini dulu. Kira-kira masih cocok apa ternyata malah nggak cocok, yaa \uD83D\uDE36 " + BuildConfig.PANTAU_WEB_URL + SHARE_KUIS_PATH + item.id
-                is KuisUserResult -> "Hmm.. Ternyata begini kecenderunganku \uD83D\uDC40 %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + item.user.id)
+                is FeedsItem -> "\"${item.source?.text} #PantauBersama  – " + BuildConfig.PANTAU_WEB_URL + SHARE_FEEDS_PATH + item.id // not used
+                is Pertanyaan -> "Kamu setuju pertanyaan ini? Upvote dulu, dong ⬆️ #PantauBersama " + BuildConfig.PANTAU_WEB_URL + SHARE_TANYA_PATH + item.id
+                is JanjiPolitik -> "Sudah tahu Janji yang ini, belum? Siap-siap catatan, ya! ✔️ #PantauBersama " + BuildConfig.PANTAU_WEB_URL + SHARE_JANPOL_PATH + item.id
+                is KuisItem -> "Iseng-iseng serius main Quiz ini dulu. Kira-kira masih cocok apa ternyata malah nggak cocok, yaa \uD83D\uDE36 #PantauBersama " + BuildConfig.PANTAU_WEB_URL + SHARE_KUIS_PATH + item.id
+                is KuisUserResult -> "Hmm.. Ternyata begini kecenderunganku \uD83D\uDC40 #PantauBersama %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + item.user.id)
                 is KuisUserResult -> context.getString(R.string.share_wording_kecenderungan).format(BuildConfig.PANTAU_WEB_URL + SHARE_KECENDERUNGAN_PATH + item.user.id)
-                is KuisResult -> "Kamu sudah ikut? Aku sudah dapat hasilnya \uD83D\uDE0E %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_HASIL_KUIS_PATH + item.quizParticipation.id)
-                is AchievedBadge -> "Yeay! I got the badge \uD83E\uDD18 " + BuildConfig.PANTAU_WEB_URL + SHARE_BADGE_PATH + item.achievedId
+                is KuisResult -> "Kamu sudah ikut? Aku sudah dapat hasilnya \uD83D\uDE0E #PantauBersama %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_HASIL_KUIS_PATH + item.quizParticipation.id)
+                is AchievedBadge -> "Yeay! I got the badge \uD83E\uDD18 #PantauBersama " + BuildConfig.PANTAU_WEB_URL + SHARE_BADGE_PATH + item.achievedId
                 else -> ""
             }
             if (!resInfo!!.isEmpty()) {

@@ -16,23 +16,23 @@ class CopyUtil {
 
         fun copyJanpol(context: Context, janpolId: String) {
             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_JANPOL_PATH + janpolId)
+            val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, BuildConfig.PANTAU_WEB_URL + PantauConstants.Share.SHARE_JANPOL_PATH + janpolId)
             clipboard.primaryClip = clip
-            ToastUtil.show(context, "tautan telah tersalin")
+            ToastUtil.show(context, "Tautan telah tersalin")
         }
 
         fun copyFeedsItem(context: Context, feedsId: String) {
             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_FEEDS_PATH + feedsId)
+            val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, BuildConfig.PANTAU_WEB_URL + PantauConstants.Share.SHARE_FEEDS_PATH + feedsId)
             clipboard.primaryClip = clip
-            ToastUtil.show(context, "tautan telah tersalin")
+            ToastUtil.show(context, "Tautan telah tersalin")
         }
 
         fun copyTanyaKandidat(context: Context, questionId: String) {
             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, BuildConfig.PANTAU_BASE_URL + PantauConstants.Share.SHARE_TANYA_PATH + questionId)
+            val clip = ClipData.newPlainText(PantauConstants.LABEL_COPY, BuildConfig.PANTAU_WEB_URL + PantauConstants.Share.SHARE_TANYA_PATH + questionId)
             clipboard.primaryClip = clip
-            ToastUtil.show(context, "tautan telah tersalin")
+            ToastUtil.show(context, "Tautan telah tersalin")
         }
     }
 }

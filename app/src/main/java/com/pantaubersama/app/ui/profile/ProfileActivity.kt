@@ -14,19 +14,19 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.user.Badge
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.data.model.user.VerificationStep
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.clusterdetail.ClusterDetailActivity
 import com.pantaubersama.app.ui.home.HomeActivity
-import com.pantaubersama.app.ui.lapor.LaporFragment
 import com.pantaubersama.app.ui.profile.cluster.invite.UndangAnggotaActivity
 import com.pantaubersama.app.ui.profile.cluster.requestcluster.RequestClusterActivity
 import com.pantaubersama.app.ui.profile.setting.SettingActivity
 import com.pantaubersama.app.ui.profile.linimasa.ProfileJanjiPolitikFragment
 import com.pantaubersama.app.ui.profile.penpol.ProfileTanyaKandidatFragment
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
-import com.pantaubersama.app.ui.quickcount.QuickCountFragment
+import com.pantaubersama.app.ui.profile.verifikasi.VerifikasiNavigator
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
-import com.pantaubersama.app.ui.wordstadium.WordStadiumFragment
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.State
 import com.pantaubersama.app.utils.ToastUtil
@@ -34,8 +34,6 @@ import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.badge_item_layout.view.*
-import kotlinx.android.synthetic.main.cluster_options_layout.*
-import kotlinx.android.synthetic.main.layout_leave_cluster_confirmation_dialog.*
 import java.lang.IllegalStateException
 import javax.inject.Inject
 
@@ -89,6 +87,9 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     private fun parseCluster(cluster: ClusterItem) {
         layout_cluster.visibility = View.VISIBLE
+        layout_cluster.setOnClickListener {
+            cluster.id?.let { it1 -> ClusterDetailActivity.start(this@ProfileActivity, it1) }
+        }
         tv_request_cluster.visibility = View.GONE
         cluster_image.loadUrl(cluster.image?.thumbnail?.url)
         cluster_name.text = cluster.name
@@ -107,12 +108,9 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         verified_text.text = getString(R.string.txt_belum_verifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.gray_dark_1))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_gray)
-//        if (userId == null) {
-//            verified_button.setOnClickListener {
-//                val intent = Intent(this@ProfileActivity, Step1VerifikasiActivity::class.java)
-//                startActivity(intent)
-//            }
-//        }
+        verified_button.setOnClickListener {
+            presenter.getStatusVerifikasi()
+        }
     }
 
     private fun setVerified() {
@@ -121,6 +119,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
         verified_text.text = getString(R.string.txt_terverifikasi)
         verified_text.setTextColor(ContextCompat.getColor(this@ProfileActivity, R.color.colorAccent))
         verified_button.setBackgroundResource(R.drawable.rounded_outline_green)
+        verified_button.setOnClickListener(null)
     }
 
     private fun setupNavigation() {
@@ -128,9 +127,9 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
             val (fragment, tag) = when (item.itemId) {
                 R.id.navigation_menyerap -> ProfileJanjiPolitikFragment.newInstance(userId) to ProfileJanjiPolitikFragment.TAG
                 R.id.navigation_menggali -> ProfileTanyaKandidatFragment.newInstance(userId) to ProfileTanyaKandidatFragment.TAG
-                R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
-                R.id.navigation_menjaga -> LaporFragment.newInstance() to LaporFragment.TAG
-                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
+//                R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
+//                R.id.navigation_menjaga -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
+//                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
                 else -> throw IllegalStateException("unknown menu")
             }
             showFragment(fragment, tag)
@@ -325,6 +324,14 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 
     override fun showFailedGetProfileAlert() {
         ToastUtil.show(this@ProfileActivity, "Gagal memuat profil pengguna")
+    }
+
+    override fun showVerifikasiScreen(step: VerificationStep) {
+        VerifikasiNavigator.start(this, step)
+    }
+
+    override fun showFailedGetVerifikasi() {
+        ToastUtil.show(this, "Gagal mendapatkan status verifikasi")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

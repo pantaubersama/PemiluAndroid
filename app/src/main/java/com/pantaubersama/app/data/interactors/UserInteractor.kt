@@ -19,7 +19,7 @@ class UserInteractor @Inject constructor(
     }
 
     fun saveSearchOrangFilter(searchOrangFilter: String): Completable {
-        return Completable.fromCallable { dataCache.saveTanyaKandidatUserFilter(searchOrangFilter) }
+        return Completable.fromCallable { dataCache.saveSearchOrangFilter(searchOrangFilter) }
     }
 
     fun searchPerson(keyword: String, page: Int, perPage: Int): Single<MutableList<Profile>> {

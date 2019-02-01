@@ -10,6 +10,7 @@ ext {
     androidCompileSdkVersion = 28
 
     versions = [
+            coroutines              : "1.0.1",
             support                 : "28.0.0",
 
             retrofit                : "2.4.0",
@@ -39,7 +40,7 @@ ext {
             daggerCompiler          : "2.19",
 
             roundedImageView        : "2.3.0",
-            symbolic                : "0.3.2",
+            symbolic                : "0.3.3",
             mockito                 : "2.18.3",
             flexbox                 : "1.1.0",
             lottie                  : "2.8.0",
@@ -97,6 +98,10 @@ ext {
             navigationFragment: "android.arch.navigation:navigation-fragment-ktx:$versions.navigation",
             navigationUI: "android.arch.navigation:navigation-ui-ktx:$versions.navigation"
     ]
+    cameraKit = [
+            camerakit   : "com.camerakit:camerakit:1.0.0-beta3.10",
+            jpegkit     : "com.camerakit:jpegkit:0.1.0"
+    ]
 
     designLibs = designDeps.values()
     networkLibs = retrofit.values() + okHttp.values()
@@ -104,6 +109,7 @@ ext {
     rxJavaLibs = rxJava.values()
     unitTestLibs = unitTestDeps.values()
     archComponentLibs = archComponent.values()
+    cameraKitLibs = cameraKit.values()
 
     multidex = "com.android.support:multidex:$versions.multidexVersion"
     easyPermission = "pub.devrel:easypermissions:$versions.easyPermission"

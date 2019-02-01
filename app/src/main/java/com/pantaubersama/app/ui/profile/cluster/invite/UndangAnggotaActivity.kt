@@ -69,7 +69,7 @@ class UndangAnggotaActivity : BaseActivity<UndangAnggotaPresenter>(), UndangAngg
             if (undang_anggota_text_email.text.isNotEmpty()) {
                 val pattern = Patterns.EMAIL_ADDRESS
                 val matcher = pattern.matcher(undang_anggota_text_email.text)
-                if (matcher.matches()) {
+                if (matcher.matches() || undang_anggota_text_email.text.contains(",")) {
                     presenter.invite(undang_anggota_text_email.text.toString())
                 } else {
                     undang_anggota_text_email.error = "Email tidak valid"

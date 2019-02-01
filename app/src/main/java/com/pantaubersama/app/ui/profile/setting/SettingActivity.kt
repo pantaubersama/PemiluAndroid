@@ -27,8 +27,6 @@ import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.profile.setting.badge.BadgeActivity
 import com.pantaubersama.app.ui.profile.setting.clusterundang.ClusterUndangActivity
 import com.pantaubersama.app.ui.profile.setting.editprofile.EditProfileActivity
-import com.pantaubersama.app.ui.profile.setting.ubahdatalapor.UbahDataLaporActivity
-import com.pantaubersama.app.ui.profile.verifikasi.step1.Step1VerifikasiActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -38,7 +36,9 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import com.facebook.GraphRequest
+import com.pantaubersama.app.data.model.user.VerificationStep
 import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
+import com.pantaubersama.app.ui.profile.verifikasi.VerifikasiNavigator
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.ShareUtil
@@ -228,8 +228,7 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
             if (profile.verified) {
                 openVerifiedDialog(profile)
             } else {
-                val intent = Intent(this@SettingActivity, Step1VerifikasiActivity::class.java)
-                startActivityForResult(intent, VERIFIKASI)
+                presenter.getStatusVerifikasi()
             }
         }
         if (profile.cluster != null && profile.isModerator) {
@@ -304,10 +303,10 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         setting_ubah_sandi.setOnClickListener {
             SymbolicLoginButton.loadPage(this, BuildConfig.SYMBOLIC_URL + "/users/edit", BuildConfig.SYMBOLIC_URL + "/")
         }
-        setting_ubah_data_lapor.setOnClickListener {
-            val intent = Intent(this@SettingActivity, UbahDataLaporActivity::class.java)
-            startActivityForResult(intent, UBAH_DATA_LAPOR)
-        }
+//        setting_ubah_data_lapor.setOnClickListener {
+//            val intent = Intent(this@SettingActivity, UbahDataLaporActivity::class.java)
+//            startActivityForResult(intent, UBAH_DATA_LAPOR)
+//        }
         setting_badge.setOnClickListener {
             val intent = Intent(this@SettingActivity, BadgeActivity::class.java)
             startActivityForResult(intent, BADGE)
@@ -394,6 +393,14 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     override fun showFailedDisconnectTwitterAlert() {
         ToastUtil.show(this@SettingActivity, "Gagal disconnect Twitter")
+    }
+
+    override fun showVerifikasiScreen(step: VerificationStep) {
+        VerifikasiNavigator.start(this, step)
+    }
+
+    override fun showFailedGetVerifikasi() {
+        ToastUtil.show(this, "Gagal mendapatkan status verifikasi")
     }
 
     override fun logoutFacebookSDK() {

@@ -110,43 +110,43 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/setting_ubah_data_lapor"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="10dp">
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/setting_ubah_data_lapor"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="56dp"-->
+                    <!--android:background="?attr/selectableItemBackground"-->
+                    <!--android:clickable="true"-->
+                    <!--android:paddingLeft="16dp"-->
+                    <!--android:paddingTop="10dp">-->
 
-                    <ImageView
-                        android:id="@+id/setting_icon_ubah_data_laporan"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/baseline_assignment_48_px" />
+                    <!--<ImageView-->
+                        <!--android:id="@+id/setting_icon_ubah_data_laporan"-->
+                        <!--android:layout_width="24dp"-->
+                        <!--android:layout_height="24dp"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:src="@drawable/baseline_assignment_48_px" />-->
 
-                    <TextView
-                        android:id="@+id/setting_text_ubah_data_laporan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/setting_icon_ubah_data_laporan"
-                        android:fontFamily="@font/lato_regular"
-                        android:text="@string/label_ubah_data_lapor"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/setting_text_ubah_data_laporan"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:layout_toRightOf="@+id/setting_icon_ubah_data_laporan"-->
+                        <!--android:fontFamily="@font/lato_regular"-->
+                        <!--android:text="@string/label_ubah_data_lapor"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="12sp" />-->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/setting_icon_ubah_data_laporan"
-                        android:background="@color/gray_3" />
+                    <!--<View-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="1dp"-->
+                        <!--android:layout_alignParentBottom="true"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:layout_toRightOf="@+id/setting_icon_ubah_data_laporan"-->
+                        <!--android:background="@color/gray_3" />-->
 
-                </RelativeLayout>
+                <!--</RelativeLayout>-->
 
                 <RelativeLayout
                     android:id="@+id/setting_verifikasi"

@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken
 import com.pantaubersama.app.data.local.SharedPref
 import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.data.model.cluster.ClusterItem
+import com.pantaubersama.app.data.model.partai.PoliticalParty
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.PantauConstants
@@ -52,12 +53,19 @@ class DataCache(context: Context) : SharedPref(context) {
 
         const val TANYA_KANDIDAT_USER_FILTER = "tanya_kandidat_user_filter"
         const val TANYA_KANDIDAT_ORDER_FILTER = "tanya_kandidat_order_filter"
+        const val TANYA_KANDIDAT_USER_FILTER_SEARCH = "tanya_kandidat_user_filter_search"
+        const val TANYA_KANDIDAT_ORDER_FILTER_SEARCH = "tanya_kandidat_order_filter_search"
 
         const val KEY_SEARCH_HISTORY = "KEY_SEARCH_HISTORY"
         const val IS_ONBOARDING_COMPLETE = "is_onboarding_complete"
 
         const val FILTER_ORANG = "filter_orang"
         const val FIREBASE_TOKEN = "firebase_token"
+
+        const val LAPOR_USER_FILTER = "lapor_user_filter"
+        const val LAPOR_USER_FILTER_SEARCH = "lapor_user_filter_search"
+        const val LAPOR_PARTY_FILTER = "lapor_party_filter"
+        const val LAPOR_PARTY_FILTER_SEARCH = "lapor_party_filter_search"
     }
 
     override fun prefId(): String {
@@ -144,19 +152,19 @@ class DataCache(context: Context) : SharedPref(context) {
         return gson.fromJson(getString(USER_PROFILE), Profile::class.java) ?: EMPTY_PROFILE
     }
 
-    fun saveTanyaKandidatUserFilter(userFilter: String) {
-        putString(TANYA_KANDIDAT_USER_FILTER, userFilter)
+    fun saveTanyaKandidatUserFilter(userFilter: String?) {
+        userFilter?.let { putString(TANYA_KANDIDAT_USER_FILTER, it) }
     }
 
-    fun saveTanyaKandidatOrderFilter(orderFilter: String) {
-        putString(TANYA_KANDIDAT_ORDER_FILTER, orderFilter)
+    fun saveTanyaKandidatOrderFilter(orderFilter: String?) {
+        orderFilter?.let { putString(TANYA_KANDIDAT_ORDER_FILTER, it) }
     }
 
     fun loadTanyaKandidatUserFilter(): String? {
         return if (getString(TANYA_KANDIDAT_USER_FILTER) != null) {
             getString(TANYA_KANDIDAT_USER_FILTER)
         } else {
-            PantauConstants.TanyaKandidat.Filter.ByVerified.USER_VERIFIED_ALL
+            PantauConstants.Filter.USER_VERIFIED_ALL
         }
     }
 
@@ -185,7 +193,7 @@ class DataCache(context: Context) : SharedPref(context) {
     }
 
     fun getJanpolUserFilter(): String {
-        return getString(KEY_FILTER_JANPOL_USER) ?: PantauConstants.Filter.Janpol.USER_VERIFIED_ALL
+        return getString(KEY_FILTER_JANPOL_USER) ?: PantauConstants.Filter.USER_VERIFIED_ALL
     }
 
     fun saveJanpolUserFilter(janpolUserFilter: String) {
@@ -193,7 +201,7 @@ class DataCache(context: Context) : SharedPref(context) {
     }
 
     fun getSearchJanpolUserFilter(): String {
-        return getString(KEY_FILTER_SEARCH_JANPOL_USER) ?: PantauConstants.Filter.Janpol.USER_VERIFIED_ALL
+        return getString(KEY_FILTER_SEARCH_JANPOL_USER) ?: PantauConstants.Filter.USER_VERIFIED_ALL
     }
 
     fun saveSearchJanpolUserFilter(janpolUserFilter: String) {
@@ -261,11 +269,71 @@ class DataCache(context: Context) : SharedPref(context) {
         return getString(FILTER_ORANG) ?: PantauConstants.FILTER_ORANG_ALL
     }
 
+    fun saveSearchOrangFilter(searchOrangFilter: String) {
+        putString(FILTER_ORANG, searchOrangFilter)
+    }
+
     fun saveFirebaseToken(firebaseToken: String?) {
         firebaseToken?.let { putString(FIREBASE_TOKEN, it) }
     }
 
     fun loadFirebaseToken(): String? {
         return getString(FIREBASE_TOKEN)
+    }
+
+    fun loadLaporUserFilter(): String {
+        return getString(LAPOR_USER_FILTER) ?: PantauConstants.Filter.USER_VERIFIED_ALL
+    }
+
+    fun saveLaporUserFilter(userFilter: String) {
+        putString(LAPOR_USER_FILTER, userFilter)
+    }
+
+    fun loadLaporUserFilterSearch(): String {
+        return getString(LAPOR_USER_FILTER_SEARCH) ?: PantauConstants.Filter.USER_VERIFIED_ALL
+    }
+
+    fun saveLaporUserFilterSearch(userFilter: String) {
+        putString(LAPOR_USER_FILTER_SEARCH, userFilter)
+    }
+
+    fun saveLaporPartyFilter(partyFilter: PoliticalParty) {
+        putString(LAPOR_PARTY_FILTER, gson.toJson(partyFilter))
+    }
+
+    fun saveLaporPartyFilterSearch(partyFilterSearch: PoliticalParty) {
+        putString(LAPOR_PARTY_FILTER_SEARCH, gson.toJson(partyFilterSearch))
+    }
+
+    fun loadLaporPartyFilter(): PoliticalParty? {
+        return gson.fromJson(getString(LAPOR_PARTY_FILTER), PoliticalParty::class.java)
+    }
+
+    fun loadLaporPartyFilterSearch(): PoliticalParty? {
+        return gson.fromJson(getString(LAPOR_PARTY_FILTER_SEARCH), PoliticalParty::class.java)
+    }
+
+    fun saveTanyaKandidatUserFilterSearch(userFilter: String?) {
+        userFilter?.let { putString(TANYA_KANDIDAT_USER_FILTER_SEARCH, it) }
+    }
+
+    fun saveTanyaKandidatOrderFilterSearch(orderFilter: String?) {
+        orderFilter?.let { putString(TANYA_KANDIDAT_ORDER_FILTER_SEARCH, it) }
+    }
+
+    fun loadTanyaKandidatUserFilterSearch(): String? {
+        return if (getString(TANYA_KANDIDAT_USER_FILTER_SEARCH) != null) {
+            getString(TANYA_KANDIDAT_USER_FILTER_SEARCH)
+        } else {
+            PantauConstants.Filter.USER_VERIFIED_ALL
+        }
+    }
+
+    fun loadTanyaKandidatOrderFilterSearch(): String? {
+        return if (getString(TANYA_KANDIDAT_ORDER_FILTER_SEARCH) != null) {
+            getString(TANYA_KANDIDAT_ORDER_FILTER_SEARCH)
+        } else {
+            PantauConstants.TanyaKandidat.Filter.ByVotes.MOST_VOTES
+        }
     }
 }

@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.RECORD_AUDIO"
+        tools:node="remove" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.location.gps" />
@@ -21,9 +24,14 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.webview.ChromeTabActivity"></activity>
-        <activity android:name=".utils.download.DownloadActivity" />
-        <activity android:name=".ui.clusterdetail.ClusterDetailActivity" />
+        <activity android:name=".ui.webview.ChromeTabActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.menjaga.filter.LaporFilterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".utils.download.DownloadActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.clusterdetail.ClusterDetailActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".background.firebase.PantauFirebaseMessagingService">
             <intent-filter>
@@ -40,6 +48,10 @@
                 android:name="com.google.firebase.messaging.default_notification_color"
                 android:resource="@color/colorPrimary" />
         </service>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="536361816a0d2006ea747cdd456218543609b7d7"
+            />
 
         <activity
             android:name=".ui.search.cluster.filter.FilterClusterActivity"
@@ -192,11 +204,24 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:name=".ui.profile.verifikasi.step0.Step0VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.profile.verifikasi.step1.Step1VerifikasiActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.verifikasi.step2.Step2VerifikasiActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.step3.Step3VerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.finalstep.FinalScreenVerifikasiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.verifikasi.VerifikasiCameraActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".ui.linimasa.janjipolitik.detail.DetailJanjiPolitikActivity"
             android:screenOrientation="portrait" />
@@ -205,24 +230,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.profile.verifikasi.step3.Step3VerifikasiActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.profile.verifikasi.step4.Step4VerifikasiActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.profile.verifikasi.step5.Step5VerifikasiActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.profile.verifikasi.step6.Step6VerifikasiActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.profile.verifikasi.step7.Step7VerifikasiActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.profile.verifikasi.finalstep.FinalScreenVerifikasiActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.setting.SettingActivity"

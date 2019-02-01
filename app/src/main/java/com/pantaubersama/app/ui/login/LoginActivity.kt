@@ -49,7 +49,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     override fun setupUI(savedInstanceState: Bundle?) {
         if (!url.isNullOrEmpty()) {
             if (url?.contains(PantauConstants.Networking.INVITATION_PATH)!!) {
-                url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it, BuildConfig.SYMBOLIC_REDIRECT_URI) }
+                url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it) }
             } else if (url?.contains(CONFIRMATION_PATH)!!) {
                 url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it) }
             }
