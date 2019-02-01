@@ -40,7 +40,7 @@ ext {
             daggerCompiler          : "2.19",
 
             roundedImageView        : "2.3.0",
-            symbolic                : "0.3.2",
+            symbolic                : "0.3.3",
             mockito                 : "2.18.3",
             flexbox                 : "1.1.0",
             lottie                  : "2.8.0",
