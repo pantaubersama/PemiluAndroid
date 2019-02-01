@@ -71,6 +71,7 @@
                     android:background="@color/gray_3"/>
 
                 <ScrollView
+                    android:id="@+id/scroll_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -138,24 +139,35 @@
                                 android:textColor="@color/black_3"
                                 android:textSize="18sp"/>
 
-                            <EditText
-                                android:id="@+id/ktp_number"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/ktp_number_layout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_outline_green"
-                                android:hint="Nomor KTP Anda"
-                                android:fontFamily="@font/lato_bold"
-                                android:gravity="center_horizontal"
-                                android:layout_marginTop="12dp"
-                                android:padding="12dp"
-                                android:layout_marginLeft="12dp"
                                 android:layout_marginStart="12dp"
-                                android:layout_marginRight="12dp"
+                                android:layout_marginTop="12dp"
                                 android:layout_marginEnd="12dp"
-                                android:textColor="@color/black_3"
-                                android:inputType="number"
-                                android:lines="1"
-                                android:maxLines="1"/>
+                                app:boxCornerRadiusBottomEnd="8dp"
+                                app:boxCornerRadiusBottomStart="8dp"
+                                app:boxCornerRadiusTopEnd="8dp"
+                                app:boxCornerRadiusTopStart="8dp"
+                                app:boxStrokeColor="@color/colorAccent"
+                                app:boxStrokeWidth="0.5dp"
+                                app:hintTextColor="@color/colorAccent">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/ktp_number"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/lato_bold"
+                                    android:hint="Nomor KTP Anda"
+                                    android:inputType="number"
+                                    android:lines="1"
+                                    android:maxLines="1"
+                                    android:padding="12dp"
+                                    android:textColor="@color/black_3" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
 
                         </LinearLayout>
 

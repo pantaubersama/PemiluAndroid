@@ -2,13 +2,13 @@ package com.pantaubersama.app.ui.search.history
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.search.SearchActivity
+import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_search_history.*
@@ -94,13 +94,17 @@ class SearchHistoryFragment : BaseFragment<SearchHistoryPresenter>(), SearchHist
     }
 
     private fun showAlertDialog(message: String, listener: DialogListener) {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setMessage(message)
-            .setPositiveButton(getString(R.string.txt_hapus)) { dialog, _ ->
-                listener.onClickDelete()
-                dialog.dismiss()
-            }
-            .setNegativeButton(getString(R.string.batal)) { dialog, _ -> dialog.dismiss() }
+        ConfirmationDialog.Builder()
+            .with(requireActivity())
+            .setDialogTitle("Hapus Riwayat Pencarian")
+            .setAlert(message)
+            .setOkText(getString(R.string.txt_hapus))
+            .setCancelText(getString(R.string.batal))
+            .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                override fun onClickOk() {
+                    listener.onClickDelete()
+                }
+            })
             .show()
     }
 
