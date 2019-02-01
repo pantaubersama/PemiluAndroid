@@ -25,6 +25,7 @@ class SettingPresenter @Inject constructor(
                 ).subscribe(
                     {
                         loginInteractor.clearDataCache()
+                        loginInteractor.setOnboardingComplete()
                         view?.goToLogin()
                     },
                     {
