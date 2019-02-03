@@ -251,4 +251,6 @@
     <string name="onboarding_5_file_name">lottie_onboarding_5_perhitungan.json</string>
     <string name="share_wording_kecenderungan">Hmm.. Ternyata begini kecenderunganku \uD83D\uDC40 #PantauBersama %s</string>
     <string name="lapor_label">Lapor</string>
+    <string name="title_notification">Notifikasi</string>
+    <string name="text_blank_notif">Belum ada notifikasi buat kamu</string>
 </resources>
