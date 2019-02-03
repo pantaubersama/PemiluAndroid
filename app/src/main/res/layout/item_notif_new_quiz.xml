@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/notif_new_quiz_avatar"
+        android:layout_width="48dp"
+        android:layout_height="48dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@+id/notif_new_quiz_avatar"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/notif_new_quiz_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.02"
+            android:lineSpacingExtra="9sp"
+            android:textColor="@color/gray_4"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/notif_new_quiz_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_yellow"
+            android:clickable="true"
+            android:paddingStart="27dp"
+            android:paddingTop="4dp"
+            android:paddingRight="27dp"
+            android:paddingBottom="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.1"
+                android:lineSpacingExtra="3sp"
+                android:text="IKUTI KUIS"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/notif_new_quiz_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:letterSpacing="0.29"
+            android:textColor="@color/gray_10"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</RelativeLayout>

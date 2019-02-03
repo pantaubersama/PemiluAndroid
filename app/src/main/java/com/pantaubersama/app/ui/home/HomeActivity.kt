@@ -13,6 +13,7 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.linimasa.LinimasaFragment
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
+import com.pantaubersama.app.ui.notification.NotifActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.search.SearchActivity
@@ -47,6 +48,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
         btn_search.setOnClickListener { startActivity(Intent(this, SearchActivity::class.java)) }
         btn_pinned.setOnClickListener { startActivity(Intent(this, CatatanPilihanActivity::class.java)) }
+        btn_notification.setOnClickListener { startActivity(Intent(this, NotifActivity::class.java)) }
 
         if (savedInstanceState == null) {
             showFragment(PenPolFragment.newInstance(), PenPolFragment.TAG)
