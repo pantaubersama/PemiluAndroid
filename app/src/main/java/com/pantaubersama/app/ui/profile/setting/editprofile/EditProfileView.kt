@@ -16,4 +16,6 @@ interface EditProfileView : BaseView {
     fun onSuccessUpdateProfile()
     fun onUsernameAvailable()
     fun onUsernameUnAvailable()
+    fun showUploadPictureLoading()
+    fun dismissUploadPictureLoading()
 }
