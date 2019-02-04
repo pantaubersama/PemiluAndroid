@@ -50,7 +50,7 @@ class PenPolFragment : CommonFragment() {
         val tanyaKandidatTab = TabView(context)
         tanyaKandidatTab.setTitleLabel(getString(R.string.tanya_kandidat_label))
         val kuisTab = TabView(context)
-        kuisTab.setTitleLabel(getString(R.string.kuis_label))
+        kuisTab.setTitleLabel(getString(R.string.kata_kandidat_label))
 
         tab_layout?.addTab(tab_layout?.newTab()?.setCustomView(tanyaKandidatTab)!!)
         tab_layout?.addTab(tab_layout?.newTab()?.setCustomView(kuisTab)!!)
