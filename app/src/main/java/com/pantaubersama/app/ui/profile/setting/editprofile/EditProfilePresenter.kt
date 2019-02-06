@@ -64,10 +64,12 @@ class EditProfilePresenter @Inject constructor(
     }
 
     fun uploadAvatar(avatar: MultipartBody.Part?) {
+        view?.showUploadPictureLoading()
         disposables.add(
             profileInteractor.uploadAvatar(avatar)
                 .subscribe(
                     {
+                        view?.dismissUploadPictureLoading()
                         view?.refreshProfile()
                         view?.showSuccessUpdateAvatarAlert()
                     },
@@ -88,7 +90,7 @@ class EditProfilePresenter @Inject constructor(
                     },
                     {
                         view?.onUsernameUnAvailable()
-                        view?.showError(it)
+//                        view?.showError(it)
                     }
                 )
         )

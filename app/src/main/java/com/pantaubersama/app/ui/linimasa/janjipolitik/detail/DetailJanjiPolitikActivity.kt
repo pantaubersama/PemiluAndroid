@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.linimasa.janjipolitik.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.cluster.ClusterItem
@@ -125,13 +126,17 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
         if (creator?.cluster != null) {
             ll_cluster_container.visibleIf(true)
             cluster = creator?.cluster
-            cluster?.let {
-                tv_cluster_name.text = it.name
-                tv_cluster_member_count.text = it.memberCount.toString() + getString(R.string.anggota)
-                iv_avatar_cluster.loadUrl(it.image?.url, R.drawable.ic_avatar_placeholder)
-            }
-            ll_cluster_container.setOnClickListener {
-                cluster?.id?.let { it1 -> ClusterDetailActivity.start(this@DetailJanjiPolitikActivity, it1) }
+            if (cluster?.id != null) {
+                cluster?.let {
+                    tv_cluster_name.text = it.name
+                    tv_cluster_member_count.text = it.memberCount.toString() + getString(R.string.anggota)
+                    iv_avatar_cluster.loadUrl(it.image?.url, R.drawable.ic_avatar_placeholder)
+                }
+                ll_cluster_container.setOnClickListener {
+                    cluster?.id?.let { it1 -> ClusterDetailActivity.start(this@DetailJanjiPolitikActivity, it1) }
+                }
+            } else {
+                ll_cluster_container.visibility = View.GONE
             }
         } else {
             ll_cluster_container.visibleIf(false)

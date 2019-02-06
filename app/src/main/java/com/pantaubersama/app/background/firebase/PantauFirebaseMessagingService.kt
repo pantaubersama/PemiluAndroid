@@ -22,13 +22,17 @@ import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
+import com.pantaubersama.app.data.model.notification.NotificationData
 import com.pantaubersama.app.data.model.notification.PemiluBroadcast
+import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.webview.ChromeTabActivity
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_DESC_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_NAME_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_BROADCAST
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_JANPOL
 import org.json.JSONObject
 
 class PantauFirebaseMessagingService : FirebaseMessagingService() {
@@ -49,37 +53,47 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
         val gson: Gson = GsonBuilder().setFieldNamingPolicy(com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
         var intent: Intent? = null
         var title: String? = null
-        var message: String? = null
+        var description: String? = null
         var largeIcon: String? = null
 
+        Logger.d(remoteMessage?.notification.toString())
         Logger.json(remoteMessage?.data.toString())
 
         var notifType = ""
-        val payload = JSONObject(remoteMessage?.data?.get("payload"))
-        payload.optString(NOTIFICATION_TYPE)?.let { notifType = it }
-
-        when (notifType) {
-            NOTIFICATION_TYPE_BROADCAST -> {
-                Logger.d(payload)
-                val pemiluBroadcast = gson.fromJson(payload.getJSONObject(PemiluBroadcast.TAG).toString(), PemiluBroadcast::class.java)
-                Logger.d(pemiluBroadcast)
-                title = pemiluBroadcast.title
-                message = pemiluBroadcast.description
-                val broadcastUrl = pemiluBroadcast.link
-                intent = ChromeTabActivity.setIntent(this, broadcastUrl)
-                createNotif(intent, title, message)
+        remoteMessage?.data?.get("payload")?.let { payloadData ->
+            val payload = JSONObject(payloadData)
+            payload.optString(NOTIFICATION_TYPE)?.let { notifType = it }
+            when (notifType) {
+                NOTIFICATION_TYPE_BROADCAST -> {
+                    val pemiluBroadcast = gson.fromJson(payload.getJSONObject(PemiluBroadcast.TAG).toString(), PemiluBroadcast::class.java)
+                    title = pemiluBroadcast.title
+                    description = pemiluBroadcast.description
+                    val broadcastUrl = pemiluBroadcast.link
+                    intent = ChromeTabActivity.setIntent(this, broadcastUrl)
+                    intent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+                    createNotif(pendingIntent, title, description)
+                }
+                NOTIFICATION_TYPE_JANPOL -> {
+                    val notification = gson.fromJson(payload.getJSONObject(NotificationData().TAG).toString(), NotificationData::class.java)
+                    title = notification.title
+                    description = notification.body
+                    intent = HomeActivity.setIntentByOpenedTab(this, EXTRA_TYPE_JANPOL)
+                    intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+                    createNotif(pendingIntent, title, description)
+                }
             }
         }
     }
 
-    private fun createNotif(intent: Intent, title: String?, message: String?, largeIcon: Bitmap? = null) {
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+    private fun createNotif(pendingIntent: PendingIntent, title: String?, description: String?, largeIcon: Bitmap? = null) {
         val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_NAME_BROADCAST)
             .setSmallIcon(R.drawable.ic_notification_icon)
             .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
             .setContentTitle(title)
             .setContentInfo(BuildConfig.APPLICATION_ID)
-            .setContentText(message)
+            .setContentText(description)
             .setAutoCancel(true)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setContentIntent(pendingIntent)

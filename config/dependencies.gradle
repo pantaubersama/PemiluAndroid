@@ -20,6 +20,7 @@ ext {
             firebaseCore            : "16.0.6",
             firebaseMessaging       : "17.3.4",
             crashlytic              : "2.9.8",
+            performance             : "16.2.3",
 
             rxJava                  : "2.2.5",
             rxKotlin                : "2.3.0",
@@ -79,7 +80,8 @@ ext {
     firebase = [
             firebaseCore        : "com.google.firebase:firebase-core:$versions.firebaseCore",
             firebaseMessaging   : "com.google.firebase:firebase-messaging:$versions.firebaseMessaging",
-            crashlytic          : "com.crashlytics.sdk.android:crashlytics:$versions.crashlytic"
+            crashlytic          : "com.crashlytics.sdk.android:crashlytics:$versions.crashlytic",
+            performance         : "com.google.firebase:firebase-perf:$versions.performance"
     ]
 
     rxJava = [

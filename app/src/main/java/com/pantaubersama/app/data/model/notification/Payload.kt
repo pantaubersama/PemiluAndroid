@@ -2,7 +2,7 @@ package com.pantaubersama.app.data.model.notification
 
 import com.google.gson.annotations.SerializedName
 
-data class Notificatioon(
+data class NotificationData(
     @SerializedName("title") val title: String? = "",
     @SerializedName("body") val body: String? = ""
 ) {
@@ -14,7 +14,7 @@ data class PemiluBroadcast(
     @SerializedName("title") val title: String = "",
     @SerializedName("description") val description: String = "",
     @SerializedName("event_type") val eventType: String = "",
-    @SerializedName("link") val link: String = "pantaubersama.com"
+    @SerializedName("link") val link: String = ""
 ) {
     companion object {
         val TAG = "pemilu_broadcast"

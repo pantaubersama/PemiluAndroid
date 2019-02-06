@@ -43,7 +43,8 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:gravity="center_vertical"
-                    android:foreground="?selectableItemBackground">
+                    android:foreground="?selectableItemBackground"
+                    android:visibility="gone">
 
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/iv_avatar_cluster"
@@ -85,7 +86,8 @@
                     android:text="@string/dummy_tweet_content"
                     android:textSize="12sp"
                     android:textColor="@color/black_1"
-                    android:fontFamily="@font/lato_medium"/>
+                    android:fontFamily="@font/lato_medium"
+                    android:layout_marginTop="8dp"/>
 
                 <ImageView
                     android:visibility="gone"

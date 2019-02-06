@@ -260,6 +260,14 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
         }
     }
 
+    override fun showUploadPictureLoading() {
+        showProgressDialog("Mengunggah avatar")
+    }
+
+    override fun dismissUploadPictureLoading() {
+        dismissProgressDialog()
+    }
+
     override fun refreshProfile() {
         presenter.refreshUserData()
     }

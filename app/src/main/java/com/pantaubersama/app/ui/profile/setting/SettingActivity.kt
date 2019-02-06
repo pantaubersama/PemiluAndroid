@@ -36,11 +36,16 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import com.facebook.GraphRequest
+import com.google.firebase.messaging.FirebaseMessaging
 import com.pantaubersama.app.data.model.user.VerificationStep
 import com.pantaubersama.app.ui.profile.setting.tentangapp.TentangAppActivity
 import com.pantaubersama.app.ui.profile.verifikasi.VerifikasiNavigator
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.utils.ChromeTabUtil
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TOPIC_BROADCAST
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TOPIC_FEED
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TOPIC_JANPOL
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TOPIC_QUIZ
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.extensions.visibleIf
 import com.twitter.sdk.android.core.* // ktlint-disable
@@ -413,5 +418,22 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         CookieManager.getInstance().removeAllCookies(null)
         TwitterCore.getInstance().sessionManager.clearActiveSession()
         getTwitterUserData()
+    }
+
+    override fun unsubscribeFCM() {
+        val topicList = arrayListOf(NOTIFICATION_TOPIC_BROADCAST,
+            NOTIFICATION_TOPIC_FEED,
+            NOTIFICATION_TOPIC_JANPOL,
+            NOTIFICATION_TOPIC_QUIZ)
+
+        topicList.forEach {
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(it)
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        val msg = "FCM ERROR - Failed unsubscribing $it – ${task.exception}"
+                        Timber.e(msg)
+                    }
+                }
+        }
     }
 }
