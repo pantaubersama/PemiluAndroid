@@ -14,6 +14,8 @@ import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
 import com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.widget.TabView
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OPEN_TAB_TYPE
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_FILTER_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_FILTER_PILPRES
 import kotlinx.android.synthetic.main.fragment_linimasa.*
@@ -24,9 +26,32 @@ class LinimasaFragment : CommonFragment() {
     private var pilpresFragment = PilpresFragment.newInstance()
     private var janjiPolitikFragment = JanjiPolitikFragment()
 
+    private var selectedTab = 0
+
+    companion object {
+        val TAG: String = LinimasaFragment::class.java.simpleName
+
+        fun newInstanceOpenJanpol(): LinimasaFragment {
+            val fragment = LinimasaFragment()
+            val args = Bundle()
+            args.putInt(EXTRA_OPEN_TAB_TYPE, EXTRA_TYPE_JANPOL)
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+    override fun fetchArguments(args: Bundle?) {
+        args?.apply {
+            selectedTab = getInt(EXTRA_OPEN_TAB_TYPE, 0)
+        }
+    }
+
     override fun initView(view: View, savedInstanceState: Bundle?) {
         setupTabLayout()
         setupViewPager()
+
+        view_pager.currentItem = selectedTab
+
         btn_filter.setOnClickListener {
             when (selectedTabs) {
                 0 -> startActivityForResult(Intent(
@@ -102,9 +127,5 @@ class LinimasaFragment : CommonFragment() {
                 }
             }
         }
-    }
-
-    companion object {
-        val TAG: String = LinimasaFragment::class.java.simpleName
     }
 }

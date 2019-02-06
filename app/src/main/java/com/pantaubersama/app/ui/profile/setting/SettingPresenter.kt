@@ -132,6 +132,7 @@ class SettingPresenter @Inject constructor(
             loginInteractor.updateFirebaseToken("")
                 .subscribe(
                     {
+                        view?.unsubscribeFCM()
                         view?.onSuccessRevokeFirebaseToken()
                     },
                     {

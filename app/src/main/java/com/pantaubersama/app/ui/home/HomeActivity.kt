@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -18,6 +19,9 @@ import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.search.SearchActivity
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OPEN_TAB_TYPE
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_JANPOL
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_TANYA_KANDIDAT
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
@@ -27,12 +31,22 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     @Inject
     override lateinit var presenter: HomePresenter
     private var url: String? = null
+    private var tabDest: Int? = null
 
     override fun statusBarColor(): Int = R.color.white
     override fun setLayout(): Int = R.layout.activity_home
 
+    companion object {
+        fun setIntentByOpenedTab(context: Context, tabDest: Int): Intent {
+            val intent = Intent(context, HomeActivity::class.java)
+            intent.putExtra(EXTRA_OPEN_TAB_TYPE, tabDest)
+            return intent
+        }
+    }
+
     override fun fetchIntentExtra() {
-        url = intent.getStringExtra(PantauConstants.URL)
+        intent.getStringExtra(PantauConstants.URL)?.let { url = it }
+        intent.getIntExtra(EXTRA_OPEN_TAB_TYPE, EXTRA_TYPE_TANYA_KANDIDAT).let { tabDest = it }
     }
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -51,8 +65,16 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         btn_notification.setOnClickListener { startActivity(Intent(this, NotifActivity::class.java)) }
 
         if (savedInstanceState == null) {
-            showFragment(PenPolFragment.newInstance(), PenPolFragment.TAG)
-            navigation.selectedItemId = R.id.navigation_menggali
+            when (tabDest) {
+                EXTRA_TYPE_JANPOL -> {
+                    showFragment(LinimasaFragment.newInstanceOpenJanpol(), LinimasaFragment.TAG)
+                    navigation.selectedItemId = R.id.navigation_menyerap
+                }
+                else -> {
+                    showFragment(PenPolFragment.newInstance(), PenPolFragment.TAG)
+                    navigation.selectedItemId = R.id.navigation_menggali
+                }
+            }
         }
 
         val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
