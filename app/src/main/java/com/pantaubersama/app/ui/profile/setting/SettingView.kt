@@ -26,4 +26,5 @@ interface SettingView : BaseView {
     fun showLogoutFailedAlert()
     fun showVerifikasiScreen(step: VerificationStep)
     fun showFailedGetVerifikasi()
+    fun unsubscribeFCM()
 }
