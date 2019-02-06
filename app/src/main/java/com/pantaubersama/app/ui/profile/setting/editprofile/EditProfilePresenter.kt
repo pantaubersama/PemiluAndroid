@@ -90,7 +90,7 @@ class EditProfilePresenter @Inject constructor(
                     },
                     {
                         view?.onUsernameUnAvailable()
-                        view?.showError(it)
+//                        view?.showError(it)
                     }
                 )
         )
