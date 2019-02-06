@@ -23,6 +23,7 @@ import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OPEN_TAB_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_TANYA_KANDIDAT
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
 
@@ -62,6 +63,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
         btn_search.setOnClickListener { startActivity(Intent(this, SearchActivity::class.java)) }
         btn_pinned.setOnClickListener { startActivity(Intent(this, CatatanPilihanActivity::class.java)) }
+        btn_notification.visibleIf(false) // di hide dulu, karena belum diimplementasi @edityo 6/2/19
         btn_notification.setOnClickListener { startActivity(Intent(this, NotifActivity::class.java)) }
 
         if (savedInstanceState == null) {
