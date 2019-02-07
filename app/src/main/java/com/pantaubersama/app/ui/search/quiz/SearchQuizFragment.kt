@@ -123,8 +123,8 @@ class SearchQuizFragment : BaseFragment<SearchQuizPresenter>(), UpdateableFragme
 
     override fun showMoreData(list: List<KuisItem>) {
         adapter.addData(list)
-        view_empty_state.visibleIf(false)
-        recycler_view.visibleIf(true)
+        view_empty_state.visibleIf(adapter.itemCount == 0)
+        recycler_view.visibleIf(adapter.itemCount > 0)
     }
 
     override fun showFailedGetData() {
