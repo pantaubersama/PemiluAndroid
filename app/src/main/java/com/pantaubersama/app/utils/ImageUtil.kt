@@ -65,14 +65,18 @@ class ImageUtil {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        if (it.length() <= (maxSizeInMb * 1024 * 1024)) {
-                            listener.onSuccess(it)
+                        if (it.length() > 0) {
+                            if (it.length() <= (maxSizeInMb * 1024 * 1024)) {
+                                listener.onSuccess(it)
+                            } else {
+                                listener.onFailed(Throwable("Gambar terlalu besar"))
+                            }
                         } else {
-                            listener.onFailed(Throwable("Gambar terlalu besar"))
+                            listener.onFailed(Throwable("Gagal memuat gambar"))
                         }
                     },
                     {
-                        listener.onFailed(Throwable("Gambar terlalu besar"))
+                        listener.onFailed(Throwable("Gagal memuat gambar"))
                     }
                 )
         }
