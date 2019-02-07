@@ -215,7 +215,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK && resultCode != Activity.RESULT_CANCELED) {
             if (requestCode == PantauConstants.RequestCode.RC_CAMERA) {
                 showProgressDialog("Memperbarui avatar")
                 try {
