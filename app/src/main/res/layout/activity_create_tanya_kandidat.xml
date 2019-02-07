@@ -54,7 +54,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/question_hint"
+                        android:text="@string/question_short_hint"
                         android:fontFamily="@font/lato_regular"/>
 
                 </LinearLayout>
