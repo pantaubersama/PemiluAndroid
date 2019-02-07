@@ -65,7 +65,7 @@ class PantauConstants {
         const val EXTRA_SELECTED_FILTER_PILPRES = "EXTRA_SELECTED_FILTER"
         const val EXTRA_BANNER_INFO_TYPE = "EXTRA_BANNER_INFO_TYPE"
         const val EXTRA_BANNER_INFO_DATA = "EXTRA_BANNER_INFO_DATA"
-        const val EXTRA_TYPE_PILPRES = 0
+        const val EXTRA_TYPE_FEED = 0
         const val EXTRA_TYPE_JANPOL = 1
         const val EXTRA_TYPE_TANYA_KANDIDAT = 2
         const val EXTRA_TYPE_KUIS = 3

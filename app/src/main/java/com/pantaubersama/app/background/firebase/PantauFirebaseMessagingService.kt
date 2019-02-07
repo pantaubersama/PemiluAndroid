@@ -25,13 +25,16 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.notification.NotificationData
 import com.pantaubersama.app.data.model.notification.PemiluBroadcast
 import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import com.pantaubersama.app.ui.webview.ChromeTabActivity
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_FEED
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_DESC_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_NAME_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_BROADCAST
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_FEED
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_JANPOL
 import org.json.JSONObject
 
@@ -75,13 +78,34 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
                     createNotif(pendingIntent, title, description)
                 }
                 NOTIFICATION_TYPE_JANPOL -> {
-                    val notification = gson.fromJson(payload.getJSONObject(NotificationData().TAG).toString(), NotificationData::class.java)
-                    title = notification.title
-                    description = notification.body
+                    val notificationData = gson.fromJson(payload.getJSONObject(NotificationData().TAG).toString(), NotificationData::class.java)
+                    title = notificationData.title
+                    description = notificationData.body
                     intent = HomeActivity.setIntentByOpenedTab(this, EXTRA_TYPE_JANPOL)
                     intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
                     createNotif(pendingIntent, title, description)
+                }
+                NOTIFICATION_TYPE_FEED -> {
+                    val notificationData = gson.fromJson(payload.getJSONObject(NotificationData().TAG).toString(), NotificationData::class.java)
+                    title = notificationData.title
+                    description = notificationData.body
+                    intent = HomeActivity.setIntentByOpenedTab(this, EXTRA_TYPE_FEED)
+                    intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+                    createNotif(pendingIntent, title, description)
+                }
+                else -> {
+                    val notificationData: NotificationData? = gson.fromJson(payload.getJSONObject(NotificationData().TAG).toString(), NotificationData::class.java)
+                    title = notificationData?.title ?: remoteMessage.notification?.title
+                    description = notificationData?.body ?: remoteMessage.notification?.body
+
+                    intent = Intent(this, SplashScreenActivity::class.java)
+                    intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+                    title?.let {
+                        createNotif(pendingIntent, title, description)
+                    }
                 }
             }
         }
