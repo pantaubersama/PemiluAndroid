@@ -20,6 +20,7 @@ import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.search.SearchActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OPEN_TAB_TYPE
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_FEED
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_TANYA_KANDIDAT
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -70,6 +71,10 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
             when (tabDest) {
                 EXTRA_TYPE_JANPOL -> {
                     showFragment(LinimasaFragment.newInstanceOpenJanpol(), LinimasaFragment.TAG)
+                    navigation.selectedItemId = R.id.navigation_menyerap
+                }
+                EXTRA_TYPE_FEED -> {
+                    showFragment(LinimasaFragment(), LinimasaFragment.TAG)
                     navigation.selectedItemId = R.id.navigation_menyerap
                 }
                 else -> {
