@@ -156,32 +156,34 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
     }
 
     private fun getFacebookLoginSatus() {
-        if (AccessToken.getCurrentAccessToken() != null) {
-            facebook_connect_label.text = getString(R.string.label_connected_as)
-            val request = GraphRequest.newMeRequest(
-                    AccessToken.getCurrentAccessToken()
-            ) { me, _ ->
-                facebook_login_text.text = me?.getString("name")
-                val request = GraphRequest.newGraphPathRequest(
-                        AccessToken.getCurrentAccessToken(),
+        with(AccessToken.getCurrentAccessToken()) {
+            if (this != null) {
+                facebook_connect_label.text = getString(R.string.label_connected_as)
+                val request = GraphRequest.newMeRequest(
+                    this
+                ) { me, _ ->
+                    facebook_login_text.text = me?.getString("name")
+                    val request = GraphRequest.newGraphPathRequest(
+                        this,
                         "/" + me.getString("id") + "/picture"
-                ) {
-                    try {
-                        facebook_login_icon.loadUrl(it.jsonObject.getJSONObject("data").getString("url"))
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                    ) {
+                        try {
+                            facebook_login_icon.loadUrl(it.jsonObject.getJSONObject("data").getString("url"))
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
+                    val params = Bundle()
+                    params.putBoolean("redirect", false)
+                    request.parameters = params
+                    request.executeAsync()
                 }
-                val params = Bundle()
-                params.putBoolean("redirect", false)
-                request.parameters = params
                 request.executeAsync()
+            } else {
+                facebook_connect_label.text = getString(R.string.label_click_connect_facebook)
+                facebook_login_text.text = getString(R.string.label_connect_with_fb)
+                facebook_login_icon.setImageDrawable(ContextCompat.getDrawable(this@SettingActivity, R.drawable.facebook))
             }
-            request.executeAsync()
-        } else {
-            facebook_connect_label.text = getString(R.string.label_click_connect_facebook)
-            facebook_login_text.text = getString(R.string.label_connect_with_fb)
-            facebook_login_icon.setImageDrawable(ContextCompat.getDrawable(this@SettingActivity, R.drawable.facebook))
         }
     }
 
