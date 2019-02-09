@@ -13,16 +13,12 @@ import com.pantaubersama.app.R
 /**
  * @author edityomurti on 18/12/2018 15:28
  */
-class TabView : LinearLayout {
+class CustomTabView(context: Context) : LinearLayout(context) {
     private lateinit var tvTabTitle: TextView
 
-    constructor (context: Context?) : super(context) {
-        init()
-    }
-
-    private fun init() {
-        var inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        var view = inflater.inflate(R.layout.layout_custom_tab, this)
+    init {
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.layout_custom_tab, this)
         initView(view)
     }
 
@@ -30,7 +26,7 @@ class TabView : LinearLayout {
         tvTabTitle = view.findViewById(R.id.tv_tab_title)
     }
 
-    fun setTitleLabel(title: String) {
+    fun setTitleLabel(title: CharSequence?) {
         tvTabTitle.text = title
     }
 

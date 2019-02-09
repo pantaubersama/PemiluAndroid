@@ -4,10 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
 import com.extrainteger.symbolic.ui.SymbolicLoginButton
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayout
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.base.CommonFragment
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
@@ -100,6 +103,19 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
+        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                val pagerFragment = supportFragmentManager.primaryNavigationFragment
+                    ?.childFragmentManager?.findFragmentByTag(
+                    "android:switcher:" + R.id.view_pager + ":" + tab.position) as CommonFragment?
+
+                pagerFragment?.scrollToTop()
+            }
+
+            override fun onTabUnselected(p0: TabLayout.Tab) {}
+            override fun onTabSelected(tab: TabLayout.Tab) {}
+        })
+
         presenter.updateUser()
         url?.let { SymbolicLoginButton.loadPage(this@HomeActivity, it) }
     }
@@ -126,6 +142,11 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     override fun onResume() {
         super.onResume()
         presenter.updateUser()
+    }
+
+    fun setupTabsAndFilter(viewPager: ViewPager, onFilterClicked: () -> Unit) {
+        tab_layout.setupWithViewPager(viewPager)
+        btn_filter.setOnClickListener { onFilterClicked() }
     }
 
     override fun onSuccessLoadUser(profile: Profile) {
