@@ -10,7 +10,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.base.CommonFragment
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
@@ -105,11 +104,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
 
         tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab) {
-                val pagerFragment = supportFragmentManager.primaryNavigationFragment
-                    ?.childFragmentManager?.findFragmentByTag(
-                    "android:switcher:" + R.id.view_pager + ":" + tab.position) as CommonFragment?
-
-                pagerFragment?.scrollToTop()
+                (supportFragmentManager.primaryNavigationFragment as HomeFragment).scrollToTop()
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab) {}
