@@ -2,7 +2,11 @@ package com.pantaubersama.app.ui.home
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.TransitionDrawable
+import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.extrainteger.symbolic.ui.SymbolicLoginButton
@@ -20,6 +24,7 @@ import com.pantaubersama.app.ui.notification.NotifActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.search.SearchActivity
+import com.pantaubersama.app.ui.wordstadium.WordStadiumFragment
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OPEN_TAB_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_FEED
@@ -90,7 +95,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
             val (fragment, tag) = when (item.itemId) {
                 R.id.navigation_menyerap -> LinimasaFragment() to LinimasaFragment.TAG
                 R.id.navigation_menggali -> PenPolFragment.newInstance() to PenPolFragment.TAG
-//                R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
+                R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
 //                R.id.navigation_menjaga -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
 //                R.id.navigation_menjaga -> MenjagaFragment.newInstance() to MenjagaFragment.TAG   // di hide dulu, production belum ada api nya @edityo 30/01/19
 //                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
@@ -139,9 +144,19 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         presenter.updateUser()
     }
 
-    fun setupTabsAndFilter(viewPager: ViewPager, onFilterClicked: () -> Unit) {
+    fun setupTabsAndFilter(viewPager: ViewPager, onFilterClicked: View.OnClickListener?) {
         tab_layout.setupWithViewPager(viewPager)
-        btn_filter.setOnClickListener { onFilterClicked() }
+        btn_filter.setOnClickListener(onFilterClicked)
+        btn_filter.visibleIf(onFilterClicked != null)
+    }
+
+    fun changeTopBarColor(appbarColor: Int, statusBarColor: Int) {
+        val appbarDrawable = TransitionDrawable(arrayOf(appbar.background, ColorDrawable(appbarColor)))
+        appbar.background = appbarDrawable.also { it.startTransition(150) }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            window.statusBarColor = statusBarColor
+        }
     }
 
     override fun onSuccessLoadUser(profile: Profile) {

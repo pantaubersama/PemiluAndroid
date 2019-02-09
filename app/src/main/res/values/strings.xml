@@ -253,4 +253,6 @@
     <string name="lapor_label">Lapor</string>
     <string name="title_notification">Notifikasi</string>
     <string name="text_blank_notif">Belum ada notifikasi buat kamu</string>
+    <string name="publik_label">Publik</string>
+    <string name="personal_label">Personal</string>
 </resources>

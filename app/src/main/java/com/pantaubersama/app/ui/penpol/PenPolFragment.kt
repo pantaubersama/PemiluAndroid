@@ -21,7 +21,7 @@ class PenPolFragment : HomeFragment() {
             kuisFragment to getString(R.string.kata_kandidat_label))
     }
 
-    override fun onFilterClicked(tabPosition: Int) {
+    override val onFilterClicked = { tabPosition: Int ->
         when (tabPosition) {
             0 -> {
                 val intent = Intent(context, FilterTanyaKandidatActivity::class.java)

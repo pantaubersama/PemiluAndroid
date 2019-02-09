@@ -6,6 +6,7 @@
     <color name="colorAccent">#08BDA8</color>
     <color name="white">#ffffff</color>
     <color name="translucent_white">#d6ffffff</color>
+    <color name="translucent_white_2">#c2ffffff</color>
     <color name="gray_1">#f9f9f9</color>
     <color name="gray_2">#f4f4f4</color>
     <color name="gray_3">#ececec</color>
@@ -36,4 +37,5 @@
     <color name="blue_twitter">#059ff5</color>
     <color name="blue_fb">#475993</color>
     <color name="yellow">#f6b42a</color>
+    <color name="yellow_dark">#f49422</color>
 </resources>

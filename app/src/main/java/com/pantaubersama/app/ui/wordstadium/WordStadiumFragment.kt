@@ -2,41 +2,42 @@ package com.pantaubersama.app.ui.wordstadium
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.CommonFragment
-import com.pantaubersama.app.utils.ChromeTabUtil
-import com.pantaubersama.app.utils.PantauConstants.Networking.URL_PANTAU_BERSAMA
-import com.pantaubersama.app.utils.PantauConstants.Networking.URL_PANTAU_BERSAMA_FACEBOOK
-import com.pantaubersama.app.utils.PantauConstants.Networking.URL_PANTAU_BERSAMA_INSTAGRAM
-import com.pantaubersama.app.utils.PantauConstants.Networking.URL_PANTAU_BERSAMA_TWITTER
-import com.pantaubersama.app.utils.extensions.enableLottie
-import kotlinx.android.synthetic.main.layout_coming_soon.*
+import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.ui.home.HomeFragment
+import com.pantaubersama.app.utils.extensions.color
 
-class WordStadiumFragment : CommonFragment() {
+class WordStadiumFragment : HomeFragment() {
 
     companion object {
-        val TAG = WordStadiumFragment::class.java.simpleName
+        val TAG: String = WordStadiumFragment::class.java.simpleName
 
         fun newInstance(): WordStadiumFragment {
             return WordStadiumFragment()
         }
     }
 
-    override fun setLayout(): Int {
-        return R.layout.fragment_word_stadium
-    }
+    override val pagerFragments: List<Pair<Fragment, String>>
+        get() = listOf(
+            Fragment() to getString(R.string.publik_label),
+            Fragment() to getString(R.string.personal_label))
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        lottie_coming_soon.enableLottie(true)
-
-        iv_logo_pantau_web.setOnClickListener { ChromeTabUtil(context!!).loadUrl(URL_PANTAU_BERSAMA) }
-        iv_logo_facebook.setOnClickListener { ChromeTabUtil(context!!).forceLoadUrl(URL_PANTAU_BERSAMA_FACEBOOK) }
-        iv_logo_instagram.setOnClickListener { ChromeTabUtil(context!!).forceLoadUrl(URL_PANTAU_BERSAMA_INSTAGRAM) }
-        iv_logo_twitter.setOnClickListener { ChromeTabUtil(context!!).forceLoadUrl(URL_PANTAU_BERSAMA_TWITTER) }
+        super.initView(view, savedInstanceState)
+        changeTopBarColor(isHidden)
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        lottie_coming_soon.enableLottie(!hidden)
+        changeTopBarColor(hidden)
+    }
+
+    private fun changeTopBarColor(hidden: Boolean) {
+        val (appbarColor, statusBarColor) = if (hidden)
+            color(R.color.colorPrimary) to color(R.color.colorPrimaryDark)
+        else
+            color(R.color.yellow) to color(R.color.yellow_dark)
+        (requireActivity() as HomeActivity).changeTopBarColor(appbarColor, statusBarColor)
     }
 }

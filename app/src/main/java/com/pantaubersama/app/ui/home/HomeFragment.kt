@@ -15,6 +15,8 @@ abstract class HomeFragment : CommonFragment() {
 
     abstract val pagerFragments: List<Pair<Fragment, String>>
 
+    open val onFilterClicked: ((tabPosition: Int) -> Unit)? = null
+
     override fun setLayout(): Int = R.layout.fragment_view_pager
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
@@ -42,12 +44,10 @@ abstract class HomeFragment : CommonFragment() {
     }
 
     private fun setupTabsAndFilter() {
-        (requireActivity() as HomeActivity).setupTabsAndFilter(view_pager) {
-            onFilterClicked(currentTabPosition)
-        }
+        (requireActivity() as HomeActivity).setupTabsAndFilter(view_pager, onFilterClicked?.run {
+            View.OnClickListener { invoke(currentTabPosition) }
+        })
     }
-
-    abstract fun onFilterClicked(tabPosition: Int)
 
     fun scrollToTop() {
         val pagerFragment = childFragmentManager.findFragmentByTag("android:switcher:"

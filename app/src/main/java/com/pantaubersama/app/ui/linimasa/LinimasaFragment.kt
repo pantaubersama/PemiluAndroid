@@ -53,7 +53,7 @@ class LinimasaFragment : HomeFragment() {
         view_pager.currentItem = selectedTab
     }
 
-    override fun onFilterClicked(tabPosition: Int) {
+    override val onFilterClicked = { tabPosition: Int ->
         when (tabPosition) {
             0 -> startActivityForResult(Intent(
                 context, FilterPilpresActivity::class.java),
