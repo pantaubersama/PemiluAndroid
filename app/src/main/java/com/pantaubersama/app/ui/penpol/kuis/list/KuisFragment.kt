@@ -134,18 +134,26 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
         adapter.setDataEnd(true)
     }
 
-    companion object {
-        fun newInstance(): KuisFragment {
-            return KuisFragment()
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 PantauConstants.RequestCode.RC_REFRESH_KUIS_ON_RESULT -> getTopPageItems()
             }
+        }
+    }
+
+    override fun scrollToTop(smoothScroll: Boolean) {
+        if (smoothScroll) {
+            recycler_view.smoothScrollToPosition(0)
+        } else {
+            recycler_view.scrollToPosition(0)
+        }
+    }
+
+    companion object {
+        fun newInstance(): KuisFragment {
+            return KuisFragment()
         }
     }
 }
