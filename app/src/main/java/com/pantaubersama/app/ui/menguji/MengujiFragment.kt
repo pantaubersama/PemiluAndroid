@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.wordstadium
+package com.pantaubersama.app.ui.menguji
 
 import android.os.Bundle
 import android.view.View
@@ -8,13 +8,13 @@ import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.home.HomeFragment
 import com.pantaubersama.app.utils.extensions.color
 
-class WordStadiumFragment : HomeFragment() {
+class MengujiFragment : HomeFragment() {
 
     companion object {
-        val TAG: String = WordStadiumFragment::class.java.simpleName
+        val TAG: String = MengujiFragment::class.java.simpleName
 
-        fun newInstance(): WordStadiumFragment {
-            return WordStadiumFragment()
+        fun newInstance(): MengujiFragment {
+            return MengujiFragment()
         }
     }
 

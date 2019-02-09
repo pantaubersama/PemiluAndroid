@@ -24,7 +24,7 @@ import com.pantaubersama.app.ui.notification.NotifActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.search.SearchActivity
-import com.pantaubersama.app.ui.wordstadium.WordStadiumFragment
+import com.pantaubersama.app.ui.menguji.MengujiFragment
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OPEN_TAB_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_FEED
@@ -95,8 +95,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
             val (fragment, tag) = when (item.itemId) {
                 R.id.navigation_menyerap -> LinimasaFragment() to LinimasaFragment.TAG
                 R.id.navigation_menggali -> PenPolFragment.newInstance() to PenPolFragment.TAG
-                R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
-//                R.id.navigation_menjaga -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
+                R.id.navigation_menguji -> MengujiFragment.newInstance() to MengujiFragment.TAG
 //                R.id.navigation_menjaga -> MenjagaFragment.newInstance() to MenjagaFragment.TAG   // di hide dulu, production belum ada api nya @edityo 30/01/19
 //                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
                 else -> throw IllegalStateException("unknown menu")
