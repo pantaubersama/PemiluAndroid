@@ -9,4 +9,5 @@ interface PublikView : BaseView {
     fun showDebatLive(list: List<DebatItem.LiveNow>)
     fun showDebatComingSoon(list: List<DebatItem.ComingSoon>)
     fun showDebatDone(list: List<DebatItem.Done>)
+    fun showDebatOpen(list: List<DebatItem.Open>)
 }

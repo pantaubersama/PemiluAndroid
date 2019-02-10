@@ -28,6 +28,7 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
     private val debatLiveAdapter by unSyncLazy { BriefDebatAdapter(true) }
     private val debatComingAdapter by unSyncLazy { BriefDebatAdapter(false) }
     private val debatDoneAdapter by unSyncLazy { BriefDebatAdapter(false) }
+    private val debatOpenAdapter by unSyncLazy { BriefDebatAdapter(false) }
 
     private val recyclerItemDecoration by unSyncLazy {
         OffsetItemDecoration(0, top = dip(16), ignoreFirstAndLast = true)
@@ -57,6 +58,7 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
         presenter.getDebatLive()
         presenter.getDebatComingSoon()
         presenter.getDebatDone()
+        presenter.getDebatOpen()
     }
 
     private fun setupBanner() {
@@ -79,6 +81,7 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
 
         setupDebatComingSoon()
         setupDebatDone()
+        setupDebatOpen()
     }
 
     private fun setupDebatComingSoon() {
@@ -93,6 +96,13 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
         recycler_debat_done.adapter = debatDoneAdapter
         recycler_debat_done.addItemDecoration(recyclerItemDecoration)
         button_more_debat_done.setOnClickListener { }
+    }
+
+    private fun setupDebatOpen() {
+        label_debat_open.text = "Challenge"
+        recycler_debat_open.adapter = debatOpenAdapter
+        recycler_debat_open.addItemDecoration(recyclerItemDecoration)
+        button_more_debat_open.setOnClickListener { }
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {
@@ -110,6 +120,10 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
 
     override fun showDebatDone(list: List<DebatItem.Done>) {
         debatDoneAdapter.debatItems = list
+    }
+
+    override fun showDebatOpen(list: List<DebatItem.Open>) {
+        debatOpenAdapter.debatItems = list
     }
 
     override fun showLoading() {

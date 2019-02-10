@@ -120,6 +120,23 @@
                 app:riv_corner_radius="25dp" />
 
             <TextView
+                android:id="@+id/text_opponent_count"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/circle_translucent_black"
+                android:fontFamily="@font/lato_black"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/image_avatar_2"
+                app:layout_constraintEnd_toEndOf="@id/image_avatar_2"
+                app:layout_constraintStart_toStartOf="@id/image_avatar_2"
+                app:layout_constraintTop_toTopOf="@id/image_avatar_2"
+                tools:text="\?" />
+
+            <TextView
                 android:id="@+id/text_name_2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

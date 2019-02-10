@@ -25,7 +25,11 @@ sealed class DebatItem {
         override val type: String = "DONE"
     }
 
-    data class OpenChallenge(override val debatDetail: DebatDetail) : DebatItem() {
+    data class Open(
+        override val debatDetail: DebatDetail,
+        val pendingOpponent: Int,
+        val isMyDebat: Boolean
+    ) : DebatItem() {
         override val type: String = "OPEN CHALLENGE"
     }
 }

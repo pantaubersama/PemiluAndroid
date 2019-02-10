@@ -35,4 +35,12 @@ class PublikPresenter @Inject constructor() : BasePresenter<PublikView>() {
         view?.showDebatDone(debatList)
     }
 
+    fun getDebatOpen() {
+        val debatList = listOf(
+            DebatItem.Open(DebatDetail("Raja Kampreta", "", "ekonomi"), 0, false),
+            DebatItem.Open(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 0, true),
+            DebatItem.Open(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 1, true))
+        view?.showDebatOpen(debatList)
+    }
+
 }
