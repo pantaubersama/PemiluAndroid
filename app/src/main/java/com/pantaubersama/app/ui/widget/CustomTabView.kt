@@ -1,28 +1,28 @@
 package com.pantaubersama.app.ui.widget
 
 import android.content.Context
-import android.graphics.Typeface
 import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.core.content.res.ResourcesCompat
 import com.pantaubersama.app.R
 
 /**
  * @author edityomurti on 18/12/2018 15:28
  */
-class TabView : LinearLayout {
+class CustomTabView(context: Context) : LinearLayout(context) {
+
     private lateinit var tvTabTitle: TextView
 
-    constructor (context: Context?) : super(context) {
-        init()
-    }
+    private val typefaceRegular = ResourcesCompat.getFont(context, R.font.lato_regular)
+    private val typefaceBold = ResourcesCompat.getFont(context, R.font.lato_black)
 
-    private fun init() {
-        var inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        var view = inflater.inflate(R.layout.layout_custom_tab, this)
+    init {
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.layout_custom_tab, this)
         initView(view)
     }
 
@@ -30,7 +30,7 @@ class TabView : LinearLayout {
         tvTabTitle = view.findViewById(R.id.tv_tab_title)
     }
 
-    fun setTitleLabel(title: String) {
+    fun setTitleLabel(title: CharSequence?) {
         tvTabTitle.text = title
     }
 
@@ -41,7 +41,7 @@ class TabView : LinearLayout {
     override fun setSelected(selected: Boolean) {
         super.setSelected(selected)
 
-        tvTabTitle.setTextColor(if (selected) ContextCompat.getColor(context, R.color.white) else ContextCompat.getColor(context, R.color.gray_7))
-        tvTabTitle.setTypeface(null, if (selected) Typeface.BOLD else Typeface.NORMAL)
+        tvTabTitle.setTextColor(if (selected) ContextCompat.getColor(context, R.color.white) else ContextCompat.getColor(context, R.color.translucent_white_2))
+        tvTabTitle.typeface = if (selected) typefaceBold else typefaceRegular
     }
 }

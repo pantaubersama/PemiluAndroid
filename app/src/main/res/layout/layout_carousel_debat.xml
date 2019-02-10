@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_1"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
+
+    <ImageView
+        android:id="@+id/icon_carousel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/ic_outline_live" />
+
+    <TextView
+        android:id="@+id/text_carousel_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/lato_italic"
+        android:includeFontPadding="false"
+        android:textColor="@color/black_2"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/icon_carousel"
+        app:layout_constraintStart_toEndOf="@id/icon_carousel"
+        app:layout_constraintTop_toTopOf="@id/icon_carousel"
+        tools:text="Live Now" />
+
+    <Button
+        android:id="@+id/button_see_more"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:fontFamily="@font/lato_bold"
+        android:includeFontPadding="false"
+        android:minHeight="24dp"
+        android:text="See more &gt;&gt;"
+        android:textAllCaps="false"
+        android:textColor="@color/yellow_dark"
+        android:textSize="10sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/text_carousel_title"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/carousel_debat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/icon_carousel"
+        tools:listitem="@layout/item_carousel_debat" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

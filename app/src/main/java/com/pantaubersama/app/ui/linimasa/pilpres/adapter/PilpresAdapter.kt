@@ -14,13 +14,13 @@ import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.base.viewholder.LoadingViewHolder
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.linimasa.FeedsItem
+import com.pantaubersama.app.ui.widget.BannerViewHolder
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_BANNER
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_FEEDS
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_pilpres_tweet.*
 
 class PilpresAdapter(private val isTwitterAvailable: Boolean) : BaseRecyclerAdapter() {
@@ -29,7 +29,9 @@ class PilpresAdapter(private val isTwitterAvailable: Boolean) : BaseRecyclerAdap
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
+            TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container),
+                onClick = { listener?.onClickBanner(data[it] as BannerInfo) },
+                onRemove = { removeBanner() })
             TYPE_FEEDS -> FeedViewHolder(parent.inflate(R.layout.item_pilpres_tweet))
             else -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
         }
@@ -39,16 +41,6 @@ class PilpresAdapter(private val isTwitterAvailable: Boolean) : BaseRecyclerAdap
         (holder as? BannerViewHolder)?.bind(data[position] as BannerInfo)
         (holder as? FeedViewHolder)?.bind(data[position] as FeedsItem)
         (holder as? LoadingViewHolder)?.bind()
-    }
-
-    inner class BannerViewHolder(override val containerView: View)
-        : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: BannerInfo) {
-            tv_banner_text.text = item.body
-            iv_banner_image.loadUrl(item.headerImage?.url)
-            rl_banner_container.setOnClickListener { listener?.onClickBanner(item) }
-            iv_banner_close.setOnClickListener { removeBanner() }
-        }
     }
 
     inner class FeedViewHolder(override val containerView: View)
@@ -87,7 +79,7 @@ class PilpresAdapter(private val isTwitterAvailable: Boolean) : BaseRecyclerAdap
         addItem(bannerInfo, 0)
     }
 
-    fun removeBanner() {
+    private fun removeBanner() {
         if (data[0] is BannerInfo) {
             deleteItem(0)
         }

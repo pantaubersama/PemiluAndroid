@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/bg_carousel_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/bg_carousel_debat_live"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_3"
+            app:layout_constraintTop_toBottomOf="@id/bg_carousel_item" />
+
+        <ImageView
+            android:id="@+id/button_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:src="@drawable/ic_more_horiz"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/image_avatar_2"
+            app:layout_constraintEnd_toEndOf="@id/image_avatar_2"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/icon_debat_type"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_outline_live"
+            app:layout_constraintBottom_toBottomOf="@id/bg_carousel_item"
+            app:layout_constraintEnd_toStartOf="@id/text_debat_type"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/bg_carousel_item"
+            app:layout_constraintTop_toTopOf="@id/bg_carousel_item"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/text_debat_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:includeFontPadding="false"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/bg_carousel_item"
+            app:layout_constraintEnd_toEndOf="@id/bg_carousel_item"
+            app:layout_constraintStart_toEndOf="@id/icon_debat_type"
+            app:layout_constraintTop_toTopOf="@id/bg_carousel_item"
+            tools:text="LIVE NOW" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/image_avatar_1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ava_calon_1"
+            app:layout_constraintBottom_toBottomOf="@id/bg_carousel_item"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bg_carousel_item"
+            app:riv_border_color="@color/white"
+            app:riv_border_width="1dp"
+            app:riv_corner_radius="25dp" />
+
+        <TextView
+            android:id="@+id/text_name_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/lato_regular"
+            android:textColor="@color/black_1"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@id/image_avatar_1"
+            app:layout_constraintTop_toBottomOf="@id/image_avatar_1"
+            tools:text="Ratu CebonganYK" />
+
+        <TextView
+            android:id="@+id/text_versus"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/bg_versus"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="center_horizontal"
+            android:includeFontPadding="false"
+            android:paddingTop="4dp"
+            android:text="VS"
+            android:textColor="@color/yellow"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bg_carousel_item" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/image_avatar_2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ava_calon_2"
+            app:layout_constraintBottom_toBottomOf="@id/bg_carousel_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bg_carousel_item"
+            app:riv_border_color="@color/white"
+            app:riv_border_width="1dp"
+            app:riv_corner_radius="25dp" />
+
+        <TextView
+            android:id="@+id/text_name_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/lato_regular"
+            android:textColor="@color/black_1"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@id/image_avatar_2"
+            app:layout_constraintTop_toBottomOf="@id/image_avatar_2"
+            tools:text="Raja Kampreta" />
+
+        <TextView
+            android:id="@+id/text_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_rounded_4dp_outline_yellow_light"
+            android:fontFamily="@font/lato_italic"
+            android:paddingStart="10dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="2dp"
+            android:textColor="@color/gray_dark_3"
+            android:textSize="8sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_versus"
+            tools:text="ekonomi" />
+
+        <TextView
+            android:id="@+id/text_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/bw_modelica_bold"
+            android:gravity="center_horizontal"
+            android:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%.2 periode yuk, biar 10,54%."
+            android:textColor="@color/black_2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_tag" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
