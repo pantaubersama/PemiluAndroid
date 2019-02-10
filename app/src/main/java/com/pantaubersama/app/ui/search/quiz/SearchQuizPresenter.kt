@@ -47,7 +47,7 @@ class SearchQuizPresenter @Inject constructor(
                 .subscribe({
                     if (it.isNotEmpty()) {
                         view?.showFirstPage(it)
-                    } else if (filter != Filter.KUIS_ALL){
+                    } else if (filter != Filter.KUIS_ALL) {
                         view?.showEmptyData()
                     }
 
