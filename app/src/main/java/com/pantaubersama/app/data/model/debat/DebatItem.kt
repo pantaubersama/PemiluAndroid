@@ -8,6 +8,14 @@ sealed class DebatItem {
         override val type: String = "LIVE NOW"
     }
 
+    data class ComingSoon(
+        override val debatDetail: DebatDetail,
+        val date: String,
+        val startEndTime: String
+    ) : DebatItem() {
+        override val type: String = "COMING SOON"
+    }
+
     data class OpenChallenge(override val debatDetail: DebatDetail) : DebatItem() {
         override val type: String = "OPEN CHALLENGE"
     }
