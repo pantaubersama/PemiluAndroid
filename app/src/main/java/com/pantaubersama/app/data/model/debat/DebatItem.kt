@@ -16,6 +16,15 @@ sealed class DebatItem {
         override val type: String = "COMING SOON"
     }
 
+    data class Done(
+        override val debatDetail: DebatDetail,
+        val clap1: Int,
+        val clap2: Int,
+        val favoriteCount: Int
+    ) : DebatItem() {
+        override val type: String = "DONE"
+    }
+
     data class OpenChallenge(override val debatDetail: DebatDetail) : DebatItem() {
         override val type: String = "OPEN CHALLENGE"
     }

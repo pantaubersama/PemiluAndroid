@@ -33,9 +33,9 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/bg_coming_soon"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/bg_coming_soon" />
 
             <View
                 android:layout_width="match_parent"
@@ -179,9 +179,9 @@
                     android:fontFamily="@font/lato_regular"
                     android:gravity="center_horizontal"
                     android:lineSpacingExtra="3sp"
+                    android:text="Clap"
                     android:textColor="#7c7c7c"
-                    android:textSize="9sp"
-                    tools:text="Clap" />
+                    android:textSize="9sp" />
 
                 <TextView
                     android:id="@+id/text_clap_2"
@@ -210,6 +210,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/bg_rounded_4dp_outline_yellow_light"
         android:fontFamily="@font/lato_italic"
+        android:includeFontPadding="false"
         android:paddingStart="10dp"
         android:paddingTop="2dp"
         android:paddingEnd="10dp"
@@ -219,6 +220,23 @@
         app:layout_constraintStart_toEndOf="@id/guide"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="ekonomi" />
+
+    <TextView
+        android:id="@+id/text_favorite_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:drawableStart="@drawable/ic_heart_small"
+        android:drawablePadding="4dp"
+        android:fontFamily="@font/lato_bold"
+        android:includeFontPadding="false"
+        android:textColor="@color/black_3"
+        android:textSize="10sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/button_more"
+        app:layout_constraintEnd_toStartOf="@id/button_more"
+        app:layout_constraintTop_toTopOf="@id/button_more"
+        tools:text="50" />
 
     <ImageView
         android:id="@+id/button_more"

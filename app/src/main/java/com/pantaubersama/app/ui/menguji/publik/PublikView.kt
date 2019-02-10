@@ -8,4 +8,5 @@ interface PublikView : BaseView {
     fun showBanner(bannerInfo: BannerInfo)
     fun showDebatLive(list: List<DebatItem.LiveNow>)
     fun showDebatComingSoon(list: List<DebatItem.ComingSoon>)
+    fun showDebatDone(list: List<DebatItem.Done>)
 }

@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:fontFamily="@font/lato_bold"
     android:includeFontPadding="false"
+    android:letterSpacing="0"
     android:minHeight="24dp"
     android:text="@string/see_more"
     android:textAllCaps="false"

@@ -26,8 +26,8 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
     override lateinit var presenter: PublikPresenter
 
     private val debatLiveAdapter by unSyncLazy { BriefDebatAdapter(true) }
-
     private val debatComingAdapter by unSyncLazy { BriefDebatAdapter(false) }
+    private val debatDoneAdapter by unSyncLazy { BriefDebatAdapter(false) }
 
     private val recyclerItemDecoration by unSyncLazy {
         OffsetItemDecoration(0, top = dip(16), ignoreFirstAndLast = true)
@@ -56,6 +56,7 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
         presenter.getBanner()
         presenter.getDebatLive()
         presenter.getDebatComingSoon()
+        presenter.getDebatDone()
     }
 
     private fun setupBanner() {
@@ -77,6 +78,7 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
         text_timeline_description.text = "Daftar challenge dan debat yang akan atau sudah berlangsung ditampilkan semua di sini."
 
         setupDebatComingSoon()
+        setupDebatDone()
     }
 
     private fun setupDebatComingSoon() {
@@ -84,6 +86,13 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
         recycler_debat_coming.adapter = debatComingAdapter
         recycler_debat_coming.addItemDecoration(recyclerItemDecoration)
         button_more_debat_coming.setOnClickListener { }
+    }
+
+    private fun setupDebatDone() {
+        label_debat_done.text = "Debat: Done"
+        recycler_debat_done.adapter = debatDoneAdapter
+        recycler_debat_done.addItemDecoration(recyclerItemDecoration)
+        button_more_debat_done.setOnClickListener { }
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {
@@ -97,6 +106,10 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
 
     override fun showDebatComingSoon(list: List<DebatItem.ComingSoon>) {
         debatComingAdapter.debatItems = list
+    }
+
+    override fun showDebatDone(list: List<DebatItem.Done>) {
+        debatDoneAdapter.debatItems = list
     }
 
     override fun showLoading() {

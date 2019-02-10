@@ -27,4 +27,12 @@ class PublikPresenter @Inject constructor() : BasePresenter<PublikView>() {
         view?.showDebatComingSoon(debatList)
     }
 
+    fun getDebatDone() {
+        val debatList = (0..2).map {
+            DebatItem.Done(DebatDetail("Ratu CebonganYK", "Raja Kampreta", "ekonomi"),
+                70, 70, 50)
+        }
+        view?.showDebatDone(debatList)
+    }
+
 }
