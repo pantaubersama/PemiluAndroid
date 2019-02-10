@@ -8,7 +8,28 @@ sealed class DebatItem {
         override val type: String = "LIVE NOW"
     }
 
-    data class OpenChallenge(override val debatDetail: DebatDetail) : DebatItem() {
+    data class ComingSoon(
+        override val debatDetail: DebatDetail,
+        val date: String,
+        val startEndTime: String
+    ) : DebatItem() {
+        override val type: String = "COMING SOON"
+    }
+
+    data class Done(
+        override val debatDetail: DebatDetail,
+        val clap1: Int,
+        val clap2: Int,
+        val favoriteCount: Int
+    ) : DebatItem() {
+        override val type: String = "DONE"
+    }
+
+    data class Open(
+        override val debatDetail: DebatDetail,
+        val pendingOpponent: Int,
+        val isMyDebat: Boolean
+    ) : DebatItem() {
         override val type: String = "OPEN CHALLENGE"
     }
 }

@@ -23,6 +23,8 @@
 
                 <include layout="@layout/layout_carousel_debat" />
 
+                <include layout="@layout/layout_debat_list" />
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

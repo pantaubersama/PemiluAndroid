@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/text_timeline_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/lato_black"
+        android:textColor="@color/black_2"
+        android:textSize="16sp"
+        tools:text="LINIMASA DEBAT" />
+
+    <TextView
+        android:id="@+id/text_timeline_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/lato_regular"
+        android:textColor="@color/gray_4"
+        android:textSize="12sp"
+        tools:text="Daftar challenge dan debat yang akan atau sudah berlangsung ditampilkan semua di sini." />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_3" />
+
+    <TextView
+        android:id="@+id/label_debat_coming"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:drawableStart="@drawable/ic_outline_debat_coming"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/lato_italic"
+        android:textColor="@color/black_2"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="Debat: Coming Soon" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_debat_coming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_debat_small" />
+
+    <include
+        android:id="@+id/button_more_debat_coming"
+        layout="@layout/button_see_more_yellow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/label_debat_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:drawableStart="@drawable/ic_outline_debat_done"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/lato_italic"
+        android:textColor="@color/black_2"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="Debat: Done" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_debat_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_debat_small" />
+
+    <include
+        android:id="@+id/button_more_debat_done"
+        layout="@layout/button_see_more_yellow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/label_debat_open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:drawableStart="@drawable/ic_outline_challenge"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/lato_italic"
+        android:textColor="@color/black_2"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="Challenge" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_debat_open"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_debat_small" />
+
+    <include
+        android:id="@+id/button_more_debat_open"
+        layout="@layout/button_see_more_yellow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>
