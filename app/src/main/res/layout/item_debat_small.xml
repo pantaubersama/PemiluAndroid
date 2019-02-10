@@ -21,28 +21,27 @@
         app:cardElevation="0dp"
         app:layout_constraintEnd_toStartOf="@id/guide"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/gray_3"
-        app:strokeWidth="1dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="4dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/bg_carousel_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
+                android:scaleType="fitXY"
                 android:src="@drawable/bg_coming_soon"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray_3"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_rounded_bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bg_carousel_item" />
 
             <TextView
@@ -141,11 +140,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
                 android:fontFamily="@font/lato_medium"
                 android:gravity="center_horizontal"
                 android:text="24 Maret 2019  •  16:00 - 17:00"
                 android:textColor="@color/gray_4"
                 android:textSize="9sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_name_1" />
 
             <LinearLayout
@@ -153,8 +154,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/text_status">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_name_1">
 
                 <TextView
                     android:id="@+id/text_clap_1"
@@ -234,11 +237,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:fontFamily="@font/bw_modelica_bold"
+        android:fontFamily="@font/bw_modelica_regular"
         android:lines="4"
         android:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%.2 periode yuk, biar 10,54%."
         android:textColor="@color/black_2"
-        android:textSize="12sp"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/text_tag"
