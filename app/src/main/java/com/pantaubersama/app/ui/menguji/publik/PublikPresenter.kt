@@ -4,12 +4,21 @@ import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.debat.DebatDetail
 import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.utils.extensions.unSyncLazy
 import javax.inject.Inject
 
 class PublikPresenter @Inject constructor() : BasePresenter<PublikView>() {
 
+    private val isPublik: Boolean
+        get() = view?.isPublik ?: true
+
     fun getBanner() {
-        view?.showBanner(BannerInfo(title = "Menguji", body = "Explore WordStadium. Kamu bisa cari tantangan terbuka dan debat yang akan atau sudah berlangsung."))
+        val body = if (isPublik)
+            "Chivalry over Bigotry\nExplore WordStadium. Kamu bisa cari tantangan terbuka dan debat yang akan atau sudah berlangsung."
+        else
+            "Be truthful and gentle.\nUtarakan pernyataan kamu mengenai sebuah bidang kajian. Buat tantangan dan undang orang untuk berdebat denganmu!"
+
+        view?.showBanner(BannerInfo(title = "Menguji", body = body))
     }
 
     fun getDebatLive() {

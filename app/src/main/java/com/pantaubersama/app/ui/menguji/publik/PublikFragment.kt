@@ -25,7 +25,9 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
     @Inject
     override lateinit var presenter: PublikPresenter
 
-    private val debatLiveAdapter by unSyncLazy { BriefDebatAdapter(true) }
+    override val isPublik by unSyncLazy { arguments?.getBoolean(ARG_PUBLIK_TAB) ?: true }
+
+    private val debatCarouselAdapter by unSyncLazy { BriefDebatAdapter(isPublik) }
     private val debatComingAdapter by unSyncLazy { BriefDebatAdapter(false) }
     private val debatDoneAdapter by unSyncLazy { BriefDebatAdapter(false) }
     private val debatOpenAdapter by unSyncLazy { BriefDebatAdapter(false) }
@@ -70,7 +72,7 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
         icon_carousel.setImageResource(R.drawable.ic_outline_live)
         text_carousel_title.text = "Live Now"
         button_more_live.setOnClickListener { }
-        carousel_debat.adapter = debatLiveAdapter
+        carousel_debat.adapter = debatCarouselAdapter
         carousel_debat.addItemDecoration(OffsetItemDecoration(dip(16), top = 0,
             orientation = RecyclerView.HORIZONTAL))
     }
@@ -111,7 +113,7 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
     }
 
     override fun showDebatLive(list: List<DebatItem.LiveNow>) {
-        debatLiveAdapter.debatItems = list
+        debatCarouselAdapter.debatItems = list
     }
 
     override fun showDebatComingSoon(list: List<DebatItem.ComingSoon>) {
@@ -130,5 +132,17 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
     }
 
     override fun dismissLoading() {
+    }
+
+    companion object {
+        private const val ARG_PUBLIK_TAB = "ARG_PUBLIK_TAB"
+
+        fun newInstance(isPublikTab: Boolean): PublikFragment {
+            return PublikFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(ARG_PUBLIK_TAB, isPublikTab)
+                }
+            }
+        }
     }
 }
