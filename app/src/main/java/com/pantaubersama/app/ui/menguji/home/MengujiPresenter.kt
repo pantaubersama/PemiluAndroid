@@ -1,13 +1,12 @@
-package com.pantaubersama.app.ui.menguji.publik
+package com.pantaubersama.app.ui.menguji.home
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.debat.DebatDetail
 import com.pantaubersama.app.data.model.debat.DebatItem
-import com.pantaubersama.app.utils.extensions.unSyncLazy
 import javax.inject.Inject
 
-class PublikPresenter @Inject constructor() : BasePresenter<PublikView>() {
+class MengujiPresenter @Inject constructor() : BasePresenter<MengujiView>() {
 
     private val isPublik: Boolean
         get() = view?.isPublik ?: true

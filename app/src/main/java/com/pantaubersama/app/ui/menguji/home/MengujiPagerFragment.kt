@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.menguji.publik
+package com.pantaubersama.app.ui.menguji.home
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,7 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.debat.DebatItem
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.menguji.viewadapter.BriefDebatAdapter
+import com.pantaubersama.app.ui.menguji.adapter.BriefDebatAdapter
 import com.pantaubersama.app.utils.OffsetItemDecoration
 import com.pantaubersama.app.utils.extensions.dip
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -20,10 +20,10 @@ import kotlinx.android.synthetic.main.layout_carousel_debat.*
 import kotlinx.android.synthetic.main.layout_debat_list.*
 import javax.inject.Inject
 
-class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
+class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
 
     @Inject
-    override lateinit var presenter: PublikPresenter
+    override lateinit var presenter: MengujiPresenter
 
     override val isPublik by unSyncLazy { arguments?.getBoolean(ARG_PUBLIK_TAB) ?: true }
 
@@ -137,8 +137,8 @@ class PublikFragment : BaseFragment<PublikPresenter>(), PublikView {
     companion object {
         private const val ARG_PUBLIK_TAB = "ARG_PUBLIK_TAB"
 
-        fun newInstance(isPublikTab: Boolean): PublikFragment {
-            return PublikFragment().apply {
+        fun newInstance(isPublikTab: Boolean): MengujiPagerFragment {
+            return MengujiPagerFragment().apply {
                 arguments = Bundle().apply {
                     putBoolean(ARG_PUBLIK_TAB, isPublikTab)
                 }

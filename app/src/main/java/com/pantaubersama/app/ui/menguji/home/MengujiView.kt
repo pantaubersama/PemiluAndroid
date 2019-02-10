@@ -1,10 +1,10 @@
-package com.pantaubersama.app.ui.menguji.publik
+package com.pantaubersama.app.ui.menguji.home
 
 import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.debat.DebatItem
 
-interface PublikView : BaseView {
+interface MengujiView : BaseView {
 
     val isPublik: Boolean
 
