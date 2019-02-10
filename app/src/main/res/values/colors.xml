@@ -38,4 +38,5 @@
     <color name="blue_fb">#475993</color>
     <color name="yellow">#f6b42a</color>
     <color name="yellow_dark">#f49422</color>
+    <color name="yellow_light">#f9d65c</color>
 </resources>

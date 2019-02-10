@@ -21,6 +21,8 @@
 
                 <include layout="@layout/item_banner_container" />
 
+                <include layout="@layout/layout_carousel_debat" />
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
