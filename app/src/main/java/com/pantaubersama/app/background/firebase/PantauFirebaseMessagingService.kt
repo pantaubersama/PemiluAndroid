@@ -34,6 +34,7 @@ import com.pantaubersama.app.data.model.notification.QuizNotif
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.penpol.kuis.detail.DetailKuisActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
+import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import com.pantaubersama.app.ui.webview.ChromeTabActivity
@@ -48,6 +49,7 @@ import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYP
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_FEED
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_JANPOL
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_PROFILE
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_QUESTION
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_QUIZ
 import org.json.JSONObject
@@ -168,6 +170,15 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
                             }
                         })
                         .submit()
+                }
+                NOTIFICATION_TYPE_PROFILE -> {
+                    title = notificationData?.title
+                    description = notificationData?.body
+                    intent = Intent(this, ProfileActivity::class.java)
+                    intent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+                    Logger.d("NOTIFICATION_TYPE_PROFILE")
+                    createNotif(pendingIntent, title, description)
                 }
                 else -> {
                     title = notificationData?.title ?: remoteMessage.notification?.title
