@@ -14,7 +14,7 @@ import com.pantaubersama.app.utils.extensions.dip
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.unSyncLazy
 import com.pantaubersama.app.utils.extensions.visibleIf
-import kotlinx.android.synthetic.main.fragment_pager_item_menguji.*
+import kotlinx.android.synthetic.main.fragment_menguji_pager.*
 import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_carousel_debat.*
 import kotlinx.android.synthetic.main.layout_debat_list.*
@@ -27,7 +27,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
 
     override val isPublik by unSyncLazy { arguments?.getBoolean(ARG_PUBLIK_TAB) ?: true }
 
-    private val debatCarouselAdapter by unSyncLazy { BriefDebatAdapter(isPublik) }
+    private val debatCarouselAdapter by unSyncLazy { BriefDebatAdapter(true) }
     private val debatComingAdapter by unSyncLazy { BriefDebatAdapter(false) }
     private val debatDoneAdapter by unSyncLazy { BriefDebatAdapter(false) }
     private val debatOpenAdapter by unSyncLazy { BriefDebatAdapter(false) }
@@ -36,7 +36,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         OffsetItemDecoration(0, top = dip(16), ignoreFirstAndLast = true)
     }
 
-    override fun setLayout(): Int = R.layout.fragment_pager_item_menguji
+    override fun setLayout(): Int = R.layout.fragment_menguji_pager
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -57,7 +57,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
 
     private fun refreshList() {
         presenter.getBanner()
-        presenter.getDebatLive()
+        if (isPublik) presenter.getDebatLive()
         presenter.getDebatComingSoon()
         presenter.getDebatDone()
         presenter.getDebatOpen()
@@ -69,8 +69,8 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     private fun setupCarousel() {
-        icon_carousel.setImageResource(R.drawable.ic_outline_live)
-        text_carousel_title.text = "Live Now"
+        icon_carousel.setImageResource(if (isPublik) R.drawable.ic_debat_live else R.drawable.ic_debat_open)
+        text_carousel_title.text = if (isPublik) "Live Now" else "Challenge in Progress"
         button_more_live.setOnClickListener { }
         carousel_debat.adapter = debatCarouselAdapter
         carousel_debat.addItemDecoration(OffsetItemDecoration(dip(16), top = 0,
@@ -113,7 +113,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     override fun showDebatLive(list: List<DebatItem.LiveNow>) {
-        debatCarouselAdapter.debatItems = list
+        if (isPublik) debatCarouselAdapter.debatItems = list
     }
 
     override fun showDebatComingSoon(list: List<DebatItem.ComingSoon>) {
@@ -125,6 +125,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     override fun showDebatOpen(list: List<DebatItem.Open>) {
+        if (!isPublik) debatCarouselAdapter.debatItems = list
         debatOpenAdapter.debatItems = list
     }
 

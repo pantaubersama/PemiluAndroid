@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_outline_live" />
+        tools:src="@drawable/ic_debat_live" />
 
     <TextView
         android:id="@+id/text_carousel_title"
@@ -38,8 +38,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
-        app:layout_constraintBaseline_toBaselineOf="@id/text_carousel_title"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@id/text_carousel_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_carousel_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/carousel_debat"

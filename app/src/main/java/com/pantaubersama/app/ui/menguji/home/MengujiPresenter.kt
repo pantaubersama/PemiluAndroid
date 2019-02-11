@@ -46,8 +46,8 @@ class MengujiPresenter @Inject constructor() : BasePresenter<MengujiView>() {
     fun getDebatOpen() {
         val debatList = listOf(
             DebatItem.Open(DebatDetail("Raja Kampreta", "", "ekonomi"), 0, false),
-            DebatItem.Open(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 0, true),
-            DebatItem.Open(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 1, true))
+            DebatItem.Open(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 1, true),
+            DebatItem.Open(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 2, true))
         view?.showDebatOpen(debatList)
     }
 

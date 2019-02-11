@@ -13,11 +13,11 @@
         <ImageView
             android:id="@+id/bg_carousel_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@drawable/bg_carousel_debat_live"
+            android:layout_height="64dp"
+            android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/bg_debat_live" />
 
         <View
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_marginEnd="4dp"
-            android:src="@drawable/ic_outline_live"
+            android:src="@drawable/ic_debat_live"
             app:layout_constraintBottom_toBottomOf="@id/bg_carousel_item"
             app:layout_constraintEnd_toStartOf="@id/text_debat_type"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -117,6 +117,23 @@
             app:riv_border_color="@color/white"
             app:riv_border_width="1dp"
             app:riv_corner_radius="25dp" />
+
+        <TextView
+            android:id="@+id/text_opponent_count"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/circle_translucent_black"
+            android:fontFamily="@font/lato_black"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/image_avatar_2"
+            app:layout_constraintEnd_toEndOf="@id/image_avatar_2"
+            app:layout_constraintStart_toStartOf="@id/image_avatar_2"
+            app:layout_constraintTop_toTopOf="@id/image_avatar_2"
+            tools:text="\?" />
 
         <TextView
             android:id="@+id/text_name_2"
