@@ -55,5 +55,19 @@ data class BadgeNotif(
 
 data class ImageNotif(
     @SerializedName("thumbnail") val thumbnail: String = "",
-    @SerializedName("thumbnail_square") val thumbnailSquare: String = ""
+    @SerializedName("thumbnail_square") val thumbnailSquare: String = "",
+    @SerializedName("large") val large: String = "",
+    @SerializedName("large_square") val largeSquare: String = ""
 ) : Serializable
+
+data class QuizNotif(
+    @SerializedName("image") val image: ImageNotif,
+    @SerializedName("description") val description: String,
+    @SerializedName("id") val id: String,
+    @SerializedName("title") val title: String,
+    @SerializedName("quiz_questions_count") val quizQuestionsCount: Int
+) : Serializable {
+    companion object {
+        const val TAG = "quiz"
+    }
+}

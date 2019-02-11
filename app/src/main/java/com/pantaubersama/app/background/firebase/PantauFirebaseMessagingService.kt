@@ -26,11 +26,13 @@ import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
-import com.pantaubersama.app.data.model.notification.AchievedBadgeNotif
 import com.pantaubersama.app.data.model.notification.NotificationData
 import com.pantaubersama.app.data.model.notification.PemiluBroadcast
 import com.pantaubersama.app.data.model.notification.QuestionNotif
+import com.pantaubersama.app.data.model.notification.AchievedBadgeNotif
+import com.pantaubersama.app.data.model.notification.QuizNotif
 import com.pantaubersama.app.ui.home.HomeActivity
+import com.pantaubersama.app.ui.penpol.kuis.detail.DetailKuisActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
 import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
@@ -47,6 +49,7 @@ import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYP
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_FEED
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_QUESTION
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_QUIZ
 import org.json.JSONObject
 
 class PantauFirebaseMessagingService : FirebaseMessagingService() {
@@ -131,11 +134,36 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
                         .listener(object : RequestListener<Bitmap> {
                             override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
                                 createNotif(pendingIntent, title, description)
-                                return true
+                                return false
                             }
 
                             override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
                                 createNotif(pendingIntent, title, description, resource)
+                                return true
+                            }
+                        })
+                        .submit()
+                }
+                NOTIFICATION_TYPE_QUIZ -> {
+                    val quizNotif = gson.fromJson(payload.getJSONObject(QuizNotif.TAG).toString(), QuizNotif::class.java)
+                    title = notificationData?.title
+                    description = notificationData?.body
+
+                    intent = DetailKuisActivity.setIntent(this, quizNotif.id)
+                    intent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+
+                    GlideApp.with(this)
+                        .asBitmap()
+                        .load(quizNotif.image.large)
+                        .listener(object : RequestListener<Bitmap> {
+                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
+                                createNotif(pendingIntent, title, description)
+                                return false
+                            }
+
+                            override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                createNotif(pendingIntent, title, description, bigPicture = resource)
                                 return true
                             }
                         })
@@ -156,7 +184,7 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun createNotif(pendingIntent: PendingIntent, title: String?, description: String?, largeIcon: Bitmap? = null) {
+    private fun createNotif(pendingIntent: PendingIntent, title: String?, description: String?, largeIcon: Bitmap? = null, bigPicture: Bitmap? = null) {
         val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_NAME_BROADCAST)
             .setSmallIcon(R.drawable.ic_notification_icon)
             .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
@@ -169,10 +197,15 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setDefaults(Notification.DEFAULT_ALL)
-            .setStyle(NotificationCompat.BigTextStyle()
-            .bigText(description))
 
         largeIcon?.let { notificationBuilder.setLargeIcon(it) }
+
+        bigPicture?.let {
+            notificationBuilder.setLargeIcon(bigPicture)
+            notificationBuilder.setStyle(NotificationCompat.BigPictureStyle()
+                .bigPicture(bigPicture)
+                .bigLargeIcon(null))
+        } ?: notificationBuilder.setStyle(NotificationCompat.BigTextStyle().bigText(description))
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
