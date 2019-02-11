@@ -264,5 +264,6 @@ class PantauConstants {
         const val NOTIFICATION_TYPE_QUIZ = "quiz"
         const val NOTIFICATION_TYPE_QUESTION = "question"
         const val NOTIFICATION_TYPE_BADGE = "badge"
+        const val NOTIFICATION_TYPE_PROFILE = "profile"
     }
 }
