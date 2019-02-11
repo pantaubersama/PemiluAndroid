@@ -51,7 +51,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
             if (url?.contains(PantauConstants.Networking.INVITATION_PATH)!!) {
                 url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it) }
             } else if (url?.contains(CONFIRMATION_PATH)!!) {
-                url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it) }
+                url?.let { SymbolicLoginButton.confirmEmail(this@LoginActivity, it) }
             }
         }
         symbolicScope = ArrayList()
