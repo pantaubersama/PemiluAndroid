@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.model.notification
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class NotificationData(
     @SerializedName("title") val title: String? = "",
@@ -32,3 +33,27 @@ data class QuestionNotif(
         val TAG = "question"
     }
 }
+
+data class AchievedBadgeNotif(
+    @SerializedName("achieved_id") val achievedId: String,
+    @SerializedName("badge") val badge: BadgeNotif
+) : Serializable {
+    companion object {
+        const val TAG = "achieved_badge"
+    }
+}
+
+data class BadgeNotif(
+    @SerializedName("image") val image: ImageNotif,
+    @SerializedName("code") val code: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("namespace") val namespace: String,
+    @SerializedName("id") val id: String,
+    @SerializedName("position") val position: String,
+    @SerializedName("image_gray") val imageGray: ImageNotif
+) : Serializable
+
+data class ImageNotif(
+    @SerializedName("thumbnail") val thumbnail: String = "",
+    @SerializedName("thumbnail_square") val thumbnailSquare: String = ""
+) : Serializable

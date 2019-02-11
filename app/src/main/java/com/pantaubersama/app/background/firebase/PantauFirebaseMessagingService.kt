@@ -17,24 +17,32 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.di.module.ServiceModule
 import javax.inject.Inject
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
+import com.pantaubersama.app.data.model.notification.AchievedBadgeNotif
 import com.pantaubersama.app.data.model.notification.NotificationData
 import com.pantaubersama.app.data.model.notification.PemiluBroadcast
 import com.pantaubersama.app.data.model.notification.QuestionNotif
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
+import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import com.pantaubersama.app.ui.webview.ChromeTabActivity
+import com.pantaubersama.app.utils.GlideApp
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_FEED
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_DESC_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHANNEL_NAME_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_BADGE
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_BROADCAST
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_FEED
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_JANPOL
@@ -106,6 +114,33 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
                     val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
                     createNotif(pendingIntent, title, description)
                 }
+                NOTIFICATION_TYPE_BADGE -> {
+                    val achievedBadgeData = gson.fromJson(payload.getJSONObject(AchievedBadgeNotif.TAG).toString(), AchievedBadgeNotif::class.java)
+                    val achievedId = achievedBadgeData.achievedId
+                    val badge = achievedBadgeData.badge
+                    title = notificationData?.title
+                    description = notificationData?.body
+
+                    intent = DetailBadgeActivity.setIntent(this, achievedId)
+                    intent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+
+                    GlideApp.with(this)
+                        .asBitmap()
+                        .load(badge.image.thumbnail)
+                        .listener(object : RequestListener<Bitmap> {
+                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
+                                createNotif(pendingIntent, title, description)
+                                return true
+                            }
+
+                            override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                createNotif(pendingIntent, title, description, resource)
+                                return true
+                            }
+                        })
+                        .submit()
+                }
                 else -> {
                     title = notificationData?.title ?: remoteMessage.notification?.title
                     description = notificationData?.body ?: remoteMessage.notification?.body
@@ -135,7 +170,9 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setDefaults(Notification.DEFAULT_ALL)
             .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(description))
+            .bigText(description))
+
+        largeIcon?.let { notificationBuilder.setLargeIcon(it) }
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
