@@ -6,7 +6,9 @@ data class NotificationData(
     @SerializedName("title") val title: String? = "",
     @SerializedName("body") val body: String? = ""
 ) {
-    val TAG = "notification"
+    companion object {
+        val TAG = "notification"
+    }
 }
 
 data class PemiluBroadcast(
@@ -18,5 +20,15 @@ data class PemiluBroadcast(
 ) {
     companion object {
         val TAG = "pemilu_broadcast"
+    }
+}
+
+data class QuestionNotif(
+    @SerializedName("id") val id: String = "",
+    @SerializedName("created_at") val createdAt: String = "",
+    @SerializedName("body") val body: String = ""
+) {
+    companion object {
+        val TAG = "question"
     }
 }

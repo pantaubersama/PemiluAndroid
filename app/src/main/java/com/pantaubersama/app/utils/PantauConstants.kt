@@ -262,5 +262,6 @@ class PantauConstants {
         const val NOTIFICATION_TYPE_JANPOL = "janji_politik"
         const val NOTIFICATION_TYPE_FEED = "feed"
         const val NOTIFICATION_TYPE_QUIZ = "quiz"
+        const val NOTIFICATION_TYPE_QUESTION = "question"
     }
 }

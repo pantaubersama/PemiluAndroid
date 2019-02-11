@@ -50,8 +50,8 @@ abstract class HomeFragment : CommonFragment() {
     }
 
     fun scrollToTop() {
-        val pagerFragment = childFragmentManager.findFragmentByTag("android:switcher:"
-            + R.id.view_pager + ":" + currentTabPosition) as CommonFragment?
+        val pagerFragment = childFragmentManager.findFragmentByTag("android:switcher:" +
+            R.id.view_pager + ":" + currentTabPosition) as CommonFragment?
         pagerFragment?.scrollToTop()
     }
 }
