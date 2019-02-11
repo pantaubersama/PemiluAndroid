@@ -22,7 +22,7 @@ class LinimasaFragment : HomeFragment() {
     private var pilpresFragment = PilpresFragment.newInstance()
     private var janjiPolitikFragment = JanjiPolitikFragment()
 
-    private var selectedTab = 0
+    private var initialSelectedTab = 0
 
     override val pagerFragments: List<Pair<Fragment, String>> by lazy(LazyThreadSafetyMode.NONE) {
         listOf(
@@ -44,13 +44,13 @@ class LinimasaFragment : HomeFragment() {
 
     override fun fetchArguments(args: Bundle?) {
         args?.apply {
-            selectedTab = getInt(EXTRA_OPEN_TAB_TYPE, 0)
+            initialSelectedTab = getInt(EXTRA_OPEN_TAB_TYPE, 0)
         }
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         super.initView(view, savedInstanceState)
-        view_pager.currentItem = selectedTab
+        view_pager.currentItem = initialSelectedTab
     }
 
     override val onFilterClicked = { tabPosition: Int ->
