@@ -14,7 +14,7 @@ import com.pantaubersama.app.ui.linimasa.janjipolitik.filter.FilterJanjiPolitikA
 import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.login.LoginActivity
-import com.pantaubersama.app.ui.menguji.personal.PersonalFragment
+import com.pantaubersama.app.ui.menguji.home.MengujiPagerFragment
 import com.pantaubersama.app.ui.menjaga.filter.LaporFilterActivity
 import com.pantaubersama.app.ui.menjaga.filter.partiesdialog.PartiesDialog
 import com.pantaubersama.app.ui.menjaga.lapor.LaporFragment
@@ -64,7 +64,6 @@ import com.pantaubersama.app.ui.search.person.filter.FilterOrangActivity
 import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
 import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
-import com.pantaubersama.app.ui.menguji.publik.PublikFragment
 import dagger.Subcomponent
 
 /**
@@ -134,6 +133,5 @@ interface ActivityComponent {
     fun inject(laporFilterActivity: LaporFilterActivity)
     fun inject(partiesDialog: PartiesDialog)
     fun inject(notifActivity: NotifActivity)
-    fun inject(publikFragment: PublikFragment)
-    fun inject(personalFragment: PersonalFragment)
+    fun inject(mengujiPagerFragment: MengujiPagerFragment)
 }

@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.menguji
+package com.pantaubersama.app.ui.menguji.home
 
 import android.os.Bundle
 import android.view.View
@@ -6,24 +6,22 @@ import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.home.HomeFragment
-import com.pantaubersama.app.ui.menguji.personal.PersonalFragment
-import com.pantaubersama.app.ui.menguji.publik.PublikFragment
 import com.pantaubersama.app.utils.extensions.color
 
-class MengujiFragment : HomeFragment() {
+class MengujiHomeFragment : HomeFragment() {
 
     companion object {
-        val TAG: String = MengujiFragment::class.java.simpleName
+        val TAG: String = MengujiHomeFragment::class.java.simpleName
 
-        fun newInstance(): MengujiFragment {
-            return MengujiFragment()
+        fun newInstance(): MengujiHomeFragment {
+            return MengujiHomeFragment()
         }
     }
 
     override val pagerFragments: List<Pair<Fragment, String>>
         get() = listOf(
-            PublikFragment() to getString(R.string.publik_label),
-            PersonalFragment() to getString(R.string.personal_label))
+            MengujiPagerFragment.newInstance(true) to getString(R.string.publik_label),
+            MengujiPagerFragment.newInstance(false) to getString(R.string.personal_label))
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         super.initView(view, savedInstanceState)
