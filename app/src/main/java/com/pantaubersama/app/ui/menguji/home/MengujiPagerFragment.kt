@@ -78,8 +78,11 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     private fun setupTimeline() {
-        text_timeline_label.text = "LINIMASA DEBAT"
-        text_timeline_description.text = "Daftar challenge dan debat yang akan atau sudah berlangsung ditampilkan semua di sini."
+        text_timeline_label.text = if (isPublik) "LINIMASA DEBAT" else "MY WORDSTADIUM"
+        text_timeline_description.text = if (isPublik)
+            "Daftar challenge dan debat yang akan atau sudah berlangsung ditampilkan semua di sini."
+        else
+            "Daftar tantangan dan debat yang akan atau sudah kamu ikuti ditampilkan semua di sini."
 
         setupDebatComingSoon()
         setupDebatDone()
@@ -87,21 +90,21 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     private fun setupDebatComingSoon() {
-        label_debat_coming.text = "Debat: Coming Soon"
+        label_debat_coming.text = if (isPublik) "Debat: Coming Soon" else "My Debat: Coming Soon"
         recycler_debat_coming.adapter = debatComingAdapter
         recycler_debat_coming.addItemDecoration(recyclerItemDecoration)
         button_more_debat_coming.setOnClickListener { }
     }
 
     private fun setupDebatDone() {
-        label_debat_done.text = "Debat: Done"
+        label_debat_done.text = if (isPublik) "Debat: Done" else "My Debat: Done"
         recycler_debat_done.adapter = debatDoneAdapter
         recycler_debat_done.addItemDecoration(recyclerItemDecoration)
         button_more_debat_done.setOnClickListener { }
     }
 
     private fun setupDebatOpen() {
-        label_debat_open.text = "Challenge"
+        label_debat_open.text = if (isPublik) "Challenge" else "My Challenge"
         recycler_debat_open.adapter = debatOpenAdapter
         recycler_debat_open.addItemDecoration(recyclerItemDecoration)
         button_more_debat_open.setOnClickListener { }
