@@ -38,6 +38,8 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var profile: Profile
     private var userId: String? = null
+    private var page: Int = 1
+    private var perPage: Int = 20
 
     companion object {
         val TAG = ProfileTanyaKandidatFragment::class.java.simpleName
@@ -71,9 +73,9 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     private fun getDataList() {
         adapter.setDataEnd(false)
         if (userId == null) {
-            presenter.getTanyaKandidatList(1)
+            presenter.getTanyaKandidatList(1, perPage)
         } else {
-            userId?.let { id -> presenter.getUserTanyaKandidat(1, id) }
+            userId?.let { id -> presenter.getUserTanyaKandidat(1, id, perPage) }
         }
     }
 
@@ -167,9 +169,9 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
         adapter.addSupportLoadMore(recycler_view, 10) {
             adapter.setLoading()
             if (userId == null) {
-                presenter.getTanyaKandidatList(it)
+                presenter.getTanyaKandidatList(it, perPage)
             } else {
-                userId?.let { id -> presenter.getUserTanyaKandidat(it, id) }
+                userId?.let { id -> presenter.getUserTanyaKandidat(it, id, perPage) }
             }
         }
     }
@@ -177,7 +179,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>) {
         recycler_view?.visibleIf(true)
         adapter.setDatas(pertanyaanList as MutableList<ItemModel>)
-        if (pertanyaanList.size < presenter.perPage) {
+        if (pertanyaanList.size < perPage) {
             adapter.setDataEnd(true)
         }
         recycler_view.swapAdapter(adapter, true)
@@ -194,7 +196,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
 
     override fun bindNextDataTanyaKandidat(questions: MutableList<Pertanyaan>) {
         adapter.setLoaded()
-        if (questions.size < presenter.perPage) {
+        if (questions.size < perPage) {
             adapter.setDataEnd(true)
         }
         adapter.addData(questions as MutableList<ItemModel>)

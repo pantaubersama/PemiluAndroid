@@ -9,9 +9,8 @@ class ProfileTanyaKandidatPresenter @Inject constructor(
     private val tanyaKandidatInteractor: TanyaKandidatInteractor,
     private val profileInteractor: ProfileInteractor
 ) : BasePresenter<ProfileTanyaKandidatView>() {
-    var perPage = 20
 
-    fun getTanyaKandidatList(page: Int) {
+    fun getTanyaKandidatList(page: Int, perPage: Int) {
         if (page == 1) {
             view?.showLoading()
         }
@@ -32,7 +31,11 @@ class ProfileTanyaKandidatPresenter @Inject constructor(
                                 view?.showFailedGetDataAlert()
                             }
                         } else {
-                            view?.showFailedGetDataAlert()
+                            if (it?.questions?.size != 0) {
+                                it?.questions?.let { it1 -> view?.bindNextDataTanyaKandidat(it1) }
+                            } else {
+                                view?.showEmptyNextDataAlert()
+                            }
                         }
                     },
                     {
@@ -42,25 +45,6 @@ class ProfileTanyaKandidatPresenter @Inject constructor(
                     }
                 )
         )
-//        val tanyaKandidatList: MutableList<Pertanyaan> = ArrayList()
-//
-//        for (i in 1..25) {
-//            val data = Pertanyaan()
-//            data.question = "Apakah ini angka $i ?"
-//            data.user?.name = "Andi $i ?"
-//            data.user?.bio = "I love Indonesia"
-//            data.createdAtInWord = "A seconds ago"
-//            data.upVoteCount = 100
-//            tanyaKandidatList.add(data)
-//        }
-//
-//        if (tanyaKandidatList.size != 0) {
-//            view?.dismissLoading()
-//            view?.bindDataTanyaKandidat(tanyaKandidatList)
-//        } else {
-//            view?.dismissLoading()
-//            view?.showEmptyDataAlert()
-//        }
     }
 
     fun upVoteQuestion(id: String, questionCalass: String, isLiked: Boolean, position: Int) {
@@ -118,7 +102,7 @@ class ProfileTanyaKandidatPresenter @Inject constructor(
         view?.bindProfile(profileInteractor.getProfile())
     }
 
-    fun getUserTanyaKandidat(page: Int, userId: String) {
+    fun getUserTanyaKandidat(page: Int, userId: String, perPage: Int) {
         if (page == 1) {
             view?.showLoading()
         }
