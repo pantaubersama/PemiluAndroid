@@ -258,4 +258,5 @@
     <string name="title_direct_challenge">Direct Challenge</string>
     <string name="desc_direct_challenge">Dari sini, kamu bisa mengundang langsung lawan debatmu yang sudah punya Symbolic ID atau mention akun Twitter-nya. Jangan lupa menyiapkan bidang kajian dan bahasan debat terbaikmu!</string>
     <string name="title_buat_tantangan">Buat Tantangan</string>
+    <string name="open_challenge">OPEN CHALLENGE</string>
 </resources>
