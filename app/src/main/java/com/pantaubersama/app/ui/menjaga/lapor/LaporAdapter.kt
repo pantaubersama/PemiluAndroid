@@ -10,10 +10,10 @@ import com.pantaubersama.app.base.viewholder.LoadingViewHolder
 import com.pantaubersama.app.data.model.LoadingModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.ui.widget.BannerViewHolder
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.header_item_layout.*
 
 class LaporAdapter : BaseRecyclerAdapter() {
@@ -50,17 +50,7 @@ class LaporAdapter : BaseRecyclerAdapter() {
         }
     }
 
-    inner class BannerViewHolder(override val containerView: View)
-        : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: BannerInfo) {
-            tv_banner_text.text = item.body
-            iv_banner_image.loadUrl(item.headerImage?.url)
-            rl_banner_container.setOnClickListener { listener?.onClickBanner(item) }
-            iv_banner_close.setOnClickListener { removeBanner() }
-        }
-    }
-
-    fun removeBanner() {
+    private fun removeBanner() {
         if (data[0] is BannerInfo) {
             deleteItem(0)
         }
@@ -70,7 +60,9 @@ class LaporAdapter : BaseRecyclerAdapter() {
         return when (viewType) {
             VIEW_TYPE_LOADING -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
             VIEW_TYPE_HEADER -> HeaderViewHolder(parent.inflate(R.layout.header_item_layout))
-            VIEW_TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
+            VIEW_TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container),
+                onClick = { listener?.onClickBanner(data[it] as BannerInfo) },
+                onRemove = { removeBanner() })
             else -> LaporViewHolder(parent.inflate(R.layout.lapor_item_layout))
         }
     }

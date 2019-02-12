@@ -8,7 +8,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.CommonFragment
 import com.pantaubersama.app.ui.menjaga.filter.LaporFilterActivity
 import com.pantaubersama.app.ui.menjaga.lapor.LaporFragment
-import com.pantaubersama.app.ui.widget.TabView
+import com.pantaubersama.app.ui.widget.CustomTabView
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.fragment_menjaga.*
 
@@ -37,7 +37,7 @@ class MenjagaFragment : CommonFragment() {
     }
 
     private fun setupTabLayout() {
-        val laporTab = TabView(context)
+        val laporTab = CustomTabView(requireContext())
         laporTab.setTitleLabel(R.string.lapor_label)
 
         tab_layout.addTab(tab_layout.newTab().setCustomView(laporTab))

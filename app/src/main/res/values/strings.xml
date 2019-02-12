@@ -253,10 +253,13 @@
     <string name="lapor_label">Lapor</string>
     <string name="title_notification">Notifikasi</string>
     <string name="text_blank_notif">Belum ada notifikasi buat kamu</string>
+    <string name="publik_label">Publik</string>
+    <string name="personal_label">Personal</string>
     <string name="title_open_challenge">Open Challenge</string>
     <string name="desc_open_challenge">Setelah menyiapkan bahan debat terkait bidang kajian tertentu; Kamu akan mengundang lawan untuk diajak berdebat satu lawan satu. Jangan lupa promosikan Open Challenge-mu, yaa! Supaya semakin banyak yang memantau~</string>
     <string name="title_direct_challenge">Direct Challenge</string>
     <string name="desc_direct_challenge">Dari sini, kamu bisa mengundang langsung lawan debatmu yang sudah punya Symbolic ID atau mention akun Twitter-nya. Jangan lupa menyiapkan bidang kajian dan bahasan debat terbaikmu!</string>
     <string name="title_buat_tantangan">Buat Tantangan</string>
     <string name="open_challenge">OPEN CHALLENGE</string>
+    <string name="see_more">See more &gt;&gt;</string>
 </resources>

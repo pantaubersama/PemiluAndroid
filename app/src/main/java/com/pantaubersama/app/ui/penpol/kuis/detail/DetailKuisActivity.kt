@@ -13,6 +13,7 @@ import com.pantaubersama.app.ui.penpol.kuis.ikutikuis.IkutiKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_KUIS
 import com.pantaubersama.app.utils.PantauConstants.Kuis.KUIS_ID
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
@@ -53,8 +54,12 @@ class DetailKuisActivity : BaseActivity<DetailKuisPresenter>(), DetailKuisView {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        presenter.getQuizById(quizId)
         btn_close.setOnClickListener { onBackPressed() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.getQuizById(quizId)
     }
 
     override fun showQuiz(item: KuisItem) {
@@ -96,12 +101,10 @@ class DetailKuisActivity : BaseActivity<DetailKuisPresenter>(), DetailKuisView {
 
     override fun onBackPressed() {
         if (isTaskRoot) {
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = HomeActivity.setIntentByOpenedTab(this, EXTRA_TYPE_KUIS)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
-            finish()
-        } else {
-            super.onBackPressed()
         }
+        super.onBackPressed()
     }
 }

@@ -11,10 +11,10 @@ import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.ui.widget.BannerViewHolder
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_tanya_kandidat.*
 import kotlinx.android.synthetic.main.layout_action_post.*
 import kotlinx.android.synthetic.main.header_item_layout.*
@@ -39,7 +39,9 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         return when (viewType) {
             VIEW_TYPE_LOADING -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
             VIEW_TYPE_HEADER -> HeaderViewHolder(parent.inflate(R.layout.header_item_layout))
-            VIEW_TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
+            VIEW_TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container),
+                onClick = { listener?.onClickBanner(data[it] as BannerInfo) },
+                onRemove = { removeBanner() })
             else -> TanyaKandidatViewHolder(parent.inflate(R.layout.item_tanya_kandidat))
         }
     }
@@ -123,16 +125,6 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         }
     }
 
-    inner class BannerViewHolder(override val containerView: View)
-        : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: BannerInfo) {
-            tv_banner_text.text = item.body
-            iv_banner_image.loadUrl(item.headerImage?.url)
-            rl_banner_container.setOnClickListener { listener?.onClickBanner(item) }
-            iv_banner_close.setOnClickListener { removeBanner() }
-        }
-    }
-
     override fun getItemCount(): Int {
         return data.size
     }
@@ -159,7 +151,7 @@ class TanyaKandidatAdapter() : BaseRecyclerAdapter() {
         addItem(bannerInfo, 0)
     }
 
-    fun removeBanner() {
+    private fun removeBanner() {
         if (data[0] is BannerInfo) {
             deleteItem(0)
         }
