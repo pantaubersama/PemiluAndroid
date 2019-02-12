@@ -195,6 +195,8 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     }
 
     override fun bindNextDataTanyaKandidat(questions: MutableList<Pertanyaan>) {
+        view_empty_state.enableLottie(false, lottie_empty_state)
+        view_fail_state.enableLottie(false, lottie_fail_state)
         adapter.setLoaded()
         if (questions.size < perPage) {
             adapter.setDataEnd(true)
