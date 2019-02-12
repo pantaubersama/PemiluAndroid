@@ -29,6 +29,7 @@ import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OPEN_TAB_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_FEED
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_JANPOL
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_KUIS
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_TANYA_KANDIDAT
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -83,6 +84,10 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
                 EXTRA_TYPE_FEED -> {
                     showFragment(LinimasaFragment(), LinimasaFragment.TAG)
                     navigation.selectedItemId = R.id.navigation_menyerap
+                }
+                EXTRA_TYPE_KUIS -> {
+                    showFragment(PenPolFragment.newInstanceOpenKuis(), PenPolFragment.TAG)
+                    navigation.selectedItemId = R.id.navigation_menggali
                 }
                 else -> {
                     showFragment(PenPolFragment.newInstance(), PenPolFragment.TAG)

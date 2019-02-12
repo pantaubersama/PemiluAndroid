@@ -50,5 +50,4 @@ class MengujiPresenter @Inject constructor() : BasePresenter<MengujiView>() {
             DebatItem.Open(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 2, true))
         view?.showDebatOpen(debatList)
     }
-
 }

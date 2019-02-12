@@ -1,6 +1,8 @@
 package com.pantaubersama.app.ui.penpol
 
 import android.content.Intent
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
 import com.pantaubersama.app.ui.home.HomeFragment
@@ -9,11 +11,16 @@ import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
 import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OPEN_TAB_TYPE
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_KUIS
+import kotlinx.android.synthetic.main.activity_search.*
 
 class PenPolFragment : HomeFragment() {
 
     private var tanyaKandidatFragment: TanyaKandidatFragment = TanyaKandidatFragment.newInstance()
     private var kuisFragment: KuisFragment = KuisFragment.newInstance()
+
+    private var initialSelectedTab = 0
 
     override val pagerFragments: List<Pair<Fragment, String>> by lazy(LazyThreadSafetyMode.NONE) {
         listOf(
@@ -34,6 +41,17 @@ class PenPolFragment : HomeFragment() {
         }
     }
 
+    override fun fetchArguments(args: Bundle?) {
+        args?.apply {
+            initialSelectedTab = getInt(EXTRA_OPEN_TAB_TYPE, 0)
+        }
+    }
+
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+        super.initView(view, savedInstanceState)
+        view_pager.currentItem = initialSelectedTab
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         tanyaKandidatFragment.onActivityResult(requestCode, resultCode, data)
@@ -45,6 +63,14 @@ class PenPolFragment : HomeFragment() {
 
         fun newInstance(): PenPolFragment {
             return PenPolFragment()
+        }
+
+        fun newInstanceOpenKuis(): PenPolFragment {
+            val fragment = PenPolFragment()
+            val args = Bundle()
+            args.putInt(EXTRA_OPEN_TAB_TYPE, EXTRA_TYPE_KUIS)
+            fragment.arguments = args
+            return fragment
         }
     }
 }

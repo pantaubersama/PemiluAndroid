@@ -31,7 +31,7 @@ class KuisListAdapter : BaseRecyclerAdapter() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_BANNER ->  BannerViewHolder(parent.inflate(R.layout.item_banner_container),
+            TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container),
                 onClick = { listener?.onClickBanner(data[it] as BannerInfo) },
                 onRemove = { removeBanner() })
             TYPE_KUIS_RESULT -> ResultViewHolder(parent.inflate(R.layout.item_kuis_result))
