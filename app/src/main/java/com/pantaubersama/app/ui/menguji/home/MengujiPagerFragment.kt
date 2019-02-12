@@ -14,10 +14,12 @@ import com.pantaubersama.app.utils.extensions.dip
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.unSyncLazy
 import com.pantaubersama.app.utils.extensions.visibleIf
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_menguji_pager.*
 import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_carousel_debat.*
 import kotlinx.android.synthetic.main.layout_debat_list.*
+import kotlinx.android.synthetic.main.layout_menguji_fabs.*
 import javax.inject.Inject
 
 class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
@@ -36,6 +38,9 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         OffsetItemDecoration(0, top = dip(16), ignoreFirstAndLast = true)
     }
 
+    private lateinit var fabAnimationDelegate: FabAnimationDelegate
+    private var animationDisposable: Disposable? = null
+
     override fun setLayout(): Int = R.layout.fragment_menguji_pager
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -43,6 +48,11 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
+        fabAnimationDelegate = FabAnimationDelegate(fab_container, overlay)
+        overlay.setOnClickListener {
+            fabAnimationDelegate.collapse()
+        }
+
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
             refreshList()
@@ -53,6 +63,10 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         setupTimeline()
 
         refreshList()
+
+        fab_create.setOnClickListener {
+            animationDisposable = fabAnimationDelegate.toggle()
+        }
     }
 
     private fun refreshList() {
@@ -136,6 +150,11 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     override fun dismissLoading() {
+    }
+
+    override fun onDestroy() {
+        animationDisposable?.dispose()
+        super.onDestroy()
     }
 
     companion object {

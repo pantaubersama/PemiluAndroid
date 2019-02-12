@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fab_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom">
+
+    <TextView
+        android:id="@+id/label_challenge"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@drawable/bg_rounded_16dp_white"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Challenge"
+        android:textColor="@color/black_2"
+        android:textSize="11sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/fab_challenge"
+        app:layout_constraintEnd_toEndOf="@id/label_create"
+        app:layout_constraintTop_toTopOf="@id/fab_challenge" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_challenge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_outline_challenge"
+        android:visibility="gone"
+        app:backgroundTint="@color/yellow"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@id/fab_done"
+        app:layout_constraintStart_toStartOf="@id/fab_done"
+        app:maxImageSize="16dp"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/label_done"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@drawable/bg_rounded_16dp_white"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Debat Done"
+        android:textColor="@color/black_2"
+        android:textSize="11sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/fab_done"
+        app:layout_constraintEnd_toEndOf="@id/label_create"
+        app:layout_constraintTop_toTopOf="@id/fab_done" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_outline_debat_done"
+        android:visibility="gone"
+        app:backgroundTint="@color/purple_3"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@id/fab_coming"
+        app:layout_constraintStart_toStartOf="@id/fab_coming"
+        app:maxImageSize="16dp"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/label_coming"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@drawable/bg_rounded_16dp_white"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Coming Soon"
+        android:textColor="@color/black_2"
+        android:textSize="11sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/fab_coming"
+        app:layout_constraintEnd_toEndOf="@id/label_create"
+        app:layout_constraintTop_toTopOf="@id/fab_coming" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_coming"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_outline_debat_coming"
+        android:visibility="gone"
+        app:backgroundTint="@color/blue"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@id/fab_live"
+        app:layout_constraintStart_toStartOf="@id/fab_live"
+        app:maxImageSize="16dp"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/label_live"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@drawable/bg_rounded_16dp_white"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Debat Live"
+        android:textColor="@color/black_2"
+        android:textSize="11sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/fab_live"
+        app:layout_constraintEnd_toEndOf="@id/label_create"
+        app:layout_constraintTop_toTopOf="@id/fab_live" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_live"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_debat_live"
+        android:visibility="gone"
+        app:backgroundTint="@color/red_2"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@id/fab_create"
+        app:layout_constraintEnd_toEndOf="@id/fab_create"
+        app:layout_constraintStart_toStartOf="@id/fab_create"
+        app:maxImageSize="16dp"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/label_create"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bg_rounded_16dp_white"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Buat Tantangan"
+        android:textColor="@color/black_2"
+        android:textSize="11sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/fab_create"
+        app:layout_constraintEnd_toStartOf="@id/fab_create"
+        app:layout_constraintTop_toTopOf="@id/fab_create" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:src="@drawable/ic_add_menguji"
+        app:backgroundTint="@color/yellow_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="36dp"
+        app:tint="@color/white" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
