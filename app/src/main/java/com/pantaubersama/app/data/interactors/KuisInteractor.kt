@@ -38,7 +38,7 @@ class KuisInteractor @Inject constructor(
         return pantauAPI.getKuisUserResult()
             .subscribeOn(rxSchedulers.io())
             .map { response ->
-                val team = response.data.teams.maxBy { it.percentage }
+                val team = response.data.teams.shuffled().maxBy { it.percentage }
                 team?.let { KuisUserResult(it.percentage, it.team, response.data.meta.quizzes, response.data.user) }
                     ?: throw ErrorException("Gagal mendapatkan hasil kuis")
             }
@@ -49,7 +49,7 @@ class KuisInteractor @Inject constructor(
         return pantauAPI.getKuisUserResultByUserId(userId)
             .subscribeOn(rxSchedulers.io())
             .map { response ->
-                val team = response.data.teams.maxBy { it.percentage }
+                val team = response.data.teams.shuffled().maxBy { it.percentage }
                 team?.let { KuisUserResult(it.percentage, it.team, response.data.meta.quizzes, response.data.user) }
                     ?: throw ErrorException("Gagal mendapatkan hasil kuis")
             }
@@ -60,7 +60,7 @@ class KuisInteractor @Inject constructor(
         return pantauAPI.getKuisResult(kuisId)
             .subscribeOn(rxSchedulers.io())
             .map { response ->
-                val team = response.data.teams.maxBy { it.percentage }
+                val team = response.data.teams.shuffled().maxBy { it.percentage }
                 team?.let { KuisResult(it.percentage, it.team, response.data.user, response.data.quizParticipation, response.data.quiz.title) }
                     ?: throw ErrorException("Gagal mendapatkan hasil kuis")
             }
@@ -71,7 +71,7 @@ class KuisInteractor @Inject constructor(
         return pantauAPI.getKuisResultByQuizParticipationId(quizParticipationId)
             .subscribeOn(rxSchedulers.io())
             .map { response ->
-                val team = response.data.teams.maxBy { it.percentage }
+                val team = response.data.teams.shuffled().maxBy { it.percentage }
                 team?.let { KuisResult(it.percentage, it.team, response.data.user, response.data.quizParticipation, response.data.quiz.title) }
                     ?: throw ErrorException("Gagal mendapatkan hasil kuis")
             }
