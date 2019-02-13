@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 
 class FabAnimationDelegate(override val containerView: View, private val overlay: View) : LayoutContainer {
 
-    private val isCollapsed: Boolean
+    val isCollapsed: Boolean
         get() = label_create.visibility != View.VISIBLE
 
     private var isAnimationRunning: Boolean = false

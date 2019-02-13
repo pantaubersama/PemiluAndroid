@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.menguji.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import com.pantaubersama.app.data.model.debat.DebatItem
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.menguji.adapter.BriefDebatAdapter
 import com.pantaubersama.app.ui.menguji.list.DebatListActivity
+import com.pantaubersama.app.ui.wordstadium.challenge.CreateChallengeActivity
 import com.pantaubersama.app.utils.OffsetItemDecoration
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PERSONAL_CHALLENGE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PERSONAL_CHALLENGE_IN_PROGRESS
@@ -76,18 +78,29 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
 
     private fun setupFab() {
         fabAnimationDelegate = FabAnimationDelegate(fab_container, overlay)
-        fab_create.setOnClickListener { animationDisposable = fabAnimationDelegate.toggle() }
+        fab_create.setOnClickListener {
+            if (fabAnimationDelegate.isCollapsed) {
+                animationDisposable = fabAnimationDelegate.expand()
+            } else {
+                animationDisposable = fabAnimationDelegate.collapse()
+                startActivity(Intent(requireContext(), CreateChallengeActivity::class.java))
+            }
+        }
         overlay.setOnClickListener { animationDisposable = fabAnimationDelegate.collapse() }
         fab_challenge.setOnClickListener {
+            animationDisposable = fabAnimationDelegate.collapse()
             DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_CHALLENGE else PERSONAL_CHALLENGE)
         }
         fab_done.setOnClickListener {
+            animationDisposable = fabAnimationDelegate.collapse()
             DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_DONE else PERSONAL_DONE)
         }
         fab_coming.setOnClickListener {
+            animationDisposable = fabAnimationDelegate.collapse()
             DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_COMING_SOON else PERSONAL_COMING_SOON)
         }
         fab_live.setOnClickListener {
+            animationDisposable = fabAnimationDelegate.collapse()
             DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_LIVE_NOW else PERSONAL_CHALLENGE_IN_PROGRESS)
         }
     }
