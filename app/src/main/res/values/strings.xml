@@ -179,6 +179,7 @@
     <string name="galeri">Galeri</string>
     <string name="ambil_gambar_dari">Ambil gambar dari :</string>
     <string name="izinkan_akses_kamera_dan_galeri"><![CDATA[Izinkan aplikasi mengakses Kamera & Galeri pada perangkat anda]]></string>
+    <string name="izinkan_akses_lokasi"><![CDATA[Izinkan aplikasi mengakses GPS pada perangkat anda]]></string>
     <string name="izinkan_akses_file"><![CDATA[Izinkan aplikasi mengakses Galeri pada perangkat anda]]></string>
     <string name="izinkan_akses_kamera">Anda harus mengizinkan aplikasi untuk mengakses kamera</string>
     <string name="izinkan_akses_penyimpanan">Anda harus mengijinkan aplikasi untuk mengakses penyimpanan</string>
