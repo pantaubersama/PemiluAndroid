@@ -502,16 +502,10 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lato_bold"
-            android:gravity="center_horizontal"
-            android:letterSpacing="0.1"
-            android:lineSpacingExtra="0sp"
-            android:text="PUBLISH"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:src="@drawable/ic_next" />
 
     </LinearLayout>
 
