@@ -13,6 +13,10 @@ class PantauConstants {
         }
     }
 
+    object Merayakan {
+        const val CREATE_PERHITUNGAN_REQUEST_CODE = 965
+    }
+
     companion object {
         const val LABEL_COPY = "LABEL_COPY"
 
