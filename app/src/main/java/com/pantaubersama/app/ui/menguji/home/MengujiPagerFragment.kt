@@ -9,7 +9,16 @@ import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.debat.DebatItem
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.menguji.adapter.BriefDebatAdapter
+import com.pantaubersama.app.ui.menguji.list.DebatListActivity
 import com.pantaubersama.app.utils.OffsetItemDecoration
+import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PERSONAL_CHALLENGE
+import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PERSONAL_CHALLENGE_IN_PROGRESS
+import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PERSONAL_COMING_SOON
+import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PERSONAL_DONE
+import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_CHALLENGE
+import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_COMING_SOON
+import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_DONE
+import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_LIVE_NOW
 import com.pantaubersama.app.utils.extensions.dip
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.unSyncLazy
@@ -34,10 +43,6 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     private val debatDoneAdapter by unSyncLazy { BriefDebatAdapter(false) }
     private val debatOpenAdapter by unSyncLazy { BriefDebatAdapter(false) }
 
-    private val recyclerItemDecoration by unSyncLazy {
-        OffsetItemDecoration(0, top = dip(16), ignoreFirstAndLast = true)
-    }
-
     private lateinit var fabAnimationDelegate: FabAnimationDelegate
     private var animationDisposable: Disposable? = null
 
@@ -48,19 +53,12 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        fabAnimationDelegate = FabAnimationDelegate(fab_container, overlay)
-        fab_create.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.toggle()
-        }
-        overlay.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.collapse()
-        }
-
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
             refreshList()
         }
 
+        setupFab()
         setupBanner()
         setupCarousel()
         setupTimeline()
@@ -76,6 +74,24 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         presenter.getDebatOpen()
     }
 
+    private fun setupFab() {
+        fabAnimationDelegate = FabAnimationDelegate(fab_container, overlay)
+        fab_create.setOnClickListener { animationDisposable = fabAnimationDelegate.toggle() }
+        overlay.setOnClickListener { animationDisposable = fabAnimationDelegate.collapse() }
+        fab_challenge.setOnClickListener {
+            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_CHALLENGE else PERSONAL_CHALLENGE)
+        }
+        fab_done.setOnClickListener {
+            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_DONE else PERSONAL_DONE)
+        }
+        fab_coming.setOnClickListener {
+            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_COMING_SOON else PERSONAL_COMING_SOON)
+        }
+        fab_live.setOnClickListener {
+            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_LIVE_NOW else PERSONAL_CHALLENGE_IN_PROGRESS)
+        }
+    }
+
     private fun setupBanner() {
         banner_background.setImageResource(R.drawable.ic_background_base_yellow)
         iv_banner_close.setOnClickListener { rl_banner_container.visibleIf(false) }
@@ -84,10 +100,12 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     private fun setupCarousel() {
         icon_carousel.setImageResource(if (isPublik) R.drawable.ic_debat_live else R.drawable.ic_debat_open)
         text_carousel_title.text = if (isPublik) "Live Now" else "Challenge in Progress"
-        button_more_live.setOnClickListener { }
         carousel_debat.adapter = debatCarouselAdapter
         carousel_debat.addItemDecoration(OffsetItemDecoration(dip(16), top = 0,
             orientation = RecyclerView.HORIZONTAL))
+        button_more_live.setOnClickListener {
+            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_LIVE_NOW else PERSONAL_CHALLENGE_IN_PROGRESS)
+        }
     }
 
     private fun setupTimeline() {
@@ -105,22 +123,25 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     private fun setupDebatComingSoon() {
         label_debat_coming.text = if (isPublik) "Debat: Coming Soon" else "My Debat: Coming Soon"
         recycler_debat_coming.adapter = debatComingAdapter
-        recycler_debat_coming.addItemDecoration(recyclerItemDecoration)
-        button_more_debat_coming.setOnClickListener { }
+        button_more_debat_coming.setOnClickListener {
+            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_COMING_SOON else PERSONAL_COMING_SOON)
+        }
     }
 
     private fun setupDebatDone() {
         label_debat_done.text = if (isPublik) "Debat: Done" else "My Debat: Done"
         recycler_debat_done.adapter = debatDoneAdapter
-        recycler_debat_done.addItemDecoration(recyclerItemDecoration)
-        button_more_debat_done.setOnClickListener { }
+        button_more_debat_done.setOnClickListener {
+            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_DONE else PERSONAL_DONE)
+        }
     }
 
     private fun setupDebatOpen() {
         label_debat_open.text = if (isPublik) "Challenge" else "My Challenge"
         recycler_debat_open.adapter = debatOpenAdapter
-        recycler_debat_open.addItemDecoration(recyclerItemDecoration)
-        button_more_debat_open.setOnClickListener { }
+        button_more_debat_open.setOnClickListener {
+            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_CHALLENGE else PERSONAL_CHALLENGE)
+        }
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {
