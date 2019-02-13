@@ -129,7 +129,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 R.id.navigation_menggali -> ProfileTanyaKandidatFragment.newInstance(userId) to ProfileTanyaKandidatFragment.TAG
 //                R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
 //                R.id.navigation_menjaga -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
-//                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
+//                R.id.navigation_merayakan -> MerayakanFragment.newInstance() to MerayakanFragment.TAG
                 else -> throw IllegalStateException("unknown menu")
             }
             showFragment(fragment, tag)

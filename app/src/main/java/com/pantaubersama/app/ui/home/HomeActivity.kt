@@ -25,6 +25,7 @@ import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.search.SearchActivity
 import com.pantaubersama.app.ui.menguji.home.MengujiHomeFragment
+import com.pantaubersama.app.ui.merayakan.MerayakanFragment
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OPEN_TAB_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_FEED
@@ -102,7 +103,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
                 R.id.navigation_menggali -> PenPolFragment.newInstance() to PenPolFragment.TAG
                 R.id.navigation_menguji -> MengujiHomeFragment.newInstance() to MengujiHomeFragment.TAG
 //                R.id.navigation_menjaga -> MenjagaFragment.newInstance() to MenjagaFragment.TAG   // di hide dulu, production belum ada api nya @edityo 30/01/19
-//                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
+                R.id.navigation_merayakan -> MerayakanFragment.newInstance() to MerayakanFragment.TAG
                 else -> throw IllegalStateException("unknown menu")
             }
             showFragment(fragment, tag)
