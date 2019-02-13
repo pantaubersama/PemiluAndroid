@@ -6,13 +6,14 @@ import android.content.Context
 import android.content.Intent
 import android.location.* //ktlint-disable
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
+import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
-import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_data_tps.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
@@ -63,29 +64,53 @@ class DataTPSActivity : CommonActivity() {
     private fun getLocationPermission() {
         if (EasyPermissions.hasPermissions(this, *permission)) {
             update_location_button.setOnClickListener {
-                location_progressbar.visibility = View.VISIBLE
-                address_text.visibility = View.GONE
-                try {
+                if (isLocationEnabled(this@DataTPSActivity)) {
+                    location_progressbar.visibility = View.VISIBLE
+                    address_text.visibility = View.GONE
+                    try {
 //                    locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
-                    val location: Location? = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                        val location: Location? = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
-                    location_progressbar.visibility = View.GONE
-                    address_text.visibility = View.VISIBLE
-                    if (location != null) {
-                        addresses = geocoder?.getFromLocation(location.latitude, location.longitude, 1)
-                        val address = addresses?.get(0)?.getAddressLine(0)
-                        address_text.text = address
-                    } else {
-                        address_text.text = "Lokasi tidak ditemukan"
+                        location_progressbar.visibility = View.GONE
+                        address_text.visibility = View.VISIBLE
+                        if (location != null) {
+                            addresses = geocoder?.getFromLocation(location.latitude, location.longitude, 1)
+                            val address = addresses?.get(0)?.getAddressLine(0)
+                            address_text.text = address
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                } else {
+                    ConfirmationDialog.Builder()
+                        .with(this@DataTPSActivity)
+                        .setDialogTitle("Actifkan GPS")
+                        .setAlert("Kami gagal menemukan lokasi kamu karena GPS kamu non-aktif. Mohon hidupkan GPS kamu.")
+                        .setOkText("Aktifkan")
+                        .setCancelText("Batal")
+                        .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                            override fun onClickOk() {
+                                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                            }
+                        })
+                        .show()
                 }
             }
         } else {
             requestPermission()
         }
+    }
+
+    fun isLocationEnabled(context: Context): Boolean {
+        var locationMode = 0
+        val locationProviders: String
+        try {
+            locationMode = Settings.Secure.getInt(context.contentResolver, Settings.Secure.LOCATION_MODE)
+        } catch (e: Settings.SettingNotFoundException) {
+            e.printStackTrace()
+            return false
+        }
+        return locationMode != Settings.Secure.LOCATION_MODE_OFF
     }
 
     private fun requestPermission() {
