@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
 
@@ -22,7 +24,7 @@ class DataTPSActivity : CommonActivity() {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        setupToolbar(true, "Data TPS", R.color.white, 4f)
     }
 
     companion object {
@@ -34,5 +36,22 @@ class DataTPSActivity : CommonActivity() {
                 context.startActivity(intent)
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_done, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.done_action -> {
+            }
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

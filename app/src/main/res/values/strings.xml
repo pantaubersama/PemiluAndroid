@@ -267,4 +267,5 @@
     <string name="title_preview">Preview</string>
     <string name="perhitungan_label">Perhitungan</string>
     <string name="rekapitulasi_label">Rekapitulasi</string>
+    <string name="data_tps_hint">Isi data TPS dengan lengkap, pastikan data sesuai. Kamu bisa memasukkan lokasi kamu dengen gps dari handhpone mu</string>
 </resources>
