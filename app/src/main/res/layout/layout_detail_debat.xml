@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp"
+    android:paddingStart="32dp"
+    android:paddingEnd="32dp"
+    android:clipToPadding="false">
+
+    <TextView
+        android:id="@+id/tv_challenge_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/challenge_detail"
+        android:textSize="14sp"
+        android:textColor="@color/black_2"
+        android:fontFamily="@font/bw_modelica_bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    
+    <TextView
+        android:id="@+id/tv_label_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:background="@drawable/bg_rounded_4dp_outline_yellow_light"
+        android:text="ekonomi"
+        android:textSize="9sp"
+        android:textColor="@color/gray_dark_3"
+        android:fontFamily="@font/lato_italic"
+        app:layout_constraintTop_toBottomOf="@id/tv_challenge_detail"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_title_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%. 2 periode yuk, biar 10,54%."
+        android:fontFamily="@font/bw_modelica_bold"
+        android:textSize="12sp"
+        android:textColor="@color/black_2"
+        app:layout_constraintTop_toBottomOf="@id/tv_label_detail"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_label_time_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/date_time"
+        android:fontFamily="@font/lato_regular"
+        android:textSize="14sp"
+        android:textColor="@color/black_2"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_detail"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_date"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_date"
+        app:layout_constraintTop_toBottomOf="@id/tv_label_time_detail"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Selasa, 24 Maret 2019"
+        android:textSize="12sp"
+        android:textColor="@color/black_2"
+        android:fontFamily="@font/bw_modelica_bold"
+        app:layout_constraintStart_toEndOf="@id/iv_date"
+        app:layout_constraintTop_toTopOf="@id/iv_date"
+        app:layout_constraintBottom_toBottomOf="@id/iv_date"/>
+
+
+    <ImageView
+        android:id="@+id/iv_hour"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_clock"
+        app:layout_constraintTop_toBottomOf="@id/iv_date"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_hour_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="16.00"
+        android:textSize="12sp"
+        android:textColor="@color/black_2"
+        android:fontFamily="@font/bw_modelica_bold"
+        app:layout_constraintStart_toEndOf="@id/iv_hour"
+        app:layout_constraintTop_toTopOf="@id/iv_hour"
+        app:layout_constraintBottom_toBottomOf="@id/iv_hour"/>
+
+    <TextView
+        android:id="@+id/tv_label_saldo_waktu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/saldo_waktu"
+        android:fontFamily="@font/lato_regular"
+        android:textSize="14sp"
+        android:textColor="@color/black_2"
+        app:layout_constraintTop_toBottomOf="@id/tv_hour_detail"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_label_saldo_waktu_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/saldo_waktu_desc"
+        android:fontFamily="@font/lato_regular"
+        android:textSize="11sp"
+        android:textColor="@color/gray_4"
+        app:layout_constraintTop_toBottomOf="@id/tv_label_saldo_waktu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <ImageView
+        android:id="@+id/iv_saldo_waktu"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_saldo_waktu"
+        app:layout_constraintTop_toBottomOf="@id/tv_label_saldo_waktu_desc"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_saldo_waktu_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="120 menit"
+        android:textSize="12sp"
+        android:textColor="@color/black_2"
+        android:fontFamily="@font/bw_modelica_bold"
+        app:layout_constraintStart_toEndOf="@id/iv_saldo_waktu"
+        app:layout_constraintTop_toTopOf="@id/iv_saldo_waktu"
+        app:layout_constraintBottom_toBottomOf="@id/iv_saldo_waktu"/>
+
+    <View
+        android:id="@+id/view_gray"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/gray_2"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="-32dp"
+        android:layout_marginEnd="-32dp"
+        app:layout_constraintTop_toBottomOf="@id/iv_saldo_waktu"/>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iv_creator_avatar_detail"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="17dp"
+        android:src="@drawable/ava_calon_1"
+        app:riv_oval="true"
+        app:layout_constraintTop_toBottomOf="@id/view_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_name_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="120 menit"
+        android:textSize="12sp"
+        android:textColor="@color/black_2"
+        android:fontFamily="@font/bw_modelica_bold"
+        app:layout_constraintStart_toEndOf="@id/iv_saldo_waktu"
+        app:layout_constraintTop_toTopOf="@id/iv_saldo_waktu"
+        app:layout_constraintBottom_toBottomOf="@id/iv_saldo_waktu"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,207 +13,305 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_debat_live"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-            <RelativeLayout
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?actionBarSize"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                            tools:drawableLeft="@drawable/ic_debat_live"
-                            android:drawablePadding="10dp"
-                            android:fontFamily="@font/lato_bold"
-                            android:textColor="@color/white"
-                            android:layout_centerHorizontal="true"
-                            tools:text="LIVE NOW"/>
-                    </RelativeLayout>
-                </androidx.appcompat.widget.Toolbar>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_header"
+                <RelativeLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/toolbar">
-                    <View
+                    android:background="@drawable/bg_header_debat_live_now">
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/white"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                    <TextView
-                        android:id="@+id/tv_versus"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_versus_outline_white"
-                        android:fontFamily="@font/lato_bold"
-                        android:gravity="center_horizontal"
-                        android:includeFontPadding="false"
-                        android:paddingTop="4dp"
-                        android:text="VS"
-                        android:textSize="12sp"
-                        android:textColor="@color/white"
+                        android:layout_height="?actionBarSize"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_collapseMode="pin">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                                android:drawableStart="@drawable/ic_debat_live"
+                                android:drawablePadding="10dp"
+                                android:fontFamily="@font/lato_bold"
+                                android:textColor="@color/white"
+                                android:layout_centerHorizontal="true"
+                                android:text="LIVE NOW"/>
+                        </RelativeLayout>
 
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/iv_avatar_1"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="16dp"
-                        tools:src="@drawable/ava_calon_1"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_versus"
-                        app:layout_constraintTop_toBottomOf="@id/tv_versus"
-                        app:riv_border_color="@color/white"
-                        app:riv_border_width="1dp"
-                        app:riv_oval="true"/>
+                    </androidx.appcompat.widget.Toolbar>
 
-                    <TextView
-                        android:id="@+id/tv_name_1"
-                        android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_header"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="18"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:textSize="13sp"
-                        tools:text="Raja Kampret"
-                        android:fontFamily="@font/bw_modelica_bold"
-                        android:textColor="@color/white"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toEndOf="@id/iv_avatar_1"
-                        app:layout_constraintTop_toBottomOf="@id/iv_avatar_1"
-                        app:layout_constraintTop_toTopOf="@id/iv_avatar_1"/>
-
-                    <TextView
-                        android:id="@+id/tv_username_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLength="18"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        tools:text="\@raja_kampret"
-                        android:textSize="10sp"
-                        android:fontFamily="@font/lato_bold"
-                        android:textColor="@color/white"
-                        app:layout_constraintTop_toBottomOf="@id/tv_name_1"
-                        app:layout_constraintStart_toStartOf="@id/tv_name_1"/>
-
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/iv_avatar_2"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="16dp"
-                        tools:src="@drawable/ava_calon_2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_versus"
-                        app:layout_constraintTop_toBottomOf="@id/tv_versus"
-                        app:riv_border_color="@color/white"
-                        app:riv_border_width="1dp"
-                        app:riv_oval="true"/>
-
-                    <TextView
-                        android:id="@+id/tv_name_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLength="18"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:textSize="13sp"
-                        tools:text="Ratu Cebong"
-                        android:fontFamily="@font/bw_modelica_bold"
-                        android:textColor="@color/white"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toStartOf="@id/iv_avatar_2"
-                        app:layout_constraintTop_toBottomOf="@id/iv_avatar_2"
-                        app:layout_constraintTop_toTopOf="@id/iv_avatar_2"/>
-
-                    <TextView
-                        android:id="@+id/tv_username_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLength="18"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        tools:text="\@ratu_cebong"
-                        android:textSize="10sp"
-                        android:fontFamily="@font/lato_bold"
-                        android:textColor="@color/white"
-                        app:layout_constraintTop_toBottomOf="@id/tv_name_2"
-                        app:layout_constraintStart_toStartOf="@id/tv_name_2"/>
-
-                    <RelativeLayout
-                        android:id="@+id/rl_sisa_waktu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        app:layout_constraintTop_toBottomOf="@id/tv_username_1"
-                        app:layout_constraintStart_toEndOf="@id/tv_versus"
-                        app:layout_constraintEnd_toStartOf="@id/tv_versus">
-
-                        <ImageView
-                            android:id="@+id/iv_saldo_waktu"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_saldo_waktu_white_24"
-                            tools:ignore="ContentDescription"
-                            android:layout_centerVertical="true"/>
+                        android:layout_below="@id/toolbar"
+                        app:layout_collapseMode="none">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                         <TextView
-                            android:id="@+id/tv_sisa_waktu_anda"
+                            android:id="@+id/tv_versus"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_versus_outline_white"
+                            android:fontFamily="@font/lato_bold"
+                            android:gravity="center_horizontal"
+                            android:includeFontPadding="false"
+                            android:paddingTop="4dp"
+                            android:text="VS"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/iv_avatar_1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="16dp"
+                            android:src="@drawable/ava_calon_1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_versus"
+                            app:layout_constraintTop_toBottomOf="@id/tv_versus"
+                            app:riv_border_color="@color/white"
+                            app:riv_border_width="1dp"
+                            app:riv_oval="true"/>
+
+                        <TextView
+                            android:id="@+id/tv_name_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toEndOf="@id/iv_saldo_waktu"
-                            android:layout_marginStart="4dp"
-                            android:text="@string/sisa_waktu_anda"
+                            android:maxLength="18"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:textSize="13sp"
+                            android:text="Raja Kampret"
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:textColor="@color/white"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintStart_toEndOf="@id/iv_avatar_1"
+                            app:layout_constraintTop_toBottomOf="@id/iv_avatar_1"
+                            app:layout_constraintTop_toTopOf="@id/iv_avatar_1"/>
+
+                        <TextView
+                            android:id="@+id/tv_username_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLength="18"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:text="\@raja_kampret"
                             android:textSize="10sp"
                             android:fontFamily="@font/lato_bold"
-                            android:textColor="@color/white"/>
+                            android:textColor="@color/white"
+                            app:layout_constraintTop_toBottomOf="@id/tv_name_1"
+                            app:layout_constraintStart_toStartOf="@id/tv_name_1"/>
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/iv_avatar_2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@drawable/ava_calon_2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_versus"
+                            app:layout_constraintTop_toBottomOf="@id/tv_versus"
+                            app:riv_border_color="@color/white"
+                            app:riv_border_width="1dp"
+                            app:riv_oval="true"/>
 
                         <TextView
-                            android:id="@+id/tv_sisa_waktu"
+                            android:id="@+id/tv_name_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toEndOf="@id/iv_saldo_waktu"
-                            android:layout_marginStart="4dp"
-                            android:layout_below="@id/tv_sisa_waktu_anda"
-                            tools:text="40 MENIT"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/lato_bold"
-                            android:textColor="@color/white"/>
+                            android:maxLength="18"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:textSize="13sp"
+                            android:text="Ratu Cebong"
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:textColor="@color/white"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintEnd_toStartOf="@id/iv_avatar_2"
+                            app:layout_constraintTop_toBottomOf="@id/iv_avatar_2"
+                            app:layout_constraintTop_toTopOf="@id/iv_avatar_2"/>
 
-                    </RelativeLayout>
+                        <TextView
+                            android:id="@+id/tv_username_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLength="18"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:text="\@ratu_cebong"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/lato_bold"
+                            android:textColor="@color/white"
+                            app:layout_constraintTop_toBottomOf="@id/tv_name_2"
+                            app:layout_constraintStart_toStartOf="@id/tv_name_2"/>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_sisa_waktu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            app:layout_constraintTop_toBottomOf="@id/tv_username_1"
+                            app:layout_constraintStart_toEndOf="@id/tv_versus"
+                            app:layout_constraintEnd_toStartOf="@id/tv_versus">
+
+                            <ImageView
+                                android:id="@+id/iv_saldo_waktu"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_saldo_waktu_white_24"
+                                android:layout_centerVertical="true"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:id="@+id/tv_sisa_waktu_anda"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/iv_saldo_waktu"
+                                android:layout_marginStart="4dp"
+                                android:text="@string/sisa_waktu_anda"
+                                android:textSize="10sp"
+                                android:fontFamily="@font/lato_bold"
+                                android:textColor="@color/white"/>
+
+                            <TextView
+                                android:id="@+id/tv_sisa_waktu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/iv_saldo_waktu"
+                                android:layout_marginStart="4dp"
+                                android:layout_below="@id/tv_sisa_waktu_anda"
+                                android:text="40 MENIT"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/lato_bold"
+                                android:textColor="@color/white"/>
+
+                        </RelativeLayout>
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/purple_3"
+                    android:paddingTop="9dp"
+                    android:paddingBottom="9dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textAlignment="center"
+                    android:layout_below="@id/cl_header"
+                    android:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%. 2 periode yuk, biar 10,54%."
+                    android:textColor="@color/white"
+                    android:textSize="12sp"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_title"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@color/gray_1">
+
+                    <ImageView
+                        android:id="@+id/iv_status_debat"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_status_wordstadium_16"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="16dp"
+                        tools:ignore="ContentDescription"/>
 
                     <TextView
-                        android:id="@+id/tv_title"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/purple_3"
-                        android:layout_marginTop="15dp"
-                        android:paddingTop="9dp"
-                        android:paddingBottom="9dp"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
-                        android:textAlignment="center"
-                        tools:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%. 2 periode yuk, biar 10,54%."
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/rl_sisa_waktu"/>
+                        android:layout_marginStart="8dp"
+                        android:textSize="10sp"
+                        android:textColor="@color/black_2"
+                        android:fontFamily="@font/lato_italic"
+                        tools:text="Giliran Raja menulis argumen .."
+                        app:layout_constraintStart_toEndOf="@id/iv_status_debat"
+                        app:layout_constraintTop_toTopOf="@id/iv_status_debat"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_status_debat"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_detail_debat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:background="?selectableItemBackground"
+                        android:layout_marginEnd="8dp"
+                        android:padding="8dp">
+                        <ImageView
+                            android:id="@+id/iv_detail_debat_arrow"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_collapse_black_16"
+                            android:rotation="180"
+                            tools:ignore="ContentDescription"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/detail_debat"
+                            android:textSize="10sp"
+                            android:textColor="@color/black_2"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/iv_detail_debat_arrow"/>
+
+                        <net.cachapa.expandablelayout.ExpandableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/cl_detail_debat">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                >
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </net.cachapa.expandablelayout.ExpandableLayout>
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
+
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
