@@ -1,5 +1,7 @@
 package com.pantaubersama.app.ui.menguji.home
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.view.View
 import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -15,7 +17,7 @@ import java.util.concurrent.TimeUnit
 class FabAnimationDelegate(override val containerView: View, private val overlay: View) : LayoutContainer {
 
     private val isCollapsed: Boolean
-        get() = label_create.visibility == View.GONE
+        get() = label_create.visibility != View.VISIBLE
 
     private val fabAndLabelPairs = listOf(
         null to label_create,
@@ -49,16 +51,16 @@ class FabAnimationDelegate(override val containerView: View, private val overlay
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { (fab, label) ->
                 if (isCollapsing) {
-                    // fade out the label first then hide the fab
-                    animateLabel(label, true, fab)
+                    // fade out the label first then hide the FAB
+                    showOrHideLabel(label, true, fab)
                 } else {
-                    // show the fab first then fade in the label
-                    val listener = object : FloatingActionButton.OnVisibilityChangedListener() {
-                        override fun onShown(fab: FloatingActionButton) {
-                            animateLabel(label, false)
-                        }
+                    if (fab != null) {
+                        // show the FAB first then fade in the label
+                        showFab(fab, label)
+                    } else {
+                        // we don't animate the main FAB, just the label
+                        showOrHideLabel(label, false, null)
                     }
-                    fab?.show(listener) ?: animateLabel(label, false)
                 }
             }
     }
@@ -75,29 +77,50 @@ class FabAnimationDelegate(override val containerView: View, private val overlay
             .start()
     }
 
-    private fun animateLabel(view: TextView, isCollapsing: Boolean, fab: FloatingActionButton? = null) {
-        val xDelta = view.width.toFloat() / 2
+    private fun showFab(fab: FloatingActionButton, label: TextView) {
+        fab.addOnShowAnimationListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationStart(animation: Animator) {
+                showOrHideLabel(label, false, null)
+                fab.removeOnHideAnimationListener(this)
+            }
+        })
+        fab.show()
+    }
 
+    // isCollapsing means the view is going to hide, otherwise it's going to show
+    private fun showOrHideLabel(view: TextView, isCollapsing: Boolean, fab: FloatingActionButton?) {
+        val xDelta = view.width.toFloat() * 0.6f
+
+        view.visibility = View.VISIBLE
         view.alpha = if (isCollapsing) 1f else 0f
         view.translationX = if (isCollapsing) 0f else xDelta
         view.animate()
             .alpha(if (isCollapsing) 0f else 1f)
             .translationX(if (isCollapsing) xDelta else 0f)
             .setDuration(LABEL_FADE_DURATION)
+            .setStartDelay(if (isCollapsing) 0 else LABEL_FADE_IN_DELAY)
             .apply {
-                if (isCollapsing) withEndAction {
-                    view.visibility = View.GONE
-                    fab?.hide()
-                } else withStartAction {
-                    view.visibility = View.VISIBLE
+                if (isCollapsing) {
+                    // start hiding fab in the middle of animation progress
+                    var isHiding = false
+                    setUpdateListener {
+                        if (!isHiding && it.animatedFraction > 0.6f) {
+                            fab?.hide()
+                            isHiding = true
+                        }
+                    }
+                    withEndAction {
+                        view.visibility = View.INVISIBLE
+                    }
                 }
             }
             .start()
     }
 
     companion object {
-        private const val INTERVAL = 35L
-        private const val LABEL_FADE_DURATION = 100L
+        private const val INTERVAL = 60L
+        private const val LABEL_FADE_DURATION = 150L
+        private const val LABEL_FADE_IN_DELAY = 150L
         private const val DIMMING_DURATION = 300L
     }
 }
