@@ -24,7 +24,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.wordstadium.challenge.open.OpenChallengeAct"></activity>
+        <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity"></activity>
+        <activity android:name=".ui.wordstadium.challenge.direct.DirectChallengeActivity" />
+        <activity android:name=".ui.wordstadium.challenge.open.PromoteChallengeActivity" />
+        <activity android:name=".ui.wordstadium.challenge.open.OpenChallengeAct" />
         <activity android:name=".ui.wordstadium.challenge.CreateChallengeActivity" />
         <activity android:name=".ui.notification.NotifActivity" />
         <activity

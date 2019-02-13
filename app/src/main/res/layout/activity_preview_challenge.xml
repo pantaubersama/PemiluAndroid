@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pantaubersama.app.ui.wordstadium.challenge.open.PromoteChallengeActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <include layout="@layout/layout_toolbar_light" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/promote_challenge_publish"
+        android:layout_below="@+id/appbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:background="@drawable/banner_challenge_vs_big"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/open_challenge_avatar"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_avatar_placeholder"
+                        app:riv_border_color="@color/white"
+                        app:riv_oval="true" />
+
+                    <TextView
+                        android:id="@+id/open_challenge_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_toRightOf="@+id/open_challenge_avatar"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:lineSpacingExtra="2sp"
+                        android:maxLines="1"
+                        android:text="Ratu Cebong…"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/open_challenge_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/open_challenge_name"
+                        android:layout_marginStart="10dp"
+                        android:layout_toRightOf="@+id/open_challenge_avatar"
+                        android:fontFamily="@font/lato_bold"
+                        android:letterSpacing="0.02"
+                        android:lineSpacingExtra="15sp"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        tools:text="\ufeff@ratu_cebonganYK" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/bw_modelica_bold"
+                    android:gravity="center_horizontal"
+                    android:letterSpacing="0.05"
+                    android:lineSpacingExtra="-2sp"
+                    android:text="@string/direct_challenge"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="50dp"
+                    android:alpha="0.3"
+                    android:src="@drawable/challenge_dibuat_blm_ada_lawan" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingTop="40dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="40dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/bw_modelica_light"
+                        android:lineSpacingExtra="4sp"
+                        android:textColor="@color/black_2"
+                        android:textSize="24sp"
+                        tools:text="Tantangan debat kamu," />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:lineSpacingExtra="4sp"
+                        android:textColor="@color/yellow"
+                        android:textSize="24sp"
+                        tools:text="sudah siap tayang!" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:lineSpacingExtra="4sp"
+                        android:textColor="@color/yellow"
+                        android:textSize="24sp"
+                        tools:text="Hubungkan dengan
+akun Twitter-mu." />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_twitter_blue" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lato_bold"
+                                android:lineSpacingExtra="4sp"
+                                android:text="Twitter"
+                                android:textColor="@color/blue_twitter"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lato_regular"
+                                android:lineSpacingExtra="2sp"
+                                android:text="Tweet tantangan kamu sekarang. Undang temanmu untuk berdebat di sini."
+                                android:textColor="@color/black_2"
+                                android:textSize="12sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/lato_regular"
+                                    android:lineSpacingExtra="2sp"
+                                    android:text="Connected as "
+                                    android:textColor="@color/black_2"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/lato_bold"
+                                    android:gravity="center_horizontal"
+                                    android:lineSpacingExtra="3sp"
+                                    android:text="ratucebongYK"
+                                    android:textColor="@color/black_2"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <Switch
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bw_modelica_bold"
+                    android:gravity="center"
+                    android:letterSpacing="0.05"
+                    android:lineSpacingExtra="-2sp"
+                    android:text="CHALLENGE DETAIL"
+                    android:textColor="@color/black_2"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/bg_rounded_orange_outline"
+                    android:fontFamily="@font/lato_italic"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="2sp"
+                    android:paddingStart="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="2dp"
+                    android:text="ekonomi"
+                    android:textColor="@color/gray_dark_3"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/bw_modelica_bold"
+                    android:lineSpacingExtra="2sp"
+                    android:textColor="@color/black_2"
+                    android:textSize="12sp"
+                    tools:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%. 2 periode yuk, biar 10,54%." />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:lineSpacingExtra="16sp"
+                    android:text="Lawan debat"
+                    android:textColor="@color/black_2"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_gray_1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/direct_challenge_ava_lawan_twitter"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_avatar_placeholder"
+                        app:riv_border_color="@color/white"
+                        app:riv_oval="true" />
+
+                    <TextView
+                        android:id="@+id/direct_challenge_name_lawan_twitter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_toRightOf="@+id/direct_challenge_ava_lawan_twitter"
+                        android:fontFamily="@font/lato_bold"
+                        android:lineSpacingExtra="5sp"
+                        android:textColor="@color/black"
+                        android:textSize="11sp"
+                        tools:text="Raja Kampreta" />
+
+                    <TextView
+                        android:id="@+id/direct_challenge_username_lawan_twitter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/direct_challenge_name_lawan_twitter"
+                        android:layout_marginStart="8dp"
+                        android:layout_toRightOf="@+id/direct_challenge_ava_lawan_twitter"
+                        android:fontFamily="@font/lato_regular"
+                        android:letterSpacing="0.02"
+                        android:lineSpacingExtra="7sp"
+                        android:text="\ufeff@raja_kampret"
+                        android:textColor="@color/gray_4"
+                        android:textSize="8sp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:lineSpacingExtra="16sp"
+                    android:text="Date &amp; Time"
+                    android:textColor="@color/black_2"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_gray_1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_date" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:lineSpacingExtra="2sp"
+                        android:text="Selasa, 24 Maret 2019"
+                        android:textColor="@color/black_2"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_gray_1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_clock" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:lineSpacingExtra="2sp"
+                        android:text="16.00"
+                        android:textColor="@color/black_2"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:lineSpacingExtra="16sp"
+                    android:text="Saldo Waktu"
+                    android:textColor="@color/black_2"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_regular"
+                    android:lineSpacingExtra="2sp"
+                    android:text="Kamu dan lawan debatmu mendapat saldo waktu yang sama:"
+                    android:textColor="@color/gray_4"
+                    android:textSize="11sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_gray_1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_saldo_waktu" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:lineSpacingExtra="2sp"
+                        android:text="120"
+                        android:textColor="@color/black_2"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/lato_regular"
+                        android:lineSpacingExtra="2sp"
+                        android:text="menit"
+                        android:textColor="@color/gray_4"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/gray_2"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="70dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/open_challenge_avatar_2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_avatar_placeholder"
+                    app:riv_border_color="@color/white"
+                    app:riv_oval="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="3sp"
+                    android:text="Ratu CebongYK"
+                    android:textColor="@color/black_2"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_regular"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="2sp"
+                    android:text="Berjuang bersama untuk Indochina"
+                    android:textColor="@color/gray_dark_3"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:gravity="center_horizontal"
+                    android:letterSpacing="0.02"
+                    android:lineSpacingExtra="4sp"
+                    android:text="Posted 8 minutes ago"
+                    android:textColor="@color/gray_4"
+                    android:textSize="9sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/promote_challenge_publish"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/orange_2"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="center_horizontal"
+            android:letterSpacing="0.1"
+            android:lineSpacingExtra="0sp"
+            android:text="PUBLISH"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pantaubersama.app.ui.wordstadium.challenge.open.OpenChallengeAct">
+    tools:context="com.pantaubersama.app.ui.wordstadium.challenge.direct.DirectChallengeActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -88,7 +88,7 @@
                     android:gravity="center_horizontal"
                     android:letterSpacing="0.05"
                     android:lineSpacingExtra="-2sp"
-                    android:text="@string/open_challenge"
+                    android:text="@string/direct_challenge"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
@@ -271,6 +271,227 @@
                             android:textSize="11sp" />
 
                     </LinearLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/outline_hint_16_px" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/check_active" />
+
+                    <View style="@style/vertical_line_active" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_regular"
+                        android:lineSpacingExtra="16sp"
+                        android:text="Lawan debat"
+                        android:textColor="@color/black_2"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_regular"
+                        android:lineSpacingExtra="2sp"
+                        android:text="Undang orang untuk menjadi lawan debat kamu. Undang lawan debatmu dari Symbolic ID, atau mention langsung akun Twitternya."
+                        android:textColor="@color/gray_4"
+                        android:textSize="11sp" />
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_gray_1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="10dp"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_symbolic" />
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:background="@android:color/transparent"
+                                android:fontFamily="@font/bw_modelica_bold"
+                                android:hint="Username symbolic"
+                                android:textColorHint="@color/gray_dark_1"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_gray_1"
+                            android:gravity="center_vertical"
+                            android:padding="10dp">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:id="@+id/direct_challenge_ava_lawan_symbolic"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_avatar_placeholder"
+                                app:riv_border_color="@color/white"
+                                app:riv_oval="true" />
+
+                            <TextView
+                                android:id="@+id/direct_challenge_name_lawan_symbolic"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_toRightOf="@+id/direct_challenge_ava_lawan_symbolic"
+                                android:fontFamily="@font/lato_bold"
+                                android:lineSpacingExtra="5sp"
+                                android:textColor="@color/black"
+                                android:textSize="11sp"
+                                tools:text="Raja Kampreta" />
+
+                            <TextView
+                                android:id="@+id/direct_challenge_username_lawan_symbolic"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/direct_challenge_name_lawan_symbolic"
+                                android:layout_marginStart="8dp"
+                                android:layout_toRightOf="@+id/direct_challenge_ava_lawan_symbolic"
+                                android:fontFamily="@font/lato_regular"
+                                android:letterSpacing="0.02"
+                                android:lineSpacingExtra="7sp"
+                                android:text="\ufeff@raja_kampret"
+                                android:textColor="@color/gray_4"
+                                android:textSize="8sp" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_gray_1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="10dp"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_twitter_blue" />
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:background="@android:color/transparent"
+                                android:fontFamily="@font/bw_modelica_bold"
+                                android:hint="Username twitter"
+                                android:textColorHint="@color/gray_dark_1"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_gray_1"
+                            android:gravity="center_vertical"
+                            android:padding="10dp">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:id="@+id/direct_challenge_ava_lawan_twitter"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_avatar_placeholder"
+                                app:riv_border_color="@color/white"
+                                app:riv_oval="true" />
+
+                            <TextView
+                                android:id="@+id/direct_challenge_name_lawan_twitter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_toRightOf="@+id/direct_challenge_ava_lawan_twitter"
+                                android:fontFamily="@font/lato_bold"
+                                android:lineSpacingExtra="5sp"
+                                android:textColor="@color/black"
+                                android:textSize="11sp"
+                                tools:text="Raja Kampreta" />
+
+                            <TextView
+                                android:id="@+id/direct_challenge_username_lawan_twitter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/direct_challenge_name_lawan_twitter"
+                                android:layout_marginStart="8dp"
+                                android:layout_toRightOf="@+id/direct_challenge_ava_lawan_twitter"
+                                android:fontFamily="@font/lato_regular"
+                                android:letterSpacing="0.02"
+                                android:lineSpacingExtra="7sp"
+                                android:text="\ufeff@raja_kampret"
+                                android:textColor="@color/gray_4"
+                                android:textSize="8sp" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
