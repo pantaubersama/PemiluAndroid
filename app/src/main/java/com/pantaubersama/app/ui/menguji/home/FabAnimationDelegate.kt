@@ -1,6 +1,8 @@
 package com.pantaubersama.app.ui.menguji.home
 
 import android.view.View
+import android.widget.TextView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pantaubersama.app.R
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -28,46 +30,74 @@ class FabAnimationDelegate(override val containerView: View, private val overlay
     }
 
     fun expand(): Disposable {
-        animateView(overlay, false, FADE_DURATION)
+        animateOverlay(false)
         fab_create.setImageResource(R.drawable.ic_create)
 
-        return Observable.fromIterable(fabAndLabelPairs)
-            .zipWith(Observable.interval(INTERVAL, TimeUnit.MILLISECONDS)) { pair, _ -> pair }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { (fab, label) ->
-                fab?.show()
-                animateView(label, false)
-            }
+        return runAnimationSequence(fabAndLabelPairs, false)
     }
 
     fun collapse(): Disposable {
-        animateView(overlay, true, FADE_DURATION)
+        animateOverlay(true)
         fab_create.setImageResource(R.drawable.ic_add_menguji)
 
-        return Observable.fromIterable(fabAndLabelPairs.reversed())
+        return runAnimationSequence(fabAndLabelPairs.reversed(), true)
+    }
+
+    private fun runAnimationSequence(list: List<Pair<FloatingActionButton?, TextView>>, isCollapsing: Boolean): Disposable {
+        return Observable.fromIterable(list)
             .zipWith(Observable.interval(INTERVAL, TimeUnit.MILLISECONDS)) { pair, _ -> pair }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { (fab, label) ->
-                fab?.hide()
-                animateView(label, true)
+                if (isCollapsing) {
+                    // fade out the label first then hide the fab
+                    animateLabel(label, true, fab)
+                } else {
+                    // show the fab first then fade in the label
+                    val listener = object : FloatingActionButton.OnVisibilityChangedListener() {
+                        override fun onShown(fab: FloatingActionButton) {
+                            animateLabel(label, false)
+                        }
+                    }
+                    fab?.show(listener) ?: animateLabel(label, false)
+                }
             }
     }
 
-    private fun animateView(view: View, isCollapsing: Boolean, duration: Long? = null) {
+    private fun animateOverlay(isCollapsing: Boolean) {
+        overlay.alpha = if (isCollapsing) 1f else 0f
+        overlay.animate()
+            .alpha(if (isCollapsing) 0f else 1f)
+            .setDuration(DIMMING_DURATION)
+            .apply {
+                if (isCollapsing) withEndAction { overlay.visibility = View.GONE }
+                else withStartAction { overlay.visibility = View.VISIBLE }
+            }
+            .start()
+    }
+
+    private fun animateLabel(view: TextView, isCollapsing: Boolean, fab: FloatingActionButton? = null) {
+        val xDelta = view.width.toFloat() / 2
+
         view.alpha = if (isCollapsing) 1f else 0f
+        view.translationX = if (isCollapsing) 0f else xDelta
         view.animate()
             .alpha(if (isCollapsing) 0f else 1f)
+            .translationX(if (isCollapsing) xDelta else 0f)
+            .setDuration(LABEL_FADE_DURATION)
             .apply {
-                duration?.let { setDuration(it) }
-
-                if (isCollapsing) withEndAction { view.visibility = View.GONE }
-                else withStartAction { view.visibility = View.VISIBLE }
+                if (isCollapsing) withEndAction {
+                    view.visibility = View.GONE
+                    fab?.hide()
+                } else withStartAction {
+                    view.visibility = View.VISIBLE
+                }
             }
             .start()
     }
 
     companion object {
         private const val INTERVAL = 35L
-        private const val FADE_DURATION = 300L
+        private const val LABEL_FADE_DURATION = 100L
+        private const val DIMMING_DURATION = 300L
     }
 }
