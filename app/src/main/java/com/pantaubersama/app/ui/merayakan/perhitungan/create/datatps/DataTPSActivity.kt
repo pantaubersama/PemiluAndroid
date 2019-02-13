@@ -24,25 +24,25 @@ class DataTPSActivity : CommonActivity() {
     private var permission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
     private var geocoder: Geocoder? = null
     private var addresses: List<Address>? = null
-    private val locationListener = object : LocationListener {
-        override fun onLocationChanged(location: Location) {
-            location_progressbar.visibility = View.GONE
-            address_text.visibility = View.VISIBLE
-            addresses = geocoder?.getFromLocation(location.latitude, location.longitude, 1)
-            val address = addresses?.get(0)?.getAddressLine(0)
-            address_text.text = address
-        }
-
-        override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
-        }
-
-        override fun onProviderEnabled(p0: String?) {
-        }
-
-        override fun onProviderDisabled(p0: String?) {
-            ToastUtil.show(this@DataTPSActivity, "Hidupkan GPS kamu")
-        }
-    }
+//    private val locationListener = object : LocationListener {
+//        override fun onLocationChanged(location: Location) {
+//            location_progressbar.visibility = View.GONE
+//            address_text.visibility = View.VISIBLE
+//            addresses = geocoder?.getFromLocation(location.latitude, location.longitude, 1)
+//            val address = addresses?.get(0)?.getAddressLine(0)
+//            address_text.text = address
+//        }
+//
+//        override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
+//        }
+//
+//        override fun onProviderEnabled(p0: String?) {
+//        }
+//
+//        override fun onProviderDisabled(p0: String?) {
+//            ToastUtil.show(this@DataTPSActivity, "Hidupkan GPS kamu")
+//        }
+//    }
 
     override fun statusBarColor(): Int? {
         return 0
@@ -66,7 +66,19 @@ class DataTPSActivity : CommonActivity() {
                 location_progressbar.visibility = View.VISIBLE
                 address_text.visibility = View.GONE
                 try {
-                    locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+//                    locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+                    val location: Location? = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+                    location_progressbar.visibility = View.GONE
+                    address_text.visibility = View.VISIBLE
+                    if (location != null) {
+                        addresses = geocoder?.getFromLocation(location.latitude, location.longitude, 1)
+                        val address = addresses?.get(0)?.getAddressLine(0)
+                        address_text.text = address
+                    } else {
+                        address_text.text = "Lokasi tidak ditemukan"
+                    }
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

@@ -56,7 +56,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="16dp"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -164,18 +165,30 @@
                     android:fontFamily="@font/lato_regular"
                     android:textColor="@color/gray_dark_2"/>
 
-                <TextView
-                    android:id="@+id/update_location_button"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Perbarui lokasi"
-                    android:layout_marginTop="12dp"
-                    android:drawableLeft="@drawable/refresh_icon"
-                    android:drawableStart="@drawable/refresh_icon"
-                    android:gravity="center_vertical"
-                    android:fontFamily="@font/lato_regular"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorAccent"/>
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/refresh_location_icon"/>
+
+                    <TextView
+                        android:id="@+id/update_location_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Perbarui lokasi"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"/>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
