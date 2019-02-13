@@ -22,18 +22,20 @@ class DebatSmallViewHolder(view: View) : DebatViewHolder(view) {
         super.bind(item)
 
         val bgImage = when (item) {
+            is DebatItem.LiveNow -> R.drawable.bg_debat_live
             is DebatItem.ComingSoon -> R.drawable.bg_coming_soon
             is DebatItem.Done -> R.drawable.bg_done
             is DebatItem.Open -> R.drawable.bg_challenge
-            else -> 0
         }
 
         bg_carousel_item.setImageResource(bgImage)
-        text_status.visibleIf(item is DebatItem.ComingSoon || item is DebatItem.Open)
+        icon_debat_type.visibleIf(item is DebatItem.LiveNow)
+        text_status.visibleIf(item !is DebatItem.Done)
         text_favorite_count.visibleIf(item is DebatItem.Done)
         layout_clap.visibleIf(item is DebatItem.Done)
 
         when (item) {
+            is DebatItem.LiveNow -> text_status.text = "Live selama 20 menit"
             is DebatItem.ComingSoon -> text_status.text = "${item.date}  •  ${item.startEndTime}"
             is DebatItem.Done -> {
                 text_clap_1.text = item.clap1.toString()
