@@ -49,8 +49,11 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         fabAnimationDelegate = FabAnimationDelegate(fab_container, overlay)
+        fab_create.setOnClickListener {
+            animationDisposable = fabAnimationDelegate.toggle()
+        }
         overlay.setOnClickListener {
-            fabAnimationDelegate.collapse()
+            animationDisposable = fabAnimationDelegate.collapse()
         }
 
         swipe_refresh.setOnRefreshListener {
@@ -63,10 +66,6 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         setupTimeline()
 
         refreshList()
-
-        fab_create.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.toggle()
-        }
     }
 
     private fun refreshList() {

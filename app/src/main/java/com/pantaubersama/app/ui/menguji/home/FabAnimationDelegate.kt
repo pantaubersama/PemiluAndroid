@@ -19,6 +19,8 @@ class FabAnimationDelegate(override val containerView: View, private val overlay
     private val isCollapsed: Boolean
         get() = label_create.visibility != View.VISIBLE
 
+    private var isAnimationRunning: Boolean = false
+
     private val fabAndLabelPairs = listOf(
         null to label_create,
         fab_live to label_live,
@@ -27,19 +29,21 @@ class FabAnimationDelegate(override val containerView: View, private val overlay
         fab_challenge to label_challenge
     )
 
-    fun toggle(): Disposable {
+    fun toggle(): Disposable? {
         return if (isCollapsed) expand() else collapse()
     }
 
-    fun expand(): Disposable {
-        animateOverlay(false)
+    fun expand(): Disposable? {
+        if (isAnimationRunning) return null
+
         fab_create.setImageResource(R.drawable.ic_create)
 
         return runAnimationSequence(fabAndLabelPairs, false)
     }
 
-    fun collapse(): Disposable {
-        animateOverlay(true)
+    fun collapse(): Disposable? {
+        if (isAnimationRunning) return null
+
         fab_create.setImageResource(R.drawable.ic_add_menguji)
 
         return runAnimationSequence(fabAndLabelPairs.reversed(), true)
@@ -47,6 +51,10 @@ class FabAnimationDelegate(override val containerView: View, private val overlay
 
     private fun runAnimationSequence(list: List<Pair<FloatingActionButton?, TextView>>, isCollapsing: Boolean): Disposable {
         return Observable.fromIterable(list)
+            .doOnSubscribe {
+                isAnimationRunning = true
+                animateOverlay(isCollapsing)
+            }
             .zipWith(Observable.interval(INTERVAL, TimeUnit.MILLISECONDS)) { pair, _ -> pair }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { (fab, label) ->
@@ -109,12 +117,22 @@ class FabAnimationDelegate(override val containerView: View, private val overlay
                             isHiding = true
                         }
                     }
-                    withEndAction {
-                        view.visibility = View.INVISIBLE
-                    }
                 }
             }
+            .withEndAction {
+                if (isCollapsing) view.visibility = View.INVISIBLE
+                checkAnimationDone(view, isCollapsing)
+            }
             .start()
+    }
+
+    private fun checkAnimationDone(view: TextView, isCollapsing: Boolean) {
+        val collapseFinished = isCollapsing && view == label_create
+        val expandFinished = !isCollapsing && view == label_challenge
+
+        if (collapseFinished || expandFinished) {
+            isAnimationRunning = false
+        }
     }
 
     companion object {
