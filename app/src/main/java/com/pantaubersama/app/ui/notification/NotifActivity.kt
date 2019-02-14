@@ -23,6 +23,8 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
     private lateinit var tabAdapter: NotifTabAdapter
     var selectedTab: String = ""
     private lateinit var notificationAdapter: NotifAdapter
+    private var allData: MutableList<NotificationWhole> = ArrayList()
+    private var onlyEvent: MutableList<NotificationWhole> = ArrayList()
 
     @Inject
     override lateinit var presenter: NotifPresenter
@@ -42,7 +44,6 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_notification), R.color.white, 4f)
         setupTabRecyclerview()
-        tabAdapter.setSelected(0)
         setupNotifications()
         presenter.getNotifications()
     }
@@ -55,6 +56,7 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
             presenter.getNotifications()
             swipe_refresh.isRefreshing = false
         }
+        tabAdapter.setSelected(0)
     }
 
     override fun showFailedLoadNotificationAlert() {
@@ -62,7 +64,19 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
     }
 
     override fun bindNotifications(notifications: MutableList<NotificationWhole>) {
-        notificationAdapter.setDatas(notifications as MutableList<ItemModel>)
+        allData.addAll(notifications)
+        notificationAdapter.setDatas(allData as MutableList<ItemModel>)
+        for (notif in notifications) {
+            if (notif.data.notif_type != null) {
+                if (notif.data.notif_type == "broadcasts") {
+                    onlyEvent.add(notif)
+                }
+            } else if (notif.data.payload.notif_type != null) {
+                if (notif.data.payload.notif_type == "broadcasts") {
+                    onlyEvent.add(notif)
+                }
+            }
+        }
     }
 
     override fun showEmptyDataAlert() {
@@ -129,5 +143,10 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
     }
 
     private fun setPage(position: Int) {
+        if (position == 0) {
+            notificationAdapter.setDatas(allData as MutableList<ItemModel>)
+        } else {
+            notificationAdapter.setDatas(onlyEvent as MutableList<ItemModel>)
+        }
     }
 }
