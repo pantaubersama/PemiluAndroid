@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.datatps.perhitunganhome.PerhitunganMainActivity
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
 import kotlinx.android.synthetic.main.activity_data_tps.*
@@ -147,6 +148,8 @@ class DataTPSActivity : CommonActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.done_action -> {
+                // sementara
+                startActivity(Intent(this@DataTPSActivity, PerhitunganMainActivity::class.java))
             }
             android.R.id.home -> {
                 onBackPressed()

@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pantaubersama.app.ui.merayakan.perhitungan.create.datatps.perhitunganhome.PerhitunganMainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <include layout="@layout/layout_toolbar_light"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/submit_button"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/white">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@color/gray_3"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:paddingLeft="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingEnd="16dp"
+                        android:background="@drawable/top_rounded_red">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TPS 02"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/lato_bold"
+                            android:textSize="17sp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_more_horiz"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:tint="@color/white"/>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:paddingLeft="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingEnd="16dp"
+                        android:background="@drawable/bottom_rounded_gray">
+
+                        <LinearLayout
+                            android:layout_width="4dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/orange">
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginStart="8dp"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Provinsi:"
+                                    android:fontFamily="@font/bw_modelica_regular"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/black_3"/>
+
+                                <TextView
+                                    android:id="@+id/province_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Yogyakarta"
+                                    android:fontFamily="@font/bw_modelica_bold"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginStart="4dp"
+                                    android:textColor="@color/black_3"
+                                    android:textSize="16sp"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginStart="8dp"
+                                android:gravity="center_vertical"
+                                android:layout_marginTop="4dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Kabupaten/Kotamadya:"
+                                    android:fontFamily="@font/bw_modelica_regular"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/black_3"/>
+
+                                <TextView
+                                    android:id="@+id/district_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sleman"
+                                    android:fontFamily="@font/bw_modelica_bold"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginStart="4dp"
+                                    android:textColor="@color/black_3"
+                                    android:textSize="16sp"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginStart="8dp"
+                                android:gravity="center_vertical"
+                                android:layout_marginTop="4dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Kecamatan:"
+                                    android:fontFamily="@font/bw_modelica_regular"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/black_3"/>
+
+                                <TextView
+                                    android:id="@+id/subdistrict_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Depok"
+                                    android:fontFamily="@font/bw_modelica_bold"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginStart="4dp"
+                                    android:textColor="@color/black_3"
+                                    android:textSize="16sp"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginStart="8dp"
+                                android:gravity="center_vertical"
+                                android:layout_marginTop="4dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Desa/Kelurahan:"
+                                    android:fontFamily="@font/bw_modelica_regular"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/black_3"/>
+
+                                <TextView
+                                    android:id="@+id/village_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Condongcatur"
+                                    android:fontFamily="@font/bw_modelica_bold"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginStart="4dp"
+                                    android:textColor="@color/black_3"
+                                    android:textSize="16sp"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="48dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/presiden_action"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center_horizontal"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/presiden_animated"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Presiden"
+                                android:textSize="12sp"
+                                android:textColor="@color/black_3"
+                                android:fontFamily="@font/lato_regular"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/dpr_ri_action"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center_horizontal"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/dpr_ri_animated"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="DPR RI"
+                                android:textSize="12sp"
+                                android:textColor="@color/black_3"
+                                android:fontFamily="@font/lato_regular"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/dpd_action"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center_horizontal"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/dpd_animated"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="DPD"
+                                android:textSize="12sp"
+                                android:textColor="@color/black_3"
+                                android:fontFamily="@font/lato_regular"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/dpr_provinsi_action"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center_horizontal"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/dpr_provinsi_animated"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="DPR Provinsi"
+                                android:textSize="12sp"
+                                android:textColor="@color/black_3"
+                                android:fontFamily="@font/lato_regular"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/dpr_kabupaten_action"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center_horizontal"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/dpr_kabupaten_animated"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="DPR Kabupaten"
+                                android:textSize="12sp"
+                                android:textColor="@color/black_3"
+                                android:fontFamily="@font/lato_regular"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="@color/gray_3"
+                    android:layout_marginTop="36dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="24dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/upload_documents_animated"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tps_attachment_hint"
+                        android:gravity="center_horizontal"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:id="@+id/submit_button"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:foreground="?selectableItemBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:letterSpacing="0.1"
+                android:lineSpacingExtra="3sp"
+                android:layout_centerInParent="true"
+                android:text="@string/terapkan"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
