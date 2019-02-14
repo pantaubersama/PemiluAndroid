@@ -61,7 +61,7 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
 
         init {
             tabs.add("Semua Notifikasi")
-            tabs.add("Wordstadium")
+//            tabs.add("Wordstadium")
             tabs.add("Event")
         }
 
@@ -101,6 +101,6 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
     }
 
     private fun setPage(position: Int) {
-        // Filter notifikasi berdasarkan semua notif, wordstadium, dan event.
+
     }
 }
