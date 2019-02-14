@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.notification.NotificationWhole
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.activity_notif.*
@@ -17,8 +20,9 @@ import javax.inject.Inject
 
 class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
 
-    private lateinit var adapter: NotifTabAdapter
+    private lateinit var tabAdapter: NotifTabAdapter
     var selectedTab: String = ""
+    private lateinit var notificationAdapter: NotifAdapter
 
     @Inject
     override lateinit var presenter: NotifPresenter
@@ -38,22 +42,46 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_notification), R.color.white, 4f)
         setupTabRecyclerview()
-        adapter.setSelected(0)
+        tabAdapter.setSelected(0)
+        setupNotifications()
+        presenter.getNotifications()
+    }
+
+    private fun setupNotifications() {
+        notificationAdapter = NotifAdapter()
+        notifications.layoutManager = LinearLayoutManager(this@NotifActivity)
+        notifications.adapter = notificationAdapter
+        swipe_refresh.setOnRefreshListener {
+            presenter.getNotifications()
+            swipe_refresh.isRefreshing = false
+        }
+    }
+
+    override fun showFailedLoadNotificationAlert() {
+        ToastUtil.show(this@NotifActivity, "Gagal memuat notifikasi")
+    }
+
+    override fun bindNotifications(notifications: MutableList<NotificationWhole>) {
+        notificationAdapter.setDatas(notifications as MutableList<ItemModel>)
+    }
+
+    override fun showEmptyDataAlert() {
+        notif_blank.visibility = View.VISIBLE
     }
 
     override fun showLoading() {
-        // show
+        progress_bar.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
-        // dismiss
+        progress_bar.visibility = View.GONE
     }
 
     private fun setupTabRecyclerview() {
         notif_recycler_view_menu.layoutManager =
                 LinearLayoutManager(this@NotifActivity, LinearLayoutManager.HORIZONTAL, false)
-        adapter = NotifTabAdapter()
-        notif_recycler_view_menu.adapter = adapter
+        tabAdapter = NotifTabAdapter()
+        notif_recycler_view_menu.adapter = tabAdapter
     }
 
     inner class NotifTabAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -101,6 +129,5 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
     }
 
     private fun setPage(position: Int) {
-
     }
 }
