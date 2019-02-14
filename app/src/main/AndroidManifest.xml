@@ -26,8 +26,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.merayakan.perhitungan.create.datatps.perhitunganhome.PerhitunganMainActivity"></activity>
-        <activity android:name=".ui.merayakan.perhitungan.create.datatps.DataTPSActivity" />
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.PerhitunganPresidenActivity"></activity>
+        <activity android:name=".ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity" />
+        <activity android:name=".ui.merayakan.perhitungan.create.DataTPSActivity" />
         <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity" />
         <activity android:name=".ui.wordstadium.challenge.direct.DirectChallengeActivity" />
         <activity android:name=".ui.wordstadium.challenge.open.PromoteChallengeActivity" />

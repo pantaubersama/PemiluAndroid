@@ -6,7 +6,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.merayakan.perhitungan.create.datatps.DataTPSActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.DataTPSActivity
 import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.fragment_perhitungan.*
 import javax.inject.Inject

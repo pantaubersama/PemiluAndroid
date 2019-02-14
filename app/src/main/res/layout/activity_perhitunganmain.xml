@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pantaubersama.app.ui.merayakan.perhitungan.create.datatps.perhitunganhome.PerhitunganMainActivity">
+    tools:context="com.pantaubersama.app.ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -405,7 +405,7 @@
                 android:letterSpacing="0.1"
                 android:lineSpacingExtra="3sp"
                 android:layout_centerInParent="true"
-                android:text="@string/terapkan"/>
+                android:text="@string/submit"/>
 
         </RelativeLayout>
 
