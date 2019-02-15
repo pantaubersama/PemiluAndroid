@@ -51,7 +51,7 @@ data class Payload(
     @SerializedName("achieved_badge")
     val badgeNotif: AchievedBadge,
     @SerializedName("quiz")
-    var quizNotif: Quiz,
+    var quizNotif: Quiz?,
     @SerializedName("pemilu_broadcast")
     var broadcast: PemiluBroadcast?
 )

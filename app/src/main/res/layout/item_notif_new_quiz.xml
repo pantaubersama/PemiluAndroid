@@ -42,7 +42,8 @@
                 android:paddingStart="27dp"
                 android:paddingTop="4dp"
                 android:paddingRight="27dp"
-                android:paddingBottom="4dp">
+                android:paddingBottom="4dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"

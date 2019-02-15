@@ -62,10 +62,18 @@ class NotifAdapter : BaseRecyclerAdapter() {
         fun bind(notification: NotificationWhole) {
             notif_new_quiz_message.text = notification.notification.body
             itemView.setOnClickListener {
-                listener?.onClickQuiz(notification.data.payload.quizNotif.id)
+                if (notification.data.payload.quizNotif != null) {
+                    notification.data.payload.quizNotif?.id?.let {
+                        listener?.onClickQuiz(it)
+                    }
+                }
             }
             notif_new_quiz_follow.setOnClickListener {
-                listener?.onClickQuiz(notification.data.payload.quizNotif.id)
+                if (notification.data.payload.quizNotif != null) {
+                    notification.data.payload.quizNotif?.id?.let {
+                        listener?.onClickQuiz(it)
+                    }
+                }
             }
         }
     }
@@ -91,6 +99,9 @@ class NotifAdapter : BaseRecyclerAdapter() {
         fun bind(notification: NotificationWhole) {
             notif_question_message.text = notification.notification.body
             notif_question_text.text = notification.data.payload.question.body
+            question_container.setOnClickListener {
+                listener?.onClickTanyaKandidat(notification.data.payload.question.id)
+            }
             itemView.setOnClickListener {
                 listener?.onClickTanyaKandidat(notification.data.payload.question.id)
             }
