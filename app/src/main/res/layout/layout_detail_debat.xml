@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingTop="24dp"
     android:paddingBottom="24dp"
     android:paddingStart="32dp"
     android:paddingEnd="32dp"
-    android:clipToPadding="false">
+    android:clipToPadding="false"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_challenge_detail"
@@ -179,17 +178,43 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
-        android:id="@+id/tv_name_detail"
+        android:id="@+id/tv_creator_name_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="120 menit"
-        android:textSize="12sp"
+        android:layout_marginTop="8dp"
+        android:text="Raja Kampreta"
+        android:textSize="11sp"
         android:textColor="@color/black_2"
-        android:fontFamily="@font/bw_modelica_bold"
-        app:layout_constraintStart_toEndOf="@id/iv_saldo_waktu"
-        app:layout_constraintTop_toTopOf="@id/iv_saldo_waktu"
-        app:layout_constraintBottom_toBottomOf="@id/iv_saldo_waktu"/>
+        android:fontFamily="@font/lato_regular"
+        app:layout_constraintTop_toBottomOf="@id/iv_creator_avatar_detail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
+
+    <TextView
+        android:id="@+id/tv_creator_bio_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Usir penjajah mari bersedekah"
+        android:textSize="11sp"
+        android:textColor="@color/gray_dark_3"
+        android:fontFamily="@font/lato_regular"
+        app:layout_constraintTop_toBottomOf="@id/tv_creator_name_detail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/tv_posted_time_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Posted 8 minutes ago"
+        android:textSize="10sp"
+        android:textColor="@color/gray_4"
+        android:fontFamily="@font/lato_regular"
+        app:layout_constraintTop_toBottomOf="@id/tv_creator_bio_detail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

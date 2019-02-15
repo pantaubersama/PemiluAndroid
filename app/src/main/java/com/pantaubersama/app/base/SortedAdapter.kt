@@ -10,14 +10,14 @@ import com.pantaubersama.app.data.model.ItemModel
 /**
  * @author edityomurti on 12/02/2019 15:55
  */
-abstract class SortedAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    protected var data: SortedList<ItemModel>?
+abstract class SortedAdapter<T>: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    protected var data: SortedList<T>?
 
-    protected abstract val itemClass: Class<ItemModel>
+    protected abstract val itemClass: Class<T>
 
     init {
-        data = SortedList(itemClass, object : SortedList.Callback<ItemModel>() {
-            override fun areItemsTheSame(oldItem: ItemModel?, newItem: ItemModel?): Boolean {
+        data = SortedList(itemClass, object : SortedList.Callback<T>() {
+            override fun areItemsTheSame(oldItem: T?, newItem: T?): Boolean {
                 return oldItem == newItem
             }
 
@@ -32,18 +32,18 @@ abstract class SortedAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             override fun onRemoved(position: Int, count: Int) {}
 
-            override fun compare(item1: ItemModel, item2: ItemModel): Int {
+            override fun compare(item1: T, item2: T): Int {
                 return this@SortedAdapter.compare(item1, item2)
             }
 
-            override fun areContentsTheSame(oldItem: ItemModel?, newItem: ItemModel?): Boolean {
+            override fun areContentsTheSame(oldItem: T?, newItem: T?): Boolean {
                 return oldItem == newItem
             }
 
         })
     }
 
-    protected abstract fun compare(item1: ItemModel, item2: ItemModel): Int
+    protected abstract fun compare(item1: T, item2: T): Int
 
     protected fun getView(parent: ViewGroup, viewType: Int): View {
         return LayoutInflater.from(parent.context).inflate(getItemResourceLayout(viewType), parent, false)
@@ -55,18 +55,26 @@ abstract class SortedAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return data?.size() ?: 0
     }
 
-    fun setDatas(items: List<ItemModel>) {
+    fun getDatas(): SortedList<T>? {
+        return data
+    }
+
+    fun getData(position: Int): T? {
+        return getDatas()?.get(position)
+    }
+
+    fun setDatas(items: List<T>) {
         data?.clear()
         data?.addAll(items)
         notifyDataSetChanged()
     }
 
-    fun addData(items: List<ItemModel>) {
+    fun addData(items: List<T>) {
         data?.addAll(items)
         notifyItemRangeInserted(itemCount - 1, items.size)
     }
 
-    fun addItem(item: ItemModel) {
+    fun addItem(item: T) {
         data?.add(item)
         notifyItemInserted(itemCount - 1)
     }
@@ -78,7 +86,7 @@ abstract class SortedAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    fun deleteItem(item: ItemModel) {
+    fun deleteItem(item: T) {
         data?.remove(item)
     }
 
