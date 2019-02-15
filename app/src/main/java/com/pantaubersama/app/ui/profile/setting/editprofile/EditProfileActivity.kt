@@ -40,7 +40,7 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     private var isProfileCompletion = false
     private var isUsernameComplete = false
 
-    private var imageFile: File? = null
+    private lateinit var imageFile: File
 
     override fun statusBarColor(): Int? {
         return 0
@@ -215,20 +215,25 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK && resultCode != Activity.RESULT_CANCELED) {
             if (requestCode == PantauConstants.RequestCode.RC_CAMERA) {
                 showProgressDialog("Memperbarui avatar")
-                ImageUtil.compressImage(this, imageFile!!, 2, object : ImageUtil.CompressorListener {
-                    override fun onSuccess(file: File) {
-                        imageFile = file
-                        updateAvatar()
-                    }
+                try {
+                    ImageUtil.compressImage(this, imageFile, 2, object : ImageUtil.CompressorListener {
+                        override fun onSuccess(file: File) {
+                            updateAvatar(file)
+                        }
 
-                    override fun onFailed(throwable: Throwable) {
-                        showError(throwable)
-                        dismissProgressDialog()
-                    }
-                })
+                        override fun onFailed(throwable: Throwable) {
+                            showError(throwable)
+                            dismissProgressDialog()
+                        }
+                    })
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    dismissProgressDialog()
+                    ToastUtil.show(this@EditProfileActivity, getString(R.string.failed_load_image_alert))
+                }
             } else if (requestCode == PantauConstants.RequestCode.RC_STORAGE) {
                 if (data != null) {
                     updateAvatar(ImageChooserTools.proccedImageFromStorage(data, this@EditProfileActivity))
@@ -247,17 +252,18 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
             val reqFile = RequestBody.create(MediaType.parse(type), file)
             val avatar = MultipartBody.Part.createFormData("avatar", file.name, reqFile)
             presenter.uploadAvatar(avatar)
-        } else if (imageFile != null) {
-            val type: String
-            val extension = MimeTypeMap.getFileExtensionFromUrl(imageFile!!.absolutePath)
-            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
-            val reqFile = RequestBody.create(MediaType.parse(type), imageFile!!)
-            val avatar = MultipartBody.Part.createFormData("avatar", imageFile?.name, reqFile)
-            presenter.uploadAvatar(avatar)
         } else {
             dismissProgressDialog()
             showError(Throwable("Terjadi kesalahan pada gambar"))
         }
+    }
+
+    override fun showUploadPictureLoading() {
+        showProgressDialog("Mengunggah avatar")
+    }
+
+    override fun dismissUploadPictureLoading() {
+        dismissProgressDialog()
     }
 
     override fun refreshProfile() {

@@ -7,6 +7,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.user.AchievedBadge
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ACHIEVED_BADGE_ITEM
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ACHIEVED_ID
 import com.pantaubersama.app.utils.ShareUtil
@@ -85,5 +86,14 @@ class DetailBadgeActivity : BaseActivity<DetailBadgePresenter>(), DetailBadgeVie
 
     override fun onFailedGetBadge(throwable: Throwable) {
         view_fail_state.enableLottie(true, lottie_fail_state)
+    }
+
+    override fun onBackPressed() {
+        if (isTaskRoot) {
+            val intent = Intent(this@DetailBadgeActivity, ProfileActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
+        super.onBackPressed()
     }
 }

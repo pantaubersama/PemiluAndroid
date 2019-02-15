@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.pantaubersama.app.R
 import com.pantaubersama.app.ui.search.linimasa.SearchLinimasaFragment
-import com.pantaubersama.app.ui.widget.TabView
+import com.pantaubersama.app.ui.widget.CustomTabView
 import kotlinx.android.synthetic.main.activity_search.*
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -25,6 +25,9 @@ import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
 import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.utils.extensions.visibleIf
 import javax.inject.Inject
+import com.facebook.appevents.AppEventsConstants
+import android.util.StatsLog.logEvent
+import com.facebook.appevents.AppEventsLogger
 
 class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
     private var keyword: String? = null
@@ -60,6 +63,13 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
     fun setKeyword(keyword: String) {
         et_search.setText(keyword)
         performSearch(keyword)
+        logSearchEvent(keyword)
+    }
+
+    private fun logSearchEvent(searchString: String) {
+        val params = Bundle()
+        params.putString(AppEventsConstants.EVENT_PARAM_SEARCH_STRING, searchString)
+        AppEventsLogger.newLogger(this@SearchActivity).logEvent(AppEventsConstants.EVENT_NAME_SEARCHED, params)
     }
 
     private fun performSearch(keyword: String) {
@@ -80,25 +90,25 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
     }
 
     private fun setupTabLayout() {
-        val tabOrang = TabView(this) // yg belum selesai di hide dulu untuk production @edityo 21/01/19
+        val tabOrang = CustomTabView(this) // yg belum selesai di hide dulu untuk production @edityo 21/01/19
         tabOrang.setTitleLabel(R.string.txt_tab_orang)
         tab_layout.addTab(tab_layout.newTab().setCustomView(tabOrang))
-        val tabCluster = TabView(this)
+        val tabCluster = CustomTabView(this)
         tabCluster.setTitleLabel(R.string.txt_tab_cluster)
         tab_layout.addTab(tab_layout.newTab().setCustomView(tabCluster))
-        val tabLinimasa = TabView(this)
+        val tabLinimasa = CustomTabView(this)
         tabLinimasa.setTitleLabel(R.string.txt_tab_linimasa)
         tab_layout.addTab(tab_layout.newTab().setCustomView(tabLinimasa))
-        val tabJanPol = TabView(this)
+        val tabJanPol = CustomTabView(this)
         tabJanPol.setTitleLabel(R.string.txt_tab_janji_politik)
         tab_layout.addTab(tab_layout.newTab().setCustomView(tabJanPol))
-        val tabTanya = TabView(this)
+        val tabTanya = CustomTabView(this)
         tabTanya.setTitleLabel(R.string.txt_tab_tanya)
         tab_layout.addTab(tab_layout.newTab().setCustomView(tabTanya))
-        val tabQuiz = TabView(this)
+        val tabQuiz = CustomTabView(this)
         tabQuiz.setTitleLabel(R.string.txt_tab_quiz)
         tab_layout.addTab(tab_layout.newTab().setCustomView(tabQuiz))
-//        val tabWordstadium = TabView(this)
+//        val tabWordstadium = CustomTabView(this)
 //        tabWordstadium.setTitleLabel(R.string.txt_tab_wordstadium)
 //        tab_layout.addTab(tab_layout.newTab().setCustomView(tabWordstadium))
 

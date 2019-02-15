@@ -14,7 +14,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_partai_pilihan.*
 
 class PartaiAdapter : BaseRecyclerAdapter() {
-    var selectedItem: PoliticalParty? = null
+    lateinit var selectedItem: PoliticalParty
     lateinit var listener: Listener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -27,27 +27,26 @@ class PartaiAdapter : BaseRecyclerAdapter() {
 
     inner class PartaiViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(politicalParty: PoliticalParty) {
-            if (politicalParty.image?.url != null) {
+            partai_pilihan_nama.text = politicalParty.name
+            partai_pilihan_no_urut.text = "No Urut ${politicalParty.number}"
+            if (politicalParty.image?.medium?.url != null) {
                 partai_pilihan_nama_container.gravity = Gravity.CENTER_VERTICAL
                 partai_pilihan_foto_partai.visibility = View.VISIBLE
                 partai_pilihan_no_urut.visibility = View.VISIBLE
                 partai_pilihan_foto_partai.loadUrl(politicalParty.image?.medium?.url, R.drawable.ic_avatar_placeholder)
-                partai_pilihan_nama.text = politicalParty.name
-                partai_pilihan_no_urut.text = "No Urut ${politicalParty.number}"
             } else {
                 partai_pilihan_nama_container.gravity = Gravity.CENTER
                 partai_pilihan_foto_partai.visibility = View.GONE
                 partai_pilihan_no_urut.visibility = View.GONE
-                partai_pilihan_nama.text = politicalParty.name
             }
-            if (politicalParty.id.equals(selectedItem?.id)) {
+            if (selectedItem == politicalParty) {
                 partai_pilihan_container.setBackgroundResource(R.drawable.bg_rounded_fill_orange)
                 partai_pilihan_nama.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
                 partai_pilihan_no_urut.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
             } else {
                 partai_pilihan_container.setBackgroundResource(R.drawable.bg_rounded_outline_white)
                 partai_pilihan_nama.setTextColor(ContextCompat.getColor(itemView.context, R.color.gray_dark_3))
-                partai_pilihan_nama.setTextColor(ContextCompat.getColor(itemView.context, R.color.gray_dark_3))
+                partai_pilihan_no_urut.setTextColor(ContextCompat.getColor(itemView.context, R.color.gray_dark_3))
             }
             itemView.setOnClickListener {
                 setSelectedData(politicalParty)
@@ -57,8 +56,8 @@ class PartaiAdapter : BaseRecyclerAdapter() {
 
     fun setSelectedData(politicalParty: PoliticalParty) {
         selectedItem = politicalParty
-        selectedItem?.let { listener.onSelectItem(it) }
         notifyDataSetChanged()
+        listener.onSelectItem(selectedItem)
     }
 
     interface Listener {
