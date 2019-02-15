@@ -11,10 +11,10 @@
         android:icon="@drawable/selector_ic_menggali"
         android:title="@string/title_navbar_menggali" />
 
-    <item
-        android:id="@+id/navigation_menguji"
-        android:icon="@drawable/selector_ic_menguji"
-        android:title="@string/title_navbar_menguji" />
+    <!--<item-->
+        <!--android:id="@+id/navigation_menguji"-->
+        <!--android:icon="@drawable/selector_ic_menguji"-->
+        <!--android:title="@string/title_navbar_menguji" />-->
 
     <!--<item-->
         <!--android:id="@+id/navigation_menjaga"-->
