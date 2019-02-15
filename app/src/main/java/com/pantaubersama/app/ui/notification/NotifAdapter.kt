@@ -7,6 +7,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.notification.NotificationWhole
 import com.pantaubersama.app.utils.extensions.inflate
+import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_notif_badge.*
 import kotlinx.android.synthetic.main.item_notif_general.*
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.item_notif_new_quiz.*
 import kotlinx.android.synthetic.main.item_notif_question.*
 
 class NotifAdapter : BaseRecyclerAdapter() {
+    var listener: Listener? = null
 
     companion object {
         const val NOTIF_TYPE_GENERAL = 0
@@ -59,12 +61,29 @@ class NotifAdapter : BaseRecyclerAdapter() {
     inner class QuizViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(notification: NotificationWhole) {
             notif_new_quiz_message.text = notification.notification.body
+            itemView.setOnClickListener {
+                listener?.onClickQuiz(notification.data.payload.quizNotif.id)
+            }
+            notif_new_quiz_follow.setOnClickListener {
+                listener?.onClickQuiz(notification.data.payload.quizNotif.id)
+            }
         }
     }
 
     inner class NotificationViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(notification: NotificationWhole) {
             notif_message.text = notification.notification.body
+            itemView.setOnClickListener {
+                if (notification.broadcast != null) {
+                    notification.broadcast?.link?.let {
+                        listener?.onClickBroadcast(it)
+                    }
+                } else if (notification.data.payload.broadcast != null) {
+                    notification.data.payload.broadcast?.link?.let {
+                        listener?.onClickBroadcast(it)
+                    }
+                }
+            }
         }
     }
 
@@ -72,12 +91,26 @@ class NotifAdapter : BaseRecyclerAdapter() {
         fun bind(notification: NotificationWhole) {
             notif_question_message.text = notification.notification.body
             notif_question_text.text = notification.data.payload.question.body
+            itemView.setOnClickListener {
+                listener?.onClickTanyaKandidat(notification.data.payload.question.id)
+            }
         }
     }
 
     inner class BadgeViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(notification: NotificationWhole) {
             notif_badge_message.text = notification.notification.body
+            notif_badge_avatar.loadUrl(notification.data.payload.badgeNotif.badge.image.thumbnail)
+            itemView.setOnClickListener {
+                listener?.onClickBadge(notification.data.payload.badgeNotif.achievedId)
+            }
         }
+    }
+
+    interface Listener {
+        fun onClickTanyaKandidat(id: String)
+        fun onClickBadge(id: String)
+        fun onClickQuiz(id: String)
+        fun onClickBroadcast(link: String)
     }
 }

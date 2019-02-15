@@ -16,9 +16,14 @@ data class NotificationWrapper(
 data class NotificationWhole(
     @SerializedName("data")
     val data: DataPayload,
+    @SerializedName("id")
     val id: String,
+    @SerializedName("is_action")
     val is_action: Boolean,
-    val notification: Notification
+    @SerializedName("notification")
+    val notification: Notification,
+    @SerializedName("pemilu_broadcast")
+    var broadcast: PemiluBroadcast?
 ) : ItemModel {
     override fun getType(): Int {
         return 0
@@ -43,10 +48,12 @@ data class Payload(
     val notification: Notification,
     @SerializedName("question")
     val question: Question,
-    @SerializedName("badge")
+    @SerializedName("achieved_badge")
     val badgeNotif: AchievedBadge,
     @SerializedName("quiz")
-    var quizNotif: Quiz
+    var quizNotif: Quiz,
+    @SerializedName("pemilu_broadcast")
+    var broadcast: PemiluBroadcast?
 )
 
 data class Notification(

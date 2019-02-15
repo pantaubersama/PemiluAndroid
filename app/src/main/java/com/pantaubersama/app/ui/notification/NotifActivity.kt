@@ -11,6 +11,10 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.notification.NotificationWhole
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.penpol.kuis.detail.DetailKuisActivity
+import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
+import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
+import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
@@ -50,6 +54,26 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
 
     private fun setupNotifications() {
         notificationAdapter = NotifAdapter()
+        notificationAdapter.listener = object : NotifAdapter.Listener {
+            override fun onClickTanyaKandidat(id: String) {
+                val intent = DetailTanyaKandidatActivity.setIntent(this@NotifActivity, id)
+                startActivity(intent)
+            }
+
+            override fun onClickBadge(id: String) {
+                val intent = DetailBadgeActivity.setIntent(this@NotifActivity, id)
+                startActivity(intent)
+            }
+
+            override fun onClickQuiz(id: String) {
+                val intent = DetailKuisActivity.setIntent(this@NotifActivity, id)
+                startActivity(intent)
+            }
+
+            override fun onClickBroadcast(link: String) {
+                ChromeTabUtil(this@NotifActivity).forceLoadUrl(link)
+            }
+        }
         notifications.layoutManager = LinearLayoutManager(this@NotifActivity)
         notifications.adapter = notificationAdapter
         swipe_refresh.setOnRefreshListener {
