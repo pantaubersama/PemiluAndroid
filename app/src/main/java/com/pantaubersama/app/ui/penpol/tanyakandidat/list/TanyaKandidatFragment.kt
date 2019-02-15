@@ -20,15 +20,11 @@ import com.pantaubersama.app.ui.penpol.tanyakandidat.create.CreateTanyaKandidatA
 import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
-import com.pantaubersama.app.utils.CopyUtil
-import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_QUESTION_ITEM
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_QUESTION
 import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_ITEM_QUESTION
 import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_ITEM_CHANGED_QUESTION
-import com.pantaubersama.app.utils.ShareUtil
-import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_tanya_kandidat.*
@@ -38,6 +34,7 @@ import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 import kotlin.math.roundToInt
+import com.pantaubersama.app.utils.* // ktlint-disable
 
 class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandidatView {
 
@@ -278,8 +275,14 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
         view_fail_state.enableLottie(true, lottie_fail_state)
     }
 
-    override fun onItemUpVoted() {
-        // no need to do
+    override fun onItemUpVoted(position: Int) {
+        FacebookEventLogger.logRatedEvent(
+            requireContext(),
+            PantauConstants.TanyaKandidat.NAME,
+            (adapter?.get(position) as Pertanyaan).body,
+            (adapter?.get(position) as Pertanyaan).id,
+            1,
+            1.0)
     }
 
     override fun onFailedUpVoteItem(liked: Boolean, position: Int) {

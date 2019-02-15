@@ -9,9 +9,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.debat.DebatHeader
 import com.pantaubersama.app.data.model.debat.DebatItem
 import com.pantaubersama.app.ui.menguji.adapter.DebatListAdapter
-import com.pantaubersama.app.utils.OffsetItemDecoration
 import com.pantaubersama.app.utils.PantauConstants.Debat
-import com.pantaubersama.app.utils.extensions.dip
 import com.pantaubersama.app.utils.extensions.unSyncLazy
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 

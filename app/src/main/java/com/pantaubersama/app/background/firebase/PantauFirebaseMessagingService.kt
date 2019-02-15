@@ -38,6 +38,7 @@ import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import com.pantaubersama.app.ui.webview.ChromeTabActivity
+import com.pantaubersama.app.utils.FacebookEventLogger
 import com.pantaubersama.app.utils.GlideApp
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_FEED
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_JANPOL
@@ -145,6 +146,7 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
                             }
                         })
                         .submit()
+                        FacebookEventLogger.logUnlockedAchievementEvent(this, badge.name)
                 }
                 NOTIFICATION_TYPE_QUIZ -> {
                     val quizNotif = gson.fromJson(payload.getJSONObject(QuizNotif.TAG).toString(), QuizNotif::class.java)

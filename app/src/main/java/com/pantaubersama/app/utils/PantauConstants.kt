@@ -27,6 +27,8 @@ class PantauConstants {
         val FILTER_ORANG_VERIFIED = "verified_true"
         val FILTER_ORANG_UNVERIFIED = "verified_false"
         val CONFIRMATION_PATH = "confirmation"
+        val JANPOL = "janji_politik"
+        val QUIZ = "quiz"
     }
 
     object Lapor {
@@ -45,6 +47,7 @@ class PantauConstants {
     }
 
     object TanyaKandidat {
+        const val NAME = "tanya_kandidat"
         const val CREATE_TANYA_KANDIDAT_REQUEST_CODE = 21
         val TANYA_KANDIDAT_DATA = "tanya_kandidat_data"
         val CLASS_NAME = "Question"
