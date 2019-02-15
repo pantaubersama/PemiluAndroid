@@ -27,6 +27,7 @@ import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import timber.log.Timber
 import javax.inject.Inject
+import com.pantaubersama.app.utils.FacebookEventLogger
 
 class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     @Inject
@@ -52,6 +53,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
                 url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it) }
             } else if (url?.contains(CONFIRMATION_PATH)!!) {
                 url?.let { SymbolicLoginButton.confirmEmail(this@LoginActivity, it) }
+                FacebookEventLogger.logCompletedRegistrationEvent(this@LoginActivity, "symbolic")
             }
         }
         symbolicScope = ArrayList()

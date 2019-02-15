@@ -11,7 +11,7 @@ interface SearchQuestionView : BaseView {
     fun showFailedGetDataAlert()
     fun bindNextDataTanyaKandidat(questions: MutableList<Pertanyaan>)
     fun showEmptyNextDataAlert()
-    fun onItemUpVoted()
+    fun onItemUpVoted(position: Int)
     fun onFailedUpVoteItem(liked: Boolean, position: Int)
     fun showItemReportedAlert()
     fun showFailedReportItem()

@@ -114,7 +114,7 @@ dependencies {
     implementation dagger
     implementation lottie
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
     implementation chromeCustomTab
     implementation expandableLayout
     implementation rxBinding
