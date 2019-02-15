@@ -20,13 +20,13 @@
     <string name="question_simple_hint">Tulis pertanyaan terbaikmu di sini!</string>
     <string name="dummy_tweet_content">#SahabatBawaslu, Sentra  Gakkumdu berkomitmen untuk tidak memunculkan sikap ego sektoral antar personil, baik dari pihak Bawaslu,  Kepolisian,  maupun Kejaksaan dalam menegakkan hukum Pemilu dalam Rapat Koordinasi Nasional Sentra Gakkumdu,  di Jakarta, Rabu,  (5/12/2018).</string>
     <string name="tanya_kandidat_label">Tanya Kandidat</string>
-    <string name="kuis_label">Quiz</string>
+    <string name="kata_kandidat_label">Kata Kandidat</string>
     <string name="login_failed_alert">Failed to login with Symbolic</string>
     <string name="tanya_kandidat_banner_text">Apa yang ingin kamu tanyakan kepada Capres &amp; Cawapres Jokowi-Ma\'ruf dan Prabowo-Sandi dan juga Apa yang ingin kamu tanyakan kepada Capres &amp; Cawapres Jokowi-Ma\'ruf dan Prabowo-Sandi</string>
     <string name="pilpres_banner_text">Halaman ini berisikan informasi dari channel Resmi twitter Jokowi - Makruf dan Prabowo - Sandi yang terdaftar di Bawaslu</string>
     <string name="kuis_banner_text">Ikuti quiz pilih jawaban tanpa kamu tahu itu jawaban siapa, kemudian tunggu kejutannya dan lihat hasil dari quiz ini</string>
     <string name="janpol_banner_text">Halaman ini berisikan informasi dari para user yang menginfokan kembali janji politik dari Capres, Cawapres maupun</string>
-    <string name="question_short_hint">Apa pertanyaanmu buat Capres Indonesia?</string>
+    <string name="question_short_hint">Berikan pertanyaan singkat untuk diajukan ke kedua kandidat Calon Presiden dan Calon Wakil Presiden 2019-2024. Gunakan bahasa yang baik dan jelas, yaa</string>
     <string name="lapor_short_hint">Menemukan Dugaan Pelanggaran Pemilu?</string>
     <string name="question_dummy_text">Kapan realisasi sistem tenaga kerja alih daya diterapkan seutuhnya? Kita ini insan bukan seekor sapi.</string>
     <string name="question_time_dummy_text">8 days ago</string>
@@ -251,4 +251,18 @@
     <string name="onboarding_5_file_name">lottie_onboarding_5_perhitungan.json</string>
     <string name="share_wording_kecenderungan">Hmm.. Ternyata begini kecenderunganku \uD83D\uDC40 #PantauBersama %s</string>
     <string name="lapor_label">Lapor</string>
+    <string name="title_notification">Notifikasi</string>
+    <string name="text_blank_notif">Belum ada notifikasi buat kamu</string>
+    <string name="publik_label">Publik</string>
+    <string name="personal_label">Personal</string>
+    <string name="title_open_challenge">Open Challenge</string>
+    <string name="desc_open_challenge">Setelah menyiapkan bahan debat terkait bidang kajian tertentu; Kamu akan mengundang lawan untuk diajak berdebat satu lawan satu. Jangan lupa promosikan Open Challenge-mu, yaa! Supaya semakin banyak yang memantau~</string>
+    <string name="title_direct_challenge">Direct Challenge</string>
+    <string name="desc_direct_challenge">Dari sini, kamu bisa mengundang langsung lawan debatmu yang sudah punya Symbolic ID atau mention akun Twitter-nya. Jangan lupa menyiapkan bidang kajian dan bahasan debat terbaikmu!</string>
+    <string name="title_buat_tantangan">Buat Tantangan</string>
+    <string name="open_challenge">OPEN CHALLENGE</string>
+    <string name="see_more">See more &gt;&gt;</string>
+    <string name="title_promote_challenge">Promote your challenge</string>
+    <string name="direct_challenge">DIRECT CHALLENGE</string>
+    <string name="title_preview">Preview</string>
 </resources>

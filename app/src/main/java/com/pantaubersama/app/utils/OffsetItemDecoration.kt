@@ -8,17 +8,22 @@ class OffsetItemDecoration(
     var left: Int,
     var top: Int = left,
     var right: Int = left,
-    var bottom: Int = left,
-    var orientation: Int = RecyclerView.VERTICAL
+    var bottom: Int = top,
+    var orientation: Int = RecyclerView.VERTICAL,
+    var ignoreFirstAndLast: Boolean = false
 ) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-        val isFirstItem = parent.getChildAdapterPosition(view) == 0
+        val position = parent.getChildAdapterPosition(view)
+        val isFirstItem = position == 0
+        val isLastItem = position == parent.adapter?.itemCount?.let { it - 1 }
 
         if (orientation == RecyclerView.VERTICAL) {
-            outRect.set(left, if (isFirstItem) top else 0, right, bottom)
+            outRect.set(left, if (ignoreFirstAndLast || !isFirstItem) 0 else top,
+                right, if (ignoreFirstAndLast && isLastItem) 0 else bottom)
         } else {
-            outRect.set(if (isFirstItem) left else 0, top, right, bottom)
+            outRect.set(if (ignoreFirstAndLast || !isFirstItem) 0 else left, top,
+                if (ignoreFirstAndLast && isLastItem) 0 else right, bottom)
         }
     }
 }
