@@ -268,7 +268,7 @@
     <string name="title_preview">Preview</string>
     <string name="perhitungan_label">Perhitungan</string>
     <string name="rekapitulasi_label">Rekapitulasi</string>
-    <string name="data_tps_hint">Isi data TPS dengan lengkap, pastikan data sesuai. Kamu bisa memasukkan lokasi kamu dengen gps dari handhpone mu</string>
+    <string name="data_tps_hint">Lengkapi seluruh data di bawah ini. Lokasi TPS dapat dibarui dengan mengaktifkan penanda GPS perangkat kamu.</string>
     <string name="tps_attachment_hint">Upload Lampiran Dokumen dan Bagikan Keseruan Suasana di TPS kamu</string>
-    <string name="presiden_counter_hint">Silahkan menekan tombol counter untuk menambah atau mengurangkan, atau langsung mengisi jumlah perolehan suara</string>
+    <string name="presiden_counter_hint">Kamu bisa menambah atau langsung input jumlah perolehan suara sesuai pengamatan di TPS. Tap Undo untuk membatalkan perhitungan terakhir.</string>
 </resources>
