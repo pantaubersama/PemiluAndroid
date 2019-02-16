@@ -15,7 +15,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.layout_menguji_fabs.*
 import java.util.concurrent.TimeUnit
 
-class FabAnimationDelegate(override val containerView: View, private val overlay: View) : LayoutContainer {
+class FabAnimationDelegate(override val containerView: View) : LayoutContainer {
 
     val isCollapsed: Boolean
         get() = label_create.visibility != View.VISIBLE

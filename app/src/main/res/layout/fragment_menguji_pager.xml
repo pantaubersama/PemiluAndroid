@@ -30,13 +30,4 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <View
-        android:id="@+id/overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#b2111111"
-        android:visibility="gone" />
-
-    <include layout="@layout/layout_menguji_fabs" />
-
 </FrameLayout>

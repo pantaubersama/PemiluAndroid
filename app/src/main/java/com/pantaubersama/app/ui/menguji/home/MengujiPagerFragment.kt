@@ -45,9 +45,6 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     private val debatDoneAdapter by unSyncLazy { BriefDebatAdapter(false) }
     private val debatOpenAdapter by unSyncLazy { BriefDebatAdapter(false) }
 
-    private lateinit var fabAnimationDelegate: FabAnimationDelegate
-    private var animationDisposable: Disposable? = null
-
     override fun setLayout(): Int = R.layout.fragment_menguji_pager
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -60,7 +57,6 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
             refreshList()
         }
 
-        setupFab()
         setupBanner()
         setupCarousel()
         setupTimeline()
@@ -74,35 +70,6 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         presenter.getDebatComingSoon()
         presenter.getDebatDone()
         presenter.getDebatOpen()
-    }
-
-    private fun setupFab() {
-        fabAnimationDelegate = FabAnimationDelegate(fab_container, overlay)
-        fab_create.setOnClickListener {
-            if (fabAnimationDelegate.isCollapsed) {
-                animationDisposable = fabAnimationDelegate.expand()
-            } else {
-                animationDisposable = fabAnimationDelegate.collapse()
-                startActivity(Intent(requireContext(), CreateChallengeActivity::class.java))
-            }
-        }
-        overlay.setOnClickListener { animationDisposable = fabAnimationDelegate.collapse() }
-        fab_challenge.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.collapse()
-            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_CHALLENGE else PERSONAL_CHALLENGE)
-        }
-        fab_done.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.collapse()
-            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_DONE else PERSONAL_DONE)
-        }
-        fab_coming.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.collapse()
-            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_COMING_SOON else PERSONAL_COMING_SOON)
-        }
-        fab_live.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.collapse()
-            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_LIVE_NOW else PERSONAL_CHALLENGE_IN_PROGRESS)
-        }
     }
 
     private fun setupBanner() {
@@ -183,11 +150,6 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     override fun dismissLoading() {
-    }
-
-    override fun onDestroy() {
-        animationDisposable?.dispose()
-        super.onDestroy()
     }
 
     companion object {
