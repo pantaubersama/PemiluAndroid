@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="16dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toStartOf="@id/guide"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/bg_carousel_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/bg_coming_soon" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_rounded_bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bg_carousel_item" />
+
+            <ImageView
+                android:id="@+id/icon_debat_type"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginEnd="2dp"
+                android:src="@drawable/ic_debat_live"
+                app:layout_constraintBottom_toBottomOf="@id/bg_carousel_item"
+                app:layout_constraintEnd_toStartOf="@id/text_debat_type"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@id/image_avatar_1"
+                app:layout_constraintTop_toTopOf="@id/bg_carousel_item"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/text_debat_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@id/bg_carousel_item"
+                app:layout_constraintEnd_toStartOf="@id/image_avatar_2"
+                app:layout_constraintStart_toEndOf="@id/icon_debat_type"
+                app:layout_constraintTop_toTopOf="@id/bg_carousel_item"
+                tools:text="COMING SOON" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/image_avatar_1"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/ava_calon_1"
+                app:layout_constraintBottom_toTopOf="@id/text_name_1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.9"
+                app:riv_border_color="@color/white"
+                app:riv_border_width="1dp"
+                app:riv_corner_radius="25dp" />
+
+            <TextView
+                android:id="@+id/text_name_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="1dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/lato_regular"
+                android:singleLine="true"
+                android:textColor="@color/black_1"
+                android:textSize="9sp"
+                app:layout_constraintEnd_toStartOf="@id/text_versus"
+                app:layout_constraintStart_toStartOf="@id/image_avatar_1"
+                app:layout_constraintTop_toBottomOf="@id/bg_carousel_item"
+                tools:text="Ratu CebonganYK" />
+
+            <TextView
+                android:id="@+id/text_versus"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/bg_versus"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:paddingTop="4dp"
+                android:text="VS"
+                android:textColor="@color/yellow"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bg_carousel_item" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/image_avatar_2"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/ava_calon_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/image_avatar_1"
+                app:riv_border_color="@color/white"
+                app:riv_border_width="1dp"
+                app:riv_corner_radius="25dp" />
+
+            <TextView
+                android:id="@+id/text_opponent_count"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/circle_translucent_black"
+                android:fontFamily="@font/lato_black"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/image_avatar_2"
+                app:layout_constraintEnd_toEndOf="@id/image_avatar_2"
+                app:layout_constraintStart_toStartOf="@id/image_avatar_2"
+                app:layout_constraintTop_toTopOf="@id/image_avatar_2"
+                tools:text="\?" />
+
+            <TextView
+                android:id="@+id/text_name_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/lato_regular"
+                android:gravity="end"
+                android:singleLine="true"
+                android:textColor="@color/black_1"
+                android:textSize="9sp"
+                app:layout_constraintEnd_toEndOf="@id/image_avatar_2"
+                app:layout_constraintStart_toEndOf="@id/text_versus"
+                app:layout_constraintTop_toTopOf="@id/text_name_1"
+                tools:text="Raja Kampreta" />
+
+            <TextView
+                android:id="@+id/text_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/lato_medium"
+                android:gravity="center_horizontal"
+                android:text="24 Maret 2019  •  16:00 - 17:00"
+                android:textColor="@color/gray_4"
+                android:textSize="9sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_name_1" />
+
+            <LinearLayout
+                android:id="@+id/layout_clap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_name_1">
+
+                <TextView
+                    android:id="@+id/text_clap_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:drawableStart="@drawable/ic_clap"
+                    android:drawablePadding="4dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="center_vertical"
+                    android:text="70"
+                    android:textColor="@color/black_2"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/lato_regular"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="3sp"
+                    android:text="Clap"
+                    android:textColor="#7c7c7c"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/text_clap_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:drawableEnd="@drawable/ic_clap"
+                    android:drawablePadding="4dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="center_vertical"
+                    android:text="70"
+                    android:textColor="@color/black_2"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/text_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bg_rounded_4dp_outline_yellow_light"
+        android:fontFamily="@font/lato_italic"
+        android:includeFontPadding="false"
+        android:paddingStart="10dp"
+        android:paddingTop="2dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="2dp"
+        android:textColor="@color/gray_dark_3"
+        android:textSize="8sp"
+        app:layout_constraintStart_toEndOf="@id/guide"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="ekonomi" />
+
+    <TextView
+        android:id="@+id/text_favorite_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:drawableStart="@drawable/ic_heart_small"
+        android:drawablePadding="4dp"
+        android:fontFamily="@font/lato_bold"
+        android:includeFontPadding="false"
+        android:textColor="@color/black_3"
+        android:textSize="10sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/button_more"
+        app:layout_constraintEnd_toStartOf="@id/button_more"
+        app:layout_constraintTop_toTopOf="@id/button_more"
+        tools:text="50" />
+
+    <ImageView
+        android:id="@+id/button_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:src="@drawable/ic_more_horiz"
+        android:tint="@color/black_3"
+        app:layout_constraintBottom_toBottomOf="@id/text_tag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_tag"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/text_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/bw_modelica_regular"
+        android:lines="4"
+        android:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%.2 periode yuk, biar 10,54%."
+        android:textColor="@color/black_2"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/text_tag"
+        app:layout_constraintTop_toBottomOf="@id/text_tag" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

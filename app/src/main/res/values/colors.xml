@@ -6,6 +6,7 @@
     <color name="colorAccent">#08BDA8</color>
     <color name="white">#ffffff</color>
     <color name="translucent_white">#d6ffffff</color>
+    <color name="translucent_white_2">#c2ffffff</color>
     <color name="gray_1">#f9f9f9</color>
     <color name="gray_2">#f4f4f4</color>
     <color name="gray_3">#ececec</color>
@@ -17,6 +18,7 @@
     <color name="gray_9">#D3C9E8</color>
     <color name="gray_10">#aaaaaa</color>
     <color name="black">#000000</color>
+    <color name="translucent_black">#3d000000</color>
     <color name="gray_dark_1">#cbcbcb</color>
     <color name="gray_dark_2">#7c7c7c</color>
     <color name="gray_dark_3">#4f4f4f</color>
@@ -28,12 +30,17 @@
     <color name="transparant">#00000000</color>
     <color name="purple">#4f339b</color>
     <color name="purple_2">#5838a4</color>
+    <color name="purple_3">#934db1</color>
     <color name="pinkLight">#ffebef</color>
     <color name="brownLight">#F1CBBE</color>
     <color name="orange">#f2771d</color>
+    <color name="orange_2">#f49422</color>
     <color name="tosca">#6ccfc0</color>
     <color name="tosca_2">#08bda8</color>
+    <color name="blue">#0d55cf</color>
     <color name="blue_twitter">#059ff5</color>
     <color name="blue_fb">#475993</color>
     <color name="yellow">#f6b42a</color>
+    <color name="yellow_dark">#f49422</color>
+    <color name="yellow_light">#f9d65c</color>
 </resources>

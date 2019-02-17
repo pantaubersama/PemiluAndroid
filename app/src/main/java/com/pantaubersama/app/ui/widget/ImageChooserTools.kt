@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.widget
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.Surface
 import android.view.WindowManager
@@ -14,6 +15,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_CAMERA
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_STORAGE
+import id.zelory.compressor.Compressor
 import java.io.File
 
 class ImageChooserTools {
@@ -42,7 +44,14 @@ class ImageChooserTools {
             val column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
             cursor.moveToFirst()
             val path = cursor.getString(column_index)
-            return File(path)
+            return Compressor(context)
+                .setMaxWidth(1080)
+                .setMaxHeight(1080)
+                .setQuality(75)
+                .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_PICTURES).absolutePath)
+                .compressToFile(File(path))
         }
 
         fun showDialog(context: Context, listener: ImageChooserListener) {

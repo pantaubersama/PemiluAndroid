@@ -156,7 +156,7 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
     }
 
     fun setSelectedParty(partai: PoliticalParty) {
-        this.selectedPartai = partai
+        selectedPartai = partai
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

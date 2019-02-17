@@ -45,10 +45,10 @@ class SearchQuizPresenter @Inject constructor(
                     isRunning = false
                 }
                 .subscribe({
-                    if (it.isEmpty()) {
-                        view?.showEmptyData()
-                    } else {
+                    if (it.isNotEmpty()) {
                         view?.showFirstPage(it)
+                    } else if (filter != Filter.KUIS_ALL) {
+                        view?.showEmptyData()
                     }
 
                     checkNextPageAvailable(it, keyword)

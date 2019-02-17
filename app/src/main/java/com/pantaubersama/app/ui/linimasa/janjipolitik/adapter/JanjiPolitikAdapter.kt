@@ -8,13 +8,13 @@ import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.base.viewholder.LoadingViewHolder
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
+import com.pantaubersama.app.ui.widget.BannerViewHolder
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_BANNER
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_JANPOL
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_janji_politik.*
 import kotlinx.android.synthetic.main.layout_action_post.*
 
@@ -24,7 +24,9 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
+            TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container),
+                onClick = { listener?.onClickBanner(data[it] as BannerInfo) },
+                onRemove = { removeBanner() })
             TYPE_JANPOL -> JanjiPolitikViewHolder((parent.inflate(R.layout.item_janji_politik)))
             else -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
         }
@@ -34,16 +36,6 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter() {
         (holder as? BannerViewHolder)?.bind(data[position] as BannerInfo)
         (holder as? JanjiPolitikViewHolder)?.bind(data[position] as JanjiPolitik)
         (holder as? LoadingViewHolder)?.bind()
-    }
-
-    inner class BannerViewHolder(override val containerView: View)
-        : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: BannerInfo) {
-            tv_banner_text.text = item.body
-            iv_banner_image.loadUrl(item.headerImage?.url)
-            rl_banner_container.setOnClickListener { listener?.onClickBanner(item) }
-            iv_banner_close.setOnClickListener { removeBanner() }
-        }
     }
 
     inner class JanjiPolitikViewHolder(override val containerView: View?)
@@ -73,7 +65,7 @@ class JanjiPolitikAdapter : BaseRecyclerAdapter() {
         addItem(bannerInfo, 0)
     }
 
-    fun removeBanner() {
+    private fun removeBanner() {
         if (data[0] is BannerInfo) {
             deleteItem(0)
         }

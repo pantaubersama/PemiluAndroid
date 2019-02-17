@@ -12,6 +12,7 @@ import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.data.model.kuis.KuisUserResult
 import com.pantaubersama.app.data.model.kuis.KuisState
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisUserResultActivity
+import com.pantaubersama.app.ui.widget.BannerViewHolder
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_BANNER
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_KUIS_ITEM
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_KUIS_RESULT
@@ -20,7 +21,6 @@ import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.setBackgroundTint
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.item_kuis.*
 import kotlinx.android.synthetic.main.item_kuis_result.*
 import kotlin.math.roundToInt
@@ -31,7 +31,9 @@ class KuisListAdapter : BaseRecyclerAdapter() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container))
+            TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container),
+                onClick = { listener?.onClickBanner(data[it] as BannerInfo) },
+                onRemove = { removeBanner() })
             TYPE_KUIS_RESULT -> ResultViewHolder(parent.inflate(R.layout.item_kuis_result))
             TYPE_KUIS_ITEM -> ItemViewHolder(parent.inflate(R.layout.item_kuis))
             TYPE_LOADING -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
@@ -78,18 +80,7 @@ class KuisListAdapter : BaseRecyclerAdapter() {
         }
     }
 
-    inner class BannerViewHolder(
-        override val containerView: View?
-    ) : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
-        fun bind(item: BannerInfo) {
-            tv_banner_text.text = item.body
-            iv_banner_image.loadUrl(item.headerImage?.url)
-            rl_banner_container.setOnClickListener { listener?.onClickBanner(item) }
-            iv_banner_close.setOnClickListener { removeBanner() }
-        }
-    }
-
-    fun removeBanner() {
+    private fun removeBanner() {
         if (data[0] is BannerInfo) {
             data.removeAt(0)
             notifyItemRemoved(0)

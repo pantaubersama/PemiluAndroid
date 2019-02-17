@@ -8,6 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
+        android:id="@+id/banner_background"
         android:scaleType="fitXY"
         android:layout_width="match_parent"
         android:layout_height="28dp"
@@ -19,7 +20,7 @@
         android:id="@+id/rl_banner_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
+        android:paddingTop="8dp"
         android:paddingBottom="14dp"
         android:paddingLeft="0dp"
         android:paddingRight="20dp">
@@ -29,6 +30,8 @@
             android:scaleType="fitCenter"
             android:layout_width="100dp"
             android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/ic_banner_tanya_kandidat"/>
 
         <ImageView
@@ -57,9 +60,9 @@
                 android:id="@+id/tv_banner_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
+                android:paddingBottom="16dp"
                 android:ellipsize="end"
-                android:maxLines="3"
+                android:maxLines="4"
                 android:textSize="10sp"
                 android:textColor="@color/gray_4"
                 android:lineSpacingExtra="2sp"

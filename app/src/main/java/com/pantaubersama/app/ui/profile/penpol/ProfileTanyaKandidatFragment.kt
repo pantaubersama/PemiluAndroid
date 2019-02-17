@@ -16,11 +16,8 @@ import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatA
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatAdapter
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
-import com.pantaubersama.app.utils.CopyUtil
-import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.* // ktlint-disable
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_QUESTION
-import com.pantaubersama.app.utils.ShareUtil
-import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.isVisible
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -38,6 +35,8 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var profile: Profile
     private var userId: String? = null
+    private var page: Int = 1
+    private var perPage: Int = 20
 
     companion object {
         val TAG = ProfileTanyaKandidatFragment::class.java.simpleName
@@ -71,9 +70,9 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     private fun getDataList() {
         adapter.setDataEnd(false)
         if (userId == null) {
-            presenter.getTanyaKandidatList(1)
+            presenter.getTanyaKandidatList(1, perPage)
         } else {
-            userId?.let { id -> presenter.getUserTanyaKandidat(1, id) }
+            userId?.let { id -> presenter.getUserTanyaKandidat(1, id, perPage) }
         }
     }
 
@@ -167,9 +166,9 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
         adapter.addSupportLoadMore(recycler_view, 10) {
             adapter.setLoading()
             if (userId == null) {
-                presenter.getTanyaKandidatList(it)
+                presenter.getTanyaKandidatList(it, perPage)
             } else {
-                userId?.let { id -> presenter.getUserTanyaKandidat(it, id) }
+                userId?.let { id -> presenter.getUserTanyaKandidat(it, id, perPage) }
             }
         }
     }
@@ -177,7 +176,7 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     override fun bindDataTanyaKandidat(pertanyaanList: MutableList<Pertanyaan>) {
         recycler_view?.visibleIf(true)
         adapter.setDatas(pertanyaanList as MutableList<ItemModel>)
-        if (pertanyaanList.size < presenter.perPage) {
+        if (pertanyaanList.size < perPage) {
             adapter.setDataEnd(true)
         }
         recycler_view.swapAdapter(adapter, true)
@@ -193,8 +192,10 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
     }
 
     override fun bindNextDataTanyaKandidat(questions: MutableList<Pertanyaan>) {
+        view_empty_state.enableLottie(false, lottie_empty_state)
+        view_fail_state.enableLottie(false, lottie_fail_state)
         adapter.setLoaded()
-        if (questions.size < presenter.perPage) {
+        if (questions.size < perPage) {
             adapter.setDataEnd(true)
         }
         adapter.addData(questions as MutableList<ItemModel>)
@@ -206,8 +207,14 @@ class ProfileTanyaKandidatFragment : BaseFragment<ProfileTanyaKandidatPresenter>
         adapter.setDataEnd(true)
     }
 
-    override fun onItemUpVoted() {
-        // nothing to do
+    override fun onItemUpVoted(position: Int) {
+        FacebookEventLogger.logRatedEvent(
+            requireContext(),
+            PantauConstants.TanyaKandidat.NAME,
+            (adapter.get(position) as Pertanyaan).body,
+            (adapter.get(position) as Pertanyaan).id,
+            1,
+            1.0)
     }
 
     override fun onFailedUpVoteItem(liked: Boolean, position: Int) {

@@ -4,91 +4,58 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
-import com.google.android.material.tabs.TabLayout
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.CommonFragment
+import com.pantaubersama.app.ui.home.HomeFragment
 import com.pantaubersama.app.ui.penpol.kuis.filter.FilterKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.list.KuisFragment
 import com.pantaubersama.app.ui.penpol.tanyakandidat.filter.FilterTanyaKandidatActivity
 import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatFragment
-import com.pantaubersama.app.ui.widget.TabView
 import com.pantaubersama.app.utils.PantauConstants
-import kotlinx.android.synthetic.main.fragment_pen_pol.*
-/**
- * A simple [Fragment] subclass.
- *
- */
-class PenPolFragment : CommonFragment() {
-    private var selectedTabs: Int = 0
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OPEN_TAB_TYPE
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_KUIS
+import kotlinx.android.synthetic.main.activity_search.*
 
-    private var tanyaKandidatFragment: TanyaKandidatFragment? = TanyaKandidatFragment.newInstance()
-    private var kuisFragment: KuisFragment? = KuisFragment.newInstance()
+class PenPolFragment : HomeFragment() {
+
+    private var tanyaKandidatFragment: TanyaKandidatFragment = TanyaKandidatFragment.newInstance()
+    private var kuisFragment: KuisFragment = KuisFragment.newInstance()
+
+    private var initialSelectedTab = 0
+
+    override val pagerFragments: List<Pair<Fragment, String>> by lazy(LazyThreadSafetyMode.NONE) {
+        listOf(
+            tanyaKandidatFragment to getString(R.string.tanya_kandidat_label),
+            kuisFragment to getString(R.string.kata_kandidat_label))
+    }
+
+    override val onFilterClicked = { tabPosition: Int ->
+        when (tabPosition) {
+            0 -> {
+                val intent = Intent(context, FilterTanyaKandidatActivity::class.java)
+                startActivityForResult(intent, PantauConstants.TanyaKandidat.Filter.FILTER_TANYA_KANDIDAT_REQUEST_CODE)
+            }
+            else -> {
+                val intent = Intent(context, FilterKuisActivity::class.java)
+                startActivityForResult(intent, PantauConstants.RequestCode.RC_REFRESH_KUIS_ON_RESULT)
+            }
+        }
+    }
+
+    override fun fetchArguments(args: Bundle?) {
+        args?.apply {
+            initialSelectedTab = getInt(EXTRA_OPEN_TAB_TYPE, 0)
+        }
+    }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        setupTabLayout()
-        setupViewPager()
-        btn_filter?.setOnClickListener {
-            when (selectedTabs) {
-                0 -> {
-                    val intent = Intent(context, FilterTanyaKandidatActivity::class.java)
-                    startActivityForResult(intent, PantauConstants.TanyaKandidat.Filter.FILTER_TANYA_KANDIDAT_REQUEST_CODE)
-                }
-                else -> {
-                    val intent = Intent(context, FilterKuisActivity::class.java)
-                    startActivityForResult(intent, PantauConstants.RequestCode.RC_REFRESH_KUIS_ON_RESULT)
-                }
-            }
-        }
+        super.initView(view, savedInstanceState)
+        view_pager.currentItem = initialSelectedTab
     }
 
-    override fun setLayout(): Int {
-        return R.layout.fragment_pen_pol
-    }
-
-    fun setupTabLayout() {
-        val tanyaKandidatTab = TabView(context)
-        tanyaKandidatTab.setTitleLabel(getString(R.string.tanya_kandidat_label))
-        val kuisTab = TabView(context)
-        kuisTab.setTitleLabel(getString(R.string.kata_kandidat_label))
-
-        tab_layout?.addTab(tab_layout?.newTab()?.setCustomView(tanyaKandidatTab)!!)
-        tab_layout?.addTab(tab_layout?.newTab()?.setCustomView(kuisTab)!!)
-
-        tab_layout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(p0: TabLayout.Tab?) {
-                val currentFragment = childFragmentManager.findFragmentByTag(
-                    "android:switcher:" + R.id.view_pager + ":" + view_pager.currentItem
-                ) as CommonFragment?
-
-                currentFragment?.scrollToTop()
-            }
-
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                selectedTabs = tab!!.position
-                view_pager?.currentItem = tab.position
-            }
-        })
-    }
-
-    fun setupViewPager() {
-        view_pager?.addOnPageChangeListener(object : TabLayout.TabLayoutOnPageChangeListener(tab_layout) {})
-        view_pager?.adapter = object : FragmentPagerAdapter(childFragmentManager) {
-            override fun getItem(position: Int): Fragment {
-                return when (position) {
-                    0 -> tanyaKandidatFragment!!
-                    1 -> kuisFragment!!
-                    else -> Fragment()
-                }
-            }
-
-            override fun getCount(): Int {
-                return tab_layout?.tabCount!!
-            }
-        }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        tanyaKandidatFragment.onActivityResult(requestCode, resultCode, data)
+        kuisFragment.onActivityResult(requestCode, resultCode, data)
     }
 
     companion object {
@@ -97,15 +64,13 @@ class PenPolFragment : CommonFragment() {
         fun newInstance(): PenPolFragment {
             return PenPolFragment()
         }
-    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (tanyaKandidatFragment != null) {
-            tanyaKandidatFragment?.onActivityResult(requestCode, resultCode, data)
-        }
-        if (kuisFragment != null) {
-            kuisFragment?.onActivityResult(requestCode, resultCode, data)
+        fun newInstanceOpenKuis(): PenPolFragment {
+            val fragment = PenPolFragment()
+            val args = Bundle()
+            args.putInt(EXTRA_OPEN_TAB_TYPE, EXTRA_TYPE_KUIS)
+            fragment.arguments = args
+            return fragment
         }
     }
 }

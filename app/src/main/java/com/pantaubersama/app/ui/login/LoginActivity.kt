@@ -27,6 +27,7 @@ import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import timber.log.Timber
 import javax.inject.Inject
+import com.pantaubersama.app.utils.FacebookEventLogger
 
 class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     @Inject
@@ -51,7 +52,8 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
             if (url?.contains(PantauConstants.Networking.INVITATION_PATH)!!) {
                 url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it) }
             } else if (url?.contains(CONFIRMATION_PATH)!!) {
-                url?.let { SymbolicLoginButton.loadPage(this@LoginActivity, it) }
+                url?.let { SymbolicLoginButton.confirmEmail(this@LoginActivity, it) }
+                FacebookEventLogger.logCompletedRegistrationEvent(this@LoginActivity, "symbolic")
             }
         }
         symbolicScope = ArrayList()
@@ -136,34 +138,6 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
                     }
                 }
         }
-//        FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_BROADCAST)
-//            .addOnCompleteListener {
-//                if (!it.isSuccessful) {
-//                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_BROADCAST – ${it.exception}"
-//                    Timber.e(msg)
-//                }
-//            }
-//        FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_FEED)
-//            .addOnCompleteListener {
-//                if (!it.isSuccessful) {
-//                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_FEED – ${it.exception}"
-//                    Timber.e(msg)
-//                }
-//            }
-//        FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_JANPOL)
-//            .addOnCompleteListener {
-//                if (!it.isSuccessful) {
-//                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_JANPOL – ${it.exception}"
-//                    Timber.e(msg)
-//                }
-//            }
-//        FirebaseMessaging.getInstance().subscribeToTopic(NOTIFICATION_TOPIC_QUIZ)
-//            .addOnCompleteListener {
-//                if (!it.isSuccessful) {
-//                    val msg = "FCM ERROR - Failed subscribing $NOTIFICATION_TOPIC_QUIZ – ${it.exception}"
-//                    Timber.e(msg)
-//                }
-//            }
     }
 
     private fun openEditProfileActivity() {

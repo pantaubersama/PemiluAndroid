@@ -22,11 +22,8 @@ import com.pantaubersama.app.ui.penpol.tanyakandidat.list.TanyaKandidatAdapter
 import com.pantaubersama.app.ui.search.UpdateableFragment
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
-import com.pantaubersama.app.utils.CopyUtil
-import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.* // ktlint-disable
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_SEARCH_KEYWORD
-import com.pantaubersama.app.utils.ShareUtil
-import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_search_question.*
@@ -94,7 +91,7 @@ class SearchQuestionFragment : BaseFragment<SearchQuestionPresenter>(), Updateab
         adapter.setHaveUser(profile)
         adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.EXTRA_TYPE_PILPRES, bannerInfo), PantauConstants.RequestCode.RC_BANNER_TANYA_KANDIDAT)
+                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.EXTRA_TYPE_FEED, bannerInfo), PantauConstants.RequestCode.RC_BANNER_TANYA_KANDIDAT)
             }
 
             override fun onClickHeader() {
@@ -238,8 +235,14 @@ class SearchQuestionFragment : BaseFragment<SearchQuestionPresenter>(), Updateab
         view_fail_state.visibleIf(true)
     }
 
-    override fun onItemUpVoted() {
-        // no need to do
+    override fun onItemUpVoted(position: Int) {
+        FacebookEventLogger.logRatedEvent(
+            requireContext(),
+            PantauConstants.TanyaKandidat.NAME,
+            (adapter.get(position) as Pertanyaan).body,
+            (adapter.get(position) as Pertanyaan).id,
+            1,
+            1.0)
     }
 
     override fun onFailedUpVoteItem(liked: Boolean, position: Int) {

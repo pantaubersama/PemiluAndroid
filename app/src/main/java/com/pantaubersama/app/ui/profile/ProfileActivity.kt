@@ -251,39 +251,6 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 }
             }
         }
-//        val dialog = Dialog(this@ProfileActivity)
-//        dialog.setContentView(R.layout.cluster_options_layout)
-//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        dialog.setOnKeyListener { _, i, _ ->
-//            if (i == KeyEvent.KEYCODE_BACK) {
-//                dialog.dismiss()
-//                true
-//            } else {
-//                false
-//            }
-//        }
-//        dialog.setCanceledOnTouchOutside(true)
-//        val lp = WindowManager.LayoutParams()
-//        val window = dialog.window
-//        lp.copyFrom(window?.attributes)
-//        lp.width = WindowManager.LayoutParams.MATCH_PARENT
-//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-//        window?.attributes = lp
-//        lp.gravity = Gravity.BOTTOM
-//        window?.attributes = lp
-//        dialog.invite_to_cluster_action?.setOnClickListener {
-//            val intent = Intent(this@ProfileActivity, UndangAnggotaActivity::class.java)
-//            intent.putExtra(PantauConstants.Cluster.CLUSTER_URL, cluster.magicLink)
-//            intent.putExtra(PantauConstants.Cluster.CLUSTER_ID, cluster.id)
-//            intent.putExtra(PantauConstants.Cluster.INVITE_LINK_ACTIVE, cluster.isLinkActive)
-//            startActivityForResult(intent, PantauConstants.Cluster.REQUEST_CODE.REQUEST_CLUSTER)
-//            dialog.dismiss()
-//        }
-//        dialog.leave_cluster_action?.setOnClickListener {
-//            showLeaveClusterConfirmationDialog(cluster)
-//            dialog.dismiss()
-//        }
-//        dialog.show()
     }
 
     private fun showLeaveClusterConfirmationDialog(cluster: ClusterItem) {
@@ -367,12 +334,11 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     override fun onBackPressed() {
-        if (intent.getStringExtra(PantauConstants.URL) != null) {
+        if (isTaskRoot) {
             val intent = Intent(this@ProfileActivity, HomeActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
-        } else {
-            super.onBackPressed()
         }
+        super.onBackPressed()
     }
 }
