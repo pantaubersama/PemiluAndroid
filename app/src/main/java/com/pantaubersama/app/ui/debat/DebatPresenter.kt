@@ -19,7 +19,6 @@ class DebatPresenter @Inject constructor(
                     view?.showMessage(it)
                 },
                 {
-
                 }
             ))
     }

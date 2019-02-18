@@ -1,6 +1,5 @@
 package com.pantaubersama.app.data.model.debat
 
-import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.user.User
 import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_TYPE_LEFT_SIDE
@@ -12,8 +11,11 @@ import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_TYPE_LEFT_SID
 data class Message(
     val id: String,
     val body: String,
-    val sender: User
-): ItemModel {
+    val sender: User,
+    var isLiked: Boolean,
+    var likedCount: Int,
+    var createdAt: Long
+) : ItemModel {
     override fun getType(): Int {
         return MESSAGE_TYPE_LEFT_SIDE
     }

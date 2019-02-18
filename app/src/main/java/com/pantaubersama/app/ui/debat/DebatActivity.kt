@@ -6,11 +6,9 @@ import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
-import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.debat.Message
@@ -57,10 +55,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     private fun setupAppBarBehaviour() {
         var isMainToolbarShown = true
         app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-            Timber.d("OffsetChanged - verticalOffset : $verticalOffset")
-            Timber.d("OffsetChanged - collTool Height : ${collapsing_toolbar.height}")
-            Timber.d("OffsetChanged - collTool minHeight : ${ViewCompat.getMinimumHeight(collapsing_toolbar)}")
-            Timber.d("OffsetChanged - calc : ${collapsing_toolbar.height + verticalOffset < 2 * ViewCompat.getMinimumHeight(collapsing_toolbar)}")
             if (verticalOffset < -30) {
                 if (isMainToolbarShown) {
                     isMainToolbarShown = false
@@ -68,10 +62,10 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
                     Timber.d("OffsetChangedTransition - startTransition")
                     toolbar_debat.background = toolbarBackground.also { it.startTransition(150) }
 
-                    tv_toolbar_title.setText("${tv_sisa_waktu.text.toString().toLowerCase()} tersisa")
+                    tv_toolbar_title.text = "${tv_sisa_waktu.text.toString().toLowerCase()} tersisa"
                     tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_saldo_waktu_white_24, 0, 0, 0)
                 }
-            } else if (verticalOffset == 0){
+            } else if (verticalOffset == 0) {
                 if (!isMainToolbarShown) {
                     isMainToolbarShown = true
                     val toolbarBackground = TransitionDrawable(arrayOf(toolbar_debat.background, ColorDrawable(ContextCompat.getColor(this, R.color.yellowAlpha))))
@@ -81,10 +75,9 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
                         it.reverseTransition(150)
                     }
 
-                    tv_toolbar_title.setText("LIVE NOW")
+                    tv_toolbar_title.text = getString(R.string.live_now)
                     tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_debat_live, 0, 0, 0)
                 }
-
             }
         })
     }
@@ -93,6 +86,11 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         adapter = MessageAdapter()
         recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recycler_view.adapter = adapter
+        adapter.listener = object : MessageAdapter.AdapterListener {
+            override fun onClickClap() {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -106,7 +104,16 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     }
 
     override fun showMessage(messageList: MutableList<Message>) {
+        messageList.forEach {
+            Timber.d("messageList : $it")
+        }
+
         adapter.setDatas(messageList)
+        for (i in 0 until adapter.getDatas()?.size()!!) {
+            Timber.d("messageList getDatas $i : ${adapter.getData(i)}")
+        }
+
+        System.currentTimeMillis()
     }
 
     override fun showLoading() {

@@ -5,12 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
-import com.pantaubersama.app.data.model.ItemModel
 
 /**
  * @author edityomurti on 12/02/2019 15:55
  */
-abstract class SortedAdapter<T>: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class SortedAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     protected var data: SortedList<T>?
 
     protected abstract val itemClass: Class<T>
@@ -39,7 +38,6 @@ abstract class SortedAdapter<T>: RecyclerView.Adapter<RecyclerView.ViewHolder>()
             override fun areContentsTheSame(oldItem: T?, newItem: T?): Boolean {
                 return oldItem == newItem
             }
-
         })
     }
 

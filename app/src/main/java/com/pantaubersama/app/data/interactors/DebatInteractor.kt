@@ -15,7 +15,8 @@ class DebatInteractor @Inject constructor(
     fun getMessage(): Single<MutableList<Message>> {
         var messageList: MutableList<Message> = ArrayList()
         for (i in 1..15) {
-            val message = Message("msg-id-$i", "apa $i?", User())
+            val message = Message("msg-id-$i", "$i. Mau nambahin, jumlah baliho juga melanggar ketentuan di pertigaan Ahmad Yani sudah saya lampiran bukti foto serta tambahan lokasi baliho dimana saja pemasangan baliho.", User(),
+                false, i, System.currentTimeMillis())
             messageList.add(message)
         }
         return Single.fromCallable { messageList }.subscribeOn(rxSchedulers.io()).observeOn(rxSchedulers.mainThread())

@@ -9,13 +9,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:orientation="horizontal"
         android:id="@+id/ll_message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_max="wrap"
-        app:layout_constraintWidth_percent="0.8">
+        app:layout_constraintWidth_percent="0.7">
 
         <View
             android:id="@+id/view_indicator"
@@ -92,10 +93,11 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <ImageView
+                android:id="@+id/iv_clap"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="4dp"
-                android:src="@drawable/ic_clap_web"
+                android:src="@drawable/ic_appreciate_default"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tv_clap_count"/>
 
