@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@color/white"
-            android:layout_above="@id/save_button">
+            android:layout_above="@id/golput_container">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,6 +101,74 @@
             </LinearLayout>
 
         </FrameLayout>
+        
+        <RelativeLayout
+            android:id="@+id/golput_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/outline_gray"
+            android:layout_above="@id/save_button"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
+            android:paddingRight="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:id="@+id/golput_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Surat Suara Tidak Sah"
+                android:textSize="12sp"
+                android:fontFamily="@font/bw_modelica_bold"
+                android:textColor="@color/black_3"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true">
+
+                <EditText
+                    android:id="@+id/golput_count_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="24dp"
+                    android:background="@color/gray_2"
+                    android:gravity="center"
+                    android:paddingStart="48dp"
+                    android:paddingLeft="48dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="72dp"
+                    android:paddingRight="72dp"
+                    android:paddingBottom="12dp"
+                    android:text="0"
+                    android:textColor="@color/colorPrimary" />
+
+                <LinearLayout
+                    android:id="@+id/golput_inc_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_background_primary"
+                    android:layout_gravity="end"
+                    android:gravity="center"
+                    android:foreground="?selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_add"/>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:orientation="horizontal"
