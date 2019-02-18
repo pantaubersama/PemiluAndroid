@@ -88,6 +88,7 @@
                             android:layout_marginRight="24dp"
                             android:text="0"
                             android:gravity="center"
+                            android:inputType="number"
                             android:textColor="@color/colorAccent"/>
 
                         <LinearLayout
@@ -142,6 +143,7 @@
                             android:layout_marginRight="24dp"
                             android:text="0"
                             android:gravity="center"
+                            android:inputType="number"
                             android:textColor="@color/colorAccent"/>
 
                         <LinearLayout
@@ -205,6 +207,7 @@
                         android:layout_marginRight="24dp"
                         android:text="0"
                         android:gravity="center"
+                        android:inputType="number"
                         android:textColor="@color/colorPrimary"/>
 
                     <LinearLayout
