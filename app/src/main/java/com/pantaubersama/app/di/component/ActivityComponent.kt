@@ -18,6 +18,7 @@ import com.pantaubersama.app.ui.menguji.home.MengujiPagerFragment
 import com.pantaubersama.app.ui.menjaga.filter.LaporFilterActivity
 import com.pantaubersama.app.ui.menjaga.filter.partiesdialog.PartiesDialog
 import com.pantaubersama.app.ui.menjaga.lapor.LaporFragment
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.list.PerhitunganFragment
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.note.partai.PartaiFragment
@@ -136,4 +137,5 @@ interface ActivityComponent {
     fun inject(notifActivity: NotifActivity)
     fun inject(mengujiPagerFragment: MengujiPagerFragment)
     fun inject(perhitunganFragment: PerhitunganFragment)
+    fun inject(perhitunganDPRRIActivity: PerhitunganDPRRIActivity)
 }
