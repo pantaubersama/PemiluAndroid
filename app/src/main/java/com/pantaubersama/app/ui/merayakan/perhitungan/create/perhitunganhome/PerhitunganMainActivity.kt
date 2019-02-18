@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity
 import kotlinx.android.synthetic.main.activity_perhitunganmain.*
@@ -24,6 +25,9 @@ class PerhitunganMainActivity : CommonActivity() {
         }
         dpr_ri_action.setOnClickListener {
             startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRRIActivity::class.java))
+        }
+        dpd_action.setOnClickListener {
+            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPDActivity::class.java))
         }
     }
 }

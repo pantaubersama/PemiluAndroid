@@ -2,7 +2,7 @@ package com.pantaubersama.app.data.model.partai
 
 import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.data.model.dpr.DPRData
+import com.pantaubersama.app.data.model.kandidat.CandidateData
 import com.pantaubersama.app.data.model.meta.Meta
 import com.pantaubersama.app.utils.PantauConstants
 import java.io.Serializable
@@ -26,7 +26,7 @@ data class PoliticalParty(
     @SerializedName("number")
     var number: Int,
     // dummy object
-    var members: MutableList<DPRData>?
+    var members: MutableList<CandidateData>?
 ) : ItemModel, Serializable {
     override fun getType(): Int {
         return PantauConstants.ItemModel.TYPE_PARTAI

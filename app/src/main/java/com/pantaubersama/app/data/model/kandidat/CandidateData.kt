@@ -1,8 +1,8 @@
-package com.pantaubersama.app.data.model.dpr
+package com.pantaubersama.app.data.model.kandidat
 
 import com.pantaubersama.app.data.model.ItemModel
 
-data class DPRData(
+data class CandidateData(
     var name: String,
     var number: Int
 ) : ItemModel {
