@@ -43,6 +43,9 @@ class PerhitunganDPRRIActivity : BaseActivity<PerhitunganDPRRIPresenter>(), Perh
         setupToolbar(true, "DPR RI", R.color.white, 4f)
         setupDPRList()
         presenter.getDPRRIData()
+        save_button.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setupDPRList() {

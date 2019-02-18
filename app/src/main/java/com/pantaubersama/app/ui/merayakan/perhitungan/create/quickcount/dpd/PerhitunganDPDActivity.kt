@@ -33,6 +33,9 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
         setupToolbar(true, "DPR RI", R.color.white, 4f)
         setupDPDList()
         presenter.getDPDData()
+        save_button.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setupDPDList() {
