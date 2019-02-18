@@ -36,5 +36,11 @@ class FacebookEventLogger {
             params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_ID, contentId)
             AppEventsLogger.newLogger(context).logEvent(AppEventsConstants.EVENT_NAME_VIEWED_CONTENT, params)
         }
+
+        fun logSearchEvent(context: Context, searchString: String) {
+            val params = Bundle()
+            params.putString(AppEventsConstants.EVENT_PARAM_SEARCH_STRING, searchString)
+            AppEventsLogger.newLogger(context).logEvent(AppEventsConstants.EVENT_NAME_SEARCHED, params)
+        }
     }
 }

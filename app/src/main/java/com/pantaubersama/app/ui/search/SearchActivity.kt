@@ -28,6 +28,7 @@ import javax.inject.Inject
 import com.facebook.appevents.AppEventsConstants
 import android.util.StatsLog.logEvent
 import com.facebook.appevents.AppEventsLogger
+import com.pantaubersama.app.utils.FacebookEventLogger
 
 class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
     private var keyword: String? = null
@@ -63,13 +64,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
     fun setKeyword(keyword: String) {
         et_search.setText(keyword)
         performSearch(keyword)
-        logSearchEvent(keyword)
-    }
-
-    private fun logSearchEvent(searchString: String) {
-        val params = Bundle()
-        params.putString(AppEventsConstants.EVENT_PARAM_SEARCH_STRING, searchString)
-        AppEventsLogger.newLogger(this@SearchActivity).logEvent(AppEventsConstants.EVENT_NAME_SEARCHED, params)
+        FacebookEventLogger.logSearchEvent(this@SearchActivity, keyword)
     }
 
     private fun performSearch(keyword: String) {
