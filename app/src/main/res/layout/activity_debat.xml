@@ -10,21 +10,24 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
             android:minHeight="?actionBarSize"
-            app:contentScrim="@color/purple_3"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                android:background="@drawable/bg_header_debat_live_now"
+                android:paddingTop="?actionBarSize">
 
                 <include
                     layout="@layout/layout_header_detail_debat"
@@ -34,6 +37,7 @@
 
                 <TextView
                     android:id="@+id/tv_title"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/purple_3"
@@ -46,14 +50,10 @@
                     android:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%. 2 periode yuk, biar 10,54%."
                     android:textColor="@color/white"
                     android:textSize="12sp"/>
+
             </LinearLayout>
 
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:background="@color/yellow">
-
-            </androidx.appcompat.widget.Toolbar>
+            <include layout="@layout/layout_toolbar_debat"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -63,7 +63,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
@@ -71,9 +70,5 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     </androidx.recyclerview.widget.RecyclerView>
-
-    <include
-        layout="@layout/layout_toolbar_debat"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

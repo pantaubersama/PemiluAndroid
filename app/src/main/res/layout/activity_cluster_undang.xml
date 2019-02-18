@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/transparant"
+                android:background="@color/transparent"
                 android:fontFamily="@font/lato_bold"
                 android:hint="@string/hint_masukan_email_disini"
                 android:inputType="textEmailAddress|textNoSuggestions"
