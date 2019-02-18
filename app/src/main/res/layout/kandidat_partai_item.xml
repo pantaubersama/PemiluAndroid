@@ -107,7 +107,8 @@
         android:id="@+id/candidates_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="true">
+        android:clipToPadding="true"
+        android:nestedScrollingEnabled="false">
 
     </androidx.recyclerview.widget.RecyclerView>
 
