@@ -26,7 +26,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity"></activity>
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprdprovinsi.PerhitunganDPRDProvinsiActivity"></activity>
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity" />
         <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity" />
         <activity android:name=".ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity" />
         <activity android:name=".ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity" />
