@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.merayakan.perhitungan.create
+package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount
 
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +22,10 @@ class DPRCandidateAdapter : BaseRecyclerAdapter() {
     inner class CandidatesViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: CandidateData) {
             candidate_name.text = item.number.toString() + ". " + item.name
+            candidate_inc_button.setOnClickListener {
+                val count = candidate_count_field.text.toString().toInt()
+                candidate_count_field.setText(count.plus(1).toString())
+            }
         }
     }
 }

@@ -9,12 +9,12 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.partai.PoliticalParty
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.DPRAdapter
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.DPRPartaiAdapter
 import kotlinx.android.synthetic.main.activity_perhitungan_dprri.*
 import javax.inject.Inject
 
 class PerhitunganDPRRIActivity : BaseActivity<PerhitunganDPRRIPresenter>(), PerhitunganDPRRIView {
-    private lateinit var adapter: DPRAdapter
+    private lateinit var adapter: DPRPartaiAdapter
 
     @Inject
     override lateinit var presenter: PerhitunganDPRRIPresenter
@@ -43,13 +43,17 @@ class PerhitunganDPRRIActivity : BaseActivity<PerhitunganDPRRIPresenter>(), Perh
         setupToolbar(true, "DPR RI", R.color.white, 4f)
         setupDPRList()
         presenter.getDPRRIData()
+        golput_inc_button.setOnClickListener {
+            val count = golput_count_field.text.toString().toInt()
+            golput_count_field.setText(count.plus(1).toString())
+        }
         save_button.setOnClickListener {
             finish()
         }
     }
 
     private fun setupDPRList() {
-        adapter = DPRAdapter()
+        adapter = DPRPartaiAdapter()
         dpr_list.layoutManager = LinearLayoutManager(this)
         dpr_list.adapter = adapter
     }

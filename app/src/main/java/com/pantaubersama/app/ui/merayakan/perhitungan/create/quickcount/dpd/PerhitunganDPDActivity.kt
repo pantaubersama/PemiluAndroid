@@ -9,7 +9,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.kandidat.CandidateData
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.merayakan.perhitungan.create.DPRCandidateAdapter
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.DPRCandidateAdapter
 import kotlinx.android.synthetic.main.activity_perhitungan_dpd.*
 import javax.inject.Inject
 
@@ -35,6 +35,10 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
         setupToolbar(true, "DPR RI", R.color.white, 4f)
         setupDPDList()
         presenter.getDPDData()
+        golput_inc_button.setOnClickListener {
+            val count = golput_count_field.text.toString().toInt()
+            golput_count_field.setText(count.plus(1).toString())
+        }
         save_button.setOnClickListener {
             finish()
         }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdkabupaten.PerhitunganDPRDKabupatenActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdprovinsi.PerhitunganDPRDProvinsiActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity
@@ -32,6 +33,9 @@ class PerhitunganMainActivity : CommonActivity() {
         }
         dpr_provinsi_action.setOnClickListener {
             startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDProvinsiActivity::class.java))
+        }
+        dpr_kabupaten_action.setOnClickListener {
+            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDKabupatenActivity::class.java))
         }
     }
 }
