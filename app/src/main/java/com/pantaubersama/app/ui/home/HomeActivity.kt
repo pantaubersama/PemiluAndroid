@@ -24,7 +24,6 @@ import com.pantaubersama.app.ui.notification.NotifActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.search.SearchActivity
-import com.pantaubersama.app.ui.menguji.home.MengujiHomeFragment
 import com.pantaubersama.app.ui.merayakan.MerayakanFragment
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OPEN_TAB_TYPE

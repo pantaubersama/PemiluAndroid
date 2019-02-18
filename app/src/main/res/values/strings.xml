@@ -271,4 +271,5 @@
     <string name="data_tps_hint">Lengkapi seluruh data di bawah ini. Lokasi TPS dapat dibarui dengan mengaktifkan penanda GPS perangkat kamu.</string>
     <string name="tps_attachment_hint">Upload Lampiran Dokumen dan Bagikan Keseruan Suasana di TPS kamu</string>
     <string name="presiden_counter_hint">Kamu bisa menambah atau langsung input jumlah perolehan suara sesuai pengamatan di TPS. Tap Undo untuk membatalkan perhitungan terakhir.</string>
+    <string name="undo_action">Undo</string>
 </resources>

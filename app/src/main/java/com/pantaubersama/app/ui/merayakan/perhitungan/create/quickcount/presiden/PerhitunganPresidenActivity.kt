@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount
+package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden
 
 import android.os.Bundle
 import android.view.Menu
@@ -31,21 +31,19 @@ class PerhitunganPresidenActivity : CommonActivity() {
             val count = golput_count_field.text.toString().toInt()
             golput_count_field.setText(count.plus(1).toString())
         }
+        save_button.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_done, menu)
+        menuInflater.inflate(R.menu.menu_undo, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.done_action -> {
-                // sementara
-            }
-            android.R.id.home -> {
-                onBackPressed()
-                return true
+            R.id.undo_action -> {
             }
         }
         return super.onOptionsItemSelected(item)

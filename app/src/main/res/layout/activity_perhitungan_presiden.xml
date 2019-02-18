@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.PerhitunganPresidenActivity">
+    tools:context="com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@color/white"
-            android:layout_above="@id/undo_button">
+            android:layout_above="@id/save_button">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -231,19 +231,13 @@
 
         <RelativeLayout
             android:orientation="horizontal"
-            android:id="@+id/undo_button"
+            android:id="@+id/save_button"
             android:background="@color/gray_2"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="47dp"
             android:foreground="?selectableItemBackground"
             android:gravity="center">
-
-            <ImageView
-                android:id="@+id/undo_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/undo_arrow"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -253,8 +247,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/lato_bold"
-                android:text="Undo"
-                android:layout_toRightOf="@id/undo_image"/>
+                android:text="Simpan"
+                android:textAllCaps="true"/>
 
         </RelativeLayout>
 
