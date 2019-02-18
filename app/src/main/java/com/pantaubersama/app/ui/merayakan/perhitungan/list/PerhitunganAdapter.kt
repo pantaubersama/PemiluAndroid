@@ -1,0 +1,96 @@
+package com.pantaubersama.app.ui.merayakan.perhitungan.list
+
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
+import com.pantaubersama.app.R
+import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.base.viewholder.LoadingViewHolder
+import com.pantaubersama.app.data.model.LoadingModel
+import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
+import com.pantaubersama.app.data.model.tps.TPSData
+import com.pantaubersama.app.ui.widget.BannerViewHolder
+import com.pantaubersama.app.utils.extensions.inflate
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.tps_info_item.*
+import timber.log.Timber
+
+class PerhitunganAdapter : BaseRecyclerAdapter() {
+    var listener: Listener? = null
+
+    override fun getItemViewType(position: Int): Int {
+        return when {
+            data[position] is BannerInfo -> VIEW_TYPE_BANNER
+            data[position] is LoadingModel -> VIEW_TYPE_LOADING
+            else -> VIEW_TYPE_ITEM
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            VIEW_TYPE_LOADING -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
+            VIEW_TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container),
+                onClick = { listener?.onClickBanner(data[it] as BannerInfo) },
+                onRemove = { removeBanner() })
+            else -> PerhitunganViewHolder(parent.inflate(R.layout.tps_info_item))
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        Timber.d(data[position].toString())
+        (holder as? LoadingViewHolder)?.bind()
+        (holder as? BannerViewHolder)?.bind(data[position] as BannerInfo)
+        (holder as? PerhitunganViewHolder)?.bind(data[position] as TPSData)
+    }
+
+    inner class PerhitunganViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+        fun bind(item: TPSData) {
+            tps_number.text = item.name
+            province_text.text = item.province
+            district_text.text = item.district
+            subdistrict_text.text = item.subDistrict
+            village_text.text = item.village
+            when (item.status) {
+                0 -> {
+                    quick_count_status.text = "Uji Coba"
+                    quick_count_status_container.setBackgroundResource(R.drawable.rounded_gray_dark_2)
+                    tps_number.setTextColor(ContextCompat.getColor(itemView.context, R.color.black_3))
+                    tps_container.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.gray_1))
+                }
+                1 -> {
+                    quick_count_status.text = "Belum Dikirim"
+                    quick_count_status_container.setBackgroundResource(R.drawable.rounded_red)
+                    tps_number.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorPrimary))
+                    tps_container.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white))
+                }
+                2 -> {
+                    quick_count_status.text = "Terkirim"
+                    quick_count_status_container.setBackgroundResource(R.drawable.rounded_green)
+                    tps_number.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorPrimary))
+                    tps_container.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white))
+                }
+            }
+        }
+    }
+
+    companion object {
+        var VIEW_TYPE_LOADING = 0
+        var VIEW_TYPE_ITEM = 1
+        var VIEW_TYPE_BANNER = 2
+    }
+
+    fun addBanner(bannerInfo: BannerInfo) {
+        addItem(bannerInfo, 0)
+    }
+
+    private fun removeBanner() {
+        if (data[0] is BannerInfo) {
+            deleteItem(0)
+        }
+    }
+
+    interface Listener {
+        fun onClickBanner(bannerInfo: BannerInfo)
+    }
+}

@@ -25,6 +25,7 @@ class PantauConstants {
         const val BANNER_TANYA = "tanya"
         const val BANNER_KUIS = "kuis"
         const val BANNER_LAPOR = "lapor"
+        const val PERHITUNGAN = "perhitungan"
         const val URL = "url"
         val PROFILE_COMPLETION = "profile_completion"
         val FILTER_ORANG_ALL = "verified_all"
