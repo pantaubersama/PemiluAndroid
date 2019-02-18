@@ -17,6 +17,7 @@ import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.CopyUtil
+import com.pantaubersama.app.utils.FacebookEventLogger
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_JANPOL_ID
@@ -146,6 +147,16 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
 
         iv_share_button.setOnClickListener { onClickShare() }
         iv_options_button.setOnClickListener { onClickOption() }
+        janjiPolitik.title?.let {
+            janjiPolitik.id?.let { it1 ->
+                FacebookEventLogger.logViewedContentEvent(
+                    this@DetailJanjiPolitikActivity,
+                    PantauConstants.JANPOL,
+                    it,
+                    it1
+                )
+            }
+        }
     }
 
     private fun openProfile(janjiPolitik: JanjiPolitik) {
