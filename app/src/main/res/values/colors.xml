@@ -25,12 +25,14 @@
     <color name="black_1">#393939</color>
     <color name="black_2">#212121</color>
     <color name="black_3">#111111</color>
+    <color name="black_4">#313131</color>
     <color name="red">#bd081c</color>
     <color name="red_2">#eb3037</color>
-    <color name="transparant">#00000000</color>
+    <color name="transparent">#00000000</color>
     <color name="purple">#4f339b</color>
     <color name="purple_2">#5838a4</color>
     <color name="purple_3">#934db1</color>
+    <color name="purple_4">#7c5bc0</color>
     <color name="pinkLight">#ffebef</color>
     <color name="brownLight">#F1CBBE</color>
     <color name="orange">#f2771d</color>
@@ -41,6 +43,7 @@
     <color name="blue_twitter">#059ff5</color>
     <color name="blue_fb">#475993</color>
     <color name="yellow">#f6b42a</color>
+    <color name="yellowAlpha">#00f6b42a</color>
     <color name="yellow_dark">#f49422</color>
     <color name="yellow_light">#f9d65c</color>
     <color name="cream">#fef8e3</color>

@@ -106,6 +106,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:support-v4:28.0.0'
     kapt glideCompiler
     implementation roundedImageView
     implementation symbolic
@@ -113,7 +114,7 @@ dependencies {
     implementation dagger
     implementation lottie
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation chromeCustomTab
     implementation expandableLayout
     implementation rxBinding

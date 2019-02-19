@@ -291,4 +291,9 @@ class PantauConstants {
         const val NOTIFICATION_TYPE_BADGE = "badge"
         const val NOTIFICATION_TYPE_PROFILE = "profile"
     }
+
+    object Message {
+        const val MESSAGE_TYPE_LEFT_SIDE = 1
+        const val MESSAGE_TYPE_RIGHT_SIDE = 2
+    }
 }
