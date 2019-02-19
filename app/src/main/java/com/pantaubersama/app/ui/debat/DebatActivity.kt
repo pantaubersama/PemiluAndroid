@@ -36,6 +36,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
+        btn_back.setOnClickListener { onBackPressed() }
         setupAppBarBehaviour()
 
         cl_btn_detail_debat.setOnClickListener {
