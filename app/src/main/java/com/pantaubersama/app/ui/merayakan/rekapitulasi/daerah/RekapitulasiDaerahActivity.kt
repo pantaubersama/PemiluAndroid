@@ -12,6 +12,7 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiData
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.RekapitulasiAdapter
+import com.pantaubersama.app.ui.merayakan.rekapitulasi.tpslist.TPSListActivity
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.toDp
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -41,11 +42,17 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
     }
 
     override fun setLayout(): Int {
-        return R.layout.activity_rekapitulasi_provinsi
+        return R.layout.activity_rekapitulasi_daerah
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        setupToolbar(true, "Yogyakarta", R.color.white, 4f)
+        var titleDummy = ""
+        when (parent) {
+            "provinsi" -> titleDummy = "Yogyakarta"
+            "kabupaten" -> titleDummy = "Sleman"
+            "kecamatan" -> titleDummy = "Moyudan"
+        }
+        setupToolbar(true, titleDummy, R.color.white, 4f)
         setupRekapitulasiList()
         loadData()
     }
@@ -65,6 +72,7 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
                 when (parent) {
                     "provinsi" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kabupaten")
                     "kabupaten" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kecamatan")
+                    "kecamatan" -> TPSListActivity.start(this@RekapitulasiDaerahActivity)
                 }
             }
         }
