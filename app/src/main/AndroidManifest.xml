@@ -26,7 +26,6 @@
         tools:replace="android:theme">
         <activity
             android:name=".ui.debat.DebatActivity"
-            android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.wordstadium.challenge.open.OpenChallengeAct"
