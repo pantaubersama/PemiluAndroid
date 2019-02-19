@@ -106,7 +106,7 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
         adapter = PerhitunganAdapter()
         adapter.listener = object : PerhitunganAdapter.Listener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.EXTRA_TYPE_TANYA_KANDIDAT, bannerInfo), PantauConstants.RequestCode.RC_BANNER_TANYA_KANDIDAT)
+                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), bannerInfo), PantauConstants.RequestCode.RC_BANNER_PERHITUNGAN)
             }
         }
         recycler_view.layoutManager = LinearLayoutManager(requireContext())

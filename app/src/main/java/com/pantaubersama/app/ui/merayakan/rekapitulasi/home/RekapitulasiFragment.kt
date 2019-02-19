@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.merayakan.rekapitulasi.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,9 @@ import com.pantaubersama.app.data.model.kuis.Team
 import com.pantaubersama.app.data.model.kuis.TeamPercentage
 import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiData
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
+import com.pantaubersama.app.ui.merayakan.rekapitulasi.provinsi.RekapitulasiProvinsiActivity
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
@@ -18,7 +22,7 @@ import kotlinx.android.synthetic.main.layout_fail_state.*
 import javax.inject.Inject
 
 class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), RekapitulasiView {
-    private lateinit var adapter: RekapitulasiAdapter
+    private lateinit var adapter: RekapitulasiComplexAdapter
 
     @Inject
     override lateinit var presenter: RekapitulasiPresenter
@@ -37,9 +41,22 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
     }
 
     private fun setupRekapitulasi() {
-        adapter = RekapitulasiAdapter()
+        adapter = RekapitulasiComplexAdapter()
+        adapter.listener = object : RekapitulasiComplexAdapter.Listener {
+            override fun onClickBanner(bannerInfo: BannerInfo) {
+                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), bannerInfo), PantauConstants.RequestCode.RC_BANNER_REKAPITULASI)
+            }
+
+            override fun onClickItem(item: RekapitulasiData) {
+                startActivity(Intent(requireContext(), RekapitulasiProvinsiActivity::class.java))
+            }
+        }
         recycler_view.layoutManager = LinearLayoutManager(requireContext())
         recycler_view.adapter = adapter
+        swipe_refresh.setOnRefreshListener {
+            refreshItem()
+            swipe_refresh.isRefreshing = false
+        }
     }
 
     override fun showBanner(it: BannerInfo) {

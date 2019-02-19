@@ -371,4 +371,5 @@
     <string name="undo_action">Undo</string>
     <string name="rekapitulasi_footer_hint">Buka di web.pantaubersama.com Untuk penyajian data yang lebih lengkap, hingga ke perhitungan Legislatif</string>
     <string name="votes_count_hint">Pengguna telah berpartisipasi merayakan peritungan melalui Pantau Bersama Pemilu 2019.</string>
+    <string name="close_action">Close</string>
 </resources>

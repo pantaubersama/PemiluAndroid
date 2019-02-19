@@ -110,6 +110,9 @@ class PantauConstants {
         const val RC_BANNER_PILPRES = 101
         const val RC_BANNER_JANPOL = 102
         const val RC_BANNER_TANYA_KANDIDAT = 103
+        const val RC_BANNER_SEARCH_TANYA_KANDIDAT = 104
+        const val RC_BANNER_PERHITUNGAN = 222
+        const val RC_BANNER_REKAPITULASI = 223
         const val RC_BANNER_KUIS = 104
         const val RC_BANNER_LAPOR = 105
         const val RC_ASK_PERMISSIONS = 115

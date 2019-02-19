@@ -51,7 +51,7 @@ class KuisFragment : BaseFragment<KuisPresenter>(), KuisView {
             override fun onClickBanner(item: BannerInfo) {
                 startActivityForResult(
                     BannerInfoActivity.setIntent(
-                        requireContext(), PantauConstants.Extra.EXTRA_TYPE_KUIS, item
+                        requireContext(), item
                     ), PantauConstants.RequestCode.RC_BANNER_KUIS)
             }
 

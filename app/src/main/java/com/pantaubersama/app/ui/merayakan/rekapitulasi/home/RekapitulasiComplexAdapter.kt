@@ -15,7 +15,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.rekapitulasi_item.*
 import kotlinx.android.synthetic.main.rekapitulasi_header_layout.*
 
-class RekapitulasiAdapter : BaseRecyclerAdapter() {
+class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
     var listener: Listener? = null
 
     override fun getItemViewType(position: Int): Int {
@@ -75,6 +75,9 @@ class RekapitulasiAdapter : BaseRecyclerAdapter() {
             paslon_2_percentage.text = item.teams[1].percentage.toString()
             // golput
             golput_count.text = item.teams[2].percentage.toString()
+            itemView.setOnClickListener {
+                listener?.onClickItem(item)
+            }
         }
     }
 
@@ -116,5 +119,6 @@ class RekapitulasiAdapter : BaseRecyclerAdapter() {
 
     interface Listener {
         fun onClickBanner(bannerInfo: BannerInfo)
+        fun onClickItem(item: RekapitulasiData)
     }
 }
