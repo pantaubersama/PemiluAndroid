@@ -369,4 +369,6 @@
     <string name="tps_attachment_hint">Upload Lampiran Dokumen dan Bagikan Keseruan Suasana di TPS kamu</string>
     <string name="presiden_counter_hint">Kamu bisa menambah atau langsung input jumlah perolehan suara sesuai pengamatan di TPS. Tap Undo untuk membatalkan perhitungan terakhir.</string>
     <string name="undo_action">Undo</string>
+    <string name="rekapitulasi_footer_hint">Buka di web.pantaubersama.com Untuk penyajian data yang lebih lengkap, hingga ke perhitungan Legislatif</string>
+    <string name="votes_count_hint">User telah berpartisipasi dalam Gotong - Royong perhitungan Pantau Bersama</string>
 </resources>

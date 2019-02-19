@@ -6,15 +6,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
-import com.pantaubersama.app.base.viewholder.LoadingViewHolder
-import com.pantaubersama.app.data.model.LoadingModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.tps.TPSData
 import com.pantaubersama.app.ui.widget.BannerViewHolder
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.tps_info_item.*
-import timber.log.Timber
 
 class PerhitunganAdapter : BaseRecyclerAdapter() {
     var listener: Listener? = null
@@ -36,7 +33,6 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        Timber.d(data[position].toString())
         (holder as? BannerViewHolder)?.bind(data[position] as BannerInfo)
         (holder as? PerhitunganViewHolder)?.bind(data[position] as TPSData)
     }
