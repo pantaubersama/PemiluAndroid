@@ -24,7 +24,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.ScrollingActivity"></activity>
         <activity
             android:name=".ui.debat.DebatActivity"
             android:exported="true"
@@ -38,6 +37,9 @@
         <activity
             android:name=".ui.notification.NotifActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity"></activity>
+        <activity android:name=".ui.wordstadium.challenge.direct.DirectChallengeActivity" />
+        <activity android:name=".ui.wordstadium.challenge.open.PromoteChallengeActivity" />
         <activity
             android:name=".ui.webview.ChromeTabActivity"
             android:screenOrientation="portrait" />
@@ -287,6 +289,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.penpol.kuis.result.KuisUserResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.menguji.list.DebatListActivity"
             android:screenOrientation="portrait" />
     </application>
 

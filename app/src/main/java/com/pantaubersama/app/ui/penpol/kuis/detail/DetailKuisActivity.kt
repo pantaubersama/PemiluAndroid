@@ -12,6 +12,7 @@ import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.penpol.kuis.ikutikuis.IkutiKuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.kuisstart.KuisActivity
 import com.pantaubersama.app.ui.penpol.kuis.result.KuisResultActivity
+import com.pantaubersama.app.utils.FacebookEventLogger
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_KUIS
 import com.pantaubersama.app.utils.PantauConstants.Kuis.KUIS_ID
@@ -83,6 +84,12 @@ class DetailKuisActivity : BaseActivity<DetailKuisPresenter>(), DetailKuisView {
             startActivityForResult(intent, PantauConstants.RequestCode.RC_REFRESH_KUIS_ON_RESULT)
         }
         btn_share.setOnClickListener { ShareUtil.shareItem(this, item) }
+        FacebookEventLogger.logViewedContentEvent(
+            this@DetailKuisActivity,
+            PantauConstants.QUIZ,
+            item.title,
+            item.id
+        )
     }
 
     override fun onFailedGetQuiz() {

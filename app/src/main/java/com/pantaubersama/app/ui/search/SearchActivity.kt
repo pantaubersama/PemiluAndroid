@@ -25,6 +25,10 @@ import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
 import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.utils.extensions.visibleIf
 import javax.inject.Inject
+import com.facebook.appevents.AppEventsConstants
+import android.util.StatsLog.logEvent
+import com.facebook.appevents.AppEventsLogger
+import com.pantaubersama.app.utils.FacebookEventLogger
 
 class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
     private var keyword: String? = null
@@ -60,6 +64,7 @@ class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {
     fun setKeyword(keyword: String) {
         et_search.setText(keyword)
         performSearch(keyword)
+        FacebookEventLogger.logSearchEvent(this@SearchActivity, keyword)
     }
 
     private fun performSearch(keyword: String) {

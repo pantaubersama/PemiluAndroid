@@ -40,7 +40,7 @@
                     app:layout_scrollFlags="scroll|exitUntilCollapsed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/purple_3"
+                    android:background="@color/purple_4"
                     android:paddingTop="9dp"
                     android:paddingBottom="9dp"
                     android:paddingStart="16dp"

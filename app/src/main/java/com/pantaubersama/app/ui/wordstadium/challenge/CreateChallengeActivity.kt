@@ -6,7 +6,7 @@ import com.pantaubersama.app.base.BaseActivity
 
 class CreateChallengeActivity : BaseActivity<CreateChallengePresenter>(), CreateChallengeView {
 
-    override lateinit var presenter: CreateChallengePresenter
+    override var presenter: CreateChallengePresenter = CreateChallengePresenter()
 
     override fun statusBarColor(): Int? {
         return 0

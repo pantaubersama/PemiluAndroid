@@ -1,8 +1,14 @@
 package com.pantaubersama.app.data.model.debat
 
-sealed class DebatItem {
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_DEBAT_ITEM
+import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_HEADER
+
+sealed class DebatItem : ItemModel {
     abstract val debatDetail: DebatDetail
     abstract val type: String
+
+    override fun getType(): Int = TYPE_DEBAT_ITEM
 
     data class LiveNow(override val debatDetail: DebatDetail) : DebatItem() {
         override val type: String = "LIVE NOW"
@@ -32,6 +38,10 @@ sealed class DebatItem {
     ) : DebatItem() {
         override val type: String = "OPEN CHALLENGE"
     }
+}
+
+data class DebatHeader(val text: String) : ItemModel {
+    override fun getType(): Int = TYPE_HEADER
 }
 
 data class DebatDetail(

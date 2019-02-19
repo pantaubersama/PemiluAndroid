@@ -359,4 +359,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="live_now">LIVE NOW</string>
+    <string name="title_promote_challenge">Promote your challenge</string>
+    <string name="direct_challenge">DIRECT CHALLENGE</string>
+    <string name="title_preview">Preview</string>
 </resources>

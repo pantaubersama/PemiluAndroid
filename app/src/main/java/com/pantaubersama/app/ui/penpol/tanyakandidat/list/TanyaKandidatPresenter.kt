@@ -79,7 +79,7 @@ class TanyaKandidatPresenter @Inject constructor(
                 )
                 .subscribe(
                     {
-                        view?.onItemUpVoted()
+                        view?.onItemUpVoted(position)
                     },
                     {
                         view?.showError(it)
@@ -130,7 +130,7 @@ class TanyaKandidatPresenter @Inject constructor(
                 .unVoteQuestion(id, className)
                 .subscribe(
                     {
-                        view?.onItemUpVoted()
+                        view?.onItemUpVoted(position)
                     },
                     {
                         view?.showError(it)

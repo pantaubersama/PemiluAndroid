@@ -27,6 +27,8 @@ class PantauConstants {
         val FILTER_ORANG_VERIFIED = "verified_true"
         val FILTER_ORANG_UNVERIFIED = "verified_false"
         val CONFIRMATION_PATH = "confirmation"
+        val JANPOL = "janji_politik"
+        val QUIZ = "quiz"
     }
 
     object Lapor {
@@ -45,6 +47,7 @@ class PantauConstants {
     }
 
     object TanyaKandidat {
+        const val NAME = "tanya_kandidat"
         const val CREATE_TANYA_KANDIDAT_REQUEST_CODE = 21
         val TANYA_KANDIDAT_DATA = "tanya_kandidat_data"
         val CLASS_NAME = "Question"
@@ -160,6 +163,21 @@ class PantauConstants {
         }
     }
 
+    object Debat {
+        const val EXTRA_TITLE = "EXTRA_TITLE"
+
+        object Title {
+            const val PUBLIK_LIVE_NOW = "Live now"
+            const val PUBLIK_COMING_SOON = "Debat: Coming soon"
+            const val PUBLIK_DONE = "Debat: Done"
+            const val PUBLIK_CHALLENGE = "Challenge"
+            const val PERSONAL_CHALLENGE_IN_PROGRESS = "Challenge in progress"
+            const val PERSONAL_COMING_SOON = "My debat: Coming soon"
+            const val PERSONAL_DONE = "My debat: Done"
+            const val PERSONAL_CHALLENGE = "My challenge"
+        }
+    }
+
     object Camera {
         val ASK_PERMISSIONS_REQUEST_CODE = 123
         val BITMAP = "bitmap"
@@ -178,6 +196,8 @@ class PantauConstants {
         const val TYPE_PASLON = 9
         const val TYPE_USER = 10
         const val TYPE_PARTAI = 11
+        const val TYPE_HEADER = 12
+        const val TYPE_DEBAT_ITEM = 13
     }
 
     object Profile {
