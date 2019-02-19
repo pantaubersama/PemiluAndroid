@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
 import com.pantaubersama.app.ui.home.HomeFragment
 import com.pantaubersama.app.ui.merayakan.perhitungan.list.PerhitunganFragment
-import com.pantaubersama.app.ui.merayakan.rekapitulasi.RekapitulasiFragment
+import com.pantaubersama.app.ui.merayakan.rekapitulasi.home.RekapitulasiFragment
 
 class MerayakanFragment : HomeFragment() {
 

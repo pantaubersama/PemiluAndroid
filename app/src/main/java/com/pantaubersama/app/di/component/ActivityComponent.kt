@@ -24,6 +24,7 @@ import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdkabu
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdprovinsi.PerhitunganDPRDProvinsiActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.list.PerhitunganFragment
+import com.pantaubersama.app.ui.merayakan.rekapitulasi.home.RekapitulasiFragment
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.note.partai.PartaiFragment
 import com.pantaubersama.app.ui.note.presiden.PresidenFragment
@@ -146,4 +147,5 @@ interface ActivityComponent {
     fun inject(perhitunganDPRDProvinsiActivity: PerhitunganDPRDProvinsiActivity)
     fun inject(perhitunganDPRDKabupatenActivity: PerhitunganDPRDKabupatenActivity)
     fun inject(debatActivity: DebatActivity)
+    fun inject(rekapitulasiFragment: RekapitulasiFragment)
 }

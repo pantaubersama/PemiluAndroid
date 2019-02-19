@@ -22,14 +22,12 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
     override fun getItemViewType(position: Int): Int {
         return when {
             data[position] is BannerInfo -> VIEW_TYPE_BANNER
-            data[position] is LoadingModel -> VIEW_TYPE_LOADING
             else -> VIEW_TYPE_ITEM
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            VIEW_TYPE_LOADING -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
             VIEW_TYPE_BANNER -> BannerViewHolder(parent.inflate(R.layout.item_banner_container),
                 onClick = { listener?.onClickBanner(data[it] as BannerInfo) },
                 onRemove = { removeBanner() })
@@ -39,7 +37,6 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         Timber.d(data[position].toString())
-        (holder as? LoadingViewHolder)?.bind()
         (holder as? BannerViewHolder)?.bind(data[position] as BannerInfo)
         (holder as? PerhitunganViewHolder)?.bind(data[position] as TPSData)
     }
@@ -75,7 +72,6 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
     }
 
     companion object {
-        var VIEW_TYPE_LOADING = 0
         var VIEW_TYPE_ITEM = 1
         var VIEW_TYPE_BANNER = 2
     }
