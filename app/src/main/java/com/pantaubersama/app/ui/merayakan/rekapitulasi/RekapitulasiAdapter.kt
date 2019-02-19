@@ -11,6 +11,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.rekapitulasi_item.*
 
 class RekapitulasiAdapter : BaseRecyclerAdapter() {
+    var listener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return RekapitulasiViewHolder(parent.inflate(R.layout.rekapitulasi_item))
@@ -20,7 +21,7 @@ class RekapitulasiAdapter : BaseRecyclerAdapter() {
         (holder as RekapitulasiViewHolder).bind(data[position] as RekapitulasiData)
     }
 
-    class RekapitulasiViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    inner class RekapitulasiViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: RekapitulasiData) {
             province_text.text = item.location
             // paslon 1
@@ -32,6 +33,13 @@ class RekapitulasiAdapter : BaseRecyclerAdapter() {
             // golput
             golput_count.text = (10).toString() // example
             votes_count.text = item.totalParticipant.toInt().toString()
+            itemView.setOnClickListener {
+                listener?.onClickItem(item)
+            }
         }
+    }
+
+    interface Listener {
+        fun onClickItem(item: RekapitulasiData)
     }
 }

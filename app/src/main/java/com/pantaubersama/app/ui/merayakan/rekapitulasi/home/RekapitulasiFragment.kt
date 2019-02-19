@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.merayakan.rekapitulasi.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +12,7 @@ import com.pantaubersama.app.data.model.kuis.TeamPercentage
 import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiData
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
-import com.pantaubersama.app.ui.merayakan.rekapitulasi.provinsi.RekapitulasiProvinsiActivity
+import com.pantaubersama.app.ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerahActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -48,7 +47,7 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
             }
 
             override fun onClickItem(item: RekapitulasiData) {
-                startActivity(Intent(requireContext(), RekapitulasiProvinsiActivity::class.java))
+                RekapitulasiDaerahActivity.start(requireContext(), "provinsi")
             }
         }
         recycler_view.layoutManager = LinearLayoutManager(requireContext())

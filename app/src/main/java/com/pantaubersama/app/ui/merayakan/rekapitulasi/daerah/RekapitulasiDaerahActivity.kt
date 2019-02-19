@@ -1,5 +1,7 @@
-package com.pantaubersama.app.ui.merayakan.rekapitulasi.provinsi
+package com.pantaubersama.app.ui.merayakan.rekapitulasi.daerah
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -19,14 +21,19 @@ import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
-class RekapitulasiProvinsiActivity : BaseActivity<RekapitulasiProvinsiPresenter>(), RekapitulasiProvinsiView {
+class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>(), RekapitulasiProvinsiView {
     private lateinit var adapter: RekapitulasiAdapter
+    private var parent: String? = null
 
     @Inject
     override lateinit var presenter: RekapitulasiProvinsiPresenter
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
+    }
+
+    override fun fetchIntentExtra() {
+        parent = intent.getStringExtra("parent")
     }
 
     override fun statusBarColor(): Int? {
@@ -40,16 +47,32 @@ class RekapitulasiProvinsiActivity : BaseActivity<RekapitulasiProvinsiPresenter>
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Yogyakarta", R.color.white, 4f)
         setupRekapitulasiList()
-        presenter.getRekapitulasiData()
+        loadData()
+    }
+
+    private fun loadData() {
+        when (parent) {
+            "provinsi" -> presenter.getRekapitulasiKabupatenData()
+            "kabupaten" -> presenter.getRekapitulasiKecamatanData()
+            "kecamatan" -> presenter.getRekapitulasiKelurahanData()
+        }
     }
 
     private fun setupRekapitulasiList() {
         adapter = RekapitulasiAdapter()
-        recycler_view.setPadding(0, 8f.toDp(this@RekapitulasiProvinsiActivity), 0, 8f.toDp(this@RekapitulasiProvinsiActivity))
+        adapter.listener = object : RekapitulasiAdapter.Listener {
+            override fun onClickItem(item: RekapitulasiData) {
+                when (parent) {
+                    "provinsi" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kabupaten")
+                    "kabupaten" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kecamatan")
+                }
+            }
+        }
+        recycler_view.setPadding(0, 8f.toDp(this@RekapitulasiDaerahActivity), 0, 8f.toDp(this@RekapitulasiDaerahActivity))
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = adapter
         swipe_refresh.setOnRefreshListener {
-            presenter.getRekapitulasiData()
+            loadData()
             swipe_refresh.isRefreshing = false
         }
     }
@@ -83,5 +106,13 @@ class RekapitulasiProvinsiActivity : BaseActivity<RekapitulasiProvinsiPresenter>
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        fun start(context: Context, from: String) {
+            val intent = Intent(context, RekapitulasiDaerahActivity::class.java)
+            intent.putExtra("parent", from)
+            context.startActivity(intent)
+        }
     }
 }
