@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.menguji.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -9,9 +8,9 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.debat.DebatItem
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.menguji.adapter.BriefDebatAdapter
 import com.pantaubersama.app.ui.menguji.list.DebatListActivity
-import com.pantaubersama.app.ui.wordstadium.challenge.CreateChallengeActivity
 import com.pantaubersama.app.utils.OffsetItemDecoration
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PERSONAL_CHALLENGE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PERSONAL_CHALLENGE_IN_PROGRESS
@@ -21,16 +20,12 @@ import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_CHALLENGE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_COMING_SOON
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_DONE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_LIVE_NOW
-import com.pantaubersama.app.utils.extensions.dip
-import com.pantaubersama.app.utils.extensions.loadUrl
-import com.pantaubersama.app.utils.extensions.unSyncLazy
-import com.pantaubersama.app.utils.extensions.visibleIf
-import io.reactivex.disposables.Disposable
+import com.pantaubersama.app.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_menguji_pager.*
 import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_carousel_debat.*
 import kotlinx.android.synthetic.main.layout_debat_list.*
-import kotlinx.android.synthetic.main.layout_menguji_fabs.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
 class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
@@ -74,7 +69,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
 
     private fun setupBanner() {
         banner_background.setImageResource(R.drawable.ic_background_base_yellow)
-        iv_banner_close.setOnClickListener { rl_banner_container.visibleIf(false) }
+        iv_banner_close.setOnClickListener { hideBanner() }
     }
 
     private fun setupCarousel() {
@@ -125,8 +120,16 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {
+        rl_banner_container.visibleIf(true)
         tv_banner_text.text = bannerInfo.body
         iv_banner_image.loadUrl(bannerInfo.headerImage?.url, R.drawable.ic_dummy_word_stadium)
+        rl_banner_container.setOnClickListener {
+            startActivity(BannerInfoActivity.setIntent(requireContext(), 0, bannerInfo))
+        }
+    }
+
+    override fun hideBanner() {
+        rl_banner_container.visibleIf(false)
     }
 
     override fun showDebatLive(list: List<DebatItem.LiveNow>) {
@@ -147,9 +150,13 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     override fun showLoading() {
+        lottie_loading.enableLottie(true, lottie_loading)
+        swipe_refresh.visibleIf(false)
     }
 
     override fun dismissLoading() {
+        lottie_loading.enableLottie(false, lottie_loading)
+        swipe_refresh.visibleIf(true)
     }
 
     companion object {

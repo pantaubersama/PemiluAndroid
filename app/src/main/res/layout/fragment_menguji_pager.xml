@@ -30,4 +30,6 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <include layout="@layout/layout_loading_state"/>
+
 </FrameLayout>
