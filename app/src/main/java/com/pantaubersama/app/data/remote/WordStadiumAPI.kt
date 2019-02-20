@@ -23,11 +23,11 @@ interface WordStadiumAPI {
     @FormUrlEncoded
     @POST("word_studium/v1/challenges/open")
     fun openChallenge(
-            @Field("Authorization") accessToken:String?,
-            @Field("topic_list") topicList:String?,
-            @Field("statement") statement:String?,
-            @Field("statement_source") statementSource:String?,
-            @Field("show_time_at") showTimeAt:String?,
-            @Field("time_limit") timeLimit:Int
-    ):Completable
+        @Field("Authorization") accessToken: String?,
+        @Field("topic_list") topicList: String?,
+        @Field("statement") statement: String?,
+        @Field("statement_source") statementSource: String?,
+        @Field("show_time_at") showTimeAt: String?,
+        @Field("time_limit") timeLimit: Int
+    ): Completable
 }

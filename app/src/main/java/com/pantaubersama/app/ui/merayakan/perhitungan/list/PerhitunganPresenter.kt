@@ -4,6 +4,7 @@ import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.tps.TPSData
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
 
@@ -19,13 +20,13 @@ class PerhitunganPresenter @Inject constructor(
 //        view?.showLoading()
         val tpses: MutableList<TPSData> = ArrayList()
         tpses.add(
-            TPSData("TPS 001", "DIY", "Sleman", "Moyudan", "Sumberagung", 0)
+            TPSData("TPS 001", "DIY", "Sleman", "Moyudan", "Sumberagung", 0, EMPTY_PROFILE)
         )
         tpses.add(
-            TPSData("TPS 002", "DIY", "Sleman", "Moyudan", "Sumberagung", 1)
+            TPSData("TPS 002", "DIY", "Sleman", "Moyudan", "Sumberagung", 1, EMPTY_PROFILE)
         )
         tpses.add(
-            TPSData("TPS 003", "DIY", "Sleman", "Moyudan", "Sumberagung", 2)
+            TPSData("TPS 003", "DIY", "Sleman", "Moyudan", "Sumberagung", 2, EMPTY_PROFILE)
         )
         view?.dismissLoading()
         view?.bindPerhitungan(tpses)
