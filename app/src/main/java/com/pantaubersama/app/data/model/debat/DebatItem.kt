@@ -4,7 +4,7 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_DEBAT_ITEM
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_HEADER
 
-sealed class DebatItem: ItemModel {
+sealed class DebatItem : ItemModel {
     abstract val debatDetail: DebatDetail
     abstract val type: String
 

@@ -50,7 +50,7 @@ abstract class CommonActivity : AppCompatActivity() {
         }
     }
 
-    protected fun initProgressDialog() {
+    private fun initProgressDialog() {
         progressDialog = ProgressDialog(this).apply {
             setMessage(getString(R.string.txt_mohon_tunggu))
             setCancelable(false)

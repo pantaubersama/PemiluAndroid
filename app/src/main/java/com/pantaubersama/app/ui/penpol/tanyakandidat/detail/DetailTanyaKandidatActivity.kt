@@ -14,15 +14,12 @@ import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
-import com.pantaubersama.app.utils.CopyUtil
-import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.* // ktlint-disable
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_QUESTION_ITEM
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_QUESTION_ID
 import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_ITEM_QUESTION
 import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_ITEM_CHANGED_QUESTION
-import com.pantaubersama.app.utils.ShareUtil
-import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -125,6 +122,11 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
         }
 
         layout_item_tanya_kandidat.visibleIf(true)
+        FacebookEventLogger.logViewedContentEvent(
+            this@DetailTanyaKandidatActivity,
+            PantauConstants.TanyaKandidat.NAME,
+            question.body, question.id
+        )
     }
 
     private fun setUpvoted() {
@@ -199,6 +201,18 @@ class DetailTanyaKandidatActivity : BaseActivity<DetailTanyaKandidatPresenter>()
 
     override fun onItemUpVoted() {
         setItemChangedResult()
+        question?.body?.let {
+            question?.id?.let { it1 ->
+                FacebookEventLogger.logRatedEvent(
+                    this@DetailTanyaKandidatActivity,
+                    PantauConstants.TanyaKandidat.NAME,
+                    it,
+                    it1,
+                    1,
+                    1.0
+                )
+            }
+        }
     }
 
     override fun onFailedUpVoteItem(liked: Boolean) {

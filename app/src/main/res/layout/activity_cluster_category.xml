@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:background="@color/transparant"
+                android:background="@color/transparent"
                 android:fontFamily="@font/lato_italic"
                 android:lineSpacingExtra="12sp"
                 android:hint="@string/hint_cari_kategori"
