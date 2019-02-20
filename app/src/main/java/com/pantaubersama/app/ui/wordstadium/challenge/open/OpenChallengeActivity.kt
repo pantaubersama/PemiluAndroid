@@ -1,7 +1,6 @@
 package com.pantaubersama.app.ui.wordstadium.challenge.open
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -53,13 +52,12 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
     }
 
     override fun showProfile(profile: Profile) {
-        open_challenge_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
-        open_challenge_name.text = profile.name
+        open_challenge_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+        open_challenge_name.text = profile.fullName
         open_challenge_username.text = profile.username
     }
 
     override fun onSuccessOpenChallenge() {
-
     }
 
     fun actionClick() {
@@ -88,24 +86,20 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
                     bid_kajian.visibility = View.VISIBLE
                     bidangKajianDone()
                 }
-
             })
         }
 
         et_pernyataan.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(text: Editable?) {
-
             }
 
             override fun beforeTextChanged(textString: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun onTextChanged(textString: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 var currentLength = textString?.length
                 tv_max_character.text = "$currentLength/160"
             }
-
         })
 
         link_pernyataan.setOnClickListener {

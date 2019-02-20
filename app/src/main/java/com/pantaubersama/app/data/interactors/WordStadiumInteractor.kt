@@ -6,16 +6,16 @@ import io.reactivex.Completable
 import javax.inject.Inject
 
 class WordStadiumInteractor @Inject constructor(
-        private val apiWrapper: APIWrapper,
-        private val rxSchedulers: RxSchedulers
+    private val apiWrapper: APIWrapper,
+    private val rxSchedulers: RxSchedulers
 ) {
     fun openChallenge(
-            token: String?,
-            topicList: String?,
-            statement: String?,
-            statementSource: String?,
-            showTimeAt: String?,
-            timeLimit: Int
+        token: String?,
+        topicList: String?,
+        statement: String?,
+        statementSource: String?,
+        showTimeAt: String?,
+        timeLimit: Int
     ): Completable {
         return apiWrapper
                 .getWordStadiumApi()

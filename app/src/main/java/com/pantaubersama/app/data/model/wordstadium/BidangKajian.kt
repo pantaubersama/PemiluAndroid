@@ -6,9 +6,9 @@ import com.pantaubersama.app.utils.PantauConstants
 import java.io.Serializable
 
 data class BidangKajian(
-        var id: String? = null,
-        @SerializedName("bidang_kajian")
-        var bidangKajian: String? = null
+    var id: String? = null,
+    @SerializedName("bidang_kajian")
+    var bidangKajian: String? = null
 ) : Serializable, ItemModel {
     override fun getType(): Int {
         return PantauConstants.ItemModel.TYPE_BIDANG_KAJIAN
