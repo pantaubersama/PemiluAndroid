@@ -12,6 +12,8 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.tps_user_info_item.*
 
 class TPSAdapter : BaseRecyclerAdapter() {
+    var listener: Listener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return TPSViewHolder(parent.inflate(R.layout.tps_user_info_item))
     }
@@ -27,6 +29,13 @@ class TPSAdapter : BaseRecyclerAdapter() {
             user_cluster.text = item.user.cluster?.name
             tps_number.text = item.name
             tps_address.text = "${item.province}, ${item.district}, ${item.subDistrict}, ${item.village}"
+            itemView.setOnClickListener {
+                listener?.onClickItem(item)
+            }
         }
+    }
+
+    interface Listener {
+        fun onClickItem(item: TPSData)
     }
 }

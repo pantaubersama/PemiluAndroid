@@ -11,6 +11,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.tps.TPSData
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.merayakan.rekapitulasi.detailtps.DetailTPSActivity
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.toDp
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -46,6 +47,11 @@ class TPSListActivity : BaseActivity<TPSListPresenter>(), TPSListView {
 
     private fun setupTPSList() {
         adapter = TPSAdapter()
+        adapter.listener = object : TPSAdapter.Listener {
+            override fun onClickItem(item: TPSData) {
+                DetailTPSActivity.start(this@TPSListActivity)
+            }
+        }
         recycler_view.setPadding(0, 8f.toDp(this@TPSListActivity), 0, 8f.toDp(this@TPSListActivity))
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = adapter
