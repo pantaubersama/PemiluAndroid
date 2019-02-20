@@ -46,6 +46,12 @@ sealed class DebatItem : ItemModel {
         val isDirect: Boolean
             get() = status == Status.DIRECT
 
+        val isDenied: Boolean
+            get() = status == Status.DENIED
+
+        val isExpired: Boolean
+            get() = status == Status.EXPIRED
+
         enum class Status {
             OPEN, DIRECT, DENIED, EXPIRED
         }

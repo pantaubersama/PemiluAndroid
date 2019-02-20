@@ -48,8 +48,12 @@ class DebatListPresenter : BasePresenter<DebatListView>() {
             DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 2,
                 DebatItem.Challenge.Status.OPEN),
             DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 1,
-                DebatItem.Challenge.Status.DIRECT))
-        debatList += debatList + debatList
+                DebatItem.Challenge.Status.DIRECT),
+            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 0,
+                DebatItem.Challenge.Status.DENIED),
+            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 0,
+                DebatItem.Challenge.Status.EXPIRED))
+        debatList += debatList
         view?.showDebatItems(debatList)
     }
 }

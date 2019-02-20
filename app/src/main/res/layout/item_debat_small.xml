@@ -41,6 +41,7 @@
                 tools:src="@drawable/bg_coming_soon" />
 
             <View
+                android:id="@+id/bg_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@drawable/bg_rounded_bottom"

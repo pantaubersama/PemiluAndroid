@@ -41,6 +41,14 @@ class DebatSmallViewHolder(view: View) : DebatViewHolder(view) {
         text_favorite_count.visibleIf(item is DebatItem.Done)
         layout_clap.visibleIf(item is DebatItem.Done)
 
+        val isNotDeniedNorExpired = item !is DebatItem.Challenge || (!item.isDenied && !item.isExpired)
+        imageAvatar2.visibleIf(isNotDeniedNorExpired, true)
+        text_versus.visibleIf(isNotDeniedNorExpired)
+        bg_bottom.setBackgroundResource(if (isNotDeniedNorExpired)
+            R.drawable.bg_rounded_bottom else R.drawable.bg_rounded_bottom_fill_gray)
+        text_status.setTextColor(itemView.context.color(if (isNotDeniedNorExpired)
+            R.color.gray_4 else R.color.red_2))
+
         when (item) {
             is DebatItem.LiveNow -> text_status.text = "Live Selama 20 Menit"
             is DebatItem.ComingSoon -> text_status.text = "${item.date}  •  ${item.startEndTime}"
@@ -50,8 +58,12 @@ class DebatSmallViewHolder(view: View) : DebatViewHolder(view) {
                 text_favorite_count.text = item.favoriteCount.toString()
             }
             is DebatItem.Challenge -> {
-                text_status.text = if (item.pendingOpponent > 0)
-                    "Menunggu Konfirmasi" else "Menunggu Lawan Debat"
+                text_status.text = when {
+                    item.isDenied -> "Lawan Menolak Tantangan"
+                    item.isExpired -> "Tantangan Melebihi Batas Waktu"
+                    item.pendingOpponent > 0 -> "Menunggu Konfirmasi"
+                    else -> "Menunggu Lawan Debat"
+                }
             }
         }
     }
