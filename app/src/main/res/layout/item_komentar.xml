@@ -12,6 +12,7 @@
         android:id="@+id/iv_komentar_avatar"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_avatar_placeholder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

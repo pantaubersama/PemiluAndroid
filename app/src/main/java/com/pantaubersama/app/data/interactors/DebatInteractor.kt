@@ -7,7 +7,7 @@ import com.pantaubersama.app.data.model.image.Medium
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Single
-import java.util.*
+import java.util.Random
 import javax.inject.Inject
 
 /**
@@ -29,8 +29,7 @@ class DebatInteractor @Inject constructor(
     fun getKomentar(): Single<MutableList<Komentar>> {
         val komentarList: MutableList<Komentar> = ArrayList()
         for (i in 1..15) {
-            val komentar = Komentar("komentar-id-$i", "terlalu membawa subjektifitas yang tidak bisa dipakai buat diskusi yang membangun. saya tandai orang itu.", "${16-i} menit yang lalu"
-                , Profile(fullName = "Netizen $i", avatar = Image(medium = Medium("https://via.placeholder.com/120/${Random().nextInt(256)}/fff?text=N$i"))))
+            val komentar = Komentar("komentar-id-$i", "terlalu membawa subjektifitas yang tidak bisa dipakai buat diskusi yang membangun. saya tandai orang itu.", "${16 - i} menit yang lalu", Profile(fullName = "Netizen $i", avatar = Image(medium = Medium("https://via.placeholder.com/120/${Random().nextInt(256)}/fff?text=N$i"))))
             komentarList.add(komentar)
         }
         return Single.fromCallable { komentarList }.subscribeOn(rxSchedulers.io()).observeOn(rxSchedulers.mainThread())

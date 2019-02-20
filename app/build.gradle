@@ -126,6 +126,7 @@ dependencies {
     implementation dots_indicator
     implementation slidingUpPanel
     implementation keyboardVisibilityEvent
+    implementation jumpingbeans
     implementation "com.orhanobut:logger:2.2.0"
     kapt daggerCompiler
     testImplementation unitTestLibs

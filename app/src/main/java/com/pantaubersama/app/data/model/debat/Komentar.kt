@@ -12,6 +12,6 @@ data class Komentar(
     val content: String,
     val createdAt: String,
     val user: Profile
-): ItemModel {
+) : ItemModel {
     override fun getType(): Int = TYPE_KOMENTAR_ITEM
 }

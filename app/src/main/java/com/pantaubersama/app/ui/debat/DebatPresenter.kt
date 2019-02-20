@@ -35,7 +35,6 @@ class DebatPresenter @Inject constructor(
                     view?.showKomentar(it)
                 },
                 {
-
                 }
             )
         )
