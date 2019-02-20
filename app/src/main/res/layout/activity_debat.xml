@@ -1,74 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:focusableInTouchMode="true"
+    sothree:umanoPanelHeight="0dp"
+    sothree:umanoShadowHeight="0dp"
+    sothree:umanoDragView="@+id/layout_komentar_debat"
+    sothree:umanoScrollableView="@+id/recycler_view_komentar"
+    sothree:umanoOverlay="true"
     tools:context="com.pantaubersama.app.ui.debat.DebatActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:fitsSystemWindows="true">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="?actionBarSize"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:titleEnabled="false">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_header_debat_live_now"
+                    android:paddingTop="?actionBarSize">
+
+                    <include
+                        layout="@layout/layout_header_detail_debat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/toolbar"/>
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/purple_4"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textAlignment="center"
+                        android:layout_below="@id/cl_header"
+                        android:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%. 2 periode yuk, biar 10,54%."
+                        android:textColor="@color/white"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_toolbar_debat"/>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <include layout="@layout/layout_status_debat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minHeight="?actionBarSize"
-            android:fitsSystemWindows="true"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:titleEnabled="false">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_header_debat_live_now"
-                android:paddingTop="?actionBarSize">
+        </androidx.recyclerview.widget.RecyclerView>
 
-                <include
-                    layout="@layout/layout_header_detail_debat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/toolbar"/>
-
-                <TextView
-                    android:id="@+id/tv_title"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/purple_4"
-                    android:paddingTop="9dp"
-                    android:paddingBottom="9dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textAlignment="center"
-                    android:layout_below="@id/cl_header"
-                    android:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%. 2 periode yuk, biar 10,54%."
-                    android:textColor="@color/white"
-                    android:textSize="12sp"/>
-
-            </LinearLayout>
-
-            <include layout="@layout/layout_toolbar_debat"/>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-        <include layout="@layout/layout_status_debat"
+        <include
+            android:id="@+id/layout_box_komentar_main"
+            layout="@layout/layout_box_komentar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <include
+        android:id="@+id/layout_komentar_debat"
+        layout="@layout/layout_komentar_debat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_marginTop="?actionBarSize"/>
 
-    </androidx.recyclerview.widget.RecyclerView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

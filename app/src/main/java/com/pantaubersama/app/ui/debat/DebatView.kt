@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.debat
 
 import com.pantaubersama.app.base.BaseView
+import com.pantaubersama.app.data.model.debat.Komentar
 import com.pantaubersama.app.data.model.debat.Message
 
 /**
@@ -9,4 +10,8 @@ import com.pantaubersama.app.data.model.debat.Message
 
 interface DebatView : BaseView {
     fun showMessage(messageList: MutableList<Message>)
+
+    fun showKomentar(komentarList: MutableList<Komentar>)
+    fun showLoadingKomentar()
+    fun dismissLoadingKomentar()
 }

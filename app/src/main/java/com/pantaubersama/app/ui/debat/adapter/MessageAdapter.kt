@@ -11,7 +11,6 @@ import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_TYPE_RIGHT_SI
 import com.pantaubersama.app.utils.extensions.isOdd
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_message_left_side.*
-import timber.log.Timber
 
 /**
  * @author edityomurti on 14/02/2019 22:26
@@ -46,6 +45,7 @@ class MessageAdapter : SortedAdapter<Message>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             MESSAGE_TYPE_LEFT_SIDE -> MessageViewholder(getView(parent, viewType))
+            MESSAGE_TYPE_RIGHT_SIDE -> MessageViewholder(getView(parent, viewType))
             else -> MessageViewholder(getView(parent, viewType))
         }
     }
@@ -57,15 +57,11 @@ class MessageAdapter : SortedAdapter<Message>() {
     inner class MessageViewholder(override val containerView: View)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: Message) {
-//            for ()
-            Timber.d("bind getData pos : ${getData(adapterPosition)}")
-            Timber.d("bind pos : $adapterPosition")
-
             tv_content.text = item.body
             tv_clap_count.text = item.likedCount.toString()
 
             if (item.isLiked) {
-                iv_clap.setImageResource(R.drawable.ic_appreciate_pressed_yellow)
+                iv_clap.setImageResource(R.drawable.ic_clap)
             } else {
                 iv_clap.setImageResource(R.drawable.ic_appreciate_default)
             }
