@@ -169,6 +169,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     private fun setupLayoutBehaviour() {
         var isMainToolbarShown = true
         var isKeyboardShown = false
+        var isAppbarExpanded = true
 
         et_comment_main = layout_box_komentar_main.findViewById(R.id.et_comment)
         et_comment_in = layout_komentar_debat.findViewById(R.id.et_comment)
@@ -203,6 +204,34 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
                     tv_toolbar_title.text = getString(R.string.live_now)
                     tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_debat_live, 0, 0, 0)
+                }
+            }
+        })
+
+        app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            appBarLayout?.totalScrollRange?.let {
+                isAppbarExpanded = Math.abs(verticalOffset) - it != 0
+            }
+        })
+
+        fab_scroll_to_bottom.setOnClickListener {
+            if (isAppbarExpanded) {
+                app_bar.setExpanded(false)
+            }
+            recycler_view.smoothScrollToPosition(messageAdapter.itemCount - 1)
+            fab_scroll_to_bottom.hide()
+        }
+
+        recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    fab_scroll_to_bottom.hide()
+                } else {
+                    if (!fab_scroll_to_bottom.isShown) {
+                        fab_scroll_to_bottom.show()
+                    }
                 }
             }
         })
