@@ -42,7 +42,6 @@ class DebatSmallViewHolder(view: View) : DebatViewHolder(view) {
         layout_clap.visibleIf(item is DebatItem.Done)
 
         val isNotDeniedNorExpired = item !is DebatItem.Challenge || (!item.isDenied && !item.isExpired)
-        imageAvatar2.visibleIf(isNotDeniedNorExpired, true)
         text_versus.visibleIf(isNotDeniedNorExpired)
         bg_bottom.setBackgroundResource(if (isNotDeniedNorExpired)
             R.drawable.bg_rounded_bottom else R.drawable.bg_rounded_bottom_fill_gray)

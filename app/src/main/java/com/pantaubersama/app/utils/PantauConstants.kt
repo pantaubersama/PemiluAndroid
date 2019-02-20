@@ -169,13 +169,13 @@ class PantauConstants {
 
         object Title {
             const val PUBLIK_LIVE_NOW = "Live now"
-            const val PUBLIK_COMING_SOON = "Debat: Coming soon"
+            const val PUBLIK_COMING_SOON = "Debat: Coming Soon"
             const val PUBLIK_DONE = "Debat: Done"
             const val PUBLIK_CHALLENGE = "Challenge"
-            const val PERSONAL_CHALLENGE_IN_PROGRESS = "Challenge in progress"
-            const val PERSONAL_COMING_SOON = "My debat: Coming soon"
-            const val PERSONAL_DONE = "My debat: Done"
-            const val PERSONAL_CHALLENGE = "My challenge"
+            const val PERSONAL_CHALLENGE_IN_PROGRESS = "Challenge in Progress"
+            const val PERSONAL_COMING_SOON = "My Debat: Coming Soon"
+            const val PERSONAL_DONE = "My Debat: Done"
+            const val PERSONAL_CHALLENGE = "My Challenge"
         }
     }
 
