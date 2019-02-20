@@ -26,7 +26,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.merayakan.rekapitulasi.detailtps.DetailTPSActivity"></activity>
+        <activity android:name=".ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity"></activity>
+        <activity android:name=".ui.merayakan.rekapitulasi.detailtps.DetailTPSActivity" />
         <activity android:name=".ui.merayakan.rekapitulasi.tpslist.TPSListActivity" />
         <activity android:name=".ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerahActivity" />
         <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprdkabupaten.PerhitunganDPRDKabupatenActivity" />

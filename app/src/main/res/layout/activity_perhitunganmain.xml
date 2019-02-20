@@ -365,6 +365,7 @@
                     android:layout_marginTop="36dp"/>
 
                 <LinearLayout
+                    android:id="@+id/upload_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="24dp"

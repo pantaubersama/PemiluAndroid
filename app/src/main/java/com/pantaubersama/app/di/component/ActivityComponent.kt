@@ -19,10 +19,12 @@ import com.pantaubersama.app.ui.menguji.home.MengujiPagerFragment
 import com.pantaubersama.app.ui.menjaga.filter.LaporFilterActivity
 import com.pantaubersama.app.ui.menjaga.filter.partiesdialog.PartiesDialog
 import com.pantaubersama.app.ui.menjaga.lapor.LaporFragment
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdkabupaten.PerhitunganDPRDKabupatenActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdprovinsi.PerhitunganDPRDProvinsiActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.list.PerhitunganFragment
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.home.RekapitulasiFragment
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerahActivity
@@ -158,4 +160,6 @@ interface ActivityComponent {
     fun inject(rekapitulasiProvinsiActivity: RekapitulasiDaerahActivity)
     fun inject(tpsListActivity: TPSListActivity)
     fun inject(detailTPSActivity: DetailTPSActivity)
+    fun inject(uploadDocumentActivity: UploadDocumentActivity)
+    fun inject(perhitunganMainActivity: PerhitunganMainActivity)
 }

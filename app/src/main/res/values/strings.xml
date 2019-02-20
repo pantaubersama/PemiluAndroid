@@ -372,4 +372,5 @@
     <string name="rekapitulasi_footer_hint">Buka di web.pantaubersama.com Untuk penyajian data yang lebih lengkap, hingga ke perhitungan Legislatif</string>
     <string name="votes_count_hint">Pengguna telah berpartisipasi merayakan peritungan melalui Pantau Bersama Pemilu 2019.</string>
     <string name="close_action">Close</string>
+    <string name="upload_document_hint">Unggah data langsung dari kamera atau pilih dari galeri perangkat kamu.</string>
 </resources>
