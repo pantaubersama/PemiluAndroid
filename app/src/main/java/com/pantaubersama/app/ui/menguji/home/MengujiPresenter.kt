@@ -2,7 +2,6 @@ package com.pantaubersama.app.ui.menguji.home
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
-import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.debat.DebatDetail
 import com.pantaubersama.app.data.model.debat.DebatItem
 import com.pantaubersama.app.utils.PantauConstants
@@ -53,9 +52,9 @@ class MengujiPresenter @Inject constructor(
 
     fun getDebatOpen() {
         val debatList = listOf(
-            DebatItem.Open(DebatDetail("Raja Kampreta", "", "ekonomi"), 0, false),
-            DebatItem.Open(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 1, true),
-            DebatItem.Open(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 2, true))
+            DebatItem.Challenge(DebatDetail("Raja Kampreta", "", "ekonomi"), 0, DebatItem.Challenge.Status.OPEN),
+            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 1, DebatItem.Challenge.Status.OPEN),
+            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 2, DebatItem.Challenge.Status.OPEN))
         view?.showDebatOpen(debatList)
     }
 }

@@ -26,7 +26,7 @@ class DebatBigViewHolder(view: View) : DebatViewHolder(view) {
 
         val bgImage = when (item) {
             is DebatItem.LiveNow -> R.drawable.bg_debat_live
-            is DebatItem.Open -> R.drawable.bg_debat_open
+            is DebatItem.Challenge -> R.drawable.bg_debat_open
             else -> 0
         }
         val colorRes = if (item is DebatItem.LiveNow) R.color.black_1 else R.color.gray_4
@@ -36,7 +36,7 @@ class DebatBigViewHolder(view: View) : DebatViewHolder(view) {
         textName2.setTextColor(itemView.context.color(colorRes))
 
         when (item) {
-            is DebatItem.Open -> {
+            is DebatItem.Challenge -> {
                 textName2.text = if (item.pendingOpponent > 0)
                     "Waiting for confirmation" else "Waiting for opponent"
             }

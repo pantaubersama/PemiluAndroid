@@ -4,7 +4,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.extensions.LayoutContainer
 
@@ -25,19 +27,21 @@ abstract class DebatViewHolder(override val containerView: View)
         textName2.text = item.debatDetail.name2
         textTag.text = item.debatDetail.tag
 
-        imageAvatar2.visibleIf(item !is DebatItem.Open || item.pendingOpponent > 0, true)
+        textDebatType.setTextColor(containerView.context.color(
+            if (item is DebatItem.Challenge && item.isDirect) R.color.black_2 else R.color.white))
+        imageAvatar2.visibleIf(item !is DebatItem.Challenge || item.pendingOpponent > 0, true)
 
         setupOpponentCount(item)
     }
 
     private fun setupOpponentCount(item: DebatItem) {
-        val count = if (item is DebatItem.Open) when {
+        val count = if (item is DebatItem.Challenge) when {
             item.pendingOpponent == 1 -> "?"
             item.pendingOpponent > 1 -> item.pendingOpponent.toString()
             else -> null
         } else null
 
         textOpponentCount.text = count
-        textOpponentCount.visibleIf(item is DebatItem.Open && item.pendingOpponent > 0)
+        textOpponentCount.visibleIf(item is DebatItem.Challenge && item.pendingOpponent > 0)
     }
 }

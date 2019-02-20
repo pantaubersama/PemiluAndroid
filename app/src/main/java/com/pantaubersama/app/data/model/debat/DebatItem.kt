@@ -31,12 +31,24 @@ sealed class DebatItem : ItemModel {
         override val type: String = "DONE"
     }
 
-    data class Open(
+    data class Challenge(
         override val debatDetail: DebatDetail,
         val pendingOpponent: Int,
-        val isMyDebat: Boolean
+        val status: Status
     ) : DebatItem() {
-        override val type: String = "OPEN CHALLENGE"
+        override val type: String = when (status) {
+            Status.OPEN -> "OPEN CHALLENGE"
+            Status.DIRECT -> "DIRECT CHALLENGE"
+            Status.DENIED -> "DENIED"
+            Status.EXPIRED -> "EXPIRED"
+        }
+
+        val isDirect: Boolean
+            get() = status == Status.DIRECT
+
+        enum class Status {
+            OPEN, DIRECT, DENIED, EXPIRED
+        }
     }
 }
 

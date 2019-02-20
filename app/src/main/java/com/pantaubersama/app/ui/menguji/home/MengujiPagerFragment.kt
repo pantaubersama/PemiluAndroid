@@ -144,7 +144,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         debatDoneAdapter.debatItems = list
     }
 
-    override fun showDebatOpen(list: List<DebatItem.Open>) {
+    override fun showDebatOpen(list: List<DebatItem.Challenge>) {
         if (!isPublik) debatCarouselAdapter.debatItems = list
         debatOpenAdapter.debatItems = list
     }
