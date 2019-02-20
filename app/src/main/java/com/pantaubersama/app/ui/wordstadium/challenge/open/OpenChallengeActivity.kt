@@ -52,8 +52,8 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
     }
 
     override fun showProfile(profile: Profile) {
-        open_challenge_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
-        open_challenge_name.text = profile.name
+        open_challenge_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+        open_challenge_name.text = profile.fullName
         open_challenge_username.text = profile.username
     }
 

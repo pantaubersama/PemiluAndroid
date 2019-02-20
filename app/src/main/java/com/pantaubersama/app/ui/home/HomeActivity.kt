@@ -165,7 +165,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     }
 
     override fun onSuccessLoadUser(profile: Profile) {
-        iv_user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
+        iv_user_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
         if (profile != EMPTY_PROFILE) {
             iv_user_avatar.setOnClickListener {
                 val intent = Intent(this@HomeActivity, ProfileActivity::class.java)

@@ -26,7 +26,7 @@ data class AchievedBadgeData(
 data class AchievedBadge(
     @SerializedName("achieved_id") val achievedId: String,
     @SerializedName("badge") val badge: Badge,
-    @SerializedName("user") val user: User
+    @SerializedName("user") val user: Profile
 ) : Serializable
 
 data class Badge(
