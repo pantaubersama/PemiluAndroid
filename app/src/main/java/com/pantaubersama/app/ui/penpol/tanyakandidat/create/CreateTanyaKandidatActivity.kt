@@ -86,7 +86,7 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 
     override fun bindProfileData(profile: Profile?) {
         iv_user_avatar.loadUrl(profile?.avatar?.thumbnail?.url, R.drawable.ic_avatar_placeholder)
-        tv_user_name.text = profile?.name
+        tv_user_name.text = profile?.fullName
     }
 
     override fun showEmptyQuestionAlert() {

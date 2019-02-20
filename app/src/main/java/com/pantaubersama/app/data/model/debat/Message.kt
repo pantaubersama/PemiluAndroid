@@ -1,7 +1,7 @@
 package com.pantaubersama.app.data.model.debat
 
 import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.data.model.user.User
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_TYPE_LEFT_SIDE
 
 /**
@@ -11,7 +11,7 @@ import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_TYPE_LEFT_SID
 data class Message(
     val id: String,
     val body: String,
-    val sender: User,
+    val sender: Profile,
     var isLiked: Boolean,
     var likedCount: Int,
     var createdAt: Long

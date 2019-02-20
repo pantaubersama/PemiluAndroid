@@ -30,8 +30,8 @@ class PersonAdapter : BaseRecyclerAdapter() {
 
     inner class PersonViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(profile: Profile) {
-            person_avatar.loadUrl(profile.avatar.thumbnail?.url)
-            person_name.text = profile.name
+            person_avatar.loadUrl(profile.avatar?.thumbnail?.url)
+            person_name.text = profile.fullName
             person_username.text = profile.username
             itemView.setOnClickListener {
                 listener?.onClickItem(profile)

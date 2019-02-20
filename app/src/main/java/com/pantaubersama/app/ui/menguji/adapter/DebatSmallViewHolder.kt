@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.item_debat_small.*
 
@@ -25,26 +26,43 @@ class DebatSmallViewHolder(view: View) : DebatViewHolder(view) {
             is DebatItem.LiveNow -> R.drawable.bg_debat_live
             is DebatItem.ComingSoon -> R.drawable.bg_coming_soon
             is DebatItem.Done -> R.drawable.bg_done
-            is DebatItem.Open -> R.drawable.bg_challenge
+            is DebatItem.Challenge -> R.drawable.bg_challenge
         }
+        val vsBgImage = if (item is DebatItem.Challenge && item.isDirect)
+            R.drawable.bg_versus_fill_yellow else R.drawable.bg_versus_outline_gray
+        val vsTextColor = containerView.context.color(
+            if (item is DebatItem.Challenge && item.isDirect) R.color.white else R.color.yellow)
 
         bg_carousel_item.setImageResource(bgImage)
+        text_versus.setBackgroundResource(vsBgImage)
+        text_versus.setTextColor(vsTextColor)
         icon_debat_type.visibleIf(item is DebatItem.LiveNow)
         text_status.visibleIf(item !is DebatItem.Done)
         text_favorite_count.visibleIf(item is DebatItem.Done)
         layout_clap.visibleIf(item is DebatItem.Done)
 
+        val isNotDeniedNorExpired = item !is DebatItem.Challenge || (!item.isDenied && !item.isExpired)
+        text_versus.visibleIf(isNotDeniedNorExpired)
+        bg_bottom.setBackgroundResource(if (isNotDeniedNorExpired)
+            R.drawable.bg_rounded_bottom else R.drawable.bg_rounded_bottom_fill_gray)
+        text_status.setTextColor(itemView.context.color(if (isNotDeniedNorExpired)
+            R.color.gray_4 else R.color.red_2))
+
         when (item) {
-            is DebatItem.LiveNow -> text_status.text = "Live selama 20 menit"
+            is DebatItem.LiveNow -> text_status.text = "Live Selama 20 Menit"
             is DebatItem.ComingSoon -> text_status.text = "${item.date}  •  ${item.startEndTime}"
             is DebatItem.Done -> {
                 text_clap_1.text = item.clap1.toString()
                 text_clap_2.text = item.clap2.toString()
                 text_favorite_count.text = item.favoriteCount.toString()
             }
-            is DebatItem.Open -> {
-                text_status.text = if (item.pendingOpponent > 0)
-                    "Waiting for confirmation" else "Waiting for opponent"
+            is DebatItem.Challenge -> {
+                text_status.text = when {
+                    item.isDenied -> "Lawan Menolak Tantangan"
+                    item.isExpired -> "Tantangan Melebihi Batas Waktu"
+                    item.pendingOpponent > 0 -> "Menunggu Konfirmasi"
+                    else -> "Menunggu Lawan Debat"
+                }
             }
         }
     }

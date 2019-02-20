@@ -47,7 +47,8 @@ Coba pilih prakiraan waktu yang memungkinkan kamu dan lawan debatmu sama-sama te
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/info_bidang_kajian_go"
+        android:id="@+id/go_it"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"

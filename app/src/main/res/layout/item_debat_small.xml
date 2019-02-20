@@ -41,39 +41,47 @@
                 tools:src="@drawable/bg_coming_soon" />
 
             <View
+                android:id="@+id/bg_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@drawable/bg_rounded_bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bg_carousel_item" />
 
-            <ImageView
-                android:id="@+id/icon_debat_type"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginEnd="2dp"
-                android:src="@drawable/ic_debat_live"
-                app:layout_constraintBottom_toBottomOf="@id/bg_carousel_item"
-                app:layout_constraintEnd_toStartOf="@id/text_debat_type"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toEndOf="@id/image_avatar_1"
-                app:layout_constraintTop_toTopOf="@id/bg_carousel_item"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/text_debat_type"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layout_debat_type"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
-                android:gravity="center_horizontal"
-                android:includeFontPadding="false"
-                android:textColor="@color/white"
-                android:textSize="10sp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="@id/bg_carousel_item"
                 app:layout_constraintEnd_toStartOf="@id/image_avatar_2"
-                app:layout_constraintStart_toEndOf="@id/icon_debat_type"
+                app:layout_constraintStart_toEndOf="@id/image_avatar_1"
                 app:layout_constraintTop_toTopOf="@id/bg_carousel_item"
-                tools:text="COMING SOON" />
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:id="@+id/icon_debat_type"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="4dp"
+                    android:src="@drawable/ic_debat_live"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/text_debat_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="center_horizontal"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    app:autoSizeTextType="none"
+                    tools:text="COMING SOON" />
+
+            </LinearLayout>
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/image_avatar_1"
@@ -83,6 +91,7 @@
                 android:layout_marginBottom="4dp"
                 android:src="@drawable/ava_calon_1"
                 app:layout_constraintBottom_toTopOf="@id/text_name_1"
+                app:layout_constraintEnd_toStartOf="@id/layout_debat_type"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.9"
@@ -110,11 +119,11 @@
                 android:id="@+id/text_versus"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:background="@drawable/bg_versus"
+                android:background="@drawable/bg_versus_outline_gray"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="center_horizontal"
                 android:includeFontPadding="false"
-                android:paddingTop="4dp"
+                android:paddingTop="2dp"
                 android:text="VS"
                 android:textColor="@color/yellow"
                 android:textSize="10sp"
@@ -130,6 +139,7 @@
                 android:layout_marginBottom="4dp"
                 android:src="@drawable/ava_calon_2"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/layout_debat_type"
                 app:layout_constraintTop_toTopOf="@id/image_avatar_1"
                 app:riv_border_color="@color/white"
                 app:riv_border_width="1dp"

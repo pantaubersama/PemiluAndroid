@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fab_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_gravity="bottom">
 
-    <TextView
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#b2111111"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/label_challenge"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:background="@drawable/bg_rounded_16dp_white"
         android:fontFamily="@font/lato_bold"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:letterSpacing="0"
         android:text="Challenge"
+        android:textAllCaps="false"
         android:textColor="@color/black_2"
         android:textSize="11sp"
         android:visibility="invisible"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="@id/fab_challenge"
         app:layout_constraintEnd_toEndOf="@id/label_create"
-        app:layout_constraintTop_toTopOf="@id/fab_challenge" />
+        app:layout_constraintTop_toTopOf="@id/fab_challenge"
+        app:rippleColor="@color/gray" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_challenge"
@@ -38,23 +50,26 @@
         app:maxImageSize="16dp"
         app:tint="@color/white" />
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/label_done"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:background="@drawable/bg_rounded_16dp_white"
         android:fontFamily="@font/lato_bold"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:letterSpacing="0"
         android:text="Debat Done"
+        android:textAllCaps="false"
         android:textColor="@color/black_2"
         android:textSize="11sp"
         android:visibility="invisible"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="@id/fab_done"
         app:layout_constraintEnd_toEndOf="@id/label_create"
-        app:layout_constraintTop_toTopOf="@id/fab_done" />
+        app:layout_constraintTop_toTopOf="@id/fab_done"
+        app:rippleColor="@color/gray" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_done"
@@ -70,23 +85,26 @@
         app:maxImageSize="16dp"
         app:tint="@color/white" />
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/label_coming"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:background="@drawable/bg_rounded_16dp_white"
         android:fontFamily="@font/lato_bold"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:letterSpacing="0"
         android:text="Coming Soon"
+        android:textAllCaps="false"
         android:textColor="@color/black_2"
         android:textSize="11sp"
         android:visibility="invisible"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="@id/fab_coming"
         app:layout_constraintEnd_toEndOf="@id/label_create"
-        app:layout_constraintTop_toTopOf="@id/fab_coming" />
+        app:layout_constraintTop_toTopOf="@id/fab_coming"
+        app:rippleColor="@color/gray" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_coming"
@@ -102,23 +120,26 @@
         app:maxImageSize="16dp"
         app:tint="@color/white" />
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/label_live"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:background="@drawable/bg_rounded_16dp_white"
         android:fontFamily="@font/lato_bold"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:letterSpacing="0"
         android:text="Debat Live"
+        android:textAllCaps="false"
         android:textColor="@color/black_2"
         android:textSize="11sp"
         android:visibility="invisible"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="@id/fab_live"
         app:layout_constraintEnd_toEndOf="@id/label_create"
-        app:layout_constraintTop_toTopOf="@id/fab_live" />
+        app:layout_constraintTop_toTopOf="@id/fab_live"
+        app:rippleColor="@color/gray" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_live"
@@ -135,24 +156,27 @@
         app:maxImageSize="16dp"
         app:tint="@color/white" />
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/label_create"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/bg_rounded_16dp_white"
         android:fontFamily="@font/lato_bold"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:letterSpacing="0"
         android:text="Buat Tantangan"
+        android:textAllCaps="false"
         android:textColor="@color/black_2"
         android:textSize="11sp"
         android:visibility="invisible"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="@id/fab_create"
         app:layout_constraintEnd_toStartOf="@id/fab_create"
-        app:layout_constraintTop_toTopOf="@id/fab_create" />
+        app:layout_constraintTop_toTopOf="@id/fab_create"
+        app:rippleColor="@color/gray" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_create"
@@ -166,6 +190,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="36dp"
         app:tint="@color/white" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

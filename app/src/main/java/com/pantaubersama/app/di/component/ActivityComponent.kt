@@ -65,6 +65,8 @@ import com.pantaubersama.app.ui.search.person.filter.FilterOrangActivity
 import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
 import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
+import com.pantaubersama.app.ui.wordstadium.challenge.open.BidangKajianDialog
+import com.pantaubersama.app.ui.wordstadium.challenge.open.OpenChallengeActivity
 import dagger.Subcomponent
 
 /**
@@ -135,5 +137,7 @@ interface ActivityComponent {
     fun inject(partiesDialog: PartiesDialog)
     fun inject(notifActivity: NotifActivity)
     fun inject(mengujiPagerFragment: MengujiPagerFragment)
+    fun inject(openChallengeActivity: OpenChallengeActivity)
+    fun inject(kajianDialog: BidangKajianDialog)
     fun inject(debatActivity: DebatActivity)
 }
