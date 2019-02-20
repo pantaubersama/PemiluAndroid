@@ -41,10 +41,19 @@ class DebatListPresenter : BasePresenter<DebatListView>() {
 
     fun getDebatOpen() {
         var debatList = listOf(
-            DebatItem.Open(DebatDetail("Raja Kampreta", "", "ekonomi"), 0, false),
-            DebatItem.Open(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 1, true),
-            DebatItem.Open(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 2, true))
-        debatList += debatList + debatList
+            DebatItem.Challenge(DebatDetail("Raja Kampreta", "", "ekonomi"), 0,
+                DebatItem.Challenge.Status.OPEN),
+            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 1,
+                DebatItem.Challenge.Status.OPEN),
+            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 2,
+                DebatItem.Challenge.Status.OPEN),
+            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 1,
+                DebatItem.Challenge.Status.DIRECT),
+            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 0,
+                DebatItem.Challenge.Status.DENIED),
+            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 0,
+                DebatItem.Challenge.Status.EXPIRED))
+        debatList += debatList
         view?.showDebatItems(debatList)
     }
 }

@@ -21,6 +21,7 @@ class PantauConstants {
         const val BANNER_TANYA = "tanya"
         const val BANNER_KUIS = "kuis"
         const val BANNER_LAPOR = "lapor"
+        const val BANNER_DEBAT = "debat"
         const val URL = "url"
         val PROFILE_COMPLETION = "profile_completion"
         val FILTER_ORANG_ALL = "verified_all"
@@ -168,13 +169,13 @@ class PantauConstants {
 
         object Title {
             const val PUBLIK_LIVE_NOW = "Live now"
-            const val PUBLIK_COMING_SOON = "Debat: Coming soon"
+            const val PUBLIK_COMING_SOON = "Debat: Coming Soon"
             const val PUBLIK_DONE = "Debat: Done"
             const val PUBLIK_CHALLENGE = "Challenge"
-            const val PERSONAL_CHALLENGE_IN_PROGRESS = "Challenge in progress"
-            const val PERSONAL_COMING_SOON = "My debat: Coming soon"
-            const val PERSONAL_DONE = "My debat: Done"
-            const val PERSONAL_CHALLENGE = "My challenge"
+            const val PERSONAL_CHALLENGE_IN_PROGRESS = "Challenge in Progress"
+            const val PERSONAL_COMING_SOON = "My Debat: Coming Soon"
+            const val PERSONAL_DONE = "My Debat: Done"
+            const val PERSONAL_CHALLENGE = "My Challenge"
         }
     }
 

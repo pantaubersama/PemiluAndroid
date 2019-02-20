@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.menguji.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -9,9 +8,9 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.debat.DebatItem
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.menguji.adapter.BriefDebatAdapter
 import com.pantaubersama.app.ui.menguji.list.DebatListActivity
-import com.pantaubersama.app.ui.wordstadium.challenge.CreateChallengeActivity
 import com.pantaubersama.app.utils.OffsetItemDecoration
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PERSONAL_CHALLENGE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PERSONAL_CHALLENGE_IN_PROGRESS
@@ -21,16 +20,12 @@ import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_CHALLENGE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_COMING_SOON
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_DONE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_LIVE_NOW
-import com.pantaubersama.app.utils.extensions.dip
-import com.pantaubersama.app.utils.extensions.loadUrl
-import com.pantaubersama.app.utils.extensions.unSyncLazy
-import com.pantaubersama.app.utils.extensions.visibleIf
-import io.reactivex.disposables.Disposable
+import com.pantaubersama.app.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_menguji_pager.*
 import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_carousel_debat.*
 import kotlinx.android.synthetic.main.layout_debat_list.*
-import kotlinx.android.synthetic.main.layout_menguji_fabs.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
 class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
@@ -45,9 +40,6 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     private val debatDoneAdapter by unSyncLazy { BriefDebatAdapter(false) }
     private val debatOpenAdapter by unSyncLazy { BriefDebatAdapter(false) }
 
-    private lateinit var fabAnimationDelegate: FabAnimationDelegate
-    private var animationDisposable: Disposable? = null
-
     override fun setLayout(): Int = R.layout.fragment_menguji_pager
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -60,7 +52,6 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
             refreshList()
         }
 
-        setupFab()
         setupBanner()
         setupCarousel()
         setupTimeline()
@@ -76,38 +67,9 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         presenter.getDebatOpen()
     }
 
-    private fun setupFab() {
-        fabAnimationDelegate = FabAnimationDelegate(fab_container, overlay)
-        fab_create.setOnClickListener {
-            if (fabAnimationDelegate.isCollapsed) {
-                animationDisposable = fabAnimationDelegate.expand()
-            } else {
-                animationDisposable = fabAnimationDelegate.collapse()
-                startActivity(Intent(requireContext(), CreateChallengeActivity::class.java))
-            }
-        }
-        overlay.setOnClickListener { animationDisposable = fabAnimationDelegate.collapse() }
-        fab_challenge.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.collapse()
-            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_CHALLENGE else PERSONAL_CHALLENGE)
-        }
-        fab_done.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.collapse()
-            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_DONE else PERSONAL_DONE)
-        }
-        fab_coming.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.collapse()
-            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_COMING_SOON else PERSONAL_COMING_SOON)
-        }
-        fab_live.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.collapse()
-            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_LIVE_NOW else PERSONAL_CHALLENGE_IN_PROGRESS)
-        }
-    }
-
     private fun setupBanner() {
         banner_background.setImageResource(R.drawable.ic_background_base_yellow)
-        iv_banner_close.setOnClickListener { rl_banner_container.visibleIf(false) }
+        iv_banner_close.setOnClickListener { hideBanner() }
     }
 
     private fun setupCarousel() {
@@ -158,8 +120,16 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {
+        rl_banner_container.visibleIf(true)
         tv_banner_text.text = bannerInfo.body
         iv_banner_image.loadUrl(bannerInfo.headerImage?.url, R.drawable.ic_dummy_word_stadium)
+        rl_banner_container.setOnClickListener {
+            startActivity(BannerInfoActivity.setIntent(requireContext(), 0, bannerInfo))
+        }
+    }
+
+    override fun hideBanner() {
+        rl_banner_container.visibleIf(false)
     }
 
     override fun showDebatLive(list: List<DebatItem.LiveNow>) {
@@ -174,20 +144,19 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         debatDoneAdapter.debatItems = list
     }
 
-    override fun showDebatOpen(list: List<DebatItem.Open>) {
+    override fun showDebatOpen(list: List<DebatItem.Challenge>) {
         if (!isPublik) debatCarouselAdapter.debatItems = list
         debatOpenAdapter.debatItems = list
     }
 
     override fun showLoading() {
+        lottie_loading.enableLottie(true, lottie_loading)
+        swipe_refresh.visibleIf(false)
     }
 
     override fun dismissLoading() {
-    }
-
-    override fun onDestroy() {
-        animationDisposable?.dispose()
-        super.onDestroy()
+        lottie_loading.enableLottie(false, lottie_loading)
+        swipe_refresh.visibleIf(true)
     }
 
     companion object {

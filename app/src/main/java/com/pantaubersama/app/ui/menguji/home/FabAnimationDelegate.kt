@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.menguji.home
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.view.KeyEvent
 import android.view.View
 import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -14,7 +15,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.layout_menguji_fabs.*
 import java.util.concurrent.TimeUnit
 
-class FabAnimationDelegate(override val containerView: View, private val overlay: View) : LayoutContainer {
+class FabAnimationDelegate(override val containerView: View) : LayoutContainer {
 
     val isCollapsed: Boolean
         get() = label_create.visibility != View.VISIBLE
@@ -29,6 +30,18 @@ class FabAnimationDelegate(override val containerView: View, private val overlay
         fab_challenge to label_challenge
     )
 
+    init {
+        containerView.isFocusableInTouchMode = true
+        containerView.setOnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
+                return@setOnKeyListener isCollapsed.not().also {
+                    if (it) collapse()
+                }
+            }
+            return@setOnKeyListener false
+        }
+    }
+
     fun toggle(): Disposable? {
         return if (isCollapsed) expand() else collapse()
     }
@@ -36,6 +49,7 @@ class FabAnimationDelegate(override val containerView: View, private val overlay
     fun expand(): Disposable? {
         if (isAnimationRunning) return null
 
+        containerView.requestFocus()
         fab_create.setImageResource(R.drawable.ic_create)
 
         return runAnimationSequence(fabAndLabelPairs, false)
@@ -44,6 +58,7 @@ class FabAnimationDelegate(override val containerView: View, private val overlay
     fun collapse(): Disposable? {
         if (isAnimationRunning) return null
 
+        containerView.clearFocus()
         fab_create.setImageResource(R.drawable.ic_add_menguji)
 
         return runAnimationSequence(fabAndLabelPairs.reversed(), true)
@@ -136,7 +151,7 @@ class FabAnimationDelegate(override val containerView: View, private val overlay
     }
 
     companion object {
-        private const val INTERVAL = 60L
+        private const val INTERVAL = 50L
         private const val LABEL_FADE_DURATION = 150L
         private const val LABEL_FADE_IN_DELAY = 150L
         private const val DIMMING_DURATION = 300L
