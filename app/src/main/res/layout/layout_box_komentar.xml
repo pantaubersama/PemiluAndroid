@@ -53,6 +53,8 @@
         android:hint="@string/tulis_komentar"
         android:textColorHint="@color/gray_10"
         android:layout_toEndOf="@id/iv_avatar_me"
-        android:layout_toStartOf="@id/iv_btn_comment"/>
+        android:layout_toStartOf="@id/iv_btn_comment"
+        android:inputType="text"
+        android:maxLines="10"/>
 
 </RelativeLayout>

@@ -16,6 +16,7 @@
     tools:context="com.pantaubersama.app.ui.debat.DebatActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -83,6 +84,19 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_scroll_to_bottom"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            sothree:layout_anchor="@id/layout_box_komentar_main"
+            sothree:layout_anchorGravity="top|end"
+            android:backgroundTint="@color/gray_2"
+            android:src="@drawable/ic_scroll_to_bottom"
+            android:layout_gravity="top"
+            app:borderWidth="0dp"
+            app:fabCustomSize="40dp"/>
 
         <include
             android:id="@+id/layout_box_komentar_main"
