@@ -195,6 +195,7 @@ class PantauConstants {
         const val TYPE_PARTAI = 11
         const val TYPE_HEADER = 12
         const val TYPE_DEBAT_ITEM = 13
+        const val TYPE_BIDANG_KAJIAN = 14
     }
 
     object Profile {
