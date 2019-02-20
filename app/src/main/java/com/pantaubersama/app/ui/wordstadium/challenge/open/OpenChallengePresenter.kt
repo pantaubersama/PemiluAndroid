@@ -6,8 +6,9 @@ import com.pantaubersama.app.data.interactors.WordStadiumInteractor
 import javax.inject.Inject
 
 class OpenChallengePresenter @Inject constructor(
-        private val profileInteractor: ProfileInteractor,
-        private val wordStadiumInteractor: WordStadiumInteractor) :
+    private val profileInteractor: ProfileInteractor,
+    private val wordStadiumInteractor: WordStadiumInteractor
+) :
         BasePresenter<OpenChallengeView>() {
 
     fun getUserProfile() {
@@ -15,12 +16,12 @@ class OpenChallengePresenter @Inject constructor(
     }
 
     fun openChallenge(
-            token: String?,
-            topicList: String?,
-            statement: String?,
-            statementSource: String?,
-            showTimeAt: String?,
-            timeLimit: Int
+        token: String?,
+        topicList: String?,
+        statement: String?,
+        statementSource: String?,
+        showTimeAt: String?,
+        timeLimit: Int
     ) {
         view?.showLoading()
         disposables.add(

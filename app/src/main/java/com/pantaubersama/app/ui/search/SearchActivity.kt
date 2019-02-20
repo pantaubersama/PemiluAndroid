@@ -25,9 +25,6 @@ import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
 import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.utils.extensions.visibleIf
 import javax.inject.Inject
-import com.facebook.appevents.AppEventsConstants
-import android.util.StatsLog.logEvent
-import com.facebook.appevents.AppEventsLogger
 import com.pantaubersama.app.utils.FacebookEventLogger
 
 class SearchActivity : BaseActivity<SearchPresenter>(), BaseView {

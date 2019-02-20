@@ -15,7 +15,7 @@ class KuisResultPresenter @Inject constructor(
         val disposable = kuisInteractor.getKuisResult(kuisId)
             .doOnEvent { _, _ -> view?.dismissLoading() }
             .subscribe({
-                view?.showResult(it, profileInteractor.getProfile().name)
+                view?.showResult(it, profileInteractor.getProfile().fullName ?: "")
             }, {
                 view?.showError(it)
             })
