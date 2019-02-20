@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="false"
+    android:focusable="false"
+    android:background="@color/transparent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_comment_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/komentar"
+        android:textSize="14sp"
+        android:fontFamily="@font/bw_modelica_bold"
+        android:background="@drawable/rounded_top_gray_2"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_komentar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        tools:listitem="@layout/item_komentar"
+        app:layout_constraintTop_toBottomOf="@id/tv_comment_header"
+        app:layout_constraintBottom_toTopOf="@id/layout_box_komentar_in">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <include
+        android:id="@+id/layout_box_komentar_in"
+        layout="@layout/layout_box_komentar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

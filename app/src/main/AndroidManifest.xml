@@ -25,6 +25,7 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
         <activity
+            android:theme="@style/AppTheme.ActionBarOverlay"
             android:name=".ui.debat.DebatActivity"
             android:screenOrientation="portrait" />
         <activity

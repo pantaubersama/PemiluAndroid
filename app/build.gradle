@@ -124,6 +124,8 @@ dependencies {
     implementation twitter_sdk
     implementation archComponentLibs
     implementation dots_indicator
+    implementation slidingUpPanel
+    implementation keyboardVisibilityEvent
     implementation "com.orhanobut:logger:2.2.0"
     kapt daggerCompiler
     testImplementation unitTestLibs
