@@ -73,6 +73,8 @@ import com.pantaubersama.app.ui.search.person.filter.FilterOrangActivity
 import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
 import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
+import com.pantaubersama.app.ui.wordstadium.challenge.open.BidangKajianDialog
+import com.pantaubersama.app.ui.wordstadium.challenge.open.OpenChallengeActivity
 import dagger.Subcomponent
 
 /**
@@ -148,6 +150,8 @@ interface ActivityComponent {
     fun inject(perhitunganDPDActivity: PerhitunganDPDActivity)
     fun inject(perhitunganDPRDProvinsiActivity: PerhitunganDPRDProvinsiActivity)
     fun inject(perhitunganDPRDKabupatenActivity: PerhitunganDPRDKabupatenActivity)
+    fun inject(openChallengeActivity: OpenChallengeActivity)
+    fun inject(kajianDialog: BidangKajianDialog)
     fun inject(debatActivity: DebatActivity)
     fun inject(rekapitulasiFragment: RekapitulasiFragment)
     fun inject(rekapitulasiProvinsiActivity: RekapitulasiDaerahActivity)
