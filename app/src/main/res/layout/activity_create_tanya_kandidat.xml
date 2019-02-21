@@ -17,47 +17,80 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:layout_alignParentTop="true"
-            android:layout_above="@id/question_info_container">
+            android:animateLayoutChanges="true">
+
+            <FrameLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/header_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <View
+                        android:id="@+id/top_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:background="@color/gray_3"/>
+
+                    <LinearLayout
+                        android:id="@+id/question_hint_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/gray_2"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/question_short_hint"
+                            android:fontFamily="@font/lato_regular"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/available_questions_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:visibility="gone">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/available_questions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="true">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+
+            </FrameLayout>
 
             <RelativeLayout
                 android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/white">
-
-                <View
-                    android:id="@+id/top_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:background="@color/gray_3"
-                    android:layout_alignParentTop="true"/>
-
-                <LinearLayout
-                    android:id="@+id/question_hint_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/gray_2"
-                    android:padding="16dp"
-                    android:layout_below="@id/top_line">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/question_short_hint"
-                        android:fontFamily="@font/lato_regular"/>
-
-                </LinearLayout>
+                android:background="@color/white"
+                android:layout_below="@id/header"
+                android:layout_above="@id/question_info_container">
 
                 <LinearLayout
                     android:id="@+id/question_container"
@@ -66,7 +99,7 @@
                     android:orientation="vertical"
                     android:background="@color/white"
                     android:padding="16dp"
-                    android:layout_below="@id/question_hint_container">
+                    android:layout_alignParentTop="true">
 
                     <LinearLayout
                         android:id="@+id/user_container"
@@ -95,20 +128,19 @@
                             android:layout_marginLeft="12dp"
                             android:layout_marginStart="12dp"
                             android:textSize="11sp"
-                            android:text="Budi Santoso"
                             android:fontFamily="@font/lato_bold"/>
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginTop="16dp">
 
                         <EditText
                             android:id="@+id/question"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:background="@color/white"
                             android:gravity="top"
                             android:textSize="20sp"
@@ -123,58 +155,61 @@
 
             </RelativeLayout>
 
-        </ScrollView>
-
-        <LinearLayout
-            android:id="@+id/question_info_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentBottom="true">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray_3"
-                android:layout_gravity="top"/>
-
             <LinearLayout
-                android:id="@+id/question_length_container"
-                android:layout_width="wrap_content"
+                android:id="@+id/question_info_container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:padding="12dp">
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent">
 
-                <TextView
-                    android:id="@+id/question_length"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="top"
+                    android:background="@color/gray_3" />
+
+                <LinearLayout
+                    android:id="@+id/question_length_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
-                    android:fontFamily="@font/lato_medium"/>
+                    android:layout_gravity="end"
+                    android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/question_length_separator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="/"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginStart="4dp"
-                    android:fontFamily="@font/lato_medium"/>
+                    <TextView
+                        android:id="@+id/question_length"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_medium"
+                        android:text="0" />
 
-                <TextView
-                    android:id="@+id/question_max_length"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="260"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginStart="4dp"
-                    android:fontFamily="@font/lato_medium"/>
+                    <TextView
+                        android:id="@+id/question_length_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginLeft="4dp"
+                        android:fontFamily="@font/lato_medium"
+                        android:text="/" />
+
+                    <TextView
+                        android:id="@+id/question_max_length"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginLeft="4dp"
+                        android:fontFamily="@font/lato_medium"
+                        android:text="260" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <RelativeLayout
         android:id="@+id/page_loading"
