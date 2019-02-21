@@ -89,12 +89,11 @@
             android:id="@+id/fab_scroll_to_bottom"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:visibility="gone"
             android:layout_marginEnd="16dp"
-            sothree:layout_anchor="@id/layout_box_komentar_main"
-            sothree:layout_anchorGravity="top|end"
             android:backgroundTint="@color/gray_2"
             android:src="@drawable/ic_scroll_to_bottom"
-            android:layout_gravity="top"
+            android:layout_gravity="bottom|end"
             app:borderWidth="0dp"
             app:fabCustomSize="40dp"/>
 

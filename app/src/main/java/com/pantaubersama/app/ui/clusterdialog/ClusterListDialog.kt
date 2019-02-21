@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.clusterdialog
 
 import android.content.Context
+import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -47,7 +48,7 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
         activityComponent.inject(this)
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
         getData()
         setupSearchEditText()
