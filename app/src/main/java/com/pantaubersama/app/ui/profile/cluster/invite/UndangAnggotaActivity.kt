@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.CompoundButton
-import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
@@ -83,7 +82,7 @@ class UndangAnggotaActivity : BaseActivity<UndangAnggotaPresenter>(), UndangAngg
     @SuppressLint("SetTextI18n")
     private fun setupMagicLink() {
         undang_anggota_url_toggle.isChecked = isUrlActive
-        cluster_url.text = "%scluster?=%s".format(BuildConfig.PANTAU_WEB_URL, clusterUrl)
+        cluster_url.text = "%scluster?=%s".format(getString(R.string.share_url), clusterUrl)
         if (isUrlActive) {
             cluster_url.background = getDrawable(R.drawable.bg_rounded_outline_white)
             if (!isModerator) tv_link_status.text = getString(R.string.label_link_undangan_aktif)
