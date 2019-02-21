@@ -39,6 +39,7 @@
         <activity android:name=".ui.merayakan.perhitungan.create.DataTPSActivity" />
         <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity" />
         <activity
+            android:theme="@style/AppTheme.ActionBarOverlay"
             android:name=".ui.debat.DebatActivity"
             android:screenOrientation="portrait" />
         <activity

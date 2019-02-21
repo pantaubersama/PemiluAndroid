@@ -18,13 +18,14 @@
         tools:ignore="ContentDescription"/>
 
     <TextView
+        android:id="@+id/tv_status_debat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:textSize="10sp"
         android:textColor="@color/black_2"
         android:fontFamily="@font/lato_italic"
-        android:text="Giliran Raja menulis argumen .."
+        android:text="Giliran Raja menulis argumen "
         app:layout_constraintStart_toEndOf="@id/iv_status_debat"
         app:layout_constraintTop_toTopOf="@id/iv_status_debat"
         app:layout_constraintBottom_toBottomOf="@id/iv_status_debat"/>

@@ -363,6 +363,7 @@
     <string name="title_promote_challenge">Promote your challenge</string>
     <string name="direct_challenge">DIRECT CHALLENGE</string>
     <string name="title_preview">Preview</string>
+<<<<<<< HEAD
     <string name="perhitungan_label">Perhitungan</string>
     <string name="rekapitulasi_label">Rekapitulasi</string>
     <string name="data_tps_hint">Lengkapi seluruh data di bawah ini. Lokasi TPS dapat dibarui dengan mengaktifkan penanda GPS perangkat kamu.</string>
@@ -373,4 +374,8 @@
     <string name="votes_count_hint">Pengguna telah berpartisipasi merayakan peritungan melalui Pantau Bersama Pemilu 2019.</string>
     <string name="close_action">Close</string>
     <string name="upload_document_hint">Unggah data langsung dari kamera atau pilih dari galeri perangkat kamu.</string>
+=======
+    <string name="komentar">Komentar</string>
+    <string name="tulis_komentar">Tulis komentar</string>
+>>>>>>> onprogress
 </resources>
