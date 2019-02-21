@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.penpol.tanyakandidat.create
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
@@ -16,6 +17,7 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -51,6 +53,9 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.create_question), R.color.white, 4f)
         presenter.getUserData()
+        if (savedInstanceState?.getString("question") != null) {
+            question.setText(savedInstanceState.getString("question"))
+        }
         question?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 //                TODO("not implemented") //To change body of createdAt functions use File | Settings | File Templates.
@@ -83,6 +88,12 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
 
     private fun setupAvailableQuestions() {
         adapter = QuestionsAvailableAdapter()
+        adapter.listener = object : QuestionsAvailableAdapter.Listener {
+            override fun onClickQuestion(item: Pertanyaan) {
+                val intent = DetailTanyaKandidatActivity.setIntent(this@CreateTanyaKandidatActivity, item.id)
+                startActivity(intent)
+            }
+        }
         available_questions.layoutManager = LinearLayoutManager(this@CreateTanyaKandidatActivity)
         available_questions.adapter = adapter
     }
@@ -170,5 +181,10 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
     override fun onDestroy() {
         disposables.clear()
         super.onDestroy()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+        outPersistentState?.putString("question", question.text.toString())
+        super.onSaveInstanceState(outState, outPersistentState)
     }
 }
