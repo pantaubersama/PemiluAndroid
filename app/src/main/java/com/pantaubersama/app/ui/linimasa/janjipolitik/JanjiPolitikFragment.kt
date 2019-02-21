@@ -93,7 +93,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
                 val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
                 if (myProfile.cluster != null &&
                     item.creator?.cluster != null &&
-                    item.creator?.cluster?.id?.equals(myProfile.cluster?.id)!! &&
+                    item.creator?.cluster?.id?.equals(myProfile.cluster?.id) == true &&
                     item.creator?.id.equals(myProfile.id) &&
                     myProfile.cluster?.isEligible!!) {
 //                    dialog.removeItem(R.id.report_tanya_kandidat_action)
