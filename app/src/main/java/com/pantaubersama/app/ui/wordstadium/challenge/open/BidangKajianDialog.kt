@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.wordstadium.challenge.open
 
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,7 +40,7 @@ class BidangKajianDialog : BaseDialogFragment<BidangKajianPresenter>(), BidangKa
         }
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         setupRecycler()
         getData()
     }

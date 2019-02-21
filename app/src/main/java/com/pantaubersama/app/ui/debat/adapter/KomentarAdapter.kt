@@ -51,6 +51,6 @@ class KomentarAdapter : BaseRecyclerAdapter() {
     override fun addItem(item: ItemModel) {
         super.addItem(item)
 
-        recyclerView.scrollToPosition(itemCount - 1)
+        recyclerView.smoothScrollToPosition(itemCount - 1)
     }
 }

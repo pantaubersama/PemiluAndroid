@@ -17,7 +17,7 @@ import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_IMAGE_URL
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.fragment_image_preview.*
 
-class ImagePreviewFragment : DialogFragment() {
+class ImagePreviewDialogFragment : DialogFragment() {
 
     private lateinit var imageUrl: String
 
@@ -65,11 +65,11 @@ class ImagePreviewFragment : DialogFragment() {
     }
 
     companion object {
-        private val TAG = ImagePreviewFragment::class.java.simpleName
+        private val TAG = ImagePreviewDialogFragment::class.java.simpleName
 
         @JvmStatic
         fun show(imageUrl: String, fragmentManager: FragmentManager) {
-            val dialog = ImagePreviewFragment()
+            val dialog = ImagePreviewDialogFragment()
             dialog.arguments = Bundle().apply {
                 putString(EXTRA_IMAGE_URL, imageUrl)
             }
