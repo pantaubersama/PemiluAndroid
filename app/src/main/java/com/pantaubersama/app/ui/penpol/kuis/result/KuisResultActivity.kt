@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.kuis.KuisItem
@@ -132,7 +131,7 @@ class KuisResultActivity : BaseActivity<KuisResultPresenter>(), KuisResultView {
         dismissProgressDialog()
         ShareUtil.shareImage(
             this,
-            "Kamu sudah ikut? Aku sudah dapat hasilnya \uD83D\uDE0E #PantauBersama %s".format(BuildConfig.PANTAU_WEB_URL + SHARE_HASIL_KUIS_PATH + quizParticipationId), imageFile)
+            "Kamu sudah ikut? Aku sudah dapat hasilnya \uD83D\uDE0E #PantauBersama %s".format(getString(R.string.share_url) + SHARE_HASIL_KUIS_PATH + quizParticipationId), imageFile)
     }
 
     override fun onBackPressed() {
