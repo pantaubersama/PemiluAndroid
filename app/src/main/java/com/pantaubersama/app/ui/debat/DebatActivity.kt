@@ -26,6 +26,7 @@ import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.debat.adapter.KomentarAdapter
 import com.pantaubersama.app.ui.debat.adapter.MessageAdapter
+import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.extensions.dip
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.hideKeyboard
@@ -66,16 +67,11 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        btn_back.setOnClickListener { onBackPressed() }
         setupLayoutBehaviour()
         myProfile = presenter.getMyProfile()
 
         iv_avatar_comment_main.loadUrl(myProfile.avatar?.medium?.url, R.color.gray_3)
         iv_avatar_comment_in.loadUrl(myProfile.avatar?.medium?.url, R.color.gray_3)
-
-        cl_btn_detail_debat.setOnClickListener {
-            DetailDebatDialogFragment.show(supportFragmentManager)
-        }
 
         setupDebatList()
         setupKomentarList()
@@ -174,6 +170,9 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         lateinit var commentInTextWatcher: TextWatcher
         lateinit var commentMainTextWatcher: TextWatcher
 
+
+        btn_back.setOnClickListener { onBackPressed() }
+
         app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             if (verticalOffset < -30) {
                 if (isMainToolbarShown) {
@@ -206,6 +205,17 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
                 isAppbarExpanded = Math.abs(verticalOffset) - it != 0
             }
         })
+
+        btn_more_toolbar.setOnClickListener {
+            val dialog = OptionDialog(this, R.layout.layout_option_dialog_common)
+            dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
+            dialog.removeItem(R.id.report_tanya_kandidat_action)
+            dialog.show()
+        }
+
+        cl_btn_detail_debat.setOnClickListener {
+            DetailDebatDialogFragment.show(supportFragmentManager)
+        }
 
         fab_scroll_to_bottom.setOnClickListener {
             if (isAppbarExpanded) {

@@ -90,7 +90,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
             }
 
             override fun onClickJanpolOption(item: JanjiPolitik, position: Int) {
-                val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
+                val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_common)
                 if (myProfile.cluster != null &&
                     item.creator?.cluster != null &&
                     item.creator?.cluster?.id?.equals(myProfile.cluster?.id)!! &&

@@ -75,7 +75,7 @@ class ProfileJanjiPolitikFragment : BaseFragment<ProfileJanjiPolitikPresenter>()
             }
 
             override fun onClickJanpolOption(item: JanjiPolitik, position: Int) {
-                val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
+                val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_common)
                 dialog.removeItem(R.id.report_tanya_kandidat_action)
                 if (userId != null) {
                     dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
