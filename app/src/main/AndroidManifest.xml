@@ -166,6 +166,14 @@
                     android:pathPrefix="/share"
                     android:scheme="http" />
                 <data
+                    android:host="@string/share_url_no_scheme"
+                    android:pathPrefix="/share"
+                    android:scheme="https" />
+                <data
+                    android:host="@string/share_url_no_scheme"
+                    android:pathPrefix="/share"
+                    android:scheme="http" />
+                <data
                     android:host="@string/pantau_web_url_no_scheme"
                     android:pathPrefix="/cluster"
                     android:scheme="https" />
