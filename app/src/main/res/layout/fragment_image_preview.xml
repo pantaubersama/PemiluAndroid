@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_dark_1"
-    tools:context="com.pantaubersama.app.ui.widget.imagepreview.ImagePreviewFragment">
+    tools:context="com.pantaubersama.app.ui.widget.imagepreview.ImagePreviewDialogFragment">
 
     <ImageView
         android:id="@+id/iv_image"

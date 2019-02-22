@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.categorydialog
 
 import android.content.Context
+import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -49,7 +50,7 @@ class CategoryListDialog : BaseDialogFragment<CategoryListDialogPresenter>(), Ca
         activityComponent.inject(this)
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         setupRecycler()
         getData()
         setupSearchEditText()
