@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.TextKeyListener
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,11 +26,12 @@ import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.debat.adapter.KomentarAdapter
 import com.pantaubersama.app.ui.debat.adapter.MessageAdapter
+import com.pantaubersama.app.ui.widget.OptionDialog
+import com.pantaubersama.app.utils.extensions.dip
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.hideKeyboard
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_debat.*
-import kotlinx.android.synthetic.main.item_komentar.*
 import kotlinx.android.synthetic.main.layout_header_detail_debat.*
 import kotlinx.android.synthetic.main.layout_komentar_debat.*
 import kotlinx.android.synthetic.main.layout_status_debat.*
@@ -64,30 +67,16 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        btn_back.setOnClickListener { onBackPressed() }
         setupLayoutBehaviour()
         myProfile = presenter.getMyProfile()
 
         iv_avatar_comment_main.loadUrl(myProfile.avatar?.medium?.url, R.color.gray_3)
         iv_avatar_comment_in.loadUrl(myProfile.avatar?.medium?.url, R.color.gray_3)
 
-        cl_btn_detail_debat.setOnClickListener {
-            expandable_detail_debat.toggle(true)
-            if (expandable_detail_debat.isExpanded) {
-                iv_detail_debat_arrow.animate().rotation(180f).start()
-            } else {
-                iv_detail_debat_arrow.animate().rotation(0f).start()
-            }
-        }
-        setupKomentar()
-
         setupDebatList()
         setupKomentarList()
 
         getList()
-    }
-
-    private fun setupKomentar() {
     }
 
     private fun addKomentar(komentar: Komentar) {
@@ -181,6 +170,9 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         lateinit var commentInTextWatcher: TextWatcher
         lateinit var commentMainTextWatcher: TextWatcher
 
+
+        btn_back.setOnClickListener { onBackPressed() }
+
         app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             if (verticalOffset < -30) {
                 if (isMainToolbarShown) {
@@ -214,6 +206,17 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
             }
         })
 
+        btn_more_toolbar.setOnClickListener {
+            val dialog = OptionDialog(this, R.layout.layout_option_dialog_common)
+            dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
+            dialog.removeItem(R.id.report_tanya_kandidat_action)
+            dialog.show()
+        }
+
+        cl_btn_detail_debat.setOnClickListener {
+            DetailDebatDialogFragment.show(supportFragmentManager)
+        }
+
         fab_scroll_to_bottom.setOnClickListener {
             if (isAppbarExpanded) {
                 app_bar.setExpanded(false)
@@ -226,13 +229,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
-                if (!recyclerView.canScrollVertically(1)) {
-                    fab_scroll_to_bottom.hide()
-                } else {
-                    if (!fab_scroll_to_bottom.isShown) {
-                        fab_scroll_to_bottom.show()
-                    }
-                }
+                showFAB(recyclerView.canScrollVertically(1))
             }
         })
 
@@ -257,6 +254,8 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
         layout_box_komentar_main.post {
             recycler_view.setPadding(0, 0, 0, layout_box_komentar_main.height)
+
+            showFAB(true)
         }
 
         btn_comment_main.setImageResource(R.drawable.ic_arrow_expand_more)
@@ -264,6 +263,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
             isKeyboardShown = isOpen
             if (isOpen) {
                 btn_comment_main.setImageResource(R.drawable.ic_send)
+                showFAB(false)
             } else {
                 btn_comment_main.setImageResource(R.drawable.ic_arrow_expand_more)
             }
@@ -319,6 +319,20 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         et_comment_in.addTextChangedListener(commentInTextWatcher)
     }
 
+    private fun showFAB(showing: Boolean) {
+        if (showing) {
+            if (!fab_scroll_to_bottom.isShown) {
+                val fabLayoutParams = CoordinatorLayout.LayoutParams(dip(40), dip(40))
+                fabLayoutParams.gravity = Gravity.BOTTOM or Gravity.END
+                fabLayoutParams.setMargins(0, 0, dip(16), layout_box_komentar_main.height + dip(8))
+                fab_scroll_to_bottom.layoutParams = fabLayoutParams
+                fab_scroll_to_bottom.show()
+            }
+        } else {
+            fab_scroll_to_bottom.hide()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -328,7 +342,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     }
 
     override fun onPause() {
-        super.onPause()
         jumpingBeans.stopJumping()
+        super.onPause()
     }
 }

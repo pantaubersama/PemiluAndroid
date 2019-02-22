@@ -38,13 +38,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:background="?selectableItemBackground"
         android:layout_marginEnd="8dp"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:focusable="true"
+        android:clickable="true">
         <ImageView
             android:id="@+id/iv_detail_debat_arrow"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:src="@drawable/ic_collapse_black_16"
-            android:rotation="180"
+            android:src="@drawable/ic_expand_more_16"
             tools:ignore="ContentDescription"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:fontFamily="@font/lato_medium"
             android:text="@string/detail_debat"
             android:textSize="10sp"
             android:textColor="@color/black_2"
@@ -62,18 +64,5 @@
             app:layout_constraintEnd_toStartOf="@id/iv_detail_debat_arrow"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <net.cachapa.expandablelayout.ExpandableLayout
-        android:id="@+id/expandable_detail_debat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/cl_btn_detail_debat"
-        app:el_duration="300"
-        app:el_expanded="false">
-
-        <include layout="@layout/layout_detail_debat"/>
-
-    </net.cachapa.expandablelayout.ExpandableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,7 +26,7 @@
     <string name="pilpres_banner_text">Halaman ini berisikan informasi dari channel Resmi twitter Jokowi - Makruf dan Prabowo - Sandi yang terdaftar di Bawaslu</string>
     <string name="kuis_banner_text">Ikuti quiz pilih jawaban tanpa kamu tahu itu jawaban siapa, kemudian tunggu kejutannya dan lihat hasil dari quiz ini</string>
     <string name="janpol_banner_text">Halaman ini berisikan informasi dari para user yang menginfokan kembali janji politik dari Capres, Cawapres maupun</string>
-    <string name="question_short_hint">Tulis pertanyaan terbaikmu di sini!</string>
+    <string name="question_short_hint">Berikan pertanyaan singkat untuk kandidat Calon Presiden dan Calon Wakil Presiden 2019-2024. Gunakan bahasa yang baik dan jelas, yaa!</string>
     <string name="lapor_short_hint">Menemukan Dugaan Pelanggaran Pemilu?</string>
     <string name="question_dummy_text">Kapan realisasi sistem tenaga kerja alih daya diterapkan seutuhnya? Kita ini insan bukan seekor sapi.</string>
     <string name="question_time_dummy_text">8 days ago</string>
@@ -265,7 +265,7 @@
     <string name="see_more">See more &gt;&gt;</string>
     <string name="sisa_waktu_anda">sisa waktu anda</string>
     <string name="detail_debat">Detil debat</string>
-    <string name="challenge_detail">CHALLENGE DETAIL</string>
+    <string name="detil_debat">DETIL DEBAT</string>
     <string name="date_time"><![CDATA[Date & Time]]></string>
     <string name="saldo_waktu">Saldo waktu</string>
     <string name="saldo_waktu_desc">Kamu dan lawan debatmu mendapat saldo waktu yang sama:</string>

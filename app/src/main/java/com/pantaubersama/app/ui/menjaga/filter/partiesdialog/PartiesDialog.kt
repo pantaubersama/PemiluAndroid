@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.menjaga.filter.partiesdialog
 
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,7 +41,7 @@ class PartiesDialog : BaseDialogFragment<PartiesDialogPresenter>(), PartiesDialo
         activityComponent.inject(this)
     }
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
         getData()
         setupSearchEditText()
