@@ -8,13 +8,13 @@ import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.tanyakandidat.Pertanyaan
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.question_suggestion_item.*
+import kotlinx.android.synthetic.main.available_question_item.*
 
 class QuestionsAvailableAdapter : BaseRecyclerAdapter() {
     var listener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return QuestionsAvailableViewHolder(parent.inflate(R.layout.question_suggestion_item))
+        return QuestionsAvailableViewHolder(parent.inflate(R.layout.available_question_item))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
