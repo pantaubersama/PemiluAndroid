@@ -38,16 +38,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:background="@drawable/bg_rounded_outline_white"
             android:padding="10dp">
 
             <EditText
+                android:id="@+id/input_link_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/lato_regular"
                 android:hint="Tempel di sini…"
                 android:lineSpacingExtra="2sp"
-                android:textColor="@color/gray_dark_1"
+                android:textColor="@color/gray_5"
+                android:textColorHint="@color/gray_dark_1"
                 android:textSize="11sp" />
 
         </LinearLayout>
@@ -65,9 +68,12 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/input_link_batal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center">
 
             <TextView
@@ -89,9 +95,12 @@
             android:backgroundTint="@color/gray_3" />
 
         <LinearLayout
+            android:id="@+id/input_link_ok"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center">
 
             <TextView
@@ -101,12 +110,11 @@
                 android:gravity="center_horizontal"
                 android:letterSpacing="0.1"
                 android:lineSpacingExtra="0sp"
-                android:text="BATAL"
+                android:text="OKE"
                 android:textColor="@color/black_2"
                 android:textSize="12sp" />
 
         </LinearLayout>
-
 
     </LinearLayout>
 

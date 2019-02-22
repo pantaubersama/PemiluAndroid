@@ -6,7 +6,7 @@ import com.pantaubersama.app.base.BaseActivity
 
 class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), DirectChallengeView {
 
-    override lateinit var presenter: DirectChallengePresenter
+    override var presenter: DirectChallengePresenter = DirectChallengePresenter()
 
     override fun statusBarColor(): Int? {
         return 0

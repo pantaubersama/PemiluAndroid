@@ -14,7 +14,7 @@ class PaslonPresenter @Inject constructor(private val profileInteractor: Profile
             profileInteractor.getMyTendency()
                 .subscribe(
                     {
-                        view?.bindMyTendency(it, profileInteractor.getProfile().name)
+                        view?.bindMyTendency(it, profileInteractor.getProfile().fullName ?: "")
                     },
                     {
                         view?.showError(it)

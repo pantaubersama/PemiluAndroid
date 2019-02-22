@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
-import com.pantaubersama.app.data.model.user.User
+import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.PantauConstants
 import java.io.Serializable
 
@@ -26,7 +26,7 @@ class Pertanyaan(
     var likeCount: Int,
     @SerializedName("user")
     @Expose
-    var user: User,
+    var user: Profile,
     @SerializedName("is_liked")
     @Expose
     var isliked: Boolean = false,

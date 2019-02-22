@@ -93,7 +93,7 @@
             android:id="@+id/text_versus"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="@drawable/bg_versus"
+            android:background="@drawable/bg_versus_outline_gray"
             android:fontFamily="@font/lato_bold"
             android:gravity="center_horizontal"
             android:includeFontPadding="false"

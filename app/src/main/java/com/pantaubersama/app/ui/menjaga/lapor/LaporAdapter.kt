@@ -41,8 +41,8 @@ class LaporAdapter : BaseRecyclerAdapter() {
         override val containerView: View?
     ) : RecyclerView.ViewHolder(containerView!!), LayoutContainer {
         fun onBind(item: Profile) {
-            header_user_avatar.loadUrl(item.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
-            user_name.text = item.name
+            header_user_avatar.loadUrl(item.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+            user_name.text = item.fullName
             header_hint.text = itemView.context.getString(R.string.lapor_short_hint)
             question_section.setOnClickListener {
                 listener?.onClickHeader()

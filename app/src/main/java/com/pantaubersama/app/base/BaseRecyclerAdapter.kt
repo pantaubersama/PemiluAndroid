@@ -70,7 +70,7 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyItemRangeInserted(itemCount - 1, items.size)
     }
 
-    fun addItem(item: ItemModel) {
+    open fun addItem(item: ItemModel) {
         data.add(item)
         notifyItemInserted(itemCount - 1)
     }

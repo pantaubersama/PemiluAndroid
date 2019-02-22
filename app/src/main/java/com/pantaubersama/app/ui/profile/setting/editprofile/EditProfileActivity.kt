@@ -98,8 +98,8 @@ class EditProfileActivity : BaseActivity<EditProfilePresenter>(), EditProfileVie
 
     override fun onSuccessLoadUser(profile: Profile) {
         swipe_refresh.isRefreshing = false
-        edit_profile_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
-        edit_profile_nama.setText(profile.name)
+        edit_profile_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+        edit_profile_nama.setText(profile.fullName)
         profile.username?.let {
             edit_profile_username.setText(it)
         }

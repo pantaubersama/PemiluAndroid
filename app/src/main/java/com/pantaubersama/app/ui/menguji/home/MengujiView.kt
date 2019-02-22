@@ -9,8 +9,9 @@ interface MengujiView : BaseView {
     val isPublik: Boolean
 
     fun showBanner(bannerInfo: BannerInfo)
+    fun hideBanner()
     fun showDebatLive(list: List<DebatItem.LiveNow>)
     fun showDebatComingSoon(list: List<DebatItem.ComingSoon>)
     fun showDebatDone(list: List<DebatItem.Done>)
-    fun showDebatOpen(list: List<DebatItem.Open>)
+    fun showDebatOpen(list: List<DebatItem.Challenge>)
 }

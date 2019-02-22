@@ -53,8 +53,11 @@ ext {
             facebook_sdk            : "[4,5)",
             twitter_sdk             : "3.1.1",
             navigation              : "1.0.0-alpha09",
-            dots_indicator          : "2.1.2"
+            dots_indicator          : "2.1.2",
 
+            slidingUpPanel          : "3.4.0",
+            keyboardVisibilityEvent : "2.2.1",
+            jumpingbeans            : "1.3.0"
     ]
 
 
@@ -141,4 +144,8 @@ ext {
     facebook_sdk = "com.facebook.android:facebook-android-sdk:$versions.facebook_sdk"
     twitter_sdk = "com.twitter.sdk.android:twitter-core:$versions.twitter_sdk"
     dots_indicator = "com.tbuonomo.andrui:viewpagerdotsindicator:$versions.dots_indicator"
+
+    slidingUpPanel = "com.sothree.slidinguppanel:library:$versions.slidingUpPanel"
+    keyboardVisibilityEvent = "net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:$versions.keyboardVisibilityEvent"
+    jumpingbeans = "net.frakbot:jumpingbeans:$versions.jumpingbeans"
 }
