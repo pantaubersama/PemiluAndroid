@@ -97,18 +97,18 @@ class SearchQuestionPresenter @Inject constructor(
                     {
                         if (page == 1) {
                             view?.dismissLoading()
-                            if (it.questions.size != 0) {
-                                view?.bindDataTanyaKandidat(it.questions)
-                                if (it.questions.size < perPage) {
+                            if (it.size != 0) {
+                                view?.bindDataTanyaKandidat(it)
+                                if (it.size < perPage) {
                                     view?.setDataEnd()
                                 }
                             } else {
                                 view?.showEmptyDataAlert()
                             }
                         } else {
-                            if (it.questions.size != 0) {
-                                view?.bindNextDataTanyaKandidat(it.questions)
-                                if (it.questions.size < perPage) {
+                            if (it.size != 0) {
+                                view?.bindNextDataTanyaKandidat(it)
+                                if (it.size < perPage) {
                                     view?.setDataEnd()
                                 }
                             } else {
