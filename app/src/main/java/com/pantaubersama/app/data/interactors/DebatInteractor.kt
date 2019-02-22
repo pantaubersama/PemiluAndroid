@@ -1,11 +1,13 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.model.debat.Komentar
-import com.pantaubersama.app.data.model.debat.Message
+import com.pantaubersama.app.data.model.debat.MESSAGE_INPUT_LEFT
+import com.pantaubersama.app.data.model.debat.MessageItem
 import com.pantaubersama.app.data.model.image.Image
 import com.pantaubersama.app.data.model.image.Medium
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.RxSchedulers
+import com.pantaubersama.app.utils.extensions.isOdd
 import io.reactivex.Single
 import java.util.Random
 import javax.inject.Inject
@@ -16,13 +18,14 @@ import javax.inject.Inject
 class DebatInteractor @Inject constructor(
     private val rxSchedulers: RxSchedulers
 ) {
-    fun getMessage(): Single<MutableList<Message>> {
-        val messageList: MutableList<Message> = ArrayList()
+    fun getMessage(): Single<MutableList<MessageItem>> {
+        val messageList: MutableList<MessageItem> = ArrayList()
         for (i in 1..15) {
-            val message = Message("msg-id-$i", "$i. Mau nambahin, jumlah baliho juga melanggar ketentuan di pertigaan Ahmad Yani sudah saya lampiran bukti foto serta tambahan lokasi baliho dimana saja pemasangan baliho.", Profile(),
-                false, i, System.currentTimeMillis())
+            val message = MessageItem("msg-id-$i", "$i. Mau nambahin, jumlah baliho juga melanggar ketentuan di pertigaan Ahmad Yani sudah saya lampiran bukti foto serta tambahan lokasi baliho dimana saja pemasangan baliho.", Profile(),
+                false, i, System.currentTimeMillis(), if (i.isOdd()) MessageItem.Type.LEFT_SIDE else MessageItem.Type.RIGHT_SIDE)
             messageList.add(message)
         }
+        messageList.add(MESSAGE_INPUT_LEFT)
         return Single.fromCallable { messageList }.subscribeOn(rxSchedulers.io()).observeOn(rxSchedulers.mainThread())
     }
 

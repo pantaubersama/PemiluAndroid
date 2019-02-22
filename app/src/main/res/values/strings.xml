@@ -364,4 +364,6 @@
     <string name="title_preview">Preview</string>
     <string name="komentar">Komentar</string>
     <string name="tulis_komentar">Tulis komentar</string>
+    <string name="tulis_argumen_kamu_disini">Tulis argumen kamu disini</string>
+    <string name="publish">Publish</string>
 </resources>

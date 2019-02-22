@@ -21,14 +21,16 @@ import com.makeramen.roundedimageview.RoundedImageView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.debat.Komentar
-import com.pantaubersama.app.data.model.debat.Message
+import com.pantaubersama.app.data.model.debat.MessageItem
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.debat.adapter.KomentarAdapter
 import com.pantaubersama.app.ui.debat.adapter.MessageAdapter
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.extensions.dip
+import com.pantaubersama.app.utils.extensions.isVisible
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.visibleIf
 import com.pantaubersama.app.utils.hideKeyboard
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_debat.*
@@ -61,6 +63,8 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     private lateinit var btn_comment_in: ImageView
     private lateinit var iv_avatar_comment_main: RoundedImageView
     private lateinit var iv_avatar_comment_in: RoundedImageView
+
+    private var isMessageInputFocused = false
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -96,6 +100,10 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
             override fun onClickClap() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
+
+            override fun onMessageInputFocused(isFocused: Boolean) {
+                isMessageInputFocused = isFocused
+            }
         }
     }
 
@@ -115,7 +123,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showMessage(messageList: MutableList<Message>) {
+    override fun showMessage(messageList: MutableList<MessageItem>) {
         messageList.forEach {
             Timber.d("messageList : $it")
         }
@@ -169,7 +177,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
         lateinit var commentInTextWatcher: TextWatcher
         lateinit var commentMainTextWatcher: TextWatcher
-
 
         btn_back.setOnClickListener { onBackPressed() }
 
@@ -253,18 +260,27 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         layout_komentar_debat.setOnClickListener(null)
 
         layout_box_komentar_main.post {
-            recycler_view.setPadding(0, 0, 0, layout_box_komentar_main.height)
-
+            adjustRvPadding()
             showFAB(true)
         }
 
         btn_comment_main.setImageResource(R.drawable.ic_arrow_expand_more)
+
         KeyboardVisibilityEvent.setEventListener(this@DebatActivity) { isOpen ->
             isKeyboardShown = isOpen
             if (isOpen) {
-                btn_comment_main.setImageResource(R.drawable.ic_send)
-                showFAB(false)
+                if (isMessageInputFocused && layout_box_komentar_main.isVisible()) {
+                    layout_box_komentar_main.visibleIf(false)
+                    adjustRvPadding(true)
+                } else {
+                    btn_comment_main.setImageResource(R.drawable.ic_send)
+                    showFAB(false)
+                }
             } else {
+                if (!layout_box_komentar_main.isVisible()) {
+                    layout_box_komentar_main.visibleIf(true)
+                    adjustRvPadding()
+                }
                 btn_comment_main.setImageResource(R.drawable.ic_arrow_expand_more)
             }
         }
@@ -330,6 +346,14 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
             }
         } else {
             fab_scroll_to_bottom.hide()
+        }
+    }
+
+    private fun adjustRvPadding(removePadding: Boolean = false) {
+        if (removePadding) {
+            recycler_view.setPadding(0, 0, 0, 0)
+        } else {
+            recycler_view.setPadding(0, 0, 0, layout_box_komentar_main.height)
         }
     }
 
