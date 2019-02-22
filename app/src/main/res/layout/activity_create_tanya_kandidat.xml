@@ -17,21 +17,23 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
+        android:animateLayoutChanges="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:animateLayoutChanges="true">
+            android:fillViewport="true"
+            android:layout_above="@id/question_field_container">
 
-            <FrameLayout
-                android:id="@+id/header"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/gray_2">
 
                 <LinearLayout
                     android:id="@+id/header_hint"
@@ -65,32 +67,39 @@
                 <LinearLayout
                     android:id="@+id/available_questions_container"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:orientation="vertical"
-                    android:background="@color/white"
-                    android:visibility="gone">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/available_questions"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:nestedScrollingEnabled="false"
                         android:clipToPadding="false"
-                        android:nestedScrollingEnabled="true">
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
 
                 </LinearLayout>
 
-            </FrameLayout>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/question_field_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
 
             <RelativeLayout
                 android:id="@+id/container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:orientation="vertical"
-                android:background="@color/white"
-                android:layout_below="@id/header"
-                android:layout_above="@id/question_info_container">
+                android:background="@color/white">
 
                 <LinearLayout
                     android:id="@+id/question_container"
@@ -102,12 +111,9 @@
                     android:layout_alignParentTop="true">
 
                     <LinearLayout
-                        android:id="@+id/user_container"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="16dp"
-                        android:gravity="center_vertical">
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
                         <com.makeramen.roundedimageview.RoundedImageView
                             android:id="@+id/iv_user_avatar"
@@ -118,36 +124,19 @@
                             app:riv_oval="true"
                             android:src="@drawable/ic_avatar_placeholder"/>
 
-                        <TextView
-                            android:id="@+id/tv_user_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:lines="1"
-                            android:ellipsize="end"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginStart="12dp"
-                            android:textSize="11sp"
-                            android:fontFamily="@font/lato_bold"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="16dp">
-
                         <EditText
                             android:id="@+id/question"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@color/white"
                             android:gravity="top"
-                            android:textSize="20sp"
+                            android:textSize="14sp"
                             android:fontFamily="@font/bw_modelica_bold"
                             android:maxLength="260"
                             android:inputType="textMultiLine"
-                            android:hint="@string/question_simple_hint"/>
+                            android:hint="@string/question_simple_hint"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginStart="12dp"/>
 
                     </LinearLayout>
 
@@ -159,11 +148,8 @@
                 android:id="@+id/question_info_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="8dp"
                 android:background="@color/white"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent">
+                android:orientation="vertical">
 
                 <View
                     android:layout_width="match_parent"
@@ -207,9 +193,9 @@
 
             </LinearLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/page_loading"

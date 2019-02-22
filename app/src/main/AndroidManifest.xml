@@ -192,7 +192,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.linimasa.pilpres.filter.FilterPilpresActivity"
             android:screenOrientation="portrait" />

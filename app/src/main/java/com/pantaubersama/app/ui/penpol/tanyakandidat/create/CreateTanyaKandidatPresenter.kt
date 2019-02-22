@@ -36,7 +36,7 @@ class CreateTanyaKandidatPresenter @Inject constructor(
 
     fun getAvailableQuestions(query: String) {
         disposables.add(
-            tanyaKandidatInteractor.searchTanyaKandidat(query, 1, 5)
+            tanyaKandidatInteractor.searchTanyaKandidat(query, 1, 10)
                 .subscribe(
                     {
                         if (it.size != 0) {
