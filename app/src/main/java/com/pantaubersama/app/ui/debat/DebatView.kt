@@ -14,4 +14,7 @@ interface DebatView : BaseView {
     fun showKomentar(komentarList: MutableList<Komentar>)
     fun showLoadingKomentar()
     fun dismissLoadingKomentar()
+
+    fun onSuccessPostMessage(messageItem: MessageItem)
+    fun onFailedPostMessage(messageItem: MessageItem)
 }

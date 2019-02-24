@@ -11,17 +11,18 @@ import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_TYPE_RIGHT_SI
  * @author edityomurti on 12/02/2019 14:09
  */
 
-val MESSAGE_INPUT_LEFT = MessageItem("", "", Profile(), false, 0, 0, MessageItem.Type.INPUT_LEFT_SIDE)
-val MESSAGE_INPUT_RIGHT = MessageItem("", "", Profile(), false, 0, 0, MessageItem.Type.INPUT_RIGHT_SIDE)
+val MESSAGE_INPUT_LEFT = MessageItem("msg-input-left", "", Profile(), false, 0, 0, MessageItem.Type.INPUT_LEFT_SIDE)
+val MESSAGE_INPUT_RIGHT = MessageItem("msg-input-right", "", Profile(), false, 0, 0, MessageItem.Type.INPUT_RIGHT_SIDE)
 
 data class MessageItem(
     val id: String,
-    val body: String,
+    var body: String,
     val sender: Profile,
     var isLiked: Boolean,
     var likedCount: Int,
     var createdAt: Long,
-    val type: Type
+    val type: Type,
+    var inputState: InputState? = InputState.ACTIVE
 ) : ItemModel {
     override fun getType(): Int = when (type) {
         Type.LEFT_SIDE -> MESSAGE_TYPE_LEFT_SIDE
@@ -32,5 +33,9 @@ data class MessageItem(
 
     enum class Type {
         LEFT_SIDE, RIGHT_SIDE, INPUT_LEFT_SIDE, INPUT_RIGHT_SIDE
+    }
+
+    enum class InputState {
+        ACTIVE, INACTIVE
     }
 }

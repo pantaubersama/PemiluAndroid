@@ -25,7 +25,7 @@ import com.pantaubersama.app.data.model.debat.MessageItem
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.debat.adapter.KomentarAdapter
-import com.pantaubersama.app.ui.debat.adapter.MessageAdapter
+import com.pantaubersama.app.ui.debat.adapter.MessageSortedAdapter
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.extensions.dip
 import com.pantaubersama.app.utils.extensions.isVisible
@@ -52,7 +52,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
     private lateinit var jumpingBeans: JumpingBeans
 
-    private lateinit var messageAdapter: MessageAdapter
+    private lateinit var messageSortedAdapter: MessageSortedAdapter
     private lateinit var komentarAdapter: KomentarAdapter
 
     private lateinit var myProfile: Profile
@@ -93,16 +93,20 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     }
 
     private fun setupDebatList() {
-        messageAdapter = MessageAdapter()
-        recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        recycler_view.adapter = messageAdapter
-        messageAdapter.listener = object : MessageAdapter.AdapterListener {
+        messageSortedAdapter = MessageSortedAdapter()
+        recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, true)
+        recycler_view.adapter = messageSortedAdapter
+        messageSortedAdapter.listener = object : MessageSortedAdapter.AdapterListener {
             override fun onClickClap() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onMessageInputFocused(isFocused: Boolean) {
                 isMessageInputFocused = isFocused
+            }
+
+            override fun onPublish(content: String) {
+                presenter.postMessage(content)
             }
         }
     }
@@ -128,14 +132,30 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
             Timber.d("messageList : $it")
         }
 
-        messageAdapter.setDatas(messageList)
-        for (i in 0 until messageAdapter.getDatas()?.size()!!) {
-            Timber.d("messageList getDatas $i : ${messageAdapter.getData(i)}")
+        messageSortedAdapter.setDatas(messageList)
+        for (i in 0 until messageSortedAdapter.getDatas()?.size()!!) {
+            Timber.d("messageList getDatas $i : ${messageSortedAdapter.getData(i)}")
         }
     }
 
     override fun showKomentar(komentarList: MutableList<Komentar>) {
         komentarAdapter.setDatas(komentarList)
+    }
+
+    override fun onSuccessPostMessage(messageItem: MessageItem) {
+        Timber.d("messageList getDatas before MESSAGE_INPUT_LEFT == : ${messageSortedAdapter.getData(messageSortedAdapter.itemCount - 1)}")
+        messageSortedAdapter.updateItem(MessageItem("msg-input-left", "", Profile(), false, 0, 0, MessageItem.Type.INPUT_LEFT_SIDE), messageSortedAdapter.itemCount - 1)
+//        Timber.d("messageList getDatas MESSAGE_INPUT_LEFT == : $MESSAGE_INPUT_LEFT")
+        Timber.d("messageList getDatas after MESSAGE_INPUT_LEFT == : ${messageSortedAdapter.getData(messageSortedAdapter.itemCount - 1)}")
+        messageSortedAdapter.addItem(messageItem)
+        Timber.d("messageList getDatas onSuccessPostMessage ===")
+        for (i in 0 until messageSortedAdapter.getDatas()?.size()!!) {
+            Timber.d("messageList getDatas $i : ${messageSortedAdapter.getData(i)}")
+        }
+    }
+
+    override fun onFailedPostMessage(messageItem: MessageItem) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showLoading() {
@@ -228,7 +248,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
             if (isAppbarExpanded) {
                 app_bar.setExpanded(false)
             }
-            recycler_view.smoothScrollToPosition(messageAdapter.itemCount - 1)
+            recycler_view.smoothScrollToPosition(messageSortedAdapter.itemCount - 1)
             fab_scroll_to_bottom.hide()
         }
 
@@ -269,12 +289,12 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         KeyboardVisibilityEvent.setEventListener(this@DebatActivity) { isOpen ->
             isKeyboardShown = isOpen
             if (isOpen) {
+                showFAB(false)
                 if (isMessageInputFocused && layout_box_komentar_main.isVisible()) {
                     layout_box_komentar_main.visibleIf(false)
                     adjustRvPadding(true)
                 } else {
                     btn_comment_main.setImageResource(R.drawable.ic_send)
-                    showFAB(false)
                 }
             } else {
                 if (!layout_box_komentar_main.isVisible()) {

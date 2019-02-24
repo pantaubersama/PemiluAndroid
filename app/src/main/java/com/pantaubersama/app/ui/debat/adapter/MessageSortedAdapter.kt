@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.SortedAdapter
+import com.pantaubersama.app.data.model.debat.MESSAGE_INPUT_LEFT
+import com.pantaubersama.app.data.model.debat.MESSAGE_INPUT_RIGHT
 import com.pantaubersama.app.data.model.debat.MessageItem
 import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_INPUT_LEFT_SIDE
 import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_INPUT_RIGHT_SIDE
@@ -21,11 +23,12 @@ import kotlinx.android.synthetic.main.item_message_left_side.*
 /**
  * @author edityomurti on 14/02/2019 22:26
  */
-class MessageAdapter : SortedAdapter<MessageItem>() {
+@Deprecated("Not suitable for SortedList")
+class MessageSortedAdapter : SortedAdapter<MessageItem>() {
 
     private lateinit var recyclerView: RecyclerView
 
-    var listener: MessageAdapter.AdapterListener? = null
+    var listener: MessageSortedAdapter.AdapterListener? = null
 
     override val itemClass: Class<MessageItem>
         get() = MessageItem::class.java
@@ -95,6 +98,11 @@ class MessageAdapter : SortedAdapter<MessageItem>() {
 
     inner class MessageInputViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: MessageItem) {
+//            itemView.isEnabled = item.inputState == MessageItem.InputState.ACTIVE
+            enableView(item.inputState == MessageItem.InputState.ACTIVE, itemView as ViewGroup)
+
+            et_content.setText(item.body)
+
             et_content.onFocusChangeListener = View.OnFocusChangeListener { _, isFocused ->
                 listener?.onMessageInputFocused(isFocused)
             }
@@ -131,17 +139,48 @@ class MessageAdapter : SortedAdapter<MessageItem>() {
                     }
                 }
             })
+
+            btn_publish.setOnClickListener {
+                val content = et_content.text.toString()
+                item.body = content
+                item.inputState = MessageItem.InputState.INACTIVE
+                et_content.clearFocus()
+                notifyItemChanged(adapterPosition)
+                listener?.onPublish(content)
+            }
+        }
+
+        fun enableView(enable: Boolean, viewGroup: ViewGroup) {
+            for (i in 0 until viewGroup.childCount) {
+                val child = viewGroup.getChildAt(i)
+                child.isEnabled = enable
+                if (child is ViewGroup) {
+                    enableView(enable, child)
+                }
+            }
         }
     }
 
     interface AdapterListener {
         fun onClickClap()
         fun onMessageInputFocused(isFocused: Boolean)
+        fun onPublish(content: String)
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
 
         this.recyclerView = recyclerView
+    }
+
+    fun addMessageInput(type: MessageItem.Type) {
+        getData(itemCount - 1)?.let {
+            val messageInputItem = when (type) {
+                MessageItem.Type.INPUT_LEFT_SIDE -> MESSAGE_INPUT_LEFT
+                else -> MESSAGE_INPUT_RIGHT
+            }
+            messageInputItem.createdAt = it.createdAt + 1
+            addItem(messageInputItem)
+        }
     }
 }
