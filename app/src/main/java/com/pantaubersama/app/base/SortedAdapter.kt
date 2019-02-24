@@ -75,7 +75,6 @@ abstract class SortedAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     fun addItem(item: T) {
         val i = data.add(item)
-        Timber.d("addItem i : $i")
         notifyItemInserted(i)
     }
 

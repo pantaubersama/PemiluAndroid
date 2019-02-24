@@ -20,12 +20,13 @@ import com.google.android.material.appbar.AppBarLayout
 import com.makeramen.roundedimageview.RoundedImageView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.debat.InputMessageItem
 import com.pantaubersama.app.data.model.debat.Komentar
 import com.pantaubersama.app.data.model.debat.MessageItem
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.debat.adapter.KomentarAdapter
-import com.pantaubersama.app.ui.debat.adapter.MessageSortedAdapter
+import com.pantaubersama.app.ui.debat.adapter.MessageAdapter
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.extensions.dip
 import com.pantaubersama.app.utils.extensions.isVisible
@@ -52,7 +53,8 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
     private lateinit var jumpingBeans: JumpingBeans
 
-    private lateinit var messageSortedAdapter: MessageSortedAdapter
+//    private lateinit var messageSortedAdapter: MessageSortedAdapter
+    private lateinit var messageAdapter: MessageAdapter
     private lateinit var komentarAdapter: KomentarAdapter
 
     private lateinit var myProfile: Profile
@@ -93,10 +95,10 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     }
 
     private fun setupDebatList() {
-        messageSortedAdapter = MessageSortedAdapter()
+        messageAdapter = MessageAdapter()
         recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, true)
-        recycler_view.adapter = messageSortedAdapter
-        messageSortedAdapter.listener = object : MessageSortedAdapter.AdapterListener {
+        recycler_view.adapter = messageAdapter
+        messageAdapter.listener = object : MessageAdapter.AdapterListener {
             override fun onClickClap() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -128,14 +130,9 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     }
 
     override fun showMessage(messageList: MutableList<MessageItem>) {
-        messageList.forEach {
-            Timber.d("messageList : $it")
-        }
-
-        messageSortedAdapter.setDatas(messageList)
-        for (i in 0 until messageSortedAdapter.getDatas()?.size()!!) {
-            Timber.d("messageList getDatas $i : ${messageSortedAdapter.getData(i)}")
-        }
+        messageAdapter.setDatas(messageList)
+        messageAdapter.addInputMessage(InputMessageItem.Type.INPUT_LEFT_SIDE)
+        recycler_view.scrollToPosition(messageAdapter.itemCount - 1)
     }
 
     override fun showKomentar(komentarList: MutableList<Komentar>) {
@@ -143,15 +140,8 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     }
 
     override fun onSuccessPostMessage(messageItem: MessageItem) {
-        Timber.d("messageList getDatas before MESSAGE_INPUT_LEFT == : ${messageSortedAdapter.getData(messageSortedAdapter.itemCount - 1)}")
-        messageSortedAdapter.updateItem(MessageItem("msg-input-left", "", Profile(), false, 0, 0, MessageItem.Type.INPUT_LEFT_SIDE), messageSortedAdapter.itemCount - 1)
-//        Timber.d("messageList getDatas MESSAGE_INPUT_LEFT == : $MESSAGE_INPUT_LEFT")
-        Timber.d("messageList getDatas after MESSAGE_INPUT_LEFT == : ${messageSortedAdapter.getData(messageSortedAdapter.itemCount - 1)}")
-        messageSortedAdapter.addItem(messageItem)
-        Timber.d("messageList getDatas onSuccessPostMessage ===")
-        for (i in 0 until messageSortedAdapter.getDatas()?.size()!!) {
-            Timber.d("messageList getDatas $i : ${messageSortedAdapter.getData(i)}")
-        }
+        messageAdapter.clearInputMessage(true)
+        messageAdapter.addItem(messageItem, 1)
     }
 
     override fun onFailedPostMessage(messageItem: MessageItem) {
@@ -205,7 +195,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
                 if (isMainToolbarShown) {
                     isMainToolbarShown = false
                     val toolbarBackground = TransitionDrawable(arrayOf(toolbar_debat.background, ColorDrawable(ContextCompat.getColor(this, R.color.yellow))))
-                    Timber.d("OffsetChangedTransition - startTransition")
                     toolbar_debat.background = toolbarBackground.also { it.startTransition(150) }
 
                     tv_toolbar_title.text = "${tv_sisa_waktu.text.toString().toLowerCase()} tersisa"
@@ -215,7 +204,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
                 if (!isMainToolbarShown) {
                     isMainToolbarShown = true
                     val toolbarBackground = TransitionDrawable(arrayOf(toolbar_debat.background, ColorDrawable(ContextCompat.getColor(this, R.color.yellowAlpha))))
-                    Timber.d("OffsetChangedTransition - reverseTransition")
                     toolbar_debat.background = toolbarBackground.also {
                         it.isCrossFadeEnabled = true
                         it.reverseTransition(150)
@@ -248,7 +236,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
             if (isAppbarExpanded) {
                 app_bar.setExpanded(false)
             }
-            recycler_view.smoothScrollToPosition(messageSortedAdapter.itemCount - 1)
+            recycler_view.smoothScrollToPosition(0)
             fab_scroll_to_bottom.hide()
         }
 

@@ -21,7 +21,6 @@ class DebatInteractor @Inject constructor(
 ) {
     fun getMessage(): Single<MutableList<MessageItem>> {
         val messageList: MutableList<MessageItem> = ArrayList()
-        messageList.add(MESSAGE_INPUT_LEFT)
         for (i in 1..15) {
             val message = MessageItem("msg-id-$i", "$i. Mau nambahin, jumlah baliho juga melanggar ketentuan di pertigaan Ahmad Yani sudah saya lampiran bukti foto serta tambahan lokasi baliho dimana saja pemasangan baliho.", Profile(),
                 false, i, System.currentTimeMillis() + i, if (i.isOdd()) MessageItem.Type.LEFT_SIDE else MessageItem.Type.RIGHT_SIDE)
