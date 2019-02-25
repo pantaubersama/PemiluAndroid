@@ -57,12 +57,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/question_short_hint"
+                            android:text="@string/question_long_hint"
                             android:fontFamily="@font/lato_regular"/>
 
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_3"/>
 
                 <LinearLayout
                     android:id="@+id/available_questions_container"

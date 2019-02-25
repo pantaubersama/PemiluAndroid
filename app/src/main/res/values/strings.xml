@@ -26,7 +26,8 @@
     <string name="pilpres_banner_text">Halaman ini berisikan informasi dari channel Resmi twitter Jokowi - Makruf dan Prabowo - Sandi yang terdaftar di Bawaslu</string>
     <string name="kuis_banner_text">Ikuti quiz pilih jawaban tanpa kamu tahu itu jawaban siapa, kemudian tunggu kejutannya dan lihat hasil dari quiz ini</string>
     <string name="janpol_banner_text">Halaman ini berisikan informasi dari para user yang menginfokan kembali janji politik dari Capres, Cawapres maupun</string>
-    <string name="question_short_hint">Berikan pertanyaan singkat untuk kandidat Calon Presiden dan Calon Wakil Presiden 2019-2024. Gunakan bahasa yang baik dan jelas, yaa!</string>
+    <string name="question_long_hint">Berikan pertanyaan singkat untuk diajukan ke kedua kandidat Calon Presiden dan Calon Wakil Presiden 2019 -2024. Gunakan bahasa yang baik dan jelas. Kalau pertanyaan sudah ada, lebih asyik jangan ditanyakan lagi cukup kasih upvote pada pertanyaan yang sama aja yaa, biar Pak Presiden bisa segera jawab:</string>
+    <string name="question_short_hint">Apa Pertanyaanmu buat calon Capres Indonesia?</string>
     <string name="lapor_short_hint">Menemukan Dugaan Pelanggaran Pemilu?</string>
     <string name="question_dummy_text">Kapan realisasi sistem tenaga kerja alih daya diterapkan seutuhnya? Kita ini insan bukan seekor sapi.</string>
     <string name="question_time_dummy_text">8 days ago</string>
