@@ -285,7 +285,7 @@
         android:id="@+id/button_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackground"
+        android:background="?selectableItemBackgroundBorderless"
         android:src="@drawable/ic_more_horiz"
         android:tint="@color/black_3"
         app:layout_constraintBottom_toBottomOf="@id/text_tag"
