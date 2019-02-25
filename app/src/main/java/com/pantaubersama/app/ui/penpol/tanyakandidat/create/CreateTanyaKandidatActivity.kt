@@ -21,11 +21,13 @@ import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatA
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.visibleIf
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_create_tanya_kandidat.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -79,6 +81,7 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
             .subscribe {
                 if (it.isNotEmpty()) {
                     adapter.setDataEnd(false)
+                    available_questions_container.visibility = View.VISIBLE
                     presenter.getAvailableQuestions(it)
                 } else {
                     available_questions_container.visibility = View.GONE
@@ -99,16 +102,29 @@ class CreateTanyaKandidatActivity : BaseActivity<CreateTanyaKandidatPresenter>()
     }
 
     override fun bindAvailableQuestions(questions: MutableList<Pertanyaan>) {
-        available_questions_container.visibility = View.VISIBLE
+        available_questions.visibleIf(true)
         adapter.setDatas(questions as MutableList<ItemModel>)
     }
 
+    override fun showQustionAvailableLoading() {
+        available_questions.visibleIf(false)
+        empty_alert.visibility = View.GONE
+        failed_alert.visibility = View.GONE
+        lottie_loading.visibleIf(true)
+    }
+
+    override fun hideQustionAvailableLoading() {
+        available_questions.visibleIf(false)
+        lottie_loading.visibleIf(false)
+    }
+
     override fun showFailedGetAvailableQuestions() {
-        ToastUtil.show(this@CreateTanyaKandidatActivity, "Gagal memuat pertanyaan tersedia")
+        available_questions.visibleIf(false)
+        failed_alert.visibility = View.VISIBLE
     }
 
     override fun showEmptyAvailableQuestionAlert() {
-        ToastUtil.show(this@CreateTanyaKandidatActivity, "Tidak terdapat pertanyaan tersedia")
+        empty_alert.visibility = View.VISIBLE
     }
 
     override fun setLayout(): Int {
