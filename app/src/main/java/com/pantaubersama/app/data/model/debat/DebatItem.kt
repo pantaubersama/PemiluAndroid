@@ -3,14 +3,15 @@ package com.pantaubersama.app.data.model.debat
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_DEBAT_ITEM
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_HEADER
+import java.io.Serializable
 
-sealed class DebatItem : ItemModel {
+sealed class DebatItem : ItemModel, Serializable {
     abstract val debatDetail: DebatDetail
     abstract val type: String
 
     override fun getType(): Int = TYPE_DEBAT_ITEM
 
-    data class LiveNow(override val debatDetail: DebatDetail) : DebatItem() {
+    data class LiveNow(override val debatDetail: DebatDetail) : DebatItem(), Serializable {
         override val type: String = "LIVE NOW"
     }
 
@@ -18,7 +19,7 @@ sealed class DebatItem : ItemModel {
         override val debatDetail: DebatDetail,
         val date: String,
         val startEndTime: String
-    ) : DebatItem() {
+    ) : DebatItem(), Serializable {
         override val type: String = "COMING SOON"
     }
 
@@ -27,7 +28,7 @@ sealed class DebatItem : ItemModel {
         val clap1: Int,
         val clap2: Int,
         val favoriteCount: Int
-    ) : DebatItem() {
+    ) : DebatItem(), Serializable {
         override val type: String = "DONE"
     }
 
@@ -35,7 +36,7 @@ sealed class DebatItem : ItemModel {
         override val debatDetail: DebatDetail,
         val pendingOpponent: Int,
         val status: Status
-    ) : DebatItem() {
+    ) : DebatItem(), Serializable {
         override val type: String = when (status) {
             Status.OPEN -> "OPEN CHALLENGE"
             Status.DIRECT -> "DIRECT CHALLENGE"
@@ -69,4 +70,4 @@ data class DebatDetail(
     val name1: String,
     val name2: String,
     val tag: String
-)
+) : Serializable
