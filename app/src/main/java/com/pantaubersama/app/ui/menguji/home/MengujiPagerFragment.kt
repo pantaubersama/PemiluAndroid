@@ -35,10 +35,10 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
 
     override val isPublik by unSyncLazy { arguments?.getBoolean(ARG_PUBLIK_TAB) ?: true }
 
-    private val debatCarouselAdapter by unSyncLazy { BriefDebatAdapter(true) }
-    private val debatComingAdapter by unSyncLazy { BriefDebatAdapter(false) }
-    private val debatDoneAdapter by unSyncLazy { BriefDebatAdapter(false) }
-    private val debatOpenAdapter by unSyncLazy { BriefDebatAdapter(false) }
+    private val debatCarouselAdapter by unSyncLazy { BriefDebatAdapter(true, childFragmentManager) }
+    private val debatComingAdapter by unSyncLazy { BriefDebatAdapter(false, childFragmentManager) }
+    private val debatDoneAdapter by unSyncLazy { BriefDebatAdapter(false, childFragmentManager) }
+    private val debatOpenAdapter by unSyncLazy { BriefDebatAdapter(false, childFragmentManager) }
 
     override fun setLayout(): Int = R.layout.fragment_menguji_pager
 

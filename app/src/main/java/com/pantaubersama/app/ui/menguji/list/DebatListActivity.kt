@@ -19,7 +19,7 @@ class DebatListActivity : BaseActivity<DebatListPresenter>(), DebatListView {
 
     private val title by unSyncLazy { intent.getStringExtra(Debat.EXTRA_TITLE) }
 
-    private val adapter by unSyncLazy { DebatListAdapter() }
+    private val adapter by unSyncLazy { DebatListAdapter(supportFragmentManager) }
 
     override fun statusBarColor(): Int? = R.color.white
 
