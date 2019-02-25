@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.debat.DebatItem
 import com.pantaubersama.app.ui.debat.DebatActivity
@@ -11,7 +12,7 @@ import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.item_debat_big.*
 
-class DebatBigViewHolder(view: View) : DebatViewHolder(view) {
+class DebatBigViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(view, fm) {
 
     override val textDebatType: TextView = text_debat_type
     override val imageAvatar1: ImageView = image_avatar_1
@@ -20,6 +21,7 @@ class DebatBigViewHolder(view: View) : DebatViewHolder(view) {
     override val textName2: TextView = text_name_2
     override val textTag: TextView = text_tag
     override val textOpponentCount: TextView = text_opponent_count
+    override val buttonMoreOption: View = button_more
 
     override fun bind(item: DebatItem) {
         super.bind(item)

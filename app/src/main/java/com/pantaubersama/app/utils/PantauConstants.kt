@@ -302,5 +302,7 @@ class PantauConstants {
     object Message {
         const val MESSAGE_TYPE_LEFT_SIDE = 1
         const val MESSAGE_TYPE_RIGHT_SIDE = 2
+        const val MESSAGE_INPUT_LEFT_SIDE = 3
+        const val MESSAGE_INPUT_RIGHT_SIDE = 4
     }
 }

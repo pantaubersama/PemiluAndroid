@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseRecyclerAdapter
-import com.pantaubersama.app.data.model.debat.InputMessageItem
-import com.pantaubersama.app.data.model.debat.MESSAGE_INPUT_LEFT
+import com.pantaubersama.app.base.SortedAdapter
 import com.pantaubersama.app.data.model.debat.MESSAGE_INPUT_RIGHT
 import com.pantaubersama.app.data.model.debat.MessageItem
 import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_INPUT_LEFT_SIDE
@@ -17,32 +15,56 @@ import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_TYPE_LEFT_SID
 import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_TYPE_RIGHT_SIDE
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.drawable
-import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_box_message_left.*
 import kotlinx.android.synthetic.main.item_message_left_side.*
 
 /**
- * @author edityomurti on 24/02/2019 19:48
+ * @author edityomurti on 14/02/2019 22:26
  */
-class MessageAdapter : BaseRecyclerAdapter() {
+@Deprecated("Not yet suitable for SortedList")
+class MessageSortedAdapter : SortedAdapter<MessageItem>() {
 
-    lateinit var recyclerView: RecyclerView
-    lateinit var listener: MessageAdapter.AdapterListener
+    private lateinit var recyclerView: RecyclerView
+
+    var listener: MessageSortedAdapter.AdapterListener? = null
+
+    override val itemClass: Class<MessageItem>
+        get() = MessageItem::class.java
+
+    override fun compare(item1: MessageItem, item2: MessageItem): Int {
+        return item2.createdAt.compareTo(item1.createdAt)
+    }
+
+    override fun getItemResourceLayout(viewType: Int): Int {
+        return when (viewType) {
+            MESSAGE_TYPE_LEFT_SIDE -> R.layout.item_message_left_side
+            MESSAGE_TYPE_RIGHT_SIDE -> R.layout.item_message_right_side
+            MESSAGE_INPUT_LEFT_SIDE -> R.layout.item_box_message_left
+            MESSAGE_INPUT_RIGHT_SIDE -> R.layout.item_box_message_right
+            else -> throw IllegalArgumentException("unknown view type $viewType")
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return data?.get(position)?.getType() ?: 0
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            MESSAGE_TYPE_LEFT_SIDE -> MessageViewholder(parent.inflate(R.layout.item_message_left_side))
-            MESSAGE_TYPE_RIGHT_SIDE -> MessageViewholder(parent.inflate(R.layout.item_message_right_side))
-            MESSAGE_INPUT_LEFT_SIDE -> MessageInputViewHolder(parent.inflate(R.layout.item_box_message_left))
-            MESSAGE_INPUT_RIGHT_SIDE -> MessageInputViewHolder(parent.inflate(R.layout.item_box_message_right))
-            else -> throw IllegalArgumentException("unkown view type $viewType")
+            MESSAGE_TYPE_LEFT_SIDE -> MessageViewholder(getView(parent, viewType))
+            MESSAGE_TYPE_RIGHT_SIDE -> MessageViewholder(getView(parent, viewType))
+            MESSAGE_INPUT_LEFT_SIDE -> MessageInputViewHolder(getView(parent, viewType))
+            MESSAGE_INPUT_RIGHT_SIDE -> MessageInputViewHolder(getView(parent, viewType))
+            else -> throw IllegalArgumentException("unknown view type $viewType")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as? MessageViewholder)?.bind(data[position] as MessageItem)
-        (holder as? MessageInputViewHolder)?.bind(data[position] as InputMessageItem)
+        getData(position)?.let {
+            (holder as? MessageViewholder)?.bind(it)
+            (holder as? MessageInputViewHolder)?.bind(it)
+        }
     }
 
     inner class MessageViewholder(override val containerView: View)
@@ -59,7 +81,7 @@ class MessageAdapter : BaseRecyclerAdapter() {
             cl_btn_clap.setOnClickListener { onClapClicked(item) }
         }
 
-        private fun onClapClicked(item: MessageItem) {
+        fun onClapClicked(item: MessageItem) {
             val initialClapState = item.isLiked
             item.isLiked = !item.isLiked
             if (initialClapState) {
@@ -74,13 +96,14 @@ class MessageAdapter : BaseRecyclerAdapter() {
     }
 
     inner class MessageInputViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: InputMessageItem) {
-            enableView(item.inputState == InputMessageItem.InputState.ACTIVE, itemView as ViewGroup)
+        fun bind(item: MessageItem) {
+//            itemView.isEnabled = item.inputState == MessageItem.InputState.ACTIVE
+//            enableView(item.inputState == MessageItem.InputState.ACTIVE, itemView as ViewGroup)
 
             et_content.setText(item.body)
 
             et_content.onFocusChangeListener = View.OnFocusChangeListener { _, isFocused ->
-                listener.onMessageInputFocused(isFocused)
+                listener?.onMessageInputFocused(isFocused)
             }
 
             et_content.addTextChangedListener(object : TextWatcher {
@@ -90,11 +113,11 @@ class MessageAdapter : BaseRecyclerAdapter() {
 
                 override fun onTextChanged(query: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     if (query?.isNotEmpty() == true && query.isNotBlank()) {
-                        if (item.type == InputMessageItem.Type.INPUT_LEFT_SIDE) {
-                            view_indicator_input_message.background = itemView.context.drawable(R.drawable.rounded_tosca_2)
-                        } else {
-                            view_indicator_input_message.background = itemView.context.drawable(R.drawable.rounded_red_2)
-                        }
+//                        if (item.type == MessageItem.Type.INPUT_LEFT_SIDE) {
+//                            view_indicator_input_message.background = itemView.context.drawable(R.drawable.rounded_tosca_2)
+//                        } else {
+//                            view_indicator_input_message.background = itemView.context.drawable(R.drawable.rounded_red_2)
+//                        }
 
                         btn_publish.setTextColor(itemView.context.color(R.color.orange_2))
 
@@ -113,17 +136,16 @@ class MessageAdapter : BaseRecyclerAdapter() {
                         if (!btn_publish.isClickable) btn_publish.isClickable = false
                         if (!btn_cancel.isClickable) btn_cancel.isClickable = false
                     }
-                    item.body = query.toString()
                 }
             })
 
             btn_publish.setOnClickListener {
                 val content = et_content.text.toString()
                 item.body = content
-                item.inputState = InputMessageItem.InputState.INACTIVE
+//                item.inputState = MessageItem.InputState.INACTIVE
                 et_content.clearFocus()
                 notifyItemChanged(adapterPosition)
-                listener.onPublish(content)
+                listener?.onPublish(content)
             }
         }
 
@@ -146,22 +168,20 @@ class MessageAdapter : BaseRecyclerAdapter() {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
+
         this.recyclerView = recyclerView
     }
 
-    fun addInputMessage(type: InputMessageItem.Type) {
-        val inputMessageItem = when (type) {
-            InputMessageItem.Type.INPUT_LEFT_SIDE -> MESSAGE_INPUT_LEFT
-            InputMessageItem.Type.INPUT_RIGHT_SIDE -> MESSAGE_INPUT_RIGHT
+    fun addMessageInput(type: MessageItem.Type) {
+        getData(itemCount - 1)?.let {
+            val inputMessageItem = when (type) {
+//                MessageItem.Type.INPUT_LEFT_SIDE -> MESSAGE_INPUT_LEFT
+                else -> MESSAGE_INPUT_RIGHT
+            }
+//            messageInputItem.createdAt = it.createdAt + 1
+//            addItem(messageInputItem)
         }
-        addItem(inputMessageItem, 0)
     }
 
-    fun clearInputMessage(isActive: Boolean = false) {
-        (get(0) as? InputMessageItem)?.apply {
-            body = ""
-            inputState = if (isActive) InputMessageItem.InputState.ACTIVE else InputMessageItem.InputState.INACTIVE
-            notifyItemChanged(0)
-        }
-    }
+//    fun clearMe
 }
