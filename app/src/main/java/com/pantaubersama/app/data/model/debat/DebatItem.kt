@@ -43,6 +43,9 @@ sealed class DebatItem : ItemModel {
             Status.EXPIRED -> "EXPIRED"
         }
 
+        val isOpen: Boolean
+            get() = status == Status.OPEN
+
         val isDirect: Boolean
             get() = status == Status.DIRECT
 

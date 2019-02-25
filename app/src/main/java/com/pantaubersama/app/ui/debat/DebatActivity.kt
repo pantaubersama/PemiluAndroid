@@ -26,9 +26,11 @@ import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.debat.adapter.KomentarAdapter
 import com.pantaubersama.app.ui.debat.adapter.MessageAdapter
-import com.pantaubersama.app.ui.widget.OptionDialog
+import com.pantaubersama.app.ui.widget.OptionDialogFragment
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.dip
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.unSyncLazy
 import com.pantaubersama.app.utils.hideKeyboard
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_debat.*
@@ -61,6 +63,10 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     private lateinit var btn_comment_in: ImageView
     private lateinit var iv_avatar_comment_main: RoundedImageView
     private lateinit var iv_avatar_comment_in: RoundedImageView
+
+    private val optionDialog by unSyncLazy {
+        OptionDialogFragment.newInstance(R.layout.layout_option_dialog_menguji)
+    }
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -207,10 +213,15 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         })
 
         btn_more_toolbar.setOnClickListener {
-            val dialog = OptionDialog(this, R.layout.layout_option_dialog_common)
-            dialog.removeItem(R.id.delete_tanya_kandidat_item_action)
-            dialog.removeItem(R.id.report_tanya_kandidat_action)
-            dialog.show()
+            optionDialog.setViewVisibility(R.id.delete_action, false)
+            optionDialog.listener = View.OnClickListener {
+                when (it.id) {
+                    R.id.copy_link_action -> ToastUtil.show(it.context, "Salin Tautan")
+                    R.id.share_action -> ToastUtil.show(it.context, "Bagikan")
+                }
+                optionDialog.dismiss()
+            }
+            optionDialog.show(supportFragmentManager, "dialog")
         }
 
         cl_btn_detail_debat.setOnClickListener {
