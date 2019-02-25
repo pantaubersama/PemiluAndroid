@@ -20,8 +20,9 @@ import com.google.android.material.appbar.AppBarLayout
 import com.makeramen.roundedimageview.RoundedImageView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.debat.InputMessageItem
 import com.pantaubersama.app.data.model.debat.Komentar
-import com.pantaubersama.app.data.model.debat.Message
+import com.pantaubersama.app.data.model.debat.MessageItem
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.debat.adapter.KomentarAdapter
@@ -29,7 +30,9 @@ import com.pantaubersama.app.ui.debat.adapter.MessageAdapter
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.dip
+import com.pantaubersama.app.utils.extensions.isVisible
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.visibleIf
 import com.pantaubersama.app.utils.extensions.unSyncLazy
 import com.pantaubersama.app.utils.hideKeyboard
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -40,7 +43,6 @@ import kotlinx.android.synthetic.main.layout_status_debat.*
 import kotlinx.android.synthetic.main.layout_toolbar_debat.*
 import net.frakbot.jumpingbeans.JumpingBeans
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
-import timber.log.Timber
 import javax.inject.Inject
 
 class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
@@ -52,6 +54,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
     private lateinit var jumpingBeans: JumpingBeans
 
+//    private lateinit var messageSortedAdapter: MessageSortedAdapter
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var komentarAdapter: KomentarAdapter
 
@@ -64,6 +67,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     private lateinit var iv_avatar_comment_main: RoundedImageView
     private lateinit var iv_avatar_comment_in: RoundedImageView
 
+    private var isMessageInputFocused = false
     private val optionDialog by unSyncLazy {
         OptionDialogFragment.newInstance(R.layout.layout_option_dialog_menguji)
     }
@@ -96,11 +100,19 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
     private fun setupDebatList() {
         messageAdapter = MessageAdapter()
-        recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, true)
         recycler_view.adapter = messageAdapter
         messageAdapter.listener = object : MessageAdapter.AdapterListener {
             override fun onClickClap() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onMessageInputFocused(isFocused: Boolean) {
+                isMessageInputFocused = isFocused
+            }
+
+            override fun onPublish(content: String) {
+                presenter.postMessage(content)
             }
         }
     }
@@ -121,19 +133,23 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showMessage(messageList: MutableList<Message>) {
-        messageList.forEach {
-            Timber.d("messageList : $it")
-        }
-
+    override fun showMessage(messageList: MutableList<MessageItem>) {
         messageAdapter.setDatas(messageList)
-        for (i in 0 until messageAdapter.getDatas()?.size()!!) {
-            Timber.d("messageList getDatas $i : ${messageAdapter.getData(i)}")
-        }
+        messageAdapter.addInputMessage(InputMessageItem.Type.INPUT_LEFT_SIDE)
+        recycler_view.scrollToPosition(messageAdapter.itemCount - 1)
     }
 
     override fun showKomentar(komentarList: MutableList<Komentar>) {
         komentarAdapter.setDatas(komentarList)
+    }
+
+    override fun onSuccessPostMessage(messageItem: MessageItem) {
+        messageAdapter.clearInputMessage(true)
+        messageAdapter.addItem(messageItem, 1)
+    }
+
+    override fun onFailedPostMessage(messageItem: MessageItem) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showLoading() {
@@ -176,7 +192,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         lateinit var commentInTextWatcher: TextWatcher
         lateinit var commentMainTextWatcher: TextWatcher
 
-
         btn_back.setOnClickListener { onBackPressed() }
 
         app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
@@ -184,7 +199,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
                 if (isMainToolbarShown) {
                     isMainToolbarShown = false
                     val toolbarBackground = TransitionDrawable(arrayOf(toolbar_debat.background, ColorDrawable(ContextCompat.getColor(this, R.color.yellow))))
-                    Timber.d("OffsetChangedTransition - startTransition")
                     toolbar_debat.background = toolbarBackground.also { it.startTransition(150) }
 
                     tv_toolbar_title.text = "${tv_sisa_waktu.text.toString().toLowerCase()} tersisa"
@@ -194,7 +208,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
                 if (!isMainToolbarShown) {
                     isMainToolbarShown = true
                     val toolbarBackground = TransitionDrawable(arrayOf(toolbar_debat.background, ColorDrawable(ContextCompat.getColor(this, R.color.yellowAlpha))))
-                    Timber.d("OffsetChangedTransition - reverseTransition")
                     toolbar_debat.background = toolbarBackground.also {
                         it.isCrossFadeEnabled = true
                         it.reverseTransition(150)
@@ -232,7 +245,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
             if (isAppbarExpanded) {
                 app_bar.setExpanded(false)
             }
-            recycler_view.smoothScrollToPosition(messageAdapter.itemCount - 1)
+            recycler_view.smoothScrollToPosition(0)
             fab_scroll_to_bottom.hide()
         }
 
@@ -264,18 +277,27 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         layout_komentar_debat.setOnClickListener(null)
 
         layout_box_komentar_main.post {
-            recycler_view.setPadding(0, 0, 0, layout_box_komentar_main.height)
-
+            adjustRvPadding()
             showFAB(true)
         }
 
         btn_comment_main.setImageResource(R.drawable.ic_arrow_expand_more)
+
         KeyboardVisibilityEvent.setEventListener(this@DebatActivity) { isOpen ->
             isKeyboardShown = isOpen
             if (isOpen) {
-                btn_comment_main.setImageResource(R.drawable.ic_send)
                 showFAB(false)
+                if (isMessageInputFocused && layout_box_komentar_main.isVisible()) {
+                    layout_box_komentar_main.visibleIf(false)
+                    adjustRvPadding(true)
+                } else {
+                    btn_comment_main.setImageResource(R.drawable.ic_send)
+                }
             } else {
+                if (!layout_box_komentar_main.isVisible()) {
+                    layout_box_komentar_main.visibleIf(true)
+                    adjustRvPadding()
+                }
                 btn_comment_main.setImageResource(R.drawable.ic_arrow_expand_more)
             }
         }
@@ -341,6 +363,14 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
             }
         } else {
             fab_scroll_to_bottom.hide()
+        }
+    }
+
+    private fun adjustRvPadding(removePadding: Boolean = false) {
+        if (removePadding) {
+            recycler_view.setPadding(0, 0, 0, 0)
+        } else {
+            recycler_view.setPadding(0, 0, 0, layout_box_komentar_main.height)
         }
     }
 

@@ -230,7 +230,6 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
             }
 
             notificationBuilder.setStyle(bigPictureStyle)
-
         } ?: notificationBuilder.setStyle(NotificationCompat.BigTextStyle().bigText(description))
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
