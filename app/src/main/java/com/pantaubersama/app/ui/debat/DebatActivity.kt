@@ -41,7 +41,6 @@ import kotlinx.android.synthetic.main.layout_status_debat.*
 import kotlinx.android.synthetic.main.layout_toolbar_debat.*
 import net.frakbot.jumpingbeans.JumpingBeans
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
-import timber.log.Timber
 import javax.inject.Inject
 
 class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {

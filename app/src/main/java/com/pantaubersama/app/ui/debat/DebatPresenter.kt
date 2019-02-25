@@ -58,7 +58,6 @@ class DebatPresenter @Inject constructor(
                             MessageItem.Type.LEFT_SIDE))
                 },
                 {
-
                 }
             )
         )

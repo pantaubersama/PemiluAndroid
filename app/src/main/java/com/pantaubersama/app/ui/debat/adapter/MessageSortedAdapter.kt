@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.SortedAdapter
-import com.pantaubersama.app.data.model.debat.MESSAGE_INPUT_LEFT
 import com.pantaubersama.app.data.model.debat.MESSAGE_INPUT_RIGHT
 import com.pantaubersama.app.data.model.debat.MessageItem
 import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_INPUT_LEFT_SIDE
@@ -23,7 +22,7 @@ import kotlinx.android.synthetic.main.item_message_left_side.*
 /**
  * @author edityomurti on 14/02/2019 22:26
  */
-@Deprecated("Not suitable for SortedList")
+@Deprecated("Not yet suitable for SortedList")
 class MessageSortedAdapter : SortedAdapter<MessageItem>() {
 
     private lateinit var recyclerView: RecyclerView

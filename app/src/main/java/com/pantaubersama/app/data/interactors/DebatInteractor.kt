@@ -1,7 +1,6 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.model.debat.Komentar
-import com.pantaubersama.app.data.model.debat.MESSAGE_INPUT_LEFT
 import com.pantaubersama.app.data.model.debat.MessageItem
 import com.pantaubersama.app.data.model.image.Image
 import com.pantaubersama.app.data.model.image.Medium
@@ -39,7 +38,6 @@ class DebatInteractor @Inject constructor(
     }
 
     fun postKomentar(): Completable {
-
 
         return Completable.complete()
     }

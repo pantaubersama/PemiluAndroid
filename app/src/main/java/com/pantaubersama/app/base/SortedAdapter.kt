@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
-import timber.log.Timber
 
 /**
  * @author edityomurti on 12/02/2019 15:55

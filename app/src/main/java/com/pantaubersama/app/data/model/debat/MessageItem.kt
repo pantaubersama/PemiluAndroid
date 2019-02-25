@@ -37,7 +37,7 @@ data class InputMessageItem(
     val type: Type,
     var body: String,
     var inputState: InputState? = InputState.ACTIVE
-): ItemModel {
+) : ItemModel {
     override fun getType(): Int = when (type) {
         Type.INPUT_LEFT_SIDE -> MESSAGE_INPUT_LEFT_SIDE
         Type.INPUT_RIGHT_SIDE -> MESSAGE_INPUT_RIGHT_SIDE
