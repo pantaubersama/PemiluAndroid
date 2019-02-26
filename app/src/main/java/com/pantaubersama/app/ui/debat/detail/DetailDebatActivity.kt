@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.debat.detail
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -27,6 +28,8 @@ class DetailDebatActivity : CommonActivity() {
 
     lateinit var debatItem: DebatItem
 
+    var isLiked = false
+
     companion object {
         fun setIntent(context: Context, type: DebatItem): Intent {
             val intent = Intent(context, DetailDebatActivity::class.java)
@@ -41,6 +44,25 @@ class DetailDebatActivity : CommonActivity() {
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupHeader()
+        val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
+
+        lottie_love.progress = if (isLiked) 1.0f else 0.0f
+
+        btn_like.setOnClickListener {
+            if (!animator.isRunning) {
+                isLiked = !isLiked
+                if (isLiked) {
+                    tv_like_count.text =  (tv_like_count.text.toString().toInt() + 1).toString()
+                    animator.addUpdateListener { animation ->
+                        lottie_love.progress = animation.animatedValue as Float
+                    }
+                    animator.start()
+                } else {
+                    tv_like_count.text =  (tv_like_count.text.toString().toInt() - 1).toString()
+                    lottie_love.progress = 0.0f
+                }
+            }
+        }
 
         btn_back.setOnClickListener { onBackPressed() }
     }
