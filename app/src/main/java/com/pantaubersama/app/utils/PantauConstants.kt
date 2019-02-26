@@ -101,6 +101,7 @@ class PantauConstants {
         const val EXTRA_IMAGE_URL = "EXTRA_IMAGE_URL"
         const val EXTRA_BROADCAST_URL = "EXTRA_BROADCAST_URL"
         const val EXTRA_OPEN_TAB_TYPE = "EXTRA_OPEN_TAB_TYPE"
+        const val EXTRA_DEBAT_ITEM = "EXTRA_DEBAT_ITEM"
     }
 
     object RequestCode {

@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.ui.debat.detail.DetailDebatActivity
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.item_debat_small.*
@@ -52,7 +53,9 @@ class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(vi
 
         when (item) {
             is DebatItem.LiveNow -> text_status.text = "Live Selama 20 Menit"
-            is DebatItem.ComingSoon -> text_status.text = "${item.date}  •  ${item.startEndTime}"
+            is DebatItem.ComingSoon -> {
+                text_status.text = "${item.date}  •  ${item.startEndTime}"
+            }
             is DebatItem.Done -> {
                 text_clap_1.text = item.clap1.toString()
                 text_clap_2.text = item.clap2.toString()
@@ -67,5 +70,7 @@ class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(vi
                 }
             }
         }
+
+        itemView.setOnClickListener { itemView.context.let { it.startActivity(DetailDebatActivity.setIntent(it, item)) } }
     }
 }

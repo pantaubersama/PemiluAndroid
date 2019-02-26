@@ -38,10 +38,11 @@
         <activity android:name=".ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity" />
         <activity android:name=".ui.merayakan.perhitungan.create.DataTPSActivity" />
         <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity" />
+        <activity android:name=".ui.debat.detail.DetailDebatActivity"></activity>
         <activity
-            android:theme="@style/AppTheme.ActionBarOverlay"
             android:name=".ui.debat.DebatActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.ActionBarOverlay" />
         <activity
             android:name=".ui.wordstadium.challenge.open.OpenChallengeActivity"
             android:screenOrientation="portrait" />
@@ -216,7 +217,7 @@
         <activity
             android:name=".ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.linimasa.pilpres.filter.FilterPilpresActivity"
             android:screenOrientation="portrait" />

@@ -16,7 +16,7 @@
     <string name="txt_empty_state">Oops.. data kosong</string>
     <string name="txt_disematkan_dari">Disematkan dari </string>
     <string name="done_action">Done</string>
-    <string name="empty_question_alert">Cannot submit data. Question is empty!</string>
+    <string name="empty_question_alert">Pertanyaan tidak boleh kosong!</string>
     <string name="question_simple_hint">Tulis pertanyaan terbaikmu di sini!</string>
     <string name="dummy_tweet_content">#SahabatBawaslu, Sentra  Gakkumdu berkomitmen untuk tidak memunculkan sikap ego sektoral antar personil, baik dari pihak Bawaslu,  Kepolisian,  maupun Kejaksaan dalam menegakkan hukum Pemilu dalam Rapat Koordinasi Nasional Sentra Gakkumdu,  di Jakarta, Rabu,  (5/12/2018).</string>
     <string name="tanya_kandidat_label">Tanya Kandidat</string>
@@ -26,7 +26,8 @@
     <string name="pilpres_banner_text">Halaman ini berisikan informasi dari channel Resmi twitter Jokowi - Makruf dan Prabowo - Sandi yang terdaftar di Bawaslu</string>
     <string name="kuis_banner_text">Ikuti quiz pilih jawaban tanpa kamu tahu itu jawaban siapa, kemudian tunggu kejutannya dan lihat hasil dari quiz ini</string>
     <string name="janpol_banner_text">Halaman ini berisikan informasi dari para user yang menginfokan kembali janji politik dari Capres, Cawapres maupun</string>
-    <string name="question_short_hint">Berikan pertanyaan singkat untuk kandidat Calon Presiden dan Calon Wakil Presiden 2019-2024. Gunakan bahasa yang baik dan jelas, yaa!</string>
+    <string name="question_long_hint">Berikan pertanyaan singkat untuk diajukan ke kedua kandidat Calon Presiden dan Calon Wakil Presiden 2019 -2024. Gunakan bahasa yang baik dan jelas. Kalau pertanyaan sudah ada, lebih asyik jangan ditanyakan lagi cukup kasih upvote pada pertanyaan yang sama aja yaa, biar Pak Presiden bisa segera jawab:</string>
+    <string name="question_short_hint">Apa Pertanyaanmu buat calon Capres Indonesia?</string>
     <string name="lapor_short_hint">Menemukan Dugaan Pelanggaran Pemilu?</string>
     <string name="question_dummy_text">Kapan realisasi sistem tenaga kerja alih daya diterapkan seutuhnya? Kita ini insan bukan seekor sapi.</string>
     <string name="question_time_dummy_text">8 days ago</string>
@@ -377,4 +378,5 @@
     <string name="tulis_komentar">Tulis komentar</string>
     <string name="tulis_argumen_kamu_disini">Tulis argumen kamu disini</string>
     <string name="publish">Publish</string>
+    <string name="lawan_debat">Lawan debat</string>
 </resources>

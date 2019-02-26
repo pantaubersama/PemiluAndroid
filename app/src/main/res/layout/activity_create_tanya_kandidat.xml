@@ -57,14 +57,19 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/question_short_hint"
+                            android:text="@string/question_long_hint"
                             android:fontFamily="@font/lato_regular"/>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <LinearLayout
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_3"/>
+
+                <FrameLayout
                     android:id="@+id/available_questions_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -81,7 +86,29 @@
 
                     </androidx.recyclerview.widget.RecyclerView>
 
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/empty_alert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pertanyaan tidak ditemukan"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/lato_bold"
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/failed_alert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gagal memuat data"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/lato_bold"
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
+
+                    <include layout="@layout/layout_loading_state" />
+
+                </FrameLayout>
 
             </LinearLayout>
 
