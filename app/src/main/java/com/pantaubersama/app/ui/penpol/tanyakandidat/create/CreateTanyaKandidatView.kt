@@ -14,5 +14,7 @@ interface CreateTanyaKandidatView : BaseView {
     fun bindAvailableQuestions(questions: MutableList<Pertanyaan>)
     fun showFailedGetAvailableQuestions()
     fun showEmptyAvailableQuestionAlert()
+    fun showQustionAvailableLoading()
+    fun hideQustionAvailableLoading()
     // method
 }

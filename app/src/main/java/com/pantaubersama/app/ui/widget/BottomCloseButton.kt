@@ -9,10 +9,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import com.pantaubersama.app.R
 
-class BottomCloseButton : LinearLayout {
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int): super(context, attrs, defStyle)
+class BottomCloseButton @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyle: Int = 0) : LinearLayout(context, attrs, defStyle) {
+//    constructor(context: Context) : super(context)
+//    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+//    constructor(context: Context, attrs: AttributeSet, defStyle: Int): super(context, attrs, defStyle)
 
     init {
         setPadding(12f.toDp(), 12f.toDp(), 12f.toDp(), 12f.toDp())
@@ -27,6 +27,12 @@ class BottomCloseButton : LinearLayout {
         setBackgroundResource(R.drawable.close_button_background)
         addView(backImage)
         isClickable = true
+        attrs?.let {
+            val typedArray = context.obtainStyledAttributes(it, R.styleable.BottomCloseButton, 0, 0)
+            val iconDrawable = typedArray.getResourceId(R.styleable.BottomCloseButton_icon, R.drawable.ic_close)
+            backImage.setImageResource(iconDrawable)
+            typedArray.recycle()
+        }
     }
 
     private fun Float.toDp(): Int {

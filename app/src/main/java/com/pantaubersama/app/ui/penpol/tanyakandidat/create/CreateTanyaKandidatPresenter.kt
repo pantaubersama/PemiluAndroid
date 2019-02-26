@@ -35,10 +35,12 @@ class CreateTanyaKandidatPresenter @Inject constructor(
     }
 
     fun getAvailableQuestions(query: String) {
+        view?.showQustionAvailableLoading()
         disposables.add(
             tanyaKandidatInteractor.searchTanyaKandidat(query, 1, 10)
                 .subscribe(
                     {
+                        view?.hideQustionAvailableLoading()
                         if (it.size != 0) {
                             view?.bindAvailableQuestions(it)
                         } else {
@@ -46,6 +48,7 @@ class CreateTanyaKandidatPresenter @Inject constructor(
                         }
                     },
                     {
+                        view?.hideQustionAvailableLoading()
                         view?.showError(it)
                         view?.showFailedGetAvailableQuestions()
                     }
