@@ -31,14 +31,14 @@ class MengujiPresenter @Inject constructor(
 
     fun getDebatLive() {
         val debatList = (0..3).map {
-            DebatItem.LiveNow(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", ""))
+            DebatItem.LiveNow(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", "dummy"))
         }
         view?.showDebatLive(debatList)
     }
 
     fun getDebatComingSoon() {
         val debatList = (0..2).map {
-            DebatItem.ComingSoon(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", ""),
+            DebatItem.ComingSoon(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", "dummy"),
                 "24 Maret 2019", "16:00 - 17:00")
         }
         view?.showDebatComingSoon(debatList)
@@ -46,7 +46,7 @@ class MengujiPresenter @Inject constructor(
 
     fun getDebatDone() {
         val debatList = (0..2).map {
-            DebatItem.Done(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", ""),
+            DebatItem.Done(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", "dummy"),
                 70, 70, 50)
         }
         view?.showDebatDone(debatList)
