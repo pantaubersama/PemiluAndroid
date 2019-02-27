@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/iv_content_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/background_debat_accept"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="1:0.8"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_content_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Menunggu,"
+        android:textSize="24dp"
+        android:textColor="@color/black_2"
+        android:fontFamily="@font/bw_modelica_light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/tv_content_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="lawan menerima tantanganmu"
+        android:textSize="24dp"
+        android:textColor="@color/yellow"
+        android:fontFamily="@font/bw_modelica_bold"
+        app:layout_constraintTop_toBottomOf="@id/tv_content_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_promosikan"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:minHeight="24dp"
+        android:fontFamily="@font/lato_bold"
+        android:text="Promosikan tantangan kamu sekali lagi! >>"
+        android:textAllCaps="false"
+        android:textColor="@color/orange_2"
+        android:textSize="10sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_content_subtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/orange"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

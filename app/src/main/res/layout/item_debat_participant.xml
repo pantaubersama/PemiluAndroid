@@ -16,6 +16,7 @@
         android:src="@drawable/ava_calon_1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:riv_border_color="@color/white"
         app:riv_border_width="1dp"
         app:riv_oval="true"/>
@@ -53,5 +54,20 @@
             android:fontFamily="@font/lato_regular"
             android:textColor="@color/gray_11"/>
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:visibility="gone"
+        android:id="@+id/btn_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_bold"
+        android:text="Confirm"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/orange_2"
+        app:cornerRadius="2dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
