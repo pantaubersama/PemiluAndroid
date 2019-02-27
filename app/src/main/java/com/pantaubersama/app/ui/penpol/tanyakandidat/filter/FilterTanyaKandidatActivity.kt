@@ -70,6 +70,7 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
             getString(R.string.filter_verified_label) -> userFilter = USER_VERIFIED_TRUE
         }
         when (orderFilterSelectedValue) {
+            getString(R.string.filter_trending_label) -> orderFilter = PantauConstants.TanyaKandidat.Filter.ByVotes.TRENDING
             getString(R.string.filter_latest_label) -> orderFilter = PantauConstants.TanyaKandidat.Filter.ByVotes.LATEST
             getString(R.string.filter_most_voted_label) -> orderFilter = PantauConstants.TanyaKandidat.Filter.ByVotes.MOST_VOTES
         }
@@ -130,6 +131,7 @@ class FilterTanyaKandidatActivity : BaseActivity<FilterTanyaKandidatPresenter>()
 
     override fun setOrderFilter(orderFilter: String?) {
         when (orderFilter) {
+            PantauConstants.TanyaKandidat.Filter.ByVotes.TRENDING -> filter_trending.isChecked = true
             PantauConstants.TanyaKandidat.Filter.ByVotes.LATEST -> filter_latest.isChecked = true
             PantauConstants.TanyaKandidat.Filter.ByVotes.MOST_VOTES -> filter_most_voted.isChecked = true
         }

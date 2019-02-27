@@ -52,13 +52,13 @@ class DetailDebatActivity : CommonActivity() {
             if (!animator.isRunning) {
                 isLiked = !isLiked
                 if (isLiked) {
-                    tv_like_count.text =  (tv_like_count.text.toString().toInt() + 1).toString()
+                    tv_like_count.text = (tv_like_count.text.toString().toInt() + 1).toString()
                     animator.addUpdateListener { animation ->
                         lottie_love.progress = animation.animatedValue as Float
                     }
                     animator.start()
                 } else {
-                    tv_like_count.text =  (tv_like_count.text.toString().toInt() - 1).toString()
+                    tv_like_count.text = (tv_like_count.text.toString().toInt() - 1).toString()
                     lottie_love.progress = 0.0f
                 }
             }

@@ -61,6 +61,7 @@ class PantauConstants {
             object ByVotes {
                 const val LATEST = "created_at"
                 const val MOST_VOTES = "cached_votes_up"
+                const val TRENDING = "hot_score"
             }
         }
     }
