@@ -1,11 +1,13 @@
 package com.pantaubersama.app.ui.menguji.adapter
 
+import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.ui.debat.DebatActivity
 import com.pantaubersama.app.ui.debat.detail.DetailDebatActivity
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -72,6 +74,12 @@ class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(vi
             }
         }
 
-        itemView.setOnClickListener { itemView.context.let { it.startActivity(DetailDebatActivity.setIntent(it, item)) } }
+        itemView.setOnClickListener { itemView.context.let {
+            if (item is DebatItem.LiveNow) {
+                it.startActivity(Intent(it, DebatActivity::class.java))
+            } else {
+                it.startActivity(DetailDebatActivity.setIntent(it, item))
+            }
+        } }
     }
 }

@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.debat.DebatItem
 import com.pantaubersama.app.ui.debat.DebatActivity
+import com.pantaubersama.app.ui.debat.detail.DetailDebatActivity
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.item_debat_big.*
@@ -43,9 +44,14 @@ class DebatBigViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(view
                 textName2.text = if (item.opponentCandidates > 0)
                     "Menunggu Konfirmasi" else "Menunggu Lawan Debat"
             }
-            is DebatItem.LiveNow -> {
-                itemView.setOnClickListener { itemView.context?.let { it.startActivity(Intent(it, DebatActivity::class.java)) } }
-            }
         }
+
+        itemView.setOnClickListener { itemView.context?.let {
+            if (item is DebatItem.LiveNow) {
+                it.startActivity(Intent(it, DebatActivity::class.java))
+            } else {
+                it.startActivity(DetailDebatActivity.setIntent(it, item))
+            }
+        } }
     }
 }
