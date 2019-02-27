@@ -47,4 +47,12 @@ class WordStadiumInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun getPersonalChallenge(progress: String): Single<List<Challenge>> {
+        return apiWrapper.getWordStadiumApi()
+            .getPersonalChallenge(progress)
+            .map { it.challengeData.challenges }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }

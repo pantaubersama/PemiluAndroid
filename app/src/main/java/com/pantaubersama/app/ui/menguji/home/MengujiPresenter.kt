@@ -55,7 +55,12 @@ class MengujiPresenter @Inject constructor(
     fun getDebatOpen() {
         view?.showDebatOpen(State.Loading, emptyList(), false)
 
-        disposables += wordStadiumInteractor.getPublicChallenge(ChallengeConstants.PROGRESS_ON_GOING)
+        val request = if (isPublik)
+            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.PROGRESS_ON_GOING)
+        else
+            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.PROGRESS_ON_GOING)
+
+        disposables += request
             .subscribe({ list ->
                 val debatList = list.take(3)
                     .map { it.toDebatItemChallenge() }

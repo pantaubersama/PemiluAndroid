@@ -71,6 +71,7 @@ class DebatListActivity : BaseActivity<DebatListPresenter>(), DebatListView {
 
     override fun showDebatItems(list: List<DebatItem>) {
         view_empty_state.enableLottie(list.isEmpty(), lottie_empty_state)
+        recycler_view.visibleIf(list.isNotEmpty())
         adapter.setDatas(list)
         setupHeader()
     }

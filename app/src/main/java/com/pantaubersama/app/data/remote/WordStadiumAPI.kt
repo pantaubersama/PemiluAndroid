@@ -31,4 +31,7 @@ interface WordStadiumAPI {
 
     @GET("word_stadium/v1/challenges/all")
     fun getPublicChallenge(@Query("progress") progress: String): Single<ChallengeResponse>
+
+    @GET("word_stadium/v1/challenges/me")
+    fun getPersonalChallenge(@Query("progress") progress: String): Single<ChallengeResponse>
 }

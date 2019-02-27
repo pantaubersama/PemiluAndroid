@@ -9,14 +9,15 @@ import javax.inject.Inject
 
 class DebatListPresenter @Inject constructor(
     private val wordStadiumInteractor: WordStadiumInteractor
-): BasePresenter<DebatListView>() {
+) : BasePresenter<DebatListView>() {
 
     fun getDebatItems(title: String) {
         when (title) {
             Title.PUBLIK_LIVE_NOW -> getDebatLive()
             Title.PUBLIK_COMING_SOON, Title.PERSONAL_COMING_SOON -> getDebatComingSoon()
             Title.PUBLIK_DONE, Title.PERSONAL_DONE -> getDebatDone()
-            Title.PUBLIK_CHALLENGE, Title.PERSONAL_CHALLENGE_IN_PROGRESS, Title.PERSONAL_CHALLENGE -> getDebatOpen()
+            Title.PUBLIK_CHALLENGE, Title.PERSONAL_CHALLENGE_IN_PROGRESS, Title.PERSONAL_CHALLENGE ->
+                getDebatOpen(title)
         }
     }
 
@@ -43,10 +44,15 @@ class DebatListPresenter @Inject constructor(
         view?.showDebatItems(debatList)
     }
 
-    fun getDebatOpen() {
+    fun getDebatOpen(title: String) {
         view?.showLoading()
 
-        disposables += wordStadiumInteractor.getPublicChallenge(ChallengeConstants.PROGRESS_ON_GOING)
+        val request = if (title == Title.PUBLIK_CHALLENGE)
+            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.PROGRESS_ON_GOING)
+        else
+            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.PROGRESS_ON_GOING)
+
+        disposables += request
             .doOnEvent { _, _ -> view?.dismissLoading() }
             .subscribe({ list ->
                 val debatList = list.map { it.toDebatItemChallenge() }
