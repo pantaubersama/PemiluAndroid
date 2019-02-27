@@ -33,14 +33,7 @@ abstract class CarouselPagerAdapter(
     abstract fun getItemFragment(position: Int, scale: Float): CarouselItemFragment
 
     override fun getCount(): Int {
-        var count = 0
-        try {
-            count = itemCount * 1000
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        return count
+        return itemCount
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {

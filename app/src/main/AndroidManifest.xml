@@ -25,7 +25,6 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
         <activity android:name=".ui.note.CatatanPilihanActivityRevised"></activity>
-        <activity android:name=".ui.debat.detail.DetailDebatActivity" />
         <activity
             android:name=".ui.wordstadium.challenge.CreateChallengeActivity"
             android:screenOrientation="portrait" />

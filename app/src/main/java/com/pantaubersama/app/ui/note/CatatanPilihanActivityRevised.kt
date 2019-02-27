@@ -59,7 +59,7 @@ class CatatanPilihanActivityRevised : BaseActivity<CatatanPilihanPresenter>(), C
         val pageMargin = metrics.widthPixels / 3
         presiden_viewpager.pageMargin = -pageMargin
 
-        val imageArray = intArrayOf(R.drawable.ava_calon_1, R.drawable.ava_calon_2, R.drawable.img_dummy_paslon_1)
+        val imageArray = intArrayOf(R.drawable.note_ava_paslon_1, R.drawable.note_ava_paslon_2, R.drawable.note_ava_paslon_3)
 
         presidentAdapter = object : CarouselPagerAdapter(supportFragmentManager, presiden_viewpager, imageArray.size) {
             override fun getItemFragment(position: Int, scale: Float): CarouselItemFragment {
@@ -70,18 +70,16 @@ class CatatanPilihanActivityRevised : BaseActivity<CatatanPilihanPresenter>(), C
         presidentAdapter.notifyDataSetChanged()
 
         presiden_viewpager.addOnPageChangeListener(presidentAdapter)
-
-        // Set current item to the middle page so we can fling to both
-        // directions left and right
-        presiden_viewpager.currentItem = imageArray.size
         presiden_viewpager.offscreenPageLimit = 3
     }
 
     override fun bindUserProfile(profile: Profile) {
         if (profile.votePreference != 0) {
-//            profile.votePreference?.let { paslonAdapter.setSelectedData(paslonAdapter.get(it - 1) as PaslonData) }
+            profile.votePreference?.let {
+                presiden_viewpager.currentItem = it - 1
+            }
         } else {
-//            paslonAdapter.setSelectedData(paslonAdapter.get(2) as PaslonData)
+            presiden_viewpager.currentItem = 2
         }
     }
 
