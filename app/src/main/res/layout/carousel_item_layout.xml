@@ -1,0 +1,17 @@
+<com.pantaubersama.app.ui.note.CarouselLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.pantaubersama.app.ui.note.presiden.CarouselItemFragment">
+
+    <ImageView
+        android:id="@+id/paslon_images"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+</com.pantaubersama.app.ui.note.CarouselLinearLayout>

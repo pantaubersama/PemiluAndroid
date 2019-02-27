@@ -19,11 +19,11 @@ import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.linimasa.LinimasaFragment
 import com.pantaubersama.app.ui.login.LoginActivity
-import com.pantaubersama.app.ui.note.CatatanPilihanActivity
 import com.pantaubersama.app.ui.notification.NotifActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.search.SearchActivity
+import com.pantaubersama.app.ui.note.CatatanPilihanActivityRevised
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OPEN_TAB_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_FEED
@@ -70,9 +70,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         }
 
         btn_search.setOnClickListener { startActivity(Intent(this, SearchActivity::class.java)) }
-        btn_pinned.setOnClickListener { startActivity(Intent(this, CatatanPilihanActivity::class.java)) }
         btn_notification.visibleIf(false) // di hide dulu, karena belum diimplementasi @edityo 6/2/19
-        btn_notification.setOnClickListener { startActivity(Intent(this, NotifActivity::class.java)) }
 
         if (savedInstanceState == null) {
             when (tabDest) {
@@ -170,13 +168,15 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
                 startActivity(intent)
             }
 
-            btn_pinned.setOnClickListener { startActivity(Intent(this, CatatanPilihanActivity::class.java)) }
+            btn_pinned.setOnClickListener { startActivity(Intent(this, CatatanPilihanActivityRevised::class.java)) }
+            btn_notification.setOnClickListener { startActivity(Intent(this, NotifActivity::class.java)) }
         } else {
             iv_user_avatar.setOnClickListener {
                 openLoginActivity()
             }
 
             btn_pinned.setOnClickListener { openLoginActivity() }
+            btn_notification.setOnClickListener { openLoginActivity() }
         }
     }
 
