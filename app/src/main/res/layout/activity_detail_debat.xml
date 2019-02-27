@@ -72,8 +72,8 @@
 
                     <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/lottie_love"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:scaleType="fitCenter"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
