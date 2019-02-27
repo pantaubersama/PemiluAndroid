@@ -20,11 +20,13 @@ import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_CHALLENGE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_COMING_SOON
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_DONE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_LIVE_NOW
+import com.pantaubersama.app.utils.State
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import kotlinx.android.synthetic.main.fragment_menguji_pager.*
 import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_carousel_debat.*
 import kotlinx.android.synthetic.main.layout_debat_list.*
+import kotlinx.android.synthetic.main.layout_empty_state_small.view.*
 import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
@@ -144,8 +146,15 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         debatDoneAdapter.debatItems = list
     }
 
-    override fun showDebatOpen(list: List<DebatItem.Challenge>) {
+    override fun showDebatOpen(state: State, list: List<DebatItem.Challenge>, hasMore: Boolean) {
         if (!isPublik) debatCarouselAdapter.debatItems = list
+
+        val showEmptyState = state == State.Success && list.isEmpty()
+
+        progress_open.visibleIf(state == State.Loading)
+        button_more_debat_open.visibleIf(hasMore)
+        empty_state_open.visibleIf(showEmptyState)
+        empty_state_open.lottie_empty_state.enableLottie(showEmptyState)
         debatOpenAdapter.debatItems = list
     }
 

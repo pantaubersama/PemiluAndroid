@@ -18,7 +18,8 @@ class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(vi
     override val imageAvatar2: ImageView = image_avatar_2
     override val textName1: TextView = text_name_1
     override val textName2: TextView = text_name_2
-    override val textTag: TextView = text_tag
+    override val textTopic: TextView = text_topic
+    override val textStatement: TextView = text_statement
     override val textOpponentCount: TextView = text_opponent_count
     override val buttonMoreOption: View = button_more
 
@@ -65,7 +66,7 @@ class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(vi
                 text_status.text = when {
                     item.isDenied -> "Lawan Menolak Tantangan"
                     item.isExpired -> "Tantangan Melebihi Batas Waktu"
-                    item.pendingOpponent > 0 -> "Menunggu Konfirmasi"
+                    item.opponentCandidates > 0 -> "Menunggu Konfirmasi"
                     else -> "Menunggu Lawan Debat"
                 }
             }
