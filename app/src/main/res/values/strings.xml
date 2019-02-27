@@ -45,6 +45,7 @@
     <string name="filter_order_label">Urutan</string>
     <string name="filter_latest_label">Paling Baru</string>
     <string name="filter_most_voted_label">Paling Banyak Divoting</string>
+    <string name="filter_trending_label">Trending</string>
     <string name="reset_action">Reset</string>
     <string name="delete_action_label">Hapus</string>
     <string name="copy_url_action_label">Salin Tautan</string>
