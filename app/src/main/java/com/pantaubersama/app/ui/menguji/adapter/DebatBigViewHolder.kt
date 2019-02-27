@@ -19,7 +19,8 @@ class DebatBigViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(view
     override val imageAvatar2: ImageView = image_avatar_2
     override val textName1: TextView = text_name_1
     override val textName2: TextView = text_name_2
-    override val textTag: TextView = text_tag
+    override val textTopic: TextView = text_topic
+    override val textStatement: TextView = text_statement
     override val textOpponentCount: TextView = text_opponent_count
     override val buttonMoreOption: View = button_more
 
@@ -39,7 +40,7 @@ class DebatBigViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(view
 
         when (item) {
             is DebatItem.Challenge -> {
-                textName2.text = if (item.pendingOpponent > 0)
+                textName2.text = if (item.opponentCandidates > 0)
                     "Waiting for confirmation" else "Waiting for opponent"
             }
             is DebatItem.LiveNow -> {

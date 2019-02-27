@@ -3,9 +3,7 @@ package com.pantaubersama.app.ui.menguji.home
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.WordStadiumInteractor
-import com.pantaubersama.app.data.model.debat.DebatDetail
-import com.pantaubersama.app.data.model.debat.DebatItem
-import com.pantaubersama.app.data.model.debat.ChallengeConstants
+import com.pantaubersama.app.data.model.debat.*
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.State
 import io.reactivex.rxkotlin.plusAssign
@@ -33,14 +31,14 @@ class MengujiPresenter @Inject constructor(
 
     fun getDebatLive() {
         val debatList = (0..3).map {
-            DebatItem.LiveNow(DebatDetail("Ratu CebonganYK", "Raja Kampreta", "ekonomi"))
+            DebatItem.LiveNow(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", ""))
         }
         view?.showDebatLive(debatList)
     }
 
     fun getDebatComingSoon() {
         val debatList = (0..2).map {
-            DebatItem.ComingSoon(DebatDetail("Ratu CebonganYK", "Raja Kampreta", "ekonomi"),
+            DebatItem.ComingSoon(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", ""),
                 "24 Maret 2019", "16:00 - 17:00")
         }
         view?.showDebatComingSoon(debatList)
@@ -48,7 +46,7 @@ class MengujiPresenter @Inject constructor(
 
     fun getDebatDone() {
         val debatList = (0..2).map {
-            DebatItem.Done(DebatDetail("Ratu CebonganYK", "Raja Kampreta", "ekonomi"),
+            DebatItem.Done(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", ""),
                 70, 70, 50)
         }
         view?.showDebatDone(debatList)
@@ -60,8 +58,11 @@ class MengujiPresenter @Inject constructor(
         disposables += wordStadiumInteractor.getPublicChallenge(ChallengeConstants.PROGRESS_ON_GOING)
             .subscribe({ list ->
                 val debatList = list.take(3).map {
-                    val debatDetail = DebatDetail(it.getChallenger(), it.getOpponent(), it.topicList.first())
-                    DebatItem.Challenge(debatDetail, it.opponentCandidateCount, it.status)
+                    val debatDetail = DebatDetail(it.getChallenger(), it.getOpponent(),
+                        it.topicList.first(), it.statement)
+                    val opponentCandidates = it.getOpponentCandidates()
+                    DebatItem.Challenge(debatDetail, opponentCandidates.size,
+                        opponentCandidates.firstOrNull()?.avatar?.thumbnailSquare?.url, it.status)
                 }
                 view?.showDebatOpen(State.Success, debatList, list.size > 3)
             }, {

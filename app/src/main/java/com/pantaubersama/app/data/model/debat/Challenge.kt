@@ -3,6 +3,7 @@ package com.pantaubersama.app.data.model.debat
 import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.image.Image
 import com.pantaubersama.app.data.remote.exception.ErrorException
+import java.io.Serializable
 
 data class ChallengeResponse(
     @SerializedName("data")
@@ -39,9 +40,6 @@ data class Challenge(
     val type: String
 ) {
 
-    val opponentCandidateCount: Int
-        get() = audiences.count { it.role == ChallengeConstants.ROLE_OPPONENT_CANDIDATE }
-
     val status: DebatItem.Challenge.Status
         get() = when (type) {
             ChallengeConstants.TYPE_OPEN_CHALLENGE -> DebatItem.Challenge.Status.OPEN
@@ -56,6 +54,10 @@ data class Challenge(
 
     fun getOpponent(): Audience? {
         return audiences.find { it.role == ChallengeConstants.ROLE_OPPONENT }
+    }
+
+    fun getOpponentCandidates(): List<Audience> {
+        return audiences.filter { it.role == ChallengeConstants.ROLE_OPPONENT_CANDIDATE }
     }
 }
 
@@ -76,7 +78,7 @@ data class Audience(
     val userId: Any?,
     @SerializedName("username")
     val username: String
-)
+): Serializable
 
 // TODO: remove
 val DUMMY_CHALLENGER = Audience("", Image(), "", "Ratu CebonganYK", "",
