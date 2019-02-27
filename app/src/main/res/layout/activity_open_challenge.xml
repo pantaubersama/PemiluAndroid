@@ -20,7 +20,7 @@
         android:id="@+id/nested_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/open_challenge_publish"
+        android:layout_above="@+id/open_challenge_next"
         android:layout_below="@+id/appbar">
 
         <LinearLayout
@@ -194,7 +194,7 @@
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -240,6 +240,27 @@
                         android:textColor="@color/gray_4"
                         android:textSize="11sp" />
 
+                    <FrameLayout
+                        android:id="@+id/ll_webview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="4dp"
+                        android:visibility="gone"
+                        android:background="@drawable/bg_rounded_gray_3">
+
+                        <WebView
+                            android:id="@+id/link_webview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"></WebView>
+
+                        <ImageView
+                            android:id="@+id/link_close"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|end"
+                            android:src="@drawable/outline_delete_48_px" />
+                    </FrameLayout>
+
                     <EditText
                         android:id="@+id/et_pernyataan"
                         android:layout_width="match_parent"
@@ -249,8 +270,8 @@
                         android:fontFamily="@font/bw_modelica_bold"
                         android:hint="Tulis pernyataanmu disini..."
                         android:inputType="textMultiLine"
-                        android:textColor="@color/gray_4"
                         android:maxLength="160"
+                        android:textColor="@color/gray_4"
                         android:textColorHint="@color/gray_dark_1"
                         android:textSize="11sp" />
 
@@ -365,6 +386,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/rounded_gray_1"
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="8dp">
@@ -380,8 +403,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/bw_modelica_bold"
+                            android:hint="Tanggal"
                             android:lineSpacingExtra="2sp"
-                            android:text="Selasa, 24 Maret 2019"
                             android:textColor="@color/black_2"
                             android:textSize="12sp" />
 
@@ -393,6 +416,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/rounded_gray_1"
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="8dp">
@@ -408,8 +433,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/bw_modelica_bold"
+                            android:hint="Waktu"
                             android:lineSpacingExtra="2sp"
-                            android:text="16.00"
                             android:textColor="@color/black_2"
                             android:textSize="12sp" />
 
@@ -499,16 +524,19 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_saldo_waktu" />
 
-                        <TextView
-                            android:id="@+id/tv_pilih_saldo_waktu"
+                        <EditText
+                            android:id="@+id/et_pilih_saldo_waktu"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:layout_weight="1"
+                            android:background="@null"
                             android:fontFamily="@font/bw_modelica_bold"
+                            android:hint="Pilih saldo waktu"
+                            android:inputType="number"
                             android:lineSpacingExtra="2sp"
-                            android:text="Pilih saldo waktu"
-                            android:textColor="@color/gray_dark_1"
+                            android:textColor="@color/gray_5"
+                            android:textColorHint="@color/gray_dark_1"
                             android:textSize="12sp" />
 
                         <TextView

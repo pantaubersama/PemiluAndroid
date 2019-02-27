@@ -32,9 +32,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:background="@drawable/banner_challenge_vs_big"
-                android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:paddingStart="20dp"
+                android:paddingTop="30dp"
                 android:paddingEnd="20dp">
 
                 <RelativeLayout
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content">
 
                     <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/open_challenge_avatar"
+                        android:id="@+id/promote_challenge_avatar"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:scaleType="centerCrop"
@@ -51,12 +51,12 @@
                         app:riv_oval="true" />
 
                     <TextView
-                        android:id="@+id/open_challenge_name"
+                        android:id="@+id/promote_challenge_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="2dp"
-                        android:layout_toRightOf="@+id/open_challenge_avatar"
+                        android:layout_toRightOf="@+id/promote_challenge_avatar"
                         android:fontFamily="@font/bw_modelica_bold"
                         android:lineSpacingExtra="2sp"
                         android:maxLines="1"
@@ -65,12 +65,12 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/open_challenge_username"
+                        android:id="@+id/promote_challenge_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/open_challenge_name"
+                        android:layout_below="@+id/promote_challenge_name"
                         android:layout_marginStart="10dp"
-                        android:layout_toRightOf="@+id/open_challenge_avatar"
+                        android:layout_toRightOf="@+id/promote_challenge_avatar"
                         android:fontFamily="@font/lato_bold"
                         android:letterSpacing="0.02"
                         android:lineSpacingExtra="15sp"
@@ -79,18 +79,6 @@
                         tools:text="\ufeff@ratu_cebonganYK" />
 
                 </RelativeLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/bw_modelica_bold"
-                    android:gravity="center_horizontal"
-                    android:letterSpacing="0.05"
-                    android:lineSpacingExtra="-2sp"
-                    android:text="@string/open_challenge"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -121,18 +109,18 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/bw_modelica_light"
                         android:lineSpacingExtra="4sp"
+                        android:text="Selangkah lagi,"
                         android:textColor="@color/black_2"
-                        android:textSize="24sp"
-                        tools:text="Selangkah lagi," />
+                        android:textSize="24sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/bw_modelica_bold"
                         android:lineSpacingExtra="4sp"
+                        android:text="Promosikan tantangan debat kamu!"
                         android:textColor="@color/yellow"
-                        android:textSize="24sp"
-                        tools:text="Promosikan tantangan debat kamu!" />
+                        android:textSize="24sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -173,10 +161,12 @@
                                 android:textSize="12sp" />
 
                             <LinearLayout
+                                android:id="@+id/promote_challenge_ll_connect_twitter"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
                                 android:gravity="center_vertical"
+                                android:visibility="gone"
                                 android:orientation="horizontal">
 
                                 <TextView
@@ -189,6 +179,7 @@
                                     android:textSize="12sp" />
 
                                 <TextView
+                                    android:id="@+id/promote_challenge_twitter_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/lato_bold"
@@ -203,6 +194,7 @@
                         </LinearLayout>
 
                         <Switch
+                            android:id="@+id/switch_twitter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -247,10 +239,12 @@
                                 android:textSize="12sp" />
 
                             <LinearLayout
+                                android:id="@+id/promote_challenge_ll_connect_fb"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
                                 android:gravity="center_vertical"
+                                android:visibility="gone"
                                 android:orientation="horizontal">
 
                                 <TextView
@@ -263,6 +257,7 @@
                                     android:textSize="12sp" />
 
                                 <TextView
+                                    android:id="@+id/promote_challenge_fb_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/lato_bold"
@@ -277,6 +272,7 @@
                         </LinearLayout>
 
                         <Switch
+                            android:id="@+id/switch_fb"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -302,6 +298,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/promote_challenge_bid_kajian"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -313,19 +310,18 @@
                     android:paddingTop="2dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="2dp"
-                    android:text="ekonomi"
                     android:textColor="@color/gray_dark_3"
                     android:textSize="8sp" />
 
                 <TextView
+                    android:id="@+id/promote_challenge_pernyataan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/bw_modelica_bold"
                     android:lineSpacingExtra="2sp"
                     android:textColor="@color/black_2"
-                    android:textSize="12sp"
-                    tools:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%. 2 periode yuk, biar 10,54%." />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -352,12 +348,12 @@
                         android:src="@drawable/ic_date" />
 
                     <TextView
+                        android:id="@+id/promote_challenge_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:fontFamily="@font/bw_modelica_bold"
                         android:lineSpacingExtra="2sp"
-                        android:text="Selasa, 24 Maret 2019"
                         android:textColor="@color/black_2"
                         android:textSize="12sp" />
 
@@ -378,12 +374,12 @@
                         android:src="@drawable/ic_clock" />
 
                     <TextView
+                        android:id="@+id/promote_challenge_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:fontFamily="@font/bw_modelica_bold"
                         android:lineSpacingExtra="2sp"
-                        android:text="16.00"
                         android:textColor="@color/black_2"
                         android:textSize="12sp" />
 
@@ -423,12 +419,12 @@
                         android:src="@drawable/ic_saldo_waktu" />
 
                     <TextView
+                        android:id="@+id/promote_challenge_saldo_waktu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:fontFamily="@font/bw_modelica_bold"
                         android:lineSpacingExtra="2sp"
-                        android:text="120"
                         android:textColor="@color/black_2"
                         android:textSize="12sp" />
 
@@ -459,7 +455,7 @@
                 android:paddingBottom="70dp">
 
                 <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/open_challenge_avatar_2"
+                    android:id="@+id/promote_challenge_avatar_2"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:scaleType="centerCrop"
@@ -468,6 +464,7 @@
                     app:riv_oval="true" />
 
                 <TextView
+                    android:id="@+id/promote_challenge_username_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -479,6 +476,7 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/promote_challenge_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_regular"
@@ -489,6 +487,7 @@
                     android:textSize="11sp" />
 
                 <TextView
+                    android:id="@+id/promote_challenge_time_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -511,6 +510,8 @@
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:background="@color/orange_2"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
         android:gravity="center"
         android:orientation="vertical">
 

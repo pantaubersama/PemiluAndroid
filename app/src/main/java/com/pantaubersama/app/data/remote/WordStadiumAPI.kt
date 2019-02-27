@@ -21,9 +21,8 @@ interface WordStadiumAPI {
     ): Single<Token>
 
     @FormUrlEncoded
-    @POST("word_studium/v1/challenges/open")
+    @POST("word_stadium/v1/challenges/open")
     fun openChallenge(
-        @Field("Authorization") accessToken: String?,
         @Field("topic_list") topicList: String?,
         @Field("statement") statement: String?,
         @Field("statement_source") statementSource: String?,
