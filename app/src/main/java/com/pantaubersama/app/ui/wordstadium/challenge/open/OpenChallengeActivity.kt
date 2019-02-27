@@ -1,25 +1,46 @@
 package com.pantaubersama.app.ui.wordstadium.challenge.open
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.model.wordstadium.BidangKajian
+import com.pantaubersama.app.data.model.wordstadium.Challenge
+import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.wordstadium.InfoDialog
+import com.pantaubersama.app.ui.wordstadium.challenge.CreateChallengeActivity
 import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_open_challenge.*
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChallengeView {
+
+    var mYear: Int = 0
+    var mMonth: Int = 0
+    var mDay: Int = 0
+    var mHour: Int = 0
+    var mMinute: Int = 0
+    var mDateString: String? = null
+    var mTimeString: String? = null
+    var mLink: String = ""
 
     @Inject
     override lateinit var presenter: OpenChallengePresenter
@@ -41,6 +62,8 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
         presenter.getUserProfile()
         actionClick()
         bidangKajianActive()
+
+        link_webview.webViewClient = MyWebViewClient()
     }
 
     override fun showLoading() {
@@ -55,9 +78,6 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
         open_challenge_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
         open_challenge_name.text = profile.fullName
         open_challenge_username.text = profile.username
-    }
-
-    override fun onSuccessOpenChallenge() {
     }
 
     fun actionClick() {
@@ -91,6 +111,14 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
 
         et_pernyataan.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(text: Editable?) {
+                if (text!!.length > 6) {
+                    pernyataanDone()
+                } else {
+                    bidangKajianActive()
+                    bidangKajianDone()
+                    ll_date_time.visibility = View.GONE
+                    ll_saldo_waktu_container.visibility = View.GONE
+                }
             }
 
             override fun beforeTextChanged(textString: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -115,9 +143,79 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
                 dialog.dismiss()
             }
             btnOke.setOnClickListener {
-                val link = text.text.toString()
+                val url = text.text.toString()
+                mLink = url
                 dialog.dismiss()
+                presenter.getConvertLink(url)
             }
+        }
+
+        ll_date.setOnClickListener {
+            val c = Calendar.getInstance()
+            mYear = c.get(Calendar.YEAR)
+            mMonth = c.get(Calendar.MONTH)
+            mDay = c.get(Calendar.DAY_OF_MONTH)
+
+            val mDays = arrayOf("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu")
+
+            val datePickerDialog = DatePickerDialog(this,
+                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                        var calendar = Calendar.getInstance()
+                        calendar.set(year, monthOfYear, dayOfMonth)
+                        val date = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
+                        val dayName = mDays[calendar.get(Calendar.DAY_OF_WEEK) - 1]
+                        tv_date.text = "$dayName, $date"
+                        mDateString = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
+                    }, mYear, mMonth, mDay)
+
+            datePickerDialog.show()
+        }
+
+        ll_time.setOnClickListener {
+            val c = Calendar.getInstance()
+            mHour = c.get(Calendar.HOUR_OF_DAY)
+            mMinute = c.get(Calendar.MINUTE)
+
+            val timePickerDialog = TimePickerDialog(this,
+                    TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                        tv_time.text = "${hourOfDay}.${minute}"
+                        dateTimeDone()
+                        mTimeString = "$hourOfDay:$minute"
+                    }, mHour, mMinute, false)
+
+            timePickerDialog.show()
+        }
+
+        et_pilih_saldo_waktu.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(text: Editable?) {
+                if (text!!.length > 0) {
+                    saldoWaktuDone()
+                } else {
+                    saldoWaktuActive()
+                }
+            }
+
+            override fun beforeTextChanged(textString: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(textString: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+
+        open_challenge_next.setOnClickListener {
+            val challenge = Challenge(
+                    bid_kajian.text.toString(),
+                    et_pernyataan.text.toString(),
+                    mLink,
+                    tv_date.text.toString(),
+                    tv_time.text.toString(),
+                    et_pilih_saldo_waktu.text.toString().toInt()
+            )
+
+            val intent = Intent(this, PromoteChallengeActivity::class.java)
+            intent.putExtra("challenge", challenge)
+            intent.putExtra("date", mDateString + " " + mTimeString)
+            startActivityForResult(intent, CreateChallengeActivity.OPEN_CHALLENGE)
         }
     }
 
@@ -180,11 +278,54 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
         check_saldo_waktu.setImageResource(R.drawable.check_active)
     }
 
+    fun saldoWaktuActive() {
+        check_saldo_waktu.setImageResource(R.drawable.check_active)
+        line_saldo_waktu.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_dark_1))
+
+        open_challenge_next.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_dark_1))
+        open_challenge_next.enable(false)
+    }
+
     fun saldoWaktuDone() {
         check_saldo_waktu.setImageResource(R.drawable.check_done)
         line_saldo_waktu.setBackgroundColor(ContextCompat.getColor(this, R.color.orange_2))
 
         open_challenge_next.setBackgroundColor(ContextCompat.getColor(this, R.color.orange_2))
         open_challenge_next.enable(true)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CreateChallengeActivity.OPEN_CHALLENGE && resultCode == Activity.RESULT_OK) {
+            setResult(Activity.RESULT_OK)
+            finish()
+        }
+    }
+
+    fun previewLink(url: String?) {
+        if (url != null && url.length > 0) {
+            ll_webview.visibility = View.VISIBLE
+            link_webview.settings.loadsImagesAutomatically = true
+            link_webview.settings.javaScriptEnabled = true
+            link_webview.getSettings().setAppCacheEnabled(true);
+            link_webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+            link_webview.loadDataWithBaseURL("https://twitter.com", url.toString(), "text/html", "utf-8", "")
+            link_pernyataan.visibility = View.GONE
+        }
+        link_close.setOnClickListener {
+            ll_webview.visibility = View.GONE
+            link_pernyataan.visibility = View.VISIBLE
+        }
+    }
+
+    class MyWebViewClient : WebViewClient() {
+        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+            view?.loadUrl(request?.url.toString())
+            return true
+        }
+    }
+
+    override fun onSuccessConvertLink(oEmbedLink: OEmbedLink) {
+        previewLink(oEmbedLink.html)
     }
 }

@@ -34,7 +34,8 @@ sealed class DebatItem : ItemModel, Serializable {
 
     data class Challenge(
         override val debatDetail: DebatDetail,
-        val pendingOpponent: Int,
+        val opponentCandidates: Int,
+        val opponentCandidateAvatar: String?,
         val status: Status
     ) : DebatItem(), Serializable {
         override val type: String = when (status) {
@@ -67,7 +68,8 @@ data class DebatHeader(val text: String) : ItemModel {
 }
 
 data class DebatDetail(
-    val name1: String,
-    val name2: String,
-    val tag: String
+    val challenger: Audience,
+    val opponent: Audience?,
+    val topic: String,
+    val statement: String
 ) : Serializable

@@ -3,10 +3,7 @@ package com.pantaubersama.app.di.module
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.data.local.cache.DataCache
-import com.pantaubersama.app.data.remote.APIWrapper
-import com.pantaubersama.app.data.remote.PantauAPI
-import com.pantaubersama.app.data.remote.PantauOAuthAPI
-import com.pantaubersama.app.data.remote.WordStadiumAPI
+import com.pantaubersama.app.data.remote.*
 import com.pantaubersama.app.utils.ConnectionState
 import com.pantaubersama.app.utils.CustomAuthenticator
 import com.pantaubersama.app.utils.NetworkErrorInterceptor
@@ -86,5 +83,11 @@ class ApiModule {
     @Singleton
     fun provideWordStadiumAPI(httpClient: OkHttpClient): WordStadiumAPI {
         return APIWrapper.createRetrofit(BuildConfig.WORD_STADIUM_BASE_URL, httpClient).create(WordStadiumAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun  provideOEmbedAPI(httpClient: OkHttpClient): OEmbedApi {
+        return APIWrapper.createRetrofit("https://publish.twitter.com/", httpClient).create(OEmbedApi::class.java)
     }
 }

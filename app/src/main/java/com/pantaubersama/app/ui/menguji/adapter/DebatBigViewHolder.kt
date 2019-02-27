@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.debat.DebatItem
 import com.pantaubersama.app.ui.debat.DebatActivity
+import com.pantaubersama.app.ui.debat.detail.DetailDebatActivity
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.item_debat_big.*
@@ -19,7 +20,8 @@ class DebatBigViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(view
     override val imageAvatar2: ImageView = image_avatar_2
     override val textName1: TextView = text_name_1
     override val textName2: TextView = text_name_2
-    override val textTag: TextView = text_tag
+    override val textTopic: TextView = text_topic
+    override val textStatement: TextView = text_statement
     override val textOpponentCount: TextView = text_opponent_count
     override val buttonMoreOption: View = button_more
 
@@ -39,12 +41,17 @@ class DebatBigViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(view
 
         when (item) {
             is DebatItem.Challenge -> {
-                textName2.text = if (item.pendingOpponent > 0)
-                    "Waiting for confirmation" else "Waiting for opponent"
-            }
-            is DebatItem.LiveNow -> {
-                itemView.setOnClickListener { itemView.context?.let { it.startActivity(Intent(it, DebatActivity::class.java)) } }
+                textName2.text = if (item.opponentCandidates > 0)
+                    "Menunggu Konfirmasi" else "Menunggu Lawan Debat"
             }
         }
+
+        itemView.setOnClickListener { itemView.context?.let {
+            if (item is DebatItem.LiveNow) {
+                it.startActivity(Intent(it, DebatActivity::class.java))
+            } else {
+                it.startActivity(DetailDebatActivity.setIntent(it, item))
+            }
+        } }
     }
 }

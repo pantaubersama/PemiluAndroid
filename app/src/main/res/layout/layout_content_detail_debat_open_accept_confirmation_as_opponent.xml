@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/iv_content_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/background_debat_accept"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="1:0.8"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_content_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ini adalah Open Challenge,"
+        android:textSize="24dp"
+        android:textColor="@color/black_2"
+        android:fontFamily="@font/bw_modelica_light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/tv_content_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Terima tantangan ini?"
+        android:textSize="24dp"
+        android:textColor="@color/yellow"
+        android:fontFamily="@font/bw_modelica_bold"
+        app:layout_constraintTop_toBottomOf="@id/tv_content_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_terima"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textSize="12sp"
+        android:text="TERIMA"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:fontFamily="@font/lato_bold"
+        android:letterSpacing="0.1"
+        android:backgroundTint="@color/orange_2"
+        app:icon="@drawable/ic_outline_challenge_accepted_24_px"
+        app:iconGravity="start"
+        app:rippleColor="@color/orange"
+        app:layout_constraintTop_toBottomOf="@id/ll_debat_participant"
+        app:layout_constraintBottom_toBottomOf="@id/iv_content_background"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

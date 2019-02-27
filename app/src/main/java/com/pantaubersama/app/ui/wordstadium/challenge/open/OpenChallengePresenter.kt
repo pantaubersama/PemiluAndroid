@@ -6,43 +6,26 @@ import com.pantaubersama.app.data.interactors.WordStadiumInteractor
 import javax.inject.Inject
 
 class OpenChallengePresenter @Inject constructor(
-    private val profileInteractor: ProfileInteractor,
-    private val wordStadiumInteractor: WordStadiumInteractor
-) :
-        BasePresenter<OpenChallengeView>() {
+        private val profileInteractor: ProfileInteractor,
+        private val wordStadiumInteractor: WordStadiumInteractor
+) : BasePresenter<OpenChallengeView>() {
 
     fun getUserProfile() {
         view?.showProfile(profileInteractor.getProfile())
     }
 
-    fun openChallenge(
-        token: String?,
-        topicList: String?,
-        statement: String?,
-        statementSource: String?,
-        showTimeAt: String?,
-        timeLimit: Int
-    ) {
+    fun getConvertLink(url: String) {
         view?.showLoading()
-        disposables.add(
-                wordStadiumInteractor.openChallenge(
-                        token,
-                        topicList,
-                        statement,
-                        statementSource,
-                        showTimeAt,
-                        timeLimit
+        disposables.add(wordStadiumInteractor.getConvertLink(url)
+                .doOnEvent { _, _ -> view?.dismissLoading() }
+                .subscribe(
+                        {
+                            view?.onSuccessConvertLink(it)
+                        },
+                        {
+                            view?.showError(it)
+                        }
                 )
-                        .subscribe(
-                                {
-                                    view?.dismissLoading()
-                                    view?.onSuccessOpenChallenge()
-                                },
-                                {
-                                    view?.dismissLoading()
-                                    view?.showError(it)
-                                }
-                        )
         )
     }
 }

@@ -20,11 +20,13 @@ import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_CHALLENGE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_COMING_SOON
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_DONE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_LIVE_NOW
+import com.pantaubersama.app.utils.State
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import kotlinx.android.synthetic.main.fragment_menguji_pager.*
 import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_carousel_debat.*
 import kotlinx.android.synthetic.main.layout_debat_list.*
+import kotlinx.android.synthetic.main.layout_empty_state_small.view.*
 import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
@@ -78,7 +80,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         carousel_debat.adapter = debatCarouselAdapter
         carousel_debat.addItemDecoration(OffsetItemDecoration(dip(16), top = 0,
             orientation = RecyclerView.HORIZONTAL))
-        button_more_live.setOnClickListener {
+        button_more_carousel.setOnClickListener {
             DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_LIVE_NOW else PERSONAL_CHALLENGE_IN_PROGRESS)
         }
     }
@@ -144,8 +146,21 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         debatDoneAdapter.debatItems = list
     }
 
-    override fun showDebatOpen(list: List<DebatItem.Challenge>) {
-        if (!isPublik) debatCarouselAdapter.debatItems = list
+    override fun showDebatOpen(state: State, list: List<DebatItem.Challenge>, hasMore: Boolean) {
+        val showEmptyState = state == State.Success && list.isEmpty()
+
+        if (!isPublik) {
+            progress_carousel.visibleIf(state == State.Loading)
+            button_more_carousel.visibleIf(hasMore)
+            empty_state_carousel.visibleIf(showEmptyState)
+            empty_state_carousel.lottie_empty_state.enableLottie(showEmptyState)
+            debatCarouselAdapter.debatItems = list
+        }
+
+        progress_open.visibleIf(state == State.Loading)
+        button_more_debat_open.visibleIf(hasMore)
+        empty_state_open.visibleIf(showEmptyState)
+        empty_state_open.lottie_empty_state.enableLottie(showEmptyState)
         debatOpenAdapter.debatItems = list
     }
 

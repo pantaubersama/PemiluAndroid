@@ -16,6 +16,7 @@ import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.menguji.home.MengujiPagerFragment
+import com.pantaubersama.app.ui.menguji.list.DebatListActivity
 import com.pantaubersama.app.ui.menjaga.filter.LaporFilterActivity
 import com.pantaubersama.app.ui.menjaga.filter.partiesdialog.PartiesDialog
 import com.pantaubersama.app.ui.menjaga.lapor.LaporFragment
@@ -67,6 +68,7 @@ import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import com.pantaubersama.app.ui.wordstadium.challenge.open.BidangKajianDialog
 import com.pantaubersama.app.ui.wordstadium.challenge.open.OpenChallengeActivity
+import com.pantaubersama.app.ui.wordstadium.challenge.open.PromoteChallengeActivity
 import dagger.Subcomponent
 
 /**
@@ -140,4 +142,6 @@ interface ActivityComponent {
     fun inject(openChallengeActivity: OpenChallengeActivity)
     fun inject(kajianDialog: BidangKajianDialog)
     fun inject(debatActivity: DebatActivity)
+    fun inject(promoteChallengeActivity: PromoteChallengeActivity)
+    fun inject(debatListActivity: DebatListActivity)
 }
