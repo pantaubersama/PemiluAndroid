@@ -19,6 +19,7 @@ import com.pantaubersama.app.ui.menjaga.filter.LaporFilterActivity
 import com.pantaubersama.app.ui.menjaga.filter.partiesdialog.PartiesDialog
 import com.pantaubersama.app.ui.menjaga.lapor.LaporFragment
 import com.pantaubersama.app.ui.note.CatatanPilihanActivity
+import com.pantaubersama.app.ui.note.CatatanPilihanActivityRevised
 import com.pantaubersama.app.ui.note.partai.PartaiFragment
 import com.pantaubersama.app.ui.note.presiden.PresidenFragment
 import com.pantaubersama.app.ui.notification.NotifActivity
@@ -134,4 +135,5 @@ interface ActivityComponent {
     fun inject(partiesDialog: PartiesDialog)
     fun inject(notifActivity: NotifActivity)
     fun inject(mengujiPagerFragment: MengujiPagerFragment)
+    fun inject(catatanPilihanActivityRevised: CatatanPilihanActivityRevised)
 }

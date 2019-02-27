@@ -1,36 +1,31 @@
 package com.pantaubersama.app.ui.note.presiden
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
+import com.pantaubersama.app.base.CommonFragment
 import com.pantaubersama.app.ui.note.CarouselLinearLayout
 import com.pantaubersama.app.utils.extensions.toDp
-import kotlinx.android.synthetic.main.carousel_item_layout.view.*
+import kotlinx.android.synthetic.main.carousel_item_layout.*
 
-class CarouselItemFragment : Fragment() {
+class CarouselItemFragment : CommonFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if (container == null) {
-            return null
-        }
+    override fun setLayout(): Int {
+        return R.layout.carousel_item_layout
+    }
 
-        val layoutParams = LinearLayout.LayoutParams(300f.toDp(requireContext()), 300f.toDp(requireContext()))
-        val linearLayout = inflater.inflate(R.layout.carousel_item_layout, container, false) as LinearLayout
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+        val layoutParams = LinearLayout.LayoutParams(290f.toDp(requireContext()), 290f.toDp(requireContext()))
 
-        linearLayout.paslon_images.layoutParams = layoutParams
+        paslon_images.layoutParams = layoutParams
         arguments?.getInt(IMAGE)?.let {
-            linearLayout.paslon_images.setImageResource(it)
+            paslon_images.setImageResource(it)
         }
 
         arguments?.getFloat(SCALE)?.let {
-            (linearLayout.root_container as CarouselLinearLayout).setScaleBoth(it)
+            (root_container as CarouselLinearLayout).setScaleBoth(it)
         }
-
-        return linearLayout
     }
 
     /**

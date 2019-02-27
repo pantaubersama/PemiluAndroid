@@ -24,4 +24,23 @@ class CatatanPilihanPresenter @Inject constructor(private val profileInteractor:
                         )
         )
     }
+
+    fun getUserProfile() {
+        view?.bindUserProfile(profileInteractor.getProfile())
+    }
+
+    fun getMyTendency() {
+        disposables.add(
+            profileInteractor.getMyTendency()
+                .subscribe(
+                    {
+                        view?.bindMyTendency(it, profileInteractor.getProfile().fullName ?: "")
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedGetMyTendencyAlert()
+                    }
+                )
+        )
+    }
 }
