@@ -69,13 +69,14 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="8dp"
-            android:src="@drawable/ava_calon_1"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="@id/bg_carousel_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bg_carousel_item"
             app:riv_border_color="@color/white"
             app:riv_border_width="1dp"
-            app:riv_corner_radius="25dp" />
+            app:riv_corner_radius="25dp"
+            tools:src="@drawable/ava_calon_1" />
 
         <TextView
             android:id="@+id/text_name_1"
@@ -110,13 +111,14 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginEnd="8dp"
-            android:src="@drawable/ava_calon_2"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="@id/bg_carousel_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bg_carousel_item"
             app:riv_border_color="@color/white"
             app:riv_border_width="1dp"
-            app:riv_corner_radius="25dp" />
+            app:riv_corner_radius="25dp"
+            tools:src="@drawable/ava_calon_2" />
 
         <TextView
             android:id="@+id/text_opponent_count"
@@ -148,10 +150,10 @@
             tools:text="Raja Kampreta" />
 
         <TextView
-            android:id="@+id/text_tag"
+            android:id="@+id/text_topic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/bg_rounded_4dp_outline_yellow_light"
             android:fontFamily="@font/lato_italic"
             android:paddingStart="10dp"
@@ -166,20 +168,22 @@
             tools:text="ekonomi" />
 
         <TextView
-            android:id="@+id/text_description"
+            android:id="@+id/text_statement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="12dp"
+            android:ellipsize="end"
             android:fontFamily="@font/bw_modelica_bold"
             android:gravity="center_horizontal"
-            android:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%.2 periode yuk, biar 10,54%."
+            android:lines="3"
             android:textColor="@color/black_2"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_tag" />
+            app:layout_constraintTop_toBottomOf="@id/text_topic"
+            tools:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%.2 periode yuk, biar 10,54%." />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
