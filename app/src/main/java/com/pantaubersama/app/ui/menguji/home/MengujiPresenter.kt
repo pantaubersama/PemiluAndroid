@@ -2,14 +2,18 @@ package com.pantaubersama.app.ui.menguji.home
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
+import com.pantaubersama.app.data.interactors.WordStadiumInteractor
 import com.pantaubersama.app.data.model.debat.DebatDetail
 import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.data.model.debat.ChallengeConstants
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.State
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
 class MengujiPresenter @Inject constructor(
-    private val bannerInfoInteractor: BannerInfoInteractor
+    private val bannerInfoInteractor: BannerInfoInteractor,
+    private val wordStadiumInteractor: WordStadiumInteractor
 ) : BasePresenter<MengujiView>() {
 
     private val isPublik: Boolean
@@ -51,10 +55,17 @@ class MengujiPresenter @Inject constructor(
     }
 
     fun getDebatOpen() {
-        val debatList = listOf(
-            DebatItem.Challenge(DebatDetail("Raja Kampreta", "", "ekonomi"), 0, DebatItem.Challenge.Status.OPEN),
-            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 1, DebatItem.Challenge.Status.OPEN),
-            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 2, DebatItem.Challenge.Status.OPEN))
-        view?.showDebatOpen(debatList)
+        view?.showDebatOpen(State.Loading, emptyList(), false)
+
+        disposables += wordStadiumInteractor.getPublicChallenge(ChallengeConstants.PROGRESS_ON_GOING)
+            .subscribe({ list ->
+                val debatList = list.take(3).map {
+                    val debatDetail = DebatDetail(it.getChallenger(), it.getOpponent(), it.topicList.first())
+                    DebatItem.Challenge(debatDetail, it.opponentCandidateCount, it.status)
+                }
+                view?.showDebatOpen(State.Success, debatList, list.size > 3)
+            }, {
+                view?.showDebatOpen(State.Error(it.message), emptyList(), false)
+            })
     }
 }
