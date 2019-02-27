@@ -44,8 +44,9 @@ abstract class DebatViewHolder(
         val avatar2 = item.debatDetail.opponent?.avatar?.thumbnailSquare?.url ?:
             (item as? DebatItem.Challenge)?.opponentCandidateAvatar
 
-        imageAvatar1.loadUrl(item.debatDetail.challenger.avatar.thumbnailSquare?.url)
-        imageAvatar2.loadUrl(avatar2)
+        imageAvatar1.loadUrl(item.debatDetail.challenger.avatar.thumbnailSquare?.url,
+            R.drawable.ic_avatar_placeholder)
+        imageAvatar2.loadUrl(avatar2, R.drawable.ic_avatar_placeholder)
 
         textDebatType.setTextColor(containerView.context.color(
             if (item is DebatItem.Challenge && item.isDirect) R.color.black_2 else R.color.white))

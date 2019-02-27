@@ -57,13 +57,8 @@ class MengujiPresenter @Inject constructor(
 
         disposables += wordStadiumInteractor.getPublicChallenge(ChallengeConstants.PROGRESS_ON_GOING)
             .subscribe({ list ->
-                val debatList = list.take(3).map {
-                    val debatDetail = DebatDetail(it.getChallenger(), it.getOpponent(),
-                        it.topicList.first(), it.statement)
-                    val opponentCandidates = it.getOpponentCandidates()
-                    DebatItem.Challenge(debatDetail, opponentCandidates.size,
-                        opponentCandidates.firstOrNull()?.avatar?.thumbnailSquare?.url, it.status)
-                }
+                val debatList = list.take(3)
+                    .map { it.toDebatItemChallenge() }
                 view?.showDebatOpen(State.Success, debatList, list.size > 3)
             }, {
                 view?.showDebatOpen(State.Error(it.message), emptyList(), false)
