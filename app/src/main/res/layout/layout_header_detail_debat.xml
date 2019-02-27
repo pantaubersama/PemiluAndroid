@@ -125,7 +125,6 @@
             android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/tv_name_2"
             app:layout_constraintStart_toStartOf="@id/tv_name_2"/>
-
     </LinearLayout>
 
     <TextView
@@ -141,6 +140,66 @@
         app:layout_constraintTop_toBottomOf="@id/ll_tv_name_1"
         app:layout_constraintStart_toEndOf="@id/tv_versus"
         app:layout_constraintEnd_toStartOf="@id/tv_versus"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="gone"
+        android:id="@+id/cl_clap_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/iv_avatar_1"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/iv_clap_left"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_clap"
+            android:tint="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_clap_count_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/lato_bold"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:text="50 total"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_clap_left"/>
+
+
+        <ImageView
+            android:id="@+id/iv_clap_right"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_clap"
+            android:tint="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_clap_count_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/lato_bold"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:text="50 total"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_clap_right"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
         android:visibility="visible"
