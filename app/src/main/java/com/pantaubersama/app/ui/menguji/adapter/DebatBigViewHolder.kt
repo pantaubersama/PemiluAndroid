@@ -41,7 +41,7 @@ class DebatBigViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(view
         when (item) {
             is DebatItem.Challenge -> {
                 textName2.text = if (item.opponentCandidates > 0)
-                    "Waiting for confirmation" else "Waiting for opponent"
+                    "Menunggu Konfirmasi" else "Menunggu Lawan Debat"
             }
             is DebatItem.LiveNow -> {
                 itemView.setOnClickListener { itemView.context?.let { it.startActivity(Intent(it, DebatActivity::class.java)) } }

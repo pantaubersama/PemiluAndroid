@@ -6,6 +6,10 @@ object ChallengeConstants {
     const val PROGRESS_LIVE_NOW = "live_now"
     const val PROGRESS_DONE = "done"
 
+    const val CONDITION_ONGOING = "ongoing"
+    const val CONDITION_EXPIRED = "expired"
+    const val CONDITION_REJECTED = "rejected"
+
     const val ROLE_CHALLENGER = "challenger"
     const val ROLE_OPPONENT = "opponent"
     const val ROLE_OPPONENT_CANDIDATE = "opponent_candidate"

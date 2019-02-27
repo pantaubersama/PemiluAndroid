@@ -41,10 +41,13 @@ data class Challenge(
 ) {
 
     val status: DebatItem.Challenge.Status
-        get() = when (type) {
-            ChallengeConstants.TYPE_OPEN_CHALLENGE -> DebatItem.Challenge.Status.OPEN
-            ChallengeConstants.TYPE_DIRECT_CHALLENGE -> DebatItem.Challenge.Status.DIRECT
-            else -> throw ErrorException("Tipe challenge tidak diketahui")
+        get() = when {
+            condition == ChallengeConstants.CONDITION_EXPIRED -> DebatItem.Challenge.Status.EXPIRED
+            condition == ChallengeConstants.CONDITION_REJECTED -> DebatItem.Challenge.Status.DENIED
+            // condition == ChallengeConstants.CONDITION_ONGOING
+            type == ChallengeConstants.TYPE_OPEN_CHALLENGE -> DebatItem.Challenge.Status.OPEN
+            type == ChallengeConstants.TYPE_DIRECT_CHALLENGE -> DebatItem.Challenge.Status.DIRECT
+            else -> throw ErrorException("Status challenge tidak diketahui")
         }
 
     fun getChallenger(): Audience {

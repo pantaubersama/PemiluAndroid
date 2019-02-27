@@ -80,7 +80,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         carousel_debat.adapter = debatCarouselAdapter
         carousel_debat.addItemDecoration(OffsetItemDecoration(dip(16), top = 0,
             orientation = RecyclerView.HORIZONTAL))
-        button_more_live.setOnClickListener {
+        button_more_carousel.setOnClickListener {
             DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_LIVE_NOW else PERSONAL_CHALLENGE_IN_PROGRESS)
         }
     }
@@ -147,9 +147,15 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     override fun showDebatOpen(state: State, list: List<DebatItem.Challenge>, hasMore: Boolean) {
-        if (!isPublik) debatCarouselAdapter.debatItems = list
-
         val showEmptyState = state == State.Success && list.isEmpty()
+
+        if (!isPublik) {
+            progress_carousel.visibleIf(state == State.Loading)
+            button_more_carousel.visibleIf(hasMore)
+            empty_state_carousel.visibleIf(showEmptyState)
+            empty_state_carousel.lottie_empty_state.enableLottie(showEmptyState)
+            debatCarouselAdapter.debatItems = list
+        }
 
         progress_open.visibleIf(state == State.Loading)
         button_more_debat_open.visibleIf(hasMore)
