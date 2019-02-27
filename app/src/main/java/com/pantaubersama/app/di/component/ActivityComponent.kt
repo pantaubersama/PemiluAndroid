@@ -67,6 +67,7 @@ import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import com.pantaubersama.app.ui.wordstadium.challenge.open.BidangKajianDialog
 import com.pantaubersama.app.ui.wordstadium.challenge.open.OpenChallengeActivity
+import com.pantaubersama.app.ui.wordstadium.challenge.open.PromoteChallengeActivity
 import dagger.Subcomponent
 
 /**
@@ -140,4 +141,5 @@ interface ActivityComponent {
     fun inject(openChallengeActivity: OpenChallengeActivity)
     fun inject(kajianDialog: BidangKajianDialog)
     fun inject(debatActivity: DebatActivity)
+    fun inject(promoteChallengeActivity: PromoteChallengeActivity)
 }
