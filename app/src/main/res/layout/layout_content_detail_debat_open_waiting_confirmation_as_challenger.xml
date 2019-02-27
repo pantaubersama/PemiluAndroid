@@ -23,7 +23,7 @@
         android:id="@+id/tv_content_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ini adalah Open Challenge,"
+        android:text="Menunggu,"
         android:textSize="24dp"
         android:textColor="@color/black_2"
         android:fontFamily="@font/bw_modelica_light"
@@ -34,7 +34,7 @@
         android:id="@+id/tv_content_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Terima tantangan ini?"
+        android:text="lawan menerima tantanganmu"
         android:textSize="24dp"
         android:textColor="@color/yellow"
         android:fontFamily="@font/bw_modelica_bold"
@@ -43,22 +43,19 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_terima"
-        android:layout_width="match_parent"
+        android:id="@+id/btn_promosikan"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:textSize="12sp"
-        android:text="TERIMA"
-        android:textAlignment="center"
-        android:gravity="center"
+        android:layout_marginTop="23dp"
+        android:minHeight="24dp"
         android:fontFamily="@font/lato_bold"
-        android:letterSpacing="0.1"
-        android:backgroundTint="@color/orange_2"
-        app:icon="@drawable/ic_outline_challenge_accepted_24_px"
-        app:iconGravity="start"
-        app:rippleColor="@color/orange"
-        app:layout_constraintTop_toBottomOf="@id/ll_debat_participant"
-        app:layout_constraintBottom_toBottomOf="@id/iv_content_background"/>
+        android:text="Promosikan tantangan kamu sekali lagi! >>"
+        android:textAllCaps="false"
+        android:textColor="@color/orange_2"
+        android:textSize="10sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_content_subtitle"
+        app:layout_constraintStart_toStartOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
