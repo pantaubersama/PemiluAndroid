@@ -39,6 +39,9 @@
         android:layout_marginEnd="16dp"
         android:background="@color/gray_3" />
 
+
+    <!-- CHALLENGE COMING SOON -->
+
     <TextView
         android:id="@+id/label_debat_coming"
         android:layout_width="wrap_content"
@@ -65,11 +68,29 @@
         tools:listitem="@layout/item_debat_small" />
 
     <include
-        android:id="@+id/button_more_debat_coming"
+        android:id="@+id/empty_state_coming"
+        layout="@layout/layout_empty_state_small" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progress_coming"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="lottie_loading.json" />
+
+    <include
+        android:id="@+id/button_more_coming"
         layout="@layout/button_see_more_yellow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal" />
+
+
+    <!-- CHALLENGE DONE -->
 
     <TextView
         android:id="@+id/label_debat_done"
@@ -97,7 +118,22 @@
         tools:listitem="@layout/item_debat_small" />
 
     <include
-        android:id="@+id/button_more_debat_done"
+        android:id="@+id/empty_state_done"
+        layout="@layout/layout_empty_state_small" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progress_done"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="lottie_loading.json" />
+
+    <include
+        android:id="@+id/button_more_done"
         layout="@layout/button_see_more_yellow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -135,14 +171,16 @@
         android:id="@+id/empty_state_open"
         layout="@layout/layout_empty_state_small" />
 
-    <ProgressBar
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progress_open"
-        style="?android:progressBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="16dp"
-        android:visibility="gone" />
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="lottie_loading.json" />
 
     <include
         android:id="@+id/button_more_debat_open"

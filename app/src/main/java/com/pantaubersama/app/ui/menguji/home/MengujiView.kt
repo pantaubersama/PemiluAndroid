@@ -11,8 +11,8 @@ interface MengujiView : BaseView {
 
     fun showBanner(bannerInfo: BannerInfo)
     fun hideBanner()
-    fun showDebatLive(list: List<Challenge>)
-    fun showDebatComingSoon(list: List<Challenge>)
-    fun showDebatDone(list: List<Challenge>)
+    fun showChallengeLive(list: List<Challenge>)
+    fun showChallengeComingSoon(list: List<Challenge>)
+    fun showChallengeDone(list: List<Challenge>)
     fun showChallengeOngoing(state: State, list: List<Challenge>, hasMore: Boolean)
 }

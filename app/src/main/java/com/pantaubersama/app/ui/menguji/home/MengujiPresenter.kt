@@ -29,16 +29,16 @@ class MengujiPresenter @Inject constructor(
             })
     }
 
-    fun getDebatLive() {
-        view?.showDebatLive(emptyList())
+    fun getChallengeLive() {
+        view?.showChallengeLive(emptyList())
     }
 
-    fun getDebatComingSoon() {
-        view?.showDebatComingSoon(emptyList())
+    fun getChallengeComingSoon() {
+        view?.showChallengeComingSoon(emptyList())
     }
 
-    fun getDebatDone() {
-        view?.showDebatDone(emptyList())
+    fun getChallengeDone() {
+        view?.showChallengeDone(emptyList())
     }
 
     fun getChallengeOngoing() {
