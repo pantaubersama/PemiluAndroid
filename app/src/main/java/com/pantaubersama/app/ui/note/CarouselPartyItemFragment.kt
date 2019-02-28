@@ -2,14 +2,11 @@ package com.pantaubersama.app.ui.note
 
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.CommonFragment
 import com.pantaubersama.app.data.model.partai.PoliticalParty
 import com.pantaubersama.app.utils.extensions.loadUrl
-import com.pantaubersama.app.utils.extensions.toDp
 import kotlinx.android.synthetic.main.carousel_party_item_layout.*
-import timber.log.Timber
 
 class CarouselPartyItemFragment : CommonFragment() {
 
@@ -18,14 +15,13 @@ class CarouselPartyItemFragment : CommonFragment() {
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        val layoutParams = LinearLayout.LayoutParams(290f.toDp(requireContext()), 290f.toDp(requireContext()))
-
-        party_images.layoutParams = layoutParams
-
         if (arguments?.getSerializable(PARTY) != null) {
             (arguments?.getSerializable(PARTY) as PoliticalParty).let {
-                Timber.d(it.toString())
+                party_name.text = it.name
                 party_images.loadUrl(it.image?.medium?.url)
+                if (it.number != 0) {
+                    party_number.text = "No. ${it.number}"
+                }
             }
         }
 
