@@ -38,9 +38,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:letterSpacing="0.29"
                 android:textColor="@color/gray_10"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:fontFamily="@font/lato_regular"/>
         </LinearLayout>
 
     </RelativeLayout>

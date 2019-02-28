@@ -70,7 +70,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
         }
 
         btn_search.setOnClickListener { startActivity(Intent(this, SearchActivity::class.java)) }
-        btn_notification.visibleIf(false) // di hide dulu, karena belum diimplementasi @edityo 6/2/19
+//        btn_notification.visibleIf(false) // di hide dulu, karena belum diimplementasi @edityo 6/2/19
 
         if (savedInstanceState == null) {
             when (tabDest) {

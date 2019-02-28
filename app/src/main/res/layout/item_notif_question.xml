@@ -7,7 +7,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:id="@+id/item">
 
         <ImageView
             android:id="@+id/notif_question_avatar"
@@ -57,9 +58,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:letterSpacing="0.29"
                 android:textColor="@color/gray_10"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:fontFamily="@font/lato_regular"/>
         </LinearLayout>
 
     </RelativeLayout>
@@ -67,6 +68,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/gray_2"/>
+        android:background="@color/gray_2"
+        android:layout_below="@id/item"/>
 
 </RelativeLayout>

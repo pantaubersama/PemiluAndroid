@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class CreatedAtInWord(
+    @SerializedName("time_zone")
+    @Expose
+    var timeZone: String,
     @SerializedName("iso_8601")
     @Expose
     var iso8601: String,

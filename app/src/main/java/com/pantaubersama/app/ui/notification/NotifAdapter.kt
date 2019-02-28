@@ -61,6 +61,7 @@ class NotifAdapter : BaseRecyclerAdapter() {
     inner class QuizViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(notification: NotificationWhole) {
             notif_new_quiz_message.text = notification.notification.body
+            notif_new_quiz_time.text = notification.timeInWord.id
             itemView.setOnClickListener {
                 if (notification.data.payload.quizNotif != null) {
                     notification.data.payload.quizNotif?.id?.let {
@@ -81,6 +82,7 @@ class NotifAdapter : BaseRecyclerAdapter() {
     inner class NotificationViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(notification: NotificationWhole) {
             notif_message.text = notification.notification.body
+            notif_time.text = notification.timeInWord.id
             itemView.setOnClickListener {
                 if (notification.broadcast != null) {
                     notification.broadcast?.link?.let {
@@ -99,6 +101,7 @@ class NotifAdapter : BaseRecyclerAdapter() {
         fun bind(notification: NotificationWhole) {
             notif_question_message.text = notification.notification.body
             notif_question_text.text = notification.data.payload.question.body
+            notif_question_time.text = notification.timeInWord.id
             question_container.setOnClickListener {
                 listener?.onClickTanyaKandidat(notification.data.payload.question.id)
             }
@@ -112,6 +115,7 @@ class NotifAdapter : BaseRecyclerAdapter() {
         fun bind(notification: NotificationWhole) {
             notif_badge_message.text = notification.notification.body
             notif_badge_avatar.loadUrl(notification.data.payload.badgeNotif.badge.image.thumbnail)
+            notif_badge_time.text = notification.timeInWord.id
             itemView.setOnClickListener {
                 listener?.onClickBadge(notification.data.payload.badgeNotif.achievedId)
             }

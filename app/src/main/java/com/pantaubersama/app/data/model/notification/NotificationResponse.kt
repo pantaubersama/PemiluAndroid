@@ -2,6 +2,7 @@ package com.pantaubersama.app.data.model.notification
 
 import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
 
 data class NotificationResponse(
     @SerializedName("data")
@@ -23,7 +24,9 @@ data class NotificationWhole(
     @SerializedName("notification")
     val notification: Notification,
     @SerializedName("pemilu_broadcast")
-    var broadcast: PemiluBroadcast?
+    var broadcast: PemiluBroadcast?,
+    @SerializedName("created_at_in_word")
+    var timeInWord: CreatedAtInWord
 ) : ItemModel {
     override fun getType(): Int {
         return 0
