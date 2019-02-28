@@ -48,7 +48,11 @@ abstract class CarouselPagerAdapter(
         }
     }
 
-    override fun onPageSelected(position: Int) {}
+    override fun onPageSelected(position: Int) {
+        setPosition(position)
+    }
+
+    abstract fun setPosition(position: Int)
 
     override fun onPageScrollStateChanged(state: Int) {}
 

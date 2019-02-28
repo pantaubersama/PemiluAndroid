@@ -49,14 +49,18 @@ class CatatanPilihanPresenter @Inject constructor(
     }
 
     fun getPartai(page: Int, perPage: Int) {
+        view?.showPartiesProgressBar()
         disposables.add(
             partyInteractor.getParties(page, perPage)
                 .subscribe(
                     {
+                        view?.dismissPartiesProgressBar()
                         view?.showPartai(it)
                     },
                     {
+                        view?.dismissPartiesProgressBar()
                         view?.showError(it)
+                        view?.showFailedGetPartiesAlert()
                     }
                 )
         )

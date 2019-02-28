@@ -13,4 +13,7 @@ interface CatatanPilihanView : BaseView {
     fun finishActivity()
     fun showFailedSubmitCatatanAlert()
     fun showPartai(parties: MutableList<PoliticalParty>)
+    fun showPartiesProgressBar()
+    fun dismissPartiesProgressBar()
+    fun showFailedGetPartiesAlert()
 }
