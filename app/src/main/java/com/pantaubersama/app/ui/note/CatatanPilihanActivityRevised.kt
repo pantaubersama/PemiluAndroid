@@ -3,13 +3,13 @@ package com.pantaubersama.app.ui.note
 import android.app.Activity
 import android.os.Bundle
 import android.util.DisplayMetrics
+import androidx.fragment.app.Fragment
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.kuis.KuisUserResult
+import com.pantaubersama.app.data.model.partai.PoliticalParty
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.note.presiden.CarouselItemFragment
-import com.pantaubersama.app.ui.note.presiden.CarouselPagerAdapter
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -21,6 +21,7 @@ import kotlin.math.roundToInt
 
 class CatatanPilihanActivityRevised : BaseActivity<CatatanPilihanPresenter>(), CatatanPilihanView {
     lateinit var presidentAdapter: CarouselPagerAdapter
+    lateinit var partyAdapter: CarouselPagerAdapter
 
     @Inject
     override lateinit var presenter: CatatanPilihanPresenter
@@ -41,7 +42,31 @@ class CatatanPilihanActivityRevised : BaseActivity<CatatanPilihanPresenter>(), C
         setupToolbar(true, getString(R.string.title_catatan_pilihanku), R.color.white, 4f)
         presenter.getUserProfile()
         presenter.getMyTendency()
-        setupPresiden()
+        setupPresident()
+        presenter.getPartai(1, 100)
+    }
+
+    override fun showPartai(parties: MutableList<PoliticalParty>) {
+        setupParty(parties)
+    }
+
+    private fun setupParty(parties: MutableList<PoliticalParty>) {
+        // set page margin between pages for viewpager
+        val metrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(metrics)
+        val pageMargin = metrics.widthPixels / 3
+        party_viewpager.pageMargin = -pageMargin
+
+        partyAdapter = object : CarouselPagerAdapter(supportFragmentManager, party_viewpager, parties.size) {
+            override fun getItemFragment(position: Int, scale: Float): Fragment {
+                return CarouselPartyItemFragment.newInstance(parties[position], scale)
+            }
+        }
+        party_viewpager.adapter = partyAdapter
+        partyAdapter.notifyDataSetChanged()
+
+        party_viewpager.addOnPageChangeListener(partyAdapter)
+        party_viewpager.offscreenPageLimit = 7
     }
 
     override fun showLoading() {
@@ -52,34 +77,34 @@ class CatatanPilihanActivityRevised : BaseActivity<CatatanPilihanPresenter>(), C
         dismissProgressDialog()
     }
 
-    private fun setupPresiden() {
+    private fun setupPresident() {
         // set page margin between pages for viewpager
         val metrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(metrics)
         val pageMargin = metrics.widthPixels / 3
-        presiden_viewpager.pageMargin = -pageMargin
+        president_viewpager.pageMargin = -pageMargin
 
         val imageArray = intArrayOf(R.drawable.note_ava_paslon_1, R.drawable.note_ava_paslon_2, R.drawable.note_ava_paslon_3)
 
-        presidentAdapter = object : CarouselPagerAdapter(supportFragmentManager, presiden_viewpager, imageArray.size) {
-            override fun getItemFragment(position: Int, scale: Float): CarouselItemFragment {
-                return CarouselItemFragment.newInstance(imageArray[position], scale)
+        presidentAdapter = object : CarouselPagerAdapter(supportFragmentManager, president_viewpager, imageArray.size) {
+            override fun getItemFragment(position: Int, scale: Float): Fragment {
+                return CarouselPresidentItemFragment.newInstance(imageArray[position], scale)
             }
         }
-        presiden_viewpager.adapter = presidentAdapter
+        president_viewpager.adapter = presidentAdapter
         presidentAdapter.notifyDataSetChanged()
 
-        presiden_viewpager.addOnPageChangeListener(presidentAdapter)
-        presiden_viewpager.offscreenPageLimit = 3
+        president_viewpager.addOnPageChangeListener(presidentAdapter)
+        president_viewpager.offscreenPageLimit = 3
     }
 
     override fun bindUserProfile(profile: Profile) {
         if (profile.votePreference != 0) {
-            profile.votePreference?.let {
-                presiden_viewpager.currentItem = it - 1
+            profile.votePreference.let {
+                president_viewpager.currentItem = it - 1
             }
         } else {
-            presiden_viewpager.currentItem = 2
+            president_viewpager.currentItem = 2
         }
     }
 

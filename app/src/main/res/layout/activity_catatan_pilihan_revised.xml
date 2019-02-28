@@ -22,124 +22,155 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_above="@id/catatan_pilihanku_ok">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/gray_3"
-                android:gravity="center"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/presiden_info_preferensi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_regular"
-                    android:lineSpacingExtra="2sp"
-                    android:text="@string/info_preferensi_calon_presiden"
-                    android:textColor="@color/gray_5"
-                    android:textSize="10sp" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Siapakah yang saat ini cocok dengan pilihan kamu?"
-                android:gravity="center_horizontal"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/lato_italic"
-                android:textSize="12sp"
-                android:textColor="@color/black_3"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp">
-
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/presiden_viewpager"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:layout_gravity="center_horizontal" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_kuis_result"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/gray_1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:visibility="gone"
-                android:layout_marginTop="36dp">
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/paslon_avatar"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_avatar_placeholder"
-                    app:riv_border_color="@color/white"
-                    app:riv_oval="true" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:orientation="vertical">
+                    android:background="@color/gray_3"
+                    android:gravity="center"
+                    android:padding="16dp">
 
                     <TextView
-                        android:id="@+id/presiden_total_kuis"
+                        android:id="@+id/presiden_info_preferensi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/bw_modelica_bold"
-                        android:letterSpacing="0.02"
-                        android:lineSpacingExtra="4sp"
-                        android:textColor="@color/black_3"
-                        android:textSize="12sp" />
+                        android:fontFamily="@font/lato_regular"
+                        android:lineSpacingExtra="2sp"
+                        android:text="@string/info_preferensi_calon_presiden"
+                        android:textColor="@color/gray_5"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Siapakah yang saat ini cocok dengan pilihan kamu?"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/lato_italic"
+                    android:textSize="12sp"
+                    android:textColor="@color/black_3"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp">
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/president_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_gravity="center_horizontal" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_kuis_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray_1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="36dp">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/paslon_avatar"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_avatar_placeholder"
+                        app:riv_border_color="@color/white"
+                        app:riv_oval="true" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp">
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/total_tendency"
+                            android:id="@+id/presiden_total_kuis"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/bw_modelica_bold"
-                            android:gravity="center_horizontal"
-                            android:lineSpacingExtra="0sp"
+                            android:letterSpacing="0.02"
+                            android:lineSpacingExtra="4sp"
                             android:textColor="@color/black_3"
-                            android:textSize="16sp" />
+                            android:textSize="12sp" />
 
-                        <TextView
-                            android:id="@+id/paslon_name"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/bw_modelica_bold"
-                            android:gravity="center_horizontal"
-                            android:lineSpacingExtra="0sp"
-                            android:textColor="@color/black_3"
-                            android:textSize="16sp"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginStart="4dp"/>
+                            android:layout_marginTop="4dp">
 
+                            <TextView
+                                android:id="@+id/total_tendency"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/bw_modelica_bold"
+                                android:gravity="center_horizontal"
+                                android:lineSpacingExtra="0sp"
+                                android:textColor="@color/black_3"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/paslon_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/bw_modelica_bold"
+                                android:gravity="center_horizontal"
+                                android:lineSpacingExtra="0sp"
+                                android:textColor="@color/black_3"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginStart="4dp"/>
+
+                        </LinearLayout>
                     </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Partai mana yang cocok dengan pilihan kamu?"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/lato_italic"
+                    android:textSize="12sp"
+                    android:textColor="@color/black_3"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="36dp">
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/party_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_gravity="center_horizontal" />
+
                 </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <LinearLayout
             android:id="@+id/catatan_pilihanku_ok"

@@ -7,10 +7,10 @@
     android:background="@android:color/transparent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.pantaubersama.app.ui.note.presiden.CarouselItemFragment">
+    tools:context="com.pantaubersama.app.ui.note.CarouselPresidentItemFragment">
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/paslon_images"
+        android:id="@+id/party_images"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"

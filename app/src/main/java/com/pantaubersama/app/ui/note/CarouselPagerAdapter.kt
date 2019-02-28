@@ -1,11 +1,10 @@
-package com.pantaubersama.app.ui.note.presiden
+package com.pantaubersama.app.ui.note
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.pantaubersama.app.R
-import com.pantaubersama.app.ui.note.CarouselLinearLayout
 
 abstract class CarouselPagerAdapter(
     private val fragmentManager: FragmentManager,
@@ -30,7 +29,7 @@ abstract class CarouselPagerAdapter(
         return getItemFragment(newPosition, scale)
     }
 
-    abstract fun getItemFragment(position: Int, scale: Float): CarouselItemFragment
+    abstract fun getItemFragment(position: Int, scale: Float): Fragment
 
     override fun getCount(): Int {
         return itemCount

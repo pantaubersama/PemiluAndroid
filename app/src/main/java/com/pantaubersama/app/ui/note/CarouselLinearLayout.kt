@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.widget.LinearLayout
-import com.pantaubersama.app.ui.note.presiden.CarouselPagerAdapter
 
 class CarouselLinearLayout : LinearLayout {
     private var scale = CarouselPagerAdapter.BIG_SCALE

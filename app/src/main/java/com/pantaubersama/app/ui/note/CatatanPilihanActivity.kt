@@ -58,6 +58,10 @@ class CatatanPilihanActivity : BaseActivity<CatatanPilihanPresenter>(), CatatanP
         }
     }
 
+    override fun showPartai(parties: MutableList<PoliticalParty>) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private fun setupRecyclerview() {
         recycler_view.layoutManager =
                 LinearLayoutManager(this@CatatanPilihanActivity, LinearLayoutManager.HORIZONTAL, false)

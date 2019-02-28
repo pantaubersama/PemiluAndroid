@@ -1,11 +1,15 @@
 package com.pantaubersama.app.ui.note
 
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.interactors.PartyInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.model.partai.PoliticalParty
 import javax.inject.Inject
 
-class CatatanPilihanPresenter @Inject constructor(private val profileInteractor: ProfileInteractor) : BasePresenter<CatatanPilihanView>() {
+class CatatanPilihanPresenter @Inject constructor(
+    private val profileInteractor: ProfileInteractor,
+    private val partyInteractor: PartyInteractor
+) : BasePresenter<CatatanPilihanView>() {
     fun submitCatatanku(paslonSelected: Int, partySelected: PoliticalParty) {
         view?.showLoading()
         disposables.add(
@@ -34,11 +38,25 @@ class CatatanPilihanPresenter @Inject constructor(private val profileInteractor:
             profileInteractor.getMyTendency()
                 .subscribe(
                     {
-                        view?.bindMyTendency(it, profileInteractor.getProfile().name ?: "")
+                        view?.bindMyTendency(it, profileInteractor.getProfile().name)
                     },
                     {
                         view?.showError(it)
                         view?.showFailedGetMyTendencyAlert()
+                    }
+                )
+        )
+    }
+
+    fun getPartai(page: Int, perPage: Int) {
+        disposables.add(
+            partyInteractor.getParties(page, perPage)
+                .subscribe(
+                    {
+                        view?.showPartai(it)
+                    },
+                    {
+                        view?.showError(it)
                     }
                 )
         )
