@@ -6,8 +6,8 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.debat.Challenge
 import com.pantaubersama.app.data.model.debat.DebatHeader
-import com.pantaubersama.app.data.model.debat.DebatItem
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.menguji.adapter.DebatListAdapter
 import com.pantaubersama.app.utils.PantauConstants.Debat
@@ -69,7 +69,7 @@ class DebatListActivity : BaseActivity<DebatListPresenter>(), DebatListView {
         adapter.addItem(DebatHeader(text), 0)
     }
 
-    override fun showDebatItems(list: List<DebatItem>) {
+    override fun showChallenge(list: List<Challenge>) {
         view_empty_state.enableLottie(list.isEmpty(), lottie_empty_state)
         recycler_view.visibleIf(list.isNotEmpty())
         adapter.setDatas(list)

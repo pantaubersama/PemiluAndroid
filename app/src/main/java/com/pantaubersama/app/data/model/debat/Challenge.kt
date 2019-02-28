@@ -1,8 +1,15 @@
 package com.pantaubersama.app.data.model.debat
 
 import com.google.gson.annotations.SerializedName
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.debat.ChallengeConstants.Condition
+import com.pantaubersama.app.data.model.debat.ChallengeConstants.Progress
+import com.pantaubersama.app.data.model.debat.ChallengeConstants.Role
+import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
+import com.pantaubersama.app.data.model.debat.ChallengeConstants.Type
 import com.pantaubersama.app.data.model.image.Image
 import com.pantaubersama.app.data.remote.exception.ErrorException
+import com.pantaubersama.app.utils.PantauConstants
 import java.io.Serializable
 
 data class ChallengeResponse(
@@ -38,30 +45,33 @@ data class Challenge(
     val topicList: List<String>,
     @SerializedName("type")
     val type: String
-) {
+) : ItemModel, Serializable {
 
-    val status: DebatItem.Challenge.Status
+    override fun getType(): Int = PantauConstants.ItemModel.TYPE_DEBAT_ITEM
+
+    val status: String
         get() = when {
-            condition == ChallengeConstants.CONDITION_EXPIRED -> DebatItem.Challenge.Status.EXPIRED
-            condition == ChallengeConstants.CONDITION_REJECTED -> DebatItem.Challenge.Status.DENIED
-            // condition == ChallengeConstants.CONDITION_ONGOING
-            type == ChallengeConstants.TYPE_OPEN_CHALLENGE -> DebatItem.Challenge.Status.OPEN
-            type == ChallengeConstants.TYPE_DIRECT_CHALLENGE -> DebatItem.Challenge.Status.DIRECT
+            condition == Condition.EXPIRED -> Status.EXPIRED
+            progress == Progress.LIVE_NOW -> Status.LIVE_NOW
+            progress == Progress.COMING_SOON -> Status.COMING_SOON
+            progress == Progress.DONE -> Status.DONE
+            type == Type.OPEN_CHALLENGE -> Status.OPEN_CHALLENGE
+            type == Type.DIRECT_CHALLENGE -> {
+                if (condition == Condition.REJECTED) Status.DENIED
+                else Status.DIRECT_CHALLENGE
+            }
             else -> throw ErrorException("Status challenge tidak diketahui")
         }
 
-    fun getChallenger(): Audience {
-        return audiences.find { it.role == ChallengeConstants.ROLE_CHALLENGER }
+    val challenger: Audience
+        get() = audiences.find { it.role == Role.CHALLENGER }
             ?: throw ErrorException("Tidak ada penantang")
-    }
 
-    fun getOpponent(): Audience? {
-        return audiences.find { it.role == ChallengeConstants.ROLE_OPPONENT }
-    }
+    val opponent: Audience?
+        get() = audiences.find { it.role == Role.OPPONENT }
 
-    fun getOpponentCandidates(): List<Audience> {
-        return audiences.filter { it.role == ChallengeConstants.ROLE_OPPONENT_CANDIDATE }
-    }
+    val opponentCandidates: List<Audience>
+        get() = audiences.filter { it.role == Role.OPPONENT_CANDIDATE }
 }
 
 data class Audience(
@@ -81,10 +91,4 @@ data class Audience(
     val userId: Any?,
     @SerializedName("username")
     val username: String
-): Serializable
-
-// TODO: remove
-val DUMMY_CHALLENGER = Audience("", Image(), "", "Ratu CebonganYK", "",
-    ChallengeConstants.ROLE_CHALLENGER, null, "@ratu_cebonganYK")
-val DUMMY_OPPONENT = Audience("", Image(), "", "Raja Kampreta", "",
-    ChallengeConstants.ROLE_CHALLENGER, null, "@raja_kampreta")
+) : Serializable

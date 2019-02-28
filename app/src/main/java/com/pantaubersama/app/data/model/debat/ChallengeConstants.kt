@@ -1,19 +1,39 @@
 package com.pantaubersama.app.data.model.debat
 
 object ChallengeConstants {
-    const val PROGRESS_ON_GOING = "ongoing" // Open Challenge
-    const val PROGRESS_COMING_SOON = "coming_soon"
-    const val PROGRESS_LIVE_NOW = "live_now"
-    const val PROGRESS_DONE = "done"
+    object Progress {
+        const val ON_GOING = "ongoing"
+        const val COMING_SOON = "coming_soon"
+        const val LIVE_NOW = "live_now"
+        const val DONE = "done"
+        const val WAITING_OPPONENT = "waiting_opponent"
+        const val WAITING_CONFIRMATION = "waiting_confirmation"
+    }
 
-    const val CONDITION_ONGOING = "ongoing"
-    const val CONDITION_EXPIRED = "expired"
-    const val CONDITION_REJECTED = "rejected"
+    object Status {
+        const val LIVE_NOW = "LIVE NOW"
+        const val COMING_SOON = "COMING SOON"
+        const val DONE = "DONE"
+        const val OPEN_CHALLENGE = "OPEN CHALLENGE"
+        const val DIRECT_CHALLENGE = "DIRECT CHALLENGE"
+        const val EXPIRED = "EXPIRED"
+        const val DENIED = "DENIED"
+    }
 
-    const val ROLE_CHALLENGER = "challenger"
-    const val ROLE_OPPONENT = "opponent"
-    const val ROLE_OPPONENT_CANDIDATE = "opponent_candidate"
+    object Condition {
+        const val ONGOING = "ongoing"
+        const val EXPIRED = "expired"
+        const val REJECTED = "rejected"
+    }
 
-    const val TYPE_OPEN_CHALLENGE = "OpenChallenge"
-    const val TYPE_DIRECT_CHALLENGE = "DirectChallenge"
+    object Role {
+        const val CHALLENGER = "challenger"
+        const val OPPONENT = "opponent"
+        const val OPPONENT_CANDIDATE = "opponent_candidate"
+    }
+
+    object Type {
+        const val OPEN_CHALLENGE = "OpenChallenge"
+        const val DIRECT_CHALLENGE = "DirectChallenge"
+    }
 }
