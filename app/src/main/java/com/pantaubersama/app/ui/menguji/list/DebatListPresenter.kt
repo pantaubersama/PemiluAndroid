@@ -2,7 +2,7 @@ package com.pantaubersama.app.ui.menguji.list
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.WordStadiumInteractor
-import com.pantaubersama.app.data.model.debat.*
+import com.pantaubersama.app.data.model.debat.ChallengeConstants
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
@@ -22,41 +22,29 @@ class DebatListPresenter @Inject constructor(
     }
 
     fun getDebatLive() {
-        val debatList = (0..9).map {
-            DebatItem.LiveNow(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", "dummy"))
-        }
-        view?.showDebatItems(debatList)
+        view?.showChallenge(emptyList())
     }
 
     fun getDebatComingSoon() {
-        val debatList = (0..9).map {
-            DebatItem.ComingSoon(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", "dummy"),
-                "24 Maret 2019", "16:00 - 17:00")
-        }
-        view?.showDebatItems(debatList)
+        view?.showChallenge(emptyList())
     }
 
     fun getDebatDone() {
-        val debatList = (0..9).map {
-            DebatItem.Done(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", "dummy"),
-                70, 70, 50)
-        }
-        view?.showDebatItems(debatList)
+        view?.showChallenge(emptyList())
     }
 
     fun getDebatOpen(title: String) {
         view?.showLoading()
 
         val request = if (title == Title.PUBLIK_CHALLENGE)
-            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.PROGRESS_ON_GOING)
+            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.ON_GOING)
         else
-            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.PROGRESS_ON_GOING)
+            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.ON_GOING)
 
         disposables += request
             .doOnEvent { _, _ -> view?.dismissLoading() }
-            .subscribe({ list ->
-                val debatList = list.map { it.toDebatItemChallenge() }
-                view?.showDebatItems(debatList)
+            .subscribe({
+                view?.showChallenge(it)
             }, {
                 view?.showError(it)
             })

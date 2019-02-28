@@ -6,7 +6,9 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
-import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.data.model.debat.Challenge
+import com.pantaubersama.app.data.model.debat.ChallengeConstants
+import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.color
@@ -20,7 +22,7 @@ abstract class DebatViewHolder(
     private val fragmentManager: FragmentManager
 ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    abstract val textDebatType: TextView
+    abstract val textStatus: TextView
     abstract val imageAvatar1: ImageView
     abstract val imageAvatar2: ImageView
     abstract val textName1: TextView
@@ -34,34 +36,37 @@ abstract class DebatViewHolder(
         OptionDialogFragment.newInstance(R.layout.layout_option_dialog_menguji)
     }
 
-    open fun bind(item: DebatItem) {
-        textDebatType.text = item.type
-        textName1.text = item.debatDetail.challenger.fullName
-        textName2.text = item.debatDetail.opponent?.fullName
-        textTopic.text = item.debatDetail.topic
-        textStatement.text = item.debatDetail.statement
+    open fun bind(challenge: Challenge) {
+        textStatus.text = challenge.status
+        textName1.text = challenge.challenger.fullName
+        textName2.text = challenge.opponent?.fullName
+        textTopic.text = challenge.topicList.firstOrNull()
+        textStatement.text = challenge.statement
 
-        val avatar2 = item.debatDetail.opponent?.avatar?.thumbnailSquare?.url ?:
-            (item as? DebatItem.Challenge)?.opponentCandidateAvatar
-
-        imageAvatar1.loadUrl(item.debatDetail.challenger.avatar.thumbnailSquare?.url,
+        val avatar2 = challenge.opponent?.avatar?.thumbnailSquare?.url
+            ?: challenge.opponentCandidates.firstOrNull()?.avatar?.thumbnailSquare?.url
+        val showAvatar2 = avatar2 != null &&
+            challenge.status !in arrayOf(Status.DENIED, Status.EXPIRED)
+        imageAvatar1.loadUrl(challenge.challenger.avatar.thumbnailSquare?.url,
             R.drawable.ic_avatar_placeholder)
         imageAvatar2.loadUrl(avatar2, R.drawable.ic_avatar_placeholder)
+        imageAvatar2.visibleIf(showAvatar2, true)
 
-        textDebatType.setTextColor(containerView.context.color(
-            if (item is DebatItem.Challenge && item.isDirect) R.color.black_2 else R.color.white))
-        imageAvatar2.visibleIf(item !is DebatItem.Challenge || item.opponentCandidates > 0, true)
+        val statusColor = containerView.context.color(
+            if (challenge.status == Status.DIRECT_CHALLENGE) R.color.black_2
+            else R.color.white)
+        textStatus.setTextColor(statusColor)
 
-        setupOpponentCount(item)
+        setupOpponentCandidateCount(challenge)
 
         buttonMoreOption.setOnClickListener {
-            showOptionDialog(item)
+            showOptionDialog(challenge)
         }
     }
 
-    private fun showOptionDialog(item: DebatItem) {
-        val hideDeleteButton = item !is DebatItem.Challenge || !item.isOpen
-        optionDialog.setViewVisibility(R.id.delete_action, !hideDeleteButton)
+    private fun showOptionDialog(challenge: Challenge) {
+        val showDeleteButton = challenge.progress == ChallengeConstants.Progress.WAITING_OPPONENT
+        optionDialog.setViewVisibility(R.id.delete_action, showDeleteButton)
         optionDialog.listener = View.OnClickListener {
             when (it.id) {
                 R.id.copy_link_action -> ToastUtil.show(it.context, "Salin Tautan")
@@ -74,12 +79,12 @@ abstract class DebatViewHolder(
         optionDialog.show(fragmentManager, "dialog")
     }
 
-    private fun setupOpponentCount(item: DebatItem) {
-        val count = if (item is DebatItem.Challenge) when {
-            item.opponentCandidates == 1 -> "?"
-            item.opponentCandidates > 1 -> item.opponentCandidates.toString()
+    private fun setupOpponentCandidateCount(challenge: Challenge) {
+        val count = when {
+            challenge.opponentCandidates.size == 1 -> "?"
+            challenge.opponentCandidates.size > 1 -> challenge.opponentCandidates.toString()
             else -> null
-        } else null
+        }?.takeIf { challenge.progress == ChallengeConstants.Progress.WAITING_CONFIRMATION }
 
         textOpponentCount.text = count
         textOpponentCount.visibleIf(count != null)

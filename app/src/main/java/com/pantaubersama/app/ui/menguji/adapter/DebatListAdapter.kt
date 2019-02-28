@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.base.viewholder.LoadingViewHolder
+import com.pantaubersama.app.data.model.debat.Challenge
 import com.pantaubersama.app.data.model.debat.DebatHeader
-import com.pantaubersama.app.data.model.debat.DebatItem
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_DEBAT_ITEM
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_HEADER
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_LOADING
@@ -27,7 +27,7 @@ class DebatListAdapter(private val fm: FragmentManager) : BaseRecyclerAdapter() 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HeaderViewHolder) holder.bind(data[position] as DebatHeader)
-        if (holder is DebatSmallViewHolder) holder.bind(data[position] as DebatItem)
+        if (holder is DebatSmallViewHolder) holder.bind(data[position] as Challenge)
     }
 
     class HeaderViewHolder(private val textView: TextView) : RecyclerView.ViewHolder(textView) {

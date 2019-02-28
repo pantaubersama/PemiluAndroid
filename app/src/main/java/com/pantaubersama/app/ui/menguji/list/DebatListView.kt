@@ -1,8 +1,8 @@
 package com.pantaubersama.app.ui.menguji.list
 
 import com.pantaubersama.app.base.BaseView
-import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.data.model.debat.Challenge
 
 interface DebatListView : BaseView {
-    fun showDebatItems(list: List<DebatItem>)
+    fun showChallenge(list: List<Challenge>)
 }

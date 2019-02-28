@@ -3,7 +3,7 @@ package com.pantaubersama.app.ui.menguji.home
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.WordStadiumInteractor
-import com.pantaubersama.app.data.model.debat.*
+import com.pantaubersama.app.data.model.debat.ChallengeConstants
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.State
 import io.reactivex.rxkotlin.plusAssign
@@ -30,43 +30,30 @@ class MengujiPresenter @Inject constructor(
     }
 
     fun getDebatLive() {
-        val debatList = (0..3).map {
-            DebatItem.LiveNow(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", "dummy"))
-        }
-        view?.showDebatLive(debatList)
+        view?.showDebatLive(emptyList())
     }
 
     fun getDebatComingSoon() {
-        val debatList = (0..2).map {
-            DebatItem.ComingSoon(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", "dummy"),
-                "24 Maret 2019", "16:00 - 17:00")
-        }
-        view?.showDebatComingSoon(debatList)
+        view?.showDebatComingSoon(emptyList())
     }
 
     fun getDebatDone() {
-        val debatList = (0..2).map {
-            DebatItem.Done(DebatDetail(DUMMY_CHALLENGER, DUMMY_OPPONENT, "ekonomi", "dummy"),
-                70, 70, 50)
-        }
-        view?.showDebatDone(debatList)
+        view?.showDebatDone(emptyList())
     }
 
-    fun getDebatOpen() {
-        view?.showDebatOpen(State.Loading, emptyList(), false)
+    fun getChallengeOngoing() {
+        view?.showChallengeOngoing(State.Loading, emptyList(), false)
 
         val request = if (isPublik)
-            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.PROGRESS_ON_GOING)
+            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.ON_GOING)
         else
-            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.PROGRESS_ON_GOING)
+            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.ON_GOING)
 
         disposables += request
-            .subscribe({ list ->
-                val debatList = list.take(3)
-                    .map { it.toDebatItemChallenge() }
-                view?.showDebatOpen(State.Success, debatList, list.size > 3)
+            .subscribe({
+                view?.showChallengeOngoing(State.Success, it.take(3), it.size > 3)
             }, {
-                view?.showDebatOpen(State.Error(it.message), emptyList(), false)
+                view?.showChallengeOngoing(State.Error(it.message), emptyList(), false)
             })
     }
 }

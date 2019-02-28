@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
-import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.data.model.debat.Challenge
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.menguji.adapter.BriefDebatAdapter
@@ -66,7 +66,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         if (isPublik) presenter.getDebatLive()
         presenter.getDebatComingSoon()
         presenter.getDebatDone()
-        presenter.getDebatOpen()
+        presenter.getChallengeOngoing()
     }
 
     private fun setupBanner() {
@@ -134,19 +134,19 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         rl_banner_container.visibleIf(false)
     }
 
-    override fun showDebatLive(list: List<DebatItem.LiveNow>) {
-        if (isPublik) debatCarouselAdapter.debatItems = list
+    override fun showDebatLive(list: List<Challenge>) {
+        if (isPublik) debatCarouselAdapter.challenges = list
     }
 
-    override fun showDebatComingSoon(list: List<DebatItem.ComingSoon>) {
-        debatComingAdapter.debatItems = list
+    override fun showDebatComingSoon(list: List<Challenge>) {
+        debatComingAdapter.challenges = list
     }
 
-    override fun showDebatDone(list: List<DebatItem.Done>) {
-        debatDoneAdapter.debatItems = list
+    override fun showDebatDone(list: List<Challenge>) {
+        debatDoneAdapter.challenges = list
     }
 
-    override fun showDebatOpen(state: State, list: List<DebatItem.Challenge>, hasMore: Boolean) {
+    override fun showChallengeOngoing(state: State, list: List<Challenge>, hasMore: Boolean) {
         val showEmptyState = state == State.Success && list.isEmpty()
 
         if (!isPublik) {
@@ -154,14 +154,14 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
             button_more_carousel.visibleIf(hasMore)
             empty_state_carousel.visibleIf(showEmptyState)
             empty_state_carousel.lottie_empty_state.enableLottie(showEmptyState)
-            debatCarouselAdapter.debatItems = list
+            debatCarouselAdapter.challenges = list
         }
 
         progress_open.visibleIf(state == State.Loading)
         button_more_debat_open.visibleIf(hasMore)
         empty_state_open.visibleIf(showEmptyState)
         empty_state_open.lottie_empty_state.enableLottie(showEmptyState)
-        debatOpenAdapter.debatItems = list
+        debatOpenAdapter.challenges = list
     }
 
     override fun showLoading() {
