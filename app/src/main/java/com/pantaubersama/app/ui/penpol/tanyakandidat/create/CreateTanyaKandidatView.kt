@@ -11,5 +11,10 @@ interface CreateTanyaKandidatView : BaseView {
     fun showFailedCreateTanyaKandidatAlert()
     fun hideActions()
     fun bindProfileData(profile: Profile?)
+    fun bindAvailableQuestions(questions: MutableList<Pertanyaan>)
+    fun showFailedGetAvailableQuestions()
+    fun showEmptyAvailableQuestionAlert()
+    fun showQustionAvailableLoading()
+    fun hideQustionAvailableLoading()
     // method
 }

@@ -59,6 +59,8 @@ android {
             it.resValue("string", "twitter_secret_key", TWITTER_SECRET)
             it.resValue("string", "pantau_base_url_no_scheme", PANTAU_BASE_URL_NO_SCHEME)
             it.resValue("string", "pantau_web_url_no_scheme", PANTAU_WEB_URL_NO_SCHEME)
+            it.resValue("string", "share_url", PANTAU_SHARE_URL)
+            it.resValue("string", "share_url_no_scheme", PANTAU_SHARE_URL_NO_SCHEME)
         }
     }
     productFlavors {
@@ -113,7 +115,7 @@ dependencies {
     implementation dagger
     implementation lottie
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation chromeCustomTab
     implementation expandableLayout
     implementation rxBinding

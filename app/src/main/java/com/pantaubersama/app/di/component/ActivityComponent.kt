@@ -18,9 +18,7 @@ import com.pantaubersama.app.ui.menguji.home.MengujiPagerFragment
 import com.pantaubersama.app.ui.menjaga.filter.LaporFilterActivity
 import com.pantaubersama.app.ui.menjaga.filter.partiesdialog.PartiesDialog
 import com.pantaubersama.app.ui.menjaga.lapor.LaporFragment
-import com.pantaubersama.app.ui.note.CatatanPilihanActivity
-import com.pantaubersama.app.ui.note.partai.PartaiFragment
-import com.pantaubersama.app.ui.note.presiden.PresidenFragment
+import com.pantaubersama.app.ui.note.CatatanPilihanActivityRevised
 import com.pantaubersama.app.ui.notification.NotifActivity
 import com.pantaubersama.app.ui.onboarding.OnboardingActivity
 import com.pantaubersama.app.ui.penpol.kuis.detail.DetailKuisActivity
@@ -109,8 +107,6 @@ interface ActivityComponent {
     fun inject(panduanKomunitasActivity: PanduanKomunitasActivity)
     fun inject(profileJanjiPolitikFragment: ProfileJanjiPolitikFragment)
     fun inject(profileTanyaKandidatFragment: ProfileTanyaKandidatFragment)
-    fun inject(presidenFragment: PresidenFragment)
-    fun inject(catatanPilihanActivity: CatatanPilihanActivity)
     fun inject(detailTanyaKandidatActivity: DetailTanyaKandidatActivity)
     fun inject(detailKuisActivity: DetailKuisActivity)
     fun inject(detailBadgeActivity: DetailBadgeActivity)
@@ -127,11 +123,11 @@ interface ActivityComponent {
     fun inject(searchQuestionFragment: SearchQuestionFragment)
     fun inject(searchQuizFragment: SearchQuizFragment)
     fun inject(filterOrangActivity: FilterOrangActivity)
-    fun inject(partaiFragment: PartaiFragment)
     fun inject(clusterDetailActivity: ClusterDetailActivity)
     fun inject(laporFragment: LaporFragment)
     fun inject(laporFilterActivity: LaporFilterActivity)
     fun inject(partiesDialog: PartiesDialog)
     fun inject(notifActivity: NotifActivity)
     fun inject(mengujiPagerFragment: MengujiPagerFragment)
+    fun inject(catatanPilihanActivityRevised: CatatanPilihanActivityRevised)
 }

@@ -172,7 +172,7 @@ class DataCache(context: Context) : SharedPref(context) {
         return if (getString(TANYA_KANDIDAT_ORDER_FILTER) != null) {
             getString(TANYA_KANDIDAT_ORDER_FILTER)
         } else {
-            PantauConstants.TanyaKandidat.Filter.ByVotes.MOST_VOTES
+            PantauConstants.TanyaKandidat.Filter.ByVotes.TRENDING
         }
     }
 
@@ -333,7 +333,7 @@ class DataCache(context: Context) : SharedPref(context) {
         return if (getString(TANYA_KANDIDAT_ORDER_FILTER_SEARCH) != null) {
             getString(TANYA_KANDIDAT_ORDER_FILTER_SEARCH)
         } else {
-            PantauConstants.TanyaKandidat.Filter.ByVotes.MOST_VOTES
+            PantauConstants.TanyaKandidat.Filter.ByVotes.TRENDING
         }
     }
 }

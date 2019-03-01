@@ -120,7 +120,7 @@ class TanyaKandidatInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
-    fun searchTanyaKandidat(keyword: String, page: Int, perpage: Int): Single<TanyaKandidatListData> {
+    fun searchTanyaKandidat(keyword: String, page: Int, perpage: Int): Single<MutableList<Pertanyaan>> {
         return apiWrapper.getPantauApi().searchTanyaKandidat(
             keyword,
             page,
@@ -129,7 +129,7 @@ class TanyaKandidatInteractor @Inject constructor(
             dataCache.loadTanyaKandidatOrderFilterDirection(),
             dataCache.loadTanyaKandidatUserFilterSearch()
         )
-            .map { it.data }
+            .map { it.data.questions }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }

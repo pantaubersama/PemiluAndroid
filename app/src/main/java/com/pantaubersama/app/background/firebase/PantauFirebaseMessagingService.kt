@@ -199,7 +199,6 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun createNotif(pendingIntent: PendingIntent, title: String?, description: String?, largeIcon: Bitmap? = null, bigPicture: Bitmap? = null) {
         val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_NAME_BROADCAST)
-            .setSmallIcon(R.drawable.ic_notification_icon)
             .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
             .setContentTitle(title)
             .setContentInfo(BuildConfig.APPLICATION_ID)
@@ -211,13 +210,26 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setDefaults(Notification.DEFAULT_ALL)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            notificationBuilder.setSmallIcon(R.drawable.ic_notification_icon)
+        } else {
+            notificationBuilder.setSmallIcon(R.drawable.ic_logo_notification_transparent_in)
+        }
+
         largeIcon?.let { notificationBuilder.setLargeIcon(it) }
 
         bigPicture?.let {
             notificationBuilder.setLargeIcon(bigPicture)
-            notificationBuilder.setStyle(NotificationCompat.BigPictureStyle()
+
+            val bigPictureStyle = NotificationCompat.BigPictureStyle()
                 .bigPicture(bigPicture)
-                .bigLargeIcon(null))
+                .bigLargeIcon(null)
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                bigPictureStyle.setSummaryText(description)
+            }
+
+            notificationBuilder.setStyle(bigPictureStyle)
         } ?: notificationBuilder.setStyle(NotificationCompat.BigTextStyle().bigText(description))
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

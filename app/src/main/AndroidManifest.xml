@@ -24,12 +24,22 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity"></activity>
-        <activity android:name=".ui.wordstadium.challenge.direct.DirectChallengeActivity" />
-        <activity android:name=".ui.wordstadium.challenge.open.PromoteChallengeActivity" />
-        <activity android:name=".ui.wordstadium.challenge.open.OpenChallengeAct" />
-        <activity android:name=".ui.wordstadium.challenge.CreateChallengeActivity" />
-        <activity android:name=".ui.notification.NotifActivity" />
+        <activity android:name=".ui.note.CatatanPilihanActivityRevised"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.wordstadium.challenge.CreateChallengeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.notification.NotifActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.wordstadium.challenge.direct.DirectChallengeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.wordstadium.challenge.open.PromoteChallengeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.wordstadium.challenge.open.OpenChallengeAct"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.webview.ChromeTabActivity"
             android:screenOrientation="portrait" />
@@ -166,6 +176,14 @@
                     android:pathPrefix="/share"
                     android:scheme="http" />
                 <data
+                    android:host="@string/share_url_no_scheme"
+                    android:pathPrefix="/share"
+                    android:scheme="https" />
+                <data
+                    android:host="@string/share_url_no_scheme"
+                    android:pathPrefix="/share"
+                    android:scheme="http" />
+                <data
                     android:host="@string/pantau_web_url_no_scheme"
                     android:pathPrefix="/cluster"
                     android:scheme="https" />
@@ -184,7 +202,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.linimasa.pilpres.filter.FilterPilpresActivity"
             android:screenOrientation="portrait" />

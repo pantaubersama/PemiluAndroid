@@ -205,7 +205,7 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
         val dialog = OptionDialog(this, R.layout.layout_option_dialog_tanya_kandidat)
         if (profile.cluster != null &&
             janpolItem?.creator?.cluster != null &&
-            janpolItem?.creator?.cluster?.id?.equals(profile.cluster?.id)!! &&
+            janpolItem?.creator?.cluster?.id?.equals(profile.cluster?.id) == true &&
             janpolItem?.creator?.id.equals(profile.id) &&
             profile.cluster?.isEligible!!) {
 //                    dialog.removeItem(R.id.report_tanya_kandidat_action)

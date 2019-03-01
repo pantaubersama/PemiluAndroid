@@ -100,11 +100,18 @@
                     android:layout_marginTop="10dp">
 
                     <RadioButton
+                        android:id="@+id/filter_trending"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filter_trending_label"
+                        android:theme="@style/RadioButtonStyle"
+                        android:checked="true"/>
+
+                    <RadioButton
                         android:id="@+id/filter_latest"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_latest_label"
-                        android:checked="true"
                         android:theme="@style/RadioButtonStyle"/>
 
                     <RadioButton

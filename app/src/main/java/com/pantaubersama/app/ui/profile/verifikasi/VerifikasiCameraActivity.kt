@@ -25,6 +25,7 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_verification_camera.*
 import okio.Okio
 import java.io.File
+import java.util.UUID
 
 class VerifikasiCameraActivity : AppCompatActivity() {
 
@@ -75,7 +76,7 @@ class VerifikasiCameraActivity : AppCompatActivity() {
     }
 
     private fun storeTemporaryImage(bytes: ByteArray): Uri {
-        val file = File(cacheDir.path, "camera.jpg")
+        val file = File(cacheDir.path, "camera_${UUID.randomUUID()}.jpg")
 
         with(Okio.buffer(Okio.sink(file))) {
             write(bytes)

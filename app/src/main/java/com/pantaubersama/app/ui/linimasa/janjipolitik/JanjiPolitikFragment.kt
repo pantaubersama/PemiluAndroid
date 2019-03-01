@@ -93,7 +93,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
                 val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
                 if (myProfile.cluster != null &&
                     item.creator?.cluster != null &&
-                    item.creator?.cluster?.id?.equals(myProfile.cluster?.id)!! &&
+                    item.creator?.cluster?.id?.equals(myProfile.cluster?.id) == true &&
                     item.creator?.id.equals(myProfile.id) &&
                     myProfile.cluster?.isEligible!!) {
 //                    dialog.removeItem(R.id.report_tanya_kandidat_action)
@@ -247,10 +247,10 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 RC_CREATE_JANPOL -> {
-//                    if (adapter.get(0) is BannerInfo) {
-//                        adapter.addItem(data?.getSerializableExtra(EXTRA_JANPOL_ITEM) as ItemModel, 1)
+//                    if (presidentAdapter.get(0) is BannerInfo) {
+//                        presidentAdapter.addItem(data?.getSerializableExtra(EXTRA_JANPOL_ITEM) as ItemModel, 1)
 //                    } else {
-//                        adapter.addItem(data?.getSerializableExtra(EXTRA_JANPOL_ITEM) as ItemModel, 0)
+//                        presidentAdapter.addItem(data?.getSerializableExtra(EXTRA_JANPOL_ITEM) as ItemModel, 0)
 //                        scrollToTop(false)
 //                    }
                     getJanjiPolitikList()

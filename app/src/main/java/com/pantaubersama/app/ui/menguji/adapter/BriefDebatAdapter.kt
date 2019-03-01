@@ -7,7 +7,7 @@ import com.pantaubersama.app.data.model.debat.DebatItem
 import com.pantaubersama.app.utils.extensions.inflate
 
 /**
- * This adapter is used for showing only a few [DebatItem]s on the RecyclerView. So it doesn't
+ * This presidentAdapter is used for showing only a few [DebatItem]s on the RecyclerView. So it doesn't
  * support pagination.
  * */
 class BriefDebatAdapter(
