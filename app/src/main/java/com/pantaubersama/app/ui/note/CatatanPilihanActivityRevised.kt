@@ -25,7 +25,7 @@ class CatatanPilihanActivityRevised : BaseActivity<CatatanPilihanPresenter>(), C
     private lateinit var partyAdapter: CarouselPagerAdapter
     private lateinit var profile: Profile
 
-    private var selectedPaslon = 0
+    private var selectedPaslon = 3
     private lateinit var selectedParty: PoliticalParty
 
     private var savedInstanceState: Bundle? = null
@@ -151,6 +151,7 @@ class CatatanPilihanActivityRevised : BaseActivity<CatatanPilihanPresenter>(), C
             }
         } else {
             if (profile.votePreference != 0) {
+                selectedPaslon = profile.votePreference
                 president_viewpager.currentItem = profile.votePreference - 1
             } else {
                 president_viewpager.currentItem = imageArray.size
