@@ -24,17 +24,22 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.note.CatatanPilihanActivityRevised"></activity>
+        <activity android:name=".ui.note.CatatanPilihanActivityRevised"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.wordstadium.challenge.CreateChallengeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.notification.NotifActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity" />
-        <activity android:name=".ui.wordstadium.challenge.direct.DirectChallengeActivity" />
-        <activity android:name=".ui.wordstadium.challenge.open.PromoteChallengeActivity" />
-        <activity android:name=".ui.wordstadium.challenge.open.OpenChallengeAct" />
+        <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.wordstadium.challenge.direct.DirectChallengeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.wordstadium.challenge.open.PromoteChallengeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.wordstadium.challenge.open.OpenChallengeAct"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.webview.ChromeTabActivity"
             android:screenOrientation="portrait" />
