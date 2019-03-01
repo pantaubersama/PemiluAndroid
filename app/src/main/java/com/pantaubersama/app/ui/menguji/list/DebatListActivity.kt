@@ -6,16 +6,24 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.debat.Challenge
 import com.pantaubersama.app.data.model.debat.DebatHeader
-import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.menguji.adapter.DebatListAdapter
 import com.pantaubersama.app.utils.PantauConstants.Debat
+import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.unSyncLazy
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import kotlinx.android.synthetic.main.layout_empty_state.*
+import kotlinx.android.synthetic.main.layout_fail_state.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
+import javax.inject.Inject
 
 class DebatListActivity : BaseActivity<DebatListPresenter>(), DebatListView {
 
-    override var presenter: DebatListPresenter = DebatListPresenter()
+    @Inject
+    override lateinit var presenter: DebatListPresenter
 
     private val title by unSyncLazy { intent.getStringExtra(Debat.EXTRA_TITLE) }
 
@@ -25,12 +33,21 @@ class DebatListActivity : BaseActivity<DebatListPresenter>(), DebatListView {
 
     override fun setLayout(): Int = R.layout.activity_debat_list
 
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
+    }
+
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, title, R.color.white, 4f)
 
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = adapter
         recycler_view.isNestedScrollingEnabled = true
+
+        swipe_refresh.setOnRefreshListener {
+            swipe_refresh.isRefreshing = false
+            presenter.getDebatItems(title)
+        }
 
         setupHeader()
 
@@ -52,14 +69,29 @@ class DebatListActivity : BaseActivity<DebatListPresenter>(), DebatListView {
         adapter.addItem(DebatHeader(text), 0)
     }
 
-    override fun showDebatItems(list: List<DebatItem>) {
-        adapter.addData(list)
+    override fun showChallenge(list: List<Challenge>) {
+        view_empty_state.enableLottie(list.isEmpty(), lottie_empty_state)
+        recycler_view.visibleIf(list.isNotEmpty())
+        adapter.setDatas(list)
+        setupHeader()
     }
 
     override fun showLoading() {
+        lottie_loading.enableLottie(true, lottie_loading)
+        view_empty_state.enableLottie(false, lottie_empty_state)
+        view_fail_state.enableLottie(false, lottie_fail_state)
+        recycler_view.visibleIf(false)
     }
 
     override fun dismissLoading() {
+        recycler_view.visibleIf(true)
+        lottie_loading.enableLottie(false, lottie_loading)
+    }
+
+    override fun showError(throwable: Throwable) {
+        super.showError(throwable)
+        recycler_view.visibleIf(false)
+        view_fail_state.enableLottie(true, lottie_fail_state)
     }
 
     companion object {

@@ -1,59 +1,52 @@
 package com.pantaubersama.app.ui.menguji.list
 
 import com.pantaubersama.app.base.BasePresenter
-import com.pantaubersama.app.data.model.debat.DebatDetail
-import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.data.interactors.WordStadiumInteractor
+import com.pantaubersama.app.data.model.debat.ChallengeConstants
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title
+import io.reactivex.rxkotlin.plusAssign
+import javax.inject.Inject
 
-class DebatListPresenter : BasePresenter<DebatListView>() {
+class DebatListPresenter @Inject constructor(
+    private val wordStadiumInteractor: WordStadiumInteractor
+) : BasePresenter<DebatListView>() {
 
     fun getDebatItems(title: String) {
         when (title) {
             Title.PUBLIK_LIVE_NOW -> getDebatLive()
             Title.PUBLIK_COMING_SOON, Title.PERSONAL_COMING_SOON -> getDebatComingSoon()
             Title.PUBLIK_DONE, Title.PERSONAL_DONE -> getDebatDone()
-            Title.PUBLIK_CHALLENGE, Title.PERSONAL_CHALLENGE_IN_PROGRESS, Title.PERSONAL_CHALLENGE -> getDebatOpen()
+            Title.PUBLIK_CHALLENGE, Title.PERSONAL_CHALLENGE_IN_PROGRESS, Title.PERSONAL_CHALLENGE ->
+                getDebatOpen(title)
         }
     }
 
     fun getDebatLive() {
-        val debatList = (0..9).map {
-            DebatItem.LiveNow(DebatDetail("Ratu CebonganYK", "Raja Kampreta", "ekonomi"))
-        }
-        view?.showDebatItems(debatList)
+        view?.showChallenge(emptyList())
     }
 
     fun getDebatComingSoon() {
-        val debatList = (0..9).map {
-            DebatItem.ComingSoon(DebatDetail("Ratu CebonganYK", "Raja Kampreta", "ekonomi"),
-                "24 Maret 2019", "16:00 - 17:00")
-        }
-        view?.showDebatItems(debatList)
+        view?.showChallenge(emptyList())
     }
 
     fun getDebatDone() {
-        val debatList = (0..9).map {
-            DebatItem.Done(DebatDetail("Ratu CebonganYK", "Raja Kampreta", "ekonomi"),
-                70, 70, 50)
-        }
-        view?.showDebatItems(debatList)
+        view?.showChallenge(emptyList())
     }
 
-    fun getDebatOpen() {
-        var debatList = listOf(
-            DebatItem.Challenge(DebatDetail("Raja Kampreta", "", "ekonomi"), 0,
-                DebatItem.Challenge.Status.OPEN),
-            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 1,
-                DebatItem.Challenge.Status.OPEN),
-            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 2,
-                DebatItem.Challenge.Status.OPEN),
-            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 1,
-                DebatItem.Challenge.Status.DIRECT),
-            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 0,
-                DebatItem.Challenge.Status.DENIED),
-            DebatItem.Challenge(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 0,
-                DebatItem.Challenge.Status.EXPIRED))
-        debatList += debatList
-        view?.showDebatItems(debatList)
+    fun getDebatOpen(title: String) {
+        view?.showLoading()
+
+        val request = if (title == Title.PUBLIK_CHALLENGE)
+            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.ON_GOING)
+        else
+            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.ON_GOING)
+
+        disposables += request
+            .doOnEvent { _, _ -> view?.dismissLoading() }
+            .subscribe({
+                view?.showChallenge(it)
+            }, {
+                view?.showError(it)
+            })
     }
 }

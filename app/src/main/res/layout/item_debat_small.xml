@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
     android:paddingStart="16dp"
     android:paddingTop="8dp"
     android:paddingEnd="16dp"
-    android:paddingBottom="8dp"
-    android:background="?selectableItemBackground">
+    android:paddingBottom="8dp">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide"
@@ -91,7 +91,7 @@
                 android:layout_height="38dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="4dp"
-                android:src="@drawable/ava_calon_1"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toTopOf="@id/text_name_1"
                 app:layout_constraintEnd_toStartOf="@id/layout_debat_type"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +99,8 @@
                 app:layout_constraintVertical_bias="0.9"
                 app:riv_border_color="@color/white"
                 app:riv_border_width="1dp"
-                app:riv_corner_radius="25dp" />
+                app:riv_corner_radius="25dp"
+                tools:src="@drawable/ava_calon_1" />
 
             <TextView
                 android:id="@+id/text_name_1"
@@ -139,13 +140,14 @@
                 android:layout_height="38dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="4dp"
-                android:src="@drawable/ava_calon_2"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/layout_debat_type"
                 app:layout_constraintTop_toTopOf="@id/image_avatar_1"
                 app:riv_border_color="@color/white"
                 app:riv_border_width="1dp"
-                app:riv_corner_radius="25dp" />
+                app:riv_corner_radius="25dp"
+                tools:src="@drawable/ava_calon_2" />
 
             <TextView
                 android:id="@+id/text_opponent_count"
@@ -248,7 +250,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
-        android:id="@+id/text_tag"
+        android:id="@+id/text_topic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -290,25 +292,25 @@
         android:background="?selectableItemBackgroundBorderless"
         android:src="@drawable/ic_more_horiz"
         android:tint="@color/black_3"
-        app:layout_constraintBottom_toBottomOf="@id/text_tag"
+        app:layout_constraintBottom_toBottomOf="@id/text_topic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/text_tag"
+        app:layout_constraintTop_toTopOf="@id/text_topic"
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/text_description"
+        android:id="@+id/text_statement"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:fontFamily="@font/bw_modelica_regular"
         android:lines="4"
-        android:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%.2 periode yuk, biar 10,54%."
         android:textColor="@color/black_2"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/text_tag"
-        app:layout_constraintTop_toBottomOf="@id/text_tag" />
+        app:layout_constraintStart_toStartOf="@id/text_topic"
+        app:layout_constraintTop_toBottomOf="@id/text_topic"
+        tools:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%.2 periode yuk, biar 10,54%." />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

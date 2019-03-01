@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ava_calon_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:riv_border_color="@color/white"
+        app:riv_border_width="1dp"
+        app:riv_oval="true"/>
+
+    <LinearLayout
+        android:id="@+id/ll_tv_name"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/iv_avatar"
+        app:layout_constraintTop_toTopOf="@id/iv_avatar"
+        app:layout_constraintBottom_toBottomOf="@id/iv_avatar">
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="18"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="14sp"
+            android:text="Raja Kampret"
+            android:fontFamily="@font/lato_bold"
+            android:textColor="@color/black_2"/>
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="18"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text=" @raja_kampret"
+            android:textSize="11sp"
+            android:fontFamily="@font/lato_regular"
+            android:textColor="@color/gray_11"/>
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:visibility="gone"
+        android:id="@+id/btn_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_bold"
+        android:text="Confirm"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/orange_2"
+        app:cornerRadius="2dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

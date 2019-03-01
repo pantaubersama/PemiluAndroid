@@ -8,6 +8,7 @@ import android.view.View
 import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_DEBAT_ITEM
 import com.pantaubersama.app.utils.ToastUtil
@@ -52,13 +53,13 @@ class DetailDebatActivity : CommonActivity() {
             if (!animator.isRunning) {
                 isLiked = !isLiked
                 if (isLiked) {
-                    tv_like_count.text =  (tv_like_count.text.toString().toInt() + 1).toString()
+                    tv_like_count.text = (tv_like_count.text.toString().toInt() + 1).toString()
                     animator.addUpdateListener { animation ->
                         lottie_love.progress = animation.animatedValue as Float
                     }
                     animator.start()
                 } else {
-                    tv_like_count.text =  (tv_like_count.text.toString().toInt() - 1).toString()
+                    tv_like_count.text = (tv_like_count.text.toString().toInt() - 1).toString()
                     lottie_love.progress = 0.0f
                 }
             }
@@ -82,23 +83,30 @@ class DetailDebatActivity : CommonActivity() {
             optionDialog.show(supportFragmentManager, "dialog")
         }
 
-        when (debatItem) {
-            is DebatItem.ComingSoon -> {
-                toolbar_detail_debat?.setBackgroundColor(color(R.color.blue_2))
-                cl_header?.setBackgroundResource(R.drawable.banner_coming_soon_fullheight)
-                ll_content_detail_debat.addView(layoutInflater.inflate(R.layout.layout_content_detail_debat_coming_soon, null))
-            }
-            is DebatItem.Challenge -> {
-                toolbar_detail_debat?.setBackgroundColor(color(R.color.yellow_2))
-                cl_header?.setBackgroundResource(R.drawable.banner_challenge_big)
-                ll_content_detail_debat.addView(layoutInflater.inflate(R.layout.layout_content_detail_debat_coming_soon, null))
-            }
-            is DebatItem.Done -> {
-                toolbar_detail_debat?.setBackgroundColor(color(R.color.purple_5))
-                cl_header?.setBackgroundResource(R.drawable.banner_done_post)
-                ll_content_detail_debat.addView(layoutInflater.inflate(R.layout.layout_content_detail_debat_done, null))
-            }
+        val bgToolbarColor = color(when (debatItem) {
+            is DebatItem.ComingSoon -> R.color.blue_2
+            is DebatItem.Challenge -> R.color.yellow_2
+            is DebatItem.Done -> R.color.purple_5
+            else -> throw ErrorException("Progress debat tidak diketahui")
+        })
+
+        val bgHeader = when (debatItem) {
+            is DebatItem.ComingSoon -> R.drawable.banner_coming_soon_fullheight
+            is DebatItem.Challenge -> R.drawable.banner_challenge_big
+            is DebatItem.Done -> R.drawable.banner_done_post
+            else -> throw ErrorException("Progress debat tidak diketahui")
         }
+
+        val contentDetail = layoutInflater.inflate(when (debatItem) {
+            is DebatItem.ComingSoon -> R.layout.layout_content_detail_debat_coming_soon
+            is DebatItem.Challenge -> R.layout.layout_content_detail_debat_coming_soon
+            is DebatItem.Done -> R.layout.layout_content_detail_debat_done
+            else -> throw ErrorException("Progress debat tidak diketahui")
+        }, null)
+
+        toolbar_detail_debat.setBackgroundColor(bgToolbarColor)
+        cl_header.setBackgroundResource(bgHeader)
+        ll_content_detail_debat.addView(contentDetail)
 
         ll_content_detail_debat.addView(layoutInflater.inflate(R.layout.layout_detail_debat, null))
     }

@@ -24,8 +24,8 @@ class TPSAdapter : BaseRecyclerAdapter() {
 
     inner class TPSViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: TPSData) {
-            user_avatar.loadUrl(item.user.avatar.url, R.drawable.ic_avatar_placeholder)
-            user_name.text = item.user.name
+            user_avatar.loadUrl(item.user.avatar?.url, R.drawable.ic_avatar_placeholder)
+            user_name.text = item.user.fullName
             user_cluster.text = item.user.cluster?.name
             tps_number.text = item.name
             tps_address.text = "${item.province}, ${item.district}, ${item.subDistrict}, ${item.village}"

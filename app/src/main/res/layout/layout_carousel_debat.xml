@@ -33,7 +33,7 @@
         tools:text="Live Now" />
 
     <include
-        android:id="@+id/button_more_live"
+        android:id="@+id/button_more_carousel"
         layout="@layout/button_see_more_yellow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,16 +49,39 @@
         android:clipToPadding="false"
         android:orientation="horizontal"
         android:paddingTop="16dp"
-        android:paddingBottom="16dp"
+        android:paddingBottom="32dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/icon_carousel"
         tools:listitem="@layout/item_debat_big" />
+
+    <include
+        android:id="@+id/empty_state_carousel"
+        layout="@layout/layout_empty_state_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/icon_carousel" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progress_carousel"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/icon_carousel"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="lottie_loading.json" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:layout_marginTop="16dp"
         android:background="@color/gray_3"
-        app:layout_constraintTop_toBottomOf="@id/carousel_debat" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
