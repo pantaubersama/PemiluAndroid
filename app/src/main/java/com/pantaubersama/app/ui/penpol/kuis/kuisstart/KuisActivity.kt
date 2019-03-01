@@ -25,9 +25,8 @@ class KuisActivity : BaseActivity<KuisQuestionPresenter>(), KuisQuestionView {
 
     private lateinit var kuisItem: KuisItem
 
-    override fun statusBarColor(): Int? {
-        return 0
-    }
+    override fun setLayout(): Int = R.layout.activity_kuis
+    override fun statusBarColor(): Int? = 0
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -48,10 +47,6 @@ class KuisActivity : BaseActivity<KuisQuestionPresenter>(), KuisQuestionView {
         }
 
         presenter.getQuestions(kuisItem.id)
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.activity_kuis
     }
 
     override fun showLoading() {
@@ -87,6 +82,8 @@ class KuisActivity : BaseActivity<KuisQuestionPresenter>(), KuisQuestionView {
         answer_b_button.setOnClickListener {
             presenter.answerQuestion(kuisItem.id, question.id, answerB.id)
         }
+        scroll_view_question.scrollTo(0, 0)
+        scroll_view.scrollTo(0, 0)
     }
 
     override fun onKuisFinished() {
