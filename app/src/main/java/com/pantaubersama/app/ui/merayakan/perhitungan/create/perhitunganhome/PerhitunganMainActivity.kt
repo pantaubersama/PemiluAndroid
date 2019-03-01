@@ -33,21 +33,21 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Perhitungan", R.color.white, 4f)
-        presiden_action.setOnClickListener {
-            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganPresidenActivity::class.java))
-        }
-        dpr_ri_action.setOnClickListener {
-            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRRIActivity::class.java))
-        }
-        dpd_action.setOnClickListener {
-            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPDActivity::class.java))
-        }
-        dpr_provinsi_action.setOnClickListener {
-            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDProvinsiActivity::class.java))
-        }
-        dpr_kabupaten_action.setOnClickListener {
-            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDKabupatenActivity::class.java))
-        }
+//        presiden_action.setOnClickListener {
+//            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganPresidenActivity::class.java))
+//        }
+//        dpr_ri_action.setOnClickListener {
+//            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRRIActivity::class.java))
+//        }
+//        dpd_action.setOnClickListener {
+//            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPDActivity::class.java))
+//        }
+//        dpr_provinsi_action.setOnClickListener {
+//            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDProvinsiActivity::class.java))
+//        }
+//        dpr_kabupaten_action.setOnClickListener {
+//            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDKabupatenActivity::class.java))
+//        }
         upload_container.setOnClickListener {
             startActivity(Intent(this@PerhitunganMainActivity, UploadDocumentActivity::class.java))
         }

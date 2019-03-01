@@ -160,7 +160,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pastikan kamu berata di lokasi TPS dan gps aktif"
+                    android:text="Pastikan penanda GPS aktif dan kamu berada di lokasi TPS."
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/lato_regular"
                     android:textColor="@color/gray_dark_2"/>
@@ -181,7 +181,7 @@
                         android:id="@+id/update_location_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Perbarui lokasi"
+                        android:text="Perbarui Lokasi"
                         android:gravity="center_vertical"
                         android:fontFamily="@font/bw_modelica_bold"
                         android:textSize="14sp"
