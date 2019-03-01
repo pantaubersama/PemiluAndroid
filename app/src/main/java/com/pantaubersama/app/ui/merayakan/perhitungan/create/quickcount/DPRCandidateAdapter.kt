@@ -11,6 +11,8 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.kandidat_person_item.*
 
 class DPRCandidateAdapter : BaseRecyclerAdapter() {
+    var listener: Listener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return CandidatesViewHolder(parent.inflate(R.layout.kandidat_person_item))
     }
@@ -27,5 +29,9 @@ class DPRCandidateAdapter : BaseRecyclerAdapter() {
                 candidate_count_field.setText(count.plus(1).toString())
             }
         }
+    }
+
+    interface Listener {
+
     }
 }

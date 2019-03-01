@@ -32,6 +32,9 @@ class DPRPartaiAdapter : BaseRecyclerAdapter() {
                 party_count_field.setText(count.plus(1).toString())
             }
             val adapter = DPRCandidateAdapter()
+            adapter.listener = object : DPRCandidateAdapter.Listener {
+
+            }
             candidates_container.layoutManager = LinearLayoutManager(itemView.context)
             candidates_container.adapter = adapter
             adapter.setDatas(item.members as MutableList<ItemModel>)
