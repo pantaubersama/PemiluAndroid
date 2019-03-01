@@ -21,6 +21,10 @@ class C1FormActivity : CommonActivity() {
                 setupToolbar(false, "Model C1 Presiden", R.color.white, 4f)
                 c1_short_hint.text = getString(R.string.c1_form_presiden_hint)
             }
+            "dpr_ri" -> {
+                setupToolbar(false, "Model C1-DPR RI", R.color.white, 4f)
+                c1_short_hint.text = getString(R.string.c1_form_dpr_ri_hint)
+            }
         }
     }
 }

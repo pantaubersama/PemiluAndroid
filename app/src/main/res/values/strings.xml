@@ -381,6 +381,7 @@
     <string name="tulis_argumen_kamu_disini">Tulis argumen kamu disini</string>
     <string name="publish">Publish</string>
     <string name="lawan_debat">Lawan debat</string>
-    <string name="tulis_disini">Tulis disini...</string>
+    <string name="tulis_disini">Tulis disini…</string>
     <string name="c1_form_presiden_hint">Silahkan masukkan data Model C1 Presiden pada kolom dibawah ini :</string>
+    <string name="c1_form_dpr_ri_hint">Silahkan masukkan data Model C1-DPR RI pada kolom dibawah ini :</string>
 </resources>

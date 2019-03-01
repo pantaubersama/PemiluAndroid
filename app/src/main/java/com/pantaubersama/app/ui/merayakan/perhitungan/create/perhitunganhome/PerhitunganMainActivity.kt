@@ -6,6 +6,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.c1.C1FormActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity
 import kotlinx.android.synthetic.main.activity_perhitunganmain.*
@@ -38,9 +39,14 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
             intent.putExtra("c1_type", "presiden")
             startActivity(intent)
         }
-//        dpr_ri_action.setOnClickListener {
-//            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRRIActivity::class.java))
-//        }
+        dpr_ri_counter_action.setOnClickListener {
+            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRRIActivity::class.java))
+        }
+        dpr_ri_c1_action.setOnClickListener {
+            val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
+            intent.putExtra("c1_type", "dpr_ri")
+            startActivity(intent)
+        }
 //        dpd_action.setOnClickListener {
 //            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPDActivity::class.java))
 //        }

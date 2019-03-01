@@ -17,11 +17,11 @@ class UndoRedoTools
  *
  * @param textView The text view for which the undo/redo is implemented.
  */(
-    /**
-     * The edit text.
-     */
-    private val mTextView: TextView
-) {
+     /**
+      * The edit text.
+      */
+     private val mTextView: TextView
+ ) {
 
     /**
      * Is undo/redo being performed? This member signals if an undo/redo
