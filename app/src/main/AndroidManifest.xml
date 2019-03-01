@@ -26,7 +26,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity"></activity>
+        <activity android:name=".ui.merayakan.perhitungan.create.c1.C1FormActivity"></activity>
+        <activity android:name=".ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity" />
         <activity android:name=".ui.merayakan.rekapitulasi.detailtps.DetailTPSActivity" />
         <activity android:name=".ui.merayakan.rekapitulasi.tpslist.TPSListActivity" />
         <activity android:name=".ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerahActivity" />
@@ -38,7 +39,7 @@
         <activity android:name=".ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity" />
         <activity android:name=".ui.merayakan.perhitungan.create.DataTPSActivity" />
         <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity" />
-        <activity android:name=".ui.debat.detail.DetailDebatActivity"></activity>
+        <activity android:name=".ui.debat.detail.DetailDebatActivity" />
         <activity
             android:name=".ui.debat.DebatActivity"
             android:screenOrientation="portrait"
