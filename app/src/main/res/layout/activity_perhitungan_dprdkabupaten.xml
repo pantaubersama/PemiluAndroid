@@ -144,7 +144,7 @@
                 android:layout_centerVertical="true">
 
                 <EditText
-                    android:id="@+id/golput_count_field"
+                    android:id="@+id/no_vote_count_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="24dp"
@@ -161,7 +161,7 @@
                     android:textColor="@color/colorPrimary" />
 
                 <LinearLayout
-                    android:id="@+id/golput_inc_button"
+                    android:id="@+id/no_vote_inc_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/circle_background_primary"

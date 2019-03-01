@@ -33,9 +33,9 @@ class PerhitunganDPRDKabupatenActivity : BaseActivity<PerhitunganDPRDKabupatenPr
         setupToolbar(true, "DPRD KABUPATEN", R.color.white, 4f)
         setupDPRDKabupatenList()
         presenter.getDPRRProvinsiData()
-        golput_inc_button.setOnClickListener {
-            val count = golput_count_field.text.toString().toInt()
-            golput_count_field.setText(count.plus(1).toString())
+        no_vote_inc_button.setOnClickListener {
+            val count = no_vote_count_field.text.toString().toInt()
+            no_vote_count_field.setText(count.plus(1).toString())
         }
         save_button.setOnClickListener {
             finish()

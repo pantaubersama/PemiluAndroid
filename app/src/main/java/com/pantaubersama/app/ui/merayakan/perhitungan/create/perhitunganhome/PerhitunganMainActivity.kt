@@ -5,10 +5,6 @@ import android.os.Bundle
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity
-import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdkabupaten.PerhitunganDPRDKabupatenActivity
-import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdprovinsi.PerhitunganDPRDProvinsiActivity
-import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity
 import kotlinx.android.synthetic.main.activity_perhitunganmain.*
@@ -33,9 +29,9 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Perhitungan", R.color.white, 4f)
-//        presiden_action.setOnClickListener {
-//            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganPresidenActivity::class.java))
-//        }
+        president_counter_action.setOnClickListener {
+            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganPresidenActivity::class.java))
+        }
 //        dpr_ri_action.setOnClickListener {
 //            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRRIActivity::class.java))
 //        }

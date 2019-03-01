@@ -6,8 +6,8 @@ import com.pantaubersama.app.data.interactors.WordStadiumInteractor
 import javax.inject.Inject
 
 class OpenChallengePresenter @Inject constructor(
-        private val profileInteractor: ProfileInteractor,
-        private val wordStadiumInteractor: WordStadiumInteractor
+    private val profileInteractor: ProfileInteractor,
+    private val wordStadiumInteractor: WordStadiumInteractor
 ) : BasePresenter<OpenChallengeView>() {
 
     fun getUserProfile() {

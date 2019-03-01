@@ -31,7 +31,6 @@ import android.R.attr.name
 import android.content.ComponentName
 import android.net.Uri
 
-
 class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), PromoteChallengeView {
 
     lateinit var challenge: Challenge
@@ -129,7 +128,6 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
                             this,
                             "/" + me.getString("id") + "/picture"
                     ) {
-
                     }
                     val params = Bundle()
                     params.putBoolean("redirect", false)

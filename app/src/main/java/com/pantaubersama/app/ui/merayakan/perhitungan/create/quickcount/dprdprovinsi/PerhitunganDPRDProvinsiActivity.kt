@@ -35,9 +35,9 @@ class PerhitunganDPRDProvinsiActivity : BaseActivity<PerhitunganDPRDProvinsiPres
         setupToolbar(true, "DPR PROVINSI", R.color.white, 4f)
         setupDPRDProvinsiList()
         presenter.getDPRRProvinsiData()
-        golput_inc_button.setOnClickListener {
-            val count = golput_count_field.text.toString().toInt()
-            golput_count_field.setText(count.plus(1).toString())
+        no_vote_inc_button.setOnClickListener {
+            val count = no_vote_count_field.text.toString().toInt()
+            no_vote_count_field.setText(count.plus(1).toString())
         }
         save_button.setOnClickListener {
             finish()

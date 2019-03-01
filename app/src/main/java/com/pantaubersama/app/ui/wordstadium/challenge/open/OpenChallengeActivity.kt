@@ -178,7 +178,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
 
             val timePickerDialog = TimePickerDialog(this,
                     TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                        tv_time.text = "${hourOfDay}.${minute}"
+                        tv_time.text = "$hourOfDay.$minute"
                         dateTimeDone()
                         mTimeString = "$hourOfDay:$minute"
                     }, mHour, mMinute, false)
@@ -307,7 +307,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
             ll_webview.visibility = View.VISIBLE
             link_webview.settings.loadsImagesAutomatically = true
             link_webview.settings.javaScriptEnabled = true
-            link_webview.getSettings().setAppCacheEnabled(true);
+            link_webview.getSettings().setAppCacheEnabled(true)
             link_webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
             link_webview.loadDataWithBaseURL("https://twitter.com", url.toString(), "text/html", "utf-8", "")
             link_pernyataan.visibility = View.GONE
