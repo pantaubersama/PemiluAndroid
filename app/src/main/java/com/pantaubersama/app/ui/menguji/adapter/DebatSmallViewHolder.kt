@@ -10,6 +10,7 @@ import com.pantaubersama.app.data.model.debat.Challenge
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Progress
 import com.pantaubersama.app.ui.debat.DebatActivity
+import com.pantaubersama.app.ui.debat.detail.DetailDebatActivity
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.item_debat_small.*
@@ -82,7 +83,7 @@ class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(vi
             if (challenge.status == Status.LIVE_NOW) {
                 it.context.startActivity(Intent(it.context, DebatActivity::class.java))
             } else {
-//                it.startActivity(DetailDebatActivity.setIntent(it, challenge))
+                it.context.startActivity(DetailDebatActivity.setIntent(it.context, challenge))
             }
         }
     }

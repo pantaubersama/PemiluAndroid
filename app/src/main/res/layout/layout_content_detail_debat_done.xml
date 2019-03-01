@@ -57,7 +57,7 @@
             android:layout_weight="1">
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/iv_avatar_left"
+                android:id="@+id/iv_avatar_challenger_content"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -69,12 +69,12 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/iv_avatar_left"
+                app:layout_constraintTop_toBottomOf="@id/iv_avatar_challenger_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <ImageView
-                    android:id="@+id/iv_clap_left"
+                    android:id="@+id/iv_clap_challenger_content"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_clap"
@@ -88,14 +88,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_toEndOf="@id/iv_clap_left"
-                    app:layout_constraintStart_toEndOf="@id/iv_clap_left"
+                    android:layout_toEndOf="@id/iv_clap_challenger_content"
+                    app:layout_constraintStart_toEndOf="@id/iv_clap_challenger_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent">
 
                     <TextView
-                        android:id="@+id/tv_clap_count_left"
+                        android:id="@+id/tv_clap_count_challenger_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -128,7 +128,7 @@
             android:layout_weight="1">
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/iv_avatar_right"
+                android:id="@+id/iv_avatar_opponent_content"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -140,12 +140,12 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/iv_avatar_right"
+                app:layout_constraintTop_toBottomOf="@id/iv_avatar_opponent_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <ImageView
-                    android:id="@+id/iv_clap_right"
+                    android:id="@+id/iv_clap_opponent_content"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_clap"
@@ -159,14 +159,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_toEndOf="@id/iv_clap_right"
-                    app:layout_constraintStart_toEndOf="@id/iv_clap_right"
+                    app:layout_constraintStart_toEndOf="@id/iv_clap_opponent_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent">
 
                     <TextView
-                        android:id="@+id/tv_clap_count_right"
+                        android:id="@+id/tv_clap_count_opponent_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
