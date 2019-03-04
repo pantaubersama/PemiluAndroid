@@ -24,4 +24,58 @@ class DataTPSPresenter @Inject constructor(
                 )
         )
     }
+
+    fun getRegenciesData(provinceId: Int) {
+        view?.showRegenciesLoading()
+        disposables.add(
+            tpsInteractor.getRegencies(provinceId)
+                .subscribe(
+                    {
+                        view?.dismissRegenciesLoading()
+                        view?.bindRegenciesToSpinner(it)
+                    },
+                    {
+                        view?.dismissRegenciesLoading()
+                        view?.showError(it)
+                        view?.showFailedGetRegenciesAlert()
+                    }
+                )
+        )
+    }
+
+    fun getDistrictsData(regencyId: Int) {
+        view?.showDistrictsLoading()
+        disposables.add(
+            tpsInteractor.getDistricts(regencyId)
+                .subscribe(
+                    {
+                        view?.dismissDistrictsLoading()
+                        view?.bindDistrictsToSpinner(it)
+                    },
+                    {
+                        view?.dismissDistrictsLoading()
+                        view?.showError(it)
+                        view?.showFailedGetDistrictsAlert()
+                    }
+                )
+        )
+    }
+
+    fun getVillagesData(districtId: Int) {
+        view?.showVillagesLoading()
+        disposables.add(
+            tpsInteractor.getVillages(districtId)
+                .subscribe(
+                    {
+                        view?.dismissVillagesLoading()
+                        view?.bindVillagesToSpinner(it)
+                    },
+                    {
+                        view?.dismissVillagesLoading()
+                        view?.showError(it)
+                        view?.showFailedGetVillagesAlert()
+                    }
+                )
+        )
+    }
 }

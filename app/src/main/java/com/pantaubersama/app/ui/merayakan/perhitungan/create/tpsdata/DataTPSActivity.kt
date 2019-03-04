@@ -14,7 +14,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.tps.District
 import com.pantaubersama.app.data.model.tps.Province
+import com.pantaubersama.app.data.model.tps.Regency
+import com.pantaubersama.app.data.model.tps.Village
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
@@ -107,10 +110,123 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 if (position != 0) {
-                    ToastUtil.show(this@DataTPSActivity, provinces[position - 1].name)
+                    presenter.getRegenciesData(provinces[position - 1].id)
                 }
             }
         }
+    }
+
+    override fun showRegenciesLoading() {
+        regencies_loading.visibility = View.VISIBLE
+    }
+
+    override fun dismissRegenciesLoading() {
+        regencies_loading.visibility = View.GONE
+    }
+
+    override fun showFailedGetRegenciesAlert() {
+        ToastUtil.show(this@DataTPSActivity, "Gagal memuat kabupaten")
+    }
+
+    override fun bindRegenciesToSpinner(regencies: MutableList<Regency>) {
+        val regencyNames: MutableList<String> = ArrayList()
+        regencyNames.add(0, "Pilih Kabupaten:")
+        regencies.forEach {
+            regencyNames.add(it.name)
+        }
+        val adapter = ArrayAdapter<String>(
+            this@DataTPSActivity,
+            R.layout.default_collapsed_spinner_item,
+            regencyNames
+        )
+        adapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
+        regencies_dropdown.adapter = adapter
+        regencies_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                if (position != 0) {
+                    presenter.getDistrictsData(regencies[position - 1].id)
+                }
+            }
+        }
+    }
+
+    override fun showDistrictsLoading() {
+        districts_loading.visibility = View.VISIBLE
+    }
+
+    override fun dismissDistrictsLoading() {
+        districts_loading.visibility = View.GONE
+    }
+
+    override fun showFailedGetDistrictsAlert() {
+        ToastUtil.show(this@DataTPSActivity, "Gagal memuat kecamatan")
+    }
+
+    override fun bindDistrictsToSpinner(districts: MutableList<District>) {
+        val districtNames: MutableList<String> = ArrayList()
+        districtNames.add(0, "Pilih Kecamatan:")
+        districts.forEach {
+            districtNames.add(it.name)
+        }
+        val adapter = ArrayAdapter<String>(
+            this@DataTPSActivity,
+            R.layout.default_collapsed_spinner_item,
+            districtNames
+        )
+        adapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
+        districts_dropdown.adapter = adapter
+        districts_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                if (position != 0) {
+                    presenter.getVillagesData(districts[position - 1].id)
+                }
+            }
+        }
+    }
+
+    override fun showVillagesLoading() {
+        villages_loading.visibility = View.VISIBLE
+    }
+
+    override fun dismissVillagesLoading() {
+        villages_loading.visibility = View.GONE
+    }
+
+    override fun bindVillagesToSpinner(villages: MutableList<Village>) {
+        val villageNames: MutableList<String> = ArrayList()
+        villageNames.add(0, "Pilih Kelurahan:")
+        villages.forEach {
+            villageNames.add(it.name)
+        }
+        val adapter = ArrayAdapter<String>(
+            this@DataTPSActivity,
+            R.layout.default_collapsed_spinner_item,
+            villageNames
+        )
+        adapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
+        villages_dropdown.adapter = adapter
+        villages_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                if (position != 0) {
+                }
+            }
+        }
+    }
+
+    override fun showFailedGetVillagesAlert() {
+        ToastUtil.show(this@DataTPSActivity, "Gagal memuat kelurahan")
     }
 
     @AfterPermissionGranted(RC_ASK_PERMISSIONS)

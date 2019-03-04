@@ -71,7 +71,7 @@
                     android:id="@+id/tps_number_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_outline_green"
+                    android:background="@drawable/edittext_c1_background"
                     android:layout_marginTop="10dp"
                     android:padding="12dp"
                     android:hint="No. TPS"
