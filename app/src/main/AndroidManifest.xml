@@ -37,7 +37,7 @@
         <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity" />
         <activity android:name=".ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity" />
         <activity android:name=".ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity" />
-        <activity android:name=".ui.merayakan.perhitungan.create.DataTPSActivity" />
+        <activity android:name=".ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity" />
         <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity" />
         <activity android:name=".ui.debat.detail.DetailDebatActivity" />
         <activity

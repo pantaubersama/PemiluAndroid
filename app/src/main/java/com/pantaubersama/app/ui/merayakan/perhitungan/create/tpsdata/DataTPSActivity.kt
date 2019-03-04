@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.merayakan.perhitungan.create
+package com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata
 
 import android.Manifest
 import android.app.Activity
@@ -10,18 +10,24 @@ import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.pantaubersama.app.CommonActivity
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.pantaubersama.app.R
+import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.tps.Province
+import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
+import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_data_tps.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
 import java.util.Locale
+import javax.inject.Inject
 
-class DataTPSActivity : CommonActivity() {
+class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     var locationManager: LocationManager? = null
     private var permission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
     private var geocoder: Geocoder? = null
@@ -46,6 +52,13 @@ class DataTPSActivity : CommonActivity() {
 //        }
 //    }
 
+    @Inject
+    override lateinit var presenter: DataTPSPresenter
+
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
+    }
+
     override fun statusBarColor(): Int? {
         return 0
     }
@@ -59,6 +72,45 @@ class DataTPSActivity : CommonActivity() {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         geocoder = Geocoder(this, Locale.getDefault())
         getLocationPermission()
+        presenter.getProvincesData()
+    }
+
+    override fun showProvincesLoading() {
+        provinces_loading.visibility = View.VISIBLE
+    }
+
+    override fun dismissProvincesLoading() {
+        provinces_loading.visibility = View.GONE
+    }
+
+    override fun showFailedGetProvincesAlert() {
+        ToastUtil.show(this@DataTPSActivity, "Gagal memuat provinsi")
+    }
+
+    override fun bindProvincesToSpinner(provinces: MutableList<Province>) {
+        val provinceNames: MutableList<String> = ArrayList()
+        provinceNames.add(0, "Pilih Provinsi: ")
+        provinces.forEach {
+            provinceNames.add(it.name)
+        }
+        val adapter = ArrayAdapter<String>(
+            this@DataTPSActivity,
+            R.layout.default_collapsed_spinner_item,
+            provinceNames
+        )
+        adapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
+        provinces_dropdown.adapter = adapter
+        provinces_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                if (position != 0) {
+                    ToastUtil.show(this@DataTPSActivity, provinces[position - 1].name)
+                }
+            }
+        }
     }
 
     @AfterPermissionGranted(RC_ASK_PERMISSIONS)
@@ -138,6 +190,14 @@ class DataTPSActivity : CommonActivity() {
                 context.startActivity(intent)
             }
         }
+    }
+
+    override fun showLoading() {
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun dismissLoading() {
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pantaubersama.app.ui.merayakan.perhitungan.create.DataTPSActivity">
+    tools:context="com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -88,12 +88,32 @@
                     android:textSize="16sp"
                     android:layout_marginTop="16dp"/>
 
-                <Spinner
-                    android:id="@+id/province_options"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/spinner_background"
-                    android:layout_marginTop="10dp" />
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/provinces_dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/spinner_background"
+                        android:layout_marginTop="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/provinces_loading"
+                        android:layout_toStartOf="@id/provinces_loading"/>
+
+                    <ProgressBar
+                        android:id="@+id/provinces_loading"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:visibility="gone"/>
+
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -104,12 +124,31 @@
                     android:textSize="16sp"
                     android:layout_marginTop="16dp"/>
 
-                <Spinner
-                    android:id="@+id/district_options"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/spinner_background"
-                    android:layout_marginTop="10dp" />
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/regencies_dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/spinner_background"
+                        android:layout_marginTop="10dp"
+                        android:layout_toStartOf="@id/regencies_loading"
+                        android:layout_toLeftOf="@id/regencies_loading"/>
+
+                    <ProgressBar
+                        android:id="@+id/regencies_loading"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:visibility="gone"/>
+
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -120,12 +159,31 @@
                     android:textSize="16sp"
                     android:layout_marginTop="16dp"/>
 
-                <Spinner
-                    android:id="@+id/sub-district_options"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/spinner_background"
-                    android:layout_marginTop="10dp" />
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/districts_dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/spinner_background"
+                        android:layout_marginTop="10dp"
+                        android:layout_toStartOf="@id/districts_loading"
+                        android:layout_toLeftOf="@id/districts_loading"/>
+
+                    <ProgressBar
+                        android:id="@+id/districts_loading"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:visibility="gone"/>
+
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -136,17 +194,31 @@
                     android:textSize="16sp"
                     android:layout_marginTop="16dp"/>
 
-                <EditText
-                    android:id="@+id/village_field"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_outline_green"
-                    android:layout_marginTop="10dp"
-                    android:padding="12dp"
-                    android:hint="Desa/Kelurahan"
-                    android:fontFamily="@font/lato_regular"
-                    android:textSize="14sp"
-                    android:textColor="@color/black_3"/>
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/villages_dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/spinner_background"
+                        android:layout_marginTop="10dp"
+                        android:layout_toStartOf="@id/villages_loading"
+                        android:layout_toLeftOf="@id/villages_loading"/>
+
+                    <ProgressBar
+                        android:id="@+id/villages_loading"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:visibility="gone"/>
+
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"

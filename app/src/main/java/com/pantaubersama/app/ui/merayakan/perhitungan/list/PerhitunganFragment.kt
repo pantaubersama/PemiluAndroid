@@ -14,7 +14,7 @@ import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.login.LoginActivity
-import com.pantaubersama.app.ui.merayakan.perhitungan.create.DataTPSActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
