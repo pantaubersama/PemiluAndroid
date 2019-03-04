@@ -250,8 +250,21 @@
 
                         <WebView
                             android:id="@+id/link_webview"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="26dp"
+                            android:layout_marginEnd="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"></WebView>
+
+                        <TextView
+                            android:id="@+id/link_source"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:lineSpacingExtra="6sp"
+                            android:text="https://twitter.com/ident_it/status/997050576012591104"
+                            android:textColor="#1da1f2"
+                            android:textSize="10sp" />
 
                         <ImageView
                             android:id="@+id/link_close"

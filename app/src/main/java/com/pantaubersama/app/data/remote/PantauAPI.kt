@@ -9,6 +9,8 @@ import com.pantaubersama.app.data.model.kuis.* // ktlint-disable
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatListResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
+import com.pantaubersama.app.data.model.wordstadium.LawanDebat
+import com.pantaubersama.app.data.model.wordstadium.LawanDebatResponse
 import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -194,4 +196,11 @@ interface PantauAPI {
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
     ): Single<JanjiPolitiksResponse>
+
+    @GET("dashboard/v1/linimasa/suggest/username")
+    fun getLawanDebatTwitter(
+            @Query("q") q:String,
+            @Query("page") page: Int,
+            @Query("per_page") perPage: Int
+    ):Single<LawanDebatResponse>
 }

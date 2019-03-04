@@ -66,6 +66,8 @@ import com.pantaubersama.app.ui.search.person.filter.FilterOrangActivity
 import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
 import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
+import com.pantaubersama.app.ui.wordstadium.challenge.direct.DirectChallengeActivity
+import com.pantaubersama.app.ui.wordstadium.challenge.direct.PreviewChallengeActivity
 import com.pantaubersama.app.ui.wordstadium.challenge.open.BidangKajianDialog
 import com.pantaubersama.app.ui.wordstadium.challenge.open.OpenChallengeActivity
 import com.pantaubersama.app.ui.wordstadium.challenge.open.PromoteChallengeActivity
@@ -144,4 +146,6 @@ interface ActivityComponent {
     fun inject(debatActivity: DebatActivity)
     fun inject(promoteChallengeActivity: PromoteChallengeActivity)
     fun inject(debatListActivity: DebatListActivity)
+    fun inject(directChallengeActivity: DirectChallengeActivity)
+    fun inject(previewChallengeActivity: PreviewChallengeActivity)
 }
