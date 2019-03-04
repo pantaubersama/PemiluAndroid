@@ -27,9 +27,12 @@ import com.twitter.sdk.android.core.models.User
 import kotlinx.android.synthetic.main.activity_promote_challenge.*
 import timber.log.Timber
 import javax.inject.Inject
-import android.R.attr.name
 import android.content.ComponentName
 import android.net.Uri
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
 
 
 class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), PromoteChallengeView {
@@ -40,6 +43,7 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
     private lateinit var twitterAuthClient: TwitterAuthClient
     var date: String? = null
     var fbConnected = false
+    var oEmbedLink: OEmbedLink? = null
 
     @Inject
     override lateinit var presenter: PromoteChallengePresenter
@@ -51,6 +55,7 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
     override fun fetchIntentExtra() {
         intent.getSerializableExtra("challenge").let { challenge = it as Challenge }
         intent.getStringExtra("date").let { date = it as String }
+        intent.getSerializableExtra("link").let { oEmbedLink = it as OEmbedLink }
     }
 
     override fun statusBarColor(): Int? {
@@ -71,6 +76,9 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
         promote_challenge_publish.setOnClickListener {
             presenter.openChallenge(challenge.bidangKajian, challenge.pernyataan, challenge.link, date, challenge.saldoWaktu)
         }
+
+        link_webview.webViewClient = MyWebViewClient()
+        previewLink(oEmbedLink?.html)
     }
 
     override fun showLoading() {
@@ -328,5 +336,24 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
             shareIntent = Intent(Intent.ACTION_VIEW, Uri.parse(sharerUrl))
         }
         startActivity(shareIntent)
+    }
+
+    fun previewLink(url: String?) {
+        if (url != null && url.length > 0) {
+            ll_webview.visibility = View.VISIBLE
+            link_webview.settings.loadsImagesAutomatically = true
+            link_webview.settings.javaScriptEnabled = true
+            link_webview.getSettings().setAppCacheEnabled(true);
+            link_webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+            link_webview.loadDataWithBaseURL("https://twitter.com", url.toString(), "text/html", "utf-8", "")
+            link_source.text = oEmbedLink?.url
+        }
+    }
+
+    class MyWebViewClient : WebViewClient() {
+        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+            view?.loadUrl(request?.url.toString())
+            return true
+        }
     }
 }
