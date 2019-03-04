@@ -55,6 +55,19 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 //        }
 //    }
 
+    //provinces
+    private lateinit var provinceNames: MutableList<String>
+    private lateinit var provincesAdapter: ArrayAdapter<String>
+    //regencies
+    private lateinit var regencyNames: MutableList<String>
+    private lateinit var regenciesAdapter: ArrayAdapter<String>
+    //districts
+    private lateinit var districtNames: MutableList<String>
+    private lateinit var districtsAdapter: ArrayAdapter<String>
+    //villages
+    private lateinit var villageNames: MutableList<String>
+    private lateinit var villagesAdapter: ArrayAdapter<String>
+
     @Inject
     override lateinit var presenter: DataTPSPresenter
 
@@ -75,7 +88,62 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         geocoder = Geocoder(this, Locale.getDefault())
         getLocationPermission()
+        setupProvincesDropdown()
+        setupRegenciesDropdown()
+        setupDistrictsDropdown()
+        setupVillagesDropdown()
         presenter.getProvincesData()
+    }
+
+    private fun setupVillagesDropdown() {
+        villageNames = ArrayList()
+        villageNames.add(0, "Pilih Kelurahan/Desa: ")
+        villagesAdapter = ArrayAdapter<String>(
+            this@DataTPSActivity,
+            R.layout.default_collapsed_spinner_item,
+            villageNames
+        )
+        villagesAdapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
+        villages_dropdown.adapter = villagesAdapter
+        villages_dropdown.isEnabled = false
+    }
+
+    private fun setupDistrictsDropdown() {
+        districtNames = ArrayList()
+        districtNames.add(0, "Pilih Kecamatan: ")
+        districtsAdapter = ArrayAdapter<String>(
+            this@DataTPSActivity,
+            R.layout.default_collapsed_spinner_item,
+            districtNames
+        )
+        districtsAdapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
+        districts_dropdown.adapter = districtsAdapter
+        districts_dropdown.isEnabled = false
+    }
+
+    private fun setupRegenciesDropdown() {
+        regencyNames = ArrayList()
+        regencyNames.add(0, "Pilih Kabupaten: ")
+        regenciesAdapter = ArrayAdapter<String>(
+            this@DataTPSActivity,
+            R.layout.default_collapsed_spinner_item,
+            regencyNames
+        )
+        regenciesAdapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
+        regencies_dropdown.adapter = regenciesAdapter
+        regencies_dropdown.isEnabled = false
+    }
+
+    private fun setupProvincesDropdown() {
+        provinceNames = ArrayList()
+        provinceNames.add(0, "Pilih Provinsi: ")
+        provincesAdapter = ArrayAdapter<String>(
+            this@DataTPSActivity,
+            R.layout.default_collapsed_spinner_item,
+            provinceNames
+        )
+        provincesAdapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
+        provinces_dropdown.adapter = provincesAdapter
     }
 
     override fun showProvincesLoading() {
@@ -87,22 +155,15 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun showFailedGetProvincesAlert() {
-        ToastUtil.show(this@DataTPSActivity, "Gagal memuat provinsi")
+        ToastUtil.show(this@DataTPSActivity, "Gagal memuat Provinsi")
     }
 
     override fun bindProvincesToSpinner(provinces: MutableList<Province>) {
-        val provinceNames: MutableList<String> = ArrayList()
-        provinceNames.add(0, "Pilih Provinsi: ")
         provinces.forEach {
             provinceNames.add(it.name)
         }
-        val adapter = ArrayAdapter<String>(
-            this@DataTPSActivity,
-            R.layout.default_collapsed_spinner_item,
-            provinceNames
-        )
-        adapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
-        provinces_dropdown.adapter = adapter
+        provincesAdapter.addAll(provinceNames)
+        provincesAdapter.notifyDataSetChanged()
         provinces_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -125,22 +186,15 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun showFailedGetRegenciesAlert() {
-        ToastUtil.show(this@DataTPSActivity, "Gagal memuat kabupaten")
+        ToastUtil.show(this@DataTPSActivity, "Gagal memuat Kabupaten")
     }
 
     override fun bindRegenciesToSpinner(regencies: MutableList<Regency>) {
-        val regencyNames: MutableList<String> = ArrayList()
-        regencyNames.add(0, "Pilih Kabupaten:")
         regencies.forEach {
             regencyNames.add(it.name)
         }
-        val adapter = ArrayAdapter<String>(
-            this@DataTPSActivity,
-            R.layout.default_collapsed_spinner_item,
-            regencyNames
-        )
-        adapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
-        regencies_dropdown.adapter = adapter
+        regenciesAdapter.addAll(regencyNames)
+        regenciesAdapter.notifyDataSetChanged()
         regencies_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -152,6 +206,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 }
             }
         }
+        regencies_dropdown.isEnabled = true
     }
 
     override fun showDistrictsLoading() {
@@ -163,22 +218,15 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun showFailedGetDistrictsAlert() {
-        ToastUtil.show(this@DataTPSActivity, "Gagal memuat kecamatan")
+        ToastUtil.show(this@DataTPSActivity, "Gagal memuat Kecamatan")
     }
 
     override fun bindDistrictsToSpinner(districts: MutableList<District>) {
-        val districtNames: MutableList<String> = ArrayList()
-        districtNames.add(0, "Pilih Kecamatan:")
         districts.forEach {
             districtNames.add(it.name)
         }
-        val adapter = ArrayAdapter<String>(
-            this@DataTPSActivity,
-            R.layout.default_collapsed_spinner_item,
-            districtNames
-        )
-        adapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
-        districts_dropdown.adapter = adapter
+        districtsAdapter.addAll(districtNames)
+        districtsAdapter.notifyDataSetChanged()
         districts_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -190,6 +238,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 }
             }
         }
+        districts_dropdown.isEnabled = true
     }
 
     override fun showVillagesLoading() {
@@ -201,18 +250,11 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun bindVillagesToSpinner(villages: MutableList<Village>) {
-        val villageNames: MutableList<String> = ArrayList()
-        villageNames.add(0, "Pilih Kelurahan:")
         villages.forEach {
             villageNames.add(it.name)
         }
-        val adapter = ArrayAdapter<String>(
-            this@DataTPSActivity,
-            R.layout.default_collapsed_spinner_item,
-            villageNames
-        )
-        adapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
-        villages_dropdown.adapter = adapter
+        villagesAdapter.addAll(villageNames)
+        villagesAdapter.notifyDataSetChanged()
         villages_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -223,10 +265,11 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 }
             }
         }
+        villages_dropdown.isEnabled = true
     }
 
     override fun showFailedGetVillagesAlert() {
-        ToastUtil.show(this@DataTPSActivity, "Gagal memuat kelurahan")
+        ToastUtil.show(this@DataTPSActivity, "Gagal memuat Kelurahan")
     }
 
     @AfterPermissionGranted(RC_ASK_PERMISSIONS)
