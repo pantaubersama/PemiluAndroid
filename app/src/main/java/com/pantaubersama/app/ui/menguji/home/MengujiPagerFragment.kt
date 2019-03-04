@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_carousel_debat.*
 import kotlinx.android.synthetic.main.layout_debat_list.*
 import kotlinx.android.synthetic.main.layout_empty_state_small.view.*
+import kotlinx.android.synthetic.main.layout_fail_state_small.view.*
 import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
@@ -139,8 +140,8 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
 
         progress_carousel.enableLottie(false)
         button_more_carousel.visibleIf(false)
-        empty_state_carousel.visibleIf(showEmptyState)
-        empty_state_carousel.lottie_empty_state.enableLottie(showEmptyState)
+        empty_state_carousel.run { enableLottie(showEmptyState, lottie_empty_state) }
+        fail_state_carousel.run { enableLottie(false, lottie_fail_state) }
         debatCarouselAdapter.challenges = list
     }
 
@@ -170,15 +171,15 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         if (!isPublik) {
             progress_carousel.enableLottie(state == State.Loading)
             button_more_carousel.visibleIf(hasMore)
-            empty_state_carousel.visibleIf(showEmptyState)
-            empty_state_carousel.lottie_empty_state.enableLottie(showEmptyState)
+            empty_state_carousel.run { enableLottie(showEmptyState, lottie_empty_state) }
+            fail_state_carousel.run { enableLottie(state is State.Error, lottie_fail_state) }
             debatCarouselAdapter.challenges = list
         }
 
         progress_open.enableLottie(state == State.Loading)
         button_more_debat_open.visibleIf(hasMore)
-        empty_state_open.visibleIf(showEmptyState)
-        empty_state_open.lottie_empty_state.enableLottie(showEmptyState)
+        empty_state_open.run { enableLottie(showEmptyState, lottie_empty_state) }
+        fail_state_open.run { enableLottie(state is State.Error, lottie_fail_state) }
         debatOpenAdapter.challenges = list
     }
 

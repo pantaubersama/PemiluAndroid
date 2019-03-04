@@ -171,6 +171,10 @@
         android:id="@+id/empty_state_open"
         layout="@layout/layout_empty_state_small" />
 
+    <include
+        android:id="@+id/fail_state_open"
+        layout="@layout/layout_fail_state_small"/>
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progress_open"
         android:layout_width="100dp"
