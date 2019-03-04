@@ -37,9 +37,9 @@ class DebatListPresenter @Inject constructor(
         view?.showLoading()
 
         val request = if (title == Title.PUBLIK_CHALLENGE)
-            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.ON_GOING)
+            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.CHALLENGE)
         else
-            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.ON_GOING)
+            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.CHALLENGE)
 
         disposables += request
             .doOnEvent { _, _ -> view?.dismissLoading() }

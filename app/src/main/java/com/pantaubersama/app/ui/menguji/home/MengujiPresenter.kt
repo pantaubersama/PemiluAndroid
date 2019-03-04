@@ -45,9 +45,9 @@ class MengujiPresenter @Inject constructor(
         view?.showChallengeOngoing(State.Loading, emptyList(), false)
 
         val request = if (isPublik)
-            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.ON_GOING)
+            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.CHALLENGE)
         else
-            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.ON_GOING)
+            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.CHALLENGE)
 
         disposables += request
             .subscribe({
