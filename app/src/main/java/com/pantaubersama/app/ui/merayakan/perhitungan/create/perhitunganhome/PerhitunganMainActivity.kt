@@ -8,6 +8,8 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.c1.C1FormActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdkabupaten.PerhitunganDPRDKabupatenActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdprovinsi.PerhitunganDPRDProvinsiActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity
@@ -40,6 +42,10 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
         dpr_ri_c1_action.setOnClickListener(this)
         dpd_counter_action.setOnClickListener(this)
         dpd_c1_action.setOnClickListener(this)
+        dprd_provinsi_counter_action.setOnClickListener(this)
+        dprd_provinsi_c1_action.setOnClickListener(this)
+        dprd_kabupaten_counter_action.setOnClickListener(this)
+        dprd_kabupaten_c1_action.setOnClickListener(this)
 //        dpr_provinsi_action.setOnClickListener {
 //            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDProvinsiActivity::class.java))
 //        }
@@ -73,6 +79,22 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
             dpd_c1_action -> {
                 val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
                 intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "dpd")
+                startActivity(intent)
+            }
+            dprd_provinsi_counter_action -> {
+                startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDProvinsiActivity::class.java))
+            }
+            dprd_provinsi_c1_action -> {
+                val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
+                intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "dprd_provinsi")
+                startActivity(intent)
+            }
+            dprd_kabupaten_counter_action -> {
+                startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDKabupatenActivity::class.java))
+            }
+            dprd_kabupaten_c1_action -> {
+                val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
+                intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "dprd_kabupaten")
                 startActivity(intent)
             }
             upload_container -> {

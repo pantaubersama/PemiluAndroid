@@ -17,19 +17,30 @@ class C1FormActivity : CommonActivity() {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
+        var title: String = ""
         when (intent.getStringExtra(PantauConstants.Merayakan.C1_MODEL_TYPE)) {
             "presiden" -> {
-                setupToolbar(false, "Model C1 Presiden", R.color.white, 4f)
+                title = "Model C1 Presiden"
                 c1_short_hint.text = getString(R.string.c1_form_presiden_hint)
             }
             "dpr_ri" -> {
-                setupToolbar(false, "Model C1-DPR RI", R.color.white, 4f)
+                title = "Model C1-DPR RI"
                 c1_short_hint.text = getString(R.string.c1_form_dpr_ri_hint)
             }
             "dpd" -> {
-                setupToolbar(false, "Model C1-DPD RI", R.color.white, 4f)
+                title = "Model C1-DPD RI"
                 c1_short_hint.text = getString(R.string.c1_form_dpd_ri_hint)
             }
+            "dprd_provinsi" -> {
+                title = "Model C1-DPRD Provinsi"
+                c1_short_hint.text = getString(R.string.c1_form_dprd_provinsi_hint)
+            }
+            "dprd_kabupaten" -> {
+                title = "Model C1-DPRD Kabupaten"
+                c1_short_hint.text = getString(R.string.c1_form_dprd_kabupaten_hint)
+            }
         }
+
+        setupToolbar(false, title, R.color.white, 4f)
     }
 }
