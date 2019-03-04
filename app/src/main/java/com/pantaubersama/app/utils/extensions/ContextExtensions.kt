@@ -7,8 +7,11 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.Settings
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -42,4 +45,8 @@ inline fun Activity.checkPermission(permission: String, requestCode: Int, onGran
 fun Context.openAppSettings() {
     startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
         Uri.parse("package:" + BuildConfig.APPLICATION_ID)))
+}
+
+fun Activity.inflate(@LayoutRes layoutRes: Int, root: ViewGroup? = null): View {
+    return layoutInflater.inflate(layoutRes, root)
 }

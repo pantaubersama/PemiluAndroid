@@ -50,7 +50,7 @@ class CreateChallengeActivity : BaseActivity<CreateChallengePresenter>(), Create
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == OPEN_CHALLENGE && resultCode == Activity.RESULT_OK){
+        if (requestCode == OPEN_CHALLENGE && resultCode == Activity.RESULT_OK) {
             finish()
         }
     }

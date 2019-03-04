@@ -3,7 +3,6 @@ package com.pantaubersama.app.ui.wordstadium.challenge.open
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.LoginInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
-import com.pantaubersama.app.data.interactors.VerifikasiInteractor
 import com.pantaubersama.app.data.interactors.WordStadiumInteractor
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.models.User
@@ -13,20 +12,20 @@ import com.twitter.sdk.android.core.Result
 import javax.inject.Inject
 
 class PromoteChallengePresenter @Inject constructor(
-        private val profileInteractor: ProfileInteractor,
-        private val wordStadiumInteractor: WordStadiumInteractor,
-        private val loginInteractor: LoginInteractor
+    private val profileInteractor: ProfileInteractor,
+    private val wordStadiumInteractor: WordStadiumInteractor,
+    private val loginInteractor: LoginInteractor
 ) : BasePresenter<PromoteChallengeView>() {
     fun getUserProfile() {
         view?.showProfile(profileInteractor.getProfile())
     }
 
     fun openChallenge(
-            topicList: String?,
-            statement: String?,
-            statementSource: String?,
-            showTimeAt: String?,
-            timeLimit: Int
+        topicList: String?,
+        statement: String?,
+        statementSource: String?,
+        showTimeAt: String?,
+        timeLimit: Int
     ) {
         view?.showLoading()
         disposables.add(

@@ -86,7 +86,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_bold"
-                        android:text="20"
+                        tools:text="20"
                         android:textSize="12sp"
                         android:textColor="@color/black_2"
                         android:layout_toRightOf="@id/lottie_love"

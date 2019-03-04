@@ -2,7 +2,7 @@ package com.pantaubersama.app.data.model.debat
 
 object ChallengeConstants {
     object Progress {
-        const val ON_GOING = "ongoing"
+        const val CHALLENGE = "challenge"
         const val COMING_SOON = "coming_soon"
         const val LIVE_NOW = "live_now"
         const val DONE = "done"
