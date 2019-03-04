@@ -31,7 +31,5 @@ class DPRCandidateAdapter : BaseRecyclerAdapter() {
         }
     }
 
-    interface Listener {
-
-    }
+    interface Listener
 }

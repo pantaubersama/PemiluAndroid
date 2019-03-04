@@ -33,7 +33,6 @@ class DPRPartaiAdapter : BaseRecyclerAdapter() {
             }
             val adapter = DPRCandidateAdapter()
             adapter.listener = object : DPRCandidateAdapter.Listener {
-
             }
             candidates_container.layoutManager = LinearLayoutManager(itemView.context)
             candidates_container.adapter = adapter

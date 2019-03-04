@@ -2,17 +2,20 @@ package com.pantaubersama.app.ui.merayakan.perhitungan.create.perhitunganhome
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.c1.C1FormActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity
+import com.pantaubersama.app.utils.PantauConstants
 import kotlinx.android.synthetic.main.activity_perhitunganmain.*
 import javax.inject.Inject
 
-class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), PerhitunganMainView {
+class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), PerhitunganMainView, View.OnClickListener {
 
     @Inject
     override lateinit var presenter: PerhitunganMainPresenter
@@ -31,33 +34,50 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Perhitungan", R.color.white, 4f)
-        president_counter_action.setOnClickListener {
-            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganPresidenActivity::class.java))
-        }
-        president_c1_action.setOnClickListener {
-            val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
-            intent.putExtra("c1_type", "presiden")
-            startActivity(intent)
-        }
-        dpr_ri_counter_action.setOnClickListener {
-            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRRIActivity::class.java))
-        }
-        dpr_ri_c1_action.setOnClickListener {
-            val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
-            intent.putExtra("c1_type", "dpr_ri")
-            startActivity(intent)
-        }
-//        dpd_action.setOnClickListener {
-//            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPDActivity::class.java))
-//        }
+        president_counter_action.setOnClickListener(this)
+        president_c1_action.setOnClickListener(this)
+        dpr_ri_counter_action.setOnClickListener(this)
+        dpr_ri_c1_action.setOnClickListener(this)
+        dpd_counter_action.setOnClickListener(this)
+        dpd_c1_action.setOnClickListener(this)
 //        dpr_provinsi_action.setOnClickListener {
 //            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDProvinsiActivity::class.java))
 //        }
 //        dpr_kabupaten_action.setOnClickListener {
 //            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDKabupatenActivity::class.java))
 //        }
-        upload_container.setOnClickListener {
-            startActivity(Intent(this@PerhitunganMainActivity, UploadDocumentActivity::class.java))
+        upload_container.setOnClickListener(this)
+    }
+
+    override fun onClick(view: View) {
+        when (view) {
+            president_counter_action -> {
+                startActivity(Intent(this@PerhitunganMainActivity, PerhitunganPresidenActivity::class.java))
+            }
+            president_c1_action -> {
+                val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
+                intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "presiden")
+                startActivity(intent)
+            }
+            dpr_ri_counter_action -> {
+                startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRRIActivity::class.java))
+            }
+            dpr_ri_c1_action -> {
+                val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
+                intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "dpr_ri")
+                startActivity(intent)
+            }
+            dpd_counter_action -> {
+                startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPDActivity::class.java))
+            }
+            dpd_c1_action -> {
+                val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
+                intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "dpd")
+                startActivity(intent)
+            }
+            upload_container -> {
+                startActivity(Intent(this@PerhitunganMainActivity, UploadDocumentActivity::class.java))
+            }
         }
     }
 

@@ -11,6 +11,7 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.RxSchedulers
 import com.pantaubersama.app.utils.UndoRedoTools
 import kotlinx.android.synthetic.main.activity_perhitungan_presiden.*
+import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
 import javax.inject.Inject
 
 class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>(), PerhitunganPresidenView, View.OnClickListener {

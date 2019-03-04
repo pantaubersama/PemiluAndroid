@@ -13,8 +13,7 @@
         android:paddingRight="16dp"
         android:paddingEnd="16dp"
         android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:background="@color/cream">
+        android:paddingBottom="12dp">
 
         <ImageView
             android:id="@+id/party_thumbnail"
@@ -72,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="24dp"
-                android:background="@color/gray_2"
+                android:background="@drawable/outline_graydark_1"
                 android:gravity="center"
                 android:paddingStart="36dp"
                 android:paddingLeft="36dp"

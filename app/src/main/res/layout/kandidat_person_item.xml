@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="24dp"
-                android:background="@color/gray_2"
+                android:background="@drawable/outline_graydark_1"
                 android:gravity="center"
                 android:paddingStart="36dp"
                 android:paddingLeft="36dp"
