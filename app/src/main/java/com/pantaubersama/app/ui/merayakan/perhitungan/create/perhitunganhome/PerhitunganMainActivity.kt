@@ -1,7 +1,9 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.perhitunganhome
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -109,5 +111,21 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
 
     override fun dismissLoading() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onBackPressed() {
+        finishSection()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> finishSection()
+        }
+        return false
+    }
+
+    private fun finishSection() {
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 }

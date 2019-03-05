@@ -73,7 +73,7 @@ class TPSInteractor @Inject constructor(
             return Completable.fromCallable {
                 appDB.getTPSDAO().saveTPS(
                     TPS(
-                        appDB.getTPSDAO().loadTPS().size.toString(),
+                        (appDB.getTPSDAO().loadTPS().size + 1).toString(),
                         tpsNumber,
                         selectedProvince,
                         selectedRegency,

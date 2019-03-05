@@ -85,6 +85,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
     private fun setupVillagesDropdown() {
         villageNames = ArrayList()
+        villageNames.add(0, "Pilih Desa/Kelurahan: ")
         villagesAdapter = ArrayAdapter<String>(
             this@DataTPSActivity,
             R.layout.default_collapsed_spinner_item,
@@ -97,6 +98,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
     private fun setupDistrictsDropdown() {
         districtNames = ArrayList()
+        districtNames.add(0, "Pilih Kecamatan: ")
         districtsAdapter = ArrayAdapter<String>(
             this@DataTPSActivity,
             R.layout.default_collapsed_spinner_item,
@@ -109,6 +111,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
     private fun setupRegenciesDropdown() {
         regencyNames = ArrayList()
+        regencyNames.add(0, "Pilih Kabupaten: ")
         regenciesAdapter = ArrayAdapter<String>(
             this@DataTPSActivity,
             R.layout.default_collapsed_spinner_item,
@@ -413,7 +416,16 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun onSuccessSaveTPS() {
-        startActivity(Intent(this@DataTPSActivity, PerhitunganMainActivity::class.java))
-        finish()
+        val intent = Intent(this@DataTPSActivity, PerhitunganMainActivity::class.java)
+        startActivityForResult(intent, 1)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 1) {
+                setResult(Activity.RESULT_OK)
+                finish()
+            }
+        }
     }
 }

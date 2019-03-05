@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.list
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -131,5 +132,13 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
         }
 
         val TAG: String = PerhitunganFragment::class.java.simpleName
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PantauConstants.Merayakan.CREATE_PERHITUNGAN_REQUEST_CODE) {
+                refreshItem()
+            }
+        }
     }
 }
