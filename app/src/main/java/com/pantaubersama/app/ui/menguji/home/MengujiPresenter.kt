@@ -7,6 +7,7 @@ import com.pantaubersama.app.data.model.debat.ChallengeConstants
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.State
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
 class MengujiPresenter @Inject constructor(
@@ -16,6 +17,8 @@ class MengujiPresenter @Inject constructor(
 
     private val isPublik: Boolean
         get() = view?.isPublik ?: true
+
+    private val emptyChallenges = BehaviorSubject.create<Boolean>()
 
     fun getBanner() {
         view?.showLoading()
@@ -32,11 +35,15 @@ class MengujiPresenter @Inject constructor(
     fun getChallengeLive() {
         view?.showChallengeLive(State.Loading, emptyList(), false)
 
-        val request = wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.LIVE_NOW)
+        val request = if (isPublik)
+            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.LIVE_NOW)
+        else
+            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.LIVE_NOW)
 
         disposables += request
             .subscribe({
                 view?.showChallengeLive(State.Success, it.take(3), it.size > 3)
+                emptyChallenges.onNext(it.isEmpty())
             }, {
                 view?.showChallengeLive(State.Error(it.message), emptyList(), false)
             })
@@ -53,6 +60,7 @@ class MengujiPresenter @Inject constructor(
         disposables += request
             .subscribe({
                 view?.showChallengeComingSoon(State.Success, it.take(3), it.size > 3)
+                emptyChallenges.onNext(it.isEmpty())
             }, {
                 view?.showChallengeComingSoon(State.Error(it.message), emptyList(), false)
             })
@@ -69,6 +77,7 @@ class MengujiPresenter @Inject constructor(
         disposables += request
             .subscribe({
                 view?.showChallengeDone(State.Success, it.take(3), it.size > 3)
+                emptyChallenges.onNext(it.isEmpty())
             }, {
                 view?.showChallengeDone(State.Error(it.message), emptyList(), false)
             })
@@ -85,8 +94,16 @@ class MengujiPresenter @Inject constructor(
         disposables += request
             .subscribe({
                 view?.showChallengeOngoing(State.Success, it.take(3), it.size > 3)
+                emptyChallenges.onNext(it.isEmpty())
             }, {
                 view?.showChallengeOngoing(State.Error(it.message), emptyList(), false)
             })
+    }
+
+    fun observeEmptyChallenges() {
+        disposables += emptyChallenges.buffer(4)
+            .subscribe { emptyResults ->
+                view?.showAllChallengeEmpty(emptyResults.all { it })
+            }
     }
 }

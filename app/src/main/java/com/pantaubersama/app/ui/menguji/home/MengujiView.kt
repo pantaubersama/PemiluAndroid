@@ -15,4 +15,5 @@ interface MengujiView : BaseView {
     fun showChallengeComingSoon(state: State, list: List<Challenge>, hasMore: Boolean)
     fun showChallengeDone(state: State, list: List<Challenge>, hasMore: Boolean)
     fun showChallengeOngoing(state: State, list: List<Challenge>, hasMore: Boolean)
+    fun showAllChallengeEmpty(isAllChallengeEmpty: Boolean)
 }
