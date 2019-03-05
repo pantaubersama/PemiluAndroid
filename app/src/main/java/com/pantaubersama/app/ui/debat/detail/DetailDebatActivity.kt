@@ -7,14 +7,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.debat.Audience
 import com.pantaubersama.app.data.model.debat.Challenge
 import com.pantaubersama.app.data.model.debat.ChallengeConstants
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Progress
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
 import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.debat.TerimaChallengeDialog
+import com.pantaubersama.app.ui.debat.adapter.OpponentCandidateAdapter
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
 import com.pantaubersama.app.ui.widget.PreviewWebViewClient
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
@@ -26,7 +31,9 @@ import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.parseDate
 import com.pantaubersama.app.utils.extensions.unSyncLazy
+import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_detail_debat.*
+import kotlinx.android.synthetic.main.layout_content_detail_debat_open_accept_confirmation_as_challenger.*
 import kotlinx.android.synthetic.main.layout_detail_debat.*
 import kotlinx.android.synthetic.main.layout_header_detail_debat.*
 import kotlinx.android.synthetic.main.layout_toolbar_centered_title.*
@@ -209,11 +216,12 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     override fun onErrorStatementSource(throwable: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        link_webview.visibleIf(false)
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun showStatementSource(url: String) {
+        if (!link_webview.isVisible()) link_webview.visibleIf(true)
         link_webview.webViewClient = PreviewWebViewClient()
         link_webview.settings.loadsImagesAutomatically = true
         link_webview.settings.javaScriptEnabled = true
@@ -264,6 +272,46 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     private fun setupOpponentCandidateList() {
-//        var adapter =
+        val adapter = OpponentCandidateAdapter(isMyChallenge)
+        recycler_view.adapter = adapter
+        recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        adapter.addData(challenge.opponentCandidates)
+        adapter.listener = object : OpponentCandidateAdapter.AdapterListener {
+            override fun onClickConfirm(audience: Audience) {
+                val message = spannable {
+                    textColor(color(R.color.gray_12)) { + "Kamu akan mengkonfirmasi " }
+                    textColor(color(R.color.black)) { +"@${audience.username} " }
+                    textColor(color(R.color.gray_12)) { + "sebagai lawan debat anda sesuai dengan detail yang tertera. Tindakan ini tidak bisa dibatalkan. Apakah kamu yakin?"}
+                }.toCharSequence()
+                TerimaChallengeDialog(this@DetailDebatActivity, message.toString(),
+                    "YA",
+                    object : TerimaChallengeDialog.DialogListener {
+                        override fun onClickTerima() {
+                            presenter.confirmOpponentCandidate(challenge.id, audience.id)
+                        }
+                    }).show()
+            }
+        }
+    }
+
+    override fun showLoadingConfirmOpponentCandidate() {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        showProgressDialog(getString(R.string.txt_mohon_tunggu))
+    }
+
+    override fun dismissLoadingConfirmOpponentCandidate() {
+        dismissProgressDialog()
+    }
+
+    override fun onSuccessConfirmOpponentCandidate(audienceId: String) {
+        val currentChallenge = challenge
+        currentChallenge.progress = Progress.COMING_SOON
+        currentChallenge.opponent = challenge.audiences.find { it.id == audienceId }
+        finish()
+        startActivity(DetailDebatActivity.setIntent(this, currentChallenge))
+    }
+
+    override fun onErrorConfirmOpponentcandidate(t: Throwable) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

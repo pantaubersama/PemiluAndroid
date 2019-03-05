@@ -34,4 +34,11 @@ interface WordStadiumAPI {
 
     @GET("word_stadium/v1/challenges/me")
     fun getPersonalChallenge(@Query("progress") progress: String): Single<ChallengeResponse>
+
+    @FormUrlEncoded
+    @PUT("word_stadium/v1/challenges/open/opponent_candidates")
+    fun confirmOpponentCandidate(
+        @Field("id") challengeId: String?,
+        @Field("audience_id") audienceId: String?
+    ): Completable
 }

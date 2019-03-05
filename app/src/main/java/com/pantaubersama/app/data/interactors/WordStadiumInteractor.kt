@@ -55,4 +55,11 @@ class WordStadiumInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun confirmOpponentCandidate(challengeId: String, audienceId: String): Completable {
+        return apiWrapper.getWordStadiumApi()
+            .confirmOpponentCandidate(challengeId, audienceId)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }

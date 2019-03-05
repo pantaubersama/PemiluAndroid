@@ -32,4 +32,19 @@ class DetailDebatPresenter @Inject constructor(
             )
         )
     }
+
+    fun confirmOpponentCandidate(challengeId: String, audienceId: String) {
+        view?.showLoadingConfirmOpponentCandidate()
+        disposables.add(wordStadiumInteractor.confirmOpponentCandidate(challengeId, audienceId)
+            .doOnEvent { view?.dismissLoadingConfirmOpponentCandidate() }
+            .subscribe(
+                {
+                    view?.onSuccessConfirmOpponentCandidate(audienceId)
+                },
+                {
+                    view?.onErrorConfirmOpponentcandidate(it)
+                }
+            )
+        )
+    }
 }
