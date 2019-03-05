@@ -4,27 +4,27 @@
     android:id="@+id/view_empty_state"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingTop="40dp"
     android:paddingBottom="40dp"
     android:visibility="gone">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_empty_state"
+        android:id="@+id/lottie_fail_state"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:scaleType="centerInside"
         app:lottie_autoPlay="false"
-        app:lottie_fileName="lottie_empty_state.json" />
+        app:lottie_fileName="lottie_failed.json" />
 
     <TextView
-        android:id="@+id/tv_empty_state"
+        android:id="@+id/tv_fail_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/lato_italic"
-        android:text="@string/txt_empty_state_2"
+        android:text="@string/txt_failed_state"
         android:textAlignment="center"
         android:textSize="12sp" />
 

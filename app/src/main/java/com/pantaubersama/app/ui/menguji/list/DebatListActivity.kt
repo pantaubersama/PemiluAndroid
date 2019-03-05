@@ -46,12 +46,12 @@ class DebatListActivity : BaseActivity<DebatListPresenter>(), DebatListView {
 
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
-            presenter.getDebatItems(title)
+            presenter.getChallenges(title)
         }
 
         setupHeader()
 
-        presenter.getDebatItems(title)
+        presenter.getChallenges(title)
     }
 
     private fun setupHeader() {
