@@ -32,7 +32,7 @@ class OpponentCandidateAdapter(var showConfirmButton: Boolean = false) : BaseRec
     inner class OpponentCandidateViewHolder(override val containerView: View)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: Audience) {
-            iv_avatar.loadUrl(item.avatar.medium?.url, R.color.gray_3)
+            iv_avatar.loadUrl(item.avatar?.medium?.url, R.color.gray_3)
             tv_name.text = item.fullName
             tv_username.text = item.username
             btn_confirm.visibleIf(showConfirmButton)

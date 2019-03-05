@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.model.debat.Challenge
+import com.pantaubersama.app.data.model.wordstadium.LawanDebat
 import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
@@ -32,6 +33,30 @@ class WordStadiumInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
+    fun directChallenge(
+            topicList: String?,
+            statement: String?,
+            statementSource: String?,
+            showTimeAt: String?,
+            timeLimit: Int,
+            invitationId: String?,
+            screenName: String?
+    ): Completable {
+        return apiWrapper
+                .getWordStadiumApi()
+                .directChallenge(
+                        topicList,
+                        statement,
+                        statementSource,
+                        showTimeAt,
+                        timeLimit,
+                        invitationId,
+                        screenName
+                )
+                .subscribeOn(rxSchedulers.io())
+                .observeOn(rxSchedulers.mainThread())
+    }
+
     fun getConvertLink(url: String): Single<OEmbedLink> {
         return apiWrapper
             .getOEmbedApi()
@@ -61,5 +86,18 @@ class WordStadiumInteractor @Inject constructor(
             .confirmOpponentCandidate(challengeId, audienceId)
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun searchLawanDebat(keyword: String, page: Int, perPage: Int): Single<MutableList<LawanDebat>> {
+        return apiWrapper
+                .getPantauApi()
+                .getLawanDebatTwitter(
+                        keyword,
+                        page,
+                        perPage
+                )
+                .map { it.data.users }
+                .subscribeOn(rxSchedulers.io())
+                .observeOn(rxSchedulers.mainThread())
     }
 }

@@ -39,6 +39,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
     var mDateString: String? = null
     var mTimeString: String? = null
     var mLink: String = ""
+    var oEmbedLink: OEmbedLink? = null
 
     @Inject
     override lateinit var presenter: OpenChallengePresenter
@@ -213,6 +214,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
             val intent = Intent(this, PromoteChallengeActivity::class.java)
             intent.putExtra("challenge", challenge)
             intent.putExtra("date", mDateString + " " + mTimeString)
+            intent.putExtra("link", oEmbedLink)
             startActivityForResult(intent, CreateChallengeActivity.OPEN_CHALLENGE)
         }
     }
@@ -287,7 +289,6 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
     fun saldoWaktuDone() {
         check_saldo_waktu.setImageResource(R.drawable.check_done)
         line_saldo_waktu.setBackgroundColor(ContextCompat.getColor(this, R.color.orange_2))
-
         open_challenge_next.setBackgroundColor(ContextCompat.getColor(this, R.color.orange_2))
         open_challenge_next.enable(true)
     }
@@ -317,6 +318,8 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
     }
 
     override fun onSuccessConvertLink(oEmbedLink: OEmbedLink) {
+        link_source.text = oEmbedLink.url
         previewLink(oEmbedLink.html)
+        this.oEmbedLink = oEmbedLink
     }
 }

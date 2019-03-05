@@ -97,7 +97,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         tv_denied_debat.apply { if (isVisible()) text = challenge.status }
 
         tv_name_challenger.text = challenge.challenger.fullName
-        iv_avatar_challenger.loadUrl(challenge.challenger.avatar.medium?.url, R.color.gray_3)
+        iv_avatar_challenger.loadUrl(challenge.challenger.avatar?.medium?.url, R.color.gray_3)
         tv_username_challenger.text = "@${challenge.challenger.username}"
 
         val showAvatarOpponent = challenge.progress != Progress.WAITING_OPPONENT && challenge.status !in arrayOf(Status.DENIED, Status.EXPIRED)
@@ -200,7 +200,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
         tv_saldo_waktu_detail.text = "${challenge.timeLimit} menit"
 
-        iv_creator_avatar_detail.loadUrl(challenge.challenger.avatar.medium?.url, R.color.gray_3)
+        iv_creator_avatar_detail.loadUrl(challenge.challenger.avatar?.medium?.url, R.color.gray_3)
         tv_creator_name_detail.text = challenge.challenger.fullName
         tv_creator_bio_detail.text = challenge.challenger.about
 

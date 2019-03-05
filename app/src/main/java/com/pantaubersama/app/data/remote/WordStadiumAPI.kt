@@ -29,6 +29,18 @@ interface WordStadiumAPI {
         @Field("time_limit") timeLimit: Int
     ): Completable
 
+    @FormUrlEncoded
+    @POST("word_stadium/v1/challenges/direct")
+    fun directChallenge(
+            @Field("topic_list") topicList: String?,
+            @Field("statement") statement: String?,
+            @Field("statement_source") statementSource: String?,
+            @Field("show_time_at") showTimeAt: String?,
+            @Field("time_limit") timeLimit: Int,
+            @Field("invitation_id") invitationId: String?,
+            @Field("screen_name") screenName: String?
+    ): Completable
+
     @GET("word_stadium/v1/challenges/all")
     fun getPublicChallenge(@Query("progress") progress: String): Single<ChallengeResponse>
 
