@@ -34,7 +34,19 @@ class MengujiPresenter @Inject constructor(
     }
 
     fun getChallengeComingSoon() {
-        view?.showChallengeComingSoon(emptyList())
+        view?.showChallengeComingSoon(State.Loading, emptyList(), false)
+
+        val request = if (isPublik)
+            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.COMING_SOON)
+        else
+            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.COMING_SOON)
+
+        disposables += request
+            .subscribe({
+                view?.showChallengeComingSoon(State.Success, it.take(3), it.size > 3)
+            }, {
+                view?.showChallengeComingSoon(State.Error(it.message), emptyList(), false)
+            })
     }
 
     fun getChallengeDone() {

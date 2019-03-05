@@ -145,13 +145,13 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         debatCarouselAdapter.challenges = list
     }
 
-    override fun showChallengeComingSoon(list: List<Challenge>) {
-        val showEmptyState = list.isEmpty()
+    override fun showChallengeComingSoon(state: State, list: List<Challenge>, hasMore: Boolean) {
+        val showEmptyState = state == State.Success && list.isEmpty()
 
-        progress_coming.enableLottie(false)
-        button_more_coming.visibleIf(false)
-        empty_state_coming.visibleIf(showEmptyState)
-        empty_state_coming.lottie_empty_state.enableLottie(showEmptyState)
+        progress_coming.enableLottie(state == State.Loading)
+        button_more_coming.visibleIf(hasMore)
+        empty_state_coming.run { enableLottie(showEmptyState, lottie_empty_state) }
+        fail_state_coming.run { enableLottie(state is State.Error, lottie_fail_state) }
         debatComingAdapter.challenges = list
     }
 

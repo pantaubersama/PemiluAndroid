@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.debat.Challenge
-import com.pantaubersama.app.data.model.debat.ChallengeConstants
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Progress
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
