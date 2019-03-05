@@ -1,13 +1,11 @@
 package com.pantaubersama.app.data.model.tps
 
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
-import com.pantaubersama.app.data.model.user.Profile
 
 @Entity(tableName = "tps")
 data class TPSData(

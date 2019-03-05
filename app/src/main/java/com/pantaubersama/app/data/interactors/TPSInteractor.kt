@@ -3,13 +3,10 @@ package com.pantaubersama.app.data.interactors
 import com.pantaubersama.app.data.db.AppDB
 import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
 import com.pantaubersama.app.data.model.tps.*
-import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class TPSInteractor @Inject constructor(

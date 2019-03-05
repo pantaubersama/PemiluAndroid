@@ -7,7 +7,6 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.tps.TPSData
 import com.pantaubersama.app.utils.extensions.inflate
-import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.tps_user_info_item.*
 

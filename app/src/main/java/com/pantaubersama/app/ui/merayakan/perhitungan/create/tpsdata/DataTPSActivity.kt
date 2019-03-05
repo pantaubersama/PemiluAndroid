@@ -34,7 +34,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     var locationManager: LocationManager? = null
     private var permission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
     private var geocoder: Geocoder? = null
-    //location
+    // location
     private lateinit var addresses: List<Address>
     private var lat: Float = 0f
     private var long: Float = 0f
@@ -85,7 +85,6 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
     private fun setupVillagesDropdown() {
         villageNames = ArrayList()
-        villageNames.add(0, "Pilih Kelurahan/Desa: ")
         villagesAdapter = ArrayAdapter<String>(
             this@DataTPSActivity,
             R.layout.default_collapsed_spinner_item,
@@ -98,7 +97,6 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
     private fun setupDistrictsDropdown() {
         districtNames = ArrayList()
-        districtNames.add(0, "Pilih Kecamatan: ")
         districtsAdapter = ArrayAdapter<String>(
             this@DataTPSActivity,
             R.layout.default_collapsed_spinner_item,
@@ -111,7 +109,6 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
     private fun setupRegenciesDropdown() {
         regencyNames = ArrayList()
-        regencyNames.add(0, "Pilih Kabupaten: ")
         regenciesAdapter = ArrayAdapter<String>(
             this@DataTPSActivity,
             R.layout.default_collapsed_spinner_item,
@@ -124,7 +121,6 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
     private fun setupProvincesDropdown() {
         provinceNames = ArrayList()
-        provinceNames.add(0, "Pilih Provinsi: ")
         provincesAdapter = ArrayAdapter<String>(
             this@DataTPSActivity,
             R.layout.default_collapsed_spinner_item,
@@ -147,10 +143,11 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun bindProvincesToSpinner(provinces: MutableList<Province>) {
+        provinceNames.clear()
+        provinceNames.add(0, "Pilih Provinsi: ")
         provinces.forEach {
             provinceNames.add(it.name)
         }
-        provincesAdapter.addAll(provinceNames)
         provincesAdapter.notifyDataSetChanged()
         provinces_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -180,10 +177,11 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun bindRegenciesToSpinner(regencies: MutableList<Regency>) {
+        regencyNames.clear()
+        regencyNames.add(0, "Pilih Kabupaten: ")
         regencies.forEach {
             regencyNames.add(it.name)
         }
-        regenciesAdapter.addAll(regencyNames)
         regenciesAdapter.notifyDataSetChanged()
         regencies_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -214,10 +212,11 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun bindDistrictsToSpinner(districts: MutableList<District>) {
+        districtNames.clear()
+        districtNames.add(0, "Pilih Kecamatan: ")
         districts.forEach {
             districtNames.add(it.name)
         }
-        districtsAdapter.addAll(districtNames)
         districtsAdapter.notifyDataSetChanged()
         districts_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -244,10 +243,11 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun bindVillagesToSpinner(villages: MutableList<Village>) {
+        villageNames.clear()
+        villageNames.add(0, "Pilih Kelurahan/Desa: ")
         villages.forEach {
             villageNames.add(it.name)
         }
-        villagesAdapter.addAll(villageNames)
         villagesAdapter.notifyDataSetChanged()
         villages_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
