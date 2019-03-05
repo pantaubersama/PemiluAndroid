@@ -18,9 +18,19 @@ data class ChallengeResponse(
     val challengeData: ChallengeData
 )
 
+data class ChallengeItemResponse(
+    @SerializedName("data")
+    val challengeItemData: ChallengeItemData
+)
+
 data class ChallengeData(
     @SerializedName("challenges")
     val challenges: List<Challenge>
+)
+
+data class ChallengeItemData(
+    @SerializedName("challenge")
+    val challenge: Challenge
 )
 
 data class Challenge(

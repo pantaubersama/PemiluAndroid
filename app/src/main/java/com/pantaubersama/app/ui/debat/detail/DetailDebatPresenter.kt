@@ -4,6 +4,7 @@ import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.WordStadiumInteractor
 import com.pantaubersama.app.data.model.user.Profile
+import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
 /**
@@ -20,7 +21,7 @@ class DetailDebatPresenter @Inject constructor(
 
     fun getStatementSourcePreview(url: String) {
         view?.showLoadingStatementSource()
-        disposables.add(wordStadiumInteractor.getConvertLink(url)
+        disposables += wordStadiumInteractor.getConvertLink(url)
             .doOnEvent { _, _ -> view?.dismissLoadingStatementSource() }
             .subscribe(
                 {
@@ -30,21 +31,53 @@ class DetailDebatPresenter @Inject constructor(
                     view?.onErrorStatementSource(it)
                 }
             )
-        )
     }
 
     fun confirmOpponentCandidate(challengeId: String, audienceId: String) {
         view?.showLoadingConfirmOpponentCandidate()
-        disposables.add(wordStadiumInteractor.confirmOpponentCandidate(challengeId, audienceId)
+        disposables += wordStadiumInteractor.confirmOpponentCandidate(challengeId, audienceId)
             .doOnEvent { view?.dismissLoadingConfirmOpponentCandidate() }
             .subscribe(
                 {
                     view?.onSuccessConfirmOpponentCandidate(audienceId)
                 },
                 {
+                    view?.showError(it)
                     view?.onErrorConfirmOpponentcandidate(it)
                 }
             )
-        )
+    }
+
+    fun askAsOpponent(challengeId: String) {
+        view?.showLoadingAskAsOpponent()
+        disposables += wordStadiumInteractor.askAsOpponent(challengeId)
+            .subscribe(
+                {
+//                    Handler().postDelayed({  /* @edityo 5/3/19  delayed bcs response getItemChallenge not changed immediately */
+                        view?.dismissLoadingAskAsOpponent()
+                        view?.onSuccessAskAsOpponent()
+//                    }, 1000)
+                },
+                {
+                    view?.dismissLoadingAskAsOpponent()
+                    view?.showError(it)
+                    view?.onErrorAskAsOpponent(it)
+                }
+            )
+    }
+
+    fun getChallengeItem(id: String) {
+        view?.showLoading()
+        disposables += wordStadiumInteractor.getChallengeItem(id)
+            .doOnEvent { _, _ -> view?.dismissLoading() }
+            .subscribe(
+                {
+                    view?.showChallenge(it)
+                },
+                {
+                    view?.showError(it)
+                    view?.onErrorGetChallenge(it)
+                }
+            )
     }
 }

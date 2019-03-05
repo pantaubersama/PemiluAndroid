@@ -31,7 +31,7 @@
         android:id="@+id/tv_content_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Raja Kampreta untuk konfirmasi lawan debat"
+        tools:text="Raja Kampreta untuk konfirmasi lawan debat"
         android:textSize="24dp"
         android:textColor="@color/yellow"
         android:fontFamily="@font/bw_modelica_bold"
@@ -40,6 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"

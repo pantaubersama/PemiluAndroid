@@ -12,9 +12,9 @@ import com.twitter.sdk.android.core.models.User
 import javax.inject.Inject
 
 class PreviewChallengePresenter @Inject constructor(
-        private val profileInteractor: ProfileInteractor,
-        private val wordStadiumInteractor: WordStadiumInteractor,
-        private val loginInteractor: LoginInteractor
+    private val profileInteractor: ProfileInteractor,
+    private val wordStadiumInteractor: WordStadiumInteractor,
+    private val loginInteractor: LoginInteractor
 ) : BasePresenter<PreviewChallengeView>() {
 
     fun getUserProfile() {
@@ -22,13 +22,13 @@ class PreviewChallengePresenter @Inject constructor(
     }
 
     fun directChallenge(
-            topicList: String?,
-            statement: String?,
-            statementSource: String?,
-            showTimeAt: String?,
-            timeLimit: Int,
-            invitationId: String?,
-            screenName: String?
+        topicList: String?,
+        statement: String?,
+        statementSource: String?,
+        showTimeAt: String?,
+        timeLimit: Int,
+        invitationId: String?,
+        screenName: String?
     ) {
         view?.showLoading()
         disposables.add(

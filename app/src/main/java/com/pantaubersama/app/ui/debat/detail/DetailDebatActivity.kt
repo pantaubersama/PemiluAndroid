@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
@@ -22,6 +23,7 @@ import com.pantaubersama.app.ui.debat.TerimaChallengeDialog
 import com.pantaubersama.app.ui.debat.adapter.OpponentCandidateAdapter
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
 import com.pantaubersama.app.ui.widget.PreviewWebViewClient
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ID
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -34,10 +36,10 @@ import com.pantaubersama.app.utils.extensions.unSyncLazy
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_detail_debat.*
 import kotlinx.android.synthetic.main.layout_content_detail_debat_open_accept_confirmation_as_challenger.*
+import kotlinx.android.synthetic.main.layout_content_detail_debat_open_accept_confirmation_as_opponent.*
 import kotlinx.android.synthetic.main.layout_detail_debat.*
 import kotlinx.android.synthetic.main.layout_header_detail_debat.*
 import kotlinx.android.synthetic.main.layout_toolbar_centered_title.*
-import java.util.*
 import javax.inject.Inject
 
 class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatView {
@@ -49,6 +51,11 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     @Inject
     override lateinit var presenter: DetailDebatPresenter
 
+    private var challenge: Challenge? = null
+    private var challengeId: String? = null
+
+    private var isLiked = false
+
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
@@ -57,60 +64,81 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         OptionDialogFragment.newInstance(R.layout.layout_option_dialog_menguji)
     }
 
-    lateinit var challenge: Challenge
-
-    var isLiked = false
-
     companion object {
         fun setIntent(context: Context, challenge: Challenge): Intent {
             val intent = Intent(context, DetailDebatActivity::class.java)
             intent.putExtra(EXTRA_CHALLENGE_ITEM, challenge)
             return intent
         }
+
+        fun setIntent(context: Context, challengeId: String): Intent {
+            val intent = Intent(context, DetailDebatActivity::class.java)
+            intent.putExtra(EXTRA_CHALLENGE_ID, challengeId)
+            return intent
+        }
     }
 
     override fun fetchIntentExtra() {
-        intent.getSerializableExtra(EXTRA_CHALLENGE_ITEM)?.let { challenge = it as Challenge }
+        intent.getSerializableExtra(EXTRA_CHALLENGE_ITEM)?.let {
+            challenge = it as Challenge
+            challengeId = it.id
+        }
+        intent.getStringExtra(EXTRA_CHALLENGE_ID)?.let { challengeId = it }
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        isMyChallenge = challenge.challenger.userId == presenter.getMyProfile().id
-        setupHeader()
-        setupContent()
-        setupDetail()
+        fl_progress_bar.visibleIf(challenge == null)
+
+        challenge?.let { showChallenge(it) } ?: challengeId?.let { presenter.getChallengeItem(it) }
 
         btn_back.setOnClickListener { onBackPressed() }
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        fl_progress_bar.visibleIf(true)
     }
 
     override fun dismissLoading() {
+        fl_progress_bar.visibleIf(false)
+    }
+
+    override fun showChallenge(challenge: Challenge) {
+        this.challenge = challenge
+        isMyChallenge = challenge.challenger.userId == presenter.getMyProfile().id
+        setupHeader()
+        setupContent()
+        setupDetail()
+    }
+
+    override fun onErrorGetChallenge(t: Throwable) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun setupHeader() {
-        tv_toolbar_title.text = challenge.status
-        cl_clap_count.visibleIf(challenge.status == Status.DONE)
-        tv_denied_debat.visibleIf(challenge.status in arrayOf(Status.DENIED, Status.EXPIRED))
-        tv_denied_debat.apply { if (isVisible()) text = challenge.status }
+        tv_toolbar_title.text = challenge?.status
+        cl_clap_count.visibleIf(challenge?.status == Status.DONE)
+        tv_denied_debat.visibleIf(challenge?.status in arrayOf(Status.DENIED, Status.EXPIRED))
+        tv_denied_debat.apply { if (isVisible()) text = challenge?.status }
 
-        tv_name_challenger.text = challenge.challenger.fullName
-        iv_avatar_challenger.loadUrl(challenge.challenger.avatar?.medium?.url, R.color.gray_3)
-        tv_username_challenger.text = "@${challenge.challenger.username}"
+        tv_name_challenger.text = challenge?.challenger?.fullName
+        iv_avatar_challenger.loadUrl(challenge?.challenger?.avatar?.medium?.url, R.color.gray_3)
+        tv_username_challenger.text = "@${challenge?.challenger?.username}"
 
-        val showAvatarOpponent = challenge.progress != Progress.WAITING_OPPONENT && challenge.status !in arrayOf(Status.DENIED, Status.EXPIRED)
+        val showAvatarOpponent = challenge?.progress != Progress.WAITING_OPPONENT && challenge?.status !in arrayOf(Status.DENIED, Status.EXPIRED)
         iv_avatar_opponent.visibleIf(showAvatarOpponent)
-        ll_text_opponent.visibleIf(challenge.progress in arrayOf(Progress.WAITING_OPPONENT, Status.DENIED, Status.EXPIRED))
+        ll_text_opponent.visibleIf(challenge?.opponent != null)
+        if (ll_text_opponent.isVisible()) {
+            tv_name_opponent.text = challenge?.opponent?.fullName
+            tv_username_opponent.text = "@${challenge?.opponent?.username}"
+        }
 
-        val avatarOpponent = challenge.opponent?.avatar?.thumbnailSquare?.url
-            ?: challenge.opponentCandidates.firstOrNull()?.avatar?.thumbnailSquare?.url
-        iv_avatar_opponent.apply { if (isVisible()) {
+        val avatarOpponent = challenge?.opponent?.avatar?.thumbnailSquare?.url
+            ?: challenge?.opponentCandidates?.firstOrNull()?.avatar?.thumbnailSquare?.url
+        iv_avatar_opponent.apply { if (isVisible() && challenge?.opponentCandidates != null) {
             loadUrl(avatarOpponent, R.color.gray_3)
             val count = when {
-                challenge.opponentCandidates.size == 1 -> "?"
-                challenge.opponentCandidates.size > 1 -> challenge.opponentCandidates.toString()
+                challenge?.opponentCandidates?.size == 1 -> "?"
+                challenge?.opponentCandidates!!.size > 1 -> challenge?.opponentCandidates?.size.toString()
                 else -> null
             }
             tv_opponent_count.text = count
@@ -118,7 +146,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         } }
 
         btn_more.setOnClickListener {
-            val showDeleteButton = isMyChallenge && challenge.progress == ChallengeConstants.Progress.WAITING_OPPONENT
+            val showDeleteButton = isMyChallenge && challenge?.progress == ChallengeConstants.Progress.WAITING_OPPONENT
             optionDialog.setViewVisibility(R.id.delete_action, showDeleteButton)
             optionDialog.listener = View.OnClickListener {
                 when (it.id) {
@@ -131,14 +159,14 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
             optionDialog.show(supportFragmentManager, "dialog")
         }
 
-        val bgToolbarColor = color(when (challenge.status) {
+        val bgToolbarColor = color(when (challenge?.status) {
             Status.COMING_SOON -> R.color.blue_2
             Status.DONE -> R.color.purple_5
             in arrayOf(Status.OPEN_CHALLENGE, Status.DIRECT_CHALLENGE, Status.EXPIRED, Status.DENIED) -> R.color.orange_3
             else -> throw ErrorException("Status debat tidak sesuai")
         })
 
-        val bgHeader = when (challenge.status) {
+        val bgHeader = when (challenge?.status) {
             Status.COMING_SOON -> R.drawable.banner_coming_soon_fullheight
             Status.DONE -> R.drawable.banner_done_post
             in arrayOf(Status.OPEN_CHALLENGE, Status.DIRECT_CHALLENGE, Status.EXPIRED, Status.DENIED) -> R.drawable.banner_challenge_big
@@ -148,7 +176,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         toolbar_detail_debat.setBackgroundColor(bgToolbarColor)
         cl_header.setBackgroundResource(bgHeader)
 
-        btn_like.visibleIf(challenge.status == Status.DONE)
+        btn_like.visibleIf(challenge?.status == Status.DONE)
         if (btn_like.isVisible()) {
             val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
             lottie_love.progress = if (isLiked) 1.0f else 0.0f
@@ -172,7 +200,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     private fun setupContent() {
-        when (challenge.status) {
+        when (challenge?.status) {
             Status.COMING_SOON -> onComingSoon()
             Status.DONE -> onDone()
             Status.OPEN_CHALLENGE -> onOpenChallenge()
@@ -181,30 +209,34 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
     private fun setupDetail() {
         ll_content_detail_debat.addView(inflate(R.layout.layout_detail_debat))
-        presenter.getStatementSourcePreview(challenge.statementSource)
+        tv_label_detail.text = challenge?.topicList?.firstOrNull()
 
-        tv_label_detail.text = challenge.topicList.firstOrNull()
-        tv_statement_url.text = challenge.statementSource
-        tv_title_detail.text = challenge.statement
+        challenge?.statementSource?.let { cl_statement.visibleIf(it.isNotEmpty()) }
+        if (cl_statement.isVisible()) {
+            challenge?.statementSource?.let { presenter.getStatementSourcePreview(it) }
+            tv_statement_url.text = challenge?.statementSource
+        }
 
-        cl_opponent_detail.visibleIf(challenge.opponent != null)
+        tv_title_detail.text = challenge?.statement
+
+        cl_opponent_detail.visibleIf(challenge?.opponent != null)
         if (cl_opponent_detail.isVisible()) {
-            val opponent = challenge.opponent
+            val opponent = challenge?.opponent
             iv_opponent_avatar.loadUrl(opponent?.avatar?.medium?.url, R.color.gray_3)
             tv_opponent_name.text = opponent?.fullName
             tv_opponent_username.text = "@${opponent?.username}"
         }
 
-        tv_date_detail.text = challenge.showTimeAt.parseDate(toFormat = "EEEE, dd MMMM yyyy")
-        tv_hour_detail.text = challenge.showTimeAt.parseDate(toFormat = "hh.mm")
+        tv_date_detail.text = challenge?.showTimeAt?.parseDate(toFormat = "EEEE, dd MMMM yyyy")
+        tv_hour_detail.text = challenge?.showTimeAt?.parseDate(toFormat = "hh.mm")
 
-        tv_saldo_waktu_detail.text = "${challenge.timeLimit} menit"
+        tv_saldo_waktu_detail.text = "${challenge?.timeLimit} menit"
 
-        iv_creator_avatar_detail.loadUrl(challenge.challenger.avatar?.medium?.url, R.color.gray_3)
-        tv_creator_name_detail.text = challenge.challenger.fullName
-        tv_creator_bio_detail.text = challenge.challenger.about
+        iv_creator_avatar_detail.loadUrl(challenge?.challenger?.avatar?.medium?.url, R.color.gray_3)
+        tv_creator_name_detail.text = challenge?.challenger?.fullName
+        tv_creator_bio_detail.text = challenge?.challenger?.about
 
-        tv_posted_time_detail.text = "Posted in ${challenge.createdAt.parseDate(toFormat = "dd MMM yy hh:mm")}"
+        tv_posted_time_detail.text = "Posted in ${challenge?.createdAt?.parseDate(toFormat = "dd MMM yy hh:mm")}"
     }
 
     override fun showLoadingStatementSource() {
@@ -245,7 +277,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
     private fun onOpenChallenge() {
         if (isMyChallenge) {
-            when (challenge.progress) {
+            when (challenge?.progress) {
                 Progress.WAITING_CONFIRMATION -> {
                     ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_open_accept_confirmation_as_challenger))
                     setupOpponentCandidateList()
@@ -255,17 +287,32 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
                 }
             }
         } else {
-            if (challenge.progress != Progress.COMING_SOON) {
-                var alreadyAcceptChallenge = false
-                challenge.opponentCandidates.forEach {
-                    if (it.id == presenter.getMyProfile().id) {
-                        alreadyAcceptChallenge = true
-                        return@forEach
-                    }
+            var meAsOpponentCandidate = false
+            challenge?.opponentCandidates?.forEach {
+                if (it.userId == presenter.getMyProfile().id) {
+                    meAsOpponentCandidate = true
+                    return@forEach
                 }
-                if (alreadyAcceptChallenge) {
-                } else {
-                    ll_content_detail_debat.addView(layoutInflater.inflate(R.layout.layout_content_detail_debat_open_accept_confirmation_as_opponent, null))
+            }
+            if (meAsOpponentCandidate) {
+                ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_open_waiting_confirmation_as_others))
+                findViewById<TextView>(R.id.tv_content_subtitle).text = "${challenge?.challenger?.fullName} untuk konfirmasi lawan debat"
+                setupOpponentCandidateList()
+            } else {
+                ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_open_accept_confirmation_as_opponent))
+                btn_terima.setOnClickListener {
+                    val message = spannable {
+                        + "Kamu akan menerima tantangan dari "
+                        textColor(color(R.color.black)) { +"@${challenge?.challenger?.username} " }
+                        + "untuk berdebat sesuai dengan detail yang tertera. Tindakan ini tidak bisa dibatalkan. Apakah kamu yakin?"
+                    }.toCharSequence()
+                    TerimaChallengeDialog(this@DetailDebatActivity, message,
+                        "YA",
+                        object : TerimaChallengeDialog.DialogListener {
+                            override fun onClickTerima() {
+                                challenge?.id?.let { presenter.askAsOpponent(it) }
+                            }
+                        }).show()
                 }
             }
         }
@@ -275,28 +322,32 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         val adapter = OpponentCandidateAdapter(isMyChallenge)
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        adapter.addData(challenge.opponentCandidates)
-        adapter.listener = object : OpponentCandidateAdapter.AdapterListener {
-            override fun onClickConfirm(audience: Audience) {
-                val message = spannable {
-                    textColor(color(R.color.gray_12)) { + "Kamu akan mengkonfirmasi " }
-                    textColor(color(R.color.black)) { +"@${audience.username} " }
-                    textColor(color(R.color.gray_12)) { + "sebagai lawan debat anda sesuai dengan detail yang tertera. Tindakan ini tidak bisa dibatalkan. Apakah kamu yakin?"}
-                }.toCharSequence()
-                TerimaChallengeDialog(this@DetailDebatActivity, message.toString(),
-                    "YA",
-                    object : TerimaChallengeDialog.DialogListener {
-                        override fun onClickTerima() {
-                            presenter.confirmOpponentCandidate(challenge.id, audience.id)
-                        }
-                    }).show()
+        challenge?.opponentCandidates?.let { adapter.addData(it) }
+        if (isMyChallenge) {
+            adapter.listener = object : OpponentCandidateAdapter.AdapterListener {
+                override fun onClickConfirm(audience: Audience) {
+                    val message = spannable {
+                        textColor(color(R.color.gray_12)) { + "Kamu akan mengkonfirmasi " }
+                        textColor(color(R.color.black)) { +"@${audience.username} " }
+                        textColor(color(R.color.gray_12)) { + "sebagai lawan debat anda sesuai dengan detail yang tertera. Tindakan ini tidak bisa dibatalkan. Apakah kamu yakin?" }
+                    }.toCharSequence()
+                    TerimaChallengeDialog(this@DetailDebatActivity, message,
+                        "YA",
+                        object : TerimaChallengeDialog.DialogListener {
+                            override fun onClickTerima() {
+                                challenge?.id?.let { presenter.confirmOpponentCandidate(it, audience.id) }
+                            }
+                        }).show()
+                }
             }
         }
     }
 
+    /* ConfirmOpponentCandidate View */
+
     override fun showLoadingConfirmOpponentCandidate() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        showProgressDialog(getString(R.string.txt_mohon_tunggu))
+        showProgressDialog()
     }
 
     override fun dismissLoadingConfirmOpponentCandidate() {
@@ -304,14 +355,36 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     override fun onSuccessConfirmOpponentCandidate(audienceId: String) {
-        val currentChallenge = challenge
-        currentChallenge.progress = Progress.COMING_SOON
-        currentChallenge.opponent = challenge.audiences.find { it.id == audienceId }
-        finish()
-        startActivity(DetailDebatActivity.setIntent(this, currentChallenge))
+        reloadChallenge()
     }
 
     override fun onErrorConfirmOpponentcandidate(t: Throwable) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    /* AskAsOpponent View */
+
+    override fun showLoadingAskAsOpponent() {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        showProgressDialog()
+    }
+
+    override fun dismissLoadingAskAsOpponent() {
+        dismissProgressDialog()
+    }
+
+    override fun onSuccessAskAsOpponent() {
+        reloadChallenge()
+    }
+
+    override fun onErrorAskAsOpponent(t: Throwable) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun reloadChallenge() {
+        challengeId?.let {
+            finish()
+            startActivity(DetailDebatActivity.setIntent(this, it))
+        }
     }
 }

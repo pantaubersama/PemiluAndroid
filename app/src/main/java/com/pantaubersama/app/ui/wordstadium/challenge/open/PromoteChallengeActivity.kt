@@ -54,7 +54,7 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
     override fun fetchIntentExtra() {
         intent.getSerializableExtra("challenge").let { challenge = it as Challenge }
         intent.getStringExtra("date").let { date = it as String }
-        intent.getSerializableExtra("link").let { oEmbedLink = it as OEmbedLink }
+        intent.getSerializableExtra("link")?.let { oEmbedLink = it as OEmbedLink }
     }
 
     override fun statusBarColor(): Int? {
@@ -341,7 +341,7 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
             ll_webview.visibility = View.VISIBLE
             link_webview.settings.loadsImagesAutomatically = true
             link_webview.settings.javaScriptEnabled = true
-            link_webview.getSettings().setAppCacheEnabled(true);
+            link_webview.getSettings().setAppCacheEnabled(true)
             link_webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
             link_webview.loadDataWithBaseURL("https://twitter.com", url.toString(), "text/html", "utf-8", "")
             link_source.text = oEmbedLink?.url

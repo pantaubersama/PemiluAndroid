@@ -15,10 +15,12 @@ import java.io.Serializable
  * @author edityomurti on 04/03/2019 17:41
  */
 
-class TerimaChallengeDialog(context: Context,
-                            message: String,
-                            positiveBtnText: String = "SETUJU",
-                            listener: DialogListener){
+class TerimaChallengeDialog(
+    context: Context,
+    message: CharSequence,
+    positiveBtnText: String = "SETUJU",
+    listener: DialogListener
+) {
     private val dialog: Dialog
 
     init {
@@ -39,7 +41,9 @@ class TerimaChallengeDialog(context: Context,
         val btnPositive = dialog.findViewById<MaterialButton>(R.id.btn_setuju)
         val btnNegative = dialog.findViewById<MaterialButton>(R.id.btn_kembali)
         btnPositive.text = positiveBtnText
-        btnPositive.setOnClickListener { listener.onClickTerima(); dialog.dismiss() }
+        btnPositive.setOnClickListener {
+            listener.onClickTerima()
+            dialog.dismiss() }
         btnNegative.setOnClickListener { dialog.dismiss() }
         this.dialog = dialog
     }

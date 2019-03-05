@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.remote
 
 import com.pantaubersama.app.data.model.accesstoken.Token
+import com.pantaubersama.app.data.model.debat.ChallengeItemResponse
 import com.pantaubersama.app.data.model.debat.ChallengeResponse
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -32,13 +33,13 @@ interface WordStadiumAPI {
     @FormUrlEncoded
     @POST("word_stadium/v1/challenges/direct")
     fun directChallenge(
-            @Field("topic_list") topicList: String?,
-            @Field("statement") statement: String?,
-            @Field("statement_source") statementSource: String?,
-            @Field("show_time_at") showTimeAt: String?,
-            @Field("time_limit") timeLimit: Int,
-            @Field("invitation_id") invitationId: String?,
-            @Field("screen_name") screenName: String?
+        @Field("topic_list") topicList: String?,
+        @Field("statement") statement: String?,
+        @Field("statement_source") statementSource: String?,
+        @Field("show_time_at") showTimeAt: String?,
+        @Field("time_limit") timeLimit: Int,
+        @Field("invitation_id") invitationId: String?,
+        @Field("screen_name") screenName: String?
     ): Completable
 
     @GET("word_stadium/v1/challenges/all")
@@ -50,7 +51,14 @@ interface WordStadiumAPI {
     @FormUrlEncoded
     @PUT("word_stadium/v1/challenges/open/opponent_candidates")
     fun confirmOpponentCandidate(
-        @Field("id") challengeId: String?,
-        @Field("audience_id") audienceId: String?
+        @Field("id") challengeId: String,
+        @Field("audience_id") audienceId: String
     ): Completable
+
+    @FormUrlEncoded
+    @PUT("word_stadium/v1/challenges/open/ask_as_opponent")
+    fun askAsOpponent(@Field("id") challengeId: String): Completable
+
+    @GET("word_stadium/v1/challenges/{id}")
+    fun getChallengeItem(@Path("id") id: String): Single<ChallengeItemResponse>
 }
