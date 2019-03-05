@@ -87,7 +87,7 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun  provideOEmbedAPI(httpClient: OkHttpClient): OEmbedApi {
+    fun provideOEmbedAPI(httpClient: OkHttpClient): OEmbedApi {
         return APIWrapper.createRetrofit("https://publish.twitter.com/", httpClient).create(OEmbedApi::class.java)
     }
 }

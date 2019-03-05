@@ -10,9 +10,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
@@ -22,6 +19,7 @@ import com.pantaubersama.app.data.model.wordstadium.BidangKajian
 import com.pantaubersama.app.data.model.wordstadium.Challenge
 import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.widget.PreviewWebViewClient
 import com.pantaubersama.app.ui.wordstadium.InfoDialog
 import com.pantaubersama.app.ui.wordstadium.challenge.CreateChallengeActivity
 import com.pantaubersama.app.utils.extensions.enable
@@ -64,7 +62,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
         actionClick()
         bidangKajianActive()
 
-        link_webview.webViewClient = MyWebViewClient()
+        link_webview.webViewClient = PreviewWebViewClient()
     }
 
     override fun showLoading() {
@@ -179,7 +177,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
 
             val timePickerDialog = TimePickerDialog(this,
                     TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                        tv_time.text = "${hourOfDay}.${minute}"
+                        tv_time.text = "$hourOfDay.$minute"
                         dateTimeDone()
                         mTimeString = "$hourOfDay:$minute"
                     }, mHour, mMinute, false)
@@ -308,7 +306,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
             ll_webview.visibility = View.VISIBLE
             link_webview.settings.loadsImagesAutomatically = true
             link_webview.settings.javaScriptEnabled = true
-            link_webview.getSettings().setAppCacheEnabled(true);
+            link_webview.getSettings().setAppCacheEnabled(true)
             link_webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
             link_webview.loadDataWithBaseURL("https://twitter.com", url.toString(), "text/html", "utf-8", "")
             link_pernyataan.visibility = View.GONE
@@ -316,13 +314,6 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
         link_close.setOnClickListener {
             ll_webview.visibility = View.GONE
             link_pernyataan.visibility = View.VISIBLE
-        }
-    }
-
-    class MyWebViewClient : WebViewClient() {
-        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-            view?.loadUrl(request?.url.toString())
-            return true
         }
     }
 

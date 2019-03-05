@@ -10,6 +10,7 @@ import com.pantaubersama.app.data.model.debat.ChallengeConstants.Type
 import com.pantaubersama.app.data.model.image.Image
 import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_AUDIENCE_ITEM
 import java.io.Serializable
 
 data class ChallengeResponse(
@@ -17,9 +18,19 @@ data class ChallengeResponse(
     val challengeData: ChallengeData
 )
 
+data class ChallengeItemResponse(
+    @SerializedName("data")
+    val challengeItemData: ChallengeItemData
+)
+
 data class ChallengeData(
     @SerializedName("challenges")
     val challenges: List<Challenge>
+)
+
+data class ChallengeItemData(
+    @SerializedName("challenge")
+    val challenge: Challenge
 )
 
 data class Challenge(
@@ -32,7 +43,7 @@ data class Challenge(
     @SerializedName("id")
     val id: String,
     @SerializedName("progress")
-    val progress: String,
+    var progress: String,
     @SerializedName("show_time_at")
     val showTimeAt: String,
     @SerializedName("statement")
@@ -67,7 +78,7 @@ data class Challenge(
         get() = audiences.find { it.role == Role.CHALLENGER }
             ?: throw ErrorException("Tidak ada penantang")
 
-    val opponent: Audience?
+    var opponent: Audience? = null
         get() = audiences.find { it.role == Role.OPPONENT }
 
     val opponentCandidates: List<Audience>
@@ -91,4 +102,6 @@ data class Audience(
     val userId: Any?,
     @SerializedName("username")
     val username: String
-) : Serializable
+) : Serializable, ItemModel {
+    override fun getType(): Int = TYPE_AUDIENCE_ITEM
+}

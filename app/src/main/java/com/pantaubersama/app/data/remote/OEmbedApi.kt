@@ -8,6 +8,6 @@ import retrofit2.http.Query
 interface OEmbedApi {
     @GET("oembed")
     fun getConvertLink(
-            @Query("url") url: String
+        @Query("url") url: String
     ): Single<OEmbedLink>
 }

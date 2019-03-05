@@ -84,7 +84,7 @@ abstract class DebatViewHolder(
         val count = when {
             challenge.opponent != null -> "?"
             challenge.opponentCandidates.size == 1 -> "?"
-            challenge.opponentCandidates.size > 1 -> challenge.opponentCandidates.toString()
+            challenge.opponentCandidates.size > 1 -> challenge.opponentCandidates.size.toString()
             else -> null
         }?.takeIf {
             challenge.progress in arrayOf(Progress.WAITING_OPPONENT, Progress.WAITING_CONFIRMATION)

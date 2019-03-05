@@ -4,7 +4,7 @@ import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.data.model.user.Profile
 import com.twitter.sdk.android.core.models.User
 
-interface PreviewChallengeView : BaseView{
+interface PreviewChallengeView : BaseView {
     fun showProfile(profile: Profile)
     fun onSuccessOpenChallenge()
     fun showConnectedToTwitterAlert()

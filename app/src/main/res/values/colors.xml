@@ -7,6 +7,7 @@
     <color name="white">#ffffff</color>
     <color name="translucent_white">#d6ffffff</color>
     <color name="translucent_white_2">#c2ffffff</color>
+    <color name="gray_transparent">#807c7c7c</color>
     <color name="gray_1">#f9f9f9</color>
     <color name="gray_2">#f4f4f4</color>
     <color name="gray_3">#ececec</color>
@@ -40,6 +41,7 @@
     <color name="brownLight">#F1CBBE</color>
     <color name="orange">#f2771d</color>
     <color name="orange_2">#f49422</color>
+    <color name="orange_3">#fe7f5d</color>
     <color name="tosca">#6ccfc0</color>
     <color name="tosca_2">#08bda8</color>
     <color name="blue">#0d55cf</color>
