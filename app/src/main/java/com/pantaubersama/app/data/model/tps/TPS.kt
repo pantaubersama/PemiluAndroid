@@ -8,7 +8,7 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
 
 @Entity(tableName = "tps")
-data class TPSData(
+data class TPS(
     @PrimaryKey
     @SerializedName("id")
     @Expose

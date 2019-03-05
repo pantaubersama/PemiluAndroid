@@ -8,7 +8,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
-import com.pantaubersama.app.data.model.tps.TPSData
+import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
@@ -70,7 +70,7 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
         refreshItem()
     }
 
-    override fun bindPerhitungan(tpses: MutableList<TPSData>) {
+    override fun bindTPSes(tpses: MutableList<TPS>) {
         recycler_view.visibleIf(true)
         if (adapter.itemCount != 0 && adapter.get(0) is BannerInfo) {
             val bannerInfo = adapter.get(0) as BannerInfo
@@ -115,6 +115,10 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
             refreshItem()
             swipe_refresh.isRefreshing = false
         }
+    }
+
+    override fun showEmptyAlert() {
+        view_empty_state.enableLottie(true, lottie_empty_state)
     }
 
     override fun showFailedGetDataAlert() {

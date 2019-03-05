@@ -3,7 +3,7 @@ package com.pantaubersama.app.ui.merayakan.rekapitulasi.tpslist
 import com.google.gson.Gson
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.model.image.Image
-import com.pantaubersama.app.data.model.tps.TPSData
+import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.data.model.user.EMPTY_INFORMANT
 import com.pantaubersama.app.data.model.user.Profile
 import javax.inject.Inject
@@ -64,10 +64,10 @@ class TPSListPresenter @Inject constructor() : BasePresenter<TPSListView>() {
             "  \"status\": \"published\"\n" +
             "}"
 
-        val tpsData = Gson().newBuilder().create().fromJson<TPSData>(data, TPSData::class.java)
+        val tpsData = Gson().newBuilder().create().fromJson<TPS>(data, TPS::class.java)
 //        tpsData.user = profile1
 
-        val tpses: MutableList<TPSData> = ArrayList()
+        val tpses: MutableList<TPS> = ArrayList()
         tpses.add(tpsData)
         tpses.add(tpsData)
         tpses.add(tpsData)

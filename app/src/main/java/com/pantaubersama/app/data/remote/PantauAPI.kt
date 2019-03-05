@@ -9,7 +9,7 @@ import com.pantaubersama.app.data.model.kuis.* // ktlint-disable
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatListResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
-import com.pantaubersama.app.data.model.tps.*
+import com.pantaubersama.app.data.model.tps.* // ktlint-disable
 import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -213,4 +213,11 @@ interface PantauAPI {
     fun getVillages(
         @Query("district_code") districtId: Int
     ): Single<LocationResponse<VillageData>>
+
+    @GET("hitung/v1/real_counts")
+    fun getTPSes(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("user_id") userId: String?
+    ): Single<TpsResponse>
 }

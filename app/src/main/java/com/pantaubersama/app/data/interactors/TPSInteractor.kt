@@ -1,18 +1,21 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.db.AppDB
+import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
-import com.pantaubersama.app.data.model.tps.*
+import com.pantaubersama.app.data.model.tps.* // ktlint-disable
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Single
 import javax.inject.Inject
 
 class TPSInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
     private val rxSchedulers: RxSchedulers,
-    private val appDB: AppDB
+    private val appDB: AppDB,
+    private val dataCache: DataCache
 ) {
     fun getProvinces(): Single<MutableList<Province>> {
         return if (appDB.getProvinceDao().loadProvinces().size != 0) {
@@ -69,7 +72,7 @@ class TPSInteractor @Inject constructor(
         if (appDB.getTPSDAO().loadTPS().size != 0) {
             return Completable.fromCallable {
                 appDB.getTPSDAO().saveTPS(
-                    TPSData(
+                    TPS(
                         appDB.getTPSDAO().loadTPS().size.toString(),
                         tpsNumber,
                         selectedProvince,
@@ -87,7 +90,7 @@ class TPSInteractor @Inject constructor(
         } else {
             return Completable.fromCallable {
                 appDB.getTPSDAO().saveTPS(
-                    TPSData(
+                    TPS(
                         "1",
                         tpsNumber,
                         selectedProvince,
@@ -103,5 +106,35 @@ class TPSInteractor @Inject constructor(
                 )
             }
         }
+    }
+
+    fun getTpses(page: Int, perPage: Int): Maybe<MutableList<TPS>> {
+        val api =
+            apiWrapper.getPantauApi()
+                .getTPSes(
+                    page,
+                    perPage,
+                    dataCache.loadUserProfile().id
+                )
+                .map {
+                    it.tpsData.tpses
+                }
+                .filter { it.size != 0 }
+                .subscribeOn(rxSchedulers.io())
+                .observeOn(rxSchedulers.mainThread())
+
+        val db = Maybe.fromCallable {
+            appDB.getTPSDAO().loadTPS()
+        }
+            .subscribeOn(rxSchedulers.io())
+            // sementara
+            .observeOn(rxSchedulers.mainThread())
+
+        val mergedData = Maybe.concatArray(db, api)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+
+        // sementara
+        return db
     }
 }

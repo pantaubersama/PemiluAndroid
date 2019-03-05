@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
-import com.pantaubersama.app.data.model.tps.TPSData
+import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.ui.widget.BannerViewHolder
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
@@ -34,11 +34,11 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as? BannerViewHolder)?.bind(data[position] as BannerInfo)
-        (holder as? PerhitunganViewHolder)?.bind(data[position] as TPSData)
+        (holder as? PerhitunganViewHolder)?.bind(data[position] as TPS)
     }
 
     inner class PerhitunganViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: TPSData) {
+        fun bind(item: TPS) {
             tps_number.text = item.tps.toString()
             province_text.text = item.province.name
             district_text.text = item.district.name

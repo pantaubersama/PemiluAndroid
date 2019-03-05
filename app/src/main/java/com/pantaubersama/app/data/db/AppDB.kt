@@ -1,12 +1,12 @@
 package com.pantaubersama.app.data.db
 
 import android.content.Context
-import androidx.room.*
+import androidx.room.* // ktlint-disable
 import com.pantaubersama.app.data.model.tps.Province
-import com.pantaubersama.app.data.model.tps.TPSData
+import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.utils.PantauConstants
 
-@Database(entities = [Province::class, TPSData::class], version = PantauConstants.DATABASE_VERSION)
+@Database(entities = [Province::class, TPS::class], version = PantauConstants.DATABASE_VERSION)
 @TypeConverters(
     ProvinceTypeConverter::class,
     RegencyTypeConverter::class,

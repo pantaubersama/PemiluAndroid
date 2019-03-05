@@ -3,7 +3,7 @@ package com.pantaubersama.app.di.module
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.data.local.cache.DataCache
-import com.pantaubersama.app.data.remote.*
+import com.pantaubersama.app.data.remote.* // ktlint-disable
 import com.pantaubersama.app.utils.ConnectionState
 import com.pantaubersama.app.utils.CustomAuthenticator
 import com.pantaubersama.app.utils.NetworkErrorInterceptor

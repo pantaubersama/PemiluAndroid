@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.data.model.tps.TPSData
+import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.detailtps.DetailTPSActivity
 import com.pantaubersama.app.utils.extensions.enableLottie
@@ -48,7 +48,7 @@ class TPSListActivity : BaseActivity<TPSListPresenter>(), TPSListView {
     private fun setupTPSList() {
         adapter = TPSAdapter()
         adapter.listener = object : TPSAdapter.Listener {
-            override fun onClickItem(item: TPSData) {
+            override fun onClickItem(item: TPS) {
                 DetailTPSActivity.start(this@TPSListActivity)
             }
         }
@@ -57,7 +57,7 @@ class TPSListActivity : BaseActivity<TPSListPresenter>(), TPSListView {
         recycler_view.adapter = adapter
     }
 
-    override fun bindPerhitungan(tpses: MutableList<TPSData>) {
+    override fun bindPerhitungan(tpses: MutableList<TPS>) {
         recycler_view.visibleIf(true)
         adapter.setDatas(tpses as MutableList<ItemModel>)
     }

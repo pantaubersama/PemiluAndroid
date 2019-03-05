@@ -1,78 +1,43 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.list
 
-import com.google.gson.Gson
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
-import com.pantaubersama.app.data.model.tps.TPSData
+import com.pantaubersama.app.data.interactors.TPSInteractor
 import com.pantaubersama.app.utils.PantauConstants
+import timber.log.Timber
 import javax.inject.Inject
 
 class PerhitunganPresenter @Inject constructor(
     private val profileInteractor: ProfileInteractor,
-    private val bannerInfoInteractor: BannerInfoInteractor
+    private val bannerInfoInteractor: BannerInfoInteractor,
+    private val tpsInteractor: TPSInteractor
 ) : BasePresenter<PerhitunganView>() {
     fun getProfile() {
         view?.bindProfile(profileInteractor.getProfile())
     }
 
     fun getPerhitunganData(page: Int, perPage: Int) {
-//        view?.showLoading()
-        val tpses: MutableList<TPSData> = ArrayList()
-        val data = "{\n" +
-            "  \"created_at\": \"2019-03-05T06:30:25.107Z\",\n" +
-            "  \"created_at_in_word\": {\n" +
-            "    \"time_zone\": \"Asia/Jakarta\",\n" +
-            "    \"iso_8601\": \"2019-03-05T13:30:25.107+07:00\",\n" +
-            "    \"en\": \"2 minutes\",\n" +
-            "    \"id\": \"2mnt\"\n" +
-            "  },\n" +
-            "  \"id\": \"1d241b9b-c0a1-4dc7-8977-0f2a4258499b\",\n" +
-            "  \"tps\": 1,\n" +
-            "  \"province\": {\n" +
-            "        \"id\": 19,\n" +
-            "        \"code\": 19,\n" +
-            "        \"name\": \"KEPULAUAN BANGKA BELITUNG\",\n" +
-            "        \"level\": 1,\n" +
-            "        \"domain_name\": \"babelprov\",\n" +
-            "        \"id_wilayah\": 24993\n" +
-            "      },\n" +
-            "  \"regency\": {\n" +
-            "        \"id\": 3404,\n" +
-            "        \"province_id\": 34,\n" +
-            "        \"code\": 3404,\n" +
-            "        \"name\": \"SLEMAN\",\n" +
-            "        \"level\": 2,\n" +
-            "        \"domain_name\": \"slemankab\",\n" +
-            "        \"id_wilayah\": 42221,\n" +
-            "        \"id_parent\": 41863\n" +
-            "      },\n" +
-            "  \"district\": {\n" +
-            "        \"id\": 340401,\n" +
-            "        \"code\": 340401,\n" +
-            "        \"regency_code\": 3404,\n" +
-            "        \"name\": \"GAMPING\",\n" +
-            "        \"id_parent\": 42221,\n" +
-            "        \"id_wilayah\": 42222,\n" +
-            "        \"level\": 3\n" +
-            "      },\n" +
-            "  \"village\": {\n" +
-            "        \"id\": 3404032001,\n" +
-            "        \"code\": 3404032001,\n" +
-            "        \"district_code\": 340403,\n" +
-            "        \"name\": \"Sumberahayu\"\n" +
-            "      },\n" +
-            "  \"latitude\": \"37.422\",\n" +
-            "  \"longitude\": \"-122.084\",\n" +
-            "  \"status\": \"published\"\n" +
-            "}"
-
-        val tpsData = Gson().newBuilder().create().fromJson<TPSData>(data, TPSData::class.java)
-        tpses.add(tpsData)
-        tpses.add(tpsData)
-        tpses.add(tpsData)
-        view?.dismissLoading()
-        view?.bindPerhitungan(tpses)
+        view?.showLoading()
+        disposables.add(
+            tpsInteractor.getTpses(page, perPage)
+                .subscribe(
+                    {
+                        Timber.d("tpses" + it.toString())
+                        view?.dismissLoading()
+                        if (it.size != 0) {
+                            view?.bindTPSes(it)
+                        } else {
+                            view?.showEmptyAlert()
+                        }
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showError(it)
+                        view?.showFailedGetDataAlert()
+                    }
+                )
+        )
     }
 
     fun getBanner() {
