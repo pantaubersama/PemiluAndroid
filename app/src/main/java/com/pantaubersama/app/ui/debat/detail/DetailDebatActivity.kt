@@ -26,13 +26,7 @@ import com.pantaubersama.app.ui.widget.PreviewWebViewClient
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ID
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
 import com.pantaubersama.app.utils.ToastUtil
-import com.pantaubersama.app.utils.extensions.visibleIf
-import com.pantaubersama.app.utils.extensions.isVisible
-import com.pantaubersama.app.utils.extensions.color
-import com.pantaubersama.app.utils.extensions.loadUrl
-import com.pantaubersama.app.utils.extensions.inflate
-import com.pantaubersama.app.utils.extensions.parseDate
-import com.pantaubersama.app.utils.extensions.unSyncLazy
+import com.pantaubersama.app.utils.extensions.*
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_detail_debat.*
 import kotlinx.android.synthetic.main.layout_content_detail_debat_open_accept_confirmation_as_challenger.*
@@ -121,7 +115,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         tv_denied_debat.apply { if (isVisible()) text = challenge?.status }
 
         tv_name_challenger.text = challenge?.challenger?.fullName
-        iv_avatar_challenger.loadUrl(challenge?.challenger?.avatar?.medium?.url, R.color.gray_3)
+        iv_avatar_challenger.loadUrl(challenge?.challenger?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
         tv_username_challenger.text = "@${challenge?.challenger?.username}"
 
         val showAvatarOpponent = challenge?.progress != Progress.WAITING_OPPONENT && challenge?.status !in arrayOf(Status.DENIED, Status.EXPIRED)
@@ -135,7 +129,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         val avatarOpponent = challenge?.opponent?.avatar?.thumbnailSquare?.url
             ?: challenge?.opponentCandidates?.firstOrNull()?.avatar?.thumbnailSquare?.url
         iv_avatar_opponent.apply { if (isVisible() && challenge?.opponentCandidates != null) {
-            loadUrl(avatarOpponent, R.color.gray_3)
+            loadUrl(avatarOpponent, R.drawable.ic_avatar_placeholder)
             val count = when {
                 challenge?.opponentCandidates?.size == 1 -> "?"
                 challenge?.opponentCandidates!!.size > 1 -> challenge?.opponentCandidates?.size.toString()
@@ -222,7 +216,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         cl_opponent_detail.visibleIf(challenge?.opponent != null)
         if (cl_opponent_detail.isVisible()) {
             val opponent = challenge?.opponent
-            iv_opponent_avatar.loadUrl(opponent?.avatar?.medium?.url, R.color.gray_3)
+            iv_opponent_avatar.loadUrl(opponent?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
             tv_opponent_name.text = opponent?.fullName
             tv_opponent_username.text = "@${opponent?.username}"
         }
@@ -232,11 +226,18 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
         tv_saldo_waktu_detail.text = "${challenge?.timeLimit} menit"
 
-        iv_creator_avatar_detail.loadUrl(challenge?.challenger?.avatar?.medium?.url, R.color.gray_3)
+        iv_creator_avatar_detail.loadUrl(challenge?.challenger?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
         tv_creator_name_detail.text = challenge?.challenger?.fullName
         tv_creator_bio_detail.text = challenge?.challenger?.about
 
         tv_posted_time_detail.text = "Posted in ${challenge?.createdAt?.parseDate(toFormat = "dd MMM yy hh:mm")}"
+
+        val meAsOpponent = challenge?.opponent?.userId == presenter.getMyProfile().id
+        tv_label_saldo_waktu_desc.text = when {
+            isMyChallenge -> getString(R.string.saldo_waktu_desc)
+            meAsOpponent -> getString(R.string.saldo_waktu_desc)
+            else -> "Peserta debat mendapat saldo waktu yang sama:"
+        }
     }
 
     override fun showLoadingStatementSource() {
@@ -269,6 +270,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
     private fun onComingSoon() {
         ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_coming_soon))
+        findViewById<TextView>(R.id.tv_content_subtitle).text = "Debat akan berlangsung ${challenge?.showTimeAt?.parseDateRemaining()} lagi!"
     }
 
     private fun onDone() {
@@ -344,7 +346,6 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     /* ConfirmOpponentCandidate View */
-
     override fun showLoadingConfirmOpponentCandidate() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         showProgressDialog()
@@ -363,7 +364,6 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     /* AskAsOpponent View */
-
     override fun showLoadingAskAsOpponent() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         showProgressDialog()
