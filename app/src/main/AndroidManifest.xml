@@ -24,7 +24,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.debat.detail.DetailDebatActivity"></activity>
+        <activity android:name=".ui.debat.detail.DetailDebatActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.debat.DebatActivity"
             android:screenOrientation="portrait"
