@@ -6,10 +6,10 @@ import com.google.gson.annotations.SerializedName
 data class Village(
     @SerializedName("id")
     @Expose
-    var id: Int,
+    var id: Long,
     @SerializedName("code")
     @Expose
-    var code: Int,
+    var code: Long,
     @SerializedName("district_code")
     @Expose
     var districtCode: Int,

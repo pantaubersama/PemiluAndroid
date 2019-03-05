@@ -39,25 +39,25 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
 
     inner class PerhitunganViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: TPSData) {
-            tps_number.text = item.name
-            province_text.text = item.province
-            district_text.text = item.district
-            subdistrict_text.text = item.subDistrict
-            village_text.text = item.village
+            tps_number.text = item.tps.toString()
+            province_text.text = item.province.name
+            district_text.text = item.district.name
+            subdistrict_text.text = item.district.name
+            village_text.text = item.village.name
             when (item.status) {
-                0 -> {
+                "sandbox" -> {
                     quick_count_status.text = "Uji Coba"
                     quick_count_status_container.setBackgroundResource(R.drawable.rounded_gray_dark_2)
                     tps_number.setTextColor(ContextCompat.getColor(itemView.context, R.color.black_3))
                     tps_container.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.gray_1))
                 }
-                1 -> {
+                "draft" -> {
                     quick_count_status.text = "Belum Dikirim"
                     quick_count_status_container.setBackgroundResource(R.drawable.rounded_red)
                     tps_number.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorPrimary))
                     tps_container.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white))
                 }
-                2 -> {
+                "published" -> {
                     quick_count_status.text = "Terkirim"
                     quick_count_status_container.setBackgroundResource(R.drawable.rounded_green)
                     tps_number.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorPrimary))
