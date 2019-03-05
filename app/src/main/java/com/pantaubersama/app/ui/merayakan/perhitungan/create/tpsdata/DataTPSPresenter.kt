@@ -2,6 +2,10 @@ package com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.TPSInteractor
+import com.pantaubersama.app.data.model.tps.District
+import com.pantaubersama.app.data.model.tps.Province
+import com.pantaubersama.app.data.model.tps.Regency
+import com.pantaubersama.app.data.model.tps.Village
 import javax.inject.Inject
 
 class DataTPSPresenter @Inject constructor(
@@ -74,6 +78,39 @@ class DataTPSPresenter @Inject constructor(
                         view?.dismissVillagesLoading()
                         view?.showError(it)
                         view?.showFailedGetVillagesAlert()
+                    }
+                )
+        )
+    }
+
+    fun saveDataTPS(
+        tpsNumber: Int,
+        selectedProvince: Province,
+        selectedRegency: Regency,
+        selectedDistrict: District,
+        selectedVillage: Village,
+        lat: Float,
+        long: Float
+    ) {
+        view?.showLoading()
+        disposables.add(
+            tpsInteractor.saveTPS(
+                tpsNumber,
+                selectedProvince,
+                selectedRegency,
+                selectedDistrict,
+                selectedVillage,
+                lat,
+                long
+            )
+                .subscribe(
+                    {
+                        view?.dismissLoading()
+                        view?.onSuccessSaveTPS()
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showError(it)
                     }
                 )
         )

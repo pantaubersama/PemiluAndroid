@@ -21,291 +21,367 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:background="@color/gray_3"/>
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray_3"
-                android:gravity="center"
-                android:padding="16dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/data_tps_hint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_regular"
-                    android:lineSpacingExtra="2sp"
-                    android:text="@string/data_tps_hint"
-                    android:textColor="@color/gray_5"
-                    android:textSize="10sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nomor TPS"
-                    android:textColor="@color/black_3"
-                    android:fontFamily="@font/bw_modelica_bold"
-                    android:textSize="16sp"/>
-
-                <EditText
-                    android:id="@+id/tps_number_field"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_c1_background"
-                    android:layout_marginTop="10dp"
-                    android:padding="12dp"
-                    android:hint="No. TPS"
-                    android:fontFamily="@font/lato_regular"
-                    android:textSize="14sp"
-                    android:textColor="@color/black_3"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Provinsi"
-                    android:textColor="@color/black_3"
-                    android:fontFamily="@font/bw_modelica_bold"
-                    android:textSize="16sp"
-                    android:layout_marginTop="16dp"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Spinner
-                        android:id="@+id/provinces_dropdown"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/spinner_background"
-                        android:layout_marginTop="10dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/provinces_loading"
-                        android:layout_toStartOf="@id/provinces_loading"/>
-
-                    <ProgressBar
-                        android:id="@+id/provinces_loading"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:visibility="gone"/>
-
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Kabupaten"
-                    android:textColor="@color/black_3"
-                    android:fontFamily="@font/bw_modelica_bold"
-                    android:textSize="16sp"
-                    android:layout_marginTop="16dp"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Spinner
-                        android:id="@+id/regencies_dropdown"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/spinner_background"
-                        android:layout_marginTop="10dp"
-                        android:layout_toStartOf="@id/regencies_loading"
-                        android:layout_toLeftOf="@id/regencies_loading"/>
-
-                    <ProgressBar
-                        android:id="@+id/regencies_loading"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:visibility="gone"/>
-
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Kecamatan"
-                    android:textColor="@color/black_3"
-                    android:fontFamily="@font/bw_modelica_bold"
-                    android:textSize="16sp"
-                    android:layout_marginTop="16dp"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Spinner
-                        android:id="@+id/districts_dropdown"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/spinner_background"
-                        android:layout_marginTop="10dp"
-                        android:layout_toStartOf="@id/districts_loading"
-                        android:layout_toLeftOf="@id/districts_loading"/>
-
-                    <ProgressBar
-                        android:id="@+id/districts_loading"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:visibility="gone"/>
-
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Desa/Kelurahan"
-                    android:textColor="@color/black_3"
-                    android:fontFamily="@font/bw_modelica_bold"
-                    android:textSize="16sp"
-                    android:layout_marginTop="16dp"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Spinner
-                        android:id="@+id/villages_dropdown"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/spinner_background"
-                        android:layout_marginTop="10dp"
-                        android:layout_toStartOf="@id/villages_loading"
-                        android:layout_toLeftOf="@id/villages_loading"/>
-
-                    <ProgressBar
-                        android:id="@+id/villages_loading"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:visibility="gone"/>
-
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bagikan Lokasi TPS"
-                    android:textColor="@color/black_3"
-                    android:fontFamily="@font/bw_modelica_bold"
-                    android:textSize="16sp"
-                    android:layout_marginTop="16dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pastikan penanda GPS aktif dan kamu berada di lokasi TPS."
-                    android:layout_marginTop="4dp"
-                    android:fontFamily="@font/lato_regular"
-                    android:textColor="@color/gray_dark_2"/>
+                    android:layout_height="4dp"
+                    android:background="@color/gray_3"/>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/refresh_location_icon"/>
+                    android:background="@color/gray_3"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true">
 
                     <TextView
-                        android:id="@+id/update_location_button"
+                        android:id="@+id/data_tps_hint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Perbarui Lokasi"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/bw_modelica_bold"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorAccent"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginStart="8dp"/>
+                        android:fontFamily="@font/lato_regular"
+                        android:lineSpacingExtra="2sp"
+                        android:text="@string/data_tps_hint"
+                        android:textColor="@color/gray_5"
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_gray_dark_1"
-                    android:padding="12dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="12dp">
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
 
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:src="@drawable/ic_location"
-                        android:tint="@color/gray_dark_1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nomor TPS"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="16sp"/>
 
-                    <FrameLayout
+                    <EditText
+                        android:id="@+id/tps_number_field"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginStart="12dp">
+                        android:background="@drawable/edittext_c1_background"
+                        android:layout_marginTop="10dp"
+                        android:padding="12dp"
+                        android:hint="No. TPS"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="14sp"
+                        android:textColor="@color/black_3"
+                        android:inputType="number"/>
 
-                        <TextView
-                            android:id="@+id/address_text"
-                            android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Provinsi"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="16sp"
+                        android:layout_marginTop="16dp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Spinner
+                            android:id="@+id/provinces_dropdown"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Lokasi"
-                            android:fontFamily="@font/lato_regular"
-                            android:layout_gravity="center_vertical"/>
+                            android:background="@drawable/spinner_background"
+                            android:layout_marginTop="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@id/provinces_loading"
+                            android:layout_toStartOf="@id/provinces_loading"/>
 
                         <ProgressBar
-                            android:id="@+id/location_progressbar"
+                            android:id="@+id/provinces_loading"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:layout_gravity="center"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginLeft="12dp"
                             android:visibility="gone"/>
 
-                    </FrameLayout>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/provinces_empty_alert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Provinsi tidak boleh kosong"
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="11sp"
+                        android:layout_marginTop="6dp"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kabupaten"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="16sp"
+                        android:layout_marginTop="16dp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Spinner
+                            android:id="@+id/regencies_dropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/spinner_background"
+                            android:layout_marginTop="10dp"
+                            android:layout_toStartOf="@id/regencies_loading"
+                            android:layout_toLeftOf="@id/regencies_loading"/>
+
+                        <ProgressBar
+                            android:id="@+id/regencies_loading"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:visibility="gone"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/regencies_empty_alert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kabupaten tidak boleh kosong"
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="11sp"
+                        android:layout_marginTop="6dp"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kecamatan"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="16sp"
+                        android:layout_marginTop="16dp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Spinner
+                            android:id="@+id/districts_dropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/spinner_background"
+                            android:layout_marginTop="10dp"
+                            android:layout_toStartOf="@id/districts_loading"
+                            android:layout_toLeftOf="@id/districts_loading"/>
+
+                        <ProgressBar
+                            android:id="@+id/districts_loading"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:visibility="gone"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/districts_empty_alert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kecamatan tidak boleh kosong"
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="11sp"
+                        android:layout_marginTop="6dp"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Desa/Kelurahan"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="16sp"
+                        android:layout_marginTop="16dp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Spinner
+                            android:id="@+id/villages_dropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/spinner_background"
+                            android:layout_marginTop="10dp"
+                            android:layout_toStartOf="@id/villages_loading"
+                            android:layout_toLeftOf="@id/villages_loading"/>
+
+                        <ProgressBar
+                            android:id="@+id/villages_loading"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:visibility="gone"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/villages_empty_alert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Desa/Kelurahan tidak boleh kosong"
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="11sp"
+                        android:layout_marginTop="6dp"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bagikan Lokasi TPS"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="16sp"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pastikan penanda GPS aktif dan kamu berada di lokasi TPS."
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/lato_regular"
+                        android:textColor="@color/gray_dark_2"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/refresh_location_icon"/>
+
+                        <TextView
+                            android:id="@+id/update_location_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Perbarui Lokasi"
+                            android:gravity="center_vertical"
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:textSize="14sp"
+                            android:textColor="@color/colorAccent"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_gray_dark_1"
+                        android:padding="12dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="12dp">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/ic_location"
+                            android:tint="@color/gray_dark_1"/>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:id="@+id/address_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lokasi"
+                                android:fontFamily="@font/lato_regular"
+                                android:layout_gravity="center_vertical"/>
+
+                            <ProgressBar
+                                android:id="@+id/location_progressbar"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_gravity="center"
+                                android:visibility="gone"/>
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/location_empty_alert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lokasi tidak boleh kosong"
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="11sp"
+                        android:layout_marginTop="6dp"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </FrameLayout>
 
     </ScrollView>
 

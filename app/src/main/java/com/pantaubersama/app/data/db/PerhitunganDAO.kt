@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.pantaubersama.app.data.model.tps.Province
+import com.pantaubersama.app.data.model.tps.TPSData
 
 interface PerhitunganDAO {
     @Dao
@@ -14,5 +15,14 @@ interface PerhitunganDAO {
 
         @Query("SELECT * FROM province ORDER BY id ASC")
         fun loadProvinces(): MutableList<Province>
+    }
+
+    @Dao
+    interface TPSDAO {
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        fun saveTPS(tpsData: TPSData)
+
+        @Query("SELECT * FROM tps ORDER BY id ASC")
+        fun loadTPS(): MutableList<TPSData>
     }
 }

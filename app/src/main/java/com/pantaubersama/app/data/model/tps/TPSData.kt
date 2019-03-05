@@ -41,13 +41,10 @@ data class TPSData(
     var status: String,
     @SerializedName("created_at")
     @Expose
-    @Ignore
-    var createdAt: String? = null,
+    var createdAt: String,
     @SerializedName("created_at_in_word")
     @Expose
-    @Ignore
-    var createdAtInWord: CreatedAtInWord? = null,
-    var user: Profile
+    var createdAtInWord: CreatedAtInWord
 ) : ItemModel {
     override fun getType(): Int {
         return 14

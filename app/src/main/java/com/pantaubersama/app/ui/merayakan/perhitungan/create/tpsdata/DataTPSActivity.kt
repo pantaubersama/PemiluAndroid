@@ -34,39 +34,27 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     var locationManager: LocationManager? = null
     private var permission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
     private var geocoder: Geocoder? = null
-    private var addresses: List<Address>? = null
-//    private val locationListener = object : LocationListener {
-//        override fun onLocationChanged(location: Location) {
-//            location_progressbar.visibility = View.GONE
-//            address_text.visibility = View.VISIBLE
-//            addresses = geocoder?.getFromLocation(location.latitude, location.longitude, 1)
-//            val address = addresses?.get(0)?.getAddressLine(0)
-//            address_text.text = address
-//        }
-//
-//        override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
-//        }
-//
-//        override fun onProviderEnabled(p0: String?) {
-//        }
-//
-//        override fun onProviderDisabled(p0: String?) {
-//            ToastUtil.show(this@DataTPSActivity, "Hidupkan GPS kamu")
-//        }
-//    }
+    //location
+    private lateinit var addresses: List<Address>
+    private var lat: Float = 0f
+    private var long: Float = 0f
 
     // provinces
     private lateinit var provinceNames: MutableList<String>
     private lateinit var provincesAdapter: ArrayAdapter<String>
+    private lateinit var selectedProvince: Province
     // regencies
     private lateinit var regencyNames: MutableList<String>
     private lateinit var regenciesAdapter: ArrayAdapter<String>
+    private lateinit var selectedRegency: Regency
     // districts
     private lateinit var districtNames: MutableList<String>
     private lateinit var districtsAdapter: ArrayAdapter<String>
+    private lateinit var selectedDistrict: District
     // villages
     private lateinit var villageNames: MutableList<String>
     private lateinit var villagesAdapter: ArrayAdapter<String>
+    private lateinit var selectedVillage: Village
 
     @Inject
     override lateinit var presenter: DataTPSPresenter
@@ -171,6 +159,8 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 if (position != 0) {
+                    provinces_empty_alert.visibility = View.GONE
+                    selectedProvince = provinces[position - 1]
                     presenter.getRegenciesData(provinces[position - 1].id)
                 }
             }
@@ -202,6 +192,8 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 if (position != 0) {
+                    regencies_empty_alert.visibility = View.GONE
+                    selectedRegency = regencies[position - 1]
                     presenter.getDistrictsData(regencies[position - 1].id)
                 }
             }
@@ -234,6 +226,8 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 if (position != 0) {
+                    districts_empty_alert.visibility = View.GONE
+                    selectedDistrict = districts[position - 1]
                     presenter.getVillagesData(districts[position - 1].id)
                 }
             }
@@ -262,6 +256,8 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 if (position != 0) {
+                    selectedVillage = villages[position - 1]
+                    villages_empty_alert.visibility = View.GONE
                 }
             }
         }
@@ -286,8 +282,11 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                         location_progressbar.visibility = View.GONE
                         address_text.visibility = View.VISIBLE
                         if (location != null) {
-                            addresses = geocoder?.getFromLocation(location.latitude, location.longitude, 1)
-                            val address = addresses?.get(0)?.getAddressLine(0)
+                            geocoder?.getFromLocation(location.latitude, location.longitude, 1)?.let {
+                                addresses = it
+                            }
+                            val address = addresses.get(0).getAddressLine(0)
+                            location_empty_alert.visibility = View.GONE
                             address_text.text = address
                         }
                     } catch (e: Exception) {
@@ -352,11 +351,11 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun showLoading() {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+        progress_bar.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+        progress_bar.visibility = View.GONE
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -367,8 +366,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.done_action -> {
-                // sementara
-                startActivity(Intent(this@DataTPSActivity, PerhitunganMainActivity::class.java))
+                validateInput()
             }
             android.R.id.home -> {
                 onBackPressed()
@@ -376,5 +374,46 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun validateInput() {
+        if (tps_number_field.text.isEmpty()) {
+            tps_number_field.error = "Nomor TPS tidak boleh kosong"
+        } else {
+            if (provinces_dropdown.selectedItemPosition == 0) {
+                provinces_empty_alert.visibility = View.VISIBLE
+            } else {
+                if (regencies_dropdown.selectedItemPosition == 0) {
+                    regencies_empty_alert.visibility = View.VISIBLE
+                } else {
+                    if (districts_dropdown.selectedItemPosition == 0) {
+                        districts_empty_alert.visibility = View.VISIBLE
+                    } else {
+                        if (villages_dropdown.selectedItemPosition == 0) {
+                            villages_empty_alert.visibility = View.VISIBLE
+                        } else {
+                            if (address_text.text.isEmpty()) {
+                                location_empty_alert.visibility = View.VISIBLE
+                            } else {
+                                presenter.saveDataTPS(
+                                    tps_number_field.text.toString().toInt(),
+                                    selectedProvince,
+                                    selectedRegency,
+                                    selectedDistrict,
+                                    selectedVillage,
+                                    lat,
+                                    long
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onSuccessSaveTPS() {
+        startActivity(Intent(this@DataTPSActivity, PerhitunganMainActivity::class.java))
+        finish()
     }
 }

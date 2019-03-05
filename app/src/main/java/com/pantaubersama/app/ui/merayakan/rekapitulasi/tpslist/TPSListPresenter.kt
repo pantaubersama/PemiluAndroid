@@ -65,7 +65,7 @@ class TPSListPresenter @Inject constructor() : BasePresenter<TPSListView>() {
             "}"
 
         val tpsData = Gson().newBuilder().create().fromJson<TPSData>(data, TPSData::class.java)
-        tpsData.user = profile1
+//        tpsData.user = profile1
 
         val tpses: MutableList<TPSData> = ArrayList()
         tpses.add(tpsData)

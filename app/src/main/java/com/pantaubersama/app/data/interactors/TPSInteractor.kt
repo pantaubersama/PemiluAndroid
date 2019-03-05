@@ -1,13 +1,15 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.db.AppDB
-import com.pantaubersama.app.data.model.tps.District
-import com.pantaubersama.app.data.model.tps.Province
-import com.pantaubersama.app.data.model.tps.Regency
-import com.pantaubersama.app.data.model.tps.Village
+import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
+import com.pantaubersama.app.data.model.tps.*
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
+import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class TPSInteractor @Inject constructor(
@@ -56,5 +58,53 @@ class TPSInteractor @Inject constructor(
             .map {
                 it.data.villages
             }
+    }
+
+    fun saveTPS(
+        tpsNumber: Int,
+        selectedProvince: Province,
+        selectedRegency: Regency,
+        selectedDistrict: District,
+        selectedVillage: Village,
+        lat: Float,
+        long: Float
+    ): Completable {
+        if (appDB.getTPSDAO().loadTPS().size != 0) {
+            return Completable.fromCallable {
+                appDB.getTPSDAO().saveTPS(
+                    TPSData(
+                        appDB.getTPSDAO().loadTPS().size.toString(),
+                        tpsNumber,
+                        selectedProvince,
+                        selectedRegency,
+                        selectedDistrict,
+                        selectedVillage,
+                        lat,
+                        long,
+                        "draft",
+                        "",
+                        CreatedAtInWord("", "", "")
+                    )
+                )
+            }
+        } else {
+            return Completable.fromCallable {
+                appDB.getTPSDAO().saveTPS(
+                    TPSData(
+                        "1",
+                        tpsNumber,
+                        selectedProvince,
+                        selectedRegency,
+                        selectedDistrict,
+                        selectedVillage,
+                        lat,
+                        long,
+                        "draft",
+                        "",
+                        CreatedAtInWord("", "", "")
+                    )
+                )
+            }
+        }
     }
 }
