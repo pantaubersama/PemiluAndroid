@@ -30,7 +30,16 @@ class MengujiPresenter @Inject constructor(
     }
 
     fun getChallengeLive() {
-        view?.showChallengeLive(emptyList())
+        view?.showChallengeLive(State.Loading, emptyList(), false)
+
+        val request = wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.LIVE_NOW)
+
+        disposables += request
+            .subscribe({
+                view?.showChallengeLive(State.Success, it.take(3), it.size > 3)
+            }, {
+                view?.showChallengeLive(State.Error(it.message), emptyList(), false)
+            })
     }
 
     fun getChallengeComingSoon() {
@@ -50,7 +59,19 @@ class MengujiPresenter @Inject constructor(
     }
 
     fun getChallengeDone() {
-        view?.showChallengeDone(emptyList())
+        view?.showChallengeDone(State.Loading, emptyList(), false)
+
+        val request = if (isPublik)
+            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.DONE)
+        else
+            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.DONE)
+
+        disposables += request
+            .subscribe({
+                view?.showChallengeDone(State.Success, it.take(3), it.size > 3)
+            }, {
+                view?.showChallengeDone(State.Error(it.message), emptyList(), false)
+            })
     }
 
     fun getChallengeOngoing() {
