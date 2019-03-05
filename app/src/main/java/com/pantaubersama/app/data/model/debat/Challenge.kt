@@ -76,13 +76,13 @@ data class Challenge(
 
 data class Audience(
     @SerializedName("about")
-    val about: String,
+    val about: String?,
     @SerializedName("avatar")
-    val avatar: Image,
+    val avatar: Image?,
     @SerializedName("email")
-    val email: String,
+    val email: String?,
     @SerializedName("full_name")
-    val fullName: String,
+    val fullName: String?,
     @SerializedName("id")
     val id: String,
     @SerializedName("role")
