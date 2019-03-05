@@ -1,6 +1,6 @@
 package com.pantaubersama.app.data.interactors
 
-import com.pantaubersama.app.data.local.cache.DataCache
+import com.pantaubersama.app.data.db.AppDB
 import com.pantaubersama.app.data.model.tps.District
 import com.pantaubersama.app.data.model.tps.Province
 import com.pantaubersama.app.data.model.tps.Regency
@@ -12,13 +12,13 @@ import javax.inject.Inject
 
 class TPSInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
-    private val dataCache: DataCache,
-    private val rxSchedulers: RxSchedulers
+    private val rxSchedulers: RxSchedulers,
+    private val appDB: AppDB
 ) {
     fun getProvinces(): Single<MutableList<Province>> {
-        return if (dataCache.getProvinces() != null) {
+        return if (appDB.getProvinceDao().loadProvinces().size != 0) {
             Single.fromCallable {
-                dataCache.getProvinces()
+                appDB.getProvinceDao().loadProvinces()
             }
         } else {
             apiWrapper.getPantauApi().getProvinces()
@@ -26,7 +26,7 @@ class TPSInteractor @Inject constructor(
                 .observeOn(rxSchedulers.mainThread())
                 .map { it.data.provinces }
                 .doOnSuccess {
-                    dataCache.saveProvinces(it)
+                    appDB.getProvinceDao().saveProvinces(it)
                 }
         }
     }

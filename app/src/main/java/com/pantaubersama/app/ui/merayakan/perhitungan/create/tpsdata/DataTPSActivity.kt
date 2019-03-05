@@ -55,16 +55,16 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 //        }
 //    }
 
-    //provinces
+    // provinces
     private lateinit var provinceNames: MutableList<String>
     private lateinit var provincesAdapter: ArrayAdapter<String>
-    //regencies
+    // regencies
     private lateinit var regencyNames: MutableList<String>
     private lateinit var regenciesAdapter: ArrayAdapter<String>
-    //districts
+    // districts
     private lateinit var districtNames: MutableList<String>
     private lateinit var districtsAdapter: ArrayAdapter<String>
-    //villages
+    // villages
     private lateinit var villageNames: MutableList<String>
     private lateinit var villagesAdapter: ArrayAdapter<String>
 

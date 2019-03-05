@@ -37,6 +37,8 @@ class PantauConstants {
         val CONFIRMATION_PATH = "confirmation"
         val JANPOL = "janji_politik"
         val QUIZ = "quiz"
+        const val DATABASE_VERSION = 1
+        const val DATABASE_NAME = "pantau_bersama"
     }
 
     object Lapor {

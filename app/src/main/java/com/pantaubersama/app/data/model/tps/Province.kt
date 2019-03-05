@@ -1,9 +1,13 @@
 package com.pantaubersama.app.data.model.tps
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "province")
 data class Province(
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     var id: Int,
