@@ -93,6 +93,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 }
             }
         }
+        update_location_button.setOnClickListener {
+            showGPSDisabledAlert()
+        }
         getLocationPermission()
         setupProvincesDropdown()
         setupRegenciesDropdown()
@@ -317,48 +320,74 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
         ToastUtil.show(this@DataTPSActivity, "Gagal memuat Kelurahan")
     }
 
+    private val locationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location?) {
+            update_location_button.setOnClickListener {
+                location_progressbar.visibility = View.VISIBLE
+                address_text.visibility = View.GONE
+                bindLocation(location)
+            }
+        }
+
+        override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
+//            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun onProviderEnabled(p0: String?) {
+//            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun onProviderDisabled(p0: String?) {
+            if (!isFinishing) {
+                showGPSDisabledAlert()
+            }
+        }
+    }
+
     @AfterPermissionGranted(RC_ASK_PERMISSIONS)
     private fun getLocationPermission() {
         if (EasyPermissions.hasPermissions(this, *permission)) {
-            update_location_button.setOnClickListener {
-                if (isLocationEnabled(this@DataTPSActivity)) {
-                    location_progressbar.visibility = View.VISIBLE
-                    address_text.visibility = View.GONE
-                    try {
-//                    locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
-                        val location: Location? = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-
-                        location_progressbar.visibility = View.GONE
-                        address_text.visibility = View.VISIBLE
-                        if (location != null) {
-                            geocoder?.getFromLocation(location.latitude, location.longitude, 1)?.let {
-                                addresses = it
-                            }
-                            val address = addresses[0].getAddressLine(0)
-                            lat = location.latitude
-                            long = location.longitude
-                            address_text.text = address
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                } else {
-                    ConfirmationDialog.Builder()
-                        .with(this@DataTPSActivity)
-                        .setDialogTitle("Actifkan GPS")
-                        .setAlert("Kami gagal menemukan lokasi kamu karena GPS kamu non-aktif. Mohon hidupkan GPS kamu.")
-                        .setOkText("Aktifkan")
-                        .setCancelText("Batal")
-                        .addOkListener(object : ConfirmationDialog.DialogOkListener {
-                            override fun onClickOk() {
-                                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-                            }
-                        })
-                        .show()
-                }
-            }
+            getMyLocation()
         } else {
             requestPermission()
+        }
+    }
+
+    private fun showGPSDisabledAlert() {
+        ConfirmationDialog.Builder()
+            .with(this@DataTPSActivity)
+            .setDialogTitle("Actifkan GPS")
+            .setAlert("Kami gagal menemukan lokasi kamu karena GPS kamu non-aktif. Mohon hidupkan GPS kamu.")
+            .setOkText("Aktifkan")
+            .setCancelText("Batal")
+            .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                override fun onClickOk() {
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
+            })
+            .show()
+    }
+
+    private fun getMyLocation() {
+        try {
+            locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+//                    val location: Location? = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun bindLocation(location: Location?) {
+        if (location != null) {
+            geocoder?.getFromLocation(location.latitude, location.longitude, 1)?.let {
+                addresses = it
+            }
+            val address = addresses[0].getAddressLine(0)
+            lat = location.latitude
+            long = location.longitude
+            location_progressbar.visibility = View.GONE
+            address_text.visibility = View.VISIBLE
+            address_text.text = address
         }
     }
 
