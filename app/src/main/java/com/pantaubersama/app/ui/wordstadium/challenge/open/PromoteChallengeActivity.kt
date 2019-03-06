@@ -34,7 +34,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
 
-
 class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), PromoteChallengeView {
 
     lateinit var challenge: Challenge
@@ -137,7 +136,6 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
                             this,
                             "/" + me.getString("id") + "/picture"
                     ) {
-
                     }
                     val params = Bundle()
                     params.putBoolean("redirect", false)
@@ -343,7 +341,7 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
             ll_webview.visibility = View.VISIBLE
             link_webview.settings.loadsImagesAutomatically = true
             link_webview.settings.javaScriptEnabled = true
-            link_webview.getSettings().setAppCacheEnabled(true);
+            link_webview.getSettings().setAppCacheEnabled(true)
             link_webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
             link_webview.loadDataWithBaseURL("https://twitter.com", url.toString(), "text/html", "utf-8", "")
             link_source.text = oEmbedLink?.url

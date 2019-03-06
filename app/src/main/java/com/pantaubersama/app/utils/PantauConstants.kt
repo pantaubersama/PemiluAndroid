@@ -96,7 +96,11 @@ class PantauConstants {
         const val EXTRA_IMAGE_URL = "EXTRA_IMAGE_URL"
         const val EXTRA_BROADCAST_URL = "EXTRA_BROADCAST_URL"
         const val EXTRA_OPEN_TAB_TYPE = "EXTRA_OPEN_TAB_TYPE"
-        const val EXTRA_DEBAT_ITEM = "EXTRA_DEBAT_ITEM"
+        const val EXTRA_CHALLENGE_ITEM = "EXTRA_CHALLENGE_ITEM"
+        const val EXTRA_CHALLENGE_ID = "EXTRA_CHALLENGE_ID"
+        const val EXTRA_POSITIVE_BTN_TEXT = "EXTRA_POSITIVE_BTN_TEXT"
+        const val EXTRA_MESSAGE_TEXT = "EXTRA_MESSAGE_TEXT"
+        const val EXTRA_DIALOG_LISTENER = "EXTRA_DIALOG_LISTENER"
     }
 
     object RequestCode {
@@ -203,6 +207,7 @@ class PantauConstants {
         const val TYPE_DEBAT_ITEM = 13
         const val TYPE_BIDANG_KAJIAN = 14
         const val TYPE_KOMENTAR_ITEM = 15
+        const val TYPE_AUDIENCE_ITEM = 16
     }
 
     object Profile {

@@ -6,11 +6,11 @@ import com.pantaubersama.app.utils.PantauConstants
 import java.io.Serializable
 
 data class LawanDebatResponse(
-        @SerializedName("data") val data: LawanDebatData
+    @SerializedName("data") val data: LawanDebatData
 ) : Serializable
 
 data class LawanDebatData(
-        @SerializedName("users") val users: MutableList<LawanDebat>
+    @SerializedName("users") val users: MutableList<LawanDebat>
 ) : Serializable
 
 data class LawanDebat(

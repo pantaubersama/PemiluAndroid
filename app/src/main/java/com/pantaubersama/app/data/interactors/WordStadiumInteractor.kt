@@ -36,13 +36,13 @@ class WordStadiumInteractor @Inject constructor(
     }
 
     fun directChallenge(
-            topicList: String?,
-            statement: String?,
-            statementSource: String?,
-            showTimeAt: String?,
-            timeLimit: Int,
-            invitationId: String?,
-            screenName: String?
+        topicList: String?,
+        statement: String?,
+        statementSource: String?,
+        showTimeAt: String?,
+        timeLimit: Int,
+        invitationId: String?,
+        screenName: String?
     ): Completable {
         return apiWrapper
                 .getWordStadiumApi()
@@ -107,6 +107,28 @@ class WordStadiumInteractor @Inject constructor(
                 )
                 .map { it.data.users }
                 .subscribeOn(rxSchedulers.io())
-                .observeOn(rxSchedulers.mainThread())
+                .observeOn(rxSchedulers.mainThread())    
+    }
+  
+    fun confirmOpponentCandidate(challengeId: String, audienceId: String): Completable {
+        return apiWrapper.getWordStadiumApi()
+            .confirmOpponentCandidate(challengeId, audienceId)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun askAsOpponent(challengeId: String): Completable {
+        return apiWrapper.getWordStadiumApi()
+            .askAsOpponent(challengeId)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getChallengeItem(id: String): Single<Challenge> {
+        return apiWrapper.getWordStadiumApi()
+            .getChallengeItem(id)
+            .map { it.challengeItemData.challenge }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
     }
 }

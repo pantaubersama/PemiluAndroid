@@ -2,13 +2,12 @@ package com.pantaubersama.app.ui.wordstadium.challenge.direct
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.ProfileInteractor
-import com.pantaubersama.app.data.interactors.UserInteractor
 import com.pantaubersama.app.data.interactors.WordStadiumInteractor
 import javax.inject.Inject
 
 class DirectChallengePresenter @Inject constructor(
-        private val profileInteractor: ProfileInteractor,
-        private val wordStadiumInteractor: WordStadiumInteractor
+    private val profileInteractor: ProfileInteractor,
+    private val wordStadiumInteractor: WordStadiumInteractor
 ) : BasePresenter<DirectChallengeView>() {
 
     fun getUserProfile() {
