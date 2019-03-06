@@ -111,6 +111,43 @@ class DataTPSPresenter @Inject constructor(
                     {
                         view?.dismissLoading()
                         view?.showError(it)
+                        view?.failedSaveTpsAlert()
+                    }
+                )
+        )
+    }
+
+    fun updateTps(
+        tpsId: String,
+        tpsNumber: Int,
+        selectedProvince: Province,
+        selectedRegency: Regency,
+        selectedDistrict: District,
+        selectedVillage: Village,
+        lat: Double,
+        long: Double
+    ) {
+        view?.showLoading()
+        disposables.add(
+            tpsInteractor.updateTps(
+                tpsId,
+                tpsNumber,
+                selectedProvince,
+                selectedRegency,
+                selectedDistrict,
+                selectedVillage,
+                lat,
+                long
+            )
+                .subscribe(
+                    {
+                        view?.dismissLoading()
+                        view?.onSuccessSaveTPS()
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showError(it)
+                        view?.failedUpdateTpsAlert()
                     }
                 )
         )

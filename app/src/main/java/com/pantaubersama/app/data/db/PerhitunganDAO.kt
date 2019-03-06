@@ -24,5 +24,8 @@ interface PerhitunganDAO {
 
         @Delete
         fun deleteTPS(tps: TPS)
+
+        @Update
+        fun updateTps(tps: TPS)
     }
 }

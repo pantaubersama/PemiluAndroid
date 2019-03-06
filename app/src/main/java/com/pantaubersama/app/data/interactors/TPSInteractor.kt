@@ -143,4 +143,33 @@ class TPSInteractor @Inject constructor(
             appDB.getTPSDAO().deleteTPS(tps)
         }
     }
+
+    fun updateTps(
+        tpsId: String,
+        tpsNumber: Int,
+        selectedProvince: Province,
+        selectedRegency: Regency,
+        selectedDistrict: District,
+        selectedVillage: Village,
+        lat: Double,
+        long: Double
+    ): Completable {
+        return Completable.fromCallable {
+            appDB.getTPSDAO().updateTps(
+                TPS(
+                    tpsId,
+                    tpsNumber,
+                    selectedProvince,
+                    selectedRegency,
+                    selectedDistrict,
+                    selectedVillage,
+                    lat,
+                    long,
+                    "draft",
+                    "",
+                    CreatedAtInWord("", "", "")
+                )
+            )
+        }
+    }
 }

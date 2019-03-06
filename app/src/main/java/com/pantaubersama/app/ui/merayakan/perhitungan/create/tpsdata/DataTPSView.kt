@@ -24,4 +24,6 @@ interface DataTPSView : BaseView {
     fun bindVillagesToSpinner(villages: MutableList<Village>)
     fun showFailedGetVillagesAlert()
     fun onSuccessSaveTPS()
+    fun failedSaveTpsAlert()
+    fun failedUpdateTpsAlert()
 }

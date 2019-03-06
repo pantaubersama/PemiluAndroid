@@ -41,8 +41,8 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
         fun bind(item: TPS) {
             tps_number.text = item.tps.toString()
             province_text.text = item.province.name
+            regency_text.text = item.regency.name
             district_text.text = item.district.name
-            subdistrict_text.text = item.district.name
             village_text.text = item.village.name
             when (item.status) {
                 "sandbox" -> {

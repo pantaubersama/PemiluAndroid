@@ -121,7 +121,10 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
                     override fun onClick(viewId: Int) {
                         when (viewId) {
                             R.id.edit_tps_data_action -> {
-                                // edit
+                                val intent = Intent(requireContext(), DataTPSActivity::class.java)
+                                intent.putExtra("tps_data", tps)
+                                intent.putExtra("tps_position", position)
+                                startActivityForResult(intent, PantauConstants.Merayakan.CREATE_PERHITUNGAN_REQUEST_CODE)
                                 dialog.dismiss()
                             }
                             R.id.delete_tanya_kandidat_item_action -> {

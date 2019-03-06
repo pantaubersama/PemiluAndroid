@@ -134,7 +134,7 @@
                         android:textSize="12sp"/>
 
                     <TextView
-                        android:id="@+id/district_text"
+                        android:id="@+id/regency_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
@@ -164,7 +164,7 @@
                         android:textSize="12sp"/>
 
                     <TextView
-                        android:id="@+id/subdistrict_text"
+                        android:id="@+id/district_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"

@@ -13,10 +13,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.data.model.tps.District
-import com.pantaubersama.app.data.model.tps.Province
-import com.pantaubersama.app.data.model.tps.Regency
-import com.pantaubersama.app.data.model.tps.Village
+import com.pantaubersama.app.data.model.tps.* // ktlint-disable
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
@@ -55,11 +52,19 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     private lateinit var villagesAdapter: ArrayAdapter<String>
     private lateinit var selectedVillage: Village
 
+    private var tps: TPS? = null
+
     @Inject
     override lateinit var presenter: DataTPSPresenter
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
+    }
+
+    override fun fetchIntentExtra() {
+        if (intent.getSerializableExtra("tps_data") != null) {
+            tps = intent.getSerializableExtra("tps_data") as TPS
+        }
     }
 
     override fun statusBarColor(): Int? {
@@ -74,6 +79,21 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
         setupToolbar(true, "Data TPS", R.color.white, 4f)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         geocoder = Geocoder(this, Locale.getDefault())
+        if (tps != null) {
+            tps_number_field.setText(tps?.tps.toString())
+            tps?.latitude?.let {
+                lat = it
+                tps?.longitude?.let { it1 ->
+                    long = it
+                    geocoder?.getFromLocation(it, it1, 1)?.let {
+                        addresses = it
+                        val address = addresses[0].getAddressLine(0)
+                        location_empty_alert.visibility = View.GONE
+                        address_text.text = address
+                    }
+                }
+            }
+        }
         getLocationPermission()
         setupProvincesDropdown()
         setupRegenciesDropdown()
@@ -151,6 +171,13 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
             provinceNames.add(it.name)
         }
         provincesAdapter.notifyDataSetChanged()
+        if (tps != null) {
+            provinces.forEachIndexed { index, province ->
+                if (province == tps?.province) {
+                    provinces_dropdown.setSelection(index + 1)
+                }
+            }
+        }
         provinces_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -185,6 +212,13 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
             regencyNames.add(it.name)
         }
         regenciesAdapter.notifyDataSetChanged()
+        if (tps != null) {
+            regencies.forEachIndexed { index, regency ->
+                if (regency == tps?.regency) {
+                    regencies_dropdown.setSelection(index + 1)
+                }
+            }
+        }
         regencies_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -220,6 +254,13 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
             districtNames.add(it.name)
         }
         districtsAdapter.notifyDataSetChanged()
+        if (tps != null) {
+            districts.forEachIndexed { index, district ->
+                if (district == tps?.district) {
+                    districts_dropdown.setSelection(index + 1)
+                }
+            }
+        }
         districts_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -251,6 +292,13 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
             villageNames.add(it.name)
         }
         villagesAdapter.notifyDataSetChanged()
+        if (tps != null) {
+            villages.forEachIndexed { index, village ->
+                if (village == tps?.village) {
+                    villages_dropdown.setSelection(index + 1)
+                }
+            }
+        }
         villages_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -287,7 +335,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                             geocoder?.getFromLocation(location.latitude, location.longitude, 1)?.let {
                                 addresses = it
                             }
-                            val address = addresses.get(0).getAddressLine(0)
+                            val address = addresses[0].getAddressLine(0)
                             location_empty_alert.visibility = View.GONE
                             lat = location.latitude
                             long = location.longitude
@@ -388,15 +436,30 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                             if (lat == 0.0 || long == 0.0) {
                                 location_empty_alert.visibility = View.VISIBLE
                             } else {
-                                presenter.saveDataTPS(
-                                    tps_number_field.text.toString().toInt(),
-                                    selectedProvince,
-                                    selectedRegency,
-                                    selectedDistrict,
-                                    selectedVillage,
-                                    lat,
-                                    long
-                                )
+                                if (tps != null) {
+                                    tps?.id?.let {
+                                        presenter.updateTps(
+                                            it,
+                                            tps_number_field.text.toString().toInt(),
+                                            selectedProvince,
+                                            selectedRegency,
+                                            selectedDistrict,
+                                            selectedVillage,
+                                            lat,
+                                            long
+                                        )
+                                    }
+                                } else {
+                                    presenter.saveDataTPS(
+                                        tps_number_field.text.toString().toInt(),
+                                        selectedProvince,
+                                        selectedRegency,
+                                        selectedDistrict,
+                                        selectedVillage,
+                                        lat,
+                                        long
+                                    )
+                                }
                             }
                         }
                     }
@@ -408,6 +471,14 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     override fun onSuccessSaveTPS() {
         val intent = Intent(this@DataTPSActivity, PerhitunganMainActivity::class.java)
         startActivityForResult(intent, 1)
+    }
+
+    override fun failedSaveTpsAlert() {
+        ToastUtil.show(this@DataTPSActivity, "Gagal menyimpan data TPS")
+    }
+
+    override fun failedUpdateTpsAlert() {
+        ToastUtil.show(this@DataTPSActivity, "Gagal memperbarui data TPS")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
