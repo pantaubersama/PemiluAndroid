@@ -54,7 +54,7 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
     override fun fetchIntentExtra() {
         intent.getSerializableExtra("challenge").let { challenge = it as Challenge }
         intent.getStringExtra("date").let { date = it as String }
-        intent.getSerializableExtra("link")?.let { oEmbedLink = it as OEmbedLink }
+        intent.getSerializableExtra("link").let { oEmbedLink = it as OEmbedLink? }
     }
 
     override fun statusBarColor(): Int? {

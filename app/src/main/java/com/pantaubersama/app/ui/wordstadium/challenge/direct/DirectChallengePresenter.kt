@@ -55,4 +55,31 @@ class DirectChallengePresenter @Inject constructor(
                         )
         )
     }
+
+    fun searchPerson(keyword: String, page: Int, perPage: Int) {
+        view?.showLoading()
+        disposables.add(
+                wordStadiumInteractor.searchPerson(keyword, page, perPage)
+                        .subscribe(
+                                {
+                                    if (page == 1) {
+                                        view?.dismissLoading()
+                                        if (it.size != 0) {
+                                            view?.bindData(it)
+                                        } else {
+                                            view?.showEmptyData()
+                                        }
+                                    }
+                                },
+                                {
+                                    if (page == 1) {
+                                        view?.dismissLoading()
+                                        view?.showFailedGetDataAlert()
+                                    }
+                                    it.printStackTrace()
+                                    view?.showError(it)
+                                }
+                        )
+        )
+    }
 }
