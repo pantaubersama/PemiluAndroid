@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -32,6 +33,7 @@ import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_direct_challenge.*
+import kotlinx.android.synthetic.main.close_challenge.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -176,7 +178,12 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
                     radio_twitter.isChecked = false
                     radio_symbolic.isChecked = true
                     et_username_twitter.isEnabled = false
+                    et_username_twitter.setText("")
                     et_username_symbolic.isEnabled = true
+                    ll_user_symbolic.visibility = View.GONE
+                    ll_form_symbolic.visibility = View.VISIBLE
+                    ll_user_twitter.visibility = View.GONE
+                    ll_form_twitter.visibility = View.VISIBLE
                     userType = SYMBOLIC_USER
                 }
             }
@@ -188,7 +195,12 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
                     radio_twitter.isChecked = true
                     radio_symbolic.isChecked = false
                     et_username_symbolic.isEnabled = false
+                    et_username_symbolic.setText("")
                     et_username_twitter.isEnabled = true
+                    ll_user_symbolic.visibility = View.GONE
+                    ll_form_symbolic.visibility = View.VISIBLE
+                    ll_user_twitter.visibility = View.GONE
+                    ll_form_twitter.visibility = View.VISIBLE
                     userType = TWITTER_USER
                 }
             }
@@ -198,8 +210,8 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
 
         et_username_symbolic.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(text: Editable?) {
-                if (text!!.length > 6) {
-                    lawanDebatDone()
+                if (text!!.length > 0) {
+                    presenter.searchPerson(text.toString(), 1, 5)
                 } else {
                     bidangKajianActive()
                     bidangKajianDone()
@@ -438,6 +450,12 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
     override fun bindData(users: MutableList<LawanDebat>) {
         recycler_search_user.visibility = View.VISIBLE
         adapter.setDatas(users)
+        if (users.size > 0)
+            if (userType == SYMBOLIC_USER) {
+                ll_lawan_debat_twitter.visibility = View.GONE
+            } else {
+                ll_lawan_debat_twitter.visibility = View.VISIBLE
+            }
     }
 
     override fun showEmptyData() {
@@ -455,25 +473,56 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
             override fun onClickItem(lawanDebat: LawanDebat) {
                 lawanDebatDone()
                 recycler_search_user.visibility = View.GONE
-                lawanId = lawanDebat.id
-                lawanUserName = lawanDebat.screenName
-                lawanName = lawanDebat.name
-                lawanAvatar = lawanDebat.profileImageUrl
+                ll_lawan_debat_twitter.visibility = View.VISIBLE
                 if (userType == TWITTER_USER) {
                     ll_form_twitter.visibility = View.GONE
                     ll_user_twitter.visibility = View.VISIBLE
                     ava_lawan_twitter.loadUrl(lawanDebat.profileImageUrl)
                     name_lawan_twitter.text = lawanDebat.name
                     username_lawan_twitter.text = lawanDebat.screenName
+                    lawanId = lawanDebat.id
+                    lawanUserName = lawanDebat.screenName
+                    lawanName = lawanDebat.name
+                    lawanAvatar = lawanDebat.profileImageUrl
                 } else {
                     ll_form_symbolic.visibility = View.GONE
                     ll_user_symbolic.visibility = View.VISIBLE
-                    ava_lawan_symbolic.loadUrl(lawanDebat.profileImageUrl)
-                    name_lawan_symbolic.text = lawanDebat.name
-                    username_lawan_symbolic.text = lawanDebat.screenName
+                    ava_lawan_symbolic.loadUrl(lawanDebat.avatar.url)
+                    name_lawan_symbolic.text = lawanDebat.fullName
+                    username_lawan_symbolic.text = lawanDebat.username
+                    lawanId = lawanDebat.id
+                    lawanUserName = lawanDebat.username
+                    lawanName = lawanDebat.fullName
+                    lawanAvatar = lawanDebat.avatar.url
                 }
             }
         }
         recycler_search_user.adapter = adapter
+    }
+
+    fun back() {
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.close_challenge, null)
+        val mDialogBuilder = AlertDialog.Builder(this)
+                .setView(mDialogView)
+        val mAlertDalog = mDialogBuilder.show()
+        mDialogView.yes_button.setOnClickListener {
+            mAlertDalog.dismiss()
+            finish()
+            setResult(Activity.RESULT_OK)
+        }
+        mDialogView.no_button.setOnClickListener {
+            mAlertDalog.dismiss()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home) {
+            back()
+        }
+        return true
+    }
+
+    override fun onBackPressed() {
+        back()
     }
 }

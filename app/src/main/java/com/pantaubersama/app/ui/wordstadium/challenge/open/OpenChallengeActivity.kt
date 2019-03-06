@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import androidx.core.content.ContextCompat
@@ -25,6 +26,7 @@ import com.pantaubersama.app.ui.wordstadium.challenge.CreateChallengeActivity
 import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_open_challenge.*
+import kotlinx.android.synthetic.main.close_challenge.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -321,5 +323,31 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
         link_source.text = oEmbedLink.url
         previewLink(oEmbedLink.html)
         this.oEmbedLink = oEmbedLink
+    }
+
+    fun back() {
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.close_challenge, null)
+        val mDialogBuilder = AlertDialog.Builder(this)
+                .setView(mDialogView)
+        val mAlertDalog = mDialogBuilder.show()
+        mDialogView.yes_button.setOnClickListener {
+            mAlertDalog.dismiss()
+            finish()
+            setResult(Activity.RESULT_OK)
+        }
+        mDialogView.no_button.setOnClickListener {
+            mAlertDalog.dismiss()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home) {
+            back()
+        }
+        return true
+    }
+
+    override fun onBackPressed() {
+        back()
     }
 }
