@@ -1,9 +1,6 @@
 package com.pantaubersama.app.data.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.pantaubersama.app.data.model.tps.Province
 import com.pantaubersama.app.data.model.tps.TPS
 
@@ -24,5 +21,8 @@ interface PerhitunganDAO {
 
         @Query("SELECT * FROM tps ORDER BY id ASC")
         fun loadTPS(): MutableList<TPS>
+
+        @Delete
+        fun deleteTPS(tps: TPS)
     }
 }

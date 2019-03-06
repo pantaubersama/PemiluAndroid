@@ -16,7 +16,10 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity
+import com.pantaubersama.app.ui.widget.ConfirmationDialog
+import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.fragment_perhitungan.*
@@ -110,6 +113,36 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
             override fun onClickBanner(bannerInfo: BannerInfo) {
                 startActivityForResult(BannerInfoActivity.setIntent(requireContext(), bannerInfo), PantauConstants.RequestCode.RC_BANNER_PERHITUNGAN)
             }
+
+            override fun onClickTpsOptions(tps: TPS, position: Int) {
+                val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tps)
+                dialog.show()
+                dialog.listener = object : OptionDialog.DialogListener {
+                    override fun onClick(viewId: Int) {
+                        when (viewId) {
+                            R.id.edit_tps_data_action -> {
+                                // edit
+                                dialog.dismiss()
+                            }
+                            R.id.delete_tanya_kandidat_item_action -> {
+                                ConfirmationDialog.Builder()
+                                    .with(requireActivity())
+                                    .setDialogTitle("Hapus Perhitungan")
+                                    .setAlert("Apakah kamu yakin untuk menghapus item ini?")
+                                    .setCancelText("Batal")
+                                    .setOkText("Ya, Hapus")
+                                    .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                                        override fun onClickOk() {
+                                            presenter.deletePerhitungan(tps, position)
+                                        }
+                                    })
+                                    .show()
+                                dialog.dismiss()
+                            }
+                        }
+                    }
+                }
+            }
         }
         recycler_view.layoutManager = LinearLayoutManager(requireContext())
         recycler_view.adapter = adapter
@@ -117,6 +150,22 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
             refreshItem()
             swipe_refresh.isRefreshing = false
         }
+    }
+
+    override fun showFailedDeleteItemAlert() {
+        ToastUtil.show(requireContext(), "Gagal menghapus item")
+    }
+
+    override fun showDeleteItemLoading() {
+        showProgressDialog("Menghapus item")
+    }
+
+    override fun dismissDeleteItemLoading() {
+        dismissProgressDialog()
+    }
+
+    override fun onSuccessDeleteItem(position: Int) {
+        adapter.deleteItem(position)
     }
 
     override fun showEmptyAlert() {

@@ -11,4 +11,8 @@ interface PerhitunganView : BaseView {
     fun showFailedGetDataAlert()
     fun showBanner(bannerInfo: BannerInfo)
     fun showEmptyAlert()
+    fun showFailedDeleteItemAlert()
+    fun showDeleteItemLoading()
+    fun dismissDeleteItemLoading()
+    fun onSuccessDeleteItem(position: Int)
 }

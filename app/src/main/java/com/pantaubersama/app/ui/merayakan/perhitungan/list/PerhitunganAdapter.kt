@@ -64,6 +64,9 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
                     tps_container.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white))
                 }
             }
+            tps_options.setOnClickListener {
+                listener?.onClickTpsOptions(item, adapterPosition)
+            }
         }
     }
 
@@ -84,5 +87,6 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
 
     interface Listener {
         fun onClickBanner(bannerInfo: BannerInfo)
+        fun onClickTpsOptions(tps: TPS, position: Int)
     }
 }

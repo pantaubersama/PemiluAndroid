@@ -4,6 +4,7 @@ import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.TPSInteractor
+import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
 
@@ -50,6 +51,24 @@ class PerhitunganPresenter @Inject constructor(
                         view?.dismissLoading()
                         view?.showError(it)
                         view?.showFailedGetDataAlert()
+                    }
+                )
+        )
+    }
+
+    fun deletePerhitungan(tps: TPS, position: Int) {
+        view?.showDeleteItemLoading()
+        disposables.add(
+            tpsInteractor.deleteTps(tps)
+                .subscribe(
+                    {
+                        view?.dismissDeleteItemLoading()
+                        view?.onSuccessDeleteItem(position)
+                    },
+                    {
+                        view?.dismissDeleteItemLoading()
+                        view?.showError(it)
+                        view?.showFailedDeleteItemAlert()
                     }
                 )
         )

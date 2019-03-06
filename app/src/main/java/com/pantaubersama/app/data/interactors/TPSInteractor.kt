@@ -137,4 +137,10 @@ class TPSInteractor @Inject constructor(
         // sementara
         return db
     }
+
+    fun deleteTps(tps: TPS): Completable {
+        return Completable.fromCallable {
+            appDB.getTPSDAO().deleteTPS(tps)
+        }
+    }
 }
