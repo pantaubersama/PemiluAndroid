@@ -88,7 +88,6 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                     geocoder?.getFromLocation(it, it1, 1)?.let {
                         addresses = it
                         val address = addresses[0].getAddressLine(0)
-                        location_empty_alert.visibility = View.GONE
                         address_text.text = address
                     }
                 }
@@ -336,7 +335,6 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                                 addresses = it
                             }
                             val address = addresses[0].getAddressLine(0)
-                            location_empty_alert.visibility = View.GONE
                             lat = location.latitude
                             long = location.longitude
                             address_text.text = address
@@ -433,24 +431,10 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                         if (villages_dropdown.selectedItemPosition == 0) {
                             villages_empty_alert.visibility = View.VISIBLE
                         } else {
-                            if (lat == 0.0 || long == 0.0) {
-                                location_empty_alert.visibility = View.VISIBLE
-                            } else {
-                                if (tps != null) {
-                                    tps?.id?.let {
-                                        presenter.updateTps(
-                                            it,
-                                            tps_number_field.text.toString().toInt(),
-                                            selectedProvince,
-                                            selectedRegency,
-                                            selectedDistrict,
-                                            selectedVillage,
-                                            lat,
-                                            long
-                                        )
-                                    }
-                                } else {
-                                    presenter.saveDataTPS(
+                            if (tps != null) {
+                                tps?.id?.let {
+                                    presenter.updateTps(
+                                        it,
                                         tps_number_field.text.toString().toInt(),
                                         selectedProvince,
                                         selectedRegency,
@@ -460,6 +444,16 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                                         long
                                     )
                                 }
+                            } else {
+                                presenter.saveDataTPS(
+                                    tps_number_field.text.toString().toInt(),
+                                    selectedProvince,
+                                    selectedRegency,
+                                    selectedDistrict,
+                                    selectedVillage,
+                                    lat,
+                                    long
+                                )
                             }
                         }
                     }
