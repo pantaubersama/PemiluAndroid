@@ -1,6 +1,6 @@
 package com.pantaubersama.app.data.db
 
-import androidx.room.*
+import androidx.room.* //ktlint-disable
 import com.pantaubersama.app.data.model.tps.Province
 import com.pantaubersama.app.data.model.tps.TPS
 

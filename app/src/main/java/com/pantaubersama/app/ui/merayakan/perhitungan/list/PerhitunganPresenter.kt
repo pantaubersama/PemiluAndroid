@@ -25,6 +25,7 @@ class PerhitunganPresenter @Inject constructor(
                     {
                         view?.dismissLoading()
                         if (it.size != 0) {
+                            it.addAll(tpsInteractor.getLocalTpses())
                             view?.bindTPSes(it)
                         } else {
                             view?.showEmptyAlert()

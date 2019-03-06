@@ -109,8 +109,7 @@ class TPSInteractor @Inject constructor(
     }
 
     fun getTpses(page: Int, perPage: Int): Maybe<MutableList<TPS>> {
-        val api =
-            apiWrapper.getPantauApi()
+        return apiWrapper.getPantauApi()
                 .getTPSes(
                     page,
                     perPage,
@@ -122,20 +121,6 @@ class TPSInteractor @Inject constructor(
                 .filter { it.size != 0 }
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
-
-        val db = Maybe.fromCallable {
-            appDB.getTPSDAO().loadTPS()
-        }
-            .subscribeOn(rxSchedulers.io())
-            // sementara
-            .observeOn(rxSchedulers.mainThread())
-
-        val mergedData = Maybe.concatArray(db, api)
-            .subscribeOn(rxSchedulers.io())
-            .observeOn(rxSchedulers.mainThread())
-
-        // sementara
-        return db
     }
 
     fun deleteTps(tps: TPS): Completable {
@@ -171,5 +156,9 @@ class TPSInteractor @Inject constructor(
                 )
             )
         }
+    }
+
+    fun getLocalTpses(): MutableList<TPS> {
+        return appDB.getTPSDAO().loadTPS()
     }
 }
