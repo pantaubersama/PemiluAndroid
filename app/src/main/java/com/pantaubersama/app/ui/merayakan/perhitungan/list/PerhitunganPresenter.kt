@@ -5,7 +5,6 @@ import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.TPSInteractor
 import com.pantaubersama.app.utils.PantauConstants
-import timber.log.Timber
 import javax.inject.Inject
 
 class PerhitunganPresenter @Inject constructor(
@@ -23,7 +22,6 @@ class PerhitunganPresenter @Inject constructor(
             tpsInteractor.getTpses(page, perPage)
                 .subscribe(
                     {
-                        Timber.d("tpses" + it.toString())
                         view?.dismissLoading()
                         if (it.size != 0) {
                             view?.bindTPSes(it)

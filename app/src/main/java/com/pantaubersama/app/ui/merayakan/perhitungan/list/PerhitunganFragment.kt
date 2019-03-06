@@ -53,7 +53,8 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
         this.profile = profile
         fab_add.setOnClickListener {
             if (profile != EMPTY_PROFILE) {
-                DataTPSActivity.start(requireContext(), PantauConstants.Merayakan.CREATE_PERHITUNGAN_REQUEST_CODE)
+                val intent = Intent(requireContext(), DataTPSActivity::class.java)
+                startActivityForResult(intent, PantauConstants.Merayakan.CREATE_PERHITUNGAN_REQUEST_CODE)
             } else {
                 openLoginActivity()
             }

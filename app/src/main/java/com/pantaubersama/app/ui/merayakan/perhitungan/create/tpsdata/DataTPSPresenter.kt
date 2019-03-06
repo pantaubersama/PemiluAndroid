@@ -89,8 +89,8 @@ class DataTPSPresenter @Inject constructor(
         selectedRegency: Regency,
         selectedDistrict: District,
         selectedVillage: Village,
-        lat: Float,
-        long: Float
+        lat: Double,
+        long: Double
     ) {
         view?.showLoading()
         disposables.add(

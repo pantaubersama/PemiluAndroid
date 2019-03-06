@@ -30,10 +30,10 @@ data class TPS(
     var village: Village,
     @SerializedName("latitude")
     @Expose
-    var latitude: Float,
+    var latitude: Double,
     @SerializedName("longitude")
     @Expose
-    var longitude: Float,
+    var longitude: Double,
     @SerializedName("status")
     @Expose
     var status: String,

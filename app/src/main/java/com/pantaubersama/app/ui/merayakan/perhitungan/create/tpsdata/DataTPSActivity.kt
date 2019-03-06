@@ -1,7 +1,6 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.location.* //ktlint-disable
@@ -36,8 +35,8 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     private var geocoder: Geocoder? = null
     // location
     private lateinit var addresses: List<Address>
-    private var lat: Float = 0f
-    private var long: Float = 0f
+    private var lat: Double = 0.0
+    private var long: Double = 0.0
 
     // provinces
     private lateinit var provinceNames: MutableList<String>
@@ -290,6 +289,8 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                             }
                             val address = addresses.get(0).getAddressLine(0)
                             location_empty_alert.visibility = View.GONE
+                            lat = location.latitude
+                            long = location.longitude
                             address_text.text = address
                         }
                     } catch (e: Exception) {
@@ -342,17 +343,6 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
-    companion object {
-        fun start(context: Context, requsetCode: Int? = null) {
-            val intent = Intent(context, DataTPSActivity::class.java)
-            if (requsetCode != null) {
-                (context as Activity).startActivityForResult(intent, requsetCode)
-            } else {
-                context.startActivity(intent)
-            }
-        }
-    }
-
     override fun showLoading() {
         progress_bar.visibility = View.VISIBLE
     }
@@ -395,7 +385,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                         if (villages_dropdown.selectedItemPosition == 0) {
                             villages_empty_alert.visibility = View.VISIBLE
                         } else {
-                            if (address_text.text.isEmpty()) {
+                            if (lat == 0.0 || long == 0.0) {
                                 location_empty_alert.visibility = View.VISIBLE
                             } else {
                                 presenter.saveDataTPS(
@@ -421,9 +411,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
-                setResult(Activity.RESULT_OK)
+                setResult(RESULT_OK)
                 finish()
             }
         }

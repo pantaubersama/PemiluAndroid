@@ -66,8 +66,8 @@ class TPSInteractor @Inject constructor(
         selectedRegency: Regency,
         selectedDistrict: District,
         selectedVillage: Village,
-        lat: Float,
-        long: Float
+        lat: Double,
+        long: Double
     ): Completable {
         if (appDB.getTPSDAO().loadTPS().size != 0) {
             return Completable.fromCallable {
