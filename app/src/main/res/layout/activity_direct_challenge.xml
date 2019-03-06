@@ -390,6 +390,7 @@
                         android:textSize="11sp" />
 
                     <LinearLayout
+                        android:id="@+id/ll_lawan_debat_symbolic"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -477,6 +478,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_lawan_debat_twitter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"

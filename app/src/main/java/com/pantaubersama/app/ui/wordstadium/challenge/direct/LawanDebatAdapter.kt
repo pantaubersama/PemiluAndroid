@@ -24,9 +24,15 @@ class LawanDebatAdapter : BaseRecyclerAdapter() {
 
     inner class PersonViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(lawanDebat: LawanDebat) {
-            person_avatar.loadUrl(lawanDebat.profileImageUrl)
-            person_name.text = lawanDebat.name
-            person_username.text = lawanDebat.screenName
+            if (lawanDebat.name == null) {
+                person_avatar.loadUrl(lawanDebat.avatar.url)
+                person_name.text = lawanDebat.fullName
+                person_username.text = lawanDebat.username
+            } else {
+                person_avatar.loadUrl(lawanDebat.profileImageUrl)
+                person_name.text = lawanDebat.name
+                person_username.text = lawanDebat.screenName
+            }
             itemView.setOnClickListener {
                 listener?.onClickItem(lawanDebat)
             }

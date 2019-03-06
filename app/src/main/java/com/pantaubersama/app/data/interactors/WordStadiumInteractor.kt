@@ -1,5 +1,6 @@
 package com.pantaubersama.app.data.interactors
 
+import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.debat.Challenge
 import com.pantaubersama.app.data.model.wordstadium.LawanDebat
 import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
@@ -10,8 +11,9 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class WordStadiumInteractor @Inject constructor(
-    private val apiWrapper: APIWrapper,
-    private val rxSchedulers: RxSchedulers
+        private val apiWrapper: APIWrapper,
+        private val dataCache: DataCache,
+        private val rxSchedulers: RxSchedulers
 ) {
     fun openChallenge(
         topicList: String?,
@@ -88,6 +90,20 @@ class WordStadiumInteractor @Inject constructor(
                         keyword,
                         page,
                         perPage
+                )
+                .map { it.data.users }
+                .subscribeOn(rxSchedulers.io())
+                .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun searchPerson(keyword: String, page: Int, perPage: Int): Single<MutableList<LawanDebat>> {
+        return apiWrapper
+                .getPantauOAuthApi()
+                .searchPerson(
+                        keyword,
+                        page,
+                        perPage,
+                        dataCache.getSearchOrangFilter()
                 )
                 .map { it.data.users }
                 .subscribeOn(rxSchedulers.io())
