@@ -8,6 +8,7 @@ import com.pantaubersama.app.ui.clusterdetail.ClusterDetailActivity
 import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
 import com.pantaubersama.app.ui.debat.DebatActivity
 import com.pantaubersama.app.ui.debat.detail.DetailDebatActivity
+import com.pantaubersama.app.ui.debat.detail.DetailDebatDialogFragment
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
 import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity
@@ -150,4 +151,5 @@ interface ActivityComponent {
     fun inject(detailDebatActivity: DetailDebatActivity)
     fun inject(directChallengeActivity: DirectChallengeActivity)
     fun inject(previewChallengeActivity: PreviewChallengeActivity)
+    fun inject(detailDebatDialogFragment: DetailDebatDialogFragment)
 }

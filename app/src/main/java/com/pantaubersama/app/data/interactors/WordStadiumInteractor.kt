@@ -2,6 +2,7 @@ package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.debat.Challenge
+import com.pantaubersama.app.data.model.debat.WordItem
 import com.pantaubersama.app.data.model.wordstadium.LawanDebat
 import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
 import com.pantaubersama.app.data.remote.APIWrapper
@@ -128,6 +129,21 @@ class WordStadiumInteractor @Inject constructor(
         return apiWrapper.getWordStadiumApi()
             .getChallengeItem(id)
             .map { it.challengeItemData.challenge }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getWordsFighter(challengeId: String): Single<MutableList<WordItem>> {
+        return apiWrapper.getWordStadiumApi()
+            .getWordsFighter(challengeId)
+            .map { it.wordListData.wordList.asReversed() }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun postWordsFighter(challengeId: String, words: String): Completable {
+        return apiWrapper.getWordStadiumApi()
+            .postWordsFighter(challengeId, words)
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }

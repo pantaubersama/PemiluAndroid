@@ -1,12 +1,15 @@
 package com.pantaubersama.app.ui.debat
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.TextKeyListener
+import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -17,24 +20,23 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
+import com.google.firebase.messaging.FirebaseMessaging
 import com.makeramen.roundedimageview.RoundedImageView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.data.model.debat.InputMessageItem
-import com.pantaubersama.app.data.model.debat.Komentar
-import com.pantaubersama.app.data.model.debat.MessageItem
+import com.pantaubersama.app.data.model.debat.*
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.debat.adapter.KomentarAdapter
-import com.pantaubersama.app.ui.debat.adapter.MessageAdapter
+import com.pantaubersama.app.ui.debat.adapter.WordsFighterAdapter
+import com.pantaubersama.app.ui.debat.detail.DetailDebatDialogFragment
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
 import com.pantaubersama.app.utils.ToastUtil
-import com.pantaubersama.app.utils.extensions.dip
-import com.pantaubersama.app.utils.extensions.isVisible
-import com.pantaubersama.app.utils.extensions.loadUrl
-import com.pantaubersama.app.utils.extensions.visibleIf
-import com.pantaubersama.app.utils.extensions.unSyncLazy
+import com.pantaubersama.app.utils.extensions.*
 import com.pantaubersama.app.utils.hideKeyboard
+import com.pantaubersama.app.data.model.debat.ChallengeConstants.Role
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_debat.*
 import kotlinx.android.synthetic.main.layout_header_detail_debat.*
@@ -43,6 +45,7 @@ import kotlinx.android.synthetic.main.layout_status_debat.*
 import kotlinx.android.synthetic.main.layout_toolbar_debat.*
 import net.frakbot.jumpingbeans.JumpingBeans
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
+import timber.log.Timber
 import javax.inject.Inject
 
 class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
@@ -52,10 +55,10 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     override fun statusBarColor(): Int? = R.color.white
     override fun setLayout(): Int = R.layout.activity_debat
 
-    private lateinit var jumpingBeans: JumpingBeans
+    private var jumpingBeans: JumpingBeans? = null
 
 //    private lateinit var messageSortedAdapter: MessageSortedAdapter
-    private lateinit var messageAdapter: MessageAdapter
+    private lateinit var wordsFighterAdapter: WordsFighterAdapter
     private lateinit var komentarAdapter: KomentarAdapter
 
     private lateinit var myProfile: Profile
@@ -72,12 +75,47 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         OptionDialogFragment.newInstance(R.layout.layout_option_dialog_menguji)
     }
 
+    private lateinit var challenge: Challenge
+    private val isMyChallenge by unSyncLazy {
+        presenter.getMyProfile().id in arrayOf(challenge.challenger.userId, challenge.opponent?.userId)
+    }
+    private val myRole by unSyncLazy {
+        when (presenter.getMyProfile().id) {
+            challenge.challenger.userId -> Role.CHALLENGER
+            challenge.opponent?.userId -> Role.OPPONENT
+            else -> Role.AUDIENCE
+        }
+    }
+    private var isMyTurn: Boolean = false
+
+    private val topicList by unSyncLazy {
+        arrayOf(
+            "android-fighter-${challenge.id}",
+            "android-audience-${challenge.id}"
+        )
+    }
+
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
 
+    companion object {
+        fun setIntent(context: Context, challenge: Challenge): Intent {
+            val intent = Intent(context, DebatActivity::class.java)
+            intent.putExtra(EXTRA_CHALLENGE_ITEM, challenge)
+            return intent
+        }
+    }
+
+    override fun fetchIntentExtra() {
+        intent.getSerializableExtra(EXTRA_CHALLENGE_ITEM)?.let {
+            challenge = it as Challenge
+        }
+    }
+
     override fun setupUI(savedInstanceState: Bundle?) {
         setupLayoutBehaviour()
+        setupHeader()
         myProfile = presenter.getMyProfile()
 
         iv_avatar_comment_main.loadUrl(myProfile.avatar?.medium?.url, R.color.gray_3)
@@ -89,20 +127,35 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         getList()
     }
 
+    fun setupHeader() {
+        val challenger = challenge.challenger
+        val opponent = challenge.opponent
+
+        iv_avatar_challenger.loadUrl(challenger.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+        tv_name_challenger.text = challenger.fullName
+        tv_username_challenger.text = "@${challenger.username}"
+
+        iv_avatar_opponent.loadUrl(opponent?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+        tv_name_opponent.text = opponent?.fullName
+        tv_username_opponent.text = "@${opponent?.username}"
+
+        tv_title.text = challenge.statement
+    }
+
     private fun addKomentar(komentar: Komentar) {
         komentarAdapter.addItem(komentar)
     }
 
     private fun getList() {
-        presenter.getMessage()
-        presenter.getKomentar()
+        presenter.getWordsFighter(challenge.id)
+//        presenter.getKomentar()
     }
 
     private fun setupDebatList() {
-        messageAdapter = MessageAdapter()
+        wordsFighterAdapter = WordsFighterAdapter()
         recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, true)
-        recycler_view.adapter = messageAdapter
-        messageAdapter.listener = object : MessageAdapter.AdapterListener {
+        recycler_view.adapter = wordsFighterAdapter
+        wordsFighterAdapter.listener = object : WordsFighterAdapter.AdapterListener {
             override fun onClickClap() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -111,8 +164,9 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
                 isMessageInputFocused = isFocused
             }
 
-            override fun onPublish(content: String) {
-                presenter.postMessage(content)
+            override fun onPublish(words: String) {
+                presenter.postWordsFighter(challenge.id, words, if (myRole == Role.CHALLENGER) challenge.challenger else challenge.opponent
+                    ?: Audience(null, null,null,null,"","",null, ""))
             }
         }
     }
@@ -133,22 +187,59 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showMessage(messageList: MutableList<MessageItem>) {
-        messageAdapter.setDatas(messageList)
-        messageAdapter.addInputMessage(InputMessageItem.Type.INPUT_LEFT_SIDE)
-        recycler_view.scrollToPosition(messageAdapter.itemCount - 1)
+    override fun showWordsFighter(wordList: MutableList<WordItem>) {
+        wordsFighterAdapter.setDatas(wordList)
+        updateInputTurn()
+        if (isMyChallenge) wordsFighterAdapter.addInputMessage(myRole, isMyTurn)
+        recycler_view.scrollToPosition(wordsFighterAdapter.itemCount - 1)
+        showFAB(true)
+    }
+
+    override fun showLoadingWordsFighter() {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun dismissLoadingWordsFighter() {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onErrorGetWordsFighter(t: Throwable) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showKomentar(komentarList: MutableList<Komentar>) {
         komentarAdapter.setDatas(komentarList)
     }
 
-    override fun onSuccessPostMessage(messageItem: MessageItem) {
-        messageAdapter.clearInputMessage(true)
-        messageAdapter.addItem(messageItem, 1)
+    override fun updateInputTurn() {
+        val turnActorRole = if (!wordsFighterAdapter.itemCount.isOdd()) {
+//            if (isMyChallenge) {
+                Role.CHALLENGER
+//            } else Role.OPPONENT
+        } else {
+//            if (isMyChallenge) {
+                Role.OPPONENT
+//            } else Role.CHALLENGER
+        }
+        val turnActorName = when (turnActorRole) {
+            myRole -> "Kamu"
+            Role.CHALLENGER -> challenge.challenger.fullName
+            Role.OPPONENT -> challenge.opponent?.fullName
+            else -> throw ErrorException("unknown turnActorRole $turnActorRole")
+        }
+
+        isMyTurn = myRole == turnActorRole
+
+        tv_status_debat.text = "Giliran $turnActorName menulis argumen "
+        enableJumpingDots(true)
     }
 
-    override fun onFailedPostMessage(messageItem: MessageItem) {
+    override fun onSuccessPostWordsFighter(wordItem: WordItem) {
+        wordsFighterAdapter.clearInputMessage(true)
+        wordsFighterAdapter.addItem(wordItem, 1)
+    }
+
+    override fun onFailedPostWordsFighter(wordItem: WordItem) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -238,7 +329,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         }
 
         cl_btn_detail_debat.setOnClickListener {
-            DetailDebatDialogFragment.show(supportFragmentManager)
+            DetailDebatDialogFragment.show(supportFragmentManager, challenge)
         }
 
         fab_scroll_to_bottom.setOnClickListener {
@@ -278,7 +369,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
         layout_box_komentar_main.post {
             adjustRvPadding()
-            showFAB(true)
         }
 
         btn_comment_main.setImageResource(R.drawable.ic_arrow_expand_more)
@@ -354,7 +444,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
     private fun showFAB(showing: Boolean) {
         if (showing) {
-            if (!fab_scroll_to_bottom.isShown) {
+            if (!fab_scroll_to_bottom.isShown && recycler_view.canScrollVertically(1)) {
                 val fabLayoutParams = CoordinatorLayout.LayoutParams(dip(40), dip(40))
                 fabLayoutParams.gravity = Gravity.BOTTOM or Gravity.END
                 fabLayoutParams.setMargins(0, 0, dip(16), layout_box_komentar_main.height + dip(8))
@@ -362,7 +452,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
                 fab_scroll_to_bottom.show()
             }
         } else {
-            fab_scroll_to_bottom.hide()
+            if (fab_scroll_to_bottom.isShown) fab_scroll_to_bottom.hide()
         }
     }
 
@@ -374,16 +464,45 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         }
     }
 
+    private fun enableJumpingDots(enable: Boolean = true) {
+        if (enable && tv_status_debat.text.isNotEmpty()) {
+            jumpingBeans = JumpingBeans.with(tv_status_debat)
+                .appendJumpingDots()
+                .build()
+        } else {
+            jumpingBeans?.stopJumping()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
+        enableJumpingDots()
 
-        jumpingBeans = JumpingBeans.with(tv_status_debat)
-            .appendJumpingDots()
-            .build()
+        topicList.forEach {
+            FirebaseMessaging.getInstance().subscribeToTopic(it)
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        val msg = "FCM ERROR - Failed subscribing $it - ${task.exception}"
+                        Log.e("FCM ERROR", msg)
+                    }
+                }
+        }
+
     }
 
     override fun onPause() {
-        jumpingBeans.stopJumping()
+        enableJumpingDots(false)
+
+        topicList.forEach {
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(it)
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        val msg = "FCM ERROR - Failed unsubscribing $it - ${task.exception}"
+                        Log.e("FCM ERROR", msg)
+                    }
+                }
+        }
+
         super.onPause()
     }
 }

@@ -13,8 +13,8 @@ interface DetailDebatView : BaseView {
 
     fun showLoadingStatementSource()
     fun dismissLoadingStatementSource()
-    fun onErrorStatementSource(throwable: Throwable)
     fun showStatementSource(url: String)
+    fun onErrorStatementSource(throwable: Throwable)
 
     fun showLoadingConfirmOpponentCandidate()
     fun dismissLoadingConfirmOpponentCandidate()

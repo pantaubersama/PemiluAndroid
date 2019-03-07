@@ -1,7 +1,7 @@
 package com.pantaubersama.app.data.model.debat
 
 import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_DEBAT_ITEM
+import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_CHALLENGE_ITEM
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_HEADER
 import java.io.Serializable
 
@@ -9,7 +9,7 @@ sealed class DebatItem : ItemModel, Serializable {
     abstract val debatDetail: DebatDetail
     abstract val type: String
 
-    override fun getType(): Int = TYPE_DEBAT_ITEM
+    override fun getType(): Int = TYPE_CHALLENGE_ITEM
 
     data class LiveNow(override val debatDetail: DebatDetail) : DebatItem(), Serializable {
         override val type: String = "LIVE NOW"

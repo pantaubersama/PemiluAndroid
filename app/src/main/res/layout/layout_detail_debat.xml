@@ -109,6 +109,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_label_opponent"/>
 
             <com.makeramen.roundedimageview.RoundedImageView
+                android:visibility="gone"
                 android:id="@+id/iv_opponent_site_avatar"
                 android:layout_width="13dp"
                 android:layout_height="13dp"
