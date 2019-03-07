@@ -179,9 +179,13 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
 
             val timePickerDialog = TimePickerDialog(this,
                     TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                        tv_time.text = "$hourOfDay.$minute"
+                        var hour: String = hourOfDay.toString()
+                        var mnt: String = minute.toString()
+                        if (hourOfDay < 10) hour = "0" + hour
+                        if (minute < 10) mnt = "0" + mnt
+                        tv_time.text = "$hour.$mnt"
                         dateTimeDone()
-                        mTimeString = "$hourOfDay:$minute"
+                        mTimeString = "$hour:$mnt"
                     }, mHour, mMinute, false)
 
             timePickerDialog.show()

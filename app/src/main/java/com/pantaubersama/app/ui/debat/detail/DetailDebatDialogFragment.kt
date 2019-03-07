@@ -65,7 +65,7 @@ class DetailDebatDialogFragment : BaseDialogFragment<DetailDebatDialogPresenter>
         tv_opponent_username.text = "@${opponent?.username}"
 
         tv_date_detail.text = challenge.showTimeAt.parseDate(toFormat = "EEEE, dd MMMM yyyy")
-        tv_hour_detail.text = challenge.showTimeAt.parseDate(toFormat = "hh.mm")
+        tv_hour_detail.text = challenge.showTimeAt.parseDate(toFormat = "HH.mm")
 
         tv_saldo_waktu_detail.text = "${challenge?.timeLimit} menit"
 
@@ -73,7 +73,7 @@ class DetailDebatDialogFragment : BaseDialogFragment<DetailDebatDialogPresenter>
         tv_creator_name_detail.text = challenge.challenger.fullName
         tv_creator_bio_detail.text = challenge.challenger.about
 
-        tv_posted_time_detail.text = "Posted in ${challenge?.createdAt?.parseDate(toFormat = "dd MMM yy hh:mm")}"
+        tv_posted_time_detail.text = "Posted in ${challenge?.createdAt?.parseDate(toFormat = "dd MMM yy HH:mm")}"
 
         val isMyChallenge = presenter.getMyProfile().id in arrayOf(challenge.challenger.userId, challenge.opponent?.userId)
         tv_label_saldo_waktu_desc.text = when {

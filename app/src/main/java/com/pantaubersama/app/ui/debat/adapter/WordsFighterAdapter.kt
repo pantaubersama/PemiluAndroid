@@ -60,7 +60,7 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
             }
             cl_btn_clap.setOnClickListener { onClapClicked(item) }
 
-            tv_posted_time.text = item.createdAt.parseDate("hh:mm")
+            tv_posted_time.text = item.createdAt.parseDate("HH:mm")
             tv_read_estimation.text = "Estimasi baca ${item.readTime.let { if ( it > 0f) it else "<1"}} menit"
         }
 
