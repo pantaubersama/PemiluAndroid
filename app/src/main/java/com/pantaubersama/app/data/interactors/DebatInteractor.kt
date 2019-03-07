@@ -1,7 +1,7 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.model.debat.Komentar
-import com.pantaubersama.app.data.model.debat.MessageItem
+import com.pantaubersama.app.data.model.debat.WordItem
 import com.pantaubersama.app.data.model.image.Image
 import com.pantaubersama.app.data.model.image.Medium
 import com.pantaubersama.app.data.model.user.Profile
@@ -15,18 +15,19 @@ import javax.inject.Inject
 /**
  * @author edityomurti on 15/02/2019 12:32
  */
+@Deprecated("use WordstadiumInteractor instead")
 class DebatInteractor @Inject constructor(
     private val rxSchedulers: RxSchedulers
 ) {
-    fun getMessage(): Single<MutableList<MessageItem>> {
-        val messageList: MutableList<MessageItem> = ArrayList()
-        for (i in 1..15) {
-            val message = MessageItem("msg-id-$i", "$i. Mau nambahin, jumlah baliho juga melanggar ketentuan di pertigaan Ahmad Yani sudah saya lampiran bukti foto serta tambahan lokasi baliho dimana saja pemasangan baliho.", Profile(),
-                false, i, System.currentTimeMillis() + i, if (i.isOdd()) MessageItem.Type.LEFT_SIDE else MessageItem.Type.RIGHT_SIDE)
-            messageList.add(message)
-        }
-        return Single.fromCallable { messageList }.subscribeOn(rxSchedulers.io()).observeOn(rxSchedulers.mainThread())
-    }
+//    fun getWordsFighter(): Single<MutableList<WordItem>> {
+//        val wordList: MutableList<WordItem> = ArrayList()
+//        for (i in 1..15) {
+//            val message = WordItem("msg-id-$i", "$i. Mau nambahin, jumlah baliho juga melanggar ketentuan di pertigaan Ahmad Yani sudah saya lampiran bukti foto serta tambahan lokasi baliho dimana saja pemasangan baliho.", Profile(),
+//                false, i, System.currentTimeMillis() + i, if (i.isOdd()) WordItem.Type.LEFT_SIDE else WordItem.Type.RIGHT_SIDE)
+//            wordList.add(message)
+//        }
+//        return Single.fromCallable { wordList }.subscribeOn(rxSchedulers.io()).observeOn(rxSchedulers.mainThread())
+//    }
 
     fun getKomentar(): Single<MutableList<Komentar>> {
         val komentarList: MutableList<Komentar> = ArrayList()

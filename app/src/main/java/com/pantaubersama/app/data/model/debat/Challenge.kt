@@ -58,7 +58,7 @@ data class Challenge(
     val type: String
 ) : ItemModel, Serializable {
 
-    override fun getType(): Int = PantauConstants.ItemModel.TYPE_DEBAT_ITEM
+    override fun getType(): Int = PantauConstants.ItemModel.TYPE_CHALLENGE_ITEM
 
     val status: String
         get() = when {

@@ -30,6 +30,7 @@ object ChallengeConstants {
         const val CHALLENGER = "challenger"
         const val OPPONENT = "opponent"
         const val OPPONENT_CANDIDATE = "opponent_candidate"
+        const val AUDIENCE = "audience"
     }
 
     object Type {

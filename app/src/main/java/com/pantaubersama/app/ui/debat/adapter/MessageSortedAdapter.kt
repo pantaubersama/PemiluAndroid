@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.SortedAdapter
-import com.pantaubersama.app.data.model.debat.MESSAGE_INPUT_RIGHT
-import com.pantaubersama.app.data.model.debat.MessageItem
-import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_INPUT_LEFT_SIDE
-import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_INPUT_RIGHT_SIDE
-import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_TYPE_LEFT_SIDE
-import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_TYPE_RIGHT_SIDE
+import com.pantaubersama.app.data.model.debat.WordItem
+import com.pantaubersama.app.utils.PantauConstants.Word.WORD_INPUT_CHALLENGER
+import com.pantaubersama.app.utils.PantauConstants.Word.WORD_INPUT_OPPONENT
+import com.pantaubersama.app.utils.PantauConstants.Word.WORD_TYPE_CHALLENGER
+import com.pantaubersama.app.utils.PantauConstants.Word.WORD_TYPE_OPPONENT
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.drawable
 import kotlinx.android.extensions.LayoutContainer
@@ -23,25 +22,25 @@ import kotlinx.android.synthetic.main.item_message_left_side.*
  * @author edityomurti on 14/02/2019 22:26
  */
 @Deprecated("Not yet suitable for SortedList")
-class MessageSortedAdapter : SortedAdapter<MessageItem>() {
+class MessageSortedAdapter : SortedAdapter<WordItem>() {
 
     private lateinit var recyclerView: RecyclerView
 
     var listener: MessageSortedAdapter.AdapterListener? = null
 
-    override val itemClass: Class<MessageItem>
-        get() = MessageItem::class.java
+    override val itemClass: Class<WordItem>
+        get() = WordItem::class.java
 
-    override fun compare(item1: MessageItem, item2: MessageItem): Int {
+    override fun compare(item1: WordItem, item2: WordItem): Int {
         return item2.createdAt.compareTo(item1.createdAt)
     }
 
     override fun getItemResourceLayout(viewType: Int): Int {
         return when (viewType) {
-            MESSAGE_TYPE_LEFT_SIDE -> R.layout.item_message_left_side
-            MESSAGE_TYPE_RIGHT_SIDE -> R.layout.item_message_right_side
-            MESSAGE_INPUT_LEFT_SIDE -> R.layout.item_box_message_left
-            MESSAGE_INPUT_RIGHT_SIDE -> R.layout.item_box_message_right
+            WORD_TYPE_CHALLENGER -> R.layout.item_message_left_side
+            WORD_TYPE_OPPONENT -> R.layout.item_message_right_side
+            WORD_INPUT_CHALLENGER -> R.layout.item_box_message_left
+            WORD_INPUT_OPPONENT -> R.layout.item_box_message_right
             else -> throw IllegalArgumentException("unknown view type $viewType")
         }
     }
@@ -52,10 +51,10 @@ class MessageSortedAdapter : SortedAdapter<MessageItem>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            MESSAGE_TYPE_LEFT_SIDE -> MessageViewholder(getView(parent, viewType))
-            MESSAGE_TYPE_RIGHT_SIDE -> MessageViewholder(getView(parent, viewType))
-            MESSAGE_INPUT_LEFT_SIDE -> MessageInputViewHolder(getView(parent, viewType))
-            MESSAGE_INPUT_RIGHT_SIDE -> MessageInputViewHolder(getView(parent, viewType))
+            WORD_TYPE_CHALLENGER -> MessageViewholder(getView(parent, viewType))
+            WORD_TYPE_OPPONENT -> MessageViewholder(getView(parent, viewType))
+            WORD_INPUT_CHALLENGER -> MessageInputViewHolder(getView(parent, viewType))
+            WORD_INPUT_OPPONENT -> MessageInputViewHolder(getView(parent, viewType))
             else -> throw IllegalArgumentException("unknown view type $viewType")
         }
     }
@@ -69,11 +68,11 @@ class MessageSortedAdapter : SortedAdapter<MessageItem>() {
 
     inner class MessageViewholder(override val containerView: View)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: MessageItem) {
+        fun bind(item: WordItem) {
             tv_content.text = item.body
-            tv_clap_count.text = item.likedCount.toString()
+            tv_clap_count.text = item.clapCount.toString()
 
-            if (item.isLiked) {
+            if (item.isClaped) {
                 iv_clap.setImageResource(R.drawable.ic_clap)
             } else {
                 iv_clap.setImageResource(R.drawable.ic_appreciate_default)
@@ -81,14 +80,14 @@ class MessageSortedAdapter : SortedAdapter<MessageItem>() {
             cl_btn_clap.setOnClickListener { onClapClicked(item) }
         }
 
-        fun onClapClicked(item: MessageItem) {
-            val initialClapState = item.isLiked
-            item.isLiked = !item.isLiked
+        fun onClapClicked(item: WordItem) {
+            val initialClapState = item.isClaped
+            item.isClaped = !item.isClaped
             if (initialClapState) {
-                item.likedCount -= 1
+                item.clapCount -= 1
 //                iv_clap.setImageResource(R.drawable.ic_appreciate_pressed_yellow)
             } else {
-                item.likedCount += 1
+                item.clapCount += 1
 //                iv_clap.setImageResource(R.drawable.ic_appreciate_default)
             }
             notifyItemChanged(adapterPosition)
@@ -96,9 +95,9 @@ class MessageSortedAdapter : SortedAdapter<MessageItem>() {
     }
 
     inner class MessageInputViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: MessageItem) {
-//            itemView.isEnabled = item.inputState == MessageItem.InputState.ACTIVE
-//            enableView(item.inputState == MessageItem.InputState.ACTIVE, itemView as ViewGroup)
+        fun bind(item: WordItem) {
+//            itemView.isEnabled = item.inputState == WordItem.InputState.ACTIVE
+//            enableView(item.inputState == WordItem.InputState.ACTIVE, itemView as ViewGroup)
 
             et_content.setText(item.body)
 
@@ -113,7 +112,7 @@ class MessageSortedAdapter : SortedAdapter<MessageItem>() {
 
                 override fun onTextChanged(query: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     if (query?.isNotEmpty() == true && query.isNotBlank()) {
-//                        if (item.type == MessageItem.Type.INPUT_LEFT_SIDE) {
+//                        if (item.type == WordItem.Type.INPUT_CHALLENGER) {
 //                            view_indicator_input_message.background = itemView.context.drawable(R.drawable.rounded_tosca_2)
 //                        } else {
 //                            view_indicator_input_message.background = itemView.context.drawable(R.drawable.rounded_red_2)
@@ -142,7 +141,7 @@ class MessageSortedAdapter : SortedAdapter<MessageItem>() {
             btn_publish.setOnClickListener {
                 val content = et_content.text.toString()
                 item.body = content
-//                item.inputState = MessageItem.InputState.INACTIVE
+//                item.inputState = WordItem.InputState.INACTIVE
                 et_content.clearFocus()
                 notifyItemChanged(adapterPosition)
                 listener?.onPublish(content)
@@ -172,16 +171,16 @@ class MessageSortedAdapter : SortedAdapter<MessageItem>() {
         this.recyclerView = recyclerView
     }
 
-    fun addMessageInput(type: MessageItem.Type) {
-        getData(itemCount - 1)?.let {
-            val inputMessageItem = when (type) {
-//                MessageItem.Type.INPUT_LEFT_SIDE -> MESSAGE_INPUT_LEFT
-                else -> MESSAGE_INPUT_RIGHT
-            }
-//            messageInputItem.createdAt = it.createdAt + 1
-//            addItem(messageInputItem)
-        }
-    }
+//    fun addMessageInput(type: WordItem.Type) {
+//        getData(itemCount - 1)?.let {
+//            val inputMessageItem = when (type) {
+////                WordItem.Type.INPUT_CHALLENGER -> WORD_FIGHTER_INPUT_CHALLENGER
+//                else -> WORD_FIGHTER_INPUT_OPPONENT
+//            }
+////            messageInputItem.createdAt = it.createdAt + 1
+////            addItem(messageInputItem)
+//        }
+//    }
 
 //    fun clearMe
 }

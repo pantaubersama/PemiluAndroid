@@ -11,14 +11,17 @@ fun Int.isOdd(): Boolean {
     return this % 2 != 0
 }
 
-fun String.parseDate(toFormat: String = "dd MMMM yyyy  '•'  hh:mm", fromFormat: String = "yyyy-MM-dd'T'hh:mm:ss"): String {
+fun String.parseDate(toFormat: String = "dd MMMM yyyy  '•'  hh:mm", fromFormat: String = "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'"): String {
     val dateFormatFrom = SimpleDateFormat(fromFormat, Locale("in", "ID"))
+    dateFormatFrom.timeZone = TimeZone.getTimeZone("GMT")
     val dateFormatTo = SimpleDateFormat(toFormat, Locale("in", "ID"))
+    dateFormatTo.timeZone = TimeZone.getDefault()
     return dateFormatTo.format(dateFormatFrom.parse(this))
 }
 
-fun String.parseDateRemaining(fromFormat: String = "yyyy-MM-dd'T'hh:mm:ss"): String {
+fun String.parseDateRemaining(fromFormat: String = "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'"): String {
     val dateFormatFrom = SimpleDateFormat(fromFormat, Locale("in", "ID"))
+    dateFormatFrom.timeZone = TimeZone.getTimeZone("GMT")
     val msDiff = dateFormatFrom.parse(this).time - Calendar.getInstance().timeInMillis
     val daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff)
     val hourDiff = TimeUnit.MILLISECONDS.toHours(msDiff)

@@ -81,7 +81,7 @@ class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(vi
 
         itemView.setOnClickListener {
             if (challenge.status == Status.LIVE_NOW) {
-                it.context.startActivity(Intent(it.context, DebatActivity::class.java))
+                it.context.startActivity(DebatActivity.setIntent(it.context, challenge))
             } else {
                 it.context.startActivity(DetailDebatActivity.setIntent(it.context, challenge))
             }
