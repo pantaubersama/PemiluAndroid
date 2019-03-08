@@ -35,7 +35,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
     }
 
     override fun fetchIntentExtra() {
-        intent.getSerializableExtra("tps_data")?.let {
+        intent.getSerializableExtra(PantauConstants.Merayakan.TPS_DATA)?.let {
             tps = it as TPS
         }
     }
@@ -112,7 +112,9 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
     override fun onClick(view: View) {
         when (view) {
             president_counter_action -> {
-                startActivity(Intent(this@PerhitunganMainActivity, PerhitunganPresidenActivity::class.java))
+                val intent = Intent(this@PerhitunganMainActivity, PerhitunganPresidenActivity::class.java)
+                intent.putExtra(PantauConstants.Merayakan.TPS_DATA, tps)
+                startActivity(intent)
             }
             president_c1_action -> {
                 val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)

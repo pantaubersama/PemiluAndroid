@@ -7,8 +7,12 @@ import android.view.View
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.tps.RealCount
+import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.RxSchedulers
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.UndoRedoTools
 import kotlinx.android.synthetic.main.activity_perhitungan_presiden.*
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
@@ -22,9 +26,16 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
 
     private lateinit var undoRedoToolses: MutableList<UndoRedoTools>
     private var undoPosition: Int? = null
+    private var tps: TPS? = null
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
+    }
+
+    override fun fetchIntentExtra() {
+        intent.getSerializableExtra(PantauConstants.Merayakan.TPS_DATA)?.let {
+            tps = it as TPS
+        }
     }
 
     override fun statusBarColor(): Int? {
@@ -41,6 +52,12 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
         setupCandidate1()
         setupCandidate2()
         setupNoVotes()
+        if (tps?.id != null) {
+            tps?.id?.let {
+                presenter.getRealCount(it)
+            }
+        }
+
         save_button.setOnClickListener(this)
     }
 
@@ -62,7 +79,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
                 undoPosition = 0
-                presenter.saveCandidate1Count(it)
+                tps?.id?.let { it1 -> presenter.saveCandidate1Count(it, it1) }
             }
             .doOnError {
                 it.printStackTrace()
@@ -88,7 +105,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
                 undoPosition = 1
-                presenter.saveCandidate2Count(it)
+                tps?.id?.let { it1 -> presenter.saveCandidate2Count(it, it1) }
             }
             .doOnError {
                 it.printStackTrace()
@@ -114,7 +131,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
                 undoPosition = 2
-                presenter.saveInvalidVoteCount(it)
+                tps?.id?.let { it1 -> presenter.saveInvalidVoteCount(it, it1) }
             }
             .doOnError {
                 it.printStackTrace()
@@ -179,6 +196,14 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun bindRealCount(realCount: RealCount?) {
+        realCount?.let {
+            candidate_1_count_field.setText(it.candidates[0].totalVote.toString())
+            candidate_2_count_field.setText(it.candidates[1].totalVote.toString())
+            no_vote_count_field.setText(it.invalidVote.toString())
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_undo, menu)
         return true
@@ -193,6 +218,10 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun showFailedSaveDataAlert() {
+        ToastUtil.show(this@PerhitunganPresidenActivity, "Gagal menyimpan data")
     }
 
     override fun onDestroy() {

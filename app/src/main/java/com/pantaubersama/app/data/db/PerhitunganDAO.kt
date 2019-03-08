@@ -2,6 +2,7 @@ package com.pantaubersama.app.data.db
 
 import androidx.room.* //ktlint-disable
 import com.pantaubersama.app.data.model.tps.Province
+import com.pantaubersama.app.data.model.tps.RealCount
 import com.pantaubersama.app.data.model.tps.TPS
 
 interface PerhitunganDAO {
@@ -30,5 +31,17 @@ interface PerhitunganDAO {
 
         @Query("SELECT * FROM tps WHERE id = :tpsId")
         fun getTps(tpsId: String): TPS
+    }
+
+    @Dao
+    interface RealCountDAO {
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        fun saveRealCount(realCount: RealCount)
+
+        @Query("SELECT * FROM real_count WHERE id = :tpsId")
+        fun getRealCount(tpsId: String): RealCount?
+
+        @Query("SELECT * FROM real_count ORDER BY id DESC")
+        fun getRealCounts(): MutableList<RealCount>
     }
 }

@@ -1,31 +1,64 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden
 
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.interactors.RealCountInteractor
 import javax.inject.Inject
 
-class PerhitunganPresidenPresenter @Inject constructor() : BasePresenter<PerhitunganPresidenView>() {
-    var candidate1Count = 0
-    var candidate2Count = 0
-    var validCount = 0
-    var invalidCount = 0
-    var allCount = 0
-    fun saveCandidate1Count(candidate1Count: Int) {
-        this.candidate1Count = candidate1Count
-        validCount = this.candidate1Count + this.candidate2Count
-        allCount = this.invalidCount + this.validCount
-        view?.onSuccessVoteCandidateCount(validCount, invalidCount, allCount)
+class PerhitunganPresidenPresenter @Inject constructor(
+    private val realCountInteractor: RealCountInteractor
+) : BasePresenter<PerhitunganPresidenView>() {
+    fun saveCandidate1Count(candidate1Count: Int, tpsId: String) {
+        disposables.add(
+            realCountInteractor.savePresidentCandidate1Count(candidate1Count, tpsId)
+                .subscribe(
+                    {
+                        val validCount = it.candidates[0].totalVote + it.candidates[1].totalVote
+                        val allCount = it.invalidVote + validCount
+                        view?.onSuccessVoteCandidateCount(validCount, it.invalidVote, allCount)
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedSaveDataAlert()
+                    }
+                )
+        )
     }
 
-    fun saveCandidate2Count(candidate2Count: Int) {
-        this.candidate2Count = candidate2Count
-        validCount = this.candidate1Count + this.candidate2Count
-        allCount = this.invalidCount + this.validCount
-        view?.onSuccessVoteCandidateCount(validCount, invalidCount, allCount)
+    fun saveCandidate2Count(candidate2Count: Int, tpsId: String) {
+        disposables.add(
+            realCountInteractor.savePresidentCandidate2Count(candidate2Count, tpsId)
+                .subscribe(
+                    {
+                        val validCount = it.candidates[0].totalVote + it.candidates[1].totalVote
+                        val allCount = it.invalidVote + validCount
+                        view?.onSuccessVoteCandidateCount(validCount, it.invalidVote, allCount)
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedSaveDataAlert()
+                    }
+                )
+        )
     }
 
-    fun saveInvalidVoteCount(invalidCount: Int) {
-        this.invalidCount = invalidCount
-        allCount = this.invalidCount + this.validCount
-        view?.onSuccessVoteCandidateCount(validCount, invalidCount, allCount)
+    fun saveInvalidVoteCount(invalidCount: Int, tpsId: String) {
+        disposables.add(
+            realCountInteractor.saveInvalidCount(invalidCount, tpsId)
+                .subscribe(
+                    {
+                        val validCount = it.candidates[0].totalVote + it.candidates[1].totalVote
+                        val allCount = it.invalidVote + validCount
+                        view?.onSuccessVoteCandidateCount(validCount, it.invalidVote, allCount)
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedSaveDataAlert()
+                    }
+                )
+        )
+    }
+
+    fun getRealCount(tpsId: String) {
+        view?.bindRealCount(realCountInteractor.getRealCount(tpsId))
     }
 }

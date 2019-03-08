@@ -17,6 +17,7 @@ class PantauConstants {
         const val CREATE_PERHITUNGAN_REQUEST_CODE = 965
         const val C1_MODEL_TYPE = "c1_type"
         const val DO_PERHITUNGAN_REQUEST_CODE = 967
+        const val TPS_DATA = "tps_data"
     }
 
     companion object {

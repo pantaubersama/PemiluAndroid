@@ -123,7 +123,7 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
                         when (viewId) {
                             R.id.edit_tps_data_action -> {
                                 val intent = Intent(requireContext(), DataTPSActivity::class.java)
-                                intent.putExtra("tps_data", tps)
+                                intent.putExtra(PantauConstants.Merayakan.TPS_DATA, tps)
                                 startActivityForResult(intent, PantauConstants.Merayakan.CREATE_PERHITUNGAN_REQUEST_CODE)
                                 dialog.dismiss()
                             }
@@ -149,8 +149,7 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
 
             override fun onClickItem(item: TPS, adapterPosition: Int) {
                 val intent = Intent(requireContext(), PerhitunganMainActivity::class.java)
-                intent.putExtra("tps_data", item)
-                intent.putExtra("tps_position", adapterPosition)
+                intent.putExtra(PantauConstants.Merayakan.TPS_DATA, item)
                 startActivityForResult(intent, PantauConstants.Merayakan.DO_PERHITUNGAN_REQUEST_CODE)
             }
         }

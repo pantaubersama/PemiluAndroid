@@ -18,6 +18,7 @@ import com.pantaubersama.app.data.model.tps.* // ktlint-disable
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
+import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_data_tps.*
@@ -63,8 +64,8 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun fetchIntentExtra() {
-        if (intent.getSerializableExtra("tps_data") != null) {
-            tps = intent.getSerializableExtra("tps_data") as TPS
+        if (intent.getSerializableExtra(PantauConstants.Merayakan.TPS_DATA) != null) {
+            tps = intent.getSerializableExtra(PantauConstants.Merayakan.TPS_DATA) as TPS
         }
     }
 
