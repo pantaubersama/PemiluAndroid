@@ -2,7 +2,6 @@ package com.pantaubersama.app.data.model.debat
 
 import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.utils.PantauConstants.Word.WORD_INPUT_CHALLENGER
 import com.pantaubersama.app.utils.PantauConstants.Word.WORD_INPUT_OPPONENT
@@ -19,9 +18,19 @@ data class WordListResponse(
     val wordListData: WordListData
 )
 
+data class WordItemResponse(
+    @SerializedName("data")
+    val wordItemData: WordItemData
+)
+
 data class WordListData(
     @SerializedName("words")
     val wordList: MutableList<WordItem>
+)
+
+data class WordItemData(
+    @SerializedName("word")
+    val word: WordItem
 )
 
 data class WordItem(

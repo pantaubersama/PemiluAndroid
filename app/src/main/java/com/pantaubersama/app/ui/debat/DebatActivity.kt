@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.TextKeyListener
@@ -14,7 +15,9 @@ import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +27,10 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.makeramen.roundedimageview.RoundedImageView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.data.model.debat.*
+import com.pantaubersama.app.data.model.debat.Challenge
+import com.pantaubersama.app.data.model.debat.Komentar
+import com.pantaubersama.app.data.model.debat.WordItem
+import com.pantaubersama.app.data.model.debat.WordInputItem
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.di.component.ActivityComponent
@@ -34,13 +40,16 @@ import com.pantaubersama.app.ui.debat.detail.DetailDebatDialogFragment
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
 import com.pantaubersama.app.utils.ToastUtil
-import com.pantaubersama.app.utils.extensions.*
+import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import com.pantaubersama.app.utils.hideKeyboard
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Role
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_debat.*
+import kotlinx.android.synthetic.main.layout_empty_state.*
+import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_header_detail_debat.*
 import kotlinx.android.synthetic.main.layout_komentar_debat.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
 import kotlinx.android.synthetic.main.layout_status_debat.*
 import kotlinx.android.synthetic.main.layout_toolbar_debat.*
 import net.frakbot.jumpingbeans.JumpingBeans
@@ -57,6 +66,10 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
     private var jumpingBeans: JumpingBeans? = null
 
+    private var isMainToolbarShown = true
+    private var isAppbarExpanded = true
+    private var isKeyboardShown = false
+
 //    private lateinit var messageSortedAdapter: MessageSortedAdapter
     private lateinit var wordsFighterAdapter: WordsFighterAdapter
     private lateinit var komentarAdapter: KomentarAdapter
@@ -70,7 +83,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     private lateinit var iv_avatar_comment_main: RoundedImageView
     private lateinit var iv_avatar_comment_in: RoundedImageView
 
-    private var isMessageInputFocused = false
+    private var isWordsInputFocused = false
     private val optionDialog by unSyncLazy {
         OptionDialogFragment.newInstance(R.layout.layout_option_dialog_menguji)
     }
@@ -127,7 +140,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         getList()
     }
 
-    fun setupHeader() {
+    private fun setupHeader() {
         val challenger = challenge.challenger
         val opponent = challenge.opponent
 
@@ -153,21 +166,31 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
     private fun setupDebatList() {
         wordsFighterAdapter = WordsFighterAdapter()
-        recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, true)
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.reverseLayout = true
+        layoutManager.stackFromEnd = true
+        recycler_view.layoutManager = layoutManager
         recycler_view.adapter = wordsFighterAdapter
         wordsFighterAdapter.listener = object : WordsFighterAdapter.AdapterListener {
             override fun onClickClap() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
-            override fun onMessageInputFocused(isFocused: Boolean) {
-                isMessageInputFocused = isFocused
+            override fun onWordsInputFocused(isFocused: Boolean) {
+                isWordsInputFocused = isFocused
+                if (isFocused && isAppbarExpanded) {
+                    app_bar.setExpanded(false)
+                    recycler_view.smoothScrollToPosition(0)
+                }
             }
 
             override fun onPublish(words: String) {
-                presenter.postWordsFighter(challenge.id, words, if (myRole == Role.CHALLENGER) challenge.challenger else challenge.opponent
-                    ?: Audience(null, null,null,null,"","",null, ""))
+                presenter.postWordsFighter(challenge.id, words)
             }
+        }
+
+        swipe_refresh.setOnRefreshListener {
+            getList()
         }
     }
 
@@ -188,23 +211,53 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     }
 
     override fun showWordsFighter(wordList: MutableList<WordItem>) {
+        recycler_view.visibleIf(true)
         wordsFighterAdapter.setDatas(wordList)
         updateInputTurn()
-        if (isMyChallenge) wordsFighterAdapter.addInputMessage(myRole, isMyTurn)
-        recycler_view.scrollToPosition(wordsFighterAdapter.itemCount - 1)
-        showFAB(true)
+//        recycler_view.scrollToPosition(wordsFighterAdapter.itemCount - 1)
+
+        Handler().postDelayed({
+            showFAB(true)
+        }, 500)
     }
 
     override fun showLoadingWordsFighter() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val layoutParams = FrameLayout.LayoutParams(dip(200), dip(150))
+        layoutParams.topMargin = dip(100)
+        layoutParams.gravity = Gravity.CENTER_HORIZONTAL
+        lottie_loading.layoutParams = layoutParams
+        lottie_loading.enableLottie(true, lottie_loading)
+        view_empty_state.enableLottie(false, lottie_empty_state)
+        view_fail_state.enableLottie(false, lottie_fail_state)
+        recycler_view.visibleIf(false)
     }
 
     override fun dismissLoadingWordsFighter() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        lottie_loading.enableLottie(false, lottie_loading)
+        if (swipe_refresh.isRefreshing) swipe_refresh.isRefreshing = false
+    }
+
+    override fun onEmptyWordsFighter() {
+        if (!isMyChallenge) view_empty_state.enableLottie(true, lottie_empty_state)
+        if (view_empty_state.isVisible()) {
+            val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 4f)
+            layoutParams.marginStart = dip(70)
+            layoutParams.marginEnd = dip(70)
+            layoutParams.topMargin = dip(20)
+            tv_empty_state.layoutParams = layoutParams
+            tv_empty_state.text = "belum ada perdebatan"
+        }
+        updateInputTurn()
     }
 
     override fun onErrorGetWordsFighter(t: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        view_fail_state.enableLottie(true, lottie_fail_state)
+        val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 4f)
+        layoutParams.marginStart = dip(70)
+        layoutParams.marginEnd = dip(70)
+        layoutParams.topMargin = dip(20)
+        tv_fail_state.layoutParams = layoutParams
+        tv_fail_state.text = t.message
     }
 
     override fun showKomentar(komentarList: MutableList<Komentar>) {
@@ -213,13 +266,13 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
     override fun updateInputTurn() {
         val turnActorRole = if (!wordsFighterAdapter.itemCount.isOdd()) {
-//            if (isMyChallenge) {
+            if (isMyChallenge) {
                 Role.CHALLENGER
-//            } else Role.OPPONENT
+            } else Role.OPPONENT
         } else {
-//            if (isMyChallenge) {
+            if (isMyChallenge) {
                 Role.OPPONENT
-//            } else Role.CHALLENGER
+            } else Role.CHALLENGER
         }
         val turnActorName = when (turnActorRole) {
             myRole -> "Kamu"
@@ -230,13 +283,16 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
         isMyTurn = myRole == turnActorRole
 
+        if (isMyChallenge && wordsFighterAdapter.get(0) !is WordInputItem) showWordsInputBox()
+
         tv_status_debat.text = "Giliran $turnActorName menulis argumen "
         enableJumpingDots(true)
     }
 
     override fun onSuccessPostWordsFighter(wordItem: WordItem) {
-        wordsFighterAdapter.clearInputMessage(true)
+        wordsFighterAdapter.clearInputMessage(false)
         wordsFighterAdapter.addItem(wordItem, 1)
+        updateInputTurn()
     }
 
     override fun onFailedPostWordsFighter(wordItem: WordItem) {
@@ -259,20 +315,13 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onBackPressed() {
-        if (sliding_layout.panelState == SlidingUpPanelLayout.PanelState.EXPANDED || sliding_layout.panelState == SlidingUpPanelLayout.PanelState.ANCHORED) {
-            sliding_layout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-        } else {
-            super.onBackPressed()
-        }
+    private fun showWordsInputBox() {
+        Timber.d("showWordsInputBox isMyTurn = $isMyTurn")
+        wordsFighterAdapter.addWordsInputItem(myRole, isMyTurn)
     }
 
     @SuppressLint("SetTextI18n")
     private fun setupLayoutBehaviour() {
-        var isMainToolbarShown = true
-        var isKeyboardShown = false
-        var isAppbarExpanded = true
-
         et_comment_main = layout_box_komentar_main.findViewById(R.id.et_comment)
         et_comment_in = layout_komentar_debat.findViewById(R.id.et_comment)
         btn_comment_main = layout_box_komentar_main.findViewById(R.id.iv_btn_comment)
@@ -377,7 +426,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
             isKeyboardShown = isOpen
             if (isOpen) {
                 showFAB(false)
-                if (isMessageInputFocused && layout_box_komentar_main.isVisible()) {
+                if (isWordsInputFocused && layout_box_komentar_main.isVisible()) {
                     layout_box_komentar_main.visibleIf(false)
                     adjustRvPadding(true)
                 } else {
@@ -444,7 +493,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
     private fun showFAB(showing: Boolean) {
         if (showing) {
-            if (!fab_scroll_to_bottom.isShown && recycler_view.canScrollVertically(1)) {
+            if (!fab_scroll_to_bottom.isShown && recycler_view.canScrollVertically(1) && !isKeyboardShown) {
                 val fabLayoutParams = CoordinatorLayout.LayoutParams(dip(40), dip(40))
                 fabLayoutParams.gravity = Gravity.BOTTOM or Gravity.END
                 fabLayoutParams.setMargins(0, 0, dip(16), layout_box_komentar_main.height + dip(8))
@@ -487,7 +536,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
                     }
                 }
         }
-
     }
 
     override fun onPause() {
@@ -504,5 +552,13 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         }
 
         super.onPause()
+    }
+
+    override fun onBackPressed() {
+        if (sliding_layout.panelState == SlidingUpPanelLayout.PanelState.EXPANDED || sliding_layout.panelState == SlidingUpPanelLayout.PanelState.ANCHORED) {
+            sliding_layout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        } else {
+            super.onBackPressed()
+        }
     }
 }

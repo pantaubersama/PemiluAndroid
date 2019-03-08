@@ -10,7 +10,7 @@ import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.extensions.parseDate
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
-import java.util.*
+import java.util.* // ktlint-disable
 import javax.inject.Inject
 
 class PromoteChallengePresenter @Inject constructor(

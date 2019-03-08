@@ -15,8 +15,8 @@ import com.pantaubersama.app.utils.PantauConstants.Word.WORD_TYPE_OPPONENT
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.drawable
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_box_message_left.*
-import kotlinx.android.synthetic.main.item_message_left_side.*
+import kotlinx.android.synthetic.main.item_words_input_challenger.*
+import kotlinx.android.synthetic.main.item_words_challenger.*
 
 /**
  * @author edityomurti on 14/02/2019 22:26
@@ -37,10 +37,10 @@ class MessageSortedAdapter : SortedAdapter<WordItem>() {
 
     override fun getItemResourceLayout(viewType: Int): Int {
         return when (viewType) {
-            WORD_TYPE_CHALLENGER -> R.layout.item_message_left_side
-            WORD_TYPE_OPPONENT -> R.layout.item_message_right_side
-            WORD_INPUT_CHALLENGER -> R.layout.item_box_message_left
-            WORD_INPUT_OPPONENT -> R.layout.item_box_message_right
+            WORD_TYPE_CHALLENGER -> R.layout.item_words_challenger
+            WORD_TYPE_OPPONENT -> R.layout.item_words_opponent
+            WORD_INPUT_CHALLENGER -> R.layout.item_words_input_challenger
+            WORD_INPUT_OPPONENT -> R.layout.item_words_input_opponent
             else -> throw IllegalArgumentException("unknown view type $viewType")
         }
     }
@@ -174,11 +174,11 @@ class MessageSortedAdapter : SortedAdapter<WordItem>() {
 //    fun addMessageInput(type: WordItem.Type) {
 //        getData(itemCount - 1)?.let {
 //            val inputMessageItem = when (type) {
-////                WordItem.Type.INPUT_CHALLENGER -> WORD_FIGHTER_INPUT_CHALLENGER
+// //                WordItem.Type.INPUT_CHALLENGER -> WORD_FIGHTER_INPUT_CHALLENGER
 //                else -> WORD_FIGHTER_INPUT_OPPONENT
 //            }
-////            messageInputItem.createdAt = it.createdAt + 1
-////            addItem(messageInputItem)
+// //            messageInputItem.createdAt = it.createdAt + 1
+// //            addItem(messageInputItem)
 //        }
 //    }
 

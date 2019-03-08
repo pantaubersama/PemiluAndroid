@@ -239,9 +239,9 @@ interface PantauOAuthAPI {
 
     @GET("/v1/users")
     fun searchPerson(
-            @Query("q") keyword: String,
-            @Query("page") page: Int,
-            @Query("per_page") perPage: Int,
-            @Query("filter_by") filter: String
+        @Query("q") keyword: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("filter_by") filter: String
     ): Single<LawanDebatResponse>
 }

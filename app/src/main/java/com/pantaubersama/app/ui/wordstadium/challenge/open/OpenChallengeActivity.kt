@@ -28,7 +28,7 @@ import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_open_challenge.*
 import kotlinx.android.synthetic.main.close_challenge.view.*
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.* // ktlint-disable
 import javax.inject.Inject
 
 class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChallengeView {

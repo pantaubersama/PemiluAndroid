@@ -7,7 +7,7 @@ import android.os.Handler
 import android.view.View
 import android.webkit.CookieManager
 import androidx.core.content.ContextCompat
-import com.facebook.*
+import com.facebook.* // ktlint-disable
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.pantaubersama.app.R
@@ -21,7 +21,7 @@ import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
-import com.twitter.sdk.android.core.*
+import com.twitter.sdk.android.core.* // ktlint-disable
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import com.twitter.sdk.android.core.models.User
 import kotlinx.android.synthetic.main.activity_promote_challenge.*

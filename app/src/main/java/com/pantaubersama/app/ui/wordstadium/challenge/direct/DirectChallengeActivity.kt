@@ -35,7 +35,7 @@ import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_direct_challenge.*
 import kotlinx.android.synthetic.main.close_challenge.view.*
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.* // ktlint-disable
 import javax.inject.Inject
 
 class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), DirectChallengeView {
