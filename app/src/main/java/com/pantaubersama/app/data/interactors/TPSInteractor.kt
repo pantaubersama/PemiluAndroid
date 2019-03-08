@@ -69,8 +69,9 @@ class TPSInteractor @Inject constructor(
         long: Double
     ): Single<TPS> {
         if (appDB.getTPSDAO().loadTPS().size != 0) {
+            val id = (appDB.getTPSDAO().loadTPS().get(appDB.getTPSDAO().loadTPS().size - 1).id.toInt() + 1).toString()
             val tps = TPS(
-                (appDB.getTPSDAO().loadTPS().size + 1).toString(),
+                id,
                 tpsNumber,
                 selectedProvince,
                 selectedRegency,

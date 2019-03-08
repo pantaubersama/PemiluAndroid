@@ -29,8 +29,9 @@ class RealCountInteractor @Inject constructor(
             candidates.add(Candidate(2, 0))
             val parties: MutableList<Party> = ArrayList()
             if (appDB.getRealCountDao().getRealCounts().size != 0) {
+                val id = (appDB.getRealCountDao().getRealCounts()[appDB.getRealCountDao().getRealCounts().size - 1].id.toInt() + 1).toString()
                 appDB.getRealCountDao().saveRealCount(
-                    RealCount((appDB.getRealCountDao().getRealCounts().size + 1).toString(), tpsId, "presiden", candidates, 0, parties)
+                    RealCount(id, tpsId, "presiden", candidates, 0, parties)
                 )
             } else {
                 appDB.getRealCountDao().saveRealCount(
@@ -58,8 +59,9 @@ class RealCountInteractor @Inject constructor(
             candidates.add(Candidate(2, candidate2Count))
             val parties: MutableList<Party> = ArrayList()
             if (appDB.getRealCountDao().getRealCounts().size != 0) {
+                val id = (appDB.getRealCountDao().getRealCounts()[appDB.getRealCountDao().getRealCounts().size - 1].id.toInt() + 1).toString()
                 appDB.getRealCountDao().saveRealCount(
-                    RealCount((appDB.getRealCountDao().getRealCounts().size + 1).toString(), tpsId, "presiden", candidates, 0, parties)
+                    RealCount(id, tpsId, "presiden", candidates, 0, parties)
                 )
             } else {
                 appDB.getRealCountDao().saveRealCount(
@@ -87,8 +89,9 @@ class RealCountInteractor @Inject constructor(
             candidates.add(Candidate(2, 0))
             val parties: MutableList<Party> = ArrayList()
             if (appDB.getRealCountDao().getRealCounts().size != 0) {
+                val id = (appDB.getRealCountDao().getRealCounts()[appDB.getRealCountDao().getRealCounts().size - 1].id.toInt() + 1).toString()
                 appDB.getRealCountDao().saveRealCount(
-                    RealCount((appDB.getRealCountDao().getRealCounts().size + 1).toString(), tpsId, "presiden", candidates, invalidCount, parties)
+                    RealCount(id, tpsId, "presiden", candidates, invalidCount, parties)
                 )
             } else {
                 appDB.getRealCountDao().saveRealCount(

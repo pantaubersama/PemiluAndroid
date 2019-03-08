@@ -3,7 +3,6 @@ package com.pantaubersama.app.data.db
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.pantaubersama.app.data.model.tps.Logs
-import com.twitter.sdk.android.core.models.User
 
 /**
  * Created by alimustofa on 27/02/18.
