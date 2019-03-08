@@ -43,5 +43,8 @@ interface PerhitunganDAO {
 
         @Query("SELECT * FROM real_count ORDER BY id DESC")
         fun getRealCounts(): MutableList<RealCount>
+
+        @Delete
+        fun deleteRealCount(realCount: RealCount)
     }
 }
