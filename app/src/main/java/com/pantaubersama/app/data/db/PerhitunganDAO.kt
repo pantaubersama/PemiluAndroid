@@ -19,7 +19,7 @@ interface PerhitunganDAO {
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         fun saveTPS(tpsData: TPS)
 
-        @Query("SELECT * FROM tps ORDER BY id ASC")
+        @Query("SELECT * FROM tps ORDER BY id DESC")
         fun loadTPS(): MutableList<TPS>
 
         @Delete
@@ -27,5 +27,8 @@ interface PerhitunganDAO {
 
         @Update
         fun updateTps(tps: TPS)
+
+        @Query("SELECT * FROM tps WHERE id = :tpsId")
+        fun getTps(tpsId: String): TPS
     }
 }

@@ -7,7 +7,6 @@ import com.pantaubersama.app.data.model.tps.* // ktlint-disable
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -104,7 +103,7 @@ class TPSInteractor @Inject constructor(
         }
     }
 
-    fun getTpses(page: Int, perPage: Int): Maybe<MutableList<TPS>> {
+    fun getTpses(page: Int, perPage: Int): Single<MutableList<TPS>> {
         return apiWrapper.getPantauApi()
                 .getTPSes(
                     page,
@@ -114,42 +113,51 @@ class TPSInteractor @Inject constructor(
                 .map {
                     it.tpsData.tpses
                 }
-                .filter { it.size != 0 }
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
     }
 
     fun deleteTps(tps: TPS): Completable {
-        return Completable.fromCallable {
-            appDB.getTPSDAO().deleteTPS(tps)
+        return when (tps.status) {
+            "published" -> apiWrapper.getPantauApi().deleteTPS(tps.id)
+                .subscribeOn(rxSchedulers.io())
+                .observeOn(rxSchedulers.mainThread())
+            "draft" -> Completable.fromCallable {
+                appDB.getTPSDAO().deleteTPS(tps)
+            }
+            else -> Completable.fromCallable {
+                appDB.getTPSDAO().deleteTPS(tps)
+            }
         }
     }
 
     fun updateTps(
         tpsId: String,
         tpsNumber: Int,
-        selectedProvince: Province,
-        selectedRegency: Regency,
-        selectedDistrict: District,
-        selectedVillage: Village,
-        lat: Double,
-        long: Double
-    ): Single<TPS> {
-        val tps = TPS(
-            tpsId,
-            tpsNumber,
-            selectedProvince,
-            selectedRegency,
-            selectedDistrict,
-            selectedVillage,
-            lat,
-            long,
-            "draft",
-            "",
-            CreatedAtInWord("", "", "")
-        )
-        appDB.getTPSDAO().updateTps(tps)
-        return Single.just(tps)
+        status: String
+    ): Completable {
+        when (status) {
+            "published" -> return apiWrapper.getPantauApi().updateTPS(
+                tpsId,
+                tpsNumber
+            )
+                .subscribeOn(rxSchedulers.io())
+                .observeOn(rxSchedulers.mainThread())
+            "draft" -> {
+                val tps = appDB.getTPSDAO().getTps(tpsId)
+                tps.tps = tpsNumber
+                return Completable.fromCallable {
+                    appDB.getTPSDAO().updateTps(tps)
+                }
+            }
+            else -> {
+                val tps = appDB.getTPSDAO().getTps(tpsId)
+                tps.tps = tpsNumber
+                return Completable.fromCallable {
+                    appDB.getTPSDAO().updateTps(tps)
+                }
+            }
+        }
     }
 
     fun getLocalTpses(): MutableList<TPS> {

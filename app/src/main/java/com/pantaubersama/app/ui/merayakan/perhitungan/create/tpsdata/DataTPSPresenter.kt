@@ -120,28 +120,18 @@ class DataTPSPresenter @Inject constructor(
     fun updateTps(
         tpsId: String,
         tpsNumber: Int,
-        selectedProvince: Province,
-        selectedRegency: Regency,
-        selectedDistrict: District,
-        selectedVillage: Village,
-        lat: Double,
-        long: Double
+        status: String
     ) {
         view?.showLoading()
         disposables.add(
             tpsInteractor.updateTps(
                 tpsId,
                 tpsNumber,
-                selectedProvince,
-                selectedRegency,
-                selectedDistrict,
-                selectedVillage,
-                lat,
-                long
+                status
             )
                 .subscribe(
                     {
-                        view?.onSuccessSaveTPS(it)
+                        view?.onSuccessUpdateTPS()
                         view?.dismissLoading()
                     },
                     {

@@ -23,4 +23,5 @@ interface DataTPSView : BaseView {
     fun onSuccessSaveTPS(tps: TPS)
     fun failedSaveTpsAlert()
     fun failedUpdateTpsAlert()
+    fun onSuccessUpdateTPS()
 }

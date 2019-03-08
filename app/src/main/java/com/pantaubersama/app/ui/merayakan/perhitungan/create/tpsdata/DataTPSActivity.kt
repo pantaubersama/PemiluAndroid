@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.location.* //ktlint-disable
@@ -93,8 +94,10 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 }
             }
         }
-        update_location_button.setOnClickListener {
-            showGPSDisabledAlert()
+        if (tps == null) {
+            update_location_button.setOnClickListener {
+                showGPSDisabledAlert()
+            }
         }
         getLocationPermission()
         setupProvincesDropdown()
@@ -152,6 +155,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
         )
         provincesAdapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
         provinces_dropdown.adapter = provincesAdapter
+        if (tps != null) {
+            provinces_dropdown.isEnabled = false
+        }
     }
 
     override fun showProvincesLoading() {
@@ -234,7 +240,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 }
             }
         }
-        regencies_dropdown.isEnabled = true
+        if (tps == null) {
+            regencies_dropdown.isEnabled = true
+        }
     }
 
     override fun showDistrictsLoading() {
@@ -276,7 +284,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 }
             }
         }
-        districts_dropdown.isEnabled = true
+        if (tps == null) {
+            districts_dropdown.isEnabled = true
+        }
     }
 
     override fun showVillagesLoading() {
@@ -313,7 +323,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 }
             }
         }
-        villages_dropdown.isEnabled = true
+        if (tps == null) {
+            villages_dropdown.isEnabled = true
+        }
     }
 
     override fun showFailedGetVillagesAlert() {
@@ -322,10 +334,12 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
     private val locationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
-            update_location_button.setOnClickListener {
-                location_progressbar.visibility = View.VISIBLE
-                address_text.visibility = View.GONE
-                bindLocation(location)
+            if (tps == null) {
+                update_location_button.setOnClickListener {
+                    location_progressbar.visibility = View.VISIBLE
+                    address_text.visibility = View.GONE
+                    bindLocation(location)
+                }
             }
         }
 
@@ -462,16 +476,13 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                         } else {
                             if (tps != null) {
                                 tps?.id?.let {
-                                    presenter.updateTps(
-                                        it,
-                                        tps_number_field.text.toString().toInt(),
-                                        selectedProvince,
-                                        selectedRegency,
-                                        selectedDistrict,
-                                        selectedVillage,
-                                        lat,
-                                        long
-                                    )
+                                    tps?.status?.let { it1 ->
+                                        presenter.updateTps(
+                                            it,
+                                            tps_number_field.text.toString().toInt(),
+                                            it1
+                                        )
+                                    }
                                 }
                             } else {
                                 presenter.saveDataTPS(
@@ -495,6 +506,11 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
         val intent = Intent(this@DataTPSActivity, PerhitunganMainActivity::class.java)
         intent.putExtra("tps_data", tps)
         startActivityForResult(intent, 1)
+    }
+
+    override fun onSuccessUpdateTPS() {
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 
     override fun failedSaveTpsAlert() {

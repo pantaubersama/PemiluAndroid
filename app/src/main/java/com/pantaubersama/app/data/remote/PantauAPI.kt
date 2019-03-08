@@ -220,4 +220,28 @@ interface PantauAPI {
         @Query("per_page") perPage: Int,
         @Query("user_id") userId: String?
     ): Single<TpsResponse>
+
+    @DELETE("hitung/v1/real_counts/{id}")
+    fun deleteTPS(
+        @Path("id") id: String
+    ): Completable
+
+    @FormUrlEncoded
+    @POST("hitung/v1/real_counts")
+    fun publishTPS(
+        @Field("tps") tpsNumber: Int,
+        @Field("province_code") selectedProvince: Province,
+        @Field("regency_code") selectedRegency: Regency,
+        @Field("district_code") selectedDistrict: District,
+        @Field("village_code") selectedVillage: Village,
+        @Field("latitude") lat: Double,
+        @Field("longitude") long: Double
+    )
+
+    @FormUrlEncoded
+    @PUT("hitung/v1/real_counts/{id}")
+    fun updateTPS(
+        @Path("id") tpsId: String,
+        @Field("tps") tpsNumber: Int
+    ): Completable
 }
