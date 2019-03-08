@@ -85,7 +85,7 @@ abstract class CommonActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun showProgressDialog(message: String) {
+    fun showProgressDialog(message: String? = getString(R.string.txt_mohon_tunggu)) {
         progressDialog?.setMessage(message)
 
         if (progressDialog?.isShowing == false) {

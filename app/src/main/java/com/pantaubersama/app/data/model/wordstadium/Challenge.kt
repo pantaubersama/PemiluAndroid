@@ -11,5 +11,9 @@ data class Challenge(
     var date: String?,
     var time: String?,
     @SerializedName("saldo_waktu")
-    var saldoWaktu: Int
+    var saldoWaktu: Int,
+    var invitationId: String? = null,
+    var screenName: String? = null,
+    var name: String? = null,
+    var avatar: String? = null
 ) : Serializable

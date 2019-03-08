@@ -107,7 +107,11 @@ class PantauConstants {
         const val EXTRA_IMAGE_URL = "EXTRA_IMAGE_URL"
         const val EXTRA_BROADCAST_URL = "EXTRA_BROADCAST_URL"
         const val EXTRA_OPEN_TAB_TYPE = "EXTRA_OPEN_TAB_TYPE"
-        const val EXTRA_DEBAT_ITEM = "EXTRA_DEBAT_ITEM"
+        const val EXTRA_CHALLENGE_ITEM = "EXTRA_CHALLENGE_ITEM"
+        const val EXTRA_CHALLENGE_ID = "EXTRA_CHALLENGE_ID"
+        const val EXTRA_POSITIVE_BTN_TEXT = "EXTRA_POSITIVE_BTN_TEXT"
+        const val EXTRA_MESSAGE_TEXT = "EXTRA_MESSAGE_TEXT"
+        const val EXTRA_DIALOG_LISTENER = "EXTRA_DIALOG_LISTENER"
     }
 
     object RequestCode {
@@ -214,9 +218,10 @@ class PantauConstants {
         const val TYPE_USER = 10
         const val TYPE_PARTAI = 11
         const val TYPE_HEADER = 12
-        const val TYPE_DEBAT_ITEM = 13
+        const val TYPE_CHALLENGE_ITEM = 13
         const val TYPE_BIDANG_KAJIAN = 14
         const val TYPE_KOMENTAR_ITEM = 15
+        const val TYPE_AUDIENCE_ITEM = 16
     }
 
     object Profile {
@@ -306,10 +311,10 @@ class PantauConstants {
         const val NOTIFICATION_TYPE_PROFILE = "profile"
     }
 
-    object Message {
-        const val MESSAGE_TYPE_LEFT_SIDE = 1
-        const val MESSAGE_TYPE_RIGHT_SIDE = 2
-        const val MESSAGE_INPUT_LEFT_SIDE = 3
-        const val MESSAGE_INPUT_RIGHT_SIDE = 4
+    object Word {
+        const val WORD_TYPE_CHALLENGER = 1
+        const val WORD_TYPE_OPPONENT = 2
+        const val WORD_INPUT_CHALLENGER = 3
+        const val WORD_INPUT_OPPONENT = 4
     }
 }

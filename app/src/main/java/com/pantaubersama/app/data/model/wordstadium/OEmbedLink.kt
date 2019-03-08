@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.model.wordstadium
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class OEmbedLink(
     @SerializedName("author_name")
@@ -25,4 +26,4 @@ data class OEmbedLink(
     var version: String?,
     @SerializedName("width")
     var width: Int?
-)
+) : Serializable

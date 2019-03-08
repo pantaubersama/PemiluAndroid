@@ -20,9 +20,20 @@
 
                 <include layout="@layout/item_banner_container" />
 
-                <include layout="@layout/layout_carousel_debat" />
+                <include
+                    android:id="@+id/container_carousel"
+                    layout="@layout/layout_carousel_debat" />
 
-                <include layout="@layout/layout_debat_list" />
+                <include
+                    android:id="@+id/container_list"
+                    layout="@layout/layout_debat_list" />
+
+                <include
+                    android:id="@+id/empty_state_all"
+                    layout="@layout/layout_empty_state_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -30,6 +41,6 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/layout_loading_state"/>
+    <include layout="@layout/layout_loading_state" />
 
 </FrameLayout>

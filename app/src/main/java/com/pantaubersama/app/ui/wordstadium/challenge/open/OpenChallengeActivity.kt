@@ -9,10 +9,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
@@ -22,13 +20,15 @@ import com.pantaubersama.app.data.model.wordstadium.BidangKajian
 import com.pantaubersama.app.data.model.wordstadium.Challenge
 import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.widget.PreviewWebViewClient
 import com.pantaubersama.app.ui.wordstadium.InfoDialog
 import com.pantaubersama.app.ui.wordstadium.challenge.CreateChallengeActivity
 import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_open_challenge.*
+import kotlinx.android.synthetic.main.close_challenge.view.*
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.* // ktlint-disable
 import javax.inject.Inject
 
 class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChallengeView {
@@ -41,6 +41,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
     var mDateString: String? = null
     var mTimeString: String? = null
     var mLink: String = ""
+    var oEmbedLink: OEmbedLink? = null
 
     @Inject
     override lateinit var presenter: OpenChallengePresenter
@@ -63,7 +64,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
         actionClick()
         bidangKajianActive()
 
-        link_webview.webViewClient = MyWebViewClient()
+        link_webview.webViewClient = PreviewWebViewClient()
     }
 
     override fun showLoading() {
@@ -178,9 +179,13 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
 
             val timePickerDialog = TimePickerDialog(this,
                     TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                        tv_time.text = "$hourOfDay.$minute"
+                        var hour: String = hourOfDay.toString()
+                        var mnt: String = minute.toString()
+                        if (hourOfDay < 10) hour = "0" + hour
+                        if (minute < 10) mnt = "0" + mnt
+                        tv_time.text = "$hour.$mnt"
                         dateTimeDone()
-                        mTimeString = "$hourOfDay:$minute"
+                        mTimeString = "$hour:$mnt"
                     }, mHour, mMinute, false)
 
             timePickerDialog.show()
@@ -215,6 +220,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
             val intent = Intent(this, PromoteChallengeActivity::class.java)
             intent.putExtra("challenge", challenge)
             intent.putExtra("date", mDateString + " " + mTimeString)
+            intent.putExtra("link", oEmbedLink)
             startActivityForResult(intent, CreateChallengeActivity.OPEN_CHALLENGE)
         }
     }
@@ -289,7 +295,6 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
     fun saldoWaktuDone() {
         check_saldo_waktu.setImageResource(R.drawable.check_done)
         line_saldo_waktu.setBackgroundColor(ContextCompat.getColor(this, R.color.orange_2))
-
         open_challenge_next.setBackgroundColor(ContextCompat.getColor(this, R.color.orange_2))
         open_challenge_next.enable(true)
     }
@@ -318,14 +323,35 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
         }
     }
 
-    class MyWebViewClient : WebViewClient() {
-        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-            view?.loadUrl(request?.url.toString())
-            return true
+    override fun onSuccessConvertLink(oEmbedLink: OEmbedLink) {
+        link_source.text = oEmbedLink.url
+        previewLink(oEmbedLink.html)
+        this.oEmbedLink = oEmbedLink
+    }
+
+    fun back() {
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.close_challenge, null)
+        val mDialogBuilder = AlertDialog.Builder(this)
+                .setView(mDialogView)
+        val mAlertDalog = mDialogBuilder.show()
+        mDialogView.yes_button.setOnClickListener {
+            mAlertDalog.dismiss()
+            finish()
+            setResult(Activity.RESULT_OK)
+        }
+        mDialogView.no_button.setOnClickListener {
+            mAlertDalog.dismiss()
         }
     }
 
-    override fun onSuccessConvertLink(oEmbedLink: OEmbedLink) {
-        previewLink(oEmbedLink.html)
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home) {
+            back()
+        }
+        return true
+    }
+
+    override fun onBackPressed() {
+        back()
     }
 }

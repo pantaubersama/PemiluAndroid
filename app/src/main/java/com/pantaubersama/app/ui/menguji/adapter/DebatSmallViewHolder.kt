@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.menguji.adapter
 
-import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,11 +9,11 @@ import com.pantaubersama.app.data.model.debat.Challenge
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Progress
 import com.pantaubersama.app.ui.debat.DebatActivity
+import com.pantaubersama.app.ui.debat.detail.DetailDebatActivity
 import com.pantaubersama.app.utils.extensions.color
+import com.pantaubersama.app.utils.extensions.parseDate
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.item_debat_small.*
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(view, fm) {
 
@@ -60,8 +59,7 @@ class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(vi
         when (challenge.status) {
             Status.LIVE_NOW -> text_status.text = "Live Selama 20 Menit"
             Status.COMING_SOON -> {
-                val showTime = dateFormatFrom.parse(challenge.showTimeAt)
-                text_status.text = dateFormatTo.format(showTime)
+                text_status.text = challenge.showTimeAt.parseDate()
             }
             Status.DONE -> {
                 text_clap_1.text = "70"
@@ -80,15 +78,10 @@ class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(vi
 
         itemView.setOnClickListener {
             if (challenge.status == Status.LIVE_NOW) {
-                it.context.startActivity(Intent(it.context, DebatActivity::class.java))
+                it.context.startActivity(DebatActivity.setIntent(it.context, challenge))
             } else {
-//                it.startActivity(DetailDebatActivity.setIntent(it, challenge))
+                it.context.startActivity(DetailDebatActivity.setIntent(it.context, challenge))
             }
         }
-    }
-
-    companion object {
-        private val dateFormatFrom = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale("in", "ID"))
-        private val dateFormatTo = SimpleDateFormat("dd MMMM yyyy  '•'  hh:mm", Locale("in", "ID"))
     }
 }

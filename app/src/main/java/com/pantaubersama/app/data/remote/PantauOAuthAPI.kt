@@ -10,6 +10,7 @@ import com.pantaubersama.app.data.model.user.BadgeResponse
 import com.pantaubersama.app.data.model.user.AchievedBadgeResponse
 import com.pantaubersama.app.data.model.user.Informant
 import com.pantaubersama.app.data.model.user.VerificationResponse
+import com.pantaubersama.app.data.model.wordstadium.LawanDebatResponse
 import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -235,4 +236,12 @@ interface PantauOAuthAPI {
     fun getClusterById(
         @Path("id") clusterId: String
     ): Single<ClustersResponse>
+
+    @GET("/v1/users")
+    fun searchPerson(
+        @Query("q") keyword: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("filter_by") filter: String
+    ): Single<LawanDebatResponse>
 }

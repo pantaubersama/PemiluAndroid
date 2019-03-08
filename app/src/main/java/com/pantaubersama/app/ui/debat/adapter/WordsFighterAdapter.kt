@@ -7,80 +7,84 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
-import com.pantaubersama.app.data.model.debat.InputMessageItem
-import com.pantaubersama.app.data.model.debat.MESSAGE_INPUT_LEFT
-import com.pantaubersama.app.data.model.debat.MESSAGE_INPUT_RIGHT
-import com.pantaubersama.app.data.model.debat.MessageItem
-import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_INPUT_LEFT_SIDE
-import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_INPUT_RIGHT_SIDE
-import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_TYPE_LEFT_SIDE
-import com.pantaubersama.app.utils.PantauConstants.Message.MESSAGE_TYPE_RIGHT_SIDE
+import com.pantaubersama.app.data.model.debat.WordInputItem
+import com.pantaubersama.app.data.model.debat.WordItem
+import com.pantaubersama.app.utils.PantauConstants.Word.WORD_INPUT_CHALLENGER
+import com.pantaubersama.app.utils.PantauConstants.Word.WORD_INPUT_OPPONENT
+import com.pantaubersama.app.utils.PantauConstants.Word.WORD_TYPE_CHALLENGER
+import com.pantaubersama.app.utils.PantauConstants.Word.WORD_TYPE_OPPONENT
+import com.pantaubersama.app.data.model.debat.ChallengeConstants.Role
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.drawable
 import com.pantaubersama.app.utils.extensions.inflate
+import com.pantaubersama.app.utils.extensions.parseDate
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_box_message_left.*
-import kotlinx.android.synthetic.main.item_message_left_side.*
+import kotlinx.android.synthetic.main.item_words_input_challenger.*
+import kotlinx.android.synthetic.main.item_words_challenger.*
 
 /**
  * @author edityomurti on 24/02/2019 19:48
  */
-class MessageAdapter : BaseRecyclerAdapter() {
+class WordsFighterAdapter : BaseRecyclerAdapter() {
 
     lateinit var recyclerView: RecyclerView
-    lateinit var listener: MessageAdapter.AdapterListener
+    lateinit var listener: WordsFighterAdapter.AdapterListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            MESSAGE_TYPE_LEFT_SIDE -> MessageViewholder(parent.inflate(R.layout.item_message_left_side))
-            MESSAGE_TYPE_RIGHT_SIDE -> MessageViewholder(parent.inflate(R.layout.item_message_right_side))
-            MESSAGE_INPUT_LEFT_SIDE -> MessageInputViewHolder(parent.inflate(R.layout.item_box_message_left))
-            MESSAGE_INPUT_RIGHT_SIDE -> MessageInputViewHolder(parent.inflate(R.layout.item_box_message_right))
+            WORD_TYPE_CHALLENGER -> WordFighterViewholder(parent.inflate(R.layout.item_words_challenger))
+            WORD_TYPE_OPPONENT -> WordFighterViewholder(parent.inflate(R.layout.item_words_opponent))
+            WORD_INPUT_CHALLENGER -> WordInputViewHolder(parent.inflate(R.layout.item_words_input_challenger))
+            WORD_INPUT_OPPONENT -> WordInputViewHolder(parent.inflate(R.layout.item_words_input_opponent))
             else -> throw IllegalArgumentException("unkown view type $viewType")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as? MessageViewholder)?.bind(data[position] as MessageItem)
-        (holder as? MessageInputViewHolder)?.bind(data[position] as InputMessageItem)
+        (holder as? WordFighterViewholder)?.bind(data[position] as WordItem)
+        (holder as? WordInputViewHolder)?.bind(data[position] as WordInputItem)
     }
 
-    inner class MessageViewholder(override val containerView: View)
+    inner class WordFighterViewholder(override val containerView: View)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: MessageItem) {
+        fun bind(item: WordItem) {
             tv_content.text = item.body
-            tv_clap_count.text = item.likedCount.toString()
+            tv_clap_count.text = item.clapCount.toString()
 
-            if (item.isLiked) {
+            if (item.isClaped) {
                 iv_clap.setImageResource(R.drawable.ic_clap)
             } else {
                 iv_clap.setImageResource(R.drawable.ic_appreciate_default)
             }
             cl_btn_clap.setOnClickListener { onClapClicked(item) }
+
+            tv_posted_time.text = item.createdAt.parseDate("HH:mm")
+            tv_read_estimation.text = "Estimasi baca ${item.readTime.let { if (it > 0f) it else "<1"}} menit"
         }
 
-        private fun onClapClicked(item: MessageItem) {
-            val initialClapState = item.isLiked
-            item.isLiked = !item.isLiked
+        private fun onClapClicked(item: WordItem) {
+            val initialClapState = item.isClaped
+            item.isClaped = !item.isClaped
             if (initialClapState) {
-                item.likedCount -= 1
+                item.clapCount -= 1
 //                iv_clap.setImageResource(R.drawable.ic_appreciate_pressed_yellow)
             } else {
-                item.likedCount += 1
+                item.clapCount += 1
 //                iv_clap.setImageResource(R.drawable.ic_appreciate_default)
             }
             notifyItemChanged(adapterPosition)
         }
     }
 
-    inner class MessageInputViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: InputMessageItem) {
-            enableView(item.inputState == InputMessageItem.InputState.ACTIVE, itemView as ViewGroup)
+    inner class WordInputViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+        fun bind(item: WordInputItem) {
+            enableView(item.isActive, cl_box_message as ViewGroup)
 
             et_content.setText(item.body)
 
             et_content.onFocusChangeListener = View.OnFocusChangeListener { _, isFocused ->
-                listener.onMessageInputFocused(isFocused)
+                listener.onWordsInputFocused(isFocused)
             }
 
             et_content.addTextChangedListener(object : TextWatcher {
@@ -90,11 +94,8 @@ class MessageAdapter : BaseRecyclerAdapter() {
 
                 override fun onTextChanged(query: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     if (query?.isNotEmpty() == true && query.isNotBlank()) {
-                        if (item.type == InputMessageItem.Type.INPUT_LEFT_SIDE) {
-                            view_indicator_input_message.background = itemView.context.drawable(R.drawable.rounded_tosca_2)
-                        } else {
-                            view_indicator_input_message.background = itemView.context.drawable(R.drawable.rounded_red_2)
-                        }
+                        view_indicator_input_message.background = itemView.context.drawable(
+                            if (item.role == Role.CHALLENGER) R.drawable.rounded_tosca_2 else R.drawable.rounded_red_2)
 
                         btn_publish.setTextColor(itemView.context.color(R.color.orange_2))
 
@@ -120,10 +121,16 @@ class MessageAdapter : BaseRecyclerAdapter() {
             btn_publish.setOnClickListener {
                 val content = et_content.text.toString()
                 item.body = content
-                item.inputState = InputMessageItem.InputState.INACTIVE
+                item.isActive = false
                 et_content.clearFocus()
                 notifyItemChanged(adapterPosition)
                 listener.onPublish(content)
+            }
+
+            if (!item.isActive) {
+                view_overlay.setOnClickListener {
+                    ToastUtil.show(it.context, "Belum giliran kamu")
+                }
             }
         }
 
@@ -140,8 +147,8 @@ class MessageAdapter : BaseRecyclerAdapter() {
 
     interface AdapterListener {
         fun onClickClap()
-        fun onMessageInputFocused(isFocused: Boolean)
-        fun onPublish(content: String)
+        fun onWordsInputFocused(isFocused: Boolean)
+        fun onPublish(words: String)
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -149,18 +156,14 @@ class MessageAdapter : BaseRecyclerAdapter() {
         this.recyclerView = recyclerView
     }
 
-    fun addInputMessage(type: InputMessageItem.Type) {
-        val inputMessageItem = when (type) {
-            InputMessageItem.Type.INPUT_LEFT_SIDE -> MESSAGE_INPUT_LEFT
-            InputMessageItem.Type.INPUT_RIGHT_SIDE -> MESSAGE_INPUT_RIGHT
-        }
-        addItem(inputMessageItem, 0)
+    fun addWordsInputItem(role: String, isActive: Boolean) {
+        addItem(WordInputItem(role, isActive), 0)
     }
 
     fun clearInputMessage(isActive: Boolean = false) {
-        (get(0) as? InputMessageItem)?.apply {
+        (get(0) as? WordInputItem)?.apply {
             body = ""
-            inputState = if (isActive) InputMessageItem.InputState.ACTIVE else InputMessageItem.InputState.INACTIVE
+            this.isActive = isActive
             notifyItemChanged(0)
         }
     }

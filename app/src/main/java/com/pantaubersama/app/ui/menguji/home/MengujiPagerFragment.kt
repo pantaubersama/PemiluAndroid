@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_carousel_debat.*
 import kotlinx.android.synthetic.main.layout_debat_list.*
 import kotlinx.android.synthetic.main.layout_empty_state_small.view.*
+import kotlinx.android.synthetic.main.layout_fail_state_small.view.*
 import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
@@ -59,11 +60,12 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         setupTimeline()
 
         refreshList()
+        presenter.observeEmptyChallenges()
     }
 
     private fun refreshList() {
         presenter.getBanner()
-        if (isPublik) presenter.getChallengeLive()
+        presenter.getChallengeLive()
         presenter.getChallengeComingSoon()
         presenter.getChallengeDone()
         presenter.getChallengeOngoing()
@@ -134,52 +136,50 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         rl_banner_container.visibleIf(false)
     }
 
-    override fun showChallengeLive(list: List<Challenge>) {
-        val showEmptyState = list.isEmpty()
+    override fun showChallengeLive(state: State, list: List<Challenge>, hasMore: Boolean) {
+        val showEmptyState = state == State.Success && list.isEmpty()
 
-        progress_carousel.enableLottie(false)
-        button_more_carousel.visibleIf(false)
-        empty_state_carousel.visibleIf(showEmptyState)
-        empty_state_carousel.lottie_empty_state.enableLottie(showEmptyState)
+        progress_carousel.enableLottie(state == State.Loading)
+        button_more_carousel.visibleIf(hasMore)
+        empty_state_carousel.run { enableLottie(showEmptyState, lottie_empty_state) }
+        fail_state_carousel.run { enableLottie(state is State.Error, lottie_fail_state) }
         debatCarouselAdapter.challenges = list
     }
 
-    override fun showChallengeComingSoon(list: List<Challenge>) {
-        val showEmptyState = list.isEmpty()
+    override fun showChallengeComingSoon(state: State, list: List<Challenge>, hasMore: Boolean) {
+        val showEmptyState = state == State.Success && list.isEmpty()
 
-        progress_coming.enableLottie(false)
-        button_more_coming.visibleIf(false)
-        empty_state_coming.visibleIf(showEmptyState)
-        empty_state_coming.lottie_empty_state.enableLottie(showEmptyState)
+        progress_coming.enableLottie(state == State.Loading)
+        button_more_coming.visibleIf(hasMore)
+        empty_state_coming.run { enableLottie(showEmptyState, lottie_empty_state) }
+        fail_state_coming.run { enableLottie(state is State.Error, lottie_fail_state) }
         debatComingAdapter.challenges = list
     }
 
-    override fun showChallengeDone(list: List<Challenge>) {
-        val showEmptyState = list.isEmpty()
+    override fun showChallengeDone(state: State, list: List<Challenge>, hasMore: Boolean) {
+        val showEmptyState = state == State.Success && list.isEmpty()
 
-        progress_done.enableLottie(false)
-        button_more_done.visibleIf(false)
-        empty_state_done.visibleIf(showEmptyState)
-        empty_state_done.lottie_empty_state.enableLottie(showEmptyState)
+        progress_done.enableLottie(state == State.Loading)
+        button_more_done.visibleIf(hasMore)
+        empty_state_done.run { enableLottie(showEmptyState, lottie_empty_state) }
+        fail_state_done.run { enableLottie(state is State.Error, lottie_fail_state) }
         debatDoneAdapter.challenges = list
     }
 
     override fun showChallengeOngoing(state: State, list: List<Challenge>, hasMore: Boolean) {
         val showEmptyState = state == State.Success && list.isEmpty()
 
-        if (!isPublik) {
-            progress_carousel.enableLottie(state == State.Loading)
-            button_more_carousel.visibleIf(hasMore)
-            empty_state_carousel.visibleIf(showEmptyState)
-            empty_state_carousel.lottie_empty_state.enableLottie(showEmptyState)
-            debatCarouselAdapter.challenges = list
-        }
-
         progress_open.enableLottie(state == State.Loading)
         button_more_debat_open.visibleIf(hasMore)
-        empty_state_open.visibleIf(showEmptyState)
-        empty_state_open.lottie_empty_state.enableLottie(showEmptyState)
+        empty_state_open.run { enableLottie(showEmptyState, lottie_empty_state) }
+        fail_state_open.run { enableLottie(state is State.Error, lottie_fail_state) }
         debatOpenAdapter.challenges = list
+    }
+
+    override fun showAllChallengeEmpty(isAllChallengeEmpty: Boolean) {
+        container_list.visibleIf(!isAllChallengeEmpty)
+        container_carousel.visibleIf(!isAllChallengeEmpty)
+        empty_state_all.run { enableLottie(isAllChallengeEmpty, lottie_empty_state) }
     }
 
     override fun showLoading() {

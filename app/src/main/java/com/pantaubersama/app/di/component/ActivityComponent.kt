@@ -7,6 +7,8 @@ import com.pantaubersama.app.ui.categorydialog.CategoryListDialog
 import com.pantaubersama.app.ui.clusterdetail.ClusterDetailActivity
 import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
 import com.pantaubersama.app.ui.debat.DebatActivity
+import com.pantaubersama.app.ui.debat.detail.DetailDebatActivity
+import com.pantaubersama.app.ui.debat.detail.DetailDebatDialogFragment
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
 import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity
@@ -79,6 +81,8 @@ import com.pantaubersama.app.ui.search.person.filter.FilterOrangActivity
 import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
 import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
+import com.pantaubersama.app.ui.wordstadium.challenge.direct.DirectChallengeActivity
+import com.pantaubersama.app.ui.wordstadium.challenge.direct.PreviewChallengeActivity
 import com.pantaubersama.app.ui.wordstadium.challenge.open.BidangKajianDialog
 import com.pantaubersama.app.ui.wordstadium.challenge.open.OpenChallengeActivity
 import com.pantaubersama.app.ui.wordstadium.challenge.open.PromoteChallengeActivity
@@ -170,4 +174,8 @@ interface ActivityComponent {
     fun inject(debatListActivity: DebatListActivity)
     fun inject(perhitunganPresidenActivity: PerhitunganPresidenActivity)
     fun inject(dataTPSActivity: DataTPSActivity)
+    fun inject(detailDebatActivity: DetailDebatActivity)
+    fun inject(directChallengeActivity: DirectChallengeActivity)
+    fun inject(previewChallengeActivity: PreviewChallengeActivity)
+    fun inject(detailDebatDialogFragment: DetailDebatDialogFragment)
 }

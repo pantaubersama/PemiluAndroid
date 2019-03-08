@@ -10,6 +10,7 @@ import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatListResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
+import com.pantaubersama.app.data.model.wordstadium.LawanDebatResponse
 import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -244,4 +245,10 @@ interface PantauAPI {
         @Path("id") tpsId: String,
         @Field("tps") tpsNumber: Int
     ): Completable
+    @GET("dashboard/v1/linimasa/suggest/username")
+    fun getLawanDebatTwitter(
+        @Query("q") q: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
+    ): Single<LawanDebatResponse>
 }
