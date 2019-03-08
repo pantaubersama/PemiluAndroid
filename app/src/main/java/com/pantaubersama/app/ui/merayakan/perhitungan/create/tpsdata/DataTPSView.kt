@@ -1,10 +1,7 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata
 
 import com.pantaubersama.app.base.BaseView
-import com.pantaubersama.app.data.model.tps.District
-import com.pantaubersama.app.data.model.tps.Province
-import com.pantaubersama.app.data.model.tps.Regency
-import com.pantaubersama.app.data.model.tps.Village
+import com.pantaubersama.app.data.model.tps.* // ktlint-disable
 
 interface DataTPSView : BaseView {
     fun showProvincesLoading()
@@ -23,7 +20,7 @@ interface DataTPSView : BaseView {
     fun dismissVillagesLoading()
     fun bindVillagesToSpinner(villages: MutableList<Village>)
     fun showFailedGetVillagesAlert()
-    fun onSuccessSaveTPS()
+    fun onSuccessSaveTPS(tps: TPS)
     fun failedSaveTpsAlert()
     fun failedUpdateTpsAlert()
 }

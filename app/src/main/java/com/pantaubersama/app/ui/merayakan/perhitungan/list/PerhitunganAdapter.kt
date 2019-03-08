@@ -67,6 +67,9 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
             tps_options.setOnClickListener {
                 listener?.onClickTpsOptions(item, adapterPosition)
             }
+            itemView.setOnClickListener {
+                listener?.onClickItem(item, adapterPosition)
+            }
         }
     }
 
@@ -88,5 +91,6 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
     interface Listener {
         fun onClickBanner(bannerInfo: BannerInfo)
         fun onClickTpsOptions(tps: TPS, position: Int)
+        fun onClickItem(item: TPS, adapterPosition: Int)
     }
 }

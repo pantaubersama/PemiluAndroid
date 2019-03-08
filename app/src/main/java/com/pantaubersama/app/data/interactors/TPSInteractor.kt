@@ -68,43 +68,39 @@ class TPSInteractor @Inject constructor(
         selectedVillage: Village,
         lat: Double,
         long: Double
-    ): Completable {
+    ): Single<TPS> {
         if (appDB.getTPSDAO().loadTPS().size != 0) {
-            return Completable.fromCallable {
-                appDB.getTPSDAO().saveTPS(
-                    TPS(
-                        (appDB.getTPSDAO().loadTPS().size + 1).toString(),
-                        tpsNumber,
-                        selectedProvince,
-                        selectedRegency,
-                        selectedDistrict,
-                        selectedVillage,
-                        lat,
-                        long,
-                        "draft",
-                        "",
-                        CreatedAtInWord("", "", "")
-                    )
-                )
-            }
+            val tps = TPS(
+                (appDB.getTPSDAO().loadTPS().size + 1).toString(),
+                tpsNumber,
+                selectedProvince,
+                selectedRegency,
+                selectedDistrict,
+                selectedVillage,
+                lat,
+                long,
+                "draft",
+                "",
+                CreatedAtInWord("", "", "")
+            )
+            appDB.getTPSDAO().saveTPS(tps)
+            return Single.just(tps)
         } else {
-            return Completable.fromCallable {
-                appDB.getTPSDAO().saveTPS(
-                    TPS(
-                        "1",
-                        tpsNumber,
-                        selectedProvince,
-                        selectedRegency,
-                        selectedDistrict,
-                        selectedVillage,
-                        lat,
-                        long,
-                        "draft",
-                        "",
-                        CreatedAtInWord("", "", "")
-                    )
-                )
-            }
+            val tps = TPS(
+                "1",
+                tpsNumber,
+                selectedProvince,
+                selectedRegency,
+                selectedDistrict,
+                selectedVillage,
+                lat,
+                long,
+                "draft",
+                "",
+                CreatedAtInWord("", "", "")
+            )
+            appDB.getTPSDAO().saveTPS(tps)
+            return Single.just(tps)
         }
     }
 
@@ -138,24 +134,22 @@ class TPSInteractor @Inject constructor(
         selectedVillage: Village,
         lat: Double,
         long: Double
-    ): Completable {
-        return Completable.fromCallable {
-            appDB.getTPSDAO().updateTps(
-                TPS(
-                    tpsId,
-                    tpsNumber,
-                    selectedProvince,
-                    selectedRegency,
-                    selectedDistrict,
-                    selectedVillage,
-                    lat,
-                    long,
-                    "draft",
-                    "",
-                    CreatedAtInWord("", "", "")
-                )
-            )
-        }
+    ): Single<TPS> {
+        val tps = TPS(
+            tpsId,
+            tpsNumber,
+            selectedProvince,
+            selectedRegency,
+            selectedDistrict,
+            selectedVillage,
+            lat,
+            long,
+            "draft",
+            "",
+            CreatedAtInWord("", "", "")
+        )
+        appDB.getTPSDAO().updateTps(tps)
+        return Single.just(tps)
     }
 
     fun getLocalTpses(): MutableList<TPS> {

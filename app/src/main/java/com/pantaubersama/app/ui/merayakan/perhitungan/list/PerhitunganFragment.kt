@@ -15,6 +15,7 @@ import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.login.LoginActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
@@ -123,7 +124,6 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
                             R.id.edit_tps_data_action -> {
                                 val intent = Intent(requireContext(), DataTPSActivity::class.java)
                                 intent.putExtra("tps_data", tps)
-                                intent.putExtra("tps_position", position)
                                 startActivityForResult(intent, PantauConstants.Merayakan.CREATE_PERHITUNGAN_REQUEST_CODE)
                                 dialog.dismiss()
                             }
@@ -145,6 +145,13 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
                         }
                     }
                 }
+            }
+
+            override fun onClickItem(item: TPS, adapterPosition: Int) {
+                val intent = Intent(requireContext(), PerhitunganMainActivity::class.java)
+                intent.putExtra("tps_data", item)
+                intent.putExtra("tps_position", adapterPosition)
+                startActivityForResult(intent, PantauConstants.Merayakan.DO_PERHITUNGAN_REQUEST_CODE)
             }
         }
         recycler_view.layoutManager = LinearLayoutManager(requireContext())

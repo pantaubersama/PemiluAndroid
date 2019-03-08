@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.c1.C1FormActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity
@@ -20,12 +21,19 @@ import kotlinx.android.synthetic.main.activity_perhitunganmain.*
 import javax.inject.Inject
 
 class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), PerhitunganMainView, View.OnClickListener {
+    private var tps: TPS? = null
 
     @Inject
     override lateinit var presenter: PerhitunganMainPresenter
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
+    }
+
+    override fun fetchIntentExtra() {
+        intent.getSerializableExtra("tps_data")?.let {
+            tps = it as TPS
+        }
     }
 
     override fun statusBarColor(): Int? {
@@ -38,6 +46,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Perhitungan", R.color.white, 4f)
+        bindData()
         president_counter_action.setOnClickListener(this)
         president_c1_action.setOnClickListener(this)
         dpr_ri_counter_action.setOnClickListener(this)
@@ -55,6 +64,14 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
 //            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDKabupatenActivity::class.java))
 //        }
         upload_container.setOnClickListener(this)
+    }
+
+    private fun bindData() {
+        tps_number.text = "TPS ${tps?.tps}"
+        province_text.text = tps?.province?.name
+        regency_text.text = tps?.regency?.name
+        district_text.text = tps?.district?.name
+        village_text.text = tps?.village?.name
     }
 
     override fun onClick(view: View) {

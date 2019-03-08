@@ -106,7 +106,7 @@ class DataTPSPresenter @Inject constructor(
                 .subscribe(
                     {
                         view?.dismissLoading()
-                        view?.onSuccessSaveTPS()
+                        view?.onSuccessSaveTPS(it)
                     },
                     {
                         view?.dismissLoading()
@@ -141,8 +141,8 @@ class DataTPSPresenter @Inject constructor(
             )
                 .subscribe(
                     {
+                        view?.onSuccessSaveTPS(it)
                         view?.dismissLoading()
-                        view?.onSuccessSaveTPS()
                     },
                     {
                         view?.dismissLoading()
