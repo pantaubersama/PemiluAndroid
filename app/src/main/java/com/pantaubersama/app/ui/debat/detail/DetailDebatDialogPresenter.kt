@@ -7,7 +7,6 @@ import com.pantaubersama.app.data.model.user.Profile
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
-
 /**
  * @author edityomurti on 06/03/2019 18:19
  */

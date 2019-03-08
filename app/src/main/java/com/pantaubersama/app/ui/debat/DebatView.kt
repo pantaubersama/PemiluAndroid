@@ -12,6 +12,7 @@ interface DebatView : BaseView {
     fun showWordsFighter(wordList: MutableList<WordItem>)
     fun showLoadingWordsFighter()
     fun dismissLoadingWordsFighter()
+    fun onEmptyWordsFighter()
     fun onErrorGetWordsFighter(t: Throwable)
 
     fun showKomentar(komentarList: MutableList<Komentar>)

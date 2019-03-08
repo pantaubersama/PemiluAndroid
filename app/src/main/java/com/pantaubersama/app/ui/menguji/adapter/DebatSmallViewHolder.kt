@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.menguji.adapter
 
-import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,8 +14,6 @@ import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.parseDate
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.item_debat_small.*
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(view, fm) {
 

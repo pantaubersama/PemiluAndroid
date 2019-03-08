@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
-import com.pantaubersama.app.data.model.debat.ChallengeConstants
 import com.pantaubersama.app.data.model.debat.WordInputItem
 import com.pantaubersama.app.data.model.debat.WordItem
 import com.pantaubersama.app.utils.PantauConstants.Word.WORD_INPUT_CHALLENGER
@@ -21,8 +20,8 @@ import com.pantaubersama.app.utils.extensions.drawable
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.parseDate
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_box_message_left.*
-import kotlinx.android.synthetic.main.item_message_left_side.*
+import kotlinx.android.synthetic.main.item_words_input_challenger.*
+import kotlinx.android.synthetic.main.item_words_challenger.*
 
 /**
  * @author edityomurti on 24/02/2019 19:48
@@ -34,10 +33,10 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            WORD_TYPE_CHALLENGER -> WordFighterViewholder(parent.inflate(R.layout.item_message_left_side))
-            WORD_TYPE_OPPONENT -> WordFighterViewholder(parent.inflate(R.layout.item_message_right_side))
-            WORD_INPUT_CHALLENGER -> WordInputViewHolder(parent.inflate(R.layout.item_box_message_left))
-            WORD_INPUT_OPPONENT -> WordInputViewHolder(parent.inflate(R.layout.item_box_message_right))
+            WORD_TYPE_CHALLENGER -> WordFighterViewholder(parent.inflate(R.layout.item_words_challenger))
+            WORD_TYPE_OPPONENT -> WordFighterViewholder(parent.inflate(R.layout.item_words_opponent))
+            WORD_INPUT_CHALLENGER -> WordInputViewHolder(parent.inflate(R.layout.item_words_input_challenger))
+            WORD_INPUT_OPPONENT -> WordInputViewHolder(parent.inflate(R.layout.item_words_input_opponent))
             else -> throw IllegalArgumentException("unkown view type $viewType")
         }
     }
@@ -61,7 +60,7 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
             cl_btn_clap.setOnClickListener { onClapClicked(item) }
 
             tv_posted_time.text = item.createdAt.parseDate("HH:mm")
-            tv_read_estimation.text = "Estimasi baca ${item.readTime.let { if ( it > 0f) it else "<1"}} menit"
+            tv_read_estimation.text = "Estimasi baca ${item.readTime.let { if (it > 0f) it else "<1"}} menit"
         }
 
         private fun onClapClicked(item: WordItem) {
@@ -85,7 +84,7 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
             et_content.setText(item.body)
 
             et_content.onFocusChangeListener = View.OnFocusChangeListener { _, isFocused ->
-                listener.onMessageInputFocused(isFocused)
+                listener.onWordsInputFocused(isFocused)
             }
 
             et_content.addTextChangedListener(object : TextWatcher {
@@ -129,7 +128,7 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
             }
 
             if (!item.isActive) {
-                itemView.setOnClickListener {
+                view_overlay.setOnClickListener {
                     ToastUtil.show(it.context, "Belum giliran kamu")
                 }
             }
@@ -148,7 +147,7 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
 
     interface AdapterListener {
         fun onClickClap()
-        fun onMessageInputFocused(isFocused: Boolean)
+        fun onWordsInputFocused(isFocused: Boolean)
         fun onPublish(words: String)
     }
 
@@ -157,7 +156,7 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
         this.recyclerView = recyclerView
     }
 
-    fun addInputMessage(role: String, isActive: Boolean) {
+    fun addWordsInputItem(role: String, isActive: Boolean) {
         addItem(WordInputItem(role, isActive), 0)
     }
 

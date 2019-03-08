@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.menguji.adapter
 
-import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -49,8 +48,8 @@ class DebatBigViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(view
         itemView.setOnClickListener {
             if (challenge.status == Status.LIVE_NOW) {
                 it.context.startActivity(DebatActivity.setIntent(it.context, challenge))
-            } else {
-              it.context.startActivity(DetailDebatActivity.setIntent(it.context, challenge))
+                    } else {
+                it.context.startActivity(DetailDebatActivity.setIntent(it.context, challenge))
             }
         }
     }

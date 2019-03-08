@@ -1,12 +1,10 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.model.debat.Komentar
-import com.pantaubersama.app.data.model.debat.WordItem
 import com.pantaubersama.app.data.model.image.Image
 import com.pantaubersama.app.data.model.image.Medium
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.RxSchedulers
-import com.pantaubersama.app.utils.extensions.isOdd
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.util.Random

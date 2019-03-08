@@ -12,9 +12,9 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class WordStadiumInteractor @Inject constructor(
-        private val apiWrapper: APIWrapper,
-        private val dataCache: DataCache,
-        private val rxSchedulers: RxSchedulers
+    private val apiWrapper: APIWrapper,
+    private val dataCache: DataCache,
+    private val rxSchedulers: RxSchedulers
 ) {
     fun openChallenge(
         topicList: String?,
@@ -108,9 +108,9 @@ class WordStadiumInteractor @Inject constructor(
                 )
                 .map { it.data.users }
                 .subscribeOn(rxSchedulers.io())
-                .observeOn(rxSchedulers.mainThread())    
+                .observeOn(rxSchedulers.mainThread())
     }
-  
+
     fun confirmOpponentCandidate(challengeId: String, audienceId: String): Completable {
         return apiWrapper.getWordStadiumApi()
             .confirmOpponentCandidate(challengeId, audienceId)
@@ -141,9 +141,10 @@ class WordStadiumInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
-    fun postWordsFighter(challengeId: String, words: String): Completable {
+    fun postWordsFighter(challengeId: String, words: String): Single<WordItem> {
         return apiWrapper.getWordStadiumApi()
             .postWordsFighter(challengeId, words)
+            .map { it.wordItemData.word }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }

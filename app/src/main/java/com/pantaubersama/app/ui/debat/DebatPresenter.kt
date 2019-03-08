@@ -3,8 +3,6 @@ package com.pantaubersama.app.ui.debat
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.WordStadiumInteractor
-import com.pantaubersama.app.data.model.debat.Audience
-import com.pantaubersama.app.data.model.debat.WordItem
 import com.pantaubersama.app.data.model.user.Profile
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
@@ -21,28 +19,29 @@ class DebatPresenter @Inject constructor(
     }
 
     fun getWordsFighter(challengeId: String) {
-        view?.showLoading()
+        view?.showLoadingWordsFighter()
         disposables += wordStadiumInteractor.getWordsFighter(challengeId)
-            .doOnEvent { _, _ -> view?.dismissLoading() }
+            .doOnEvent { _, _ -> view?.dismissLoadingWordsFighter() }
             .subscribe(
                 {
-                    view?.showWordsFighter(it)
+                    if (!it.isEmpty()) {
+                        view?.showWordsFighter(it)
+                    } else {
+                        view?.onEmptyWordsFighter()
+                    }
                 },
                 {
                     view?.showError(it)
+                    view?.onErrorGetWordsFighter(it)
                 }
             )
     }
 
-
-    fun postWordsFighter(challengeId: String, words: String, audience: Audience) {
+    fun postWordsFighter(challengeId: String, words: String) {
         disposables += wordStadiumInteractor.postWordsFighter(challengeId, words)
             .subscribe(
                 {
-                    view?.onSuccessPostWordsFighter(
-                            WordItem("msg-me-${System.currentTimeMillis()}",
-                            "Attack", "",
-                            words,0f,0f,0f, "2019-03-05T06:17:08.849Z", audience))
+                    view?.onSuccessPostWordsFighter(it)
                 },
                 {
                     view?.showError(it)

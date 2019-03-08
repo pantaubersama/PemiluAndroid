@@ -7,9 +7,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
+import com.makeramen.roundedimageview.RoundedImageView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.debat.Audience
@@ -26,14 +31,13 @@ import com.pantaubersama.app.ui.widget.PreviewWebViewClient
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ID
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
 import com.pantaubersama.app.utils.ToastUtil
-import com.pantaubersama.app.utils.extensions.*
+import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_detail_debat.*
-import kotlinx.android.synthetic.main.layout_content_detail_debat_open_accept_confirmation_as_challenger.*
-import kotlinx.android.synthetic.main.layout_content_detail_debat_open_accept_confirmation_as_opponent.*
-import kotlinx.android.synthetic.main.layout_detail_debat.*
+import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_header_detail_debat.*
 import kotlinx.android.synthetic.main.layout_toolbar_centered_title.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatView {
@@ -49,6 +53,8 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     private var challengeId: String? = null
 
     private var isLiked = false
+
+    private var savedInstanceState: Bundle? = null
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -81,19 +87,26 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
+        this.savedInstanceState = savedInstanceState
         fl_progress_bar.visibleIf(challenge == null)
 
         challenge?.let { showChallenge(it) } ?: challengeId?.let { presenter.getChallengeItem(it) }
 
         btn_back.setOnClickListener { onBackPressed() }
+
+        swipe_refresh.setOnRefreshListener {
+            reloadChallenge()
+        }
     }
 
     override fun showLoading() {
         fl_progress_bar.visibleIf(true)
+        view_fail_state.visibleIf(false)
     }
 
     override fun dismissLoading() {
         fl_progress_bar.visibleIf(false)
+        if (swipe_refresh.isRefreshing) swipe_refresh.isRefreshing = false
     }
 
     override fun showChallenge(challenge: Challenge) {
@@ -105,7 +118,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     override fun onErrorGetChallenge(t: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        view_fail_state.visibleIf(true)
     }
 
     private fun setupHeader() {
@@ -194,6 +207,12 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     private fun setupContent() {
+        ll_content_detail_debat.apply {
+            Timber.d("reloadActivity childCount = $childCount")
+            if (childCount > 2) {
+                (this as ViewGroup).removeViewsInLayout(2, childCount - 2)
+            }
+        }
         when (challenge?.status) {
             Status.COMING_SOON -> onComingSoon()
             Status.DONE -> onDone()
@@ -203,8 +222,24 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
     private fun setupDetail() {
         ll_content_detail_debat.addView(inflate(R.layout.layout_detail_debat))
-        tv_label_detail.text = challenge?.topicList?.firstOrNull()
+        findViewById<TextView>(R.id.tv_label_detail).text = challenge?.topicList?.firstOrNull()
+        Timber.d("reloadActivity setupDetail challenge = $challenge")
 
+        val cl_statement = findViewById<ConstraintLayout>(R.id.cl_statement)
+        val tv_statement_url = findViewById<TextView>(R.id.tv_statement_url)
+        val tv_title_detail = findViewById<TextView>(R.id.tv_title_detail)
+        val cl_opponent_detail = findViewById<ConstraintLayout>(R.id.cl_opponent_detail)
+        val iv_opponent_avatar = findViewById<RoundedImageView>(R.id.iv_opponent_avatar)
+        val tv_opponent_name = findViewById<TextView>(R.id.tv_opponent_name)
+        val tv_opponent_username = findViewById<TextView>(R.id.tv_opponent_username)
+        val tv_date_detail = findViewById<TextView>(R.id.tv_date_detail)
+        val tv_hour_detail = findViewById<TextView>(R.id.tv_hour_detail)
+        val tv_saldo_waktu_detail = findViewById<TextView>(R.id.tv_saldo_waktu_detail)
+        val iv_creator_avatar_detail = findViewById<RoundedImageView>(R.id.iv_creator_avatar_detail)
+        val tv_creator_name_detail = findViewById<TextView>(R.id.tv_creator_name_detail)
+        val tv_creator_bio_detail = findViewById<TextView>(R.id.tv_creator_bio_detail)
+        val tv_posted_time_detail = findViewById<TextView>(R.id.tv_posted_time_detail)
+        val tv_label_saldo_waktu_desc = findViewById<TextView>(R.id.tv_label_saldo_waktu_desc)
         challenge?.statementSource?.let { cl_statement.visibleIf(it.isNotEmpty()) }
         if (cl_statement.isVisible()) {
             challenge?.statementSource?.let { presenter.getStatementSourcePreview(it) }
@@ -249,11 +284,13 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     override fun onErrorStatementSource(throwable: Throwable) {
+        val link_webview = findViewById<WebView>(R.id.link_webview)
         link_webview.visibleIf(false)
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun showStatementSource(url: String) {
+        val link_webview = findViewById<WebView>(R.id.link_webview)
         if (!link_webview.isVisible()) link_webview.visibleIf(true)
         link_webview.webViewClient = PreviewWebViewClient()
         link_webview.settings.loadsImagesAutomatically = true
@@ -302,7 +339,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
                 setupOpponentCandidateList()
             } else {
                 ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_open_accept_confirmation_as_opponent))
-                btn_terima.setOnClickListener {
+                findViewById<MaterialButton>(R.id.btn_terima).setOnClickListener {
                     val message = spannable {
                         + "Kamu akan menerima tantangan dari "
                         textColor(color(R.color.black)) { +"@${challenge?.challenger?.username} " }
@@ -322,6 +359,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
     private fun setupOpponentCandidateList() {
         val adapter = OpponentCandidateAdapter(isMyChallenge)
+        val recycler_view = findViewById<RecyclerView>(R.id.recycler_view)
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         challenge?.opponentCandidates?.let { adapter.addData(it) }
@@ -382,9 +420,13 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     private fun reloadChallenge() {
-        challengeId?.let {
-            finish()
-            startActivity(DetailDebatActivity.setIntent(this, it))
-        }
+//        challengeId?.let {
+//            finish()
+//            startActivity(DetailDebatActivity.setIntent(this, it))
+//        }
+        challenge = null
+//        setContentView(R.layout.activity_detail_debat)
+//        window.decorView.findViewById<ViewGroup>(android.R.id.content).invalidate()
+        setupUI(savedInstanceState)
     }
 }
