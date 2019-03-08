@@ -163,4 +163,8 @@ class TPSInteractor @Inject constructor(
     fun getLocalTpses(): MutableList<TPS> {
         return appDB.getTPSDAO().loadTPS()
     }
+
+    fun getTps(tpsId: String): TPS {
+        return appDB.getTPSDAO().getTps(tpsId)
+    }
 }

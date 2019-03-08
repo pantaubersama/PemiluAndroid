@@ -15,8 +15,12 @@ import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdkabu
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdprovinsi.PerhitunganDPRDProvinsiActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity
+import com.pantaubersama.app.ui.widget.ConfirmationDialog
+import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_perhitunganmain.*
 import javax.inject.Inject
 
@@ -46,7 +50,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Perhitungan", R.color.white, 4f)
-        bindData()
+        bindData(tps)
         president_counter_action.setOnClickListener(this)
         president_c1_action.setOnClickListener(this)
         dpr_ri_counter_action.setOnClickListener(this)
@@ -66,12 +70,43 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
         upload_container.setOnClickListener(this)
     }
 
-    private fun bindData() {
+    private fun bindData(tps: TPS?) {
         tps_number.text = "TPS ${tps?.tps}"
         province_text.text = tps?.province?.name
         regency_text.text = tps?.regency?.name
         district_text.text = tps?.district?.name
         village_text.text = tps?.village?.name
+        tps_options.setOnClickListener {
+            val dialog = OptionDialog(this@PerhitunganMainActivity, R.layout.layout_option_dialog_tps)
+            dialog.show()
+            dialog.listener = object : OptionDialog.DialogListener {
+                override fun onClick(viewId: Int) {
+                    when (viewId) {
+                        R.id.edit_tps_data_action -> {
+                            val intent = Intent(this@PerhitunganMainActivity, DataTPSActivity::class.java)
+                            intent.putExtra("tps_data", tps)
+                            startActivityForResult(intent, PantauConstants.Merayakan.CREATE_PERHITUNGAN_REQUEST_CODE)
+                            dialog.dismiss()
+                        }
+                        R.id.delete_tanya_kandidat_item_action -> {
+                            ConfirmationDialog.Builder()
+                                .with(this@PerhitunganMainActivity)
+                                .setDialogTitle("Hapus Perhitungan")
+                                .setAlert("Apakah kamu yakin untuk menghapus item ini?")
+                                .setCancelText("Batal")
+                                .setOkText("Ya, Hapus")
+                                .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                                    override fun onClickOk() {
+                                        tps?.let { presenter.deletePerhitungan(it) }
+                                    }
+                                })
+                                .show()
+                            dialog.dismiss()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     override fun onClick(view: View) {
@@ -123,11 +158,11 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        showProgressDialog("Menghapus data")
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        dismissProgressDialog()
     }
 
     override fun onBackPressed() {
@@ -139,6 +174,27 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
             android.R.id.home -> finishSection()
         }
         return false
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PantauConstants.Merayakan.CREATE_PERHITUNGAN_REQUEST_CODE) {
+                tps?.id?.let { presenter.getTps(it) }
+            }
+        }
+    }
+
+    override fun bindTps(tps: TPS) {
+        setResult(Activity.RESULT_OK)
+        bindData(tps)
+    }
+
+    override fun showFailedDeleteTpsAlert() {
+        ToastUtil.show(this@PerhitunganMainActivity, "Gagal menghapus data TPS")
+    }
+
+    override fun onSuccessDeleteTps() {
+        finishSection()
     }
 
     private fun finishSection() {

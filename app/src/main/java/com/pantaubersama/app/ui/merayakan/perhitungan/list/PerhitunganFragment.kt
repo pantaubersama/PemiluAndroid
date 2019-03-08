@@ -198,6 +198,8 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
         if (resultCode == RESULT_OK) {
             if (requestCode == PantauConstants.Merayakan.CREATE_PERHITUNGAN_REQUEST_CODE) {
                 refreshItem()
+            } else if (requestCode == PantauConstants.Merayakan.DO_PERHITUNGAN_REQUEST_CODE) {
+                refreshItem()
             }
         }
     }
