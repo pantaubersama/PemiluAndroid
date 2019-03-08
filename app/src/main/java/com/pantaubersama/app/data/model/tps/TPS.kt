@@ -6,6 +6,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
+import com.pantaubersama.app.data.model.user.Profile
 import java.io.Serializable
 
 @Entity(tableName = "tps")
@@ -43,7 +44,13 @@ data class TPS(
     var createdAt: String,
     @SerializedName("created_at_in_word")
     @Expose
-    var createdAtInWord: CreatedAtInWord
+    var createdAtInWord: CreatedAtInWord,
+    @SerializedName("user")
+    @Expose
+    var user: Profile
+//    @SerializedName("logs")
+//    @Expose
+//    var logs: Logs
 ) : ItemModel, Serializable {
     override fun getType(): Int {
         return 14

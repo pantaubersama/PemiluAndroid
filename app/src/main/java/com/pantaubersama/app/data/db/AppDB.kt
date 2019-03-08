@@ -15,7 +15,9 @@ import com.pantaubersama.app.utils.PantauConstants
     VillageTypeConverter::class,
     TimeTypeConverter::class,
     PartiesTypeConverter::class,
-    CandidatesTypeConverter::class
+    CandidatesTypeConverter::class,
+    UserTypeConverter::class,
+    LogsTypeConverter::class
 )
 abstract class AppDB : RoomDatabase() {
     companion object {

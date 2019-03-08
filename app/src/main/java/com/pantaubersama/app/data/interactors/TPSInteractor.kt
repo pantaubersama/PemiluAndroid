@@ -80,7 +80,8 @@ class TPSInteractor @Inject constructor(
                 long,
                 "draft",
                 "",
-                CreatedAtInWord("", "", "")
+                CreatedAtInWord("", "", ""),
+                dataCache.loadUserProfile()
             )
             appDB.getTPSDAO().saveTPS(tps)
             return Single.just(tps)
@@ -96,7 +97,8 @@ class TPSInteractor @Inject constructor(
                 long,
                 "draft",
                 "",
-                CreatedAtInWord("", "", "")
+                CreatedAtInWord("", "", ""),
+                dataCache.loadUserProfile()
             )
             appDB.getTPSDAO().saveTPS(tps)
             return Single.just(tps)
