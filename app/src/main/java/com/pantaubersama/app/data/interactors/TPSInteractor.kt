@@ -68,42 +68,28 @@ class TPSInteractor @Inject constructor(
         lat: Double,
         long: Double
     ): Single<TPS> {
-        if (appDB.getTPSDAO().loadTPS().size != 0) {
-            val id = (appDB.getTPSDAO().loadTPS().get(appDB.getTPSDAO().loadTPS().size - 1).id.toInt() + 1).toString()
-            val tps = TPS(
-                id,
-                tpsNumber,
-                selectedProvince,
-                selectedRegency,
-                selectedDistrict,
-                selectedVillage,
-                lat,
-                long,
-                "draft",
-                "",
-                CreatedAtInWord("", "", ""),
-                dataCache.loadUserProfile()
-            )
-            appDB.getTPSDAO().saveTPS(tps)
-            return Single.just(tps)
-        } else {
-            val tps = TPS(
-                "1",
-                tpsNumber,
-                selectedProvince,
-                selectedRegency,
-                selectedDistrict,
-                selectedVillage,
-                lat,
-                long,
-                "draft",
-                "",
-                CreatedAtInWord("", "", ""),
-                dataCache.loadUserProfile()
-            )
-            appDB.getTPSDAO().saveTPS(tps)
-            return Single.just(tps)
+        var lastId: Int = 0
+
+        appDB.getTPSDAO().loadTPS().forEachIndexed { i, item ->
+             lastId = i+1
         }
+
+        val tps = TPS(
+            (lastId).toString(),
+            tpsNumber,
+            selectedProvince,
+            selectedRegency,
+            selectedDistrict,
+            selectedVillage,
+            lat,
+            long,
+            "draft",
+            "",
+            CreatedAtInWord("", "", ""),
+            dataCache.loadUserProfile()
+        )
+        appDB.getTPSDAO().saveTPS(tps)
+        return Single.just(tps)
     }
 
     fun getTpses(page: Int, perPage: Int): Single<MutableList<TPS>> {
