@@ -12,9 +12,7 @@ class PerhitunganPresidenPresenter @Inject constructor(
             realCountInteractor.savePresidentCandidate1Count(candidate1Count, tpsId)
                 .subscribe(
                     {
-                        val validCount = it.candidates[0].totalVote + it.candidates[1].totalVote
-                        val allCount = it.invalidVote + validCount
-                        view?.onSuccessVoteCandidateCount(validCount, it.invalidVote, allCount)
+                        view?.onSuccessVoteCandidateCount()
                     },
                     {
                         view?.showError(it)
@@ -29,9 +27,7 @@ class PerhitunganPresidenPresenter @Inject constructor(
             realCountInteractor.savePresidentCandidate2Count(candidate2Count, tpsId)
                 .subscribe(
                     {
-                        val validCount = it.candidates[0].totalVote + it.candidates[1].totalVote
-                        val allCount = it.invalidVote + validCount
-                        view?.onSuccessVoteCandidateCount(validCount, it.invalidVote, allCount)
+                        view?.onSuccessVoteCandidateCount()
                     },
                     {
                         view?.showError(it)
@@ -46,9 +42,7 @@ class PerhitunganPresidenPresenter @Inject constructor(
             realCountInteractor.saveInvalidCount(invalidCount, tpsId)
                 .subscribe(
                     {
-                        val validCount = it.candidates[0].totalVote + it.candidates[1].totalVote
-                        val allCount = it.invalidVote + validCount
-                        view?.onSuccessVoteCandidateCount(validCount, it.invalidVote, allCount)
+                        view?.onSuccessVoteCandidateCount()
                     },
                     {
                         view?.showError(it)
@@ -56,6 +50,13 @@ class PerhitunganPresidenPresenter @Inject constructor(
                     }
                 )
         )
+    }
+
+    fun getCounter(tpsId: String) {
+        realCountInteractor.getRealCount(tpsId)?.let {
+            val validCount = it.candidates[0].totalVote + it.candidates[1].totalVote
+            val allCount = it.invalidVote + validCount
+        }
     }
 
     fun getRealCount(tpsId: String) {

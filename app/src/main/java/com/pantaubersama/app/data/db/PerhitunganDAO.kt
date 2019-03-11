@@ -38,11 +38,14 @@ interface PerhitunganDAO {
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         fun saveRealCount(realCount: RealCount)
 
-        @Query("SELECT * FROM real_count WHERE id = :tpsId")
-        fun getRealCount(tpsId: String): RealCount?
+        @Update
+        fun updateRealCount(realCount: RealCount)
 
-        @Query("SELECT * FROM real_count ORDER BY id DESC")
-        fun getRealCounts(): MutableList<RealCount>
+        @Query("SELECT * FROM real_count WHERE id = :tpsId AND calculationType = \"presiden\"")
+        fun getPresidentRealCount(tpsId: String): RealCount?
+
+        @Query("SELECT * FROM real_count WHERE calculationType = \"presiden\" ORDER BY id DESC")
+        fun getPresidentRealCounts(): MutableList<RealCount>
 
         @Delete
         fun deleteRealCount(realCount: RealCount)

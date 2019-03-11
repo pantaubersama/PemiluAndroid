@@ -139,7 +139,13 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .subscribe()
     }
 
-    override fun onSuccessVoteCandidateCount(validCount: Int, invalidCount: Int, allCount: Int) {
+    override fun onSuccessVoteCandidateCount() {
+        tps?.id?.let {
+            presenter.getCounter(it)
+        }
+    }
+
+    override fun bindCounter(validCount: Int, invalidCount: Int, allCount: Int) {
         valid_vote_count.text = validCount.toString()
         invalid_vote_count.text = invalidCount.toString()
         all_vote_count.text = allCount.toString()

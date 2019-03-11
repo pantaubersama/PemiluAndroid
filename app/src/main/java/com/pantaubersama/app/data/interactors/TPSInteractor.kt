@@ -68,14 +68,14 @@ class TPSInteractor @Inject constructor(
         lat: Double,
         long: Double
     ): Single<TPS> {
-        var lastId: Int = 0
+        var newId: Int = 0
 
         appDB.getTPSDAO().loadTPS().forEachIndexed { i, item ->
-             lastId = i+1
+            newId = i + 1
         }
 
         val tps = TPS(
-            (lastId).toString(),
+            newId.toString(),
             tpsNumber,
             selectedProvince,
             selectedRegency,
