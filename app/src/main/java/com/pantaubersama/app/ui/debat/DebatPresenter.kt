@@ -4,6 +4,7 @@ import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.WordStadiumInteractor
 import com.pantaubersama.app.data.model.user.Profile
+import com.pantaubersama.app.utils.WordsPNHandler
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
@@ -25,7 +26,7 @@ class DebatPresenter @Inject constructor(
             .subscribe(
                 {
                     if (!it.isEmpty()) {
-                        view?.showWordsFighter(it)
+                        view?.showWordsFighter(it.asReversed())
                     } else {
                         view?.onEmptyWordsFighter()
                     }
@@ -45,22 +46,44 @@ class DebatPresenter @Inject constructor(
                 },
                 {
                     view?.showError(it)
-                    view?.onErrorGetWordsFighter(it)
+                    view?.onFailedPostWordsFighter(it)
                 }
             )
     }
 
-//    fun getKomentar() {
-//        view?.showLoadingKomentar()
-//        disposables.add(debatInteractor.getKomentar()
-//            .subscribe(
-//                {
-//                    view?.dismissLoadingKomentar()
-//                    view?.showKomentar(it)
-//                },
-//                {
-//                }
-//            )
-//        )
-//    }
+    fun getWordsAudience(challengeId: String) {
+        view?.showLoadingKomentar()
+        disposables += wordStadiumInteractor.getWordsAudience(challengeId)
+            .doOnEvent { _, _ -> view?.dismissLoadingKomentar() }
+            .subscribe(
+                {
+                    if (!it.isEmpty()) {
+                        view?.showKomentar(it)
+                    } else {
+                        view?.onEmptyWordsAudience()
+                    }
+                },
+                {
+                    view?.showError(it)
+                    view?.onErrorGetWordsAudience(it)
+                }
+            )
+    }
+
+    fun postWordsAudience(challengeId: String, words: String) {
+        disposables += wordStadiumInteractor.postWordsAudience(challengeId, words)
+            .subscribe(
+                {
+                    view?.onSuccessPostWordsAudience(it)
+                },
+                {
+                    view?.showError(it)
+                    view?.onFailedPostWordsAudience(it)
+                }
+            )
+    }
+
+    fun setOnGotNewWordsListener(onGotNewWordsListener: WordsPNHandler.OnGotNewWordsListener?) {
+        wordStadiumInteractor.setOnGotNewWordsListener(onGotNewWordsListener)
+    }
 }
