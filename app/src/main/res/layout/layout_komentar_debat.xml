@@ -8,6 +8,12 @@
     android:background="@color/transparent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/tv_comment_header"/>
+
     <TextView
         android:id="@+id/tv_comment_header"
         android:layout_width="match_parent"
@@ -23,12 +29,49 @@
         android:id="@+id/recycler_view_komentar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white"
         tools:listitem="@layout/item_komentar"
         app:layout_constraintTop_toBottomOf="@id/tv_comment_header"
         app:layout_constraintBottom_toTopOf="@id/layout_box_komentar_in">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/progress_bar_comment_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_comment_header"
+        app:layout_constraintBottom_toTopOf="@id/layout_box_komentar_in" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_comment_in_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal"
+        tools:text="Belum ada apa apa :("
+        android:fontFamily="@font/lato_regular"
+        android:textColor="@color/gray"
+        app:layout_constraintTop_toBottomOf="@id/tv_comment_header"/>
+
+    <TextView
+        android:visibility="visible"
+        android:alpha="0"
+        android:id="@+id/tv_comment_below_available"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:gravity="center"
+        android:background="@color/black_transparent"
+        android:text="Ada komentar lain di bawah️."
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        android:fontFamily="@font/lato_bold"
+        app:layout_constraintBottom_toTopOf="@id/layout_box_komentar_in"/>
 
     <include
         android:id="@+id/layout_box_komentar_in"
@@ -36,7 +79,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"/>
-    
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

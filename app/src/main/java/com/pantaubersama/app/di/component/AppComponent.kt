@@ -13,7 +13,8 @@ import javax.inject.Singleton
     ApiModule::class,
     ConnectionModule::class,
     SharedPreferenceModule::class,
-    RxSchedulersModule::class
+    RxSchedulersModule::class,
+    WordsModule::class
 ])
 interface AppComponent {
 

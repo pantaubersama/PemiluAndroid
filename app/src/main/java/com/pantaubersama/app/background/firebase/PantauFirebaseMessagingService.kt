@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
+import com.pantaubersama.app.data.model.debat.WordItem
 import com.pantaubersama.app.data.model.notification.NotificationData
 import com.pantaubersama.app.data.model.notification.PemiluBroadcast
 import com.pantaubersama.app.data.model.notification.QuestionNotif
@@ -48,6 +49,7 @@ import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_CHA
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_BADGE
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_BROADCAST
+import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_CHALLENGE
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_FEED
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.Notification.NOTIFICATION_TYPE_PROFILE
@@ -181,6 +183,10 @@ class PantauFirebaseMessagingService : FirebaseMessagingService() {
                     val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
                     Logger.d("NOTIFICATION_TYPE_PROFILE")
                     createNotif(pendingIntent, title, description)
+                }
+                NOTIFICATION_TYPE_CHALLENGE -> {
+                    val wordItem = gson.fromJson(payload.getJSONObject(WordItem.TAG).toString(), WordItem::class.java)
+                    presenter.handleWords(wordItem)
                 }
                 else -> {
                     title = notificationData?.title ?: remoteMessage.notification?.title

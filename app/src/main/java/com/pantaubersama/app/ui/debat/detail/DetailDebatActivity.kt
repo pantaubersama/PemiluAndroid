@@ -37,7 +37,6 @@ import kotlinx.android.synthetic.main.activity_detail_debat.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_header_detail_debat.*
 import kotlinx.android.synthetic.main.layout_toolbar_centered_title.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatView {
@@ -208,7 +207,6 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
     private fun setupContent() {
         ll_content_detail_debat.apply {
-            Timber.d("reloadActivity childCount = $childCount")
             if (childCount > 2) {
                 (this as ViewGroup).removeViewsInLayout(2, childCount - 2)
             }
@@ -223,7 +221,6 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     private fun setupDetail() {
         ll_content_detail_debat.addView(inflate(R.layout.layout_detail_debat))
         findViewById<TextView>(R.id.tv_label_detail).text = challenge?.topicList?.firstOrNull()
-        Timber.d("reloadActivity setupDetail challenge = $challenge")
 
         val cl_statement = findViewById<ConstraintLayout>(R.id.cl_statement)
         val tv_statement_url = findViewById<TextView>(R.id.tv_statement_url)

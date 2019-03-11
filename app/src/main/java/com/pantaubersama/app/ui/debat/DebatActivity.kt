@@ -14,10 +14,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.* // ktlint-disable
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,10 +25,8 @@ import com.makeramen.roundedimageview.RoundedImageView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.debat.Challenge
-import com.pantaubersama.app.data.model.debat.Komentar
 import com.pantaubersama.app.data.model.debat.WordItem
 import com.pantaubersama.app.data.model.debat.WordInputItem
-import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.debat.adapter.KomentarAdapter
@@ -43,6 +38,7 @@ import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import com.pantaubersama.app.utils.hideKeyboard
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Role
+import com.pantaubersama.app.utils.WordsPNHandler
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_debat.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
@@ -54,10 +50,9 @@ import kotlinx.android.synthetic.main.layout_status_debat.*
 import kotlinx.android.synthetic.main.layout_toolbar_debat.*
 import net.frakbot.jumpingbeans.JumpingBeans
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
-import timber.log.Timber
 import javax.inject.Inject
 
-class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
+class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.OnGotNewWordsListener {
     @Inject
     override lateinit var presenter: DebatPresenter
 
@@ -74,7 +69,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     private lateinit var wordsFighterAdapter: WordsFighterAdapter
     private lateinit var komentarAdapter: KomentarAdapter
 
-    private lateinit var myProfile: Profile
+    private val myProfile by unSyncLazy { presenter.getMyProfile() }
 
     private lateinit var et_comment_main: EditText
     private lateinit var et_comment_in: EditText
@@ -82,6 +77,8 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     private lateinit var btn_comment_in: ImageView
     private lateinit var iv_avatar_comment_main: RoundedImageView
     private lateinit var iv_avatar_comment_in: RoundedImageView
+    private lateinit var progress_bar_comment_main: ProgressBar
+    private lateinit var progress_bar_comment_in: ProgressBar
 
     private var isWordsInputFocused = false
     private val optionDialog by unSyncLazy {
@@ -129,15 +126,8 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     override fun setupUI(savedInstanceState: Bundle?) {
         setupLayoutBehaviour()
         setupHeader()
-        myProfile = presenter.getMyProfile()
-
-        iv_avatar_comment_main.loadUrl(myProfile.avatar?.medium?.url, R.color.gray_3)
-        iv_avatar_comment_in.loadUrl(myProfile.avatar?.medium?.url, R.color.gray_3)
-
         setupDebatList()
         setupKomentarList()
-
-        getList()
     }
 
     private fun setupHeader() {
@@ -155,13 +145,9 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         tv_title.text = challenge.statement
     }
 
-    private fun addKomentar(komentar: Komentar) {
-        komentarAdapter.addItem(komentar)
-    }
-
     private fun getList() {
         presenter.getWordsFighter(challenge.id)
-//        presenter.getKomentar()
+        presenter.getWordsAudience(challenge.id)
     }
 
     private fun setupDebatList() {
@@ -198,6 +184,12 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         komentarAdapter = KomentarAdapter()
         recycler_view_komentar.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recycler_view_komentar.adapter = komentarAdapter
+        komentarAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                recycler_view_komentar.smoothScrollToPosition(komentarAdapter.itemCount - 1)
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -238,7 +230,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
     }
 
     override fun onEmptyWordsFighter() {
-        if (!isMyChallenge) view_empty_state.enableLottie(true, lottie_empty_state)
+        if (!isMyChallenge) view_empty_state.enableLottie(true, lottie_empty_state) else recycler_view.visibleIf(true)
         if (view_empty_state.isVisible()) {
             val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 4f)
             layoutParams.marginStart = dip(70)
@@ -260,8 +252,75 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         tv_fail_state.text = t.message
     }
 
-    override fun showKomentar(komentarList: MutableList<Komentar>) {
+    override fun showKomentar(komentarList: MutableList<WordItem>) {
+        recycler_view_komentar.visibleIf(true)
         komentarAdapter.setDatas(komentarList)
+        if (isMyChallenge) {
+            et_comment_main.setText(komentarList[0].body)
+            iv_avatar_comment_main.loadUrl(komentarList[0].author.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+        }
+        recycler_view_komentar.scrollToPosition(komentarAdapter.itemCount - 1)
+    }
+
+    override fun onEmptyWordsAudience() {
+        if (isMyChallenge) {
+            et_comment_main.setText("Belum ada komentar")
+            iv_avatar_comment_main.setImageDrawable(null)
+        }
+
+        tv_comment_in_state.text = "Belum ada komentar"
+        tv_comment_in_state.visibleIf(true)
+    }
+
+    override fun onErrorGetWordsAudience(t: Throwable) {
+        if (isMyChallenge) {
+            et_comment_main.setText("Gagal memuat komentar")
+            iv_avatar_comment_main.setImageDrawable(null)
+        }
+
+        tv_comment_in_state.text = "Gagal memuat komentar"
+        tv_comment_in_state.visibleIf(true)
+    }
+
+    override fun showLoadingKomentar() {
+        progress_bar_comment_main.visibleIf(true)
+        et_comment_main.visibleIf(false, true)
+
+        progress_bar_comment_in.visibleIf(true)
+        tv_comment_in_state.visibleIf(false)
+        recycler_view_komentar.visibleIf(false)
+    }
+
+    override fun dismissLoadingKomentar() {
+        progress_bar_comment_main.visibleIf(false)
+        et_comment_main.visibleIf(true)
+
+        progress_bar_comment_in.visibleIf(false)
+    }
+
+    private fun addKomentar(words: String) {
+        presenter.postWordsAudience(challenge.id, words)
+        layout_box_komentar_in.isEnabled = false
+        et_comment_main.isEnabled = false
+    }
+
+    override fun onSuccessPostWordsAudience(wordItem: WordItem) {
+        if (tv_comment_in_state.isVisible()) tv_comment_in_state.visibleIf(false)
+        if (!recycler_view_komentar.isVisible()) recycler_view_komentar.visibleIf(true)
+        komentarAdapter.addItem(wordItem)
+
+        TextKeyListener.clear(et_comment_main.text)
+        TextKeyListener.clear(et_comment_in.text)
+        if (et_comment_main.isFocused) et_comment_main.clearFocus()
+        if (et_comment_in.isFocused) et_comment_in.clearFocus()
+
+        layout_box_komentar_in.isEnabled = true
+        et_comment_main.isEnabled = true
+    }
+
+    override fun onFailedPostWordsAudience(t: Throwable) {
+        layout_box_komentar_in.isEnabled = true
+        et_comment_main.isEnabled = true
     }
 
     override fun updateInputTurn() {
@@ -283,7 +342,8 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
         isMyTurn = myRole == turnActorRole
 
-        if (isMyChallenge && wordsFighterAdapter.get(0) !is WordInputItem) showWordsInputBox()
+        if (isMyChallenge &&
+            (wordsFighterAdapter.itemCount == 0 || wordsFighterAdapter.get(0) !is WordInputItem)) showWordsInputBox()
 
         tv_status_debat.text = "Giliran $turnActorName menulis argumen "
         enableJumpingDots(true)
@@ -295,8 +355,16 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         updateInputTurn()
     }
 
-    override fun onFailedPostWordsFighter(wordItem: WordItem) {
+    override fun onFailedPostWordsFighter(t: Throwable) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun gotNewArgumen(word: WordItem) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun gotNewComment(word: WordItem) {
+        komentarAdapter.addItem(word)
     }
 
     override fun showLoading() {
@@ -307,27 +375,24 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         dismissProgressDialog()
     }
 
-    override fun showLoadingKomentar() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun dismissLoadingKomentar() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     private fun showWordsInputBox() {
-        Timber.d("showWordsInputBox isMyTurn = $isMyTurn")
         wordsFighterAdapter.addWordsInputItem(myRole, isMyTurn)
     }
 
     @SuppressLint("SetTextI18n")
     private fun setupLayoutBehaviour() {
-        et_comment_main = layout_box_komentar_main.findViewById(R.id.et_comment)
-        et_comment_in = layout_komentar_debat.findViewById(R.id.et_comment)
-        btn_comment_main = layout_box_komentar_main.findViewById(R.id.iv_btn_comment)
-        btn_comment_in = layout_komentar_debat.findViewById(R.id.iv_btn_comment)
-        iv_avatar_comment_main = layout_box_komentar_main.findViewById(R.id.iv_avatar_me)
-        iv_avatar_comment_in = layout_komentar_debat.findViewById(R.id.iv_avatar_me)
+        layout_box_komentar_main.apply {
+            et_comment_main = findViewById(R.id.et_comment)
+            btn_comment_main = findViewById(R.id.iv_btn_comment)
+            iv_avatar_comment_main = findViewById(R.id.iv_avatar_me)
+            progress_bar_comment_main = findViewById(R.id.progress_bar_comment)
+        }
+        layout_komentar_debat.apply {
+            et_comment_in = findViewById(R.id.et_comment)
+            btn_comment_in = findViewById(R.id.iv_btn_comment)
+            iv_avatar_comment_in = findViewById(R.id.iv_avatar_me)
+            progress_bar_comment_in = findViewById(R.id.progress_bar_comment_in)
+        }
 
         lateinit var commentInTextWatcher: TextWatcher
         lateinit var commentMainTextWatcher: TextWatcher
@@ -398,6 +463,32 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
         })
 
         /**
+         * Komentar Main Layout behaviour
+         */
+        layout_box_komentar_in.visibleIf(!isMyChallenge)
+        if (isMyChallenge) {
+            et_comment_main.isFocusable = false
+        } else {
+            getString(R.string.tulis_komentar).apply {
+                et_comment_main.hint = this
+                et_comment_in.hint = this
+            }
+            iv_avatar_comment_main.loadUrl(myProfile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+            iv_avatar_comment_in.loadUrl(myProfile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+        }
+        btn_comment_main.setOnClickListener {
+            if (isKeyboardShown) {
+                et_comment_main.text.apply {
+                    if (toString().isNotEmpty()) {
+                        addKomentar(toString())
+                    }
+                }
+            } else {
+                sliding_layout.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
+            }
+        }
+
+        /**
          * Komentar Sliding Layout behaviour
          */
         sliding_layout.apply {
@@ -441,28 +532,24 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
             }
         }
 
-        btn_comment_main.setOnClickListener {
-            if (isKeyboardShown) {
-                et_comment_main.text.apply {
-                    if (this.toString().isNotEmpty()) {
-                        val komentar = Komentar(System.currentTimeMillis().toString(), this.toString(), "Baru saja", presenter.getMyProfile())
-                        addKomentar(komentar)
-                        TextKeyListener.clear(this)
-                        et_comment_main.clearFocus()
-                    }
+        recycler_view_komentar.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (recyclerView.canScrollVertically(1)) {
+                    tv_comment_below_available.animate().alpha(1f).duration = 200
+                } else {
+                    tv_comment_below_available.animate().alpha(0f).duration = 200
                 }
-            } else {
-                sliding_layout.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
             }
+        })
+        tv_comment_below_available.setOnClickListener {
+            recycler_view_komentar.smoothScrollToPosition(komentarAdapter.itemCount - 1)
         }
 
         btn_comment_in.setOnClickListener {
             et_comment_in.text.apply {
-                if (this.toString().isNotEmpty()) {
-                    val komentar = Komentar(System.currentTimeMillis().toString(), this.toString(), "Baru saja", presenter.getMyProfile())
-                    addKomentar(komentar)
-                    TextKeyListener.clear(this)
-                    et_comment_in.clearFocus()
+                if (toString().isNotEmpty()) {
+                    addKomentar(toString())
                 }
             }
         }
@@ -525,6 +612,9 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
 
     override fun onResume() {
         super.onResume()
+
+        presenter.setOnGotNewWordsListener(this)
+
         enableJumpingDots()
 
         topicList.forEach {
@@ -536,9 +626,13 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView {
                     }
                 }
         }
+
+        getList()
     }
 
     override fun onPause() {
+        presenter.setOnGotNewWordsListener(null)
+
         enableJumpingDots(false)
 
         topicList.forEach {

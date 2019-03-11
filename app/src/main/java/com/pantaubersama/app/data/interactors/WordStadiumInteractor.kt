@@ -7,6 +7,7 @@ import com.pantaubersama.app.data.model.wordstadium.LawanDebat
 import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
+import com.pantaubersama.app.utils.WordsPNHandler
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -14,7 +15,8 @@ import javax.inject.Inject
 class WordStadiumInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
     private val dataCache: DataCache,
-    private val rxSchedulers: RxSchedulers
+    private val rxSchedulers: RxSchedulers,
+    private val wordsPNHandler: WordsPNHandler
 ) {
     fun openChallenge(
         topicList: String?,
@@ -136,7 +138,7 @@ class WordStadiumInteractor @Inject constructor(
     fun getWordsFighter(challengeId: String): Single<MutableList<WordItem>> {
         return apiWrapper.getWordStadiumApi()
             .getWordsFighter(challengeId)
-            .map { it.wordListData.wordList.asReversed() }
+            .map { it.wordListData.wordList }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
@@ -147,5 +149,29 @@ class WordStadiumInteractor @Inject constructor(
             .map { it.wordItemData.word }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getWordsAudience(challengeId: String): Single<MutableList<WordItem>> {
+        return apiWrapper.getWordStadiumApi()
+            .getWordsAudience(challengeId)
+            .map { it.wordListData.wordList }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun postWordsAudience(challengeId: String, words: String): Single<WordItem> {
+        return apiWrapper.getWordStadiumApi()
+            .postWordsAudience(challengeId, words)
+            .map { it.wordItemData.word }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun setOnGotNewWordsListener(onGotNewWordsListener: WordsPNHandler.OnGotNewWordsListener?) {
+        wordsPNHandler.setOnGotNewWordsListener(onGotNewWordsListener)
+    }
+
+    fun handleWords(wordItem: WordItem): Completable {
+        return wordsPNHandler.handleWordsPN(wordItem)
     }
 }
