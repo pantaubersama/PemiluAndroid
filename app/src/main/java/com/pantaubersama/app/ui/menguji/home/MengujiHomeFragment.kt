@@ -58,8 +58,11 @@ class MengujiHomeFragment : HomeFragment() {
         fabAnimationDelegate = FabAnimationDelegate(fab_container)
 
         val mainFabListener = View.OnClickListener {
-            if (!fabAnimationDelegate.isCollapsed) startActivity(Intent(requireContext(),
-                CreateChallengeActivity::class.java))
+            if (!fabAnimationDelegate.isCollapsed) {
+                startActivity(Intent(requireContext(), CreateChallengeActivity::class.java))
+            } else {
+                setupFabButtons()
+            }
             animationDisposable = fabAnimationDelegate.toggle()
         }
 
@@ -88,6 +91,13 @@ class MengujiHomeFragment : HomeFragment() {
         label_done.setOnClickListener(onClickListener)
         label_coming.setOnClickListener(onClickListener)
         label_live.setOnClickListener(onClickListener)
+    }
+
+    private fun setupFabButtons() {
+        label_challenge.text = if (isPublik) "Challenge" else "My Challenge"
+        label_done.text = if (isPublik) "Debat Done" else "My Debat Done"
+        label_live.text = if (isPublik) "Live Now" else "Challenge in Progress"
+        fab_live.setImageResource(if (isPublik) R.drawable.ic_debat_live else R.drawable.ic_debat_open)
     }
 
     private fun changeTopBarColor(hidden: Boolean) {
