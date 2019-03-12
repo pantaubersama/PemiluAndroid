@@ -75,6 +75,71 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
     private fun setupAllDisabilitasSection() {
         setupPemilihDisabilitas()
+        setupHakPilihDisabilitas()
+    }
+
+    private fun setupHakPilihDisabilitas() {
+        RxTextView.textChanges(disabilitas_l_voted_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (disabilitas_p_voted_count.text.isNotEmpty()) {
+                    disabilitas_p_voted_count.getInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                disabilitas_total_voted_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(disabilitas_p_voted_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (disabilitas_l_voted_count.text.isNotEmpty()) {
+                    disabilitas_l_voted_count.getInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                disabilitas_total_voted_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
     }
 
     private fun setupPemilihDisabilitas() {
