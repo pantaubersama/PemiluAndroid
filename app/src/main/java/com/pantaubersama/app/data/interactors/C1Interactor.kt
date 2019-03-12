@@ -75,4 +75,62 @@ class C1Interactor @Inject constructor(
     fun getC1(tpsId: String, c1Type: String): C1Form? {
         return appDB.getC1Dao().getC1(tpsId, c1Type)
     }
+
+    fun saveSection2(
+        tpsId: String,
+        dptC7L: Int,
+        dptC7P: Int,
+        dptBC7L: Int,
+        dptBC7P: Int,
+        dpkC7L: Int,
+        dpkC7P: Int,
+        c1Type: String
+    ): Completable {
+        if (appDB.getC1Dao().getC1(tpsId, c1Type) != null) {
+            val c1 = appDB.getC1Dao().getC1(tpsId, c1Type)
+            c1?.c7DptL = dptC7L
+            c1?.c7DptP = dptC7P
+            c1?.c7DptBL = dptBC7L
+            c1?.c7DptBP = dptBC7P
+            c1?.c7DpkL = dpkC7L
+            c1?.c7DpkP = dpkC7P
+            return Completable.fromCallable {
+                appDB.getC1Dao().updateC1(c1)
+            }
+        } else {
+            var newId: Int = 0
+
+            appDB.getC1Dao().getC1s(tpsId, c1Type).forEachIndexed { index, realCount ->
+                newId = index + 1
+            }
+            return Completable.fromCallable {
+                appDB.getC1Dao().saveC1(
+                    C1Form(
+                        newId.toString(),
+                        tpsId,
+                        c1Type,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                    dptC7L,
+                    dptC7P,
+                    dptBC7L,
+                    dptBC7P,
+                    dpkC7L,
+                    dpkC7P,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    )
+                )
+            }
+        }
+    }
 }

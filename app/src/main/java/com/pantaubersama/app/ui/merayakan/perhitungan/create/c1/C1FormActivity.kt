@@ -76,6 +76,109 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         setupDptC7()
         setupDptBC7()
         setupDpkC7()
+        setupTotalSection2()
+    }
+
+    private fun setupTotalSection2() {
+        RxTextView.textChanges(hak_pilih_a1_a2_a3_l_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (hak_pilih_a1_a2_a3_p_count.text.isNotEmpty()) {
+                    hak_pilih_a1_a2_a3_p_count.getInt()
+                } else {
+                    0
+                }
+                val newAllCount = it + lpCount
+                hak_pilih_a1_a2_a3_total_count.text = newAllCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(hak_pilih_a1_a2_a3_p_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (hak_pilih_a1_a2_a3_l_count.text.isNotEmpty()) {
+                    hak_pilih_a1_a2_a3_l_count.getInt()
+                } else {
+                    0
+                }
+                val newAllCount = it + lpCount
+                hak_pilih_a1_a2_a3_total_count.text = newAllCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(hak_pilih_a1_a2_a3_total_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .debounce(1000, TimeUnit.MILLISECONDS)
+            .doOnNext {
+                tps?.id?.let {
+                    c1Type?.let { it1 ->
+                        presenter.saveSection2(
+                            it,
+                            dpt_c7_l_count.getInt(),
+                            dpt_c7_p_count.getInt(),
+                            dpt_b_c7_l_count.getInt(),
+                            dpt_b_c7_l_count.getInt(),
+                            dpk_c7_l_count.getInt(),
+                            dpk_c7_l_count.getInt(),
+                            it1
+                        )
+                    }
+                }
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
     }
 
     private fun setupDpkC7() {
@@ -756,6 +859,12 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         dpt_b_a4_kpu_p_count.setText(c1Form.a4P.toString())
         dpk_a_kpu_l_count.setText(c1Form.aDpkL.toString())
         dpk_a_kpu_p_count.setText(c1Form.aDpkP.toString())
+        dpt_c7_l_count.setText(c1Form.c7DptL.toString())
+        dpt_c7_p_count.setText(c1Form.c7DptP.toString())
+        dpt_b_c7_l_count.setText(c1Form.c7DptBL.toString())
+        dpt_b_c7_p_count.setText(c1Form.c7DptBP.toString())
+        dpk_c7_l_count.setText(c1Form.c7DpkL.toString())
+        dpk_c7_p_count.setText(c1Form.c7DpkP.toString())
     }
 
     private fun EditText.getInt(): Int {

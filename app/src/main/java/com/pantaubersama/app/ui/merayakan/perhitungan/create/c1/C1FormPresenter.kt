@@ -43,4 +43,37 @@ class C1FormPresenter @Inject constructor(private val c1Interactor: C1Interactor
             view?.bindC1Data(it)
         }
     }
+
+    fun saveSection2(
+        tpsId: String,
+        dptC7L: Int,
+        dptC7P: Int,
+        dptBC7L: Int,
+        dptBC7P: Int,
+        dpkC7L: Int,
+        dpkC7P: Int,
+        c1Type: String
+    ) {
+        disposables.add(
+            c1Interactor.saveSection2(
+                tpsId,
+                dptC7L,
+                dptC7P,
+                dptBC7L,
+                dptBC7P,
+                dpkC7L,
+                dpkC7P,
+                c1Type
+            )
+                .subscribe(
+                    {
+                        view?.onSuccessSaveData()
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedSaveDataAlert()
+                    }
+                )
+        )
+    }
 }
