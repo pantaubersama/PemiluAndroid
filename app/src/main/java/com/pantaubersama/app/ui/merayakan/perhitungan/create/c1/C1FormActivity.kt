@@ -58,6 +58,71 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         setupDptA3()
         setupDptA4()
         setupDpk()
+        setupAllSection1()
+    }
+
+    private fun setupAllSection1() {
+        RxTextView.textChanges(pemilih_a1_a2_a3_l_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just(0)
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (pemilih_a1_a2_a3_p_count.text.isNotEmpty()) {
+                    pemilih_a1_a2_a3_p_count.text.toString().toInt()
+                } else {
+                    0
+                }
+                val newAllCount = it + lpCount
+                pemilih_a1_a2_a3_total_count.text = newAllCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(pemilih_a1_a2_a3_p_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just(0)
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (pemilih_a1_a2_a3_l_count.text.isNotEmpty()) {
+                    pemilih_a1_a2_a3_l_count.text.toString().toInt()
+                } else {
+                    0
+                }
+                val newAllCount = it + lpCount
+                pemilih_a1_a2_a3_total_count.text = newAllCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
     }
 
     private fun setupDpk() {
