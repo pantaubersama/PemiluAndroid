@@ -125,6 +125,9 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
 
             override fun onClickTpsOptions(tps: TPS, position: Int) {
                 val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tps)
+                if (tps.status == "published") {
+                    dialog.removeItem(R.id.edit_tps_data_action)
+                }
                 dialog.show()
                 dialog.listener = object : OptionDialog.DialogListener {
                     override fun onClick(viewId: Int) {

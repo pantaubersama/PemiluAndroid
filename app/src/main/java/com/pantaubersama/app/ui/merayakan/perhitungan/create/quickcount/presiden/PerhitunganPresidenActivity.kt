@@ -62,6 +62,10 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     }
 
     private fun setupCandidate1() {
+        if (tps?.status == "published") {
+            candidate_1_count_field.isEnabled = false
+//            candidate_1_inc_button.isEnabled = false
+        }
         undoRedoToolses.add(0, UndoRedoTools(candidate_1_count_field))
         candidate_1_inc_button.setOnClickListener(this)
 //        candidate_1_count_field.onFocusChangeListener = this
@@ -79,7 +83,9 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
                 undoPosition = 0
-                tps?.id?.let { it1 -> presenter.saveCandidate1Count(it, it1) }
+                if (tps?.status == "draft" || tps?.status == "sandbox") {
+                    tps?.id?.let { it1 -> presenter.saveCandidate1Count(it, it1) }
+                }
             }
             .doOnError {
                 it.printStackTrace()
@@ -88,6 +94,10 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     }
 
     private fun setupCandidate2() {
+        if (tps?.status == "published") {
+            candidate_2_count_field.isEnabled = false
+//            candidate_2_inc_button.isEnabled = false
+        }
         undoRedoToolses.add(1, UndoRedoTools(candidate_2_count_field))
         candidate_2_inc_button.setOnClickListener(this)
 //        candidate_1_count_field.onFocusChangeListener = this
@@ -105,7 +115,9 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
                 undoPosition = 1
-                tps?.id?.let { it1 -> presenter.saveCandidate2Count(it, it1) }
+                if (tps?.status == "draft" || tps?.status == "sandbox") {
+                    tps?.id?.let { it1 -> presenter.saveCandidate2Count(it, it1) }
+                }
             }
             .doOnError {
                 it.printStackTrace()
@@ -114,6 +126,10 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     }
 
     private fun setupNoVotes() {
+        if (tps?.status == "published") {
+            no_vote_count_field.isEnabled = false
+//            no_vote_inc_button.isEnabled = false
+        }
         undoRedoToolses.add(2, UndoRedoTools(no_vote_count_field))
         no_vote_inc_button.setOnClickListener(this)
 //        no_vote_count_field.onFocusChangeListener = this
@@ -131,7 +147,9 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
                 undoPosition = 2
-                tps?.id?.let { it1 -> presenter.saveInvalidVoteCount(it, it1) }
+                if (tps?.status == "draft" || tps?.status == "sandbox") {
+                    tps?.id?.let { it1 -> presenter.saveInvalidVoteCount(it, it1) }
+                }
             }
             .doOnError {
                 it.printStackTrace()
@@ -154,19 +172,31 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     override fun onClick(view: View) {
         when (view) {
             candidate_1_inc_button -> {
-                val count = candidate_1_count_field.text.toString().toInt()
-                undoPosition = 0
-                candidate_1_count_field.setText(count.plus(1).toString())
+                if (tps?.status == "published") {
+                    ToastUtil.show(this@PerhitunganPresidenActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
+                } else {
+                    val count = candidate_1_count_field.text.toString().toInt()
+                    candidate_1_count_field.setText(count.plus(1).toString())
+                    undoPosition = 0
+                }
             }
             candidate_2_inc_button -> {
-                val count = candidate_2_count_field.text.toString().toInt()
-                undoPosition = 1
-                candidate_2_count_field.setText(count.plus(1).toString())
+                if (tps?.status == "published") {
+                    ToastUtil.show(this@PerhitunganPresidenActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
+                } else {
+                    val count = candidate_2_count_field.text.toString().toInt()
+                    undoPosition = 1
+                    candidate_2_count_field.setText(count.plus(1).toString())
+                }
             }
             no_vote_inc_button -> {
-                val count = no_vote_count_field.text.toString().toInt()
-                undoPosition = 2
-                no_vote_count_field.setText(count.plus(1).toString())
+                if (tps?.status == "published") {
+                    ToastUtil.show(this@PerhitunganPresidenActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
+                } else {
+                    val count = no_vote_count_field.text.toString().toInt()
+                    undoPosition = 2
+                    no_vote_count_field.setText(count.plus(1).toString())
+                }
             }
             save_button -> {
                 finish()

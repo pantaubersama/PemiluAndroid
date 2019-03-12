@@ -39,7 +39,7 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
 
     inner class PerhitunganViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: TPS) {
-            tps_number.text = item.tps.toString()
+            tps_number.text = "TPS Nomor ${item.tps}"
             province_text.text = item.province.name
             regency_text.text = item.regency.name
             district_text.text = item.district.name
