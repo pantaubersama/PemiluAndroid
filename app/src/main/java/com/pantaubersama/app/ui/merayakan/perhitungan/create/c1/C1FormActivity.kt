@@ -67,6 +67,27 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             }
         }
         setupToolbar(false, title, R.color.white, 4f)
+        if (tps?.status == "published") {
+            dpt_a3_kpu_l_count.isEnabled = false
+            dpt_a3_kpu_p_count.isEnabled = false
+            dpt_b_a4_kpu_l_count.isEnabled = false
+            dpt_b_a4_kpu_p_count.isEnabled = false
+            dpk_a_kpu_l_count.isEnabled = false
+            dpk_a_kpu_p_count.isEnabled = false
+            dpt_c7_l_count.isEnabled = false
+            dpt_c7_p_count.isEnabled = false
+            dpt_b_c7_l_count.isEnabled = false
+            dpt_b_c7_p_count.isEnabled = false
+            dpk_c7_l_count.isEnabled = false
+            dpk_c7_p_count.isEnabled = false
+            disabilitas_l_count.isEnabled = false
+            disabilitas_p_count.isEnabled = false
+            disabilitas_l_voted_count.isEnabled = false
+            disabilitas_p_voted_count.isEnabled = false
+            rejected_documents_count.isEnabled = false
+            unused_documents_count.isEnabled = false
+            used_documents_count.isEnabled = false
+        }
         setupAllSection1()
         setupAllSection2()
         setupAllDisabilitasSection()
