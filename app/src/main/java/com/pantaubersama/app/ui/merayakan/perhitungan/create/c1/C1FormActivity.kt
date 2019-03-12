@@ -69,7 +69,76 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         setupToolbar(false, title, R.color.white, 4f)
         setupAllSection1()
         setupAllSection2()
+        setupAllDisabilitasSection()
         tps?.id?.let { c1Type?.let { it1 -> presenter.getC1Data(it, it1) } }
+    }
+
+    private fun setupAllDisabilitasSection() {
+        setupPemilihDisabilitas()
+    }
+
+    private fun setupPemilihDisabilitas() {
+        RxTextView.textChanges(disabilitas_l_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (disabilitas_p_count.text.isNotEmpty()) {
+                    disabilitas_p_count.getInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                disabilitas_total_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(disabilitas_p_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (disabilitas_l_count.text.isNotEmpty()) {
+                    disabilitas_l_count.getInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                disabilitas_total_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
     }
 
     private fun setupAllSection2() {
