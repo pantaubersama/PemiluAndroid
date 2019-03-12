@@ -56,6 +56,7 @@ class PerhitunganPresidenPresenter @Inject constructor(
         realCountInteractor.getRealCount(tpsId)?.let {
             val validCount = it.candidates[0].totalVote + it.candidates[1].totalVote
             val allCount = it.invalidVote + validCount
+            view?.bindCounter(validCount, it.invalidVote, allCount)
         }
     }
 
