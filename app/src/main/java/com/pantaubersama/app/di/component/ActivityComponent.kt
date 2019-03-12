@@ -22,6 +22,7 @@ import com.pantaubersama.app.ui.menguji.list.DebatListActivity
 import com.pantaubersama.app.ui.menjaga.filter.LaporFilterActivity
 import com.pantaubersama.app.ui.menjaga.filter.partiesdialog.PartiesDialog
 import com.pantaubersama.app.ui.menjaga.lapor.LaporFragment
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.c1.C1FormActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdkabupaten.PerhitunganDPRDKabupatenActivity
@@ -178,4 +179,5 @@ interface ActivityComponent {
     fun inject(directChallengeActivity: DirectChallengeActivity)
     fun inject(previewChallengeActivity: PreviewChallengeActivity)
     fun inject(detailDebatDialogFragment: DetailDebatDialogFragment)
+    fun inject(c1FormActivity: C1FormActivity)
 }
