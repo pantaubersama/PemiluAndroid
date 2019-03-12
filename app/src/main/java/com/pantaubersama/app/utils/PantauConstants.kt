@@ -309,6 +309,7 @@ class PantauConstants {
         const val NOTIFICATION_TYPE_QUESTION = "question"
         const val NOTIFICATION_TYPE_BADGE = "badge"
         const val NOTIFICATION_TYPE_PROFILE = "profile"
+        const val NOTIFICATION_TYPE_CHALLENGE = "challenge"
     }
 
     object Word {
@@ -316,5 +317,6 @@ class PantauConstants {
         const val WORD_TYPE_OPPONENT = 2
         const val WORD_INPUT_CHALLENGER = 3
         const val WORD_INPUT_OPPONENT = 4
+        const val WORD_TYPE_AUDIENCE = 5
     }
 }

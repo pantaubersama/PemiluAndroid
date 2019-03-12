@@ -8,6 +8,7 @@ import com.pantaubersama.app.utils.PantauConstants.Word.WORD_INPUT_OPPONENT
 import com.pantaubersama.app.utils.PantauConstants.Word.WORD_TYPE_CHALLENGER
 import com.pantaubersama.app.utils.PantauConstants.Word.WORD_TYPE_OPPONENT
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Role
+import com.pantaubersama.app.utils.PantauConstants.Word.WORD_TYPE_AUDIENCE
 
 /**
  * @author edityomurti on 12/02/2019 14:09
@@ -55,9 +56,14 @@ data class WordItem(
     var isClaped: Boolean = false,
     var clapCount: Int = 0
 ) : ItemModel {
+    companion object {
+        const val TAG = "word"
+    }
+
     override fun getType(): Int = when {
         author.role == Role.CHALLENGER -> WORD_TYPE_CHALLENGER
         author.role == Role.OPPONENT -> WORD_TYPE_OPPONENT
+        author.role == Role.AUDIENCE || type == WordConstants.Type.COMMENT -> WORD_TYPE_AUDIENCE
         else -> throw ErrorException("Role word tidak sesuai")
     }
 }

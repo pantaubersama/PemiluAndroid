@@ -63,4 +63,14 @@ interface WordStadiumAPI {
         @Field("challenge_id") challengeId: String,
         @Field("words") words: String
     ): Single<WordItemResponse>
+
+    @GET("word_stadium/v1/words/audience")
+    fun getWordsAudience(@Query("challenge_id") challengeId: String): Single<WordListResponse>
+
+    @FormUrlEncoded
+    @POST("word_stadium/v1/words/audience/comment")
+    fun postWordsAudience(
+        @Field("challenge_id") challengeId: String,
+        @Field("words") words: String
+    ): Single<WordItemResponse>
 }

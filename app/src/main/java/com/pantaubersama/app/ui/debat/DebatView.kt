@@ -1,7 +1,6 @@
 package com.pantaubersama.app.ui.debat
 
 import com.pantaubersama.app.base.BaseView
-import com.pantaubersama.app.data.model.debat.Komentar
 import com.pantaubersama.app.data.model.debat.WordItem
 
 /**
@@ -15,12 +14,17 @@ interface DebatView : BaseView {
     fun onEmptyWordsFighter()
     fun onErrorGetWordsFighter(t: Throwable)
 
-    fun showKomentar(komentarList: MutableList<Komentar>)
+    fun showKomentar(komentarList: MutableList<WordItem>)
     fun showLoadingKomentar()
     fun dismissLoadingKomentar()
+    fun onEmptyWordsAudience()
+    fun onErrorGetWordsAudience(t: Throwable)
 
     fun onSuccessPostWordsFighter(wordItem: WordItem)
-    fun onFailedPostWordsFighter(wordItem: WordItem)
+    fun onFailedPostWordsFighter(t: Throwable)
+
+    fun onSuccessPostWordsAudience(wordItem: WordItem)
+    fun onFailedPostWordsAudience(t: Throwable)
 
     fun updateInputTurn()
 }

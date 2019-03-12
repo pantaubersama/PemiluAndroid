@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.data.model.debat.Komentar
+import com.pantaubersama.app.data.model.debat.WordItem
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.parseDate
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_komentar.*
@@ -26,19 +27,20 @@ class KomentarAdapter : BaseRecyclerAdapter() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as? KomentarViewHolder)?.bind(data[position] as Komentar)
+        (holder as? KomentarViewHolder)?.bind(data[position] as WordItem)
     }
 
     inner class KomentarViewHolder(override val containerView: View)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: Komentar) {
-            item.user.avatar?.medium?.url?.let { iv_komentar_avatar.loadUrl(it, R.color.gray_4) }
+        fun bind(item: WordItem) {
+            item.author.avatar?.medium?.url?.let { iv_komentar_avatar.loadUrl(it, R.drawable.ic_avatar_placeholder) }
+                ?: iv_komentar_avatar.setImageResource(R.drawable.ic_avatar_placeholder)
             tv_komentar_content.text = spannable {
-                item.user.fullName?.let { bold { textColor(itemView.context.color(R.color.black_2)) { +it } } }
+                item.author.fullName?.let { bold { textColor(itemView.context.color(R.color.black_2)) { +it } } }
                 + "  "
-                + item.content
+                + item.body
             }.toCharSequence()
-            tv_komentar_posted_time.text = item.createdAt
+            tv_komentar_posted_time.text = item.createdAt.parseDate("HH:mm")
         }
     }
 
@@ -49,8 +51,9 @@ class KomentarAdapter : BaseRecyclerAdapter() {
     }
 
     override fun addItem(item: ItemModel) {
-        super.addItem(item)
-
-        recyclerView.smoothScrollToPosition(itemCount - 1)
+        if (data.find { (it as? WordItem)?.id == (item as WordItem).id } == null) {
+            super.addItem(item)
+            recyclerView.smoothScrollToPosition(itemCount - 1)
+        }
     }
 }
