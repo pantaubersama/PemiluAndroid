@@ -163,6 +163,11 @@ class TPSInteractor @Inject constructor(
     }
 
     fun createSandboxTps(): Completable {
+        var newId: Int = 0
+
+        appDB.getTPSDAO().loadTPS().forEachIndexed { i, item ->
+            newId = i + 1
+        }
         return Completable.fromCallable {
             val province = "{\n" +
                 "        \"id\": 34,\n" +
@@ -198,7 +203,7 @@ class TPSInteractor @Inject constructor(
                 "        \"name\": \"Condongcatur\"\n" +
                 "      }"
             val tps = TPS(
-                "1",
+                newId.toString(),
                 1,
                 gson.fromJson(province, Province::class.java),
                 gson.fromJson(regency, Regency::class.java),
