@@ -131,6 +131,20 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 }
                 val newCount = it + lpCount
                 dpk_a_kpu_l_total_count.text = newCount.toString()
+
+                // total p
+                val allPCount = if (dpt_a3_kpu_p_count.text.isNotEmpty()) {
+                    dpt_a3_kpu_p_count.text.toString().toInt()
+                } else {
+                    0
+                } + if (dpt_b_a4_kpu_p_count.text.isNotEmpty()) {
+                    dpt_b_a4_kpu_p_count.text.toString().toInt()
+                } else {
+                    0
+                }
+
+                val newPCount = it + allPCount
+                pemilih_a1_a2_a3_p_count.text = newPCount.toString()
             }
             .doOnError {
                 it.printStackTrace()
@@ -209,6 +223,20 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 }
                 val newCount = it + lpCount
                 dpt_b_a4_kpu_total_count.text = newCount.toString()
+
+                // total p
+                val allPCount = if (dpt_a3_kpu_p_count.text.isNotEmpty()) {
+                    dpt_a3_kpu_p_count.text.toString().toInt()
+                } else {
+                    0
+                } + if (dpk_a_kpu_p_count.text.isNotEmpty()) {
+                    dpk_a_kpu_p_count.text.toString().toInt()
+                } else {
+                    0
+                }
+
+                val newPCount = it + allPCount
+                pemilih_a1_a2_a3_p_count.text = newPCount.toString()
             }
             .doOnError {
                 it.printStackTrace()
@@ -263,7 +291,6 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
         RxTextView.textChanges(dpt_a3_kpu_p_count)
             .flatMap {
-                // total l+p
                 if (it.isEmpty()) {
                     Observable.just(0)
                 } else {
@@ -279,6 +306,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
+                // total l+p
                 val lpCount = if (dpt_a3_kpu_l_count.text.isNotEmpty()) {
                     dpt_a3_kpu_l_count.text.toString().toInt()
                 } else {
@@ -286,6 +314,20 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 }
                 val newCount = it + lpCount
                 dpt_a3_kpu_total_count.text = newCount.toString()
+
+                // total p
+                val allPCount = if (dpt_b_a4_kpu_p_count.text.isNotEmpty()) {
+                    dpt_b_a4_kpu_p_count.text.toString().toInt()
+                } else {
+                    0
+                } + if (dpk_a_kpu_p_count.text.isNotEmpty()) {
+                    dpk_a_kpu_p_count.text.toString().toInt()
+                } else {
+                    0
+                }
+
+                val newPCount = it + allPCount
+                pemilih_a1_a2_a3_p_count.text = newPCount.toString()
             }
             .doOnError {
                 it.printStackTrace()
