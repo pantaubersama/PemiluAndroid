@@ -55,13 +55,17 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             }
         }
         setupToolbar(false, title, R.color.white, 4f)
-        setupDptA3()
-        setupDptA4()
-        setupDpk()
         setupAllSection1()
     }
 
     private fun setupAllSection1() {
+        setupDptA3()
+        setupDptA4()
+        setupDpk()
+        setupTotalSection1()
+    }
+
+    private fun setupTotalSection1() {
         RxTextView.textChanges(pemilih_a1_a2_a3_l_count)
             .flatMap {
                 if (it.isEmpty()) {
