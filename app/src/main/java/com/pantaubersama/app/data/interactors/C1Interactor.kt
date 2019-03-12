@@ -133,4 +133,49 @@ class C1Interactor @Inject constructor(
             }
         }
     }
+
+    fun saveDisabilitas(tpsId: String, disabilitasL: Int, disabilitasP: Int, c1Type: String): Completable {
+        if (appDB.getC1Dao().getC1(tpsId, c1Type) != null) {
+            val c1 = appDB.getC1Dao().getC1(tpsId, c1Type)
+            c1?.disabilitasTerdaftarL = disabilitasL
+            c1?.disabilitasTerdaftarP = disabilitasP
+            return Completable.fromCallable {
+                appDB.getC1Dao().updateC1(c1)
+            }
+        } else {
+            var newId: Int = 0
+
+            appDB.getC1Dao().getC1s(tpsId, c1Type).forEachIndexed { index, realCount ->
+                newId = index + 1
+            }
+            return Completable.fromCallable {
+                appDB.getC1Dao().saveC1(
+                    C1Form(
+                        newId.toString(),
+                        tpsId,
+                        c1Type,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        disabilitasL,
+                        disabilitasP,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    )
+                )
+            }
+        }
+    }
 }

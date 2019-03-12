@@ -140,6 +140,40 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.printStackTrace()
             }
             .subscribe()
+
+        RxTextView.textChanges(disabilitas_total_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .debounce(1000, TimeUnit.MILLISECONDS)
+            .doOnNext {
+                tps?.id?.let {
+                    c1Type?.let { it1 ->
+                        presenter.saveDisabilitas(
+                            it,
+                            disabilitas_l_count.getInt(),
+                            disabilitas_p_count.getInt(),
+                            it1
+                        )
+                    }
+                }
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
     }
 
     private fun setupPemilihDisabilitas() {
@@ -999,6 +1033,8 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         dpt_b_c7_p_count.setText(c1Form.c7DptBP.toString())
         dpk_c7_l_count.setText(c1Form.c7DpkL.toString())
         dpk_c7_p_count.setText(c1Form.c7DpkP.toString())
+        disabilitas_l_count.setText(c1Form.disabilitasTerdaftarL.toString())
+        disabilitas_p_count.setText(c1Form.disabilitasTerdaftarP.toString())
     }
 
     private fun EditText.getInt(): Int {
