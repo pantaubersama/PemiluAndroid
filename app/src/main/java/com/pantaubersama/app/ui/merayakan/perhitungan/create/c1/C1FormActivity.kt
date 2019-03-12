@@ -71,6 +71,9 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         setupAllSection2()
         setupAllDisabilitasSection()
         setupSuratSuara()
+        save_button.setOnClickListener {
+            finish()
+        }
         tps?.id?.let { c1Type?.let { it1 -> presenter.getC1Data(it, it1) } }
     }
 
@@ -174,6 +177,41 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 }
                 val newCount = it + lpCount
                 accepted_documents_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(accepted_documents_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .debounce(1000, TimeUnit.MILLISECONDS)
+            .doOnNext {
+                tps?.id?.let {
+                    c1Type?.let { it1 ->
+                        presenter.saveSuratSuaraSection(
+                            it,
+                            rejected_documents_count.getInt(),
+                            unused_documents_count.getInt(),
+                            used_documents_count.getInt(),
+                            it1
+                        )
+                    }
+                }
             }
             .doOnError {
                 it.printStackTrace()
@@ -1179,6 +1217,9 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         disabilitas_p_count.setText(c1Form.disabilitasTerdaftarP.toString())
         disabilitas_l_voted_count.setText(c1Form.disabilitasHakPilihL.toString())
         disabilitas_p_voted_count.setText(c1Form.disabilitasHakPilihP.toString())
+        rejected_documents_count.setText(c1Form.suratDikembalikan.toString())
+        unused_documents_count.setText(c1Form.suratTidakDigunakan.toString())
+        used_documents_count.setText(c1Form.suratDigunakan.toString())
     }
 
     private fun EditText.getInt(): Int {

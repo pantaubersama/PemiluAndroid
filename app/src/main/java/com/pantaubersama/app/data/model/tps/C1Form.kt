@@ -63,14 +63,14 @@ data class C1Form(
     @SerializedName("disabilitas_hak_pilih_perempuan")
     @Expose
     var disabilitasHakPilihP: Int,
-    @SerializedName("surat_digunakan")
-    @Expose
-    var suratDigunakan: Int,
     @SerializedName("surat_dikembalikan")
     @Expose
     var suratDikembalikan: Int,
     @SerializedName("surat_tidak_digunakan")
     @Expose
-    var suratTidakDigunakan: Int
+    var suratTidakDigunakan: Int,
+    @SerializedName("surat_digunakan")
+    @Expose
+    var suratDigunakan: Int
 
 )

@@ -116,4 +116,25 @@ class C1FormPresenter @Inject constructor(private val c1Interactor: C1Interactor
                 )
         )
     }
+
+    fun saveSuratSuaraSection(tpsId: String, reject: Int, unused: Int, used: Int, c1Type: String) {
+        disposables.add(
+            c1Interactor.saveSuratSuaraSection(
+                tpsId,
+                reject,
+                unused,
+                used,
+                c1Type
+            )
+                .subscribe(
+                    {
+                        view?.onSuccessSaveData()
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedSaveDataAlert()
+                    }
+                )
+        )
+    }
 }
