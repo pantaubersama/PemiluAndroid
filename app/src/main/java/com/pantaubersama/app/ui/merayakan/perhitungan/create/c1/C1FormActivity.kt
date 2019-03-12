@@ -56,6 +56,132 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         }
         setupToolbar(false, title, R.color.white, 4f)
         setupDptA3()
+        setupDptA4()
+        setupDpk()
+    }
+
+    private fun setupDpk() {
+        RxTextView.textChanges(dpk_a_kpu_l_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just(0)
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                val lpCount = if (dpk_a_kpu_p_count.text.isNotEmpty()) {
+                    dpk_a_kpu_p_count.text.toString().toInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                dpk_a_kpu_l_total_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(dpk_a_kpu_p_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just(0)
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                val lpCount = if (dpk_a_kpu_l_count.text.isNotEmpty()) {
+                    dpk_a_kpu_l_count.text.toString().toInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                dpk_a_kpu_l_total_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+    }
+
+    private fun setupDptA4() {
+        RxTextView.textChanges(dpt_b_a4_kpu_l_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just(0)
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                val lpCount = if (dpt_b_a4_kpu_p_count.text.isNotEmpty()) {
+                    dpt_b_a4_kpu_p_count.text.toString().toInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                dpt_b_a4_kpu_total_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(dpt_b_a4_kpu_p_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just(0)
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                val lpCount = if (dpt_b_a4_kpu_l_count.text.isNotEmpty()) {
+                    dpt_b_a4_kpu_l_count.text.toString().toInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                dpt_b_a4_kpu_total_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
     }
 
     private fun setupDptA3() {
