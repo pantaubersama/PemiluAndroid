@@ -70,7 +70,115 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         setupAllSection1()
         setupAllSection2()
         setupAllDisabilitasSection()
+        setupSuratSuara()
         tps?.id?.let { c1Type?.let { it1 -> presenter.getC1Data(it, it1) } }
+    }
+
+    private fun setupSuratSuara() {
+        RxTextView.textChanges(rejected_documents_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (unused_documents_count.text.isNotEmpty()) {
+                    unused_documents_count.getInt()
+                } else {
+                    0
+                } + if (used_documents_count.text.isNotEmpty()) {
+                    used_documents_count.text.toString().toInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                accepted_documents_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(unused_documents_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (rejected_documents_count.text.isNotEmpty()) {
+                    rejected_documents_count.getInt()
+                } else {
+                    0
+                } + if (used_documents_count.text.isNotEmpty()) {
+                    used_documents_count.text.toString().toInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                accepted_documents_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(used_documents_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (unused_documents_count.text.isNotEmpty()) {
+                    unused_documents_count.getInt()
+                } else {
+                    0
+                } + if (used_documents_count.text.isNotEmpty()) {
+                    used_documents_count.text.toString().toInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                accepted_documents_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
     }
 
     private fun setupAllDisabilitasSection() {
