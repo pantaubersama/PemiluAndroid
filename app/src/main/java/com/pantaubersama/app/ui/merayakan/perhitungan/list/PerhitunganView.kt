@@ -15,4 +15,6 @@ interface PerhitunganView : BaseView {
     fun showDeleteItemLoading()
     fun dismissDeleteItemLoading()
     fun onSuccessDeleteItem(position: Int)
+    fun onSuccessCreateSandboxTps()
+    fun onFailureCreateSandboxTps()
 }

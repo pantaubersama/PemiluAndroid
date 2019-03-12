@@ -49,7 +49,15 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         presenter.getProfile()
+        presenter.createSandboxTps()
         setupTPSData()
+    }
+
+    override fun onSuccessCreateSandboxTps() {
+        presenter.getBanner()
+    }
+
+    override fun onFailureCreateSandboxTps() {
         presenter.getBanner()
     }
 

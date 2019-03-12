@@ -1,9 +1,12 @@
 package com.pantaubersama.app.data.interactors
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.pantaubersama.app.data.db.AppDB
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
+import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
@@ -16,6 +19,8 @@ class TPSInteractor @Inject constructor(
     private val appDB: AppDB,
     private val dataCache: DataCache
 ) {
+    private var gson: Gson = GsonBuilder().setFieldNamingPolicy(com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
+
     fun getProvinces(): Single<MutableList<Province>> {
         return if (appDB.getProvinceDao().loadProvinces().size != 0) {
             Single.fromCallable {
@@ -155,5 +160,63 @@ class TPSInteractor @Inject constructor(
 
     fun getTps(tpsId: String): TPS {
         return appDB.getTPSDAO().getTps(tpsId)
+    }
+
+    fun createSandboxTps(): Completable {
+        return Completable.fromCallable {
+            val province = "{\n" +
+                "        \"id\": 34,\n" +
+                "        \"code\": 34,\n" +
+                "        \"name\": \"DAERAH ISTIMEWA YOGYAKARTA\",\n" +
+                "        \"level\": 1,\n" +
+                "        \"domain_name\": \"yogyakartaprov\",\n" +
+                "        \"id_wilayah\": 41863\n" +
+                "      }"
+            val regency = "{\n" +
+                "        \"id\": 3404,\n" +
+                "        \"province_id\": 34,\n" +
+                "        \"code\": 3404,\n" +
+                "        \"name\": \"SLEMAN\",\n" +
+                "        \"level\": 2,\n" +
+                "        \"domain_name\": \"slemankab\",\n" +
+                "        \"id_wilayah\": 42221,\n" +
+                "        \"id_parent\": 41863\n" +
+                "      }"
+            val district = "{\n" +
+                "        \"id\": 340407,\n" +
+                "        \"code\": 340407,\n" +
+                "        \"regency_code\": 3404,\n" +
+                "        \"name\": \"DEPOK\",\n" +
+                "        \"id_parent\": 42221,\n" +
+                "        \"id_wilayah\": 42259,\n" +
+                "        \"level\": 3\n" +
+                "      }"
+            val village = "{\n" +
+                "        \"id\": 3404072003,\n" +
+                "        \"code\": 3404072003,\n" +
+                "        \"district_code\": 340407,\n" +
+                "        \"name\": \"Condongcatur\"\n" +
+                "      }"
+            val tps = TPS(
+                "1",
+                1,
+                gson.fromJson(province, Province::class.java),
+                gson.fromJson(regency, Regency::class.java),
+                gson.fromJson(district, District::class.java),
+                gson.fromJson(village, Village::class.java),
+                -7.752120,
+                110.405296,
+                "sandbox",
+                "",
+                CreatedAtInWord("", "", ""),
+                EMPTY_PROFILE
+            )
+            appDB.getTPSDAO().saveTPS(tps)
+        }
+            .doOnComplete { dataCache.setCreatedSandbox() }
+    }
+
+    fun isSandboxTpsCreated(): Boolean {
+        return dataCache.isSandboxCreated()
     }
 }

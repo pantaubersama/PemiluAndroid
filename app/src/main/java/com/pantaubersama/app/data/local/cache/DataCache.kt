@@ -69,6 +69,7 @@ class DataCache(context: Context) : SharedPref(context) {
         const val LAPOR_PARTY_FILTER_SEARCH = "lapor_party_filter_search"
 
         const val PROVINCES = "provinces"
+        const val IS_SANDBOX_CREATED = "is_sandbox_created"
     }
 
     override fun prefId(): String {
@@ -350,5 +351,13 @@ class DataCache(context: Context) : SharedPref(context) {
         } else {
             null
         }
+    }
+
+    fun isSandboxCreated(): Boolean {
+        return getBoolean(IS_SANDBOX_CREATED)
+    }
+
+    fun setCreatedSandbox() {
+        return putBoolean(IS_SANDBOX_CREATED, true)
     }
 }

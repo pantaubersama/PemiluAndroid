@@ -24,11 +24,19 @@ class PerhitunganPresenter @Inject constructor(
                 .subscribe(
                     {
                         view?.dismissLoading()
+                        val tpses: MutableList<TPS> = ArrayList()
                         if (tpsInteractor.getLocalTpses().size != 0) {
                             it.addAll(tpsInteractor.getLocalTpses())
+                            it.forEach { tps ->
+                                if (tps.status == "sandbox") {
+                                    tpses.add(0, tps)
+                                } else {
+                                    tpses.add(tps)
+                                }
+                            }
                         }
                         if (it.size != 0) {
-                            view?.bindTPSes(it)
+                            view?.bindTPSes(tpses)
                         } else {
                             view?.showEmptyAlert()
                         }
@@ -75,5 +83,24 @@ class PerhitunganPresenter @Inject constructor(
                     }
                 )
         )
+    }
+
+    fun createSandboxTps() {
+        if (!tpsInteractor.isSandboxTpsCreated()) {
+            disposables.add(
+                tpsInteractor.createSandboxTps()
+                    .subscribe(
+                        {
+                            view?.onSuccessCreateSandboxTps()
+                        },
+                        {
+                            view?.onFailureCreateSandboxTps()
+                            view?.showError(it)
+                        }
+                    )
+            )
+        } else {
+            view?.onSuccessCreateSandboxTps()
+        }
     }
 }
