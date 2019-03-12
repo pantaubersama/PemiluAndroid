@@ -1,6 +1,8 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.c1
 
 import android.os.Bundle
+import android.widget.EditText
+import android.widget.TextView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
@@ -85,7 +87,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .doOnNext {
                 // total l+p
                 val lpCount = if (pemilih_a1_a2_a3_p_count.text.isNotEmpty()) {
-                    pemilih_a1_a2_a3_p_count.text.toString().toInt()
+                    pemilih_a1_a2_a3_p_count.getInt()
                 } else {
                     0
                 }
@@ -116,12 +118,38 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .doOnNext {
                 // total l+p
                 val lpCount = if (pemilih_a1_a2_a3_l_count.text.isNotEmpty()) {
-                    pemilih_a1_a2_a3_l_count.text.toString().toInt()
+                    pemilih_a1_a2_a3_l_count.getInt()
                 } else {
                     0
                 }
                 val newAllCount = it + lpCount
                 pemilih_a1_a2_a3_total_count.text = newAllCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(pemilih_a1_a2_a3_total_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just(0)
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+//                presenter.saveSection1(
+//                    dpt_a3_kpu_l_count.getInt()
+//                )
             }
             .doOnError {
                 it.printStackTrace()
@@ -149,7 +177,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .doOnNext {
                 // total l+p
                 val lpCount = if (dpk_a_kpu_p_count.text.isNotEmpty()) {
-                    dpk_a_kpu_p_count.text.toString().toInt()
+                    dpk_a_kpu_p_count.getInt()
                 } else {
                     0
                 }
@@ -158,11 +186,11 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
                 // total l
                 val allLCount = if (dpt_a3_kpu_l_count.text.isNotEmpty()) {
-                    dpt_a3_kpu_l_count.text.toString().toInt()
+                    dpt_a3_kpu_l_count.getInt()
                 } else {
                     0
                 } + if (dpt_b_a4_kpu_l_count.text.isNotEmpty()) {
-                    dpt_b_a4_kpu_l_count.text.toString().toInt()
+                    dpt_b_a4_kpu_l_count.getInt()
                 } else {
                     0
                 }
@@ -194,7 +222,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .doOnNext {
                 // total l+p
                 val lpCount = if (dpk_a_kpu_l_count.text.isNotEmpty()) {
-                    dpk_a_kpu_l_count.text.toString().toInt()
+                    dpk_a_kpu_l_count.getInt()
                 } else {
                     0
                 }
@@ -203,11 +231,11 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
                 // total p
                 val allPCount = if (dpt_a3_kpu_p_count.text.isNotEmpty()) {
-                    dpt_a3_kpu_p_count.text.toString().toInt()
+                    dpt_a3_kpu_p_count.getInt()
                 } else {
                     0
                 } + if (dpt_b_a4_kpu_p_count.text.isNotEmpty()) {
-                    dpt_b_a4_kpu_p_count.text.toString().toInt()
+                    dpt_b_a4_kpu_p_count.getInt()
                 } else {
                     0
                 }
@@ -241,7 +269,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .doOnNext {
                 // total l+p
                 val lpCount = if (dpt_b_a4_kpu_p_count.text.isNotEmpty()) {
-                    dpt_b_a4_kpu_p_count.text.toString().toInt()
+                    dpt_b_a4_kpu_p_count.getInt()
                 } else {
                     0
                 }
@@ -250,11 +278,11 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
                 // total l
                 val allLCount = if (dpt_a3_kpu_l_count.text.isNotEmpty()) {
-                    dpt_a3_kpu_l_count.text.toString().toInt()
+                    dpt_a3_kpu_l_count.getInt()
                 } else {
                     0
                 } + if (dpk_a_kpu_l_count.text.isNotEmpty()) {
-                    dpk_a_kpu_l_count.text.toString().toInt()
+                    dpk_a_kpu_l_count.getInt()
                 } else {
                     0
                 }
@@ -286,7 +314,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .doOnNext {
                 // total l+p
                 val lpCount = if (dpt_b_a4_kpu_l_count.text.isNotEmpty()) {
-                    dpt_b_a4_kpu_l_count.text.toString().toInt()
+                    dpt_b_a4_kpu_l_count.getInt()
                 } else {
                     0
                 }
@@ -295,11 +323,11 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
                 // total p
                 val allPCount = if (dpt_a3_kpu_p_count.text.isNotEmpty()) {
-                    dpt_a3_kpu_p_count.text.toString().toInt()
+                    dpt_a3_kpu_p_count.getInt()
                 } else {
                     0
                 } + if (dpk_a_kpu_p_count.text.isNotEmpty()) {
-                    dpk_a_kpu_p_count.text.toString().toInt()
+                    dpk_a_kpu_p_count.getInt()
                 } else {
                     0
                 }
@@ -333,7 +361,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .doOnNext {
                 // total l+p
                 val lpCount = if (dpt_a3_kpu_p_count.text.isNotEmpty()) {
-                    dpt_a3_kpu_p_count.text.toString().toInt()
+                    dpt_a3_kpu_p_count.getInt()
                 } else {
                     0
                 }
@@ -342,11 +370,11 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
                 // total l
                 val allLCount = if (dpt_b_a4_kpu_l_count.text.isNotEmpty()) {
-                    dpt_b_a4_kpu_l_count.text.toString().toInt()
+                    dpt_b_a4_kpu_l_count.getInt()
                 } else {
                     0
                 } + if (dpk_a_kpu_l_count.text.isNotEmpty()) {
-                    dpk_a_kpu_l_count.text.toString().toInt()
+                    dpk_a_kpu_l_count.getInt()
                 } else {
                     0
                 }
@@ -377,7 +405,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .doOnNext {
                 // total l+p
                 val lpCount = if (dpt_a3_kpu_l_count.text.isNotEmpty()) {
-                    dpt_a3_kpu_l_count.text.toString().toInt()
+                    dpt_a3_kpu_l_count.getInt()
                 } else {
                     0
                 }
@@ -386,11 +414,11 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
                 // total p
                 val allPCount = if (dpt_b_a4_kpu_p_count.text.isNotEmpty()) {
-                    dpt_b_a4_kpu_p_count.text.toString().toInt()
+                    dpt_b_a4_kpu_p_count.getInt()
                 } else {
                     0
                 } + if (dpk_a_kpu_p_count.text.isNotEmpty()) {
-                    dpk_a_kpu_p_count.text.toString().toInt()
+                    dpk_a_kpu_p_count.getInt()
                 } else {
                     0
                 }
@@ -410,5 +438,13 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
     override fun dismissLoading() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun EditText.getInt(): Int {
+        return this.text.toString().toInt()
+    }
+
+    private fun TextView.getInt(): Int {
+        return this.text.toString().toInt()
     }
 }
