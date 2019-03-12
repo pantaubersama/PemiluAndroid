@@ -118,6 +118,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
             }
             president_c1_action -> {
                 val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
+                intent.putExtra(PantauConstants.Merayakan.TPS_DATA, tps)
                 intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "presiden")
                 startActivity(intent)
             }

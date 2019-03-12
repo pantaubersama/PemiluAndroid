@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.db
 
 import androidx.room.* //ktlint-disable
+import com.pantaubersama.app.data.model.tps.C1Form
 import com.pantaubersama.app.data.model.tps.Province
 import com.pantaubersama.app.data.model.tps.RealCount
 import com.pantaubersama.app.data.model.tps.TPS
@@ -49,5 +50,20 @@ interface PerhitunganDAO {
 
         @Delete
         fun deleteRealCount(realCount: RealCount)
+    }
+
+    @Dao
+    interface C1DAO {
+        @Query("SELECT * FROM c1_form WHERE tpsId = :tpsId AND formC1Type = :c1Type")
+        fun getC1s(tpsId: String, c1Type: String): MutableList<C1Form>
+
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        fun saveC1(c1Form: C1Form)
+
+        @Query("SELECT * FROM c1_form WHERE tpsId = :tpsId AND formC1Type = :c1Type")
+        fun getC1(tpsId: String, c1Type: String): C1Form?
+
+        @Update
+        fun updateC1(c1: C1Form?)
     }
 }

@@ -6,11 +6,14 @@ import android.widget.TextView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.tps.C1Form
+import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_c1_form.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
@@ -27,14 +30,21 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
     override lateinit var presenter: C1FormPresenter
     @Inject
     lateinit var rxSchedulers: RxSchedulers
+    private var c1Type: String? = null
+    private var tps: TPS? = null
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
 
+    override fun fetchIntentExtra() {
+        c1Type = intent.getStringExtra(PantauConstants.Merayakan.C1_MODEL_TYPE)
+        tps = intent.getSerializableExtra(PantauConstants.Merayakan.TPS_DATA) as TPS
+    }
+
     override fun setupUI(savedInstanceState: Bundle?) {
         var title: String = ""
-        when (intent.getStringExtra(PantauConstants.Merayakan.C1_MODEL_TYPE)) {
+        when (c1Type) {
             "presiden" -> {
                 title = "Model C1 Presiden"
                 c1_short_hint.text = getString(R.string.c1_form_presiden_hint)
@@ -58,6 +68,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         }
         setupToolbar(false, title, R.color.white, 4f)
         setupAllSection1()
+        tps?.id?.let { c1Type?.let { it1 -> presenter.getC1Data(it, it1) } }
     }
 
     private fun setupAllSection1() {
@@ -71,7 +82,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         RxTextView.textChanges(pemilih_a1_a2_a3_l_count)
             .flatMap {
                 if (it.isEmpty()) {
-                    Observable.just(0)
+                    Observable.just("0")
                 } else {
                     Observable.just(it)
                 }
@@ -102,7 +113,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         RxTextView.textChanges(pemilih_a1_a2_a3_p_count)
             .flatMap {
                 if (it.isEmpty()) {
-                    Observable.just(0)
+                    Observable.just("0")
                 } else {
                     Observable.just(it)
                 }
@@ -133,7 +144,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         RxTextView.textChanges(pemilih_a1_a2_a3_total_count)
             .flatMap {
                 if (it.isEmpty()) {
-                    Observable.just(0)
+                    Observable.just("0")
                 } else {
                     Observable.just(it)
                 }
@@ -146,10 +157,22 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
+            .debounce(1000, TimeUnit.MILLISECONDS)
             .doOnNext {
-//                presenter.saveSection1(
-//                    dpt_a3_kpu_l_count.getInt()
-//                )
+                tps?.id?.let {
+                    c1Type?.let { it1 ->
+                        presenter.saveSection1(
+                            it,
+                            dpt_a3_kpu_l_count.getInt(),
+                            dpt_a3_kpu_p_count.getInt(),
+                            dpt_b_a4_kpu_l_count.getInt(),
+                            dpt_b_a4_kpu_p_count.getInt(),
+                            dpk_a_kpu_l_count.getInt(),
+                            dpk_a_kpu_p_count.getInt(),
+                            it1
+                        )
+                    }
+                }
             }
             .doOnError {
                 it.printStackTrace()
@@ -161,7 +184,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         RxTextView.textChanges(dpk_a_kpu_l_count)
             .flatMap {
                 if (it.isEmpty()) {
-                    Observable.just(0)
+                    Observable.just("0")
                 } else {
                     Observable.just(it)
                 }
@@ -206,7 +229,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         RxTextView.textChanges(dpk_a_kpu_p_count)
             .flatMap {
                 if (it.isEmpty()) {
-                    Observable.just(0)
+                    Observable.just("0")
                 } else {
                     Observable.just(it)
                 }
@@ -253,7 +276,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         RxTextView.textChanges(dpt_b_a4_kpu_l_count)
             .flatMap {
                 if (it.isEmpty()) {
-                    Observable.just(0)
+                    Observable.just("0")
                 } else {
                     Observable.just(it)
                 }
@@ -298,7 +321,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         RxTextView.textChanges(dpt_b_a4_kpu_p_count)
             .flatMap {
                 if (it.isEmpty()) {
-                    Observable.just(0)
+                    Observable.just("0")
                 } else {
                     Observable.just(it)
                 }
@@ -345,7 +368,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         RxTextView.textChanges(dpt_a3_kpu_l_count)
             .flatMap {
                 if (it.isEmpty()) {
-                    Observable.just(0)
+                    Observable.just("0")
                 } else {
                     Observable.just(it)
                 }
@@ -389,7 +412,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         RxTextView.textChanges(dpt_a3_kpu_p_count)
             .flatMap {
                 if (it.isEmpty()) {
-                    Observable.just(0)
+                    Observable.just("0")
                 } else {
                     Observable.just(it)
                 }
@@ -440,11 +463,34 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun onSuccessSaveData() {
+    }
+
+    override fun showFailedSaveDataAlert() {
+    }
+
+    override fun bindC1Data(c1Form: C1Form) {
+        dpt_a3_kpu_l_count.setText(c1Form.a3L.toString())
+        dpt_a3_kpu_p_count.setText(c1Form.a3P.toString())
+        dpt_b_a4_kpu_l_count.setText(c1Form.a4L.toString())
+        dpt_b_a4_kpu_p_count.setText(c1Form.a4P.toString())
+        dpk_a_kpu_l_count.setText(c1Form.aDpkL.toString())
+        dpk_a_kpu_p_count.setText(c1Form.aDpkP.toString())
+    }
+
     private fun EditText.getInt(): Int {
-        return this.text.toString().toInt()
+        return if (this.text.isNotEmpty()) {
+            this.text.toString().toInt()
+        } else {
+            0
+        }
     }
 
     private fun TextView.getInt(): Int {
-        return this.text.toString().toInt()
+        return if (this.text.isNotEmpty()) {
+            this.text.toString().toInt()
+        } else {
+            0
+        }
     }
 }
