@@ -68,7 +68,195 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         }
         setupToolbar(false, title, R.color.white, 4f)
         setupAllSection1()
+        setupAllSection2()
         tps?.id?.let { c1Type?.let { it1 -> presenter.getC1Data(it, it1) } }
+    }
+
+    private fun setupAllSection2() {
+        setupDptC7()
+        setupDptBC7()
+    }
+
+    private fun setupDptBC7() {
+        RxTextView.textChanges(dpt_b_c7_l_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (dpt_b_c7_p_count.text.isNotEmpty()) {
+                    dpt_b_c7_p_count.getInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                dpt_b_c7_total_count.text = newCount.toString()
+
+                // total l
+                val allLCount = if (dpt_c7_l_count.text.isNotEmpty()) {
+                    dpt_c7_l_count.getInt()
+                } else {
+                    0
+                } + if (dpk_c7_l_count.text.isNotEmpty()) {
+                    dpk_c7_l_count.getInt()
+                } else {
+                    0
+                }
+                val newLCount = it + allLCount
+                hak_pilih_a1_a2_a3_l_count.text = newLCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(dpt_b_c7_p_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (dpt_b_c7_l_count.text.isNotEmpty()) {
+                    dpt_b_c7_l_count.getInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                dpt_b_c7_total_count.text = newCount.toString()
+
+                // total p
+                val allPCount = if (dpt_c7_p_count.text.isNotEmpty()) {
+                    dpt_c7_p_count.getInt()
+                } else {
+                    0
+                } + if (dpk_c7_p_count.text.isNotEmpty()) {
+                    dpk_c7_p_count.getInt()
+                } else {
+                    0
+                }
+
+                val newPCount = it + allPCount
+                hak_pilih_a1_a2_a3_p_count.text = newPCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+    }
+
+    private fun setupDptC7() {
+        RxTextView.textChanges(dpt_c7_l_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (dpt_c7_p_count.text.isNotEmpty()) {
+                    dpt_c7_p_count.getInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                dpt_c7_total_count.text = newCount.toString()
+
+                // total l
+                val allLCount = if (dpt_b_c7_l_count.text.isNotEmpty()) {
+                    dpt_b_c7_l_count.getInt()
+                } else {
+                    0
+                } + if (dpk_c7_l_count.text.isNotEmpty()) {
+                    dpk_c7_l_count.getInt()
+                } else {
+                    0
+                }
+                val newLCount = it + allLCount
+                hak_pilih_a1_a2_a3_l_count.text = newLCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(dpt_c7_p_count)
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext {
+                // total l+p
+                val lpCount = if (dpt_c7_l_count.text.isNotEmpty()) {
+                    dpt_c7_l_count.getInt()
+                } else {
+                    0
+                }
+                val newCount = it + lpCount
+                dpt_c7_total_count.text = newCount.toString()
+
+                // total p
+                val allPCount = if (dpt_b_c7_p_count.text.isNotEmpty()) {
+                    dpt_b_c7_p_count.getInt()
+                } else {
+                    0
+                } + if (dpk_c7_p_count.text.isNotEmpty()) {
+                    dpk_c7_p_count.getInt()
+                } else {
+                    0
+                }
+
+                val newPCount = it + allPCount
+                hak_pilih_a1_a2_a3_p_count.text = newPCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
     }
 
     private fun setupAllSection1() {
