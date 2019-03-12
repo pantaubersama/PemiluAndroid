@@ -51,18 +51,18 @@ data class C1Form(
     @SerializedName("c7_dpk_perempuan")
     @Expose
     var c7DptP: Int,
-    @SerializedName("disabilitas_hak_pilih_laki_laki")
-    @Expose
-    var disabilitasHakPilihL: Int,
-    @SerializedName("disabilitas_hak_pilih_perempuan")
-    @Expose
-    var disabilitasHakPilihP: Int,
     @SerializedName("disabilitas_terdaftar_laki_laki")
     @Expose
     var disabilitasTerdaftarL: Int,
     @SerializedName("disabilitas_terdaftar_perempuan")
     @Expose
     var disabilitasTerdaftarP: Int,
+    @SerializedName("disabilitas_hak_pilih_laki_laki")
+    @Expose
+    var disabilitasHakPilihL: Int,
+    @SerializedName("disabilitas_hak_pilih_perempuan")
+    @Expose
+    var disabilitasHakPilihP: Int,
     @SerializedName("surat_digunakan")
     @Expose
     var suratDigunakan: Int,
