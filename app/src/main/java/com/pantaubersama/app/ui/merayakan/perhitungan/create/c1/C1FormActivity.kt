@@ -49,7 +49,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 title = "Model C1 Presiden"
                 c1_short_hint.text = getString(R.string.c1_form_presiden_hint)
             }
-            "dpr_ri" -> {
+            "dpr" -> {
                 title = "Model C1-DPR RI"
                 c1_short_hint.text = getString(R.string.c1_form_dpr_ri_hint)
             }
@@ -57,11 +57,11 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 title = "Model C1-DPD RI"
                 c1_short_hint.text = getString(R.string.c1_form_dpd_ri_hint)
             }
-            "dprd_provinsi" -> {
+            "provinsi" -> {
                 title = "Model C1-DPRD Provinsi"
                 c1_short_hint.text = getString(R.string.c1_form_dprd_provinsi_hint)
             }
-            "dprd_kabupaten" -> {
+            "kabupaten" -> {
                 title = "Model C1-DPRD Kabupaten"
                 c1_short_hint.text = getString(R.string.c1_form_dprd_kabupaten_hint)
             }

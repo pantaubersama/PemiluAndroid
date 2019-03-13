@@ -127,7 +127,8 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
             }
             dpr_ri_c1_action -> {
                 val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
-                intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "dpr_ri")
+                intent.putExtra(PantauConstants.Merayakan.TPS_DATA, tps)
+                intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "dpr")
                 startActivity(intent)
             }
             dpd_counter_action -> {
@@ -135,6 +136,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
             }
             dpd_c1_action -> {
                 val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
+                intent.putExtra(PantauConstants.Merayakan.TPS_DATA, tps)
                 intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "dpd")
                 startActivity(intent)
             }
@@ -143,7 +145,8 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
             }
             dprd_provinsi_c1_action -> {
                 val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
-                intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "dprd_provinsi")
+                intent.putExtra(PantauConstants.Merayakan.TPS_DATA, tps)
+                intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "provinsi")
                 startActivity(intent)
             }
             dprd_kabupaten_counter_action -> {
@@ -151,7 +154,8 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
             }
             dprd_kabupaten_c1_action -> {
                 val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
-                intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "dprd_kabupaten")
+                intent.putExtra(PantauConstants.Merayakan.TPS_DATA, tps)
+                intent.putExtra(PantauConstants.Merayakan.C1_MODEL_TYPE, "kabupaten")
                 startActivity(intent)
             }
             upload_container -> {
