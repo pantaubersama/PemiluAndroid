@@ -20,6 +20,8 @@ script:
   - echo "PANTAU_CLIENT_SECRET=$PANTAU_CLIENT_SECRET_STAG" >> gradle.properties
   - echo "PANTAU_WEB_URL=$PANTAU_WEB_URL_STAG" >> gradle.properties
   - echo "PANTAU_WEB_URL_NO_SCHEME=$PANTAU_WEB_URL_NO_SCHEME_STAG" >> gradle.properties
+  - echo "PANTAU_SHARE_URL=$PANTAU_SHARE_URL_STAG" >> gradle.properties
+  - echo "PANTAU_SHARE_URL_NO_SCHEME=$PANTAU_SHARE_URL_NO_SCHEME_STAG" >> gradle.properties
   - echo "android.useAndroidX=true" >> gradle.properties
   - echo "android.enableJetifier=true" >> gradle.properties
   - ./gradlew assembleStagingDebug
