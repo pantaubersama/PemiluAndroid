@@ -22,7 +22,9 @@ class MengujiPresenter @Inject constructor(
 
     fun getBanner() {
         view?.showLoading()
-        disposables += bannerInfoInteractor.getBannerInfo(PantauConstants.BANNER_DEBAT)
+        disposables += bannerInfoInteractor.getBannerInfo(
+            if (isPublik) PantauConstants.BANNER_DEBAT_PUBLIC else PantauConstants.BANNER_DEBAT_PERSONAL
+        )
             .doOnEvent { _, _ -> view?.dismissLoading() }
             .subscribe({
                 view?.showBanner(it)
