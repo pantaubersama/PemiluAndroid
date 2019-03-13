@@ -14,14 +14,14 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.DPRPartaiAdapter
 import com.pantaubersama.app.utils.PantauConstants.Merayakan.REAL_COUNT_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Merayakan.TPS_DATA
-import kotlinx.android.synthetic.main.activity_perhitungan_dprri.*
+import kotlinx.android.synthetic.main.activity_perhitungan_dpr.*
 import javax.inject.Inject
 
-class PerhitunganDPRRIActivity : BaseActivity<PerhitunganDPRRIPresenter>(), PerhitunganDPRRIView {
+class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), PerhitunganDPRView {
     private lateinit var adapter: DPRPartaiAdapter
 
     @Inject
-    override lateinit var presenter: PerhitunganDPRRIPresenter
+    override lateinit var presenter: PerhitunganDPRPresenter
     private var realCountType: String? = null
     private var tps: TPS? = null
 
@@ -49,7 +49,7 @@ class PerhitunganDPRRIActivity : BaseActivity<PerhitunganDPRRIPresenter>(), Perh
     }
 
     override fun setLayout(): Int {
-        return R.layout.activity_perhitungan_dprri
+        return R.layout.activity_perhitungan_dpr
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {

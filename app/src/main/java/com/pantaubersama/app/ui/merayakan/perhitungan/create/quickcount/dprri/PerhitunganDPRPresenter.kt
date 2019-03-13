@@ -5,9 +5,9 @@ import com.pantaubersama.app.data.interactors.RealCountInteractor
 import com.pantaubersama.app.data.model.tps.TPS
 import javax.inject.Inject
 
-class PerhitunganDPRRIPresenter @Inject constructor(
+class PerhitunganDPRPresenter @Inject constructor(
     private val realCountInteractor: RealCountInteractor
-) : BasePresenter<PerhitunganDPRRIView>() {
+) : BasePresenter<PerhitunganDPRView>() {
     fun getRealCountList(tps: TPS, realCountType: String) {
         view?.showLoading()
         disposables.add(

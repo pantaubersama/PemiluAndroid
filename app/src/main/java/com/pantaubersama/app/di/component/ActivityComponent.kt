@@ -25,9 +25,7 @@ import com.pantaubersama.app.ui.menjaga.lapor.LaporFragment
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.c1.C1FormActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity
-import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdkabupaten.PerhitunganDPRDKabupatenActivity
-import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprdprovinsi.PerhitunganDPRDProvinsiActivity
-import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity
@@ -158,10 +156,8 @@ interface ActivityComponent {
     fun inject(notifActivity: NotifActivity)
     fun inject(mengujiPagerFragment: MengujiPagerFragment)
     fun inject(perhitunganFragment: PerhitunganFragment)
-    fun inject(perhitunganDPRRIActivity: PerhitunganDPRRIActivity)
+    fun inject(perhitunganDPRRIActivity: PerhitunganDPRActivity)
     fun inject(perhitunganDPDActivity: PerhitunganDPDActivity)
-    fun inject(perhitunganDPRDProvinsiActivity: PerhitunganDPRDProvinsiActivity)
-    fun inject(perhitunganDPRDKabupatenActivity: PerhitunganDPRDKabupatenActivity)
     fun inject(openChallengeActivity: OpenChallengeActivity)
     fun inject(kajianDialog: BidangKajianDialog)
     fun inject(debatActivity: DebatActivity)

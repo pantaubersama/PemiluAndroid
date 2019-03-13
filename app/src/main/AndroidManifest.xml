@@ -34,7 +34,7 @@
         <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprdkabupaten.PerhitunganDPRDKabupatenActivity" />
         <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprdprovinsi.PerhitunganDPRDProvinsiActivity" />
         <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity" />
-        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRRIActivity" />
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRActivity" />
         <activity android:name=".ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity" />
         <activity android:name=".ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity" />
         <activity android:name=".ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity" />
