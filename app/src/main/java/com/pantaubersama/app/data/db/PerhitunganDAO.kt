@@ -42,14 +42,17 @@ interface PerhitunganDAO {
         @Update
         fun updateRealCount(realCount: RealCount)
 
-        @Query("SELECT * FROM real_count WHERE id = :tpsId AND calculationType = \"presiden\"")
+        @Query("SELECT * FROM real_count WHERE hitung_real_count_id = :tpsId AND calculationType = \"presiden\"")
         fun getPresidentRealCount(tpsId: String): RealCount?
-
-        @Query("SELECT * FROM real_count WHERE calculationType = \"presiden\" ORDER BY id DESC")
-        fun getPresidentRealCounts(): MutableList<RealCount>
 
         @Delete
         fun deleteRealCount(realCount: RealCount)
+
+        @Query("SELECT * FROM real_count WHERE hitung_real_count_id = :tpsId AND calculationType = :realCountType")
+        fun getRealCount(tpsId: String, realCountType: String): RealCount?
+
+        @Query("SELECT * FROM real_count")
+        fun getRealCounts(): MutableList<RealCount>
     }
 
     @Dao

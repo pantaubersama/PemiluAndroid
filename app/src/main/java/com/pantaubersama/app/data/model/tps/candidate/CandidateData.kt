@@ -18,8 +18,10 @@ data class CandidateData(
     @SerializedName("actor_type")
     var actorType: String,
     @SerializedName("candidates")
-    var candidates: MutableList<Candidate>
+    var candidates: MutableList<Candidate>,
+    var totalCount: Int
 ) : ItemModel, Serializable {
+
     override fun getType(): Int {
         return 1
     }

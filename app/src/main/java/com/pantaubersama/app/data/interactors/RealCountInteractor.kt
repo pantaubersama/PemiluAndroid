@@ -8,6 +8,7 @@ import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
 import io.reactivex.Single
+import timber.log.Timber
 import javax.inject.Inject
 
 class RealCountInteractor @Inject constructor(
@@ -35,7 +36,7 @@ class RealCountInteractor @Inject constructor(
 
             var newId: Int = 0
 
-            appDB.getRealCountDao().getPresidentRealCounts().forEachIndexed { index, realCount ->
+            appDB.getRealCountDao().getRealCounts().forEachIndexed { index, realCount ->
                 newId = index + 1
             }
             return Completable.fromCallable {
@@ -65,7 +66,7 @@ class RealCountInteractor @Inject constructor(
 
             var newId: Int = 0
 
-            appDB.getRealCountDao().getPresidentRealCounts().forEachIndexed { index, realCount ->
+            appDB.getRealCountDao().getRealCounts().forEachIndexed { index, realCount ->
                 newId = index + 1
             }
 
@@ -96,7 +97,7 @@ class RealCountInteractor @Inject constructor(
 
             var newId: Int = 0
 
-            appDB.getRealCountDao().getPresidentRealCounts().forEachIndexed { index, realCount ->
+            appDB.getRealCountDao().getRealCounts().forEachIndexed { index, realCount ->
                 newId = index + 1
             }
 
@@ -108,7 +109,7 @@ class RealCountInteractor @Inject constructor(
         }
     }
 
-    fun getRealCount(tpsId: String): RealCount? {
+    fun getPresidentRealCount(tpsId: String): RealCount? {
         return appDB.getRealCountDao().getPresidentRealCount(tpsId)
     }
 
@@ -133,5 +134,37 @@ class RealCountInteractor @Inject constructor(
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun saveRealCountParty(tpsId: String, partyId: Int, realCountType: String, partyCount: Int, partyPosition: Int): Completable {
+        if (appDB.getRealCountDao().getRealCount(tpsId, realCountType) != null) {
+            val realCount = appDB.getRealCountDao().getRealCount(tpsId, realCountType)
+            realCount?.parties?.get(partyPosition)?.totalVote = partyCount
+            return Completable.fromCallable {
+                realCount?.let {
+                    appDB.getRealCountDao().updateRealCount(it)
+                }
+            }
+        } else {
+            val candidates: MutableList<Candidate> = ArrayList()
+            val parties: MutableList<Party> = ArrayList()
+            parties.add(Party(partyId, partyCount))
+
+            var newId: Int = 0
+
+            appDB.getRealCountDao().getRealCounts().forEachIndexed { index, realCount ->
+                newId = index + 1
+            }
+            return Completable.fromCallable {
+                appDB.getRealCountDao().saveRealCount(
+                    RealCount(newId.toString(), tpsId, realCountType, candidates, 0, parties)
+                )
+            }
+        }
+    }
+
+    fun getRealCount(tpsId: String, realCountType: String): RealCount? {
+        Timber.d(appDB.getRealCountDao().getRealCount(tpsId, realCountType).toString())
+        return appDB.getRealCountDao().getRealCount(tpsId, realCountType)
     }
 }
