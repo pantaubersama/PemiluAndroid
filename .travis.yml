@@ -5,7 +5,7 @@ jdk:
 
 stages:
   - name: package
-    if: branch = onprogress
+    if: branch = onprogress AND type = pull_request
 
 script:
   - echo "org.gradle.jvmargs=-Xmx1536m" >> gradle.properties
