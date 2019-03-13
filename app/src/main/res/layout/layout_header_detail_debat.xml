@@ -256,7 +256,7 @@
             android:layout_toEndOf="@id/iv_saldo_waktu"
             android:layout_marginStart="4dp"
             android:layout_below="@id/tv_sisa_waktu_anda"
-            android:text="40 MENIT"
+            tools:text="40 MENIT"
             android:textSize="14sp"
             android:fontFamily="@font/lato_bold"
             android:textColor="@color/white"/>

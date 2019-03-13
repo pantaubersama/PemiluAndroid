@@ -30,6 +30,7 @@ class DebatPresenter @Inject constructor(
                     } else {
                         view?.onEmptyWordsFighter()
                     }
+                    view?.updateMyTimeLeft()
                 },
                 {
                     view?.showError(it)
@@ -43,6 +44,7 @@ class DebatPresenter @Inject constructor(
             .subscribe(
                 {
                     view?.onSuccessPostWordsFighter(it)
+                    view?.updateMyTimeLeft()
                 },
                 {
                     view?.showError(it)

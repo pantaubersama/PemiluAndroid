@@ -8,6 +8,7 @@ import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.TextKeyListener
 import android.util.Log
@@ -39,6 +40,7 @@ import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import com.pantaubersama.app.utils.hideKeyboard
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Role
 import com.pantaubersama.app.utils.WordsPNHandler
+import com.pantaubersama.app.utils.spannable
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_debat.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
@@ -65,7 +67,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     private var isAppbarExpanded = true
     private var isKeyboardShown = false
 
-//    private lateinit var messageSortedAdapter: MessageSortedAdapter
     private lateinit var wordsFighterAdapter: WordsFighterAdapter
     private lateinit var komentarAdapter: KomentarAdapter
 
@@ -143,6 +144,11 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
         tv_username_opponent.text = "@${opponent?.username}"
 
         tv_title.text = challenge.statement
+
+        if (isMyChallenge) {
+            rl_sisa_waktu.visibleIf(true)
+            tv_sisa_waktu.text = "menghitung.. menit"
+        }
     }
 
     private fun getList() {
@@ -163,11 +169,11 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
             }
 
             override fun onWordsInputFocused(isFocused: Boolean) {
-                isWordsInputFocused = isFocused
-                if (isFocused && isAppbarExpanded) {
-                    app_bar.setExpanded(false)
+                if (isFocused) {
+                    if (isAppbarExpanded) app_bar.setExpanded(false)
                     recycler_view.smoothScrollToPosition(0)
                 }
+                isWordsInputFocused = isFocused
             }
 
             override fun onPublish(words: String) {
@@ -184,12 +190,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
         komentarAdapter = KomentarAdapter()
         recycler_view_komentar.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recycler_view_komentar.adapter = komentarAdapter
-        komentarAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                super.onItemRangeInserted(positionStart, itemCount)
-                recycler_view_komentar.smoothScrollToPosition(komentarAdapter.itemCount - 1)
-            }
-        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -206,7 +206,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
         recycler_view.visibleIf(true)
         wordsFighterAdapter.setDatas(wordList)
         updateInputTurn()
-//        recycler_view.scrollToPosition(wordsFighterAdapter.itemCount - 1)
 
         Handler().postDelayed({
             showFAB(true)
@@ -256,8 +255,18 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
         recycler_view_komentar.visibleIf(true)
         komentarAdapter.setDatas(komentarList)
         if (isMyChallenge) {
-            et_comment_main.setText(komentarList[0].body)
-            iv_avatar_comment_main.loadUrl(komentarList[0].author.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+            val commentPreviewText = spannable {
+                komentarList.last().author.fullName?.let { bold { textColor(color(R.color.black_2)) { +it } } }
+                + "  "
+                + komentarList.last().body
+            }.toCharSequence()
+            et_comment_main.setText(commentPreviewText)
+            et_comment_main.inputType = InputType.TYPE_NULL
+            et_comment_main.maxLines = 2
+            et_comment_main.setTextColor(color(R.color.black_1))
+            iv_avatar_comment_main.visibleIf(true)
+            komentarList.last().author.avatar?.medium?.url?.let { iv_avatar_comment_main.loadUrl(it, R.drawable.ic_avatar_placeholder) }
+                ?: iv_avatar_comment_main.setImageResource(R.drawable.ic_avatar_placeholder)
         }
         recycler_view_komentar.scrollToPosition(komentarAdapter.itemCount - 1)
     }
@@ -265,7 +274,9 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     override fun onEmptyWordsAudience() {
         if (isMyChallenge) {
             et_comment_main.setText("Belum ada komentar")
+            et_comment_main.inputType = InputType.TYPE_NULL
             iv_avatar_comment_main.setImageDrawable(null)
+            et_comment_main.setTextColor(color(R.color.gray))
         }
 
         tv_comment_in_state.text = "Belum ada komentar"
@@ -275,7 +286,9 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     override fun onErrorGetWordsAudience(t: Throwable) {
         if (isMyChallenge) {
             et_comment_main.setText("Gagal memuat komentar")
+            et_comment_main.inputType = InputType.TYPE_NULL
             iv_avatar_comment_main.setImageDrawable(null)
+            et_comment_main.setTextColor(color(R.color.gray))
         }
 
         tv_comment_in_state.text = "Gagal memuat komentar"
@@ -283,8 +296,11 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     override fun showLoadingKomentar() {
-        progress_bar_comment_main.visibleIf(true)
-        et_comment_main.visibleIf(false, true)
+        if (isMyChallenge) {
+            progress_bar_comment_main.visibleIf(true)
+            et_comment_main.visibleIf(false, true)
+            iv_avatar_comment_main.visibleIf(false, true)
+        }
 
         progress_bar_comment_in.visibleIf(true)
         tv_comment_in_state.visibleIf(false)
@@ -292,8 +308,10 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     override fun dismissLoadingKomentar() {
-        progress_bar_comment_main.visibleIf(false)
-        et_comment_main.visibleIf(true)
+        if (isMyChallenge) {
+            progress_bar_comment_main.visibleIf(false)
+            et_comment_main.visibleIf(true)
+        }
 
         progress_bar_comment_in.visibleIf(false)
     }
@@ -324,15 +342,27 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     override fun updateInputTurn() {
-        val turnActorRole = if (!wordsFighterAdapter.itemCount.isOdd()) {
-            if (isMyChallenge) {
-                Role.CHALLENGER
-            } else Role.OPPONENT
-        } else {
-            if (isMyChallenge) {
-                Role.OPPONENT
-            } else Role.CHALLENGER
+        var turnActorRole =
+            if (!wordsFighterAdapter.itemCount.isOdd()) {
+                Role.CHALLENGER } else Role.OPPONENT
+
+        isMyTurn = myRole == turnActorRole
+
+        if (isMyChallenge) {
+            if ((wordsFighterAdapter.itemCount == 0 || wordsFighterAdapter.get(0) !is WordInputItem)) {
+                showWordsInputBox()
+            } else {
+                turnActorRole = if (turnActorRole == Role.CHALLENGER) {
+                    Role.OPPONENT
+                } else {
+                    Role.CHALLENGER
+                }
+
+                isMyTurn = myRole == turnActorRole
+                wordsFighterAdapter.clearInputMessage(isMyTurn)
+            }
         }
+
         val turnActorName = when (turnActorRole) {
             myRole -> "Kamu"
             Role.CHALLENGER -> challenge.challenger.fullName
@@ -340,18 +370,24 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
             else -> throw ErrorException("unknown turnActorRole $turnActorRole")
         }
 
-        isMyTurn = myRole == turnActorRole
-
-        if (isMyChallenge &&
-            (wordsFighterAdapter.itemCount == 0 || wordsFighterAdapter.get(0) !is WordInputItem)) showWordsInputBox()
-
         tv_status_debat.text = "Giliran $turnActorName menulis argumen "
         enableJumpingDots(true)
     }
 
+    override fun updateMyTimeLeft() {
+        runOnUiThread {
+            if (isMyChallenge) {
+                tv_sisa_waktu.text = if (wordsFighterAdapter.itemCount > 1) {
+                    "${wordsFighterAdapter.getMyTimeLeft(myRole)} MENIT"
+                } else "${challenge.timeLimit} MENIT"
+            }
+            invalidateToolbar()
+        }
+    }
+
     override fun onSuccessPostWordsFighter(wordItem: WordItem) {
         wordsFighterAdapter.clearInputMessage(false)
-        wordsFighterAdapter.addItem(wordItem, 1)
+        wordsFighterAdapter.addItem(wordItem)
         updateInputTurn()
     }
 
@@ -360,11 +396,33 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     override fun gotNewArgumen(word: WordItem) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        runOnUiThread {
+            wordsFighterAdapter.addItem(word)
+            updateInputTurn()
+        }
     }
 
     override fun gotNewComment(word: WordItem) {
-        komentarAdapter.addItem(word)
+        runOnUiThread {
+            if (tv_comment_in_state.isVisible()) tv_comment_in_state.visibleIf(false)
+            if (!recycler_view_komentar.isVisible()) recycler_view_komentar.visibleIf(true)
+            komentarAdapter.addItem(word)
+
+            if (isMyChallenge) {
+                val commentPreviewText = spannable {
+                    word.author.fullName?.let { bold { textColor(color(R.color.black_2)) { +it } } }
+                    + "  "
+                    + word.body
+                }.toCharSequence()
+                et_comment_main.setText(commentPreviewText)
+                et_comment_main.inputType = InputType.TYPE_NULL
+                et_comment_main.maxLines = 2
+                et_comment_main.setTextColor(color(R.color.black_1))
+                iv_avatar_comment_main.visibleIf(true)
+                word.author.avatar?.medium?.url?.let { iv_avatar_comment_main.loadUrl(it, R.drawable.ic_avatar_placeholder) }
+                    ?: iv_avatar_comment_main.setImageResource(R.drawable.ic_avatar_placeholder)
+            }
+        }
     }
 
     override fun showLoading() {
@@ -406,8 +464,10 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
                     val toolbarBackground = TransitionDrawable(arrayOf(toolbar_debat.background, ColorDrawable(ContextCompat.getColor(this, R.color.yellow))))
                     toolbar_debat.background = toolbarBackground.also { it.startTransition(150) }
 
-                    tv_toolbar_title.text = "${tv_sisa_waktu.text.toString().toLowerCase()} tersisa"
-                    tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_saldo_waktu_white_24, 0, 0, 0)
+                    if (isMyChallenge) {
+                        tv_toolbar_title.text = "${tv_sisa_waktu.text.toString().toLowerCase()} tersisa"
+                        tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_saldo_waktu_white_24, 0, 0, 0)
+                    }
                 }
             } else if (verticalOffset == 0) {
                 if (!isMainToolbarShown) {
@@ -418,8 +478,10 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
                         it.reverseTransition(150)
                     }
 
-                    tv_toolbar_title.text = getString(R.string.live_now)
-                    tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_debat_live, 0, 0, 0)
+                    if (isMyChallenge) {
+                        tv_toolbar_title.text = getString(R.string.live_now)
+                        tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_debat_live, 0, 0, 0)
+                    }
                 }
             }
         })
@@ -459,6 +521,14 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
                 super.onScrollStateChanged(recyclerView, newState)
 
                 showFAB(recyclerView.canScrollVertically(1))
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (dy < 0) { // scrolling up
+                    if (isKeyboardShown && isWordsInputFocused) hideKeyboard(this@DebatActivity)
+                }
             }
         })
 
@@ -589,6 +659,15 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
             }
         } else {
             if (fab_scroll_to_bottom.isShown) fab_scroll_to_bottom.hide()
+        }
+    }
+
+    private fun invalidateToolbar() {
+        if (isMyChallenge) {
+            if (!isMainToolbarShown) {
+                tv_toolbar_title.text = "${tv_sisa_waktu.text.toString().toLowerCase()} tersisa"
+                tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_saldo_waktu_white_24, 0, 0, 0)
+            }
         }
     }
 
