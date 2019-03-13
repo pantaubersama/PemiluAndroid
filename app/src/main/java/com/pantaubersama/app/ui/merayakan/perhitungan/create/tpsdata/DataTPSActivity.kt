@@ -78,7 +78,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        setupToolbar(true, "Data TPS", R.color.white, 4f)
+        setupToolbar(true, "CandidateData TPS", R.color.white, 4f)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         geocoder = Geocoder(this, Locale.getDefault())
         if (tps != null) {

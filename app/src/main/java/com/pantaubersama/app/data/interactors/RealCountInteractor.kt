@@ -3,9 +3,11 @@ package com.pantaubersama.app.data.interactors
 import com.pantaubersama.app.data.db.AppDB
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
+import com.pantaubersama.app.data.model.tps.candidate.CandidateData
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
+import io.reactivex.Single
 import javax.inject.Inject
 
 class RealCountInteractor @Inject constructor(
@@ -108,5 +110,25 @@ class RealCountInteractor @Inject constructor(
 
     fun getRealCount(tpsId: String): RealCount? {
         return appDB.getRealCountDao().getPresidentRealCount(tpsId)
+    }
+
+    fun getRealCountList(tps: TPS, realCountType: String): Single<MutableList<CandidateData>> {
+        return apiWrapper.getPantauApi().getDapils(
+            tps.province.code,
+            tps.regency.code,
+            tps.district.code,
+            realCountType
+        )
+            .map {
+                it.data
+            }
+            .flatMap {
+                apiWrapper.getPantauApi().getRealCountList(it.id, realCountType)
+                    .map {
+                        it.data
+                    }
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
     }
 }

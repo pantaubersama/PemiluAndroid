@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.data.model.partai.PoliticalParty
+import com.pantaubersama.app.data.model.tps.candidate.CandidateData
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
@@ -19,14 +19,14 @@ class DPRPartaiAdapter : BaseRecyclerAdapter() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as DPRViewHolder).bind(data[position] as PoliticalParty)
+        (holder as DPRViewHolder).bind(data[position] as CandidateData)
     }
 
     inner class DPRViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: PoliticalParty) {
-            party_thumbnail.loadUrl(item.image?.url)
+        fun bind(item: CandidateData) {
+            party_thumbnail.loadUrl(item.logo)
             party_name.text = item.name
-            party_number.text = "No. Urut " + item.number.toString()
+            party_number.text = "No. Urut ${item.serialNumber}"
             party_inc_button.setOnClickListener {
                 val count = party_count_field.text.toString().toInt()
                 party_count_field.setText(count.plus(1).toString())
@@ -36,7 +36,7 @@ class DPRPartaiAdapter : BaseRecyclerAdapter() {
             }
             candidates_container.layoutManager = LinearLayoutManager(itemView.context)
             candidates_container.adapter = adapter
-            adapter.setDatas(item.members as MutableList<ItemModel>)
+            adapter.setDatas(item.candidates as MutableList<ItemModel>)
         }
     }
 }

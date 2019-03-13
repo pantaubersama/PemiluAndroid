@@ -123,7 +123,10 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
                 startActivity(intent)
             }
             dpr_ri_counter_action -> {
-                startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRRIActivity::class.java))
+                val intent = Intent(this@PerhitunganMainActivity, PerhitunganDPRRIActivity::class.java)
+                intent.putExtra(PantauConstants.Merayakan.TPS_DATA, tps)
+                intent.putExtra(PantauConstants.Merayakan.REAL_COUNT_TYPE, "dpr")
+                startActivity(intent)
             }
             dpr_ri_c1_action -> {
                 val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)
