@@ -100,6 +100,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
     private fun setupSuratSuara() {
         RxTextView.textChanges(rejected_documents_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -135,6 +136,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(unused_documents_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -170,6 +172,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(used_documents_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -205,6 +208,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(accepted_documents_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -247,6 +251,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
     private fun setupHakPilihDisabilitas() {
         RxTextView.textChanges(disabilitas_l_voted_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -278,6 +283,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(disabilitas_p_voted_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -309,6 +315,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(disabilitas_total_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -345,6 +352,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
     private fun setupPemilihDisabilitas() {
         RxTextView.textChanges(disabilitas_l_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -376,6 +384,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(disabilitas_p_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -407,6 +416,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(disabilitas_total_voted_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -450,6 +460,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
     private fun setupTotalSection2() {
         RxTextView.textChanges(hak_pilih_a1_a2_a3_l_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -481,6 +492,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(hak_pilih_a1_a2_a3_p_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -512,6 +524,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(hak_pilih_a1_a2_a3_total_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -552,6 +565,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
     private fun setupDpkC7() {
         RxTextView.textChanges(dpk_c7_l_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -596,6 +610,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(dpk_c7_p_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -643,6 +658,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
     private fun setupDptBC7() {
         RxTextView.textChanges(dpt_b_c7_l_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -687,6 +703,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(dpt_b_c7_p_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -734,6 +751,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
     private fun setupDptC7() {
         RxTextView.textChanges(dpt_c7_l_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -778,6 +796,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(dpt_c7_p_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -832,6 +851,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
     private fun setupTotalSection1() {
         RxTextView.textChanges(pemilih_a1_a2_a3_l_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -863,6 +883,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(pemilih_a1_a2_a3_p_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -894,6 +915,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(pemilih_a1_a2_a3_total_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -934,6 +956,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
     private fun setupDpk() {
         RxTextView.textChanges(dpk_a_kpu_l_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -979,6 +1002,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(dpk_a_kpu_p_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -1026,6 +1050,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
     private fun setupDptA4() {
         RxTextView.textChanges(dpt_b_a4_kpu_l_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -1071,6 +1096,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(dpt_b_a4_kpu_p_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -1118,6 +1144,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
 
     private fun setupDptA3() {
         RxTextView.textChanges(dpt_a3_kpu_l_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")
@@ -1162,6 +1189,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribe()
 
         RxTextView.textChanges(dpt_a3_kpu_p_count)
+            .skipInitialValue()
             .flatMap {
                 if (it.isEmpty()) {
                     Observable.just("0")

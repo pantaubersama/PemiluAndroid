@@ -71,6 +71,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
         candidate_1_inc_button.setOnClickListener(this)
 //        candidate_1_count_field.onFocusChangeListener = this
         RxTextView.textChanges(candidate_1_count_field)
+            .skipInitialValue()
             .filter {
                 it.isNotEmpty()
             }
@@ -103,6 +104,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
         candidate_2_inc_button.setOnClickListener(this)
 //        candidate_1_count_field.onFocusChangeListener = this
         RxTextView.textChanges(candidate_2_count_field)
+            .skipInitialValue()
             .filter {
                 it.isNotEmpty()
             }
@@ -135,6 +137,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
         no_vote_inc_button.setOnClickListener(this)
 //        no_vote_count_field.onFocusChangeListener = this
         RxTextView.textChanges(no_vote_count_field)
+            .skipInitialValue()
             .filter {
                 it.isNotEmpty()
             }
