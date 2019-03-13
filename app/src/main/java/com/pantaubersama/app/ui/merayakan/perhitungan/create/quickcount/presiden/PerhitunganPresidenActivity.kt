@@ -27,6 +27,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     private lateinit var undoRedoToolses: MutableList<UndoRedoTools>
     private var undoPosition: Int? = null
     private var tps: TPS? = null
+    private var realCountType = "presiden"
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -54,7 +55,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
         setupNoVotes()
         if (tps?.id != null) {
             tps?.id?.let {
-                presenter.getRealCount(it)
+                presenter.getRealCount(it, realCountType)
             }
         }
 
@@ -84,7 +85,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .doOnNext {
                 undoPosition = 0
                 if (tps?.status == "draft" || tps?.status == "sandbox") {
-                    tps?.id?.let { it1 -> presenter.saveCandidate1Count(it, it1) }
+                    tps?.id?.let { it1 -> presenter.saveCandidate1Count(it, it1, realCountType) }
                 }
             }
             .doOnError {
@@ -116,7 +117,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .doOnNext {
                 undoPosition = 1
                 if (tps?.status == "draft" || tps?.status == "sandbox") {
-                    tps?.id?.let { it1 -> presenter.saveCandidate2Count(it, it1) }
+                    tps?.id?.let { it1 -> presenter.saveCandidate2Count(it, it1, realCountType) }
                 }
             }
             .doOnError {
@@ -148,7 +149,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .doOnNext {
                 undoPosition = 2
                 if (tps?.status == "draft" || tps?.status == "sandbox") {
-                    tps?.id?.let { it1 -> presenter.saveInvalidVoteCount(it, it1) }
+                    tps?.id?.let { it1 -> presenter.saveInvalidVoteCount(it, it1, realCountType) }
                 }
             }
             .doOnError {
@@ -159,7 +160,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
 
     override fun onSuccessVoteCandidateCount() {
         tps?.id?.let {
-            presenter.getCounter(it)
+            presenter.getCounter(it, realCountType)
         }
     }
 

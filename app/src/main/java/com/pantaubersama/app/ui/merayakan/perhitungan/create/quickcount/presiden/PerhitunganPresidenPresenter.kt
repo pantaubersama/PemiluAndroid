@@ -7,9 +7,9 @@ import javax.inject.Inject
 class PerhitunganPresidenPresenter @Inject constructor(
     private val realCountInteractor: RealCountInteractor
 ) : BasePresenter<PerhitunganPresidenView>() {
-    fun saveCandidate1Count(candidate1Count: Int, tpsId: String) {
+    fun saveCandidate1Count(candidate1Count: Int, tpsId: String, realCountType: String) {
         disposables.add(
-            realCountInteractor.savePresidentCandidate1Count(candidate1Count, tpsId)
+            realCountInteractor.savePresidentCandidate1Count(candidate1Count, tpsId, realCountType)
                 .subscribe(
                     {
                         view?.onSuccessVoteCandidateCount()
@@ -22,9 +22,9 @@ class PerhitunganPresidenPresenter @Inject constructor(
         )
     }
 
-    fun saveCandidate2Count(candidate2Count: Int, tpsId: String) {
+    fun saveCandidate2Count(candidate2Count: Int, tpsId: String, realCountType: String) {
         disposables.add(
-            realCountInteractor.savePresidentCandidate2Count(candidate2Count, tpsId)
+            realCountInteractor.savePresidentCandidate2Count(candidate2Count, tpsId, realCountType)
                 .subscribe(
                     {
                         view?.onSuccessVoteCandidateCount()
@@ -37,9 +37,9 @@ class PerhitunganPresidenPresenter @Inject constructor(
         )
     }
 
-    fun saveInvalidVoteCount(invalidCount: Int, tpsId: String) {
+    fun saveInvalidVoteCount(invalidCount: Int, tpsId: String, realCountType: String) {
         disposables.add(
-            realCountInteractor.saveInvalidCount(invalidCount, tpsId)
+            realCountInteractor.saveInvalidCount(invalidCount, tpsId, realCountType)
                 .subscribe(
                     {
                         view?.onSuccessVoteCandidateCount()
@@ -52,15 +52,15 @@ class PerhitunganPresidenPresenter @Inject constructor(
         )
     }
 
-    fun getCounter(tpsId: String) {
-        realCountInteractor.getPresidentRealCount(tpsId)?.let {
+    fun getCounter(tpsId: String, realCountType: String) {
+        realCountInteractor.getPresidentRealCount(tpsId, realCountType)?.let {
             val validCount = it.candidates[0].totalVote + it.candidates[1].totalVote
             val allCount = it.invalidVote + validCount
             view?.bindCounter(validCount, it.invalidVote, allCount)
         }
     }
 
-    fun getRealCount(tpsId: String) {
-        view?.bindRealCount(realCountInteractor.getPresidentRealCount(tpsId))
+    fun getRealCount(tpsId: String, realCountType: String) {
+        view?.bindRealCount(realCountInteractor.getPresidentRealCount(tpsId, realCountType))
     }
 }

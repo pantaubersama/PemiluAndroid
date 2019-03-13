@@ -17,9 +17,9 @@ class RealCountInteractor @Inject constructor(
     private val appDB: AppDB,
     private val dataCache: DataCache
 ) {
-    fun savePresidentCandidate1Count(candidate1Count: Int, tpsId: String): Completable {
-        if (appDB.getRealCountDao().getPresidentRealCount(tpsId) != null) {
-            val realCount = appDB.getRealCountDao().getPresidentRealCount(tpsId)
+    fun savePresidentCandidate1Count(candidate1Count: Int, tpsId: String, realCountType: String): Completable {
+        if (appDB.getRealCountDao().getRealCount(tpsId, realCountType) != null) {
+            val realCount = appDB.getRealCountDao().getRealCount(tpsId, realCountType)
             realCount?.candidates?.get(0)?.totalVote = candidate1Count
             return Completable.fromCallable {
                 realCount?.let {
@@ -47,9 +47,9 @@ class RealCountInteractor @Inject constructor(
         }
     }
 
-    fun savePresidentCandidate2Count(candidate2Count: Int, tpsId: String): Completable {
-        if (appDB.getRealCountDao().getPresidentRealCount(tpsId) != null) {
-            val realCount = appDB.getRealCountDao().getPresidentRealCount(tpsId)
+    fun savePresidentCandidate2Count(candidate2Count: Int, tpsId: String, realCountType: String): Completable {
+        if (appDB.getRealCountDao().getRealCount(tpsId, realCountType) != null) {
+            val realCount = appDB.getRealCountDao().getRealCount(tpsId, realCountType)
             realCount?.candidates?.get(1)?.totalVote = candidate2Count
             return Completable.fromCallable {
                 realCount?.let {
@@ -78,9 +78,9 @@ class RealCountInteractor @Inject constructor(
         }
     }
 
-    fun saveInvalidCount(invalidCount: Int, tpsId: String): Completable {
-        if (appDB.getRealCountDao().getPresidentRealCount(tpsId) != null) {
-            val realCount = appDB.getRealCountDao().getPresidentRealCount(tpsId)
+    fun saveInvalidCount(invalidCount: Int, tpsId: String, realCountType: String): Completable {
+        if (appDB.getRealCountDao().getRealCount(tpsId, realCountType) != null) {
+            val realCount = appDB.getRealCountDao().getRealCount(tpsId, realCountType)
             realCount?.invalidVote = invalidCount
             return Completable.fromCallable {
                 realCount?.let {
@@ -109,8 +109,8 @@ class RealCountInteractor @Inject constructor(
         }
     }
 
-    fun getPresidentRealCount(tpsId: String): RealCount? {
-        return appDB.getRealCountDao().getPresidentRealCount(tpsId)
+    fun getPresidentRealCount(tpsId: String, realCountType: String): RealCount? {
+        return appDB.getRealCountDao().getRealCount(tpsId, realCountType)
     }
 
     fun getDapil(tps: TPS, realCountType: String): Single<Dapil> {

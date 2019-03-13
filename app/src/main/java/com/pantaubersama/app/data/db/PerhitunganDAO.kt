@@ -42,9 +42,6 @@ interface PerhitunganDAO {
         @Update
         fun updateRealCount(realCount: RealCount)
 
-        @Query("SELECT * FROM real_count WHERE hitung_real_count_id = :tpsId AND calculationType = \"presiden\"")
-        fun getPresidentRealCount(tpsId: String): RealCount?
-
         @Delete
         fun deleteRealCount(realCount: RealCount)
 
