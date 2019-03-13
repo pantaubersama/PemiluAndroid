@@ -3,6 +3,10 @@ language: android
 jdk:
   - oraclejdk8
 
+stages:
+  - name: package
+    if: branch = onprogress
+
 script:
   - echo "org.gradle.jvmargs=-Xmx1536m" >> gradle.properties
   - echo "SYMBOLIC_REDIRECT_URI=$SYMBOLIC_REDIRECT_URI_STAG" >> gradle.properties
@@ -28,10 +32,12 @@ script:
   - echo "android.enableJetifier=true" >> gradle.properties
   - ./gradlew assembleStagingDebug
 
-after_script:
-  - export ANDROID_APK_PATH=$PWD/app/build/outputs/apk
-  - mv $ANDROID_APK_PATH/staging/debug/app-staging-debug*.apk $ANDROID_APK_PATH/staging/debug/app-staging-debug-${TRAVIS_JOB_ID}.apk
-  - curl -F file=@$ANDROID_APK_PATH/staging/debug/app-staging-debug-${TRAVIS_JOB_ID}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
+package_staging:
+  stage: package
+  script:
+    - export ANDROID_APK_PATH=$PWD/app/build/outputs/apk
+    - mv $ANDROID_APK_PATH/staging/debug/app-staging-debug*.apk $ANDROID_APK_PATH/staging/debug/app-staging-debug-${TRAVIS_JOB_ID}.apk
+    - curl -F file=@$ANDROID_APK_PATH/staging/debug/app-staging-debug-${TRAVIS_JOB_ID}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
 
 android:
   components:
