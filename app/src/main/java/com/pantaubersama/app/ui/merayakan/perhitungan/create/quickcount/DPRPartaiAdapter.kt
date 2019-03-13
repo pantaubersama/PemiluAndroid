@@ -38,7 +38,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
             party_name.text = item.name
             party_number.text = "No. Urut ${item.serialNumber}"
             if (item.totalCount != 0) {
-                party_count_field.setText(item.totalCount.toString())
+                party_votes_count.setText(item.totalCount.toString())
             }
             party_inc_button.setOnClickListener {
                 val count = party_count_field.text.toString().toInt()

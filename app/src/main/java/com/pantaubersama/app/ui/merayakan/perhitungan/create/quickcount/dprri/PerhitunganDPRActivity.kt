@@ -18,8 +18,12 @@ import com.pantaubersama.app.utils.PantauConstants.Merayakan.REAL_COUNT_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Merayakan.TPS_DATA
 import com.pantaubersama.app.utils.RxSchedulers
 import kotlinx.android.synthetic.main.activity_perhitungan_dpr.*
+import kotlinx.android.synthetic.main.catatan_tab_item.*
 import timber.log.Timber
 import javax.inject.Inject
+import androidx.recyclerview.widget.SimpleItemAnimator
+
+
 
 class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), PerhitunganDPRView {
     private lateinit var adapter: DPRPartaiAdapter
@@ -95,6 +99,8 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
             }
         }
         dpr_list.layoutManager = LinearLayoutManager(this)
+        (dpr_list.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+
         dpr_list.adapter = adapter
     }
 
@@ -125,7 +131,13 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     }
 
     override fun bindRealCount(realCount: RealCount, partyPosition: Int) {
-        adapter.updateData(realCount.parties[partyPosition].totalVote, partyPosition)
+        realCount.parties.forEachIndexed { i, itemDB ->
+            adapter.getListData().forEachIndexed { j, itemAdapter ->
+                if (itemDB.id == (itemAdapter as CandidateData).id) {
+                    adapter.updateData(realCount.parties[partyPosition].totalVote, j)
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

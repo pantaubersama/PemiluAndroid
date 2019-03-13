@@ -3,7 +3,6 @@ package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.RealCountInteractor
 import com.pantaubersama.app.data.model.tps.TPS
-import timber.log.Timber
 import javax.inject.Inject
 
 class PerhitunganDPRPresenter @Inject constructor(
@@ -60,7 +59,6 @@ class PerhitunganDPRPresenter @Inject constructor(
 
     fun getRealCount(tpsId: String, realCountType: String, position: Int) {
         realCountInteractor.getRealCount(tpsId, realCountType)?.let {
-            Timber.d(it.toString())
             view?.bindRealCount(it, position)
         }
     }

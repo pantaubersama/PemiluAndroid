@@ -8,7 +8,6 @@ import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
 import io.reactivex.Single
-import timber.log.Timber
 import javax.inject.Inject
 
 class RealCountInteractor @Inject constructor(
@@ -164,7 +163,6 @@ class RealCountInteractor @Inject constructor(
     }
 
     fun getRealCount(tpsId: String, realCountType: String): RealCount? {
-        Timber.d(appDB.getRealCountDao().getRealCount(tpsId, realCountType).toString())
         return appDB.getRealCountDao().getRealCount(tpsId, realCountType)
     }
 }
