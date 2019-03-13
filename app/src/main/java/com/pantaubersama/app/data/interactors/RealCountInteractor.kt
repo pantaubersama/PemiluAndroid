@@ -112,8 +112,8 @@ class RealCountInteractor @Inject constructor(
         return appDB.getRealCountDao().getPresidentRealCount(tpsId)
     }
 
-    fun getRealCountList(tps: TPS, realCountType: String): Single<MutableList<CandidateData>> {
-        return apiWrapper.getPantauApi().getDapils(
+    fun getDapil(tps: TPS, realCountType: String): Single<Dapil> {
+        return apiWrapper.getPantauApi().getDapil(
             tps.province.code,
             tps.regency.code,
             tps.district.code,
@@ -122,11 +122,14 @@ class RealCountInteractor @Inject constructor(
             .map {
                 it.data
             }
-            .flatMap {
-                apiWrapper.getPantauApi().getRealCountList(it.id, realCountType)
-                    .map {
-                        it.data
-                    }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun getRealCountList(id: Int, realCountType: String): Single<MutableList<CandidateData>> {
+        return apiWrapper.getPantauApi().getRealCountList(id, realCountType)
+            .map {
+                it.data
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())

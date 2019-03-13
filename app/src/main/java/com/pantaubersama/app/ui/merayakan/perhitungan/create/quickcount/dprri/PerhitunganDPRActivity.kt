@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.tps.Dapil
 import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.data.model.tps.candidate.CandidateData
 import com.pantaubersama.app.di.component.ActivityComponent
@@ -75,6 +76,14 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         adapter = DPRPartaiAdapter()
         dpr_list.layoutManager = LinearLayoutManager(this)
         dpr_list.adapter = adapter
+    }
+
+    override fun bindDapilData(dapil: Dapil) {
+        dapil_name.text = "Dapil: ${dapil.nama}"
+    }
+
+    override fun showGetDapilFailedAlert() {
+        failed_alert.visibility = View.VISIBLE
     }
 
     override fun bindCandidates(data: MutableList<CandidateData>) {

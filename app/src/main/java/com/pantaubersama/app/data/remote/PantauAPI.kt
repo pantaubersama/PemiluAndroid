@@ -254,7 +254,7 @@ interface PantauAPI {
     ): Single<LawanDebatResponse>
 
     @GET("hitung/v1/dapils")
-    fun getDapils(
+    fun getDapil(
         @Query("province_code") provinceCode: Int,
         @Query("regency_code") regencyCode: Int,
         @Query("district_code") districtCode: Int,

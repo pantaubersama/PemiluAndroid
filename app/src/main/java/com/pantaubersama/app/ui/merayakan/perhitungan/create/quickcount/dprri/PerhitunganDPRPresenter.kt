@@ -11,20 +11,33 @@ class PerhitunganDPRPresenter @Inject constructor(
     fun getRealCountList(tps: TPS, realCountType: String) {
         view?.showLoading()
         disposables.add(
-            realCountInteractor.getRealCountList(tps, realCountType)
+            realCountInteractor.getDapil(tps, realCountType)
                 .subscribe(
                     {
-                        if (it.size != 0) {
-                            view?.dismissLoading()
-                            view?.bindCandidates(it)
-                        } else {
-                            view?.showEmptyRealCountList()
-                        }
+                        view?.bindDapilData(it)
+                        disposables.add(
+                            realCountInteractor.getRealCountList(it.id, realCountType)
+                                .subscribe(
+                                    {
+                                        if (it.size != 0) {
+                                            view?.dismissLoading()
+                                            view?.bindCandidates(it)
+                                        } else {
+                                            view?.showEmptyRealCountList()
+                                        }
+                                    },
+                                    {
+                                        view?.dismissLoading()
+                                        view?.showError(it)
+                                        view?.showGetRealCountListFailedAlert()
+                                    }
+                                )
+                        )
                     },
                     {
                         view?.dismissLoading()
                         view?.showError(it)
-                        view?.showGetRealCountListFailedAlert()
+                        view?.showGetDapilFailedAlert()
                     }
                 )
         )
