@@ -5,9 +5,9 @@ jdk:
 
 stages:
   - name: buil_staging
-    if: branch = onprogress
+    if: branch = onprogress AND type = push
   - name: send_apk
-    if: branch = onprogress AND type = pull_request
+    if: branch = onprogress AND type = push
 
 jobs:
   include:
