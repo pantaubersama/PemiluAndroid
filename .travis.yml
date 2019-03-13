@@ -40,6 +40,7 @@ jobs:
     - stage: send_apk
       script:
         - export ANDROID_APK_PATH=$PWD/app/build/outputs/apk
+        - ls $ANDROID_APK_PATH
         - mv $ANDROID_APK_PATH/staging/debug/app-staging-debug.apk $ANDROID_APK_PATH/staging/debug/app-staging-debug-${TRAVIS_JOB_ID}.apk
         - curl -F file=@$ANDROID_APK_PATH/staging/debug/app-staging-debug-${TRAVIS_JOB_ID}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
 
