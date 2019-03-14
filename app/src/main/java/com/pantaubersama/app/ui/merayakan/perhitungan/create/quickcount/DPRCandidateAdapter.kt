@@ -37,7 +37,6 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecycler
                 candidate_count_field.setText(count.plus(1).toString())
             }
             RxTextView.textChanges(candidate_count_field)
-                .skipInitialValue()
                 .filter {
                     it.isNotEmpty()
                 }
