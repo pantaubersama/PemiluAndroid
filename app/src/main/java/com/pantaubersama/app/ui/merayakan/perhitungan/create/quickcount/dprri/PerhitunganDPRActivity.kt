@@ -20,6 +20,7 @@ import com.pantaubersama.app.utils.RxSchedulers
 import kotlinx.android.synthetic.main.activity_perhitungan_dpr.*
 import javax.inject.Inject
 import androidx.recyclerview.widget.SimpleItemAnimator
+import timber.log.Timber
 
 class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), PerhitunganDPRView {
     private lateinit var adapter: DPRPartaiAdapter
@@ -80,28 +81,13 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     private fun setupDPRList() {
         adapter = DPRPartaiAdapter(rxSchedulers)
         adapter.listener = object : DPRPartaiAdapter.Listener {
-            override fun onPartyCountChange(partyId: Int, partyCount: Int) {
+            override fun saveRealCount(item: CandidateData) {
                 realCountType?.let {
                     tps?.id?.let { it1 ->
-                        presenter.saveRealCountParty(
+                        presenter.saveRealCount(
                             it1,
-                            partyId,
                             it,
-                            partyCount
-                        )
-                    }
-                }
-            }
-
-            override fun onCandidateCountChange(candidateId: Int, partyId: Int, totalCount: Int) {
-                realCountType?.let {
-                    tps?.id?.let { it1 ->
-                        presenter.saveRealCountCandidate(
-                            it1,
-                            candidateId,
-                            partyId,
-                            it,
-                            totalCount
+                            item
                         )
                     }
                 }
@@ -124,6 +110,11 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     override fun bindCandidates(data: MutableList<CandidateData>) {
         no_vote_container.visibility = View.VISIBLE
         adapter.setDatas(data as MutableList<ItemModel>)
+        tps?.id?.let {
+            realCountType?.let { it1 ->
+                presenter.getRealCount(it, it1)
+            }
+        }
     }
 
     override fun showGetRealCountListFailedAlert() {
@@ -136,22 +127,12 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         empty_alert.visibility = View.VISIBLE
     }
 
-    override fun onSuccessSavePartyRealCount() {
-//        tps?.id?.let { realCountType?.let { it1 -> presenter.getRealCount(it, it1) } }
+    override fun onSuccessSaveRealCount() {
+        Timber.d("saved")
     }
 
     override fun bindRealCount(realCount: RealCount) {
-//        realCount.parties.forEachIndexed { i, itemDB ->
-//            adapter.getListData().forEachIndexed { j, itemAdapter ->
-//                if (itemDB.id == (itemAdapter as CandidateData).id) {
-//                    adapter.updatePartyData(realCount.parties[j].totalVote, j)
-//                }
-//            }
-//        }
-    }
-
-    override fun onSuccessSaveCandidateRealCount() {
-//        tps?.id?.let { realCountType?.let { it1 -> presenter.getRealCount(it, it1) } }
+        adapter.updateData(realCount)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

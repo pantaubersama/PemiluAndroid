@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.RealCountInteractor
 import com.pantaubersama.app.data.model.tps.TPS
+import com.pantaubersama.app.data.model.tps.candidate.CandidateData
 import javax.inject.Inject
 
 class PerhitunganDPRPresenter @Inject constructor(
@@ -43,32 +44,18 @@ class PerhitunganDPRPresenter @Inject constructor(
         )
     }
 
-    fun saveRealCountParty(tpsId: String, partyId: Int, realCountType: String, partyCount: Int) {
-        disposables.add(
-            realCountInteractor.saveRealCountParty(tpsId, partyId, realCountType, partyCount)
-                .subscribe(
-                    {
-                        view?.onSuccessSavePartyRealCount()
-                    },
-                    {
-                        view?.showError(it)
-                    }
-                )
-        )
-    }
-
     fun getRealCount(tpsId: String, realCountType: String) {
         realCountInteractor.getRealCount(tpsId, realCountType)?.let {
             view?.bindRealCount(it)
         }
     }
 
-    fun saveRealCountCandidate(tpsId: String, candidateId: Int, partyId: Int, realCountType: String, totalCount: Int) {
+    fun saveRealCount(tpsId: String, realCountType: String, item: CandidateData) {
         disposables.add(
-            realCountInteractor.saveRealCountCandidate(tpsId, candidateId, partyId, realCountType, totalCount)
+            realCountInteractor.saveRealCount(tpsId, realCountType, item)
                 .subscribe(
                     {
-                        view?.onSuccessSaveCandidateRealCount()
+                        view?.onSuccessSaveRealCount()
                     },
                     {
                         view?.showError(it)

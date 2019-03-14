@@ -9,6 +9,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.tps.RealCount
 import com.pantaubersama.app.data.model.tps.candidate.CandidateData
 import com.pantaubersama.app.utils.RxSchedulers
 import com.pantaubersama.app.utils.extensions.inflate
@@ -35,6 +36,22 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
 //        notifyItemChanged(partyPosition)
 //    }
 
+    fun updateData(realCount: RealCount) {
+        realCount.parties.forEachIndexed { i, partyFromDB ->
+            data.forEachIndexed { j, partyFromAdapter ->
+                if (partyFromDB.id == (partyFromAdapter as CandidateData).id) {
+                    (data[j] as CandidateData).totalCount = partyFromDB.totalVote
+//                    val candidateCounts: MutableList<Int> = ArrayList()
+//                    realCount.candidates.forEachIndexed { candidateIndex, candidate ->
+//                        candidateCounts.add(candidate.totalVote)
+//                    }
+//                    (data[j] as CandidateData).partyCount = partyFromDB.totalVote - candidateCounts.sum()
+                }
+            }
+        }
+        notifyDataSetChanged()
+    }
+
 //    fun updateCandidateData(totalVote: Int, partyPosition: Int, candidatePosition: Int) {
 //        adapters[partyPosition].updateCandidateData(totalVote, candidatePosition)
 //    }
@@ -44,7 +61,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
             party_thumbnail.loadUrl(item.logo)
             party_name.text = item.name
             party_number.text = "No. Urut ${item.serialNumber}"
-            party_count_field.setText(item.totalCount.toString())
+            party_count_field.setText(item.partyCount.toString())
             party_votes_count.text = item.totalCount.toString()
             party_inc_button.setOnClickListener {
                 val count = party_count_field.text.toString().toInt()
@@ -68,9 +85,12 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
                 .doOnNext {
-                    item.partyCount = it
-                    val newCount = item.partyCount + item.allCandidateCount
-                    party_votes_count.text = newCount.toString()
+                    val candidateCounts: MutableList<Int> = ArrayList()
+                    item.candidates.forEachIndexed { index, candidate ->
+                        candidateCounts.add(candidate.candidateCount)
+                    }
+                    val allCount = it + candidateCounts.sum()
+                    party_votes_count.text = allCount.toString()
                 }
                 .doOnError {
                     it.printStackTrace()
@@ -92,8 +112,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                 .observeOn(rxSchedulers.mainThread())
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .doOnNext {
-//                    item.totalCount = it
-                    listener?.onPartyCountChange(item.id, it)
+                    listener?.saveRealCount(item)
                 }
                 .doOnError {
                     it.printStackTrace()
@@ -108,7 +127,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                     }
                     val allCount = party_count_field.text.toString().toInt() + candidateCounts.sum()
                     party_votes_count.text = allCount.toString()
-                    listener?.onCandidateCountChange(candidateId, item.id, totalCount)
+//                    listener?.onCandidateCountChange(candidateId, item.id, totalCount)
                 }
             }
             candidates_container.layoutManager = LinearLayoutManager(itemView.context)
@@ -119,7 +138,6 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
     }
 
     interface Listener {
-        fun onPartyCountChange(partyId: Int, partyCount: Int)
-        fun onCandidateCountChange(candidateId: Int, partyId: Int, totalCount: Int)
+        fun saveRealCount(item: CandidateData)
     }
 }
