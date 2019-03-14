@@ -17,6 +17,7 @@ import com.pantaubersama.app.utils.extensions.loadUrl
 import io.reactivex.Observable
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.kandidat_partai_item.*
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAdapter() {
@@ -37,6 +38,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
 //    }
 
     fun updateData(realCount: RealCount) {
+        Timber.d(realCount.toString())
         realCount.parties.forEachIndexed { i, partyFromDB ->
             data.forEachIndexed { j, partyFromAdapter ->
                 if (partyFromDB.id == (partyFromAdapter as CandidateData).id) {
@@ -89,8 +91,11 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                     item.candidates.forEachIndexed { index, candidate ->
                         candidateCounts.add(candidate.candidateCount)
                     }
-                    val allCount = it + candidateCounts.sum()
-                    party_votes_count.text = allCount.toString()
+                    item.partyCount = it
+                    item.allCandidateCount = candidateCounts.sum()
+                    val allCount = item.partyCount + item.allCandidateCount
+                    item.totalCount = allCount
+                    party_votes_count.text = item.totalCount.toString()
                 }
                 .doOnError {
                     it.printStackTrace()
@@ -112,7 +117,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                 .observeOn(rxSchedulers.mainThread())
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .doOnNext {
-                    listener?.saveRealCount(item)
+                    listener?.saveRealCount(data as MutableList<CandidateData>)
                 }
                 .doOnError {
                     it.printStackTrace()
@@ -127,7 +132,6 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                     }
                     val allCount = party_count_field.text.toString().toInt() + candidateCounts.sum()
                     party_votes_count.text = allCount.toString()
-//                    listener?.onCandidateCountChange(candidateId, item.id, totalCount)
                 }
             }
             candidates_container.layoutManager = LinearLayoutManager(itemView.context)
@@ -138,6 +142,6 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
     }
 
     interface Listener {
-        fun saveRealCount(item: CandidateData)
+        fun saveRealCount(items: MutableList<CandidateData>)
     }
 }

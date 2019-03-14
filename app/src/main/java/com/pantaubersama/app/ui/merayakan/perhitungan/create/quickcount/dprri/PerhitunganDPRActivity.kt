@@ -81,13 +81,13 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     private fun setupDPRList() {
         adapter = DPRPartaiAdapter(rxSchedulers)
         adapter.listener = object : DPRPartaiAdapter.Listener {
-            override fun saveRealCount(item: CandidateData) {
+            override fun saveRealCount(items: MutableList<CandidateData>) {
                 realCountType?.let {
                     tps?.id?.let { it1 ->
                         presenter.saveRealCount(
                             it1,
                             it,
-                            item
+                            items
                         )
                     }
                 }
@@ -128,10 +128,11 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     }
 
     override fun onSuccessSaveRealCount() {
-        Timber.d("saved")
+//        Timber.d("saved")
     }
 
     override fun bindRealCount(realCount: RealCount) {
+        Timber.d(realCount.toString())
         adapter.updateData(realCount)
     }
 

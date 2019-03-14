@@ -139,22 +139,25 @@ class RealCountInteractor @Inject constructor(
         return appDB.getRealCountDao().getRealCount(tpsId, realCountType)
     }
 
-    fun saveRealCount(tpsId: String, realCountType: String, item: CandidateData): Completable {
+    fun saveRealCount(tpsId: String, realCountType: String, items: MutableList<CandidateData>): Completable {
         if (appDB.getRealCountDao().getRealCount(tpsId, realCountType) != null) {
             val realCount = appDB.getRealCountDao().getRealCount(tpsId, realCountType)
-            realCount?.candidates?.let {
-                it.forEachIndexed { i, candidateDb ->
-                    item.candidates.forEachIndexed { j, candidateData ->
-                        if (candidateDb.id == candidateData.id) {
-                            realCount.candidates[i].totalVote = candidateData.candidateCount
+
+            items.forEachIndexed { i, partyData ->
+                realCount?.parties?.let {
+                    it.forEachIndexed { j, partyDb ->
+                        if (partyDb.id == partyData.id) {
+                            realCount.parties[j] = Party(partyData.id, partyData.totalCount)
                         }
                     }
                 }
-            }
-            realCount?.parties?.let {
-                it.forEachIndexed { i, party ->
-                    if (party.id == item.id) {
-                        realCount.parties[i].totalVote = item.totalCount
+                realCount?.candidates?.let {
+                    it.forEachIndexed { k, candidateDb ->
+                        partyData.candidates.forEachIndexed { l, candidateData ->
+                            if (candidateDb.id == candidateData.id) {
+                                realCount.candidates[k] = Candidate(partyData.candidates[l].id, partyData.candidates[l].candidateCount)
+                            }
+                        }
                     }
                 }
             }
@@ -167,10 +170,11 @@ class RealCountInteractor @Inject constructor(
             val candidates: MutableList<Candidate> = ArrayList()
             val parties: MutableList<Party> = ArrayList()
 
-            parties.add(Party(item.id, item.totalCount))
-
-            item.candidates.forEachIndexed { index, candidate ->
-                candidates.add(Candidate(candidate.id, candidate.candidateCount))
+            items.forEach {
+                parties.add(Party(it.id, it.totalCount))
+                it.candidates.forEachIndexed { index, candidate ->
+                    candidates.add(Candidate(candidate.id, candidate.candidateCount))
+                }
             }
 
             var newId: Int = 0
