@@ -4,9 +4,9 @@ jdk:
   - oraclejdk8
 
 stages:
-- name: send_apk
-  if: branch = onprogress AND type = push
 - name: buil_staging
+  if: branch = onprogress AND type = push
+- name: send_apk
   if: branch = onprogress AND type = push
 
 jobs:
@@ -36,10 +36,10 @@ jobs:
         - echo "android.useAndroidX=true" >> gradle.properties
         - echo "android.enableJetifier=true" >> gradle.properties
         - ./gradlew assembleStagingDebug
-
     - stage: send_apk
       script:
         - export ANDROID_APK_PATH=$PWD/app/build/outputs/apk
+        - ls $PWD
         - ls $ANDROID_APK_PATH
         - mv $ANDROID_APK_PATH/staging/debug/app-staging-debug.apk $ANDROID_APK_PATH/staging/debug/app-staging-debug-${TRAVIS_JOB_ID}.apk
         - curl -F file=@$ANDROID_APK_PATH/staging/debug/app-staging-debug-${TRAVIS_JOB_ID}.apk -F channels=$SLACK_CHANNEL_ANDROID -F token=$SLACK_TOKEN https://slack.com/api/files.upload
