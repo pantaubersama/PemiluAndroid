@@ -18,7 +18,6 @@ import com.pantaubersama.app.utils.PantauConstants.Merayakan.REAL_COUNT_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Merayakan.TPS_DATA
 import com.pantaubersama.app.utils.RxSchedulers
 import kotlinx.android.synthetic.main.activity_perhitungan_dpr.*
-import kotlinx.android.synthetic.main.catatan_tab_item.*
 import javax.inject.Inject
 import androidx.recyclerview.widget.SimpleItemAnimator
 
@@ -93,6 +92,20 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
                     }
                 }
             }
+
+            override fun onCandidateCountChange(candidateId: Int, partyId: Int, totalCount: Int) {
+                realCountType?.let {
+                    tps?.id?.let { it1 ->
+                        presenter.saveRealCountCandidate(
+                            it1,
+                            candidateId,
+                            partyId,
+                            it,
+                            totalCount
+                        )
+                    }
+                }
+            }
         }
         dpr_list.layoutManager = LinearLayoutManager(this)
         (dpr_list.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
@@ -131,10 +144,14 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         realCount.parties.forEachIndexed { i, itemDB ->
             adapter.getListData().forEachIndexed { j, itemAdapter ->
                 if (itemDB.id == (itemAdapter as CandidateData).id) {
-                    adapter.updateData(realCount.parties[j].totalVote, j)
+                    adapter.updatePartyData(realCount.parties[j].totalVote, j)
                 }
             }
         }
+    }
+
+    override fun onSuccessSaveCandidateRealCount() {
+        tps?.id?.let { realCountType?.let { it1 -> presenter.getRealCount(it, it1) } }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

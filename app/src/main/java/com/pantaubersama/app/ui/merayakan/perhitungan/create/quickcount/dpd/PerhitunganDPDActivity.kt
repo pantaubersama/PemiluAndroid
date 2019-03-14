@@ -10,6 +10,7 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.kandidat.CandidateData
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.DPRCandidateAdapter
+import com.pantaubersama.app.utils.RxSchedulers
 import kotlinx.android.synthetic.main.activity_perhitungan_dpd.*
 import javax.inject.Inject
 
@@ -18,6 +19,9 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
 
     @Inject
     override lateinit var presenter: PerhitunganDPDPresenter
+
+    @Inject
+    lateinit var rxSchedulers: RxSchedulers
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -45,7 +49,7 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
     }
 
     private fun setupDPDList() {
-        adapter = DPRCandidateAdapter()
+        adapter = DPRCandidateAdapter(rxSchedulers)
         dpd_list.layoutManager = LinearLayoutManager(this@PerhitunganDPDActivity)
         dpd_list.adapter = adapter
     }

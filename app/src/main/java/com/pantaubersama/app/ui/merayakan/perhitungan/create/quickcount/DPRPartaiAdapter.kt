@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
@@ -27,10 +28,14 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
         (holder as DPRViewHolder).bind(data[position] as CandidateData)
     }
 
-    fun updateData(totalVote: Int, partyPosition: Int) {
+    fun updatePartyData(totalVote: Int, partyPosition: Int) {
         (data[partyPosition] as CandidateData).totalCount = totalVote
         notifyItemChanged(partyPosition)
     }
+
+//    fun updateCandidateData(totalVote: Int, partyPosition: Int, candidatePosition: Int) {
+//        adapters[partyPosition].updateCandidateData(totalVote, candidatePosition)
+//    }
 
     inner class DPRViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: CandidateData) {
@@ -64,16 +69,21 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                     it.printStackTrace()
                 }
                 .subscribe()
-            adapters.add(adapterPosition, DPRCandidateAdapter())
+            adapters.add(adapterPosition, DPRCandidateAdapter(rxSchedulers))
             adapters[adapterPosition].listener = object : DPRCandidateAdapter.Listener {
+                override fun onCandidateCountChange(candidateId: Int, totalCount: Int) {
+                    listener?.onCandidateCountChange(candidateId, item.id, totalCount)
+                }
             }
             candidates_container.layoutManager = LinearLayoutManager(itemView.context)
             candidates_container.adapter = adapters[adapterPosition]
+            (candidates_container.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             adapters[adapterPosition].setDatas(item.candidates as MutableList<ItemModel>)
         }
     }
 
     interface Listener {
         fun onPartyCountChange(partyId: Int, partyCount: Int)
+        fun onCandidateCountChange(candidateId: Int, partyId: Int, totalCount: Int)
     }
 }

@@ -13,4 +13,5 @@ interface PerhitunganDPRView : BaseView {
     fun showGetDapilFailedAlert()
     fun onSuccessSavePartyRealCount()
     fun bindRealCount(realCount: RealCount)
+    fun onSuccessSaveCandidateRealCount()
 }

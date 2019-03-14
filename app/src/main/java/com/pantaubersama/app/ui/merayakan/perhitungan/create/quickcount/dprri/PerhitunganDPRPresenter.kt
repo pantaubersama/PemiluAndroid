@@ -62,4 +62,18 @@ class PerhitunganDPRPresenter @Inject constructor(
             view?.bindRealCount(it)
         }
     }
+
+    fun saveRealCountCandidate(tpsId: String, candidateId: Int, partyId: Int, realCountType: String, totalCount: Int) {
+        disposables.add(
+            realCountInteractor.saveRealCountCandidate(tpsId, candidateId, partyId, realCountType, totalCount)
+                .subscribe(
+                    {
+                        view?.onSuccessSaveCandidateRealCount()
+                    },
+                    {
+                        view?.showError(it)
+                    }
+                )
+        )
+    }
 }
