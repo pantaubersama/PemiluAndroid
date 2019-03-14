@@ -117,8 +117,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
-                // total l+p
-                val lpCount = if (unused_documents_count.text.isNotEmpty()) {
+                val allCount = if (unused_documents_count.text.isNotEmpty()) {
                     unused_documents_count.getInt()
                 } else {
                     0
@@ -127,7 +126,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 } else {
                     0
                 }
-                val newCount = it + lpCount
+                val newCount = it + allCount
                 accepted_documents_count.text = newCount.toString()
             }
             .doOnError {
@@ -153,8 +152,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
-                // total l+p
-                val lpCount = if (rejected_documents_count.text.isNotEmpty()) {
+                val allCount = if (rejected_documents_count.text.isNotEmpty()) {
                     rejected_documents_count.getInt()
                 } else {
                     0
@@ -163,7 +161,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 } else {
                     0
                 }
-                val newCount = it + lpCount
+                val newCount = it + allCount
                 accepted_documents_count.text = newCount.toString()
             }
             .doOnError {
@@ -189,17 +187,16 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
-                // total l+p
-                val lpCount = if (unused_documents_count.text.isNotEmpty()) {
-                    unused_documents_count.getInt()
+                val allCount = if (rejected_documents_count.text.isNotEmpty()) {
+                    rejected_documents_count.getInt()
                 } else {
                     0
-                } + if (used_documents_count.text.isNotEmpty()) {
-                    used_documents_count.text.toString().toInt()
+                } + if (unused_documents_count.text.isNotEmpty()) {
+                    unused_documents_count.text.toString().toInt()
                 } else {
                     0
                 }
-                val newCount = it + lpCount
+                val newCount = it + allCount
                 accepted_documents_count.text = newCount.toString()
             }
             .doOnError {
