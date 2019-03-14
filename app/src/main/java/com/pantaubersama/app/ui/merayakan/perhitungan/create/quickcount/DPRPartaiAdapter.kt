@@ -42,21 +42,22 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
         realCount.parties.forEachIndexed { i, partyFromDB ->
             data.forEachIndexed { j, partyFromAdapter ->
                 if (partyFromDB.id == (partyFromAdapter as CandidateData).id) {
-                    (data[j] as CandidateData).totalCount = partyFromDB.totalVote
-//                    val candidateCounts: MutableList<Int> = ArrayList()
-//                    realCount.candidates.forEachIndexed { candidateIndex, candidate ->
-//                        candidateCounts.add(candidate.totalVote)
-//                    }
-//                    (data[j] as CandidateData).partyCount = partyFromDB.totalVote - candidateCounts.sum()
+                    val candidateCounts: MutableList<Int> = ArrayList()
+                    realCount.candidates.forEachIndexed { k, candidateDb ->
+                        partyFromAdapter.candidates.forEachIndexed { l, candidateData ->
+                            if (candidateData.id == candidateDb.id) {
+                                candidateData.candidateCount = candidateDb.totalVote
+                                candidateCounts.add(candidateData.candidateCount)
+                            }
+                        }
+                    }
+                    partyFromAdapter.partyCount = partyFromDB.totalVote - candidateCounts.sum()
+                    partyFromAdapter.totalCount = partyFromDB.totalVote
                 }
             }
         }
         notifyDataSetChanged()
     }
-
-//    fun updateCandidateData(totalVote: Int, partyPosition: Int, candidatePosition: Int) {
-//        adapters[partyPosition].updateCandidateData(totalVote, candidatePosition)
-//    }
 
     inner class DPRViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: CandidateData) {
