@@ -113,6 +113,7 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     }
 
     override fun bindCandidates(data: MutableList<CandidateData>) {
+        no_vote_container.visibility = View.VISIBLE
         adapter.setDatas(data as MutableList<ItemModel>)
     }
 

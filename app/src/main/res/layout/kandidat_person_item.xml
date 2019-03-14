@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:id="@+id/golput_container"
+        android:id="@+id/party_vote_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
