@@ -6,8 +6,6 @@ jdk:
 stages:
 - name: buil_staging
   if: branch = onprogress AND type = push
-- name: send_apk
-  if: branch = onprogress AND type = push
 
 jobs:
   include:
@@ -36,8 +34,6 @@ jobs:
         - echo "android.useAndroidX=true" >> gradle.properties
         - echo "android.enableJetifier=true" >> gradle.properties
         - ./gradlew assembleStagingDebug
-    - stage: send_apk
-      script:
         - export ANDROID_APK_PATH=$PWD/app/build/outputs/apk
         - ls $PWD
         - ls $ANDROID_APK_PATH
