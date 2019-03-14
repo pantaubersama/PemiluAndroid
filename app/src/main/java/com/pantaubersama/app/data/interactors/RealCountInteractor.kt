@@ -135,10 +135,16 @@ class RealCountInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
-    fun saveRealCountParty(tpsId: String, partyId: Int, realCountType: String, partyCount: Int, partyPosition: Int): Completable {
+    fun saveRealCountParty(tpsId: String, partyId: Int, realCountType: String, partyCount: Int): Completable {
         if (appDB.getRealCountDao().getRealCount(tpsId, realCountType) != null) {
             val realCount = appDB.getRealCountDao().getRealCount(tpsId, realCountType)
-            realCount?.parties?.get(partyPosition)?.totalVote = partyCount
+            realCount?.parties?.let {
+                it.forEachIndexed { i, party ->
+                    if (party.id == partyId) {
+                        realCount.parties[i].totalVote = partyCount
+                    }
+                }
+            }
             return Completable.fromCallable {
                 realCount?.let {
                     appDB.getRealCountDao().updateRealCount(it)

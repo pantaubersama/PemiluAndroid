@@ -19,11 +19,8 @@ import com.pantaubersama.app.utils.PantauConstants.Merayakan.TPS_DATA
 import com.pantaubersama.app.utils.RxSchedulers
 import kotlinx.android.synthetic.main.activity_perhitungan_dpr.*
 import kotlinx.android.synthetic.main.catatan_tab_item.*
-import timber.log.Timber
 import javax.inject.Inject
 import androidx.recyclerview.widget.SimpleItemAnimator
-
-
 
 class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), PerhitunganDPRView {
     private lateinit var adapter: DPRPartaiAdapter
@@ -84,15 +81,14 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     private fun setupDPRList() {
         adapter = DPRPartaiAdapter(rxSchedulers)
         adapter.listener = object : DPRPartaiAdapter.Listener {
-            override fun onPartyCountChange(partyId: Int, partyCount: Int, partyPosition: Int) {
+            override fun onPartyCountChange(partyId: Int, partyCount: Int) {
                 realCountType?.let {
                     tps?.id?.let { it1 ->
                         presenter.saveRealCountParty(
                             it1,
                             partyId,
                             it,
-                            partyCount,
-                            partyPosition
+                            partyCount
                         )
                     }
                 }
@@ -127,15 +123,15 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         empty_alert.visibility = View.VISIBLE
     }
 
-    override fun onSuccessSavePartyRealCount(partyPosition: Int) {
-        tps?.id?.let { realCountType?.let { it1 -> presenter.getRealCount(it, it1, partyPosition) } }
+    override fun onSuccessSavePartyRealCount() {
+        tps?.id?.let { realCountType?.let { it1 -> presenter.getRealCount(it, it1) } }
     }
 
-    override fun bindRealCount(realCount: RealCount, partyPosition: Int) {
+    override fun bindRealCount(realCount: RealCount) {
         realCount.parties.forEachIndexed { i, itemDB ->
             adapter.getListData().forEachIndexed { j, itemAdapter ->
                 if (itemDB.id == (itemAdapter as CandidateData).id) {
-                    adapter.updateData(realCount.parties[partyPosition].totalVote, j)
+                    adapter.updateData(realCount.parties[j].totalVote, j)
                 }
             }
         }

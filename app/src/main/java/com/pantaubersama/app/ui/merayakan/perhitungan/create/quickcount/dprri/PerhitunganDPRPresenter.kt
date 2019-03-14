@@ -43,12 +43,12 @@ class PerhitunganDPRPresenter @Inject constructor(
         )
     }
 
-    fun saveRealCountParty(tpsId: String, partyId: Int, realCountType: String, partyCount: Int, partyPosition: Int) {
+    fun saveRealCountParty(tpsId: String, partyId: Int, realCountType: String, partyCount: Int) {
         disposables.add(
-            realCountInteractor.saveRealCountParty(tpsId, partyId, realCountType, partyCount, partyPosition)
+            realCountInteractor.saveRealCountParty(tpsId, partyId, realCountType, partyCount)
                 .subscribe(
                     {
-                        view?.onSuccessSavePartyRealCount(partyPosition)
+                        view?.onSuccessSavePartyRealCount()
                     },
                     {
                         view?.showError(it)
@@ -57,9 +57,9 @@ class PerhitunganDPRPresenter @Inject constructor(
         )
     }
 
-    fun getRealCount(tpsId: String, realCountType: String, position: Int) {
+    fun getRealCount(tpsId: String, realCountType: String) {
         realCountInteractor.getRealCount(tpsId, realCountType)?.let {
-            view?.bindRealCount(it, position)
+            view?.bindRealCount(it)
         }
     }
 }

@@ -14,10 +14,10 @@ import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.kandidat_partai_item.*
-import timber.log.Timber
 
 class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAdapter() {
     var listener: Listener? = null
+    var adapters: MutableList<DPRCandidateAdapter> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return DPRViewHolder(parent.inflate(R.layout.kandidat_partai_item))
@@ -58,23 +58,22 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
                 .doOnNext {
-                    listener?.onPartyCountChange(item.id, it, adapterPosition)
+                    listener?.onPartyCountChange(item.id, it)
                 }
                 .doOnError {
                     it.printStackTrace()
                 }
                 .subscribe()
-            val adapter = DPRCandidateAdapter()
-            adapter.listener = object : DPRCandidateAdapter.Listener {
+            adapters.add(adapterPosition, DPRCandidateAdapter())
+            adapters[adapterPosition].listener = object : DPRCandidateAdapter.Listener {
             }
             candidates_container.layoutManager = LinearLayoutManager(itemView.context)
-            candidates_container.adapter = adapter
-            adapter.setDatas(item.candidates as MutableList<ItemModel>)
+            candidates_container.adapter = adapters[adapterPosition]
+            adapters[adapterPosition].setDatas(item.candidates as MutableList<ItemModel>)
         }
     }
 
     interface Listener {
-        fun onPartyCountChange(partyId: Int, partyCount: Int, partyPosition: Int)
-
+        fun onPartyCountChange(partyId: Int, partyCount: Int)
     }
 }
