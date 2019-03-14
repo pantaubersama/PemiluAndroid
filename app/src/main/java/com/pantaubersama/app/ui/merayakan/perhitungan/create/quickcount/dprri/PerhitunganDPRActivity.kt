@@ -22,7 +22,7 @@ import javax.inject.Inject
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
-import java.util.concurrent.TimeUnit
+import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
 
 class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), PerhitunganDPRView {
     private lateinit var adapter: DPRPartaiAdapter
@@ -93,8 +93,8 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
-            .debounce(1000, TimeUnit.MILLISECONDS)
             .doOnNext { noVote ->
+                invalid_vote_count.text = noVote.toString()
                 tps?.id?.let {
                     realCountType?.let { it1 ->
                         presenter.saveRealCount(
@@ -120,6 +120,15 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         adapter = DPRPartaiAdapter(rxSchedulers)
         adapter.listener = object : DPRPartaiAdapter.Listener {
             override fun saveRealCount(items: MutableList<CandidateData>) {
+                val allCounts: MutableList<Int> = ArrayList()
+                items.forEachIndexed { index, candidateData ->
+                    allCounts.add(candidateData.totalCount)
+                }
+                try {
+                    valid_vote_count.text = allCounts.sum().toString()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
                 realCountType?.let {
                     tps?.id?.let { it1 ->
                         presenter.saveRealCount(
