@@ -20,7 +20,9 @@ import com.pantaubersama.app.utils.RxSchedulers
 import kotlinx.android.synthetic.main.activity_perhitungan_dpr.*
 import javax.inject.Inject
 import androidx.recyclerview.widget.SimpleItemAnimator
-import timber.log.Timber
+import com.jakewharton.rxbinding2.widget.RxTextView
+import io.reactivex.Observable
+import java.util.concurrent.TimeUnit
 
 class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), PerhitunganDPRView {
     private lateinit var adapter: DPRPartaiAdapter
@@ -73,6 +75,42 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
             val count = no_vote_count_field.text.toString().toInt()
             no_vote_count_field.setText(count.plus(1).toString())
         }
+
+        RxTextView.textChanges(no_vote_count_field)
+            .skipInitialValue()
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .debounce(1000, TimeUnit.MILLISECONDS)
+            .doOnNext { noVote ->
+                tps?.id?.let {
+                    realCountType?.let { it1 ->
+                        presenter.saveRealCount(
+                            it,
+                            it1,
+                            (adapter.getListData() as MutableList<CandidateData>),
+                            noVote
+                        )
+                    }
+                }
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
         save_button.setOnClickListener {
             finish()
         }
@@ -132,7 +170,7 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     }
 
     override fun bindRealCount(realCount: RealCount) {
-        Timber.d(realCount.toString())
+        no_vote_count_field.setText(realCount.invalidVote.toString())
         adapter.updateData(realCount)
     }
 

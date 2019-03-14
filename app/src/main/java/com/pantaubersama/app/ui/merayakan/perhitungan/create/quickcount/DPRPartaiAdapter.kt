@@ -17,7 +17,6 @@ import com.pantaubersama.app.utils.extensions.loadUrl
 import io.reactivex.Observable
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.kandidat_partai_item.*
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAdapter() {
@@ -32,13 +31,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
         (holder as DPRViewHolder).bind(data[position] as CandidateData)
     }
 
-//    fun updatePartyData(totalVote: Int, partyPosition: Int) {
-//        (data[partyPosition] as CandidateData).accumulativeCount = totalVote
-//        notifyItemChanged(partyPosition)
-//    }
-
     fun updateData(realCount: RealCount) {
-        Timber.d(realCount.toString())
         realCount.parties.forEachIndexed { i, partyFromDB ->
             data.forEachIndexed { j, partyFromAdapter ->
                 if (partyFromDB.id == (partyFromAdapter as CandidateData).id) {
