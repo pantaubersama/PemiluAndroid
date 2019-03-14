@@ -24,7 +24,7 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecycler
     }
 
 //    fun updateCandidateData(totalVote: Int, candidatePosition: Int) {
-//        (data[candidatePosition] as Candidate).totalCount = totalVote
+//        (data[candidatePosition] as Candidate).totalVote = totalVote
 //        notifyItemChanged(candidatePosition)
 //    }
 
