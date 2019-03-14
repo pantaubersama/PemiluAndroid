@@ -137,21 +137,21 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     }
 
     override fun onSuccessSavePartyRealCount() {
-        tps?.id?.let { realCountType?.let { it1 -> presenter.getRealCount(it, it1) } }
+//        tps?.id?.let { realCountType?.let { it1 -> presenter.getRealCount(it, it1) } }
     }
 
     override fun bindRealCount(realCount: RealCount) {
-        realCount.parties.forEachIndexed { i, itemDB ->
-            adapter.getListData().forEachIndexed { j, itemAdapter ->
-                if (itemDB.id == (itemAdapter as CandidateData).id) {
-                    adapter.updatePartyData(realCount.parties[j].totalVote, j)
-                }
-            }
-        }
+//        realCount.parties.forEachIndexed { i, itemDB ->
+//            adapter.getListData().forEachIndexed { j, itemAdapter ->
+//                if (itemDB.id == (itemAdapter as CandidateData).id) {
+//                    adapter.updatePartyData(realCount.parties[j].totalVote, j)
+//                }
+//            }
+//        }
     }
 
     override fun onSuccessSaveCandidateRealCount() {
-        tps?.id?.let { realCountType?.let { it1 -> presenter.getRealCount(it, it1) } }
+//        tps?.id?.let { realCountType?.let { it1 -> presenter.getRealCount(it, it1) } }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

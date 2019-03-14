@@ -31,6 +31,7 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecycler
     inner class CandidatesViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: Candidate) {
             candidate_name.text = "${item.serialNumber}. ${item.name}"
+            candidate_count_field.setText(item.candidateCount.toString())
             candidate_inc_button.setOnClickListener {
                 val count = candidate_count_field.text.toString().toInt()
                 candidate_count_field.setText(count.plus(1).toString())
@@ -49,7 +50,8 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecycler
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
                 .doOnNext {
-                    listener?.onCandidateCountChange(item.id, it)
+                    item.candidateCount = it
+                    listener?.onCandidateCountChange(item.id, item.candidateCount)
                 }
                 .doOnError {
                     it.printStackTrace()

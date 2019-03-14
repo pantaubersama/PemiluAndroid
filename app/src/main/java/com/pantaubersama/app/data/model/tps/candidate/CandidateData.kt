@@ -19,6 +19,8 @@ data class CandidateData(
     var actorType: String,
     @SerializedName("candidates")
     var candidates: MutableList<Candidate>,
+    var partyCount: Int,
+    var allCandidateCount: Int,
     var totalCount: Int
 ) : ItemModel, Serializable {
 

@@ -20,7 +20,7 @@ data class Candidate(
     var dapil: Dapil,
     @SerializedName("political_party")
     var politicalParty: PoliticalParty,
-    var totalVote: Int
+    var candidateCount: Int
 ) : ItemModel, Serializable {
     override fun getType(): Int {
         return 1
