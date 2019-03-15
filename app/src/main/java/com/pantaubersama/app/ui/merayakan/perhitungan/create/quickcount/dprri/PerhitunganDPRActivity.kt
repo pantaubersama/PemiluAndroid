@@ -132,7 +132,8 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
                     allValidCounts.add(candidateData.totalCount)
                 }
                 try {
-                    valid_vote_count.text = allValidCounts.sum().toString()
+                    val validCount = allValidCounts.sum()
+                    valid_vote_count.text = validCount.toString()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
