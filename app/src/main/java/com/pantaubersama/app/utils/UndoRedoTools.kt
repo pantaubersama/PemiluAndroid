@@ -15,7 +15,7 @@ class UndoRedoTools
 /**
  * Create a new TextViewUndoRedo and attach it to the specified TextView.
  *
- * @param textView The text view for which the undo/redo is implemented.
+ * @param textView The text view for which the undoParty/redo is implemented.
  */(
      /**
       * The edit text.
@@ -24,9 +24,9 @@ class UndoRedoTools
  ) {
 
     /**
-     * Is undo/redo being performed? This member signals if an undo/redo
+     * Is undoParty/redo being performed? This member signals if an undoParty/redo
      * operation is currently being performed. Changes in the text during
-     * undo/redo are not recorded because it would mess up the undo history.
+     * undoParty/redo are not recorded because it would mess up the undoParty history.
      */
     private var mIsUndoOrRedo = false
 
@@ -41,7 +41,7 @@ class UndoRedoTools
     private val mChangeListener: EditTextChangeListener
 
     /**
-     * Can undo be performed?
+     * Can undoParty be performed?
      */
     val canUndo: Boolean
         get() = mEditHistory.mmPosition > 0
@@ -61,7 +61,7 @@ class UndoRedoTools
     // =================================================================== //
 
     /**
-     * Disconnect this undo/redo from the text view.
+     * Disconnect this undoParty/redo from the text view.
      */
     fun disconnect() {
         mTextView.removeTextChangedListener(mChangeListener)
@@ -83,7 +83,7 @@ class UndoRedoTools
     }
 
     /**
-     * Perform undo.
+     * Perform undoParty.
      */
     fun undo() {
         val edit = mEditHistory.previous ?: return
@@ -162,7 +162,7 @@ class UndoRedoTools
      * Restore preferences.
      *
      * @param prefix The preference key prefix used when state was stored.
-     * @return did restore succeed? If this is false, the undo history will be
+     * @return did restore succeed? If this is false, the undoParty history will be
      * empty.
      */
     @Throws(IllegalStateException::class)
@@ -230,7 +230,7 @@ class UndoRedoTools
          */
         var mmPosition = 0
         /**
-         * Maximum undo history size.
+         * Maximum undoParty history size.
          */
         var mmMaxHistorySize = -1
 

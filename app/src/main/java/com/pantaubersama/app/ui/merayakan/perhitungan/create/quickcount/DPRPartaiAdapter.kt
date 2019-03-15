@@ -12,6 +12,7 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.tps.RealCount
 import com.pantaubersama.app.data.model.tps.candidate.CandidateData
 import com.pantaubersama.app.utils.RxSchedulers
+import com.pantaubersama.app.utils.UndoRedoTools
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
 import io.reactivex.Observable
@@ -22,6 +23,7 @@ import java.util.concurrent.TimeUnit
 class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAdapter() {
     var listener: Listener? = null
     var adapters: MutableList<DPRCandidateAdapter> = ArrayList()
+    private var undoRedoToolses: MutableList<UndoRedoTools> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return DPRViewHolder(parent.inflate(R.layout.kandidat_partai_item))
@@ -50,6 +52,14 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
             }
         }
         notifyDataSetChanged()
+    }
+
+    fun undoParty(undoPosition: Int) {
+        undoRedoToolses[undoPosition].undo()
+    }
+
+    fun undoCandidate(partyPosition: Int, undoPosition: Int) {
+        adapters.get(partyPosition).undoCandidate(undoPosition)
     }
 
     inner class DPRViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -110,15 +120,17 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                 .observeOn(rxSchedulers.mainThread())
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .doOnNext {
-                    listener?.saveRealCount(data as MutableList<CandidateData>)
+                    listener?.saveRealCount(data as MutableList<CandidateData>, adapterPosition)
                 }
                 .doOnError {
                     it.printStackTrace()
                 }
                 .subscribe()
+            undoRedoToolses.add(adapterPosition, UndoRedoTools(party_count_field))
             adapters.add(adapterPosition, DPRCandidateAdapter(rxSchedulers))
             adapters[adapterPosition].listener = object : DPRCandidateAdapter.Listener {
-                override fun onCandidateCountChange(candidateId: Int, totalCount: Int) {
+                override fun onCandidateCountChange(candidateId: Int, totalCount: Int, candidateUndoPosition: Int) {
+                    listener?.onCandidateChanged(adapterPosition, candidateUndoPosition)
                     val candidateCounts: MutableList<Int> = ArrayList()
                     item.candidates.forEachIndexed { index, candidate ->
                         candidateCounts.add(candidate.candidateCount)
@@ -135,6 +147,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
     }
 
     interface Listener {
-        fun saveRealCount(items: MutableList<CandidateData>)
+        fun saveRealCount(items: MutableList<CandidateData>, selectedPartyPosition: Int)
+        fun onCandidateChanged(partyPosition: Int, candidateUndoPosition: Int)
     }
 }

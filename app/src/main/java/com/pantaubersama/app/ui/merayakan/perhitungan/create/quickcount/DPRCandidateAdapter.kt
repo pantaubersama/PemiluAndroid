@@ -8,12 +8,15 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.tps.candidate.Candidate
 import com.pantaubersama.app.utils.RxSchedulers
+import com.pantaubersama.app.utils.UndoRedoTools
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.kandidat_person_item.*
+import java.text.FieldPosition
 
 class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAdapter() {
     var listener: Listener? = null
+    private var undoRedoToolses: MutableList<UndoRedoTools> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return CandidatesViewHolder(parent.inflate(R.layout.kandidat_person_item))
@@ -23,10 +26,9 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecycler
         (holder as CandidatesViewHolder).bind(data[position] as Candidate)
     }
 
-//    fun updateCandidateData(totalVote: Int, candidatePosition: Int) {
-//        (data[candidatePosition] as Candidate).totalVote = totalVote
-//        notifyItemChanged(candidatePosition)
-//    }
+    fun undoCandidate(undoPosition: Int) {
+        undoRedoToolses[undoPosition].undo()
+    }
 
     inner class CandidatesViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: Candidate) {
@@ -50,16 +52,17 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecycler
                 .observeOn(rxSchedulers.mainThread())
                 .doOnNext {
                     item.candidateCount = it
-                    listener?.onCandidateCountChange(item.id, item.candidateCount)
+                    listener?.onCandidateCountChange(item.id, item.candidateCount, adapterPosition)
                 }
                 .doOnError {
                     it.printStackTrace()
                 }
                 .subscribe()
+            undoRedoToolses.add(adapterPosition, UndoRedoTools(candidate_count_field))
         }
     }
 
     interface Listener {
-        fun onCandidateCountChange(candidateId: Int, totalCount: Int)
+        fun onCandidateCountChange(candidateId: Int, totalCount: Int, candidateUndoPosition: Int)
     }
 }

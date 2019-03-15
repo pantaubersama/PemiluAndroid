@@ -34,6 +34,8 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     lateinit var rxSchedulers: RxSchedulers
     private var realCountType: String? = null
     private var tps: TPS? = null
+    private var partySelectedPosition: Int? = null
+    private var candidateSelectedPosition: Int? = null
 
     override fun showLoading() {
         progress_bar.visibility = View.VISIBLE
@@ -122,7 +124,8 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     private fun setupDPRList() {
         adapter = DPRPartaiAdapter(rxSchedulers)
         adapter.listener = object : DPRPartaiAdapter.Listener {
-            override fun saveRealCount(items: MutableList<CandidateData>) {
+            override fun saveRealCount(items: MutableList<CandidateData>, selectedPartyPosition: Int) {
+                partySelectedPosition = selectedPartyPosition
                 val allValidCounts: MutableList<Int> = ArrayList()
                 items.forEachIndexed { index, candidateData ->
                     allValidCounts.add(candidateData.totalCount)
@@ -147,6 +150,11 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
                         )
                     }
                 }
+            }
+
+            override fun onCandidateChanged(partyPosition: Int, candidateUndoPosition: Int) {
+                partySelectedPosition = partyPosition
+                candidateSelectedPosition = candidateUndoPosition
             }
         }
         dpr_list.layoutManager = LinearLayoutManager(this)
@@ -200,9 +208,23 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.undo_action -> {
-                finish()
+                undo()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun undo() {
+        if (candidateSelectedPosition != null) {
+            partySelectedPosition?.let { partyPos ->
+                candidateSelectedPosition?.let { candidatePost ->
+                    adapter.undoCandidate(partyPos, candidatePost)
+                }
+            }
+        } else {
+            partySelectedPosition?.let { partyPos ->
+                adapter.undoParty(partyPos)
+            }
+        }
     }
 }
