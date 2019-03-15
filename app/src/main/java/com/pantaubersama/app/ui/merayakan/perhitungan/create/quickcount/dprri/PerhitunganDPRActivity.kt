@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
-import timber.log.Timber
 
 class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), PerhitunganDPRView {
     private lateinit var adapter: DPRPartaiAdapter
@@ -36,6 +35,7 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     private var tps: TPS? = null
     private var partySelectedPosition: Int? = null
     private var candidateSelectedPosition: Int? = null
+    private var undoType: String? = null
 
     override fun showLoading() {
         progress_bar.visibility = View.VISIBLE
@@ -125,6 +125,7 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         adapter = DPRPartaiAdapter(rxSchedulers)
         adapter.listener = object : DPRPartaiAdapter.Listener {
             override fun saveRealCount(items: MutableList<CandidateData>, selectedPartyPosition: Int) {
+                undoType = "party"
                 partySelectedPosition = selectedPartyPosition
                 val allValidCounts: MutableList<Int> = ArrayList()
                 items.forEachIndexed { index, candidateData ->
@@ -153,6 +154,7 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
             }
 
             override fun onCandidateChanged(partyPosition: Int, candidateUndoPosition: Int) {
+                undoType = "candidate"
                 partySelectedPosition = partyPosition
                 candidateSelectedPosition = candidateUndoPosition
             }
@@ -215,15 +217,15 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     }
 
     private fun undo() {
-        if (candidateSelectedPosition != null) {
+        if (undoType == "party") {
+            partySelectedPosition?.let { partyPos ->
+                adapter.undoParty(partyPos)
+            }
+        } else if (undoType == "candidate") {
             partySelectedPosition?.let { partyPos ->
                 candidateSelectedPosition?.let { candidatePost ->
                     adapter.undoCandidate(partyPos, candidatePost)
                 }
-            }
-        } else {
-            partySelectedPosition?.let { partyPos ->
-                adapter.undoParty(partyPos)
             }
         }
     }
