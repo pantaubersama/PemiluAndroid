@@ -21,6 +21,7 @@ import javax.inject.Inject
 
 class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), PerhitunganDPDView {
     private lateinit var adapter: DPRCandidateAdapter
+    private var candidateSelectedPosition: Int? = null
 
     @Inject
     override lateinit var presenter: PerhitunganDPDPresenter
@@ -67,6 +68,11 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
 
     private fun setupDPDList() {
         adapter = DPRCandidateAdapter(rxSchedulers)
+        adapter.listener = object : DPRCandidateAdapter.Listener {
+            override fun onCandidateCountChange(candidateUndoPosition: Int) {
+                candidateSelectedPosition = candidateUndoPosition
+            }
+        }
         dpd_list.layoutManager = LinearLayoutManager(this@PerhitunganDPDActivity)
         dpd_list.adapter = adapter
     }
@@ -110,7 +116,7 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.undo_action -> {
-                finish()
+                candidateSelectedPosition?.let { adapter.undoCandidate(it) }
             }
         }
         return super.onOptionsItemSelected(item)
