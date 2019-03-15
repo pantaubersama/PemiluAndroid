@@ -10,9 +10,9 @@ import com.pantaubersama.app.data.model.tps.candidate.Candidate
 import com.pantaubersama.app.utils.RxSchedulers
 import com.pantaubersama.app.utils.UndoRedoTools
 import com.pantaubersama.app.utils.extensions.inflate
+import io.reactivex.Observable
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.kandidat_person_item.*
-import java.text.FieldPosition
 
 class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAdapter() {
     var listener: Listener? = null
@@ -35,12 +35,21 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecycler
             candidate_name.text = "${item.serialNumber}. ${item.name}"
             candidate_count_field.setText(item.candidateCount.toString())
             candidate_inc_button.setOnClickListener {
-                val count = candidate_count_field.text.toString().toInt()
+                val count = if (candidate_count_field.text.isNotEmpty()) {
+                    candidate_count_field.text.toString().toInt()
+                } else {
+                    0
+                }
                 candidate_count_field.setText(count.plus(1).toString())
             }
             RxTextView.textChanges(candidate_count_field)
-                .filter {
-                    it.isNotEmpty()
+                .skipInitialValue()
+                .flatMap {
+                    if (it.isEmpty()) {
+                        Observable.just("0")
+                    } else {
+                        Observable.just(it)
+                    }
                 }
                 .map {
                     it.toString()

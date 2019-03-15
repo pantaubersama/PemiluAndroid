@@ -41,8 +41,8 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                     realCount.candidates.forEachIndexed { k, candidateDb ->
                         partyFromAdapter.candidates.forEachIndexed { l, candidateData ->
                             if (candidateData.id == candidateDb.id) {
-                                candidateData.candidateCount = candidateDb.totalVote
                                 candidateCounts.add(candidateData.candidateCount)
+                                candidateData.candidateCount = candidateDb.totalVote
                             }
                         }
                     }
@@ -70,7 +70,11 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
             party_count_field.setText(item.partyCount.toString())
             party_votes_count.text = item.totalCount.toString()
             party_inc_button.setOnClickListener {
-                val count = party_count_field.text.toString().toInt()
+                val count = if (party_count_field.text.isNotEmpty()) {
+                    party_count_field.text.toString().toInt()
+                } else {
+                    0
+                }
                 party_count_field.setText(count.plus(1).toString())
             }
             RxTextView.textChanges(party_count_field)
@@ -107,6 +111,13 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
 
             RxTextView.textChanges(party_votes_count)
                 .skipInitialValue()
+                .flatMap {
+                    if (it.isEmpty()) {
+                        Observable.just("0")
+                    } else {
+                        Observable.just(it)
+                    }
+                }
                 .filter {
                     it.isNotEmpty()
                 }
@@ -135,7 +146,11 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                     item.candidates.forEachIndexed { index, candidate ->
                         candidateCounts.add(candidate.candidateCount)
                     }
-                    val allCount = party_count_field.text.toString().toInt() + candidateCounts.sum()
+                    val allCount = if (party_count_field.text.isNotEmpty()) {
+                        party_count_field.text.toString().toInt()
+                    } else {
+                        0
+                    } + candidateCounts.sum()
                     party_votes_count.text = allCount.toString()
                 }
             }
