@@ -199,6 +199,13 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
 
     override fun bindRealCount(realCount: RealCount) {
         no_vote_count_field.setText(realCount.invalidVote.toString())
+        val totalValidCount: MutableList<Int> = ArrayList()
+        realCount.parties.forEachIndexed { index, party ->
+            totalValidCount.add(party.totalVote)
+        }
+        valid_vote_count.text = totalValidCount.sum().toString()
+        val totalCount = totalValidCount.sum().toString().toInt() + invalid_vote_count.text.toString().toInt()
+        all_vote_count.text = totalCount.toString()
         adapter.updateData(realCount)
     }
 
