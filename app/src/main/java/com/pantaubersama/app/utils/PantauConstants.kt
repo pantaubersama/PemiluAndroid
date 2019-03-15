@@ -32,6 +32,8 @@ class PantauConstants {
         const val PERHITUNGAN = "perhitungan"
         const val REKAPITULASI = "rekapitulasi"
         const val BANNER_DEBAT = "debat"
+        const val BANNER_DEBAT_PUBLIC = "debat_public"
+        const val BANNER_DEBAT_PERSONAL = "debat_personal"
         const val URL = "url"
         val PROFILE_COMPLETION = "profile_completion"
         val FILTER_ORANG_ALL = "verified_all"

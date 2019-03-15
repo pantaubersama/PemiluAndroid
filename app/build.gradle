@@ -95,7 +95,7 @@ configurations {
 }
 
 dependencies {
-    implementation project(':instant')
+//    implementation project(':instant')
     implementation project(':base')
     implementation designLibs
     implementation networkLibs

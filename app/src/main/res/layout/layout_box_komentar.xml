@@ -46,13 +46,15 @@
         android:layout_marginEnd="16dp"
         android:layout_centerVertical="true"
         android:background="@null"
+        android:inputType="textNoSuggestions"
         android:textSize="12sp"
         android:textColor="@color/black_1"
         tools:hint="@string/tulis_komentar"
         android:textColorHint="@color/gray_10"
         android:layout_toEndOf="@id/iv_avatar_me"
         android:layout_toStartOf="@id/iv_btn_comment"
-        android:maxLines="10"/>
+        android:maxLines="10"
+        android:ellipsize="end"/>
 
     <ProgressBar
         android:visibility="gone"

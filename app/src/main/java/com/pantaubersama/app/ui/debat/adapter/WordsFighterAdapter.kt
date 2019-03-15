@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.debat.WordInputItem
 import com.pantaubersama.app.data.model.debat.WordItem
 import com.pantaubersama.app.utils.PantauConstants.Word.WORD_INPUT_CHALLENGER
@@ -60,7 +61,7 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
             cl_btn_clap.setOnClickListener { onClapClicked(item) }
 
             tv_posted_time.text = item.createdAt.parseDate("HH:mm")
-            tv_read_estimation.text = "Estimasi baca ${item.readTime.let { if (it > 0f) it else "<1"}} menit"
+            tv_read_estimation.text = "Estimasi baca ${item.readTime.let { if (it > 1f) it else "<1"}} menit"
         }
 
         private fun onClapClicked(item: WordItem) {
@@ -82,6 +83,7 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
             enableView(item.isActive, cl_box_message as ViewGroup)
 
             et_content.setText(item.body)
+            et_content.hint = if (!item.isActive) "Belum giliran kamu" else "Tulis argumen kamu disini"
 
             et_content.onFocusChangeListener = View.OnFocusChangeListener { _, isFocused ->
                 listener.onWordsInputFocused(isFocused)
@@ -101,12 +103,6 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
 
                         if (!btn_publish.isClickable) btn_publish.isClickable = true
                         if (!btn_cancel.isClickable) btn_cancel.isClickable = true
-
-                        if (et_content.lineCount > et_content.minLines) {
-                            if (recyclerView.canScrollVertically(1)) {
-                                recyclerView.smoothScrollBy(0, recyclerView.bottom - 1)
-                            }
-                        }
                     } else {
                         view_indicator_input_message.background = itemView.context.drawable(R.drawable.rounded_2dp_gray_dark_1)
 
@@ -114,22 +110,25 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
                         if (!btn_publish.isClickable) btn_publish.isClickable = false
                         if (!btn_cancel.isClickable) btn_cancel.isClickable = false
                     }
+                    if (et_content.lineCount > et_content.minLines) {
+                        if (recyclerView.canScrollVertically(1)) {
+                            recyclerView.smoothScrollBy(0, recyclerView.bottom - 1)
+                        }
+                    }
                     item.body = query.toString()
                 }
             })
 
             btn_publish.setOnClickListener {
                 val content = et_content.text.toString()
-                item.body = content
-                item.isActive = false
-                et_content.clearFocus()
-                notifyItemChanged(adapterPosition)
-                listener.onPublish(content)
-            }
-
-            if (!item.isActive) {
-                view_overlay.setOnClickListener {
-                    ToastUtil.show(it.context, "Belum giliran kamu")
+                if (content.isNotEmpty() && content.isNotBlank()) {
+                    item.body = content
+                    item.isActive = false
+                    et_content.clearFocus()
+                    notifyItemChanged(adapterPosition)
+                    listener.onPublish(content)
+                } else {
+                    ToastUtil.show(it.context, "isi argumenmu dulu")
                 }
             }
         }
@@ -166,5 +165,18 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
             this.isActive = isActive
             notifyItemChanged(0)
         }
+    }
+
+    override fun addItem(item: ItemModel) {
+        val position = if (!data.isEmpty() && data[0] is WordInputItem) 1 else 0
+        if (data.find { (it as? WordItem)?.id == (item as WordItem).id } == null) {
+            super.addItem(item, position)
+            recyclerView.layoutManager?.scrollToPosition(0)
+        }
+    }
+
+    fun getMyTimeLeft(myRole: String): Int {
+        val myLastArgumen = data.find { (it as? WordItem?)?.author?.role == myRole }
+        return Math.round((myLastArgumen as WordItem).timeLeft)
     }
 }

@@ -27,4 +27,5 @@ interface DebatView : BaseView {
     fun onFailedPostWordsAudience(t: Throwable)
 
     fun updateInputTurn()
+    fun updateMyTimeLeft()
 }
