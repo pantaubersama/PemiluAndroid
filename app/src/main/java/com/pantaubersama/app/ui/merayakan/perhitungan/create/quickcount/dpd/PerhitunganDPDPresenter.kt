@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.RealCountInteractor
 import com.pantaubersama.app.data.model.tps.TPS
+import com.pantaubersama.app.data.model.tps.candidate.Candidate
 import javax.inject.Inject
 
 class PerhitunganDPDPresenter @Inject constructor(
@@ -41,5 +42,23 @@ class PerhitunganDPDPresenter @Inject constructor(
                     }
                 )
         )
+    }
+
+    fun saveRealCount(tpsId: String, realCountType: String, candidates: MutableList<Candidate>, invalidVote: Int? = null) {
+        disposables.add(
+            realCountInteractor.saveDpdRealCount(tpsId, realCountType, candidates, invalidVote)
+                .subscribe(
+                    {
+                        view?.onSuccessSaveRealCount()
+                    },
+                    {
+                        view?.showError(it)
+                    }
+                )
+        )
+    }
+
+    fun getRealCount(tpsId: String, realCountType: String) {
+        realCountInteractor.getRealCount(tpsId, realCountType)?.let { view?.bindRealCount(it) }
     }
 }

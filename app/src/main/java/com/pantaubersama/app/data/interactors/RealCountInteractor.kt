@@ -139,7 +139,7 @@ class RealCountInteractor @Inject constructor(
         return appDB.getRealCountDao().getRealCount(tpsId, realCountType)
     }
 
-    fun saveRealCount(tpsId: String, realCountType: String, items: MutableList<CandidateData>, invalidVote: Int?): Completable {
+    fun saveDprRealCount(tpsId: String, realCountType: String, items: MutableList<CandidateData>, invalidVote: Int?): Completable {
         if (appDB.getRealCountDao().getRealCount(tpsId, realCountType) != null) {
             val realCount = appDB.getRealCountDao().getRealCount(tpsId, realCountType)
             if (invalidVote != null) {
@@ -192,6 +192,63 @@ class RealCountInteractor @Inject constructor(
                         tpsId,
                         realCountType,
                         candidates,
+                        if (invalidVote != null) {
+                            invalidVote
+                        } else {
+                            0
+                        },
+                        parties)
+                )
+            }
+        }
+    }
+
+    fun saveDpdRealCount(
+        tpsId: String,
+        realCountType: String,
+        candidates: MutableList<com.pantaubersama.app.data.model.tps.candidate.Candidate>,
+        invalidVote: Int?
+    ): Completable {
+        if (appDB.getRealCountDao().getRealCount(tpsId, realCountType) != null) {
+            val realCount = appDB.getRealCountDao().getRealCount(tpsId, realCountType)
+            if (invalidVote != null) {
+                realCount?.invalidVote = invalidVote
+            }
+
+            candidates.forEachIndexed { i, candidateData ->
+                realCount?.candidates?.let {
+                    it.forEachIndexed { j, candidateDb ->
+                        if (candidateDb.id == candidateData.id) {
+                            realCount.candidates[j] = Candidate(candidateData.id, candidateData.candidateCount)
+                        }
+                    }
+                }
+            }
+            return Completable.fromCallable {
+                realCount?.let {
+                    appDB.getRealCountDao().updateRealCount(it)
+                }
+            }
+        } else {
+            val newCandidates: MutableList<Candidate> = ArrayList()
+            val parties: MutableList<Party> = ArrayList()
+
+            candidates.forEach {
+                newCandidates.add(Candidate(it.id, it.candidateCount))
+            }
+
+            var newId: Int = 0
+
+            appDB.getRealCountDao().getRealCounts().forEachIndexed { index, realCount ->
+                newId = index + 1
+            }
+            return Completable.fromCallable {
+                appDB.getRealCountDao().saveRealCount(
+                    RealCount(
+                        newId.toString(),
+                        tpsId,
+                        realCountType,
+                        newCandidates,
                         if (invalidVote != null) {
                             invalidVote
                         } else {

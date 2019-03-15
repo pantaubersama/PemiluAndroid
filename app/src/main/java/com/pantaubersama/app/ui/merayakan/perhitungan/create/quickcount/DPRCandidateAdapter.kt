@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.data.model.tps.RealCount
 import com.pantaubersama.app.data.model.tps.candidate.Candidate
 import com.pantaubersama.app.utils.RxSchedulers
 import com.pantaubersama.app.utils.UndoRedoTools
@@ -28,6 +29,17 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecycler
 
     fun undoCandidate(undoPosition: Int) {
         undoRedoToolses[undoPosition].undo()
+    }
+
+    fun updateData(realCount: RealCount) {
+        realCount.candidates.forEachIndexed { i, candidateDb ->
+            data.forEachIndexed { j, candidateData ->
+                if ((candidateData as Candidate).id == candidateDb.id) {
+                    candidateData.candidateCount = candidateDb.totalVote
+                }
+            }
+        }
+        notifyDataSetChanged()
     }
 
     inner class CandidatesViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {

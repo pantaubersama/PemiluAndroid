@@ -52,7 +52,7 @@ class PerhitunganDPRPresenter @Inject constructor(
 
     fun saveRealCount(tpsId: String, realCountType: String, items: MutableList<CandidateData>, invalidVote: Int? = null) {
         disposables.add(
-            realCountInteractor.saveRealCount(tpsId, realCountType, items, invalidVote)
+            realCountInteractor.saveDprRealCount(tpsId, realCountType, items, invalidVote)
                 .subscribe(
                     {
                         view?.onSuccessSaveRealCount()
