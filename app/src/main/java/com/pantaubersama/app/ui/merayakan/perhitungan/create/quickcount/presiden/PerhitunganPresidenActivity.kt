@@ -179,7 +179,11 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                 if (tps?.status == "published") {
                     ToastUtil.show(this@PerhitunganPresidenActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
                 } else {
-                    val count = candidate_1_count_field.text.toString().toInt()
+                    val count = if (candidate_1_count_field.text.isNotEmpty()) {
+                        candidate_1_count_field.text.toString().toInt()
+                    } else {
+                        0
+                    }
                     candidate_1_count_field.setText(count.plus(1).toString())
                     undoPosition = 0
                 }
@@ -188,7 +192,11 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                 if (tps?.status == "published") {
                     ToastUtil.show(this@PerhitunganPresidenActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
                 } else {
-                    val count = candidate_2_count_field.text.toString().toInt()
+                    val count = if (candidate_2_count_field.text.isNotEmpty()) {
+                        candidate_2_count_field.text.toString().toInt()
+                    } else {
+                        0
+                    }
                     undoPosition = 1
                     candidate_2_count_field.setText(count.plus(1).toString())
                 }
@@ -197,7 +205,11 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                 if (tps?.status == "published") {
                     ToastUtil.show(this@PerhitunganPresidenActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
                 } else {
-                    val count = no_vote_count_field.text.toString().toInt()
+                    val count = if (no_vote_count_field.text.isNotEmpty()) {
+                        no_vote_count_field.text.toString().toInt()
+                    } else {
+                        0
+                    }
                     undoPosition = 2
                     no_vote_count_field.setText(count.plus(1).toString())
                 }
