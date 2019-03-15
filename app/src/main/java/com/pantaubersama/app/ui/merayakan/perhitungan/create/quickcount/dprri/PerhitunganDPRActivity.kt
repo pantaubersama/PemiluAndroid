@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
+import timber.log.Timber
 
 class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), PerhitunganDPRView {
     private lateinit var adapter: DPRPartaiAdapter
@@ -95,6 +96,8 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
             .observeOn(rxSchedulers.mainThread())
             .doOnNext { noVote ->
                 invalid_vote_count.text = noVote.toString()
+                val allCount = valid_vote_count.text.toString().toInt() + invalid_vote_count.text.toString().toInt()
+                all_vote_count.text = allCount.toString()
                 tps?.id?.let {
                     realCountType?.let { it1 ->
                         presenter.saveRealCount(
@@ -111,66 +114,6 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
             }
             .subscribe()
 
-        RxTextView.textChanges(invalid_vote_count)
-            .skipInitialValue()
-            .flatMap {
-                if (it.isEmpty()) {
-                    Observable.just("0")
-                } else {
-                    Observable.just(it)
-                }
-            }
-            .map {
-                it.toString()
-            }
-            .map {
-                it.toInt()
-            }
-            .subscribeOn(rxSchedulers.io())
-            .observeOn(rxSchedulers.mainThread())
-            .doOnNext { noVote ->
-                val newCount = noVote + if (valid_vote_count.text.isNotEmpty()) {
-                    valid_vote_count.text.toString().toInt()
-                } else {
-                    0
-                }
-                all_vote_count.text = newCount.toString()
-            }
-            .doOnError {
-                it.printStackTrace()
-            }
-            .subscribe()
-
-        RxTextView.textChanges(valid_vote_count)
-            .skipInitialValue()
-            .flatMap {
-                if (it.isEmpty()) {
-                    Observable.just("0")
-                } else {
-                    Observable.just(it)
-                }
-            }
-            .map {
-                it.toString()
-            }
-            .map {
-                it.toInt()
-            }
-            .subscribeOn(rxSchedulers.io())
-            .observeOn(rxSchedulers.mainThread())
-            .doOnNext { validVote ->
-                val newCount = validVote + if (invalid_vote_count.text.isNotEmpty()) {
-                    invalid_vote_count.text.toString().toInt()
-                } else {
-                    0
-                }
-                all_vote_count.text = newCount.toString()
-            }
-            .doOnError {
-                it.printStackTrace()
-            }
-            .subscribe()
-
         save_button.setOnClickListener {
             finish()
         }
@@ -180,12 +123,18 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         adapter = DPRPartaiAdapter(rxSchedulers)
         adapter.listener = object : DPRPartaiAdapter.Listener {
             override fun saveRealCount(items: MutableList<CandidateData>) {
+                val allValidCounts: MutableList<Int> = ArrayList()
+                items.forEachIndexed { index, candidateData ->
+                    allValidCounts.add(candidateData.totalCount)
+                }
                 try {
-                    val allValidCounts: MutableList<Int> = ArrayList()
-                    adapter.getListData().forEachIndexed { index, candidateData ->
-                        allValidCounts.add((candidateData as CandidateData).totalCount)
-                    }
                     valid_vote_count.text = allValidCounts.sum().toString()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                try {
+                    val allCount = allValidCounts.sum().toString().toInt() + invalid_vote_count.text.toString().toInt()
+                    all_vote_count.text = allCount.toString()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
