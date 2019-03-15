@@ -61,7 +61,7 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecycler
                 .observeOn(rxSchedulers.mainThread())
                 .doOnNext {
                     item.candidateCount = it
-                    listener?.onCandidateCountChange(item.id, item.candidateCount, adapterPosition)
+                    listener?.onCandidateCountChange(adapterPosition)
                 }
                 .doOnError {
                     it.printStackTrace()
@@ -72,6 +72,6 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecycler
     }
 
     interface Listener {
-        fun onCandidateCountChange(candidateId: Int, totalCount: Int, candidateUndoPosition: Int)
+        fun onCandidateCountChange(candidateUndoPosition: Int)
     }
 }

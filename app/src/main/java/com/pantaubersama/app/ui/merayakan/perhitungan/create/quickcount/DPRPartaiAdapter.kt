@@ -41,8 +41,8 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                     realCount.candidates.forEachIndexed { k, candidateDb ->
                         partyFromAdapter.candidates.forEachIndexed { l, candidateData ->
                             if (candidateData.id == candidateDb.id) {
-                                candidateCounts.add(candidateData.candidateCount)
                                 candidateData.candidateCount = candidateDb.totalVote
+                                candidateCounts.add(candidateData.candidateCount)
                             }
                         }
                     }
@@ -140,10 +140,10 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
             undoRedoToolses.add(adapterPosition, UndoRedoTools(party_count_field))
             adapters.add(adapterPosition, DPRCandidateAdapter(rxSchedulers))
             adapters[adapterPosition].listener = object : DPRCandidateAdapter.Listener {
-                override fun onCandidateCountChange(candidateId: Int, totalCount: Int, candidateUndoPosition: Int) {
+                override fun onCandidateCountChange(candidateUndoPosition: Int) {
                     listener?.onCandidateChanged(adapterPosition, candidateUndoPosition)
                     val candidateCounts: MutableList<Int> = ArrayList()
-                    item.candidates.forEachIndexed { index, candidate ->
+                    item.candidates.forEach { candidate ->
                         candidateCounts.add(candidate.candidateCount)
                     }
                     val allCount = if (party_count_field.text.isNotEmpty()) {
@@ -151,7 +151,9 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                     } else {
                         0
                     } + candidateCounts.sum()
-                    party_votes_count.text = allCount.toString()
+                    item.allCandidateCount = candidateCounts.sum()
+                    item.totalCount = allCount
+                    party_votes_count.text = item.totalCount.toString()
                 }
             }
             candidates_container.layoutManager = LinearLayoutManager(itemView.context)
