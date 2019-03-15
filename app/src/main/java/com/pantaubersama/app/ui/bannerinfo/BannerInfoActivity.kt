@@ -22,13 +22,11 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
     @Inject
     override lateinit var presenter: BannerInfoPresenter
 
-    private var infoType: Int? = null
     private var bannerInfo: BannerInfo? = null
 
     companion object {
-        fun setIntent(context: Context, infoType: Int, bannerInfo: BannerInfo): Intent {
+        fun setIntent(context: Context, bannerInfo: BannerInfo): Intent {
             val intent = Intent(context, BannerInfoActivity::class.java)
-            intent.putExtra(PantauConstants.Extra.EXTRA_BANNER_INFO_TYPE, infoType)
             intent.putExtra(PantauConstants.Extra.EXTRA_BANNER_INFO_DATA, bannerInfo)
             return intent
         }
@@ -43,7 +41,6 @@ class BannerInfoActivity : BaseActivity<BannerInfoPresenter>(), BannerInfoView {
     }
 
     override fun fetchIntentExtra() {
-        this.infoType = intent.getIntExtra(PantauConstants.Extra.EXTRA_BANNER_INFO_TYPE, 0)
         this.bannerInfo = intent.getSerializableExtra(PantauConstants.Extra.EXTRA_BANNER_INFO_DATA) as BannerInfo
     }
 

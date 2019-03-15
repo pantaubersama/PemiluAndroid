@@ -134,6 +134,8 @@ dependencies {
     testImplementation unitTestLibs
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+    implementation room
+    kapt roomCompiler
     ktlint "com.github.shyiko:ktlint:0.29.0"
 }
 

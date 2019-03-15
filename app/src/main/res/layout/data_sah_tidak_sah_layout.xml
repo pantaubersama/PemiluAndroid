@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DATA SUARA SAH DAN TIDAK SAH"
+        android:textAllCaps="true"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingRight="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textSize="12sp"
+        android:fontFamily="@font/lato_bold"
+        android:textColor="@color/white"
+        android:background="@color/gray_dark_2"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1. Jumlah suara tidak sah"
+            android:textSize="12sp"
+            android:textColor="@color/black_3"
+            android:fontFamily="@font/bw_modelica_bold"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toStartOf="@id/invalid_vote_count"
+            android:layout_toLeftOf="@id/invalid_vote_count"/>
+
+        <TextView
+            android:id="@+id/invalid_vote_count"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:background="@drawable/rounded_cream"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="0"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="14sp"
+            android:textColor="@color/black_3"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_2"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2. Jumlah seluruh suara sah"
+            android:textSize="12sp"
+            android:textColor="@color/black_3"
+            android:fontFamily="@font/bw_modelica_bold"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toStartOf="@id/valid_vote_count"
+            android:layout_toLeftOf="@id/valid_vote_count"/>
+
+        <TextView
+            android:id="@+id/valid_vote_count"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:background="@drawable/rounded_cream"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="0"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="14sp"
+            android:textColor="@color/black_3"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_2"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2. Jumlah seluruh suara sah dan tidak sah"
+            android:textSize="12sp"
+            android:textColor="@color/black_3"
+            android:fontFamily="@font/bw_modelica_bold"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toStartOf="@id/all_vote_count"
+            android:layout_toLeftOf="@id/all_vote_count"/>
+
+        <TextView
+            android:id="@+id/all_vote_count"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:background="@drawable/rounded_cream"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="0"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="14sp"
+            android:textColor="@color/black_3"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

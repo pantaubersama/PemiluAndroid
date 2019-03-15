@@ -107,7 +107,7 @@ class TanyaKandidatFragment : BaseFragment<TanyaKandidatPresenter>(), TanyaKandi
 
         adapter?.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.EXTRA_TYPE_TANYA_KANDIDAT, bannerInfo), PantauConstants.RequestCode.RC_BANNER_TANYA_KANDIDAT)
+                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), bannerInfo), PantauConstants.RequestCode.RC_BANNER_TANYA_KANDIDAT)
             }
 
             override fun onClickHeader() {

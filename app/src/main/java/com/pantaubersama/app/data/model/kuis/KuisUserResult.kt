@@ -30,7 +30,9 @@ data class Quizzes(
 
 data class TeamPercentage(
     @SerializedName("team") val team: Team,
-    @SerializedName("percentage") val percentage: Float
+    @SerializedName("percentage") val percentage: Float,
+    // dummy field
+    var teamAverage: Long
 )
 
 data class Team(

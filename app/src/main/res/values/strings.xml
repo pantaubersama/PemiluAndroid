@@ -182,6 +182,7 @@
     <string name="galeri">Galeri</string>
     <string name="ambil_gambar_dari">Ambil gambar dari :</string>
     <string name="izinkan_akses_kamera_dan_galeri"><![CDATA[Izinkan aplikasi mengakses Kamera & Galeri pada perangkat anda]]></string>
+    <string name="izinkan_akses_lokasi"><![CDATA[Izinkan aplikasi mengakses GPS pada perangkat anda]]></string>
     <string name="izinkan_akses_file"><![CDATA[Izinkan aplikasi mengakses Galeri pada perangkat anda]]></string>
     <string name="izinkan_akses_kamera">Anda harus mengizinkan aplikasi untuk mengakses kamera</string>
     <string name="izinkan_akses_penyimpanan">Anda harus mengijinkan aplikasi untuk mengakses penyimpanan</string>
@@ -365,10 +366,26 @@
     <string name="title_promote_challenge">Promote your challenge</string>
     <string name="direct_challenge">DIRECT CHALLENGE</string>
     <string name="title_preview">Preview</string>
+    <string name="perhitungan_label">Perhitungan</string>
+    <string name="rekapitulasi_label">Rekapitulasi</string>
+    <string name="data_tps_hint">Lengkapi seluruh data di bawah ini. Lokasi TPS dapat dibarui dengan mengaktifkan penanda GPS perangkat kamu.</string>
+    <string name="tps_attachment_hint">Unggah lampiran dokumen dan bagikan keseruan suasana di TPS kamu!</string>
+    <string name="presiden_counter_hint">Kamu bisa menambah atau langsung input jumlah perolehan suara sesuai pengamatan di TPS. Tap Undo untuk membatalkan perhitungan terakhir.</string>
+    <string name="undo_action">Undo</string>
+    <string name="rekapitulasi_footer_hint">Buka di web.pantaubersama.com Untuk penyajian data yang lebih lengkap, hingga ke perhitungan Legislatif</string>
+    <string name="votes_count_hint">Pengguna telah berpartisipasi merayakan peritungan melalui Pantau Bersama Pemilu 2019.</string>
+    <string name="close_action">Close</string>
+    <string name="upload_document_hint">Unggah data langsung dari kamera atau pilih dari galeri perangkat kamu.</string>
     <string name="komentar">Komentar</string>
     <string name="tulis_komentar">Tulis komentar</string>
     <string name="tulis_argumen_kamu_disini">Tulis argumen kamu disini</string>
     <string name="publish">Publish</string>
     <string name="lawan_debat">Lawan debat</string>
-    <string name="tulis_disini">Tulis disini...</string>
+    <string name="tulis_disini">Tulis disini…</string>
+    <string name="c1_form_presiden_hint">Silahkan masukkan data Model C1 Presiden pada kolom dibawah ini:</string>
+    <string name="c1_form_dpr_ri_hint">Silahkan masukkan data Model C1-DPR RI pada kolom dibawah ini:</string>
+    <string name="c1_form_dpd_ri_hint">Silahkan masukkan data Model C1-DPD RI pada kolom dibawah ini:</string>
+    <string name="c1_form_dprd_provinsi_hint">Silahkan masukkan data Model C1-DPRD Provinsi pada kolom dibawah ini:</string>
+    <string name="c1_form_dprd_kabupaten_hint">Silahkan masukkan data Model C1-DPRD Kabupaten pada kolom dibawah ini:</string>
+    <string name="upload_suasana_tps_hint">Upload suasana kemeriahan TPS dan bagikan ke pengguna yang lain</string>
 </resources>

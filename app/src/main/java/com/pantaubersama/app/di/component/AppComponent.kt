@@ -14,7 +14,8 @@ import javax.inject.Singleton
     ConnectionModule::class,
     SharedPreferenceModule::class,
     RxSchedulersModule::class,
-    WordsModule::class
+    WordsModule::class,
+    DBModule::class
 ])
 interface AppComponent {
 

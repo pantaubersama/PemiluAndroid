@@ -13,6 +13,14 @@ class PantauConstants {
         }
     }
 
+    object Merayakan {
+        const val CREATE_PERHITUNGAN_REQUEST_CODE = 965
+        const val C1_MODEL_TYPE = "c1_type"
+        const val REAL_COUNT_TYPE = "perhitungan_type"
+        const val DO_PERHITUNGAN_REQUEST_CODE = 967
+        const val TPS_DATA = "tps_data"
+    }
+
     companion object {
         const val LABEL_COPY = "LABEL_COPY"
 
@@ -21,6 +29,9 @@ class PantauConstants {
         const val BANNER_TANYA = "tanya"
         const val BANNER_KUIS = "kuis"
         const val BANNER_LAPOR = "lapor"
+        const val PERHITUNGAN = "perhitungan"
+        const val REKAPITULASI = "rekapitulasi"
+        const val BANNER_DEBAT = "debat"
         const val BANNER_DEBAT_PUBLIC = "debat_public"
         const val BANNER_DEBAT_PERSONAL = "debat_personal"
         const val URL = "url"
@@ -31,6 +42,8 @@ class PantauConstants {
         val CONFIRMATION_PATH = "confirmation"
         val JANPOL = "janji_politik"
         val QUIZ = "quiz"
+        const val DATABASE_VERSION = 1
+        const val DATABASE_NAME = "pantau_bersama"
     }
 
     object Lapor {
@@ -112,6 +125,9 @@ class PantauConstants {
         const val RC_BANNER_PILPRES = 101
         const val RC_BANNER_JANPOL = 102
         const val RC_BANNER_TANYA_KANDIDAT = 103
+        const val RC_BANNER_SEARCH_TANYA_KANDIDAT = 104
+        const val RC_BANNER_PERHITUNGAN = 222
+        const val RC_BANNER_REKAPITULASI = 223
         const val RC_BANNER_KUIS = 104
         const val RC_BANNER_LAPOR = 105
         const val RC_ASK_PERMISSIONS = 115

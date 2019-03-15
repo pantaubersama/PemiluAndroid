@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pantaubersama.app.ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <include layout="@layout/layout_toolbar_light"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@color/white">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/save_button"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@color/gray_3"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray_3"
+                    android:padding="16dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true">
+
+                    <TextView
+                        android:id="@+id/data_tps_hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_regular"
+                        android:lineSpacingExtra="2sp"
+                        android:text="@string/upload_document_hint"
+                        android:textColor="@color/gray_5"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1. Model C1-PPWP (Presiden)"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentLeft="true"
+                                android:fontFamily="@font/bw_modelica_bold"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"
+                                android:layout_toLeftOf="@id/add_c1_button"
+                                android:layout_toStartOf="@id/add_c1_button"
+                                android:layout_centerVertical="true"/>
+
+                            <LinearLayout
+                                android:id="@+id/add_c1_button"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/circle_background_accent"
+                                android:gravity="center"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginStart="12dp"
+                                android:foreground="?selectableItemBackground">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_add"/>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray_2" />
+
+                    <LinearLayout
+                        android:id="@+id/c1_model_images_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="16dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:id="@+id/c1_model_image"
+                                android:layout_width="72dp"
+                                android:layout_height="72dp"
+                                android:src="@drawable/ic_avatar_placeholder"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentLeft="true"/>
+
+                            <TextView
+                                android:id="@+id/c1_model_image_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Model_C1.jpg"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginStart="16dp"
+                                android:fontFamily="@font/lato_regular"
+                                android:textColor="@color/gray_5"
+                                android:textSize="12sp"
+                                android:layout_toRightOf="@id/c1_model_image"
+                                android:layout_toEndOf="@id/c1_model_image"
+                                android:layout_centerVertical="true"/>
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/close_camera_button"
+                                android:tint="@color/black_3"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"/>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="12dp"
+                        android:background="@color/gray_2" />
+
+
+
+                    <LinearLayout
+                        android:id="@+id/c1_presiden_images_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2. Model C1-DPR RI"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:textSize="14sp"
+                            android:textColor="@color/black_3"
+                            android:layout_toLeftOf="@id/add_c1_dpr_ri_button"
+                            android:layout_toStartOf="@id/add_c1_dpr_ri_button"
+                            android:layout_centerVertical="true"/>
+
+                        <LinearLayout
+                            android:id="@+id/add_c1_dpr_ri_button"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/circle_background_accent"
+                            android:gravity="center"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginStart="12dp"
+                            android:foreground="?selectableItemBackground">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_add"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:id="@+id/c1_dpr_ri_images_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3. Model C1-DPD"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:textSize="14sp"
+                            android:textColor="@color/black_3"
+                            android:layout_toLeftOf="@id/add_c1_dpd_button"
+                            android:layout_toStartOf="@id/add_c1_dpd_button"
+                            android:layout_centerVertical="true"/>
+
+                        <LinearLayout
+                            android:id="@+id/add_c1_dpd_button"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/circle_background_accent"
+                            android:gravity="center"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginStart="12dp"
+                            android:foreground="?selectableItemBackground">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_add"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:id="@+id/c1_dpd_images_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4. Model C1-DPRD Provinsi"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:textSize="14sp"
+                            android:textColor="@color/black_3"
+                            android:layout_toLeftOf="@id/add_c1_dprd_provinsi_button"
+                            android:layout_toStartOf="@id/add_c1_dprd_provinsi_button"
+                            android:layout_centerVertical="true"/>
+
+                        <LinearLayout
+                            android:id="@+id/add_c1_dprd_provinsi_button"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/circle_background_accent"
+                            android:gravity="center"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginStart="12dp"
+                            android:foreground="?selectableItemBackground">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_add"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:id="@+id/c1_dprd_provinsi_images_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5. Model C1-DPRD Kabupaten/Kota"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:textSize="14sp"
+                            android:textColor="@color/black_3"
+                            android:layout_toLeftOf="@id/add_c1_dprd_kabupaten_button"
+                            android:layout_toStartOf="@id/add_c1_dprd_kabupaten_button"
+                            android:layout_centerVertical="true"/>
+
+                        <LinearLayout
+                            android:id="@+id/add_c1_dprd_kabupaten_button"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/circle_background_accent"
+                            android:gravity="center"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginStart="12dp"
+                            android:foreground="?selectableItemBackground">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_add"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:id="@+id/c1_dprd_kabupaten_images_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="7. Suasana TPS"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:fontFamily="@font/bw_modelica_bold"
+                            android:textSize="14sp"
+                            android:textColor="@color/black_3"
+                            android:layout_toLeftOf="@id/add_tps_images_button"
+                            android:layout_toStartOf="@id/add_tps_images_button"
+                            android:layout_centerVertical="true"/>
+
+                        <LinearLayout
+                            android:id="@+id/add_tps_images_button"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/circle_background_accent"
+                            android:gravity="center"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginStart="12dp"
+                            android:foreground="?selectableItemBackground">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_add"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/upload_suasana_tps_hint"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="10sp"
+                        android:textColor="@color/gray_5"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:id="@+id/tps_images_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:id="@+id/save_button"
+            android:background="@color/gray_2"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:foreground="?selectableItemBackground"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/lato_bold"
+                android:text="Simpan"
+                android:textAllCaps="true"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

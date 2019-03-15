@@ -68,7 +68,7 @@ class LaporFragment : BaseFragment<LaporPresenter>(), LaporView {
 
             override fun onClickBanner(banner: BannerInfo) {
                 startActivityForResult(
-                    BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.EXTRA_TYPE_LAPOR, banner
+                    BannerInfoActivity.setIntent(requireContext(), banner
                     ), PantauConstants.RequestCode.RC_BANNER_LAPOR)
             }
         }

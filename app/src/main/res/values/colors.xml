@@ -55,4 +55,7 @@
     <color name="yellowAlpha">#00f6b42a</color>
     <color name="yellow_dark">#f49422</color>
     <color name="yellow_light">#f9d65c</color>
+    <color name="cream">#fef8e3</color>
+    <color name="paslon_1_color">#9b0012</color>
+    <color name="paslon_2_color">#f2771d</color>
 </resources>
