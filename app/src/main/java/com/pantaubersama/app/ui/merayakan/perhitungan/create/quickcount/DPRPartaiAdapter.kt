@@ -39,8 +39,8 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                     realCount.candidates.forEachIndexed { k, candidateDb ->
                         partyFromAdapter.candidates.forEachIndexed { l, candidateData ->
                             if (candidateData.id == candidateDb.id) {
-                                candidateCounts.add(candidateData.candidateCount)
                                 candidateData.candidateCount = candidateDb.totalVote
+                                candidateCounts.add(candidateData.candidateCount)
                             }
                         }
                     }
@@ -87,8 +87,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                     }
                     item.partyCount = it
                     item.allCandidateCount = candidateCounts.sum()
-                    val allCount = item.partyCount + item.allCandidateCount
-                    item.totalCount = allCount
+                    item.totalCount = item.partyCount + item.allCandidateCount
                     party_votes_count.text = item.totalCount.toString()
                 }
                 .doOnError {

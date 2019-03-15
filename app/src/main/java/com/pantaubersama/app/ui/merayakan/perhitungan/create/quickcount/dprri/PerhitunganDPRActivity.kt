@@ -111,6 +111,66 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
             }
             .subscribe()
 
+        RxTextView.textChanges(invalid_vote_count)
+            .skipInitialValue()
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext { noVote ->
+                val newCount = noVote + if (valid_vote_count.text.isNotEmpty()) {
+                    valid_vote_count.text.toString().toInt()
+                } else {
+                    0
+                }
+                all_vote_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
+        RxTextView.textChanges(valid_vote_count)
+            .skipInitialValue()
+            .flatMap {
+                if (it.isEmpty()) {
+                    Observable.just("0")
+                } else {
+                    Observable.just(it)
+                }
+            }
+            .map {
+                it.toString()
+            }
+            .map {
+                it.toInt()
+            }
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .doOnNext { validVote ->
+                val newCount = validVote + if (invalid_vote_count.text.isNotEmpty()) {
+                    invalid_vote_count.text.toString().toInt()
+                } else {
+                    0
+                }
+                all_vote_count.text = newCount.toString()
+            }
+            .doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
+
         save_button.setOnClickListener {
             finish()
         }
@@ -120,12 +180,12 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         adapter = DPRPartaiAdapter(rxSchedulers)
         adapter.listener = object : DPRPartaiAdapter.Listener {
             override fun saveRealCount(items: MutableList<CandidateData>) {
-                val allCounts: MutableList<Int> = ArrayList()
-                items.forEachIndexed { index, candidateData ->
-                    allCounts.add(candidateData.totalCount)
-                }
                 try {
-                    valid_vote_count.text = allCounts.sum().toString()
+                    val allValidCounts: MutableList<Int> = ArrayList()
+                    adapter.getListData().forEachIndexed { index, candidateData ->
+                        allValidCounts.add((candidateData as CandidateData).totalCount)
+                    }
+                    valid_vote_count.text = allValidCounts.sum().toString()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
