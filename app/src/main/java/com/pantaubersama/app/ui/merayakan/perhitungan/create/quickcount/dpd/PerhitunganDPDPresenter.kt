@@ -1,17 +1,45 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd
 
 import com.pantaubersama.app.base.BasePresenter
-import com.pantaubersama.app.data.model.kandidat.CandidateData
+import com.pantaubersama.app.data.interactors.RealCountInteractor
+import com.pantaubersama.app.data.model.tps.TPS
 import javax.inject.Inject
 
-class PerhitunganDPDPresenter @Inject constructor() : BasePresenter<PerhitunganDPDView>() {
-    fun getDPDData() {
-        val candidate1: MutableList<CandidateData> = ArrayList()
-        candidate1.add(CandidateData("Anwar", 1))
-        candidate1.add(CandidateData("Jalu", 2))
-        candidate1.add(CandidateData("Supardi B.A", 3))
-        candidate1.add(CandidateData("Suryono B.A", 4))
-        candidate1.add(CandidateData("Saerah Supandi", 5))
-        view?.bindData(candidate1)
+class PerhitunganDPDPresenter @Inject constructor(
+    private val realCountInteractor: RealCountInteractor
+) : BasePresenter<PerhitunganDPDView>() {
+    fun getDPDData(tps: TPS, realCountType: String) {
+        view?.showLoading()
+        disposables.add(
+            realCountInteractor.getDapil(tps, realCountType)
+                .subscribe(
+                    { dapil ->
+                        view?.bindDapilData(dapil)
+                        disposables.add(
+                            realCountInteractor.getRealCountList(dapil.id, realCountType)
+                                .subscribe(
+                                    {
+                                        if (it.size != 0) {
+                                            view?.dismissLoading()
+                                            view?.bindCandidates(it[0].candidates)
+                                        } else {
+                                            view?.showEmptyRealCountList()
+                                        }
+                                    },
+                                    {
+                                        view?.dismissLoading()
+                                        view?.showError(it)
+                                        view?.showGetRealCountListFailedAlert()
+                                    }
+                                )
+                        )
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showError(it)
+                        view?.showGetDapilFailedAlert()
+                    }
+                )
+        )
     }
 }

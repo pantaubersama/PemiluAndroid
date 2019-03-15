@@ -192,7 +192,11 @@ class RealCountInteractor @Inject constructor(
                         tpsId,
                         realCountType,
                         candidates,
-                        invalidVote ?: 0,
+                        if (invalidVote != null) {
+                            invalidVote
+                        } else {
+                            0
+                        },
                         parties)
                 )
             }

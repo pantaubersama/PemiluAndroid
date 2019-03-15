@@ -133,7 +133,10 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
                 startActivity(intent)
             }
             dpd_counter_action -> {
-                startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPDActivity::class.java))
+                val intent = Intent(this@PerhitunganMainActivity, PerhitunganDPDActivity::class.java)
+                intent.putExtra(PantauConstants.Merayakan.TPS_DATA, tps)
+                intent.putExtra(PantauConstants.Merayakan.REAL_COUNT_TYPE, "dpd")
+                startActivity(intent)
             }
             dpd_c1_action -> {
                 val intent = Intent(this@PerhitunganMainActivity, C1FormActivity::class.java)

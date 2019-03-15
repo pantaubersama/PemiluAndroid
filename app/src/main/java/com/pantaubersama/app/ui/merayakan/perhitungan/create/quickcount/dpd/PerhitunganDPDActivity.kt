@@ -3,13 +3,18 @@ package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.data.model.kandidat.CandidateData
+import com.pantaubersama.app.data.model.tps.Dapil
+import com.pantaubersama.app.data.model.tps.TPS
+import com.pantaubersama.app.data.model.tps.candidate.Candidate
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.DPRCandidateAdapter
+import com.pantaubersama.app.utils.PantauConstants.Merayakan.REAL_COUNT_TYPE
+import com.pantaubersama.app.utils.PantauConstants.Merayakan.TPS_DATA
 import com.pantaubersama.app.utils.RxSchedulers
 import kotlinx.android.synthetic.main.activity_perhitungan_dpd.*
 import javax.inject.Inject
@@ -23,6 +28,9 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
     @Inject
     lateinit var rxSchedulers: RxSchedulers
 
+    private var tps: TPS? = null
+    private var realCountType: String? = null
+
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
@@ -35,10 +43,19 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
         return R.layout.activity_perhitungan_dpd
     }
 
+    override fun fetchIntentExtra() {
+        tps = intent.getSerializableExtra(TPS_DATA) as TPS
+        realCountType = intent.getStringExtra(REAL_COUNT_TYPE)
+    }
+
     override fun setupUI(savedInstanceState: Bundle?) {
-        setupToolbar(true, "DPR RI", R.color.white, 4f)
+        setupToolbar(true, "DPD", R.color.white, 4f)
         setupDPDList()
-        presenter.getDPDData()
+        tps?.let {
+            realCountType?.let { type ->
+                presenter.getDPDData(it, type)
+            }
+        }
         no_vote_inc_button.setOnClickListener {
             val count = no_vote_count_field.text.toString().toInt()
             no_vote_count_field.setText(count.plus(1).toString())
@@ -54,16 +71,35 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
         dpd_list.adapter = adapter
     }
 
-    override fun bindData(candidates: MutableList<CandidateData>) {
+    override fun bindCandidates(candidates: MutableList<Candidate>) {
         adapter.setDatas(candidates as MutableList<ItemModel>)
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progress_bar.visibility = View.VISIBLE
+        failed_alert.visibility = View.GONE
+        empty_alert.visibility = View.GONE
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progress_bar.visibility = View.GONE
+    }
+
+    override fun bindDapilData(dapil: Dapil) {
+        dapil_name.text = "Dapil: ${dapil.nama}"
+    }
+
+    override fun showGetDapilFailedAlert() {
+        failed_alert.visibility = View.VISIBLE
+    }
+    override fun showGetRealCountListFailedAlert() {
+        failed_alert.visibility = View.VISIBLE
+        empty_alert.visibility = View.GONE
+    }
+
+    override fun showEmptyRealCountList() {
+        failed_alert.visibility = View.GONE
+        empty_alert.visibility = View.VISIBLE
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
