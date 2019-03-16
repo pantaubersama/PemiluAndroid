@@ -51,6 +51,17 @@ interface WordStadiumAPI {
     @PUT("word_stadium/v1/challenges/open/ask_as_opponent")
     fun askAsOpponent(@Field("id") challengeId: String): Completable
 
+    @FormUrlEncoded
+    @PUT("word_stadium/v1/challenges/direct/approve")
+    fun putApproveDirect(@Field("id") challengeId: String): Completable
+
+    @FormUrlEncoded
+    @PUT("word_stadium/v1/challenges/direct/reject")
+    fun putRejectDirect(
+        @Field("id") challengeId: String,
+        @Field("reason_rejected") resonRejected: String
+    ): Completable
+
     @GET("word_stadium/v1/challenges/{id}")
     fun getChallengeItem(@Path("id") id: String): Single<ChallengeItemResponse>
 

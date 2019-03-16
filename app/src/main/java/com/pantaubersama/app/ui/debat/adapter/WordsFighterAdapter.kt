@@ -2,8 +2,6 @@ package com.pantaubersama.app.ui.debat.adapter
 
 import android.animation.ValueAnimator
 import android.graphics.ColorFilter
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -75,7 +73,7 @@ class WordsFighterAdapter(val isMyChallenge: Boolean = false) : BaseRecyclerAdap
                 } else {
                     lottie_clap.progress = 0f
                     cl_btn_clap.isEnabled = true
-                    cl_btn_clap.setOnClickListener {if (!animator.isRunning) onClapClicked(item) }
+                    cl_btn_clap.setOnClickListener { if (!animator.isRunning) onClapClicked(item) }
                 }
             }
 

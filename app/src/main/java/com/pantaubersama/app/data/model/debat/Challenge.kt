@@ -55,7 +55,9 @@ data class Challenge(
     @SerializedName("topic_list")
     val topicList: List<String>,
     @SerializedName("type")
-    val type: String
+    val type: String,
+    @SerializedName("reason_rejected")
+    val reasonRejected: String?
 ) : ItemModel, Serializable {
 
     override fun getType(): Int = PantauConstants.ItemModel.TYPE_CHALLENGE_ITEM

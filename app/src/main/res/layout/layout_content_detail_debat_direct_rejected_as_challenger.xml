@@ -58,7 +58,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/lato_regular"
         android:textSize="12sp"
-        android:text="Maafkan aku harus menolakmu kali ini. Pada tanggal dan jam
+        tools:text="Maafkan aku harus menolakmu kali ini. Pada tanggal dan jam
 itu aku unavailable. Kalau masih ingin berdebat denganku,
 tolong pilih hari lain. Saya sarankan, sehari setelahnya."
         android:textColor="@color/black_1"
