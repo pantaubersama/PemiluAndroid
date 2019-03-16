@@ -66,7 +66,8 @@ class PartaiFragment : BaseFragment<PartaiPresenter>(), PartaiView {
             "",
             null,
             "Belum menentukan pilihan",
-            parties.size + 1
+            parties.size + 1,
+            null
         )
         parties.add(noParty)
         partaiAdapter.setDatas(parties)

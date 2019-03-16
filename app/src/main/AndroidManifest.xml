@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.pantaubersama.app">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -24,6 +26,19 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
+        <activity android:name=".ui.merayakan.perhitungan.create.c1.C1FormActivity"></activity>
+        <activity android:name=".ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity" />
+        <activity android:name=".ui.merayakan.rekapitulasi.detailtps.DetailTPSActivity" />
+        <activity android:name=".ui.merayakan.rekapitulasi.tpslist.TPSListActivity" />
+        <activity android:name=".ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerahActivity" />
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprdkabupaten.PerhitunganDPRDKabupatenActivity" />
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprdprovinsi.PerhitunganDPRDProvinsiActivity" />
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity" />
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRActivity" />
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity" />
+        <activity android:name=".ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity" />
+        <activity android:name=".ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity" />
+        <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity" />
         <activity android:name=".ui.debat.detail.DetailDebatActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -39,7 +54,6 @@
         <activity
             android:name=".ui.notification.NotifActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity" />
         <activity android:name=".ui.wordstadium.challenge.direct.DirectChallengeActivity" />
         <activity android:name=".ui.wordstadium.challenge.open.PromoteChallengeActivity" />
         <activity

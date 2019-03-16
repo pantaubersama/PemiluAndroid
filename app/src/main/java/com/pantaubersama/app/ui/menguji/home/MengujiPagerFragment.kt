@@ -128,7 +128,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         tv_banner_text.text = bannerInfo.body
         iv_banner_image.loadUrl(bannerInfo.headerImage?.url, R.drawable.ic_dummy_word_stadium)
         rl_banner_container.setOnClickListener {
-            startActivity(BannerInfoActivity.setIntent(requireContext(), 0, bannerInfo))
+            startActivity(BannerInfoActivity.setIntent(requireContext(), bannerInfo))
         }
     }
 

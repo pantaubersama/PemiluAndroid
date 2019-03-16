@@ -8,6 +8,7 @@ import com.pantaubersama.app.data.local.SharedPref
 import com.pantaubersama.app.data.model.cluster.Category
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.data.model.partai.PoliticalParty
+import com.pantaubersama.app.data.model.tps.Province
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.utils.PantauConstants
@@ -66,6 +67,9 @@ class DataCache(context: Context) : SharedPref(context) {
         const val LAPOR_USER_FILTER_SEARCH = "lapor_user_filter_search"
         const val LAPOR_PARTY_FILTER = "lapor_party_filter"
         const val LAPOR_PARTY_FILTER_SEARCH = "lapor_party_filter_search"
+
+        const val PROVINCES = "provinces"
+        const val IS_SANDBOX_CREATED = "is_sandbox_created"
     }
 
     override fun prefId(): String {
@@ -335,5 +339,25 @@ class DataCache(context: Context) : SharedPref(context) {
         } else {
             PantauConstants.TanyaKandidat.Filter.ByVotes.TRENDING
         }
+    }
+
+    fun saveProvinces(provinces: MutableList<Province>) {
+        putString(PROVINCES, gson.toJson(provinces))
+    }
+
+    fun getProvinces(): MutableList<Province>? {
+        return if ((gson.fromJson(getString(PROVINCES), object : TypeToken<MutableList<Province>>() {}.type) as MutableList<Province>?) != null) {
+            gson.fromJson(getString(PROVINCES), object : TypeToken<MutableList<Province>>() {}.type)
+        } else {
+            null
+        }
+    }
+
+    fun isSandboxCreated(): Boolean {
+        return getBoolean(IS_SANDBOX_CREATED)
+    }
+
+    fun setCreatedSandbox() {
+        return putBoolean(IS_SANDBOX_CREATED, true)
     }
 }

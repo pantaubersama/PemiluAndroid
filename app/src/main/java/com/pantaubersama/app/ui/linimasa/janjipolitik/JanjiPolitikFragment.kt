@@ -18,7 +18,6 @@ import com.pantaubersama.app.ui.linimasa.janjipolitik.detail.DetailJanjiPolitikA
 import com.pantaubersama.app.ui.widget.DeleteConfimationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.CopyUtil
-import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_ITEM_POSITION
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_CREATE_JANPOL
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_JANPOL
@@ -82,7 +81,7 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         adapter.listener = object : JanjiPolitikAdapter.AdapterListener {
 
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivity(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.EXTRA_TYPE_JANPOL, bannerInfo))
+                startActivity(BannerInfoActivity.setIntent(requireContext(), bannerInfo))
             }
 
             override fun onClickJanPolContent(item: JanjiPolitik, position: Int) {

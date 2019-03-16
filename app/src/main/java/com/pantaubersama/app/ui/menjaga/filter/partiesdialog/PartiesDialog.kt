@@ -91,7 +91,7 @@ class PartiesDialog : BaseDialogFragment<PartiesDialogPresenter>(), PartiesDialo
 
     override fun showPartai(parties: MutableList<PoliticalParty>) {
         recycler_view.visibleIf(true)
-        parties.add(0, PoliticalParty("", null, getString(R.string.txt_semua_partai), 0))
+        parties.add(0, PoliticalParty("", null, getString(R.string.txt_semua_partai), 0, null))
         adapter.setDatas(parties)
     }
 

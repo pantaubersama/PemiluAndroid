@@ -1,0 +1,1482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pantaubersama.app.ui.merayakan.perhitungan.create.c1.C1FormActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <include layout="@layout/layout_toolbar_light"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:layout_above="@id/save_button">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@color/gray_2"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/c1_short_hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/c1_form_presiden_hint"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/lato_regular"
+                        android:textColor="@color/gray_5"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingEnd="16dp"
+                    android:background="@color/orange"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="I. DATA PEMILIH dan DATA PENGGUNA HAK PILIH"
+                    android:fontFamily="@font/lato_bold"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingEnd="16dp"
+                    android:background="@color/gray_3"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="A. DATA PEMILIH"
+                    android:fontFamily="@font/bw_modelica_bold"
+                    android:textColor="@color/black_3"
+                    android:textSize="12sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1. Jumlah Pemilih dalam DPT (Model A.3-KPU)"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Laki-laki (L)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/dpt_a3_kpu_l_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="L"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perempuan (P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/dpt_a3_kpu_p_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="P"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Jumlah (L+P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/dpt_a3_kpu_total_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:text="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2. Jumlah Pemilih dalam DPTb (Model A-4 KPU)"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Laki-laki (L)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/dpt_b_a4_kpu_l_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="L"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perempuan (P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/dpt_b_a4_kpu_p_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="P"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Jumlah (L+P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/dpt_b_a4_kpu_total_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:text="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3. Jumlah Pemilih dalam DPK ( Model A.DPK-KPU)"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Laki-laki (L)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/dpk_a_kpu_l_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="L"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perempuan (P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/dpk_a_kpu_p_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="P"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Jumlah (L+P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/dpk_a_kpu_l_total_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:text="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4. Jumlah Pemilih (A.1 + A.2 + A.3)"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Laki-laki (L)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/pemilih_a1_a2_a3_l_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:text="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perempuan (P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/pemilih_a1_a2_a3_p_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:text="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Jumlah (L+P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/pemilih_a1_a2_a3_total_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:text="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingEnd="16dp"
+                    android:background="@color/gray_3"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="B PENGGUNA HAK PILIH"
+                    android:fontFamily="@font/bw_modelica_bold"
+                    android:textColor="@color/black_3"
+                    android:textSize="12sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1. Jumlah pengguna hak pilih dalam DPT (Model C7.DPT-KPU)"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Laki-laki (L)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/dpt_c7_l_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="L"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perempuan (P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/dpt_c7_p_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="P"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Jumlah (L+P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/dpt_c7_total_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2. Jumlah pengguna hak pilih dalam DPTb (Model C7.DPTb-KPU)"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Laki-laki (L)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/dpt_b_c7_l_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="L"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perempuan (P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/dpt_b_c7_p_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="P"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Jumlah (L+P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/dpt_b_c7_total_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3. Jumlah pengguna hak pilih dalam DPK (Model C7.DPK-KPU)"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Laki-laki (L)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/dpk_c7_l_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="L"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perempuan (P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/dpk_c7_p_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="P"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Jumlah (L+P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/dpk_c7_total_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4. Jumlah Pemilih (A.1 + A.2 + A.3)"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Laki-laki (L)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/hak_pilih_a1_a2_a3_l_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perempuan (P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/hak_pilih_a1_a2_a3_p_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Jumlah (L+P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/hak_pilih_a1_a2_a3_total_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingEnd="16dp"
+                    android:background="@color/orange"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="II. DATA PEMILIH DISABILITAS"
+                    android:fontFamily="@font/lato_bold"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1. Jumlah seluruh Pemilih disabilitas terdaftar dalam DPT, DPTb dan DPK"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Laki-laki (L)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/disabilitas_l_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="L"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perempuan (P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/disabilitas_p_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="P"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Jumlah (L+P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/disabilitas_total_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2. Jumlah seluruh Pemilih disabilitas yang menggunakan hak pilih
+"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Laki-laki (L)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/disabilitas_l_voted_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="L"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perempuan (P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <EditText
+                                android:id="@+id/disabilitas_p_voted_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_c1_background"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="P"
+                                android:inputType="number"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Jumlah (L+P)"
+                                android:fontFamily="@font/lato_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray_4"/>
+
+                            <TextView
+                                android:id="@+id/disabilitas_total_voted_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_cream"
+                                android:padding="12dp"
+                                android:layout_marginTop="8dp"
+                                android:hint="0"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/black_3"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingEnd="16dp"
+                    android:background="@color/orange"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="III. DATA PENGGUNAAN SURAT SUARA"
+                    android:fontFamily="@font/lato_bold"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_gravity="center_vertical"
+                        android:text="1. Jumlah surat suara yang diterima, termasuk surat suara cadangan 2% dari DPT (2+3+4)"
+                        android:textColor="@color/black_3"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/accepted_documents_count"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_cream"
+                        android:padding="12dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:text="0"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="14sp"
+                        android:textColor="@color/black_3"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="2. Jumlah surat suara yang dikembalikan oleh pemilik karena rusak/keliru coblos"
+                        android:textColor="@color/black_3"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <EditText
+                        android:id="@+id/rejected_documents_count"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_c1_background"
+                        android:padding="12dp"
+                        android:inputType="number"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="14sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/black_3"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="3. Jumlah surat suara yang tidak digunakan/tidak terpakai, termasuk sisa surat suara cadangan"
+                        android:textColor="@color/black_3"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <EditText
+                        android:id="@+id/unused_documents_count"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_c1_background"
+                        android:padding="12dp"
+                        android:inputType="number"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="14sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/black_3"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="4. Jumlah surat suara yang digunakan"
+                        android:textColor="@color/black_3"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/bw_modelica_bold"
+                        android:textSize="12sp"/>
+
+                    <EditText
+                        android:id="@+id/used_documents_count"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_c1_background"
+                        android:padding="12dp"
+                        android:inputType="number"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="14sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/black_3"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:id="@+id/save_button"
+            android:background="@color/gray_2"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:foreground="?selectableItemBackground"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/lato_bold"
+                android:text="Simpan"
+                android:textAllCaps="true"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

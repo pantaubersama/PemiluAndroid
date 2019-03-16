@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pantaubersama.app.ui.quickcount.QuickCountFragment">
+    tools:context="com.pantaubersama.app.ui.merayakan.MerayakanFragment">
 
     <include layout="@layout/layout_coming_soon"/>
 
