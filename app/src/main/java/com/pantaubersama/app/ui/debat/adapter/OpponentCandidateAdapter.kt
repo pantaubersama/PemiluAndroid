@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.item_debat_participant.*
  * @author edityomurti on 04/03/2019 15:56
  */
 
-class OpponentCandidateAdapter(var showConfirmButton: Boolean = false) : BaseRecyclerAdapter() {
+class OpponentCandidateAdapter(var showConfirmButton: Boolean = false, var enableButton: Boolean = true) : BaseRecyclerAdapter() {
 
     lateinit var listener: AdapterListener
 
@@ -40,6 +40,7 @@ class OpponentCandidateAdapter(var showConfirmButton: Boolean = false) : BaseRec
                 btn_confirm.setOnClickListener {
                     listener.onClickConfirm(item)
                 }
+                btn_confirm.isEnabled = enableButton
             }
         }
     }

@@ -25,6 +25,7 @@ import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
 import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.debat.TerimaChallengeDialog
+import com.pantaubersama.app.ui.debat.TolakChallengeDialog
 import com.pantaubersama.app.ui.debat.adapter.OpponentCandidateAdapter
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
 import com.pantaubersama.app.ui.widget.PreviewWebViewClient
@@ -121,8 +122,15 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     private fun setupHeader() {
-        tv_toolbar_title.text = challenge?.status
-        cl_clap_count.visibleIf(challenge?.status == Status.DONE)
+        tv_toolbar_title.text = if (challenge?.status == Status.DONE) {
+            Status.DONE
+        } else {
+            when (challenge?.type) {
+                ChallengeConstants.Type.OPEN_CHALLENGE -> Status.OPEN_CHALLENGE
+                ChallengeConstants.Type.DIRECT_CHALLENGE -> Status.DIRECT_CHALLENGE
+                else -> ""
+            }
+        }
         tv_denied_debat.visibleIf(challenge?.status in arrayOf(Status.DENIED, Status.EXPIRED))
         tv_denied_debat.apply { if (isVisible()) text = challenge?.status }
 
@@ -130,7 +138,8 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         iv_avatar_challenger.loadUrl(challenge?.challenger?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
         tv_username_challenger.text = "@${challenge?.challenger?.username}"
 
-        val showAvatarOpponent = challenge?.progress != Progress.WAITING_OPPONENT && challenge?.status !in arrayOf(Status.DENIED, Status.EXPIRED)
+        val opponent = challenge?.opponent ?: challenge?.opponentCandidates?.firstOrNull()
+        val showAvatarOpponent = opponent != null && challenge?.status !in arrayOf(Status.DENIED, Status.EXPIRED)
         iv_avatar_opponent.visibleIf(showAvatarOpponent)
         ll_text_opponent.visibleIf(challenge?.opponent != null)
         if (ll_text_opponent.isVisible()) {
@@ -205,6 +214,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         }
     }
 
+    /* TODO: UBAH JADI FRAGMENT */
     private fun setupContent() {
         ll_content_detail_debat.apply {
             if (childCount > 2) {
@@ -215,10 +225,12 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
             Status.COMING_SOON -> onComingSoon()
             Status.DONE -> onDone()
             Status.OPEN_CHALLENGE -> onOpenChallenge()
+            Status.DIRECT_CHALLENGE -> onDirectChallenge()
+            Status.DENIED -> onDenied()
+            Status.EXPIRED -> onExpired()
         }
     }
 
-    /* TODO: UBAH JADI FRAGMENT */
     private fun setupDetail() {
         ll_content_detail_debat.addView(inflate(R.layout.layout_detail_debat))
         findViewById<TextView>(R.id.tv_label_detail).text = challenge?.topicList?.firstOrNull()
@@ -246,9 +258,9 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
         tv_title_detail.text = challenge?.statement
 
-        cl_opponent_detail.visibleIf(challenge?.opponent != null)
+        cl_opponent_detail.visibleIf(challenge?.opponent != null || challenge?.type == ChallengeConstants.Type.DIRECT_CHALLENGE)
         if (cl_opponent_detail.isVisible()) {
-            val opponent = challenge?.opponent
+            val opponent = challenge?.opponent ?: challenge?.opponentCandidates?.first()
             iv_opponent_avatar.loadUrl(opponent?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
             tv_opponent_name.text = opponent?.fullName
             tv_opponent_username.text = "@${opponent?.username}"
@@ -309,7 +321,15 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     private fun onDone() {
+        val challenger = challenge?.challenger
+        val opponent = challenge?.opponent
+
         ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_done))
+        findViewById<RoundedImageView>(R.id.iv_avatar_challenger_content).loadUrl(challenger?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+
+        findViewById<RoundedImageView>(R.id.iv_avatar_opponent_content).loadUrl(opponent?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+
+        findViewById<MaterialButton>(R.id.btn_lihat_debat).setOnClickListener {  }
     }
 
     private fun onOpenChallenge() {
@@ -337,12 +357,12 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
                 setupOpponentCandidateList()
             } else {
                 ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_open_accept_confirmation_as_opponent))
+                val message = spannable {
+                    + "Kamu akan menerima tantangan dari "
+                    textColor(color(R.color.black)) { +"@${challenge?.challenger?.username} " }
+                    + "untuk berdebat sesuai dengan detail yang tertera. Tindakan ini tidak bisa dibatalkan. Apakah kamu yakin?"
+                }.toCharSequence()
                 findViewById<MaterialButton>(R.id.btn_terima).setOnClickListener {
-                    val message = spannable {
-                        + "Kamu akan menerima tantangan dari "
-                        textColor(color(R.color.black)) { +"@${challenge?.challenger?.username} " }
-                        + "untuk berdebat sesuai dengan detail yang tertera. Tindakan ini tidak bisa dibatalkan. Apakah kamu yakin?"
-                    }.toCharSequence()
                     TerimaChallengeDialog(this@DetailDebatActivity, message,
                         "YA",
                         object : TerimaChallengeDialog.DialogListener {
@@ -355,8 +375,59 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         }
     }
 
+    private fun onDirectChallenge() {
+        if (challenge?.opponentCandidates?.first()?.userId == presenter.getMyProfile().id) {
+            ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_direct_accept_confirmation_as_opponent))
+            val message = spannable {
+                + "Kamu akan menerima Direct Challenge dari "
+                textColor(color(R.color.black)) { +"@${challenge?.challenger?.username} " }
+                + "untuk berdebat"
+            }.toCharSequence()
+            findViewById<MaterialButton>(R.id.btn_terima).setOnClickListener {
+                TerimaChallengeDialog(this@DetailDebatActivity, message,
+                    listener = object : TerimaChallengeDialog.DialogListener {
+                        override fun onClickTerima() {
+                            challenge?.id?.let { presenter.approveDirect(it) }
+                        }
+                    }).show()
+            }
+            findViewById<MaterialButton>(R.id.btn_tolak).setOnClickListener {
+                TolakChallengeDialog(this@DetailDebatActivity, challenge?.challenger?.username,
+                    object : TolakChallengeDialog.DialogListener {
+                        override fun onClickTolak(reason: String) {
+                            challenge?.id?.let { presenter.rejectDirect(it, reason) }
+                        }
+                    }).show()
+            }
+        } else {
+            ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_direct_waiting_confirmation))
+            val opponent = challenge?.opponentCandidates?.first()
+            findViewById<TextView>(R.id.tv_content_subtitle).text = "${opponent?.fullName ?: opponent?.username} mengkonfirmasi tantangan"
+        }
+    }
+
+    private fun onDenied() {
+        ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_direct_rejected))
+        val opponent = challenge?.opponentCandidates?.first()
+        findViewById<RoundedImageView>(R.id.iv_avatar).loadUrl(opponent?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+        findViewById<TextView>(R.id.tv_name).text = opponent?.fullName
+        findViewById<TextView>(R.id.tv_username).text = opponent?.username
+        findViewById<TextView>(R.id.tv_content_reject_description)
+            .text = challenge?.reasonRejected
+            ?: "${challenge?.opponentCandidates?.first()?.fullName} tidak menulis alasan/pernyataan"
+    }
+
+    private fun onExpired() {
+        if (challenge?.type == ChallengeConstants.Type.OPEN_CHALLENGE) {
+            ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_open_expired))
+            setupOpponentCandidateList()
+        } else {
+            ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_open_expired))
+        }
+    }
+
     private fun setupOpponentCandidateList() {
-        val adapter = OpponentCandidateAdapter(isMyChallenge)
+        val adapter = OpponentCandidateAdapter(isMyChallenge, challenge?.status != Status.EXPIRED)
         val recycler_view = findViewById<RecyclerView>(R.id.recycler_view)
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
@@ -417,14 +488,40 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun showLoadingApproveDirect() {
+        showProgressDialog()
+    }
+
+    override fun dismissLoadingApproveDirect() {
+        dismissProgressDialog()
+    }
+
+    override fun onSuccessApproveDirect() {
+        reloadChallenge()
+    }
+
+    override fun onErrorApproveDirect(t: Throwable) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showLoadingRejectDirect() {
+        showProgressDialog()
+    }
+
+    override fun dismissLoadingRejectDirect() {
+        dismissProgressDialog()
+    }
+
+    override fun onSuccessRejectDirect() {
+        reloadChallenge()
+    }
+
+    override fun onErrorRejectDirect(t: Throwable) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private fun reloadChallenge() {
-//        challengeId?.let {
-//            finish()
-//            startActivity(DetailDebatActivity.setIntent(this, it))
-//        }
         challenge = null
-//        setContentView(R.layout.activity_detail_debat)
-//        window.decorView.findViewById<ViewGroup>(android.R.id.content).invalidate()
         setupUI(savedInstanceState)
     }
 }

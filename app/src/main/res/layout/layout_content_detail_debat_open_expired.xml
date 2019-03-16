@@ -6,9 +6,7 @@
     android:layout_height="wrap_content"
     android:padding="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <ImageView
-        android:id="@+id/iv_content_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitCenter"
@@ -18,12 +16,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintDimensionRatio="1:0.8"
         tools:ignore="ContentDescription" />
-
     <TextView
         android:id="@+id/tv_content_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tantangan ditolak,"
+        android:text="Tantangan tidak valid."
         android:textSize="24dp"
         android:textColor="@color/black_2"
         android:fontFamily="@font/bw_modelica_light"
@@ -34,7 +31,7 @@
         android:id="@+id/tv_content_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="lawan debat tidak menerima tantangan ini :("
+        android:text="Tantangan melebihi batas waktu :("
         android:textSize="24dp"
         android:textColor="@color/red"
         android:fontFamily="@font/bw_modelica_bold"
@@ -42,26 +39,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <include layout="@layout/item_debat_participant"
-        android:id="@+id/item_debat_participant"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="-16dp"
-        android:layout_marginEnd="-16dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_content_subtitle"/>
+        android:layout_marginTop="40dp"
+        tools:listitem="@layout/item_debat_participant"
+        app:layout_constraintTop_toBottomOf="@id/tv_content_subtitle">
 
-    <TextView
-        android:id="@+id/tv_content_reject_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/lato_regular"
-        android:textSize="12sp"
-        android:text="Maafkan aku harus menolakmu kali ini. Pada tanggal dan jam
-itu aku unavailable. Kalau masih ingin berdebat denganku,
-tolong pilih hari lain. Saya sarankan, sehari setelahnya."
-        android:textColor="@color/black_1"
-        app:layout_constraintTop_toBottomOf="@id/item_debat_participant"/>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -80,4 +80,34 @@ class DetailDebatPresenter @Inject constructor(
                 }
             )
     }
+
+    fun approveDirect(challengeId: String) {
+        view?.showLoadingApproveDirect()
+        disposables += wordStadiumInteractor.approveDirect(challengeId)
+            .doOnEvent { view?.dismissLoadingApproveDirect() }
+            .subscribe(
+                {
+                    view?.onSuccessApproveDirect()
+                },
+                {
+                    view?.showError(it)
+                    view?.onErrorApproveDirect(it)
+                }
+            )
+    }
+
+    fun rejectDirect(challengeId: String, reason: String) {
+        view?.showLoadingRejectDirect()
+        disposables += wordStadiumInteractor.rejectDirect(challengeId, reason)
+            .doOnEvent { view?.dismissLoadingRejectDirect() }
+            .subscribe(
+                {
+                    view?.onSuccessRejectDirect()
+                },
+                {
+                    view?.showError(it)
+                    view?.onErrorRejectDirect(it)
+                }
+            )
+    }
 }
