@@ -396,7 +396,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     private fun onDenied() {
-        ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_direct_rejected_as_challenger))
+        ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_direct_rejected))
         val opponent = challenge?.opponentCandidates?.first()
         findViewById<RoundedImageView>(R.id.iv_avatar).loadUrl(opponent?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
         findViewById<TextView>(R.id.tv_name).text = opponent?.fullName
@@ -408,13 +408,15 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
     private fun onExpired() {
         if (challenge?.type == ChallengeConstants.Type.OPEN_CHALLENGE) {
-//            ll_content_detail_debat.addView(inflate(R.layout.expire))
+            ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_open_expired))
+            setupOpponentCandidateList()
         } else {
+            ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_open_expired))
         }
     }
 
     private fun setupOpponentCandidateList() {
-        val adapter = OpponentCandidateAdapter(isMyChallenge)
+        val adapter = OpponentCandidateAdapter(isMyChallenge, challenge?.status != Status.EXPIRED)
         val recycler_view = findViewById<RecyclerView>(R.id.recycler_view)
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
