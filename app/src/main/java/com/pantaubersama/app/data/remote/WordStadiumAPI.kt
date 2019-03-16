@@ -73,4 +73,8 @@ interface WordStadiumAPI {
         @Field("challenge_id") challengeId: String,
         @Field("words") words: String
     ): Single<WordItemResponse>
+
+    @FormUrlEncoded
+    @PUT("word_stadium/v1/words/clap")
+    fun putWordsClap(@Field("word_id") wordId: String): Completable
 }

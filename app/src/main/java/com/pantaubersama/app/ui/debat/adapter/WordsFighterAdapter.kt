@@ -1,10 +1,18 @@
 package com.pantaubersama.app.ui.debat.adapter
 
+import android.animation.ValueAnimator
+import android.graphics.ColorFilter
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.SimpleColorFilter
+import com.airbnb.lottie.model.KeyPath
+import com.airbnb.lottie.value.LottieValueCallback
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
@@ -27,7 +35,7 @@ import kotlinx.android.synthetic.main.item_words_challenger.*
 /**
  * @author edityomurti on 24/02/2019 19:48
  */
-class WordsFighterAdapter : BaseRecyclerAdapter() {
+class WordsFighterAdapter(val isMyChallenge: Boolean = false) : BaseRecyclerAdapter() {
 
     lateinit var recyclerView: RecyclerView
     lateinit var listener: WordsFighterAdapter.AdapterListener
@@ -49,32 +57,48 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
 
     inner class WordFighterViewholder(override val containerView: View)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
+        val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(2000)
         fun bind(item: WordItem) {
             tv_content.text = item.body
             tv_clap_count.text = item.clapCount.toString()
 
-            if (item.isClaped) {
-                iv_clap.setImageResource(R.drawable.ic_clap)
+            if (isMyChallenge) {
+                cl_btn_clap.isEnabled = false
+                val simpleColorFilter = SimpleColorFilter(itemView.context.color(R.color.gray_dark_1))
+                lottie_clap.addValueCallback(KeyPath("**"), LottieProperty.COLOR_FILTER, LottieValueCallback<ColorFilter>(simpleColorFilter))
             } else {
-                iv_clap.setImageResource(R.drawable.ic_appreciate_default)
+                if (item.isClap) {
+                    lottie_clap.progress = 1f
+                    // unclap disabled @edityo 15/3/19
+                    cl_btn_clap.isEnabled = false
+                    cl_btn_clap.setOnClickListener(null)
+                } else {
+                    lottie_clap.progress = 0f
+                    cl_btn_clap.isEnabled = true
+                    cl_btn_clap.setOnClickListener {if (!animator.isRunning) onClapClicked(item) }
+                }
             }
-            cl_btn_clap.setOnClickListener { onClapClicked(item) }
 
             tv_posted_time.text = item.createdAt.parseDate("HH:mm")
-            tv_read_estimation.text = "Estimasi baca ${item.readTime.let { if (it > 1f) it else "<1"}} menit"
+            tv_read_estimation.text = "Estimasi baca ${item.readTime.let { if (it >= 1f) it else "<1"}} menit"
         }
 
         private fun onClapClicked(item: WordItem) {
-            val initialClapState = item.isClaped
-            item.isClaped = !item.isClaped
+            val initialClapState = item.isClap
+            item.isClap = !item.isClap
             if (initialClapState) {
                 item.clapCount -= 1
-//                iv_clap.setImageResource(R.drawable.ic_appreciate_pressed_yellow)
+                lottie_clap.progress = 0f
             } else {
                 item.clapCount += 1
-//                iv_clap.setImageResource(R.drawable.ic_appreciate_default)
+                animator.addUpdateListener { animation ->
+                    lottie_clap.progress = animation.animatedValue as Float
+                }
+                animator.start()
+                cl_btn_clap.isEnabled = false
+                listener.onClickClap(item)
             }
-            notifyItemChanged(adapterPosition)
+            tv_clap_count.text = item.clapCount.toString()
         }
     }
 
@@ -145,7 +169,7 @@ class WordsFighterAdapter : BaseRecyclerAdapter() {
     }
 
     interface AdapterListener {
-        fun onClickClap()
+        fun onClickClap(words: WordItem)
         fun onWordsInputFocused(isFocused: Boolean)
         fun onPublish(words: String)
     }

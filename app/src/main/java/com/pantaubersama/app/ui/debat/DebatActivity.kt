@@ -157,15 +157,15 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     private fun setupDebatList() {
-        wordsFighterAdapter = WordsFighterAdapter()
+        wordsFighterAdapter = WordsFighterAdapter(isMyChallenge)
         val layoutManager = LinearLayoutManager(this)
         layoutManager.reverseLayout = true
         layoutManager.stackFromEnd = true
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = wordsFighterAdapter
         wordsFighterAdapter.listener = object : WordsFighterAdapter.AdapterListener {
-            override fun onClickClap() {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            override fun onClickClap(words: WordItem) {
+                presenter.putWordsClap(words.id)
             }
 
             override fun onWordsInputFocused(isFocused: Boolean) {
@@ -339,6 +339,14 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     override fun onFailedPostWordsAudience(t: Throwable) {
         layout_box_komentar_in.isEnabled = true
         et_comment_main.isEnabled = true
+    }
+
+    override fun onSuccessWordsClap() {
+        // do nothing
+    }
+
+    override fun onErrorWordsClap(t: Throwable) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun updateInputTurn() {

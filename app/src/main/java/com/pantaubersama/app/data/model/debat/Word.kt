@@ -53,7 +53,9 @@ data class WordItem(
     var createdAt: String,
     @SerializedName("author")
     val author: Audience,
-    var isClaped: Boolean = false,
+    @SerializedName("is_clap")
+    var isClap: Boolean = false,
+    @SerializedName("clap_count")
     var clapCount: Int = 0
 ) : ItemModel {
     companion object {

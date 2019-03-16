@@ -26,6 +26,9 @@ interface DebatView : BaseView {
     fun onSuccessPostWordsAudience(wordItem: WordItem)
     fun onFailedPostWordsAudience(t: Throwable)
 
+    fun onSuccessWordsClap()
+    fun onErrorWordsClap(t: Throwable)
+
     fun updateInputTurn()
     fun updateMyTimeLeft()
 }
