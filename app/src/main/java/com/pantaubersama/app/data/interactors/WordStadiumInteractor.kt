@@ -127,6 +127,20 @@ class WordStadiumInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
+    fun approveDirect(challengeId: String): Completable {
+        return apiWrapper.getWordStadiumApi()
+            .putApproveDirect(challengeId)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun rejectDirect(challengeId: String, reasonRejected: String): Completable {
+        return apiWrapper.getWordStadiumApi()
+            .putRejectDirect(challengeId, reasonRejected)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
     fun getChallengeItem(id: String): Single<Challenge> {
         return apiWrapper.getWordStadiumApi()
             .getChallengeItem(id)

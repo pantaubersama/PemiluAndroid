@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,7 +14,7 @@
         android:id="@+id/iv_avatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/ava_calon_1"
+        tools:src="@drawable/ava_calon_1"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -39,7 +40,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="14sp"
-            android:text="Raja Kampret"
+            tools:text="Raja Kampret"
             android:fontFamily="@font/lato_bold"
             android:textColor="@color/black_2"/>
 
@@ -50,7 +51,7 @@
             android:maxLength="18"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text=" @raja_kampret"
+            tools:text=" @raja_kampret"
             android:textSize="11sp"
             android:fontFamily="@font/lato_regular"
             android:textColor="@color/gray_11"/>

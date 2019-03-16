@@ -25,4 +25,14 @@ interface DetailDebatView : BaseView {
     fun dismissLoadingAskAsOpponent()
     fun onSuccessAskAsOpponent()
     fun onErrorAskAsOpponent(t: Throwable)
+
+    fun showLoadingApproveDirect()
+    fun dismissLoadingApproveDirect()
+    fun onSuccessApproveDirect()
+    fun onErrorApproveDirect(t: Throwable)
+
+    fun showLoadingRejectDirect()
+    fun dismissLoadingRejectDirect()
+    fun onSuccessRejectDirect()
+    fun onErrorRejectDirect(t: Throwable)
 }
