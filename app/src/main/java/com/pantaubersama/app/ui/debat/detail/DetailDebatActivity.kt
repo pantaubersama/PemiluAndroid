@@ -24,6 +24,7 @@ import com.pantaubersama.app.data.model.debat.ChallengeConstants.Progress
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
 import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.debat.DebatActivity
 import com.pantaubersama.app.ui.debat.TerimaChallengeDialog
 import com.pantaubersama.app.ui.debat.TolakChallengeDialog
 import com.pantaubersama.app.ui.debat.adapter.OpponentCandidateAdapter
@@ -329,7 +330,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
         findViewById<RoundedImageView>(R.id.iv_avatar_opponent_content).loadUrl(opponent?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
 
-        findViewById<MaterialButton>(R.id.btn_lihat_debat).setOnClickListener {  }
+        findViewById<MaterialButton>(R.id.btn_lihat_debat).setOnClickListener { challenge?.let { startActivity(DebatActivity.setIntent(this, it)) } }
     }
 
     private fun onOpenChallenge() {

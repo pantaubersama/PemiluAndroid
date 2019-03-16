@@ -147,13 +147,14 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
 
         tv_title.text = challenge.statement
 
-        if (isMyChallenge) {
+        if (isMyChallenge && !isDone) {
             rl_sisa_waktu.visibleIf(true)
             tv_sisa_waktu.text = "menghitung.. menit"
         }
 
         if (isDone) {
             tv_toolbar_title.text = "Result"
+            tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
             cl_clap_count.visibleIf(true)
         }
     }
@@ -236,7 +237,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     override fun onEmptyWordsFighter() {
-        if (!isMyChallenge) view_empty_state.enableLottie(true, lottie_empty_state) else recycler_view.visibleIf(true)
+        if (!isMyChallenge || isDone) view_empty_state.enableLottie(true, lottie_empty_state) else recycler_view.visibleIf(true)
         if (view_empty_state.isVisible()) {
             val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 4f)
             layoutParams.marginStart = dip(70)
@@ -279,7 +280,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     override fun onEmptyWordsAudience() {
-        if (isMyChallenge) {
+        if (isMyChallenge || isDone) {
             et_comment_main.setText("Belum ada komentar")
             et_comment_main.inputType = InputType.TYPE_NULL
             iv_avatar_comment_main.setImageDrawable(null)
@@ -291,7 +292,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     override fun onErrorGetWordsAudience(t: Throwable) {
-        if (isMyChallenge) {
+        if (isMyChallenge || isDone) {
             et_comment_main.setText("Gagal memuat komentar")
             et_comment_main.inputType = InputType.TYPE_NULL
             iv_avatar_comment_main.setImageDrawable(null)
@@ -303,7 +304,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     override fun showLoadingKomentar() {
-        if (isMyChallenge) {
+        if (isMyChallenge || isDone) {
             progress_bar_comment_main.visibleIf(true)
             et_comment_main.visibleIf(false, true)
             iv_avatar_comment_main.visibleIf(false, true)
@@ -315,7 +316,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     override fun dismissLoadingKomentar() {
-        if (isMyChallenge) {
+        if (isMyChallenge || isDone) {
             progress_bar_comment_main.visibleIf(false)
             et_comment_main.visibleIf(true)
         }
@@ -397,7 +398,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
 
     override fun updateMyTimeLeft() {
         runOnUiThread {
-            if (isMyChallenge) {
+            if (isMyChallenge && !isDone) {
                 tv_sisa_waktu.text = if (wordsFighterAdapter.itemCount > 1) {
                     "${wordsFighterAdapter.getMyTimeLeft(myRole)} MENIT"
                 } else "${challenge.timeLimit} MENIT"
@@ -429,7 +430,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
             if (!recycler_view_komentar.isVisible()) recycler_view_komentar.visibleIf(true)
             komentarAdapter.addItem(word)
 
-            if (isMyChallenge) {
+            if (isMyChallenge || isDone) {
                 val commentPreviewText = spannable {
                     word.author.fullName?.let { bold { textColor(color(R.color.black_2)) { +it } } }
                     + "  "
@@ -485,7 +486,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
                     val toolbarBackground = TransitionDrawable(arrayOf(toolbar_debat.background, ColorDrawable(ContextCompat.getColor(this, R.color.yellow))))
                     toolbar_debat.background = toolbarBackground.also { it.startTransition(150) }
 
-                    if (isMyChallenge) {
+                    if (isMyChallenge && !isDone) {
                         tv_toolbar_title.text = "${tv_sisa_waktu.text.toString().toLowerCase()} tersisa"
                         tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_saldo_waktu_white_24, 0, 0, 0)
                     }
@@ -499,7 +500,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
                         it.reverseTransition(150)
                     }
 
-                    if (isMyChallenge) {
+                    if (isMyChallenge && !isDone) {
                         tv_toolbar_title.text = getString(R.string.live_now)
                         tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_debat_live, 0, 0, 0)
                     }
@@ -684,7 +685,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     private fun invalidateToolbar() {
-        if (isMyChallenge) {
+        if (isMyChallenge && !isDone) {
             if (!isMainToolbarShown) {
                 tv_toolbar_title.text = "${tv_sisa_waktu.text.toString().toLowerCase()} tersisa"
                 tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_saldo_waktu_white_24, 0, 0, 0)
@@ -715,7 +716,9 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
 
         presenter.setOnGotNewWordsListener(this)
 
-        enableJumpingDots()
+        if (!isDone) {
+            enableJumpingDots()
+        }
 
         topicList.forEach {
             FirebaseMessaging.getInstance().subscribeToTopic(it)
@@ -733,7 +736,9 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     override fun onPause() {
         presenter.setOnGotNewWordsListener(null)
 
-        enableJumpingDots(false)
+        if (!isDone) {
+            enableJumpingDots(false)
+        }
 
         topicList.forEach {
             FirebaseMessaging.getInstance().unsubscribeFromTopic(it)
