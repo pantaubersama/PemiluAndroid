@@ -26,6 +26,7 @@ import com.makeramen.roundedimageview.RoundedImageView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.debat.Challenge
+import com.pantaubersama.app.data.model.debat.ChallengeConstants
 import com.pantaubersama.app.data.model.debat.WordItem
 import com.pantaubersama.app.data.model.debat.WordInputItem
 import com.pantaubersama.app.data.remote.exception.ErrorException
@@ -90,6 +91,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     private val isMyChallenge by unSyncLazy {
         presenter.getMyProfile().id in arrayOf(challenge.challenger.userId, challenge.opponent?.userId)
     }
+    private val isDone by unSyncLazy { challenge.status == ChallengeConstants.Status.DONE }
     private val myRole by unSyncLazy {
         when (presenter.getMyProfile().id) {
             challenge.challenger.userId -> Role.CHALLENGER
@@ -148,6 +150,11 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
         if (isMyChallenge) {
             rl_sisa_waktu.visibleIf(true)
             tv_sisa_waktu.text = "menghitung.. menit"
+        }
+
+        if (isDone) {
+            tv_toolbar_title.text = "Result"
+            cl_clap_count.visibleIf(true)
         }
     }
 
@@ -254,7 +261,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     override fun showKomentar(komentarList: MutableList<WordItem>) {
         recycler_view_komentar.visibleIf(true)
         komentarAdapter.setDatas(komentarList)
-        if (isMyChallenge) {
+        if (isMyChallenge || isDone) {
             val commentPreviewText = spannable {
                 komentarList.last().author.fullName?.let { bold { textColor(color(R.color.black_2)) { +it } } }
                 + "  "
@@ -350,36 +357,42 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     override fun updateInputTurn() {
-        var turnActorRole =
-            if (!wordsFighterAdapter.itemCount.isOdd()) {
-                Role.CHALLENGER } else Role.OPPONENT
+        if (!isDone) {
+            var turnActorRole =
+                if (!wordsFighterAdapter.itemCount.isOdd()) {
+                    Role.CHALLENGER } else Role.OPPONENT
 
-        isMyTurn = myRole == turnActorRole
+            isMyTurn = myRole == turnActorRole
 
-        if (isMyChallenge) {
-            if ((wordsFighterAdapter.itemCount == 0 || wordsFighterAdapter.get(0) !is WordInputItem)) {
-                showWordsInputBox()
-            } else {
-                turnActorRole = if (turnActorRole == Role.CHALLENGER) {
-                    Role.OPPONENT
+            if (isMyChallenge) {
+                if ((wordsFighterAdapter.itemCount == 0 || wordsFighterAdapter.get(0) !is WordInputItem)) {
+                    showWordsInputBox()
                 } else {
-                    Role.CHALLENGER
+                    turnActorRole = if (turnActorRole == Role.CHALLENGER) {
+                        Role.OPPONENT
+                    } else {
+                        Role.CHALLENGER
+                    }
+
+                    isMyTurn = myRole == turnActorRole
+                    wordsFighterAdapter.clearInputMessage(isMyTurn)
                 }
-
-                isMyTurn = myRole == turnActorRole
-                wordsFighterAdapter.clearInputMessage(isMyTurn)
             }
+
+            val turnActorName = when (turnActorRole) {
+                myRole -> "Kamu"
+                Role.CHALLENGER -> challenge.challenger.fullName
+                Role.OPPONENT -> challenge.opponent?.fullName
+                else -> throw ErrorException("unknown turnActorRole $turnActorRole")
+            }
+
+            tv_status_debat.text = "Giliran $turnActorName menulis argumen "
+            enableJumpingDots(true)
+        } else {
+            enableJumpingDots(false)
+            tv_status_debat.text = "Debat sudah selesai"
         }
 
-        val turnActorName = when (turnActorRole) {
-            myRole -> "Kamu"
-            Role.CHALLENGER -> challenge.challenger.fullName
-            Role.OPPONENT -> challenge.opponent?.fullName
-            else -> throw ErrorException("unknown turnActorRole $turnActorRole")
-        }
-
-        tv_status_debat.text = "Giliran $turnActorName menulis argumen "
-        enableJumpingDots(true)
     }
 
     override fun updateMyTimeLeft() {
@@ -543,8 +556,8 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
         /**
          * Komentar Main Layout behaviour
          */
-        layout_box_komentar_in.visibleIf(!isMyChallenge)
-        if (isMyChallenge) {
+        layout_box_komentar_in.visibleIf(!isMyChallenge && !isDone)
+        if (isMyChallenge || isDone) {
             et_comment_main.isFocusable = false
         } else {
             getString(R.string.tulis_komentar).apply {
@@ -688,7 +701,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     private fun enableJumpingDots(enable: Boolean = true) {
-        if (enable && tv_status_debat.text.isNotEmpty()) {
+        if (enable && tv_status_debat.text.isNotEmpty() && !isDone) {
             jumpingBeans = JumpingBeans.with(tv_status_debat)
                 .appendJumpingDots()
                 .build()
