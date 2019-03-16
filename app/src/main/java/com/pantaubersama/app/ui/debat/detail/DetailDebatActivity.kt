@@ -122,12 +122,15 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     private fun setupHeader() {
-        tv_toolbar_title.text = when (challenge?.type) {
-            ChallengeConstants.Type.OPEN_CHALLENGE -> Status.OPEN_CHALLENGE
-            ChallengeConstants.Type.DIRECT_CHALLENGE -> Status.DIRECT_CHALLENGE
-            else -> ""
+        tv_toolbar_title.text = if (challenge?.status == Status.DONE) {
+            Status.DONE
+        } else {
+            when (challenge?.type) {
+                ChallengeConstants.Type.OPEN_CHALLENGE -> Status.OPEN_CHALLENGE
+                ChallengeConstants.Type.DIRECT_CHALLENGE -> Status.DIRECT_CHALLENGE
+                else -> ""
+            }
         }
-        cl_clap_count.visibleIf(challenge?.status == Status.DONE)
         tv_denied_debat.visibleIf(challenge?.status in arrayOf(Status.DENIED, Status.EXPIRED))
         tv_denied_debat.apply { if (isVisible()) text = challenge?.status }
 
@@ -318,7 +321,15 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     private fun onDone() {
+        val challenger = challenge?.challenger
+        val opponent = challenge?.opponent
+
         ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_done))
+        findViewById<RoundedImageView>(R.id.iv_avatar_challenger_content).loadUrl(challenger?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+
+        findViewById<RoundedImageView>(R.id.iv_avatar_opponent_content).loadUrl(opponent?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+
+        findViewById<MaterialButton>(R.id.btn_lihat_debat).setOnClickListener {  }
     }
 
     private fun onOpenChallenge() {
