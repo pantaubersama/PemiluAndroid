@@ -72,17 +72,17 @@ class MessageSortedAdapter : SortedAdapter<WordItem>() {
             tv_content.text = item.body
             tv_clap_count.text = item.clapCount.toString()
 
-            if (item.isClaped) {
-                iv_clap.setImageResource(R.drawable.ic_clap)
+            if (item.isClap) {
+//                iv_clap.setImageResource(R.drawable.ic_clap)
             } else {
-                iv_clap.setImageResource(R.drawable.ic_appreciate_default)
+//                iv_clap.setImageResource(R.drawable.ic_appreciate_default)
             }
             cl_btn_clap.setOnClickListener { onClapClicked(item) }
         }
 
         fun onClapClicked(item: WordItem) {
-            val initialClapState = item.isClaped
-            item.isClaped = !item.isClaped
+            val initialClapState = item.isClap
+            item.isClap = !item.isClap
             if (initialClapState) {
                 item.clapCount -= 1
 //                iv_clap.setImageResource(R.drawable.ic_appreciate_pressed_yellow)

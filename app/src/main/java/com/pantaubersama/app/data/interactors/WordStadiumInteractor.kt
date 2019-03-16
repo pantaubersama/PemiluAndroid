@@ -173,5 +173,14 @@ class WordStadiumInteractor @Inject constructor(
 
     fun handleWords(wordItem: WordItem): Completable {
         return wordsPNHandler.handleWordsPN(wordItem)
+//            .observeOn(rxSchedulers.io())
+//            .subscribeOn(rxSchedulers.mainThread())
+    }
+
+    fun putWordsClap(wordId: String): Completable {
+        return apiWrapper.getWordStadiumApi()
+            .putWordsClap(wordId)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
     }
 }

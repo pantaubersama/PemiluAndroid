@@ -95,8 +95,9 @@ fun LottieAnimationView.enableLottie(enable: Boolean, isGoneOnDisable: Boolean =
 
 fun View.enableLottie(enable: Boolean, lottieView: LottieAnimationView, hideOrShowContainer: Boolean = true, looping: Boolean = true) {
     if (enable) {
+        lottieView.enableMergePathsForKitKatAndAbove(true)
         lottieView.playAnimation()
-        lottieView.repeatCount = if (looping) LottieDrawable.INFINITE else 1
+        lottieView.repeatCount = if (looping) LottieDrawable.INFINITE else 0
     } else {
         lottieView.cancelAnimation()
     }

@@ -88,4 +88,17 @@ class DebatPresenter @Inject constructor(
     fun setOnGotNewWordsListener(onGotNewWordsListener: WordsPNHandler.OnGotNewWordsListener?) {
         wordStadiumInteractor.setOnGotNewWordsListener(onGotNewWordsListener)
     }
+
+    fun putWordsClap(wordId: String) {
+        disposables += wordStadiumInteractor.putWordsClap(wordId)
+            .subscribe(
+                {
+                    view?.onSuccessWordsClap()
+                },
+                {
+//                    view?.showError(it)
+                    view?.onErrorWordsClap(it)
+                }
+            )
+    }
 }

@@ -218,6 +218,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         }
     }
 
+    /* TODO: UBAH JADI FRAGMENT */
     private fun setupDetail() {
         ll_content_detail_debat.addView(inflate(R.layout.layout_detail_debat))
         findViewById<TextView>(R.id.tv_label_detail).text = challenge?.topicList?.firstOrNull()
