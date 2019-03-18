@@ -33,8 +33,11 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
     @Inject
     override lateinit var presenter: UploadDocumentPresenter
     private lateinit var c1PresidenFiles: MutableList<File>
+    private lateinit var c1DprFiles: MutableList<File>
 //    private lateinit var c1PresidenImagesPart: MutableList<MultipartBody.Part>
     private lateinit var c1PresidenAdapter: C1ImagesAdapter
+    private lateinit var c1DprAdapter: C1ImagesAdapter
+    private var uploadType = ""
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -54,6 +57,28 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
             finish()
         }
         setupC1Presiden()
+        setupC1Dpr()
+    }
+
+    private fun setupC1Dpr() {
+        c1DprFiles = ArrayList()
+//        c1PresidenImagesPart = ArrayList()
+        c1DprAdapter = C1ImagesAdapter()
+        c1DprAdapter.listener = object : C1ImagesAdapter.Listener {
+            override fun onClickDelete(item: Image, adapterPosition: Int) {
+                c1DprAdapter.deleteItem(adapterPosition)
+            }
+        }
+        c1_dpr_list.layoutManager = LinearLayoutManager(this@UploadDocumentActivity)
+        c1_dpr_list.adapter = c1DprAdapter
+        add_c1_dpr_ri_button.setOnClickListener {
+            if (c1DprAdapter.getListData().size < 5) {
+                uploadType = "dpr"
+                showImageChooserDialog()
+            } else {
+                ToastUtil.show(this@UploadDocumentActivity, "Gambar maksimal 5 item")
+            }
+        }
     }
 
     private fun setupC1Presiden() {
@@ -69,6 +94,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
         c1_presiden_list.adapter = c1PresidenAdapter
         add_c1_presiden_button.setOnClickListener {
             if (c1PresidenAdapter.getListData().size < 2) {
+                uploadType = "presiden"
                 showImageChooserDialog()
             } else {
                 ToastUtil.show(this@UploadDocumentActivity, "Gambar maksimal 2 item")
@@ -112,7 +138,10 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 
     private fun openGallery() {
         val intentGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 451)
+        when (uploadType) {
+            "presiden" -> startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 451)
+            "dpr" -> startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 452)
+        }
     }
 
     private fun takeFromCamera() {
@@ -125,8 +154,16 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
         file = File(cacheDir, "image/" + System.currentTimeMillis().toString() + ".jpg")
         intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this@UploadDocumentActivity, BuildConfig.APPLICATION_ID + ".provider", file))
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        startActivityForResult(intent, 351)
-        c1PresidenFiles.add(c1PresidenFiles.size, file)
+        when (uploadType) {
+            "presiden" -> {
+                startActivityForResult(intent, 351)
+                c1PresidenFiles.add(c1PresidenFiles.size, file)
+            }
+            "dpr" -> {
+                startActivityForResult(intent, 352)
+                c1DprFiles.add(c1DprFiles.size, file)
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -168,6 +205,45 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                        }
                         c1PresidenAdapter.addItem(
+                            Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity)) as ItemModel
+                        )
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                } else {
+                    ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
+                }
+            }
+            if (requestCode == 352) {
+                try {
+                    ImageUtil.compressImage(this, c1DprFiles[c1DprFiles.size - 1], 2, object : ImageUtil.CompressorListener {
+                        override fun onSuccess(file: File) {
+//                            proceedCamera(file)?.let {
+//                                c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
+//                            }
+                            c1DprAdapter.addItem(Image(file) as ItemModel)
+                        }
+
+                        override fun onFailed(throwable: Throwable) {
+                            showError(throwable)
+                            dismissProgressDialog()
+                        }
+                    })
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    dismissProgressDialog()
+                    ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
+                }
+            } else if (requestCode == 452) {
+                if (data != null) {
+                    try {
+//                        proceedGallery(ImageChooserTools.proccedImageFromStorage(
+//                            data,
+//                            this@UploadDocumentActivity
+//                        ))?.let {
+//                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
+//                        }
+                        c1DprAdapter.addItem(
                             Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity)) as ItemModel
                         )
                     } catch (e: Exception) {
