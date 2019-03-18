@@ -62,12 +62,17 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
         c1PresidenAdapter = C1ImagesAdapter()
         c1PresidenAdapter.listener = object : C1ImagesAdapter.Listener {
             override fun onClickDelete(item: Image, adapterPosition: Int) {
+                c1PresidenAdapter.deleteItem(adapterPosition)
             }
         }
         c1_presiden_list.layoutManager = LinearLayoutManager(this@UploadDocumentActivity)
         c1_presiden_list.adapter = c1PresidenAdapter
         add_c1_presiden_button.setOnClickListener {
-            showImageChooserDialog()
+            if (c1PresidenAdapter.getListData().size < 2) {
+                showImageChooserDialog()
+            } else {
+                ToastUtil.show(this@UploadDocumentActivity, "Gambar maksimal 2 item")
+            }
         }
     }
 
