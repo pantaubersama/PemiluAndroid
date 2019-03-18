@@ -151,8 +151,12 @@ class CatatanPilihanActivityRevised : BaseActivity<CatatanPilihanPresenter>(), C
             }
         } else {
             if (profile.votePreference != 0) {
-                selectedPaslon = profile.votePreference
-                president_viewpager.currentItem = profile.votePreference - 1
+                profile.votePreference?.let {
+                    selectedPaslon = it
+                }
+                profile.votePreference?.let {
+                    president_viewpager.currentItem = it - 1
+                }
             } else {
                 president_viewpager.currentItem = imageArray.size
             }

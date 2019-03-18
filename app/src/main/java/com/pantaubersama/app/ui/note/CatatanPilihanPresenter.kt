@@ -38,7 +38,7 @@ class CatatanPilihanPresenter @Inject constructor(
             profileInteractor.getMyTendency()
                 .subscribe(
                     {
-                        view?.bindMyTendency(it, profileInteractor.getProfile().name)
+                        profileInteractor.getProfile().fullName?.let { it1 -> view?.bindMyTendency(it, it1) }
                     },
                     {
                         view?.showError(it)
