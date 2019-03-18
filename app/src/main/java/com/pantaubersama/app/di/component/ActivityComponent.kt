@@ -34,9 +34,7 @@ import com.pantaubersama.app.ui.merayakan.rekapitulasi.home.RekapitulasiFragment
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerahActivity
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.detailtps.DetailTPSActivity
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.tpslist.TPSListActivity
-import com.pantaubersama.app.ui.note.CatatanPilihanActivity
-import com.pantaubersama.app.ui.note.partai.PartaiFragment
-import com.pantaubersama.app.ui.note.presiden.PresidenFragment
+import com.pantaubersama.app.ui.note.CatatanPilihanActivityRevised
 import com.pantaubersama.app.ui.notification.NotifActivity
 import com.pantaubersama.app.ui.onboarding.OnboardingActivity
 import com.pantaubersama.app.ui.penpol.kuis.detail.DetailKuisActivity
@@ -130,8 +128,6 @@ interface ActivityComponent {
     fun inject(panduanKomunitasActivity: PanduanKomunitasActivity)
     fun inject(profileJanjiPolitikFragment: ProfileJanjiPolitikFragment)
     fun inject(profileTanyaKandidatFragment: ProfileTanyaKandidatFragment)
-    fun inject(presidenFragment: PresidenFragment)
-    fun inject(catatanPilihanActivity: CatatanPilihanActivity)
     fun inject(detailTanyaKandidatActivity: DetailTanyaKandidatActivity)
     fun inject(detailKuisActivity: DetailKuisActivity)
     fun inject(detailBadgeActivity: DetailBadgeActivity)
@@ -148,7 +144,6 @@ interface ActivityComponent {
     fun inject(searchQuestionFragment: SearchQuestionFragment)
     fun inject(searchQuizFragment: SearchQuizFragment)
     fun inject(filterOrangActivity: FilterOrangActivity)
-    fun inject(partaiFragment: PartaiFragment)
     fun inject(clusterDetailActivity: ClusterDetailActivity)
     fun inject(laporFragment: LaporFragment)
     fun inject(laporFilterActivity: LaporFilterActivity)
@@ -176,4 +171,5 @@ interface ActivityComponent {
     fun inject(previewChallengeActivity: PreviewChallengeActivity)
     fun inject(detailDebatDialogFragment: DetailDebatDialogFragment)
     fun inject(c1FormActivity: C1FormActivity)
+    fun inject(catatanPilihanActivityRevised: CatatanPilihanActivityRevised)
 }

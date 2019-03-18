@@ -26,19 +26,28 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ui.merayakan.perhitungan.create.c1.C1FormActivity"></activity>
-        <activity android:name=".ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity" />
-        <activity android:name=".ui.merayakan.rekapitulasi.detailtps.DetailTPSActivity" />
-        <activity android:name=".ui.merayakan.rekapitulasi.tpslist.TPSListActivity" />
-        <activity android:name=".ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerahActivity" />
-        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprdkabupaten.PerhitunganDPRDKabupatenActivity" />
-        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprdprovinsi.PerhitunganDPRDProvinsiActivity" />
-        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity" />
-        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRActivity" />
-        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity" />
-        <activity android:name=".ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity" />
-        <activity android:name=".ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity" />
-        <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity" />
+        <activity android:name=".ui.merayakan.perhitungan.create.c1.C1FormActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.rekapitulasi.detailtps.DetailTPSActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.rekapitulasi.tpslist.TPSListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerahActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.debat.detail.DetailDebatActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -48,6 +57,8 @@
         <activity
             android:name=".ui.wordstadium.challenge.open.OpenChallengeActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.note.CatatanPilihanActivityRevised"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.wordstadium.challenge.CreateChallengeActivity"
             android:screenOrientation="portrait" />
@@ -219,7 +230,7 @@
         <activity
             android:name=".ui.penpol.tanyakandidat.create.CreateTanyaKandidatActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.linimasa.pilpres.filter.FilterPilpresActivity"
             android:screenOrientation="portrait" />
@@ -305,9 +316,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.connect.ConnectActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.note.CatatanPilihanActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.cluster.invite.UndangAnggotaActivity"
