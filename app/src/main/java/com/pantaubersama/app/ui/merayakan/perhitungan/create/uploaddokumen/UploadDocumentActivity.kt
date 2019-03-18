@@ -36,11 +36,13 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
     private lateinit var c1DprFiles: MutableList<File>
     private lateinit var c1DpdFiles: MutableList<File>
     private lateinit var c1DprdProvFiles: MutableList<File>
+    private lateinit var c1DprdKabFiles: MutableList<File>
 //    private lateinit var c1PresidenImagesPart: MutableList<MultipartBody.Part>
     private lateinit var c1PresidenAdapter: C1ImagesAdapter
     private lateinit var c1DprAdapter: C1ImagesAdapter
     private lateinit var c1DpdAdapter: C1ImagesAdapter
     private lateinit var c1DprdProvAdapter: C1ImagesAdapter
+    private lateinit var c1DprdKabAdapter: C1ImagesAdapter
     private var uploadType = ""
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -64,6 +66,28 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
         setupC1Dpr()
         setupC1Dpd()
         setupC1DprdProv()
+        setupC1DprdKab()
+    }
+
+    private fun setupC1DprdKab() {
+        c1DprdKabFiles = ArrayList()
+//        c1PresidenImagesPart = ArrayList()
+        c1DprdKabAdapter = C1ImagesAdapter()
+        c1DprdKabAdapter.listener = object : C1ImagesAdapter.Listener {
+            override fun onClickDelete(item: Image, adapterPosition: Int) {
+                c1DprdKabAdapter.deleteItem(adapterPosition)
+            }
+        }
+        c1_dprd_kab_list.layoutManager = LinearLayoutManager(this@UploadDocumentActivity)
+        c1_dprd_kab_list.adapter = c1DprdKabAdapter
+        add_c1_dprd_kabupaten_button.setOnClickListener {
+            if (c1DprdKabAdapter.getListData().size < 5) {
+                uploadType = "dprd_kab"
+                showImageChooserDialog()
+            } else {
+                ToastUtil.show(this@UploadDocumentActivity, "Gambar maksimal 5 item")
+            }
+        }
     }
 
     private fun setupC1DprdProv() {
@@ -191,6 +215,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
             "dpr" -> startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 452)
             "dpd" -> startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 453)
             "dprd_prov" -> startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 454)
+            "dprd_kab" -> startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 455)
         }
     }
 
@@ -220,6 +245,10 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
             "dprd_prov" -> {
                 startActivityForResult(intent, 354)
                 c1DprdProvFiles.add(c1DprdProvFiles.size, file)
+            }
+            "dprd_kab" -> {
+                startActivityForResult(intent, 355)
+                c1DprdKabFiles.add(c1DprdKabFiles.size, file)
             }
         }
     }
@@ -272,7 +301,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
                     ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
                 }
             }
-            if (requestCode == 352) {
+             else if (requestCode == 352) {
                 try {
                     ImageUtil.compressImage(this, c1DprFiles[c1DprFiles.size - 1], 2, object : ImageUtil.CompressorListener {
                         override fun onSuccess(file: File) {
@@ -311,7 +340,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
                     ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
                 }
             }
-            if (requestCode == 353) {
+            else if (requestCode == 353) {
                 try {
                     ImageUtil.compressImage(this, c1DpdFiles[c1DpdFiles.size - 1], 2, object : ImageUtil.CompressorListener {
                         override fun onSuccess(file: File) {
@@ -350,7 +379,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
                     ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
                 }
             }
-            if (requestCode == 354) {
+            else if (requestCode == 354) {
                 try {
                     ImageUtil.compressImage(this, c1DprdProvFiles[c1DprdProvFiles.size - 1], 2, object : ImageUtil.CompressorListener {
                         override fun onSuccess(file: File) {
@@ -380,6 +409,45 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                        }
                         c1DprdProvAdapter.addItem(
+                            Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity)) as ItemModel
+                        )
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                } else {
+                    ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
+                }
+            }
+            else if (requestCode == 355) {
+                try {
+                    ImageUtil.compressImage(this, c1DprdKabFiles[c1DprdKabFiles.size - 1], 2, object : ImageUtil.CompressorListener {
+                        override fun onSuccess(file: File) {
+//                            proceedCamera(file)?.let {
+//                                c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
+//                            }
+                            c1DprdKabAdapter.addItem(Image(file) as ItemModel)
+                        }
+
+                        override fun onFailed(throwable: Throwable) {
+                            showError(throwable)
+                            dismissProgressDialog()
+                        }
+                    })
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    dismissProgressDialog()
+                    ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
+                }
+            } else if (requestCode == 455) {
+                if (data != null) {
+                    try {
+//                        proceedGallery(ImageChooserTools.proccedImageFromStorage(
+//                            data,
+//                            this@UploadDocumentActivity
+//                        ))?.let {
+//                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
+//                        }
+                        c1DprdKabAdapter.addItem(
                             Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity)) as ItemModel
                         )
                     } catch (e: Exception) {
