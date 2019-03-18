@@ -37,12 +37,14 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
     private lateinit var c1DpdFiles: MutableList<File>
     private lateinit var c1DprdProvFiles: MutableList<File>
     private lateinit var c1DprdKabFiles: MutableList<File>
+    private lateinit var suasanaTpsFiles: MutableList<File>
 //    private lateinit var c1PresidenImagesPart: MutableList<MultipartBody.Part>
     private lateinit var c1PresidenAdapter: C1ImagesAdapter
     private lateinit var c1DprAdapter: C1ImagesAdapter
     private lateinit var c1DpdAdapter: C1ImagesAdapter
     private lateinit var c1DprdProvAdapter: C1ImagesAdapter
     private lateinit var c1DprdKabAdapter: C1ImagesAdapter
+    private lateinit var suasanaTpsAdapter: C1ImagesAdapter
     private var uploadType = ""
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -67,6 +69,29 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
         setupC1Dpd()
         setupC1DprdProv()
         setupC1DprdKab()
+        setupSuasanaTps()
+    }
+
+    private fun setupSuasanaTps() {
+        c1_suasana_tps_list
+        suasanaTpsFiles = ArrayList()
+//        c1PresidenImagesPart = ArrayList()
+        suasanaTpsAdapter = C1ImagesAdapter()
+        suasanaTpsAdapter.listener = object : C1ImagesAdapter.Listener {
+            override fun onClickDelete(item: Image, adapterPosition: Int) {
+                suasanaTpsAdapter.deleteItem(adapterPosition)
+            }
+        }
+        c1_suasana_tps_list.layoutManager = LinearLayoutManager(this@UploadDocumentActivity)
+        c1_suasana_tps_list.adapter = suasanaTpsAdapter
+        add_tps_images_button.setOnClickListener {
+            if (suasanaTpsAdapter.getListData().size < 3) {
+                uploadType = "suasana_tps"
+                showImageChooserDialog()
+            } else {
+                ToastUtil.show(this@UploadDocumentActivity, "Gambar maksimal 3 item")
+            }
+        }
     }
 
     private fun setupC1DprdKab() {
@@ -216,6 +241,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
             "dpd" -> startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 453)
             "dprd_prov" -> startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 454)
             "dprd_kab" -> startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 455)
+            "suasana_tps" -> startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 456)
         }
     }
 
@@ -249,6 +275,10 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
             "dprd_kab" -> {
                 startActivityForResult(intent, 355)
                 c1DprdKabFiles.add(c1DprdKabFiles.size, file)
+            }
+            "suasana_tps" -> {
+                startActivityForResult(intent, 356)
+                suasanaTpsFiles.add(suasanaTpsFiles.size, file)
             }
         }
     }
@@ -300,8 +330,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
                 } else {
                     ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
                 }
-            }
-             else if (requestCode == 352) {
+            } else if (requestCode == 352) {
                 try {
                     ImageUtil.compressImage(this, c1DprFiles[c1DprFiles.size - 1], 2, object : ImageUtil.CompressorListener {
                         override fun onSuccess(file: File) {
@@ -339,8 +368,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
                 } else {
                     ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
                 }
-            }
-            else if (requestCode == 353) {
+            } else if (requestCode == 353) {
                 try {
                     ImageUtil.compressImage(this, c1DpdFiles[c1DpdFiles.size - 1], 2, object : ImageUtil.CompressorListener {
                         override fun onSuccess(file: File) {
@@ -378,8 +406,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
                 } else {
                     ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
                 }
-            }
-            else if (requestCode == 354) {
+            } else if (requestCode == 354) {
                 try {
                     ImageUtil.compressImage(this, c1DprdProvFiles[c1DprdProvFiles.size - 1], 2, object : ImageUtil.CompressorListener {
                         override fun onSuccess(file: File) {
@@ -417,8 +444,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
                 } else {
                     ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
                 }
-            }
-            else if (requestCode == 355) {
+            } else if (requestCode == 355) {
                 try {
                     ImageUtil.compressImage(this, c1DprdKabFiles[c1DprdKabFiles.size - 1], 2, object : ImageUtil.CompressorListener {
                         override fun onSuccess(file: File) {
@@ -448,6 +474,44 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                        }
                         c1DprdKabAdapter.addItem(
+                            Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity)) as ItemModel
+                        )
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                } else {
+                    ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
+                }
+            } else if (requestCode == 356) {
+                try {
+                    ImageUtil.compressImage(this, suasanaTpsFiles[suasanaTpsFiles.size - 1], 2, object : ImageUtil.CompressorListener {
+                        override fun onSuccess(file: File) {
+//                            proceedCamera(file)?.let {
+//                                c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
+//                            }
+                            suasanaTpsAdapter.addItem(Image(file) as ItemModel)
+                        }
+
+                        override fun onFailed(throwable: Throwable) {
+                            showError(throwable)
+                            dismissProgressDialog()
+                        }
+                    })
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    dismissProgressDialog()
+                    ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
+                }
+            } else if (requestCode == 456) {
+                if (data != null) {
+                    try {
+//                        proceedGallery(ImageChooserTools.proccedImageFromStorage(
+//                            data,
+//                            this@UploadDocumentActivity
+//                        ))?.let {
+//                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
+//                        }
+                        suasanaTpsAdapter.addItem(
                             Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity)) as ItemModel
                         )
                     } catch (e: Exception) {

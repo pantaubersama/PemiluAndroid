@@ -556,6 +556,28 @@
                     android:background="@color/gray_2" />
 
                 <LinearLayout
+                    android:id="@+id/c1_suasana_tps_images_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/c1_suasana_tps_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false">
+
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_2" />
+
+                <LinearLayout
                     android:id="@+id/tps_images_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
