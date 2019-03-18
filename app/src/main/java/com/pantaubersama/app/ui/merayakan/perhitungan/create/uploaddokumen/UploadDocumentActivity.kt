@@ -34,9 +34,11 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
     override lateinit var presenter: UploadDocumentPresenter
     private lateinit var c1PresidenFiles: MutableList<File>
     private lateinit var c1DprFiles: MutableList<File>
+    private lateinit var c1DpdFiles: MutableList<File>
 //    private lateinit var c1PresidenImagesPart: MutableList<MultipartBody.Part>
     private lateinit var c1PresidenAdapter: C1ImagesAdapter
     private lateinit var c1DprAdapter: C1ImagesAdapter
+    private lateinit var c1DpdAdapter: C1ImagesAdapter
     private var uploadType = ""
 
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -58,6 +60,28 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
         }
         setupC1Presiden()
         setupC1Dpr()
+        setupC1Dpd()
+    }
+
+    private fun setupC1Dpd() {
+        c1DpdFiles = ArrayList()
+//        c1PresidenImagesPart = ArrayList()
+        c1DpdAdapter = C1ImagesAdapter()
+        c1DpdAdapter.listener = object : C1ImagesAdapter.Listener {
+            override fun onClickDelete(item: Image, adapterPosition: Int) {
+                c1DpdAdapter.deleteItem(adapterPosition)
+            }
+        }
+        c1_dpd_list.layoutManager = LinearLayoutManager(this@UploadDocumentActivity)
+        c1_dpd_list.adapter = c1DpdAdapter
+        add_c1_dpd_button.setOnClickListener {
+            if (c1DpdAdapter.getListData().size < 5) {
+                uploadType = "dpd"
+                showImageChooserDialog()
+            } else {
+                ToastUtil.show(this@UploadDocumentActivity, "Gambar maksimal 5 item")
+            }
+        }
     }
 
     private fun setupC1Dpr() {
@@ -141,6 +165,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
         when (uploadType) {
             "presiden" -> startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 451)
             "dpr" -> startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 452)
+            "dpd" -> startActivityForResult(Intent.createChooser(intentGallery, "Pilih"), 453)
         }
     }
 
@@ -162,6 +187,10 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
             "dpr" -> {
                 startActivityForResult(intent, 352)
                 c1DprFiles.add(c1DprFiles.size, file)
+            }
+            "dpd" -> {
+                startActivityForResult(intent, 353)
+                c1DpdFiles.add(c1DpdFiles.size, file)
             }
         }
     }
@@ -244,6 +273,45 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                        }
                         c1DprAdapter.addItem(
+                            Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity)) as ItemModel
+                        )
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                } else {
+                    ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
+                }
+            }
+            if (requestCode == 353) {
+                try {
+                    ImageUtil.compressImage(this, c1DpdFiles[c1DpdFiles.size - 1], 2, object : ImageUtil.CompressorListener {
+                        override fun onSuccess(file: File) {
+//                            proceedCamera(file)?.let {
+//                                c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
+//                            }
+                            c1DpdAdapter.addItem(Image(file) as ItemModel)
+                        }
+
+                        override fun onFailed(throwable: Throwable) {
+                            showError(throwable)
+                            dismissProgressDialog()
+                        }
+                    })
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    dismissProgressDialog()
+                    ToastUtil.show(this@UploadDocumentActivity, getString(R.string.failed_load_image_alert))
+                }
+            } else if (requestCode == 453) {
+                if (data != null) {
+                    try {
+//                        proceedGallery(ImageChooserTools.proccedImageFromStorage(
+//                            data,
+//                            this@UploadDocumentActivity
+//                        ))?.let {
+//                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
+//                        }
+                        c1DpdAdapter.addItem(
                             Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity)) as ItemModel
                         )
                     } catch (e: Exception) {
