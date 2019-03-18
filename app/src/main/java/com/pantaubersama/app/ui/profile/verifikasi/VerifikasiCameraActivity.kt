@@ -25,7 +25,7 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_verification_camera.*
 import okio.Okio
 import java.io.File
-import java.util.*  // ktlint-disable
+import java.util.UUID
 
 class VerifikasiCameraActivity : AppCompatActivity() {
 

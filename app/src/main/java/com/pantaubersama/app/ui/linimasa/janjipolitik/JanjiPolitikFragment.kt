@@ -246,10 +246,10 @@ class JanjiPolitikFragment : BaseFragment<JanjiPolitikPresenter>(), JanjiPolitik
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 RC_CREATE_JANPOL -> {
-//                    if (adapter.get(0) is BannerInfo) {
-//                        adapter.addItem(data?.getSerializableExtra(EXTRA_JANPOL_ITEM) as ItemModel, 1)
+//                    if (presidentAdapter.get(0) is BannerInfo) {
+//                        presidentAdapter.addItem(data?.getSerializableExtra(EXTRA_JANPOL_ITEM) as ItemModel, 1)
 //                    } else {
-//                        adapter.addItem(data?.getSerializableExtra(EXTRA_JANPOL_ITEM) as ItemModel, 0)
+//                        presidentAdapter.addItem(data?.getSerializableExtra(EXTRA_JANPOL_ITEM) as ItemModel, 0)
 //                        scrollToTop(false)
 //                    }
                     getJanjiPolitikList()
