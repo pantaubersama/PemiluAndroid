@@ -56,6 +56,7 @@
             android:theme="@style/AppTheme.ActionBarOverlay" />
         <activity
             android:name=".ui.wordstadium.challenge.open.OpenChallengeActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.note.CatatanPilihanActivityRevised"
             android:screenOrientation="portrait"/>
@@ -65,8 +66,11 @@
         <activity
             android:name=".ui.notification.NotifActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.wordstadium.challenge.direct.DirectChallengeActivity" />
-        <activity android:name=".ui.wordstadium.challenge.open.PromoteChallengeActivity" />
+        <activity android:name=".ui.wordstadium.challenge.direct.DirectChallengeActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.wordstadium.challenge.open.PromoteChallengeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.webview.ChromeTabActivity"
             android:screenOrientation="portrait" />

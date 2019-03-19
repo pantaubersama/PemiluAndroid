@@ -5,10 +5,12 @@ import com.pantaubersama.app.data.interactors.LoginInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.WordStadiumInteractor
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.extensions.parseDate
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.models.User
+import java.util.TimeZone
 import javax.inject.Inject
 
 class PreviewChallengePresenter @Inject constructor(
@@ -36,7 +38,11 @@ class PreviewChallengePresenter @Inject constructor(
                         topicList,
                         statement,
                         statementSource,
-                        showTimeAt,
+                        showTimeAt?.parseDate(
+                            toFormat = "dd-MM-yyyy HH:mm",
+                            fromFormat = "dd-MM-yyyy HH:mm",
+                            toTimeZone = TimeZone.getTimeZone("GMT"),
+                            fromTimeZone = TimeZone.getDefault()),
                         timeLimit,
                         invitationId,
                         screenName

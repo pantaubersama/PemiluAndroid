@@ -18,6 +18,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/open_challenge_next"
