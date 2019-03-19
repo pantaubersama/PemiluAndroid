@@ -68,6 +68,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
 //        }
         upload_container.setOnClickListener(this)
         submit_button.setOnClickListener(this)
+        submitted_button.setOnClickListener(this)
     }
 
     private fun bindData(tps: TPS?) {
@@ -106,6 +107,16 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
                     }
                 }
             }
+        }
+        if (tps?.status == "published") {
+            submit_button.visibility = View.GONE
+            submitted_button.visibility = View.VISIBLE
+        } else if (tps?.status == "draft") {
+            submit_button.visibility = View.VISIBLE
+            submitted_button.visibility = View.GONE
+        } else {
+            submit_button.visibility = View.VISIBLE
+            submitted_button.visibility = View.GONE
         }
     }
 
@@ -182,6 +193,9 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
                     startService(intent)
                     finishSection()
                 }
+            }
+            submitted_button -> {
+                ToastUtil.show(this@PerhitunganMainActivity, "Data Telah Terkirim")
             }
         }
     }

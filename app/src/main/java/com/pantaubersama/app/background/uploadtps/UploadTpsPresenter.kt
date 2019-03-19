@@ -103,8 +103,8 @@ class UploadTpsPresenter @Inject constructor(
 
     private fun uploadImages(apiTpsId: String, dbTpsId: String, imagesUploadType: String) {
         val images = tpsInteractor.getImagesWithType(dbTpsId, imagesUploadType)
-        if (images?.size != 0) {
-            images?.forEachIndexed { i, it ->
+        if (images != null) {
+            images.forEachIndexed { i, it ->
                 disposables.add(
                     tpsInteractor.uploadImage(apiTpsId, imagesUploadType, it.uri)
                         .subscribe(

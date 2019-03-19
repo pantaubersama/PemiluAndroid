@@ -879,21 +879,59 @@
         <RelativeLayout
             android:orientation="vertical"
             android:id="@+id/submit_button"
-            android:background="@color/colorPrimary"
+            android:background="@color/gray_1"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="47dp"
             android:foreground="?selectableItemBackground">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                android:letterSpacing="0.1"
+                android:fontFamily="@font/lato_bold"
+                android:layout_centerInParent="true"
+                android:text="Kirim Data"
+                android:textAllCaps="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:id="@+id/submitted_button"
+            android:background="@color/gray_1"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:foreground="?selectableItemBackground"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check"
+                android:layout_toLeftOf="@id/submitted_button_text"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/submitted_button_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/colorAccent"
                 android:letterSpacing="0.1"
                 android:lineSpacingExtra="3sp"
+                android:fontFamily="@font/lato_bold"
                 android:layout_centerInParent="true"
-                android:text="@string/submit"/>
+                android:text="Submitted"/>
 
         </RelativeLayout>
 

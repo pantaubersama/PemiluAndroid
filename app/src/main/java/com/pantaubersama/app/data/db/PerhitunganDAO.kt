@@ -70,6 +70,9 @@ interface PerhitunganDAO {
 
         @Update
         fun updateC1(c1: C1Form?)
+
+        @Delete
+        fun deleteC1(it: C1Form)
     }
 
     @Dao
@@ -85,5 +88,8 @@ interface PerhitunganDAO {
 
         @Insert
         fun saveImage(imageDoc: ImageDoc)
+
+        @Delete
+        fun deleteImage(it: ImageDoc)
     }
 }
