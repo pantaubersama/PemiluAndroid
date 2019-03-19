@@ -67,6 +67,11 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
             progress < 20 -> "Mengunggah Perhitungan - DPD"
             progress < 25 -> "Mengunggah Perhitungan - DPRD Tingkat Provinsi"
             progress < 30 -> "Mengunggah Perhitungan - DPRD Tingkat Kabupaten"
+            progress < 35 -> "Mengunggah Form C1 - Presiden"
+            progress < 40 -> "Mengunggah Form C1 - DPR RI"
+            progress < 45 -> "Mengunggah Form C1 - DPD"
+            progress < 50 -> "Mengunggah Form C1 - DPRD Tingkat Provinsi"
+            progress < 55 -> "Mengunggah Form C1 - DPRD Tingkat Kabupaten"
             else -> "Berhasil Mengunggah Data TPS"
         }
     }

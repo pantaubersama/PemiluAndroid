@@ -281,4 +281,7 @@ interface PantauAPI {
 
     @PUT("hitung/v1/calculations")
     fun uploadRealCount(@Body presidenBody: RequestBody): Completable
+
+    @PUT("hitung/v1/form_c1")
+    fun uploadC1Form(@Body c1Body: RequestBody): Completable
 }

@@ -16,6 +16,7 @@ import io.reactivex.Single
 import javax.inject.Inject
 import okhttp3.MediaType
 import okhttp3.RequestBody
+import timber.log.Timber
 
 class TPSInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
@@ -282,11 +283,28 @@ class TPSInteractor @Inject constructor(
             .map { it.tpsData.tps }
     }
 
-    fun uploadRealCount(tpsId: String, dbTpsId: String, realCountType: String): Completable {
+    fun uploadRealCount(tpsId: String, dbTpsId: String, realCountType: String): Completable? {
         val realCount = appDB.getRealCountDao().getRealCount(dbTpsId, realCountType)
-        realCount?.hitungRealCountId = tpsId
-        val realCountJson = gson.toJson(realCount)
-        val realCountBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), realCountJson)
-        return apiWrapper.getPantauApi().uploadRealCount(realCountBody)
+        return if (realCount != null) {
+            realCount.hitungRealCountId = tpsId
+            val realCountJson = gson.toJson(realCount)
+            val realCountBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), realCountJson)
+            apiWrapper.getPantauApi().uploadRealCount(realCountBody)
+        } else {
+            null
+        }
+    }
+
+    fun uploadC1(apiTpsId: String, dbTpsId: String, c1Type: String): Completable? {
+        val c1 = appDB.getC1Dao().getC1(dbTpsId, c1Type)
+        return if (c1 != null) {
+            c1.tpsId = apiTpsId
+            val c1Json = gson.toJson(c1)
+            Timber.d(c1Json.toString())
+            val c1Body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), c1Json)
+            apiWrapper.getPantauApi().uploadC1Form(c1Body)
+        } else {
+            null
+        }
     }
 }
