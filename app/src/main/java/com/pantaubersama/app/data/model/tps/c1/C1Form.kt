@@ -1,4 +1,4 @@
-package com.pantaubersama.app.data.model.tps
+package com.pantaubersama.app.data.model.tps.c1
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

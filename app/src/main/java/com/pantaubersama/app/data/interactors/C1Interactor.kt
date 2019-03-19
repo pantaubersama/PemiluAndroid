@@ -3,9 +3,11 @@ package com.pantaubersama.app.data.interactors
 import com.pantaubersama.app.data.db.AppDB
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
+import com.pantaubersama.app.data.model.tps.c1.C1Form
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
+import io.reactivex.Single
 import javax.inject.Inject
 
 class C1Interactor @Inject constructor(
@@ -268,5 +270,14 @@ class C1Interactor @Inject constructor(
                 )
             }
         }
+    }
+
+    fun getC1Remote(tpsId: String, c1Type: String): Single<C1Form> {
+        return apiWrapper.getPantauApi().getC1(tpsId, c1Type)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .map {
+                it.data.c1Form
+            }
     }
 }
