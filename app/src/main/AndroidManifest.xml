@@ -96,6 +96,10 @@
                 android:resource="@color/colorPrimary" />
         </service>
 
+        <service
+            android:name=".background.uploadtps.UploadTpsService">
+        </service>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="536361816a0d2006ea747cdd456218543609b7d7" />

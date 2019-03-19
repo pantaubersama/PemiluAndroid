@@ -14,6 +14,8 @@ import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
+import okhttp3.MediaType
+import okhttp3.RequestBody
 
 class TPSInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
@@ -264,5 +266,27 @@ class TPSInteractor @Inject constructor(
 
     fun getImages(tpsId: String): ImageDoc? {
         return appDB.getImagesDao().getImage(tpsId)
+    }
+
+    fun uploadTps(tpsId: String): Single<TPS> {
+        val tps = appDB.getTPSDAO().getTps(tpsId)
+        return apiWrapper.getPantauApi().uploadTps(
+            tps.tps,
+            tps.province.code,
+            tps.regency.code,
+            tps.district.code,
+            tps.village.code,
+            tps.latitude,
+            tps.longitude
+        )
+            .map { it.tpsData.tps }
+    }
+
+    fun uploadRealCount(tpsId: String, dbTpsId: String, realCountType: String): Completable {
+        val realCount = appDB.getRealCountDao().getRealCount(dbTpsId, realCountType)
+        realCount?.hitungRealCountId = tpsId
+        val realCountJson = gson.toJson(realCount)
+        val realCountBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), realCountJson)
+        return apiWrapper.getPantauApi().uploadRealCount(realCountBody)
     }
 }

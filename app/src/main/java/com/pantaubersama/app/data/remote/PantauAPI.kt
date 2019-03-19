@@ -266,4 +266,19 @@ interface PantauAPI {
         @Query("dapil_id") dapilId: Int,
         @Query("tingkat") tingkat: String
     ): Single<CandidateResponse>
+
+    @FormUrlEncoded
+    @POST("hitung/v1/real_counts")
+    fun uploadTps(
+        @Field("tps") tpsNumber: Int,
+        @Field("province_code") provinceCode: Int,
+        @Field("regency_code") regencyCode: Int,
+        @Field("district_code") districtCode: Int,
+        @Field("village_code") villageCode: Long,
+        @Field("latitude") latitude: Double,
+        @Field("longitude") longitude: Double
+    ): Single<TpsResponse>
+
+    @PUT("hitung/v1/calculations")
+    fun uploadRealCount(@Body presidenBody: RequestBody): Completable
 }

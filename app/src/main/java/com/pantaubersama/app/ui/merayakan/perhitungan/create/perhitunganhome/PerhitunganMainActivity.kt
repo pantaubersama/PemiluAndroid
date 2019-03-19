@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import com.pantaubersama.app.R
+import com.pantaubersama.app.background.uploadtps.UploadTpsService
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.di.component.ActivityComponent
@@ -66,6 +67,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
 //            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDKabupatenActivity::class.java))
 //        }
         upload_container.setOnClickListener(this)
+        submit_button.setOnClickListener(this)
     }
 
     private fun bindData(tps: TPS?) {
@@ -172,6 +174,13 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
                 val intent = Intent(this@PerhitunganMainActivity, UploadDocumentActivity::class.java)
                 intent.putExtra(PantauConstants.Merayakan.TPS_DATA, tps)
                 startActivity(Intent(intent))
+            }
+            submit_button -> {
+                tps?.id?.let {
+                    val intent = Intent(this@PerhitunganMainActivity, UploadTpsService::class.java)
+                    intent.putExtra("tps_id", it)
+                    startService(intent)
+                }
             }
         }
     }
