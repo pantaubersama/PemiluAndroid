@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
-import com.pantaubersama.app.data.model.tps.Image
+import com.pantaubersama.app.data.model.tps.image.Image
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.c1_images_layout.*

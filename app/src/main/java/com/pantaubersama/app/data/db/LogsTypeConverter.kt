@@ -16,7 +16,7 @@ class LogsTypeConverter {
     }
 
     @TypeConverter
-    fun userToString(logs: Logs): String {
+    fun logsToString(logs: Logs): String {
         return gson.toJson(logs)
     }
 }

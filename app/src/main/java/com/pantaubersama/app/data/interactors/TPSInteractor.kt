@@ -6,6 +6,8 @@ import com.pantaubersama.app.data.db.AppDB
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
+import com.pantaubersama.app.data.model.tps.image.Image
+import com.pantaubersama.app.data.model.tps.image.ImageDoc
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
@@ -223,5 +225,40 @@ class TPSInteractor @Inject constructor(
 
     fun isSandboxTpsCreated(): Boolean {
         return dataCache.isSandboxCreated()
+    }
+
+    fun saveImageDoc(
+        tpsId: String,
+        presiden: MutableList<Image>,
+        dpr: MutableList<Image>,
+        dpd: MutableList<Image>,
+        dprdProv: MutableList<Image>,
+        dprdKab: MutableList<Image>,
+        suasanaTps: MutableList<Image>
+    ): Completable {
+        if (appDB.getImagesDao().getImage(tpsId) != null) {
+            val imageDoc = appDB.getImagesDao().getImage(tpsId)
+            imageDoc?.presiden = presiden
+            imageDoc?.dpr = dpr
+            imageDoc?.dpd = dpd
+            imageDoc?.dprdProv = dprdProv
+            imageDoc?.dprdKab = dprdKab
+            imageDoc?.suasanaTps = suasanaTps
+            return Completable.fromCallable {
+                imageDoc?.let {
+                    appDB.getImagesDao().updateImage(it)
+                }
+            }
+        } else {
+            var newId: Int = 0
+            appDB.getImagesDao().getImages().forEachIndexed { index, image ->
+                newId = index + 1
+            }
+            return Completable.fromCallable {
+                appDB.getImagesDao().saveImage(
+                    ImageDoc(newId.toString(), tpsId, presiden, dpr, dpd, dprdProv, dprdKab, suasanaTps)
+                )
+            }
+        }
     }
 }

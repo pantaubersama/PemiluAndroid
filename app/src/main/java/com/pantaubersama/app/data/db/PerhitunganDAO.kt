@@ -5,6 +5,7 @@ import com.pantaubersama.app.data.model.tps.C1Form
 import com.pantaubersama.app.data.model.tps.Province
 import com.pantaubersama.app.data.model.tps.RealCount
 import com.pantaubersama.app.data.model.tps.TPS
+import com.pantaubersama.app.data.model.tps.image.ImageDoc
 
 interface PerhitunganDAO {
     @Dao
@@ -65,5 +66,20 @@ interface PerhitunganDAO {
 
         @Update
         fun updateC1(c1: C1Form?)
+    }
+
+    @Dao
+    interface ImagesDAO {
+        @Query("SELECT * FROM image_doc WHERE tpsId = :tpsId")
+        fun getImage(tpsId: String): ImageDoc?
+
+        @Update
+        fun updateImage(it: ImageDoc)
+
+        @Query("SELECT * FROM image_doc")
+        fun getImages(): MutableList<ImageDoc>
+
+        @Insert
+        fun saveImage(imageDoc: ImageDoc)
     }
 }

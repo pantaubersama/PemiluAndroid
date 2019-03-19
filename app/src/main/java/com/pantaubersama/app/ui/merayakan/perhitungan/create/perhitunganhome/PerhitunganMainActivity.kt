@@ -169,7 +169,9 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
                 startActivity(intent)
             }
             upload_container -> {
-                startActivity(Intent(this@PerhitunganMainActivity, UploadDocumentActivity::class.java))
+                val intent = Intent(this@PerhitunganMainActivity, UploadDocumentActivity::class.java)
+                intent.putExtra(PantauConstants.Merayakan.TPS_DATA, tps)
+                startActivity(Intent(intent))
             }
         }
     }

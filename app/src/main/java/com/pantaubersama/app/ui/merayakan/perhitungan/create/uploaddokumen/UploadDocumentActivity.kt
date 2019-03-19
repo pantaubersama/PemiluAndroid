@@ -15,11 +15,13 @@ import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.data.model.tps.Image
+import com.pantaubersama.app.data.model.tps.TPS
+import com.pantaubersama.app.data.model.tps.image.Image
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.widget.ImageChooserTools
 import com.pantaubersama.app.utils.ImageUtil
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Merayakan.TPS_DATA
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_upload_document.*
 import okhttp3.MediaType
@@ -47,8 +49,14 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
     private lateinit var suasanaTpsAdapter: C1ImagesAdapter
     private var uploadType = ""
 
+    private var tps: TPS? = null
+
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
+    }
+
+    override fun fetchIntentExtra() {
+        tps = intent.getSerializableExtra(TPS_DATA) as TPS
     }
 
     override fun statusBarColor(): Int? {
@@ -62,7 +70,17 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Unggah", R.color.white, 4f)
         save_button.setOnClickListener {
-            finish()
+            tps?.id?.let { it1 ->
+                presenter.saveImages(
+                    it1,
+                    c1PresidenAdapter.getListData() as MutableList<Image>,
+                    c1DprAdapter.getListData() as MutableList<Image>,
+                    c1DpdAdapter.getListData() as MutableList<Image>,
+                    c1DprdProvAdapter.getListData() as MutableList<Image>,
+                    c1DprdKabAdapter.getListData() as MutableList<Image>,
+                    suasanaTpsAdapter.getListData() as MutableList<Image>
+                )
+            }
         }
         setupC1Presiden()
         setupC1Dpr()
@@ -70,6 +88,15 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
         setupC1DprdProv()
         setupC1DprdKab()
         setupSuasanaTps()
+    }
+
+    override fun showFailedSaveImageAlert() {
+        ToastUtil.show(this@UploadDocumentActivity, "Gagal menyimpan gambar")
+    }
+
+    override fun finishSection() {
+        ToastUtil.show(this@UploadDocumentActivity, "Gambar berhasil disimpan")
+        finish()
     }
 
     private fun setupSuasanaTps() {

@@ -1,4 +1,4 @@
-package com.pantaubersama.app.data.model.tps
+package com.pantaubersama.app.data.model.tps.image
 
 import com.pantaubersama.app.data.model.ItemModel
 
