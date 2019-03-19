@@ -37,4 +37,10 @@ class UploadDocumentPresenter @Inject constructor(
             )
         )
     }
+
+    fun getImagesSaved(tpsId: String) {
+        tpsInteractor.getImages(tpsId)?.let {
+            view?.bindImages(it)
+        }
+    }
 }

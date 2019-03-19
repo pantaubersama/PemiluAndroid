@@ -261,4 +261,8 @@ class TPSInteractor @Inject constructor(
             }
         }
     }
+
+    fun getImages(tpsId: String): ImageDoc? {
+        return appDB.getImagesDao().getImage(tpsId)
+    }
 }

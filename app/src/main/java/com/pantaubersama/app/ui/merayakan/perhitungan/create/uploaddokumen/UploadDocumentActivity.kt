@@ -17,6 +17,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.data.model.tps.image.Image
+import com.pantaubersama.app.data.model.tps.image.ImageDoc
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.widget.ImageChooserTools
 import com.pantaubersama.app.utils.ImageUtil
@@ -88,6 +89,18 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
         setupC1DprdProv()
         setupC1DprdKab()
         setupSuasanaTps()
+        tps?.id?.let {
+            presenter.getImagesSaved(it)
+        }
+    }
+
+    override fun bindImages(images: ImageDoc) {
+        c1PresidenAdapter.setDatas(images.presiden)
+        c1DprAdapter.setDatas(images.dpr)
+        c1DpdAdapter.setDatas(images.dpd)
+        c1DprdProvAdapter.setDatas(images.dprdProv)
+        c1DprdKabAdapter.setDatas(images.dprdKab)
+        suasanaTpsAdapter.setDatas(images.suasanaTps)
     }
 
     override fun showFailedSaveImageAlert() {
