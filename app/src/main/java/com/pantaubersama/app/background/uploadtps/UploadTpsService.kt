@@ -53,7 +53,6 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     }
 
     override fun increaseProgress(progress: Int) {
-        Timber.d(this.progress.toString())
         this.progress += progress
         notificationBuilder.setContentTitle(getTitle(this.progress))
         notificationBuilder.setProgress(100, this.progress, false)
@@ -96,7 +95,13 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
 
         mBuilder.setContentIntent(pendingIntent)
         notificationManager.notify(1, mBuilder.build())
+        publishResult()
         stopSelf()
+    }
+
+    private fun publishResult() {
+        val intent = Intent("upload")
+        sendBroadcast(intent)
     }
 
     override fun showError(throwable: Throwable) {
