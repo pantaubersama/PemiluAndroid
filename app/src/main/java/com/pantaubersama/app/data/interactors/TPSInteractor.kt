@@ -1,17 +1,26 @@
 package com.pantaubersama.app.data.interactors
 
+import android.net.Uri
+import android.webkit.MimeTypeMap
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.pantaubersama.app.data.db.AppDB
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
+import com.pantaubersama.app.data.model.tps.image.Image
+import com.pantaubersama.app.data.model.tps.image.ImageDoc
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import timber.log.Timber
+import java.io.File
 
 class TPSInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
@@ -119,9 +128,19 @@ class TPSInteractor @Inject constructor(
             "draft" -> Completable.fromCallable {
                 appDB.getTPSDAO().deleteTPS(tps)
             }
+                .doOnComplete {
+                    appDB.getRealCountDao().getRealCounts(tps.id).forEach {
+                        appDB.getRealCountDao().deleteRealCount(it)
+                    }
+                }
             else -> Completable.fromCallable {
                 appDB.getTPSDAO().deleteTPS(tps)
             }
+                .doOnComplete {
+                    appDB.getRealCountDao().getRealCounts(tps.id).forEach {
+                        appDB.getRealCountDao().deleteRealCount(it)
+                    }
+                }
         }
     }
 
@@ -223,5 +242,141 @@ class TPSInteractor @Inject constructor(
 
     fun isSandboxTpsCreated(): Boolean {
         return dataCache.isSandboxCreated()
+    }
+
+    fun saveImageDoc(
+        tpsId: String,
+        presiden: MutableList<Image>,
+        dpr: MutableList<Image>,
+        dpd: MutableList<Image>,
+        dprdProv: MutableList<Image>,
+        dprdKab: MutableList<Image>,
+        suasanaTps: MutableList<Image>
+    ): Completable {
+        if (appDB.getImagesDao().getImage(tpsId) != null) {
+            val imageDoc = appDB.getImagesDao().getImage(tpsId)
+            imageDoc?.presiden = presiden
+            imageDoc?.dpr = dpr
+            imageDoc?.dpd = dpd
+            imageDoc?.dprdProv = dprdProv
+            imageDoc?.dprdKab = dprdKab
+            imageDoc?.suasanaTps = suasanaTps
+            return Completable.fromCallable {
+                imageDoc?.let {
+                    appDB.getImagesDao().updateImage(it)
+                }
+            }
+        } else {
+            var newId: Int = 0
+            appDB.getImagesDao().getImages().forEachIndexed { index, image ->
+                newId = index + 1
+            }
+            return Completable.fromCallable {
+                appDB.getImagesDao().saveImage(
+                    ImageDoc(newId.toString(), tpsId, presiden, dpr, dpd, dprdProv, dprdKab, suasanaTps)
+                )
+            }
+        }
+    }
+
+    fun getImages(tpsId: String): ImageDoc? {
+        return appDB.getImagesDao().getImage(tpsId)
+    }
+
+    fun uploadTps(tpsId: String): Single<TPS> {
+        val tps = appDB.getTPSDAO().getTps(tpsId)
+        return apiWrapper.getPantauApi().uploadTps(
+            tps.tps,
+            tps.province.code,
+            tps.regency.code,
+            tps.district.code,
+            tps.village.code,
+            tps.latitude,
+            tps.longitude
+        )
+            .map { it.tpsData.tps }
+    }
+
+    fun uploadRealCount(tpsId: String, dbTpsId: String, realCountType: String): Completable? {
+        val realCount = appDB.getRealCountDao().getRealCount(dbTpsId, realCountType)
+        return if (realCount != null) {
+            realCount.hitungRealCountId = tpsId
+            val realCountJson = gson.toJson(realCount)
+            val realCountBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), realCountJson)
+            apiWrapper.getPantauApi().uploadRealCount(realCountBody)
+        } else {
+            null
+        }
+    }
+
+    fun uploadC1(apiTpsId: String, dbTpsId: String, c1Type: String): Completable? {
+        val c1 = appDB.getC1Dao().getC1(dbTpsId, c1Type)
+        return if (c1 != null) {
+            c1.tpsId = apiTpsId
+            val c1Json = gson.toJson(c1)
+            Timber.d(c1Json.toString())
+            val c1Body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), c1Json)
+            apiWrapper.getPantauApi().uploadC1Form(c1Body)
+        } else {
+            null
+        }
+    }
+
+    private fun proceedImage(imageFile: File): MultipartBody.Part {
+        val type: String
+        val extension = MimeTypeMap.getFileExtensionFromUrl(imageFile.absolutePath)
+        type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)!!
+        val reqFile = RequestBody.create(MediaType.parse(type), imageFile)
+        val newFile = MultipartBody.Part.createFormData("file", imageFile.name, reqFile)
+        return newFile
+    }
+
+    fun getImagesWithType(dbTpsId: String, imagesUploadType: String): MutableList<Image>? {
+        when (imagesUploadType) {
+            "c1_presiden" -> return appDB.getImagesDao().getImage(dbTpsId)?.presiden
+            "c1_dpr_ri" -> return appDB.getImagesDao().getImage(dbTpsId)?.dpr
+            "c1_dpd" -> return appDB.getImagesDao().getImage(dbTpsId)?.dpd
+            "c1_dprd_provinsi" -> return appDB.getImagesDao().getImage(dbTpsId)?.dprdProv
+            "c1_dprd_kabupaten" -> return appDB.getImagesDao().getImage(dbTpsId)?.dprdKab
+            "suasana_tps" -> return appDB.getImagesDao().getImage(dbTpsId)?.suasanaTps
+            else -> return null
+        }
+    }
+
+    fun uploadImage(apiTpsId: String, imagesUploadType: String, uri: String): Completable {
+        return apiWrapper.getPantauApi().uploadImage(apiTpsId, imagesUploadType, proceedImage(File(Uri.parse(uri).path)))
+    }
+
+    fun publishRealCount(apiTpsId: String, dbTpsId: String): Completable {
+        val tps = appDB.getTPSDAO().getTps(dbTpsId)
+        return apiWrapper.getPantauApi().publishRealCount(apiTpsId)
+            .doOnComplete {
+                when (tps.status) {
+                    "draft" -> {
+                        appDB.getRealCountDao().getRealCounts(tps.id).forEach {
+                            appDB.getRealCountDao().deleteRealCount(it)
+                        }
+                        appDB.getC1Dao().getC1s().forEach {
+                            appDB.getC1Dao().deleteC1(it)
+                        }
+                        appDB.getImagesDao().getImages().forEach {
+                            appDB.getImagesDao().deleteImage(it)
+                        }
+                        appDB.getTPSDAO().deleteTPS(tps)
+                    }
+                    else -> {
+                        appDB.getRealCountDao().getRealCounts(tps.id).forEach {
+                            appDB.getRealCountDao().deleteRealCount(it)
+                        }
+                        appDB.getC1Dao().getC1s().forEach {
+                            appDB.getC1Dao().deleteC1(it)
+                        }
+                        appDB.getImagesDao().getImages().forEach {
+                            appDB.getImagesDao().deleteImage(it)
+                        }
+                        appDB.getTPSDAO().deleteTPS(tps)
+                    }
+                }
+            }
     }
 }

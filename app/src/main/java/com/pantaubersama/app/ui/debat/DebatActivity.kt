@@ -154,7 +154,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
 
         if (isDone) {
             tv_toolbar_title.text = "Result"
-            tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
+            tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             cl_clap_count.visibleIf(true)
         }
     }
@@ -393,7 +393,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
             enableJumpingDots(false)
             tv_status_debat.text = "Debat sudah selesai"
         }
-
     }
 
     override fun updateMyTimeLeft() {

@@ -1,7 +1,10 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.list
 
 import android.app.Activity.RESULT_OK
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +38,22 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
     private lateinit var adapter: PerhitunganAdapter
     private var page = 1
     private var perPage = 20
+
+    private val receiver = object : BroadcastReceiver() {
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            refreshItem()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().registerReceiver(receiver, IntentFilter("upload"))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivity().unregisterReceiver(receiver)
+    }
 
     @Inject
     override lateinit var presenter: PerhitunganPresenter

@@ -5,6 +5,7 @@ import com.pantaubersama.app.data.model.tps.C1Form
 import com.pantaubersama.app.data.model.tps.Province
 import com.pantaubersama.app.data.model.tps.RealCount
 import com.pantaubersama.app.data.model.tps.TPS
+import com.pantaubersama.app.data.model.tps.image.ImageDoc
 
 interface PerhitunganDAO {
     @Dao
@@ -50,12 +51,16 @@ interface PerhitunganDAO {
 
         @Query("SELECT * FROM real_count")
         fun getRealCounts(): MutableList<RealCount>
+
+        @Query("SELECT * FROM real_count WHERE hitung_real_count_id = :tpsId")
+        fun getRealCounts(tpsId: String): MutableList<RealCount>
     }
 
     @Dao
     interface C1DAO {
-        @Query("SELECT * FROM c1_form WHERE tpsId = :tpsId AND formC1Type = :c1Type")
-        fun getC1s(tpsId: String, c1Type: String): MutableList<C1Form>
+
+        @Query("SELECT * FROM c1_form")
+        fun getC1s(): MutableList<C1Form>
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         fun saveC1(c1Form: C1Form)
@@ -65,5 +70,26 @@ interface PerhitunganDAO {
 
         @Update
         fun updateC1(c1: C1Form?)
+
+        @Delete
+        fun deleteC1(it: C1Form)
+    }
+
+    @Dao
+    interface ImagesDAO {
+        @Query("SELECT * FROM image_doc WHERE tpsId = :tpsId")
+        fun getImage(tpsId: String): ImageDoc?
+
+        @Update
+        fun updateImage(it: ImageDoc)
+
+        @Query("SELECT * FROM image_doc")
+        fun getImages(): MutableList<ImageDoc>
+
+        @Insert
+        fun saveImage(imageDoc: ImageDoc)
+
+        @Delete
+        fun deleteImage(it: ImageDoc)
     }
 }

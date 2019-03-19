@@ -8,6 +8,9 @@ data class TpsData(
     @SerializedName("real_counts")
     @Expose
     var tpses: MutableList<TPS>,
+    @SerializedName("real_count")
+    @Expose
+    var tps: TPS,
     @SerializedName("meta")
     @Expose
     var meta: Meta

@@ -6,12 +6,13 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import com.pantaubersama.app.R
+import com.pantaubersama.app.background.uploadtps.UploadTpsService
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.c1.C1FormActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity
-import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpr.PerhitunganDPRActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity
@@ -66,6 +67,8 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
 //            startActivity(Intent(this@PerhitunganMainActivity, PerhitunganDPRDKabupatenActivity::class.java))
 //        }
         upload_container.setOnClickListener(this)
+        submit_button.setOnClickListener(this)
+        submitted_button.setOnClickListener(this)
     }
 
     private fun bindData(tps: TPS?) {
@@ -104,6 +107,16 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
                     }
                 }
             }
+        }
+        if (tps?.status == "published") {
+            submit_button.visibility = View.GONE
+            submitted_button.visibility = View.VISIBLE
+        } else if (tps?.status == "draft") {
+            submit_button.visibility = View.VISIBLE
+            submitted_button.visibility = View.GONE
+        } else {
+            submit_button.visibility = View.VISIBLE
+            submitted_button.visibility = View.GONE
         }
     }
 
@@ -169,7 +182,20 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
                 startActivity(intent)
             }
             upload_container -> {
-                startActivity(Intent(this@PerhitunganMainActivity, UploadDocumentActivity::class.java))
+                val intent = Intent(this@PerhitunganMainActivity, UploadDocumentActivity::class.java)
+                intent.putExtra(PantauConstants.Merayakan.TPS_DATA, tps)
+                startActivity(Intent(intent))
+            }
+            submit_button -> {
+                tps?.id?.let {
+                    val intent = Intent(this@PerhitunganMainActivity, UploadTpsService::class.java)
+                    intent.putExtra("tps_id", it)
+                    startService(intent)
+                    finishSection()
+                }
+            }
+            submitted_button -> {
+                ToastUtil.show(this@PerhitunganMainActivity, "Data Telah Terkirim")
             }
         }
     }
