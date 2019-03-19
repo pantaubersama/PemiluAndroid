@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri
+package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpr
 
 import android.os.Bundle
 import android.view.Menu
@@ -122,7 +122,7 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     }
 
     private fun setupDPRList() {
-        adapter = DPRPartaiAdapter(rxSchedulers)
+        adapter = DPRPartaiAdapter(rxSchedulers, tps?.status != "published")
         adapter.listener = object : DPRPartaiAdapter.Listener {
             override fun saveRealCount(items: MutableList<CandidateData>, selectedPartyPosition: Int) {
                 undoType = "party"

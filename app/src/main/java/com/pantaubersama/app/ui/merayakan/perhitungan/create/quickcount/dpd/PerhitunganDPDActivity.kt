@@ -112,7 +112,10 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
     }
 
     private fun setupDPDList() {
-        adapter = DPRCandidateAdapter(rxSchedulers)
+        adapter = DPRCandidateAdapter(
+            rxSchedulers,
+            tps?.status != "published"
+        )
         adapter.listener = object : DPRCandidateAdapter.Listener {
             override fun onCandidateCountChange(candidateUndoPosition: Int) {
                 candidateSelectedPosition = candidateUndoPosition

@@ -9,13 +9,14 @@ import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.tps.RealCount
 import com.pantaubersama.app.data.model.tps.candidate.Candidate
 import com.pantaubersama.app.utils.RxSchedulers
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.UndoRedoTools
 import com.pantaubersama.app.utils.extensions.inflate
 import io.reactivex.Observable
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.kandidat_person_item.*
 
-class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAdapter() {
+class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers, private var isIncrementEnable: Boolean) : BaseRecyclerAdapter() {
     var listener: Listener? = null
     private var undoRedoToolses: MutableList<UndoRedoTools> = ArrayList()
 
@@ -46,13 +47,20 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers) : BaseRecycler
         fun bind(item: Candidate) {
             candidate_name.text = "${item.serialNumber}. ${item.name}"
             candidate_count_field.setText(item.candidateCount.toString())
+            if (!isIncrementEnable) {
+                candidate_count_field.isEnabled = false
+            }
             candidate_inc_button.setOnClickListener {
-                val count = if (candidate_count_field.text.isNotEmpty()) {
-                    candidate_count_field.text.toString().toInt()
+                if (isIncrementEnable) {
+                    val count = if (candidate_count_field.text.isNotEmpty()) {
+                        candidate_count_field.text.toString().toInt()
+                    } else {
+                        0
+                    }
+                    candidate_count_field.setText(count.plus(1).toString())
                 } else {
-                    0
+                    ToastUtil.show(itemView.context, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
                 }
-                candidate_count_field.setText(count.plus(1).toString())
             }
             RxTextView.textChanges(candidate_count_field)
                 .skipInitialValue()

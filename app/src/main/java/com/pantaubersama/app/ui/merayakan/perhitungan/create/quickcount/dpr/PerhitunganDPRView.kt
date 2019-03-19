@@ -1,4 +1,4 @@
-package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri
+package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpr
 
 import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.data.model.tps.Dapil

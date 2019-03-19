@@ -12,7 +12,7 @@ import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.c1.C1FormActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity
-import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dprri.PerhitunganDPRActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpr.PerhitunganDPRActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity

@@ -12,6 +12,7 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.tps.RealCount
 import com.pantaubersama.app.data.model.tps.candidate.CandidateData
 import com.pantaubersama.app.utils.RxSchedulers
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.UndoRedoTools
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -20,7 +21,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.kandidat_partai_item.*
 import java.util.concurrent.TimeUnit
 
-class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAdapter() {
+class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers, private var isIncrementEnable: Boolean) : BaseRecyclerAdapter() {
     var listener: Listener? = null
     var adapters: MutableList<DPRCandidateAdapter> = ArrayList()
     private var undoRedoToolses: MutableList<UndoRedoTools> = ArrayList()
@@ -68,14 +69,21 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
             party_name.text = item.name
             party_number.text = "No. Urut ${item.serialNumber}"
             party_count_field.setText(item.partyCount.toString())
+            if (!isIncrementEnable) {
+                party_count_field.isEnabled = false
+            }
             party_votes_count.text = item.totalCount.toString()
             party_inc_button.setOnClickListener {
-                val count = if (party_count_field.text.isNotEmpty()) {
-                    party_count_field.text.toString().toInt()
+                if (isIncrementEnable) {
+                    val count = if (party_count_field.text.isNotEmpty()) {
+                        party_count_field.text.toString().toInt()
+                    } else {
+                        0
+                    }
+                    party_count_field.setText(count.plus(1).toString())
                 } else {
-                    0
+                    ToastUtil.show(itemView.context, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
                 }
-                party_count_field.setText(count.plus(1).toString())
             }
             RxTextView.textChanges(party_count_field)
                 .skipInitialValue()
@@ -138,7 +146,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers) : BaseRecyclerAda
                 }
                 .subscribe()
             undoRedoToolses.add(adapterPosition, UndoRedoTools(party_count_field))
-            adapters.add(adapterPosition, DPRCandidateAdapter(rxSchedulers))
+            adapters.add(adapterPosition, DPRCandidateAdapter(rxSchedulers, isIncrementEnable))
             adapters[adapterPosition].listener = object : DPRCandidateAdapter.Listener {
                 override fun onCandidateCountChange(candidateUndoPosition: Int) {
                     listener?.onCandidateChanged(adapterPosition, candidateUndoPosition)
