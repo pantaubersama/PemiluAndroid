@@ -53,6 +53,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     }
 
     override fun increaseProgress(progress: Int) {
+        Timber.d(this.progress.toString())
         this.progress += progress
         notificationBuilder.setContentTitle(getTitle(this.progress))
         notificationBuilder.setProgress(100, this.progress, false)
@@ -72,8 +73,30 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
             progress < 45 -> "Mengunggah Form C1 - DPD"
             progress < 50 -> "Mengunggah Form C1 - DPRD Tingkat Provinsi"
             progress < 55 -> "Mengunggah Form C1 - DPRD Tingkat Kabupaten"
-            else -> "Berhasil Mengunggah Data TPS"
+            progress < 60 -> "Mengunggah Gambar C1 - Presiden"
+            progress < 65 -> "Mengunggah Gambar C1 - DPR RI"
+            progress < 75 -> "Mengunggah Gambar C1 - DPD"
+            progress < 80 -> "Mengunggah Gambar C1 - DPRD Tingkat Provinsi"
+            progress < 85 -> "Mengunggah Gambar C1 - DPRD Tingkat Kabupaten"
+            progress < 90 -> "Mengunggah Gambar Suasana TPS"
+            else -> "Menyelesaikan Unggahan"
         }
+    }
+
+    override fun onSuccessPublishTps() {
+        val pendingIntent = PendingIntent.getActivity(this@UploadTpsService, 1, notificationIntent, 0)
+        val mBuilder = NotificationCompat.Builder(this@UploadTpsService)
+            .setSmallIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                R.drawable.ic_notification_icon
+            } else {
+                R.drawable.ic_logo_notification_transparent_in
+            })
+            .setContentTitle("Berhasil Mengunggah Perhitungan")
+            .setContentText("Selamat. Perhitungan Kamu Berhasil Terunggah")
+
+        mBuilder.setContentIntent(pendingIntent)
+        notificationManager.notify(1, mBuilder.build())
+        stopSelf()
     }
 
     override fun showError(throwable: Throwable) {

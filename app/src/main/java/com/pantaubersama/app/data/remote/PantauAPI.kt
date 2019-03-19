@@ -284,4 +284,17 @@ interface PantauAPI {
 
     @PUT("hitung/v1/form_c1")
     fun uploadC1Form(@Body c1Body: RequestBody): Completable
+
+    @Multipart
+    @POST("hitung/v1/images")
+    fun uploadImage(
+        @Part("hitung_real_count_id") apiTpsId: String,
+        @Part("image_type") imagesUploadType: String,
+        @Part image: MultipartBody.Part
+    ): Completable
+
+    @POST("hitung/v1/real_counts/{id}/publish")
+    fun publishRealCount(
+        @Path("id") apiTpsId: String
+    ): Completable
 }
