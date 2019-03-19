@@ -3,7 +3,6 @@ package com.pantaubersama.app.ui.wordstadium.challenge.direct
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -32,6 +31,7 @@ import com.pantaubersama.app.ui.wordstadium.challenge.open.BidangKajianDialog
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_direct_challenge.*
 import kotlinx.android.synthetic.main.close_challenge.view.*
 import java.text.SimpleDateFormat
@@ -264,24 +264,43 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
                         val dayName = mDays[calendar.get(Calendar.DAY_OF_WEEK) - 1]
                         tv_date.text = "$dayName, $date"
                         mDateString = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
+
+                        if (calendar.time.toString() == Calendar.getInstance().time.toString() && tv_time.text.isNotBlank()) {
+                            tv_time.text = ""
+                            ll_saldo_waktu_container.visibility = View.GONE
+                            direct_challenge_next.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_dark_1))
+                            direct_challenge_next.enable(false)
+                        }
                     }, mYear, mMonth, mDay)
 
+            datePickerDialog.datePicker.minDate = Calendar.getInstance().timeInMillis
             datePickerDialog.show()
         }
 
         ll_time.setOnClickListener {
-            val c = Calendar.getInstance()
-            mHour = c.get(Calendar.HOUR_OF_DAY)
-            mMinute = c.get(Calendar.MINUTE)
+            if (mDateString?.isNotEmpty() == true) {
+                val c = Calendar.getInstance()
+                mHour = c.get(Calendar.HOUR_OF_DAY)
+                mMinute = c.get(Calendar.MINUTE)
 
-            val timePickerDialog = TimePickerDialog(this,
-                    TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                        tv_time.text = "$hourOfDay.$minute"
+                val timePickerDialog = TimePickerDialog.newInstance({ view, hourOfDay, minute, second ->
+                        var hour = hourOfDay.toString()
+                        var mnt = minute.toString()
+                        if (hourOfDay < 10) hour = "0" + hour
+                        if (minute < 10) mnt = "0" + mnt
+                        tv_time.text = "$hour.$mnt"
                         dateTimeDone()
-                        mTimeString = "$hourOfDay:$minute"
-                    }, mHour, mMinute, false)
+                        mTimeString = "$hour:$mnt"
+                    }, mHour, mMinute, true)
 
-            timePickerDialog.show()
+                if (mDateString == SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().time)) {
+                    timePickerDialog.setMinTime(mHour, mMinute, 0)
+                }
+
+                timePickerDialog.show(supportFragmentManager, "TimePickerDialog")
+            } else {
+                ToastUtil.show(this, "Pilih tanggal dahulu")
+            }
         }
 
         et_pilih_saldo_waktu.addTextChangedListener(object : TextWatcher {
@@ -389,6 +408,7 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
         check_date_time.setImageResource(R.drawable.check_done)
         line_date_time.setBackgroundColor(ContextCompat.getColor(this, R.color.orange_2))
 
+        ll_saldo_waktu_container.visibility = View.VISIBLE
         ll_saldo_waktu.visibility = View.VISIBLE
         info_saldo_waktu.visibility = View.VISIBLE
         check_saldo_waktu.setImageResource(R.drawable.check_active)
