@@ -38,7 +38,7 @@ class C1Interactor @Inject constructor(
         } else {
             var newId: Int = 0
 
-            appDB.getC1Dao().getC1s(tpsId, c1Type).forEachIndexed { index, realCount ->
+            appDB.getC1Dao().getC1s().forEachIndexed { index, realCount ->
                 newId = index + 1
             }
             return Completable.fromCallable {
@@ -100,7 +100,7 @@ class C1Interactor @Inject constructor(
         } else {
             var newId: Int = 0
 
-            appDB.getC1Dao().getC1s(tpsId, c1Type).forEachIndexed { index, realCount ->
+            appDB.getC1Dao().getC1s().forEachIndexed { index, realCount ->
                 newId = index + 1
             }
             return Completable.fromCallable {
@@ -145,7 +145,7 @@ class C1Interactor @Inject constructor(
         } else {
             var newId: Int = 0
 
-            appDB.getC1Dao().getC1s(tpsId, c1Type).forEachIndexed { index, realCount ->
+            appDB.getC1Dao().getC1s().forEachIndexed { index, realCount ->
                 newId = index + 1
             }
             return Completable.fromCallable {
@@ -190,7 +190,7 @@ class C1Interactor @Inject constructor(
         } else {
             var newId: Int = 0
 
-            appDB.getC1Dao().getC1s(tpsId, c1Type).forEachIndexed { index, realCount ->
+            appDB.getC1Dao().getC1s().forEachIndexed { index, realCount ->
                 newId = index + 1
             }
             return Completable.fromCallable {
@@ -236,7 +236,7 @@ class C1Interactor @Inject constructor(
         } else {
             var newId: Int = 0
 
-            appDB.getC1Dao().getC1s(tpsId, c1Type).forEachIndexed { index, realCount ->
+            appDB.getC1Dao().getC1s().forEachIndexed { index, realCount ->
                 newId = index + 1
             }
             return Completable.fromCallable {

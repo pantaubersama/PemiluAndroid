@@ -124,9 +124,19 @@ class TPSInteractor @Inject constructor(
             "draft" -> Completable.fromCallable {
                 appDB.getTPSDAO().deleteTPS(tps)
             }
+                .doOnComplete {
+                    appDB.getRealCountDao().getRealCounts(tps.id).forEach {
+                        appDB.getRealCountDao().deleteRealCount(it)
+                    }
+                }
             else -> Completable.fromCallable {
                 appDB.getTPSDAO().deleteTPS(tps)
             }
+                .doOnComplete {
+                    appDB.getRealCountDao().getRealCounts(tps.id).forEach {
+                        appDB.getRealCountDao().deleteRealCount(it)
+                    }
+                }
         }
     }
 

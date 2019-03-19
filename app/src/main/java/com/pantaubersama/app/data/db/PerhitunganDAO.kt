@@ -51,12 +51,16 @@ interface PerhitunganDAO {
 
         @Query("SELECT * FROM real_count")
         fun getRealCounts(): MutableList<RealCount>
+
+        @Query("SELECT * FROM real_count WHERE hitung_real_count_id = :tpsId")
+        fun getRealCounts(tpsId: String): MutableList<RealCount>
     }
 
     @Dao
     interface C1DAO {
-        @Query("SELECT * FROM c1_form WHERE tpsId = :tpsId AND formC1Type = :c1Type")
-        fun getC1s(tpsId: String, c1Type: String): MutableList<C1Form>
+
+        @Query("SELECT * FROM c1_form")
+        fun getC1s(): MutableList<C1Form>
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         fun saveC1(c1Form: C1Form)
