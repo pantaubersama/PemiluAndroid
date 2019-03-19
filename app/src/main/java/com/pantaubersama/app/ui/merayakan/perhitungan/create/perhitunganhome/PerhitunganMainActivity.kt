@@ -180,7 +180,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
                     val intent = Intent(this@PerhitunganMainActivity, UploadTpsService::class.java)
                     intent.putExtra("tps_id", it)
                     startService(intent)
-                    finish()
+                    finishSection()
                 }
             }
         }
