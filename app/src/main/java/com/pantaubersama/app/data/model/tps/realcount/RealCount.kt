@@ -47,7 +47,7 @@ data class Candidate(
     @Expose
     var totalVote: Int,
     @SerializedName("actor_id")
-    var actorId: String? = null,
+    var actorId: Int? = null,
     @SerializedName("actor_type")
     var actorType: String? = null
 ) : Serializable

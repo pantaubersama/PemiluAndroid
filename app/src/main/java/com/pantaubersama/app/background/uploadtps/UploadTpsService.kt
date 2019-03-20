@@ -96,6 +96,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
         mBuilder.setContentIntent(pendingIntent)
         notificationManager.notify(1, mBuilder.build())
         publishResult()
+        presenter.dispatch()
         stopSelf()
     }
 
@@ -121,6 +122,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
 
         mBuilder.setContentIntent(pendingIntent)
         notificationManager.notify(1, mBuilder.build())
+        presenter.dispatch()
         stopSelf()
     }
 }

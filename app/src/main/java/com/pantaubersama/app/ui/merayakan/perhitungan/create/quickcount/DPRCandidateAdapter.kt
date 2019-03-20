@@ -35,7 +35,7 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers, private var is
     fun updateData(realCount: RealCount) {
         realCount.candidates.forEachIndexed { i, candidateDb ->
             data.forEachIndexed { j, candidateData ->
-                if ((candidateData as Candidate).id == candidateDb.id) {
+                if ((candidateData as Candidate).id == candidateDb.id || (candidateData as Candidate).id == candidateDb.actorId) {
                     candidateData.candidateCount = candidateDb.totalVote
                 }
             }
