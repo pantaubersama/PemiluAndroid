@@ -8,11 +8,8 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiData
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.RekapitulasiAdapter
-import com.pantaubersama.app.ui.merayakan.rekapitulasi.tpslist.TPSListActivity
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.toDp
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -67,15 +64,15 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
 
     private fun setupRekapitulasiList() {
         adapter = RekapitulasiAdapter()
-        adapter.listener = object : RekapitulasiAdapter.Listener {
-            override fun onClickItem(item: RekapitulasiData) {
-                when (parent) {
-                    "provinsi" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kabupaten")
-                    "kabupaten" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kecamatan")
-                    "kecamatan" -> TPSListActivity.start(this@RekapitulasiDaerahActivity)
-                }
-            }
-        }
+//        adapter.listener = object : RekapitulasiAdapter.Listener {
+//            override fun onClickItem(item: RekapitulasiData) {
+//                when (parent) {
+//                    "provinsi" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kabupaten")
+//                    "kabupaten" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kecamatan")
+//                    "kecamatan" -> TPSListActivity.start(this@RekapitulasiDaerahActivity)
+//                }
+//            }
+//        }
         recycler_view.setPadding(0, 8f.toDp(this@RekapitulasiDaerahActivity), 0, 8f.toDp(this@RekapitulasiDaerahActivity))
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = adapter
@@ -85,10 +82,10 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
         }
     }
 
-    override fun bindRekapitulasi(data: MutableList<RekapitulasiData>) {
-        recycler_view.visibleIf(true)
-        adapter.setDatas(data as MutableList<ItemModel>)
-    }
+//    override fun bindRekapitulasi(data: MutableList<RekapitulasiData>) {
+//        recycler_view.visibleIf(true)
+//        adapter.setDatas(data as MutableList<ItemModel>)
+//    }
 
     override fun showLoading() {
         lottie_loading.enableLottie(true, lottie_loading)

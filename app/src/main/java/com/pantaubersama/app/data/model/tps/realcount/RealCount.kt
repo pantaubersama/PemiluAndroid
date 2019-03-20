@@ -7,6 +7,7 @@ import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.tps.TPS
 import java.io.Serializable
 
@@ -49,8 +50,14 @@ data class Candidate(
     @SerializedName("actor_id")
     var actorId: Int? = null,
     @SerializedName("actor_type")
-    var actorType: String? = null
-) : Serializable
+    var actorType: String? = null,
+    @SerializedName("percentage")
+    var percentage: Double? = null
+) : ItemModel, Serializable {
+    override fun getType(): Int {
+        return 0
+    }
+}
 
 data class Party(
     @SerializedName("id")
@@ -62,5 +69,7 @@ data class Party(
     @SerializedName("actor_id")
     var actorId: Int? = null,
     @SerializedName("actor_type")
-    var actorType: String? = null
+    var actorType: String? = null,
+    @SerializedName("percentage")
+    var percentage: Double? = null
 ) : Serializable

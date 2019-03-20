@@ -7,15 +7,14 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
-import com.pantaubersama.app.data.model.kuis.Team
-import com.pantaubersama.app.data.model.kuis.TeamPercentage
-import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiData
+import com.pantaubersama.app.data.model.rekapitulasi.Percentage
+import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerahActivity
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
-import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
 import javax.inject.Inject
@@ -46,7 +45,7 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
                 startActivityForResult(BannerInfoActivity.setIntent(requireContext(), bannerInfo), PantauConstants.RequestCode.RC_BANNER_REKAPITULASI)
             }
 
-            override fun onClickItem(item: RekapitulasiData) {
+            override fun onClickItem(item: Percentage) {
                 RekapitulasiDaerahActivity.start(requireContext(), "provinsi")
             }
         }
@@ -60,14 +59,21 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
 
     override fun showBanner(it: BannerInfo) {
         adapter.addBanner(it)
-        val teamsPercentage: MutableList<TeamPercentage> = ArrayList()
-        teamsPercentage.add(TeamPercentage(Team(1, "Jokowi-Ma'ruf", ""), 52f, 200000))
-        teamsPercentage.add(TeamPercentage(Team(2, "Prabowo-Sandi", ""), 48f, 200000))
-        teamsPercentage.add(TeamPercentage(Team(2, "Tidak sah", ""), 6f, 200000))
-        adapter.addHeader(
-            RekapitulasiData(100000, "1 mnt lalu", teamsPercentage, "Jawa Timur")
-        )
+        presenter.getTotalParticipant()
         refreshItem()
+    }
+
+    override fun showFailedGetTotalParticipantAlert() {
+        ToastUtil.show(requireContext(), "Gagal memuat data total partisipan")
+    }
+
+    override fun bindTotalParticipantData(totalParticipantData: TotalParticipantData) {
+        adapter.addItem(totalParticipantData as ItemModel)
+        presenter.getRekapitulasiNasional()
+    }
+
+    override fun showFailedGetRekapitulasiNasionalAlert() {
+        ToastUtil.show(requireContext(), "Gagal memuat data rekapitulasi")
     }
 
     private fun refreshItem() {
@@ -75,10 +81,8 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
         presenter.getRekapitulasiData()
     }
 
-    override fun bindRekapitulasi(data: MutableList<RekapitulasiData>) {
-        recycler_view.visibleIf(true)
-        adapter.addData(data as MutableList<ItemModel>)
-        adapter.addFooter()
+    override fun bindRekapitulasiNasional(data: Percentage) {
+        adapter.addItem(data as ItemModel)
     }
 
     override fun showFailedGetBannerAlert() {

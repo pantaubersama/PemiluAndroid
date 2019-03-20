@@ -7,6 +7,8 @@ import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitikResponse
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitiksResponse
 import com.pantaubersama.app.data.model.kuis.* // ktlint-disable
 import com.pantaubersama.app.data.model.linimasa.FeedsResponse
+import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiResponse
+import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatListResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
@@ -311,4 +313,12 @@ interface PantauAPI {
         @Query("hitung_real_count_id") tpsId: String,
         @Query("calculation_type") realCountType: String
     ): Single<RealCountResponse>
+
+    @GET("hitung/v1/summary/president/show")
+    fun getRekapitulasiNasional(
+        @Query("level") level: Int = 0
+    ): Single<RekapitulasiResponse>
+
+    @GET("hitung/v1/summary/contribution")
+    fun getTotalParticipant(): Single<TotalParticipantResponse>
 }
