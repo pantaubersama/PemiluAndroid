@@ -35,10 +35,18 @@ interface WordStadiumAPI {
     ): Completable
 
     @GET("word_stadium/v1/challenges/all")
-    fun getPublicChallenge(@Query("progress") progress: String): Single<ChallengeResponse>
+    fun getPublicChallenge(
+        @Query("progress") progress: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
+    ): Single<ChallengeResponse>
 
     @GET("word_stadium/v1/challenges/me")
-    fun getPersonalChallenge(@Query("progress") progress: String): Single<ChallengeResponse>
+    fun getPersonalChallenge(
+        @Query("progress") progress: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
+    ): Single<ChallengeResponse>
 
     @FormUrlEncoded
     @PUT("word_stadium/v1/challenges/open/opponent_candidates")

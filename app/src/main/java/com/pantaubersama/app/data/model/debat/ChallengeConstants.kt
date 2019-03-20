@@ -5,6 +5,7 @@ object ChallengeConstants {
         const val CHALLENGE = "challenge"
         const val COMING_SOON = "coming_soon"
         const val LIVE_NOW = "live_now"
+        const val IN_PROGRESS = "in_progress"
         const val DONE = "done"
         const val WAITING_OPPONENT = "waiting_opponent"
         const val WAITING_CONFIRMATION = "waiting_confirmation"
