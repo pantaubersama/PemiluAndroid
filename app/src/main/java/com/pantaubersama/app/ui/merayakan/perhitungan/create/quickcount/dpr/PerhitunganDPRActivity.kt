@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_perhitungan_dpr.*
 import javax.inject.Inject
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.jakewharton.rxbinding2.widget.RxTextView
+import com.pantaubersama.app.utils.ToastUtil
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
 
@@ -75,10 +76,14 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         setupDPRList()
         realCountType?.let { tps?.let { it1 -> presenter.getRealCountList(it1, it) } }
         no_vote_inc_button.setOnClickListener {
-            val count = no_vote_count_field.text.toString().toInt()
-            no_vote_count_field.setText(count.plus(1).toString())
+            if (tps?.status != "published") {
+                val count = no_vote_count_field.text.toString().toInt()
+                no_vote_count_field.setText(count.plus(1).toString())
+            } else {
+                ToastUtil.show(this@PerhitunganDPRActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
+            }
         }
-
+        no_vote_count_field.isEnabled = tps?.status != "published"
         RxTextView.textChanges(no_vote_count_field)
             .skipInitialValue()
             .flatMap {
@@ -100,14 +105,16 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
                 invalid_vote_count.text = noVote.toString()
                 val allCount = valid_vote_count.text.toString().toInt() + invalid_vote_count.text.toString().toInt()
                 all_vote_count.text = allCount.toString()
-                tps?.id?.let {
-                    realCountType?.let { it1 ->
-                        presenter.saveRealCount(
-                            it,
-                            it1,
-                            (adapter.getListData() as MutableList<CandidateData>),
-                            noVote
-                        )
+                if (tps?.status != "published") {
+                    tps?.id?.let {
+                        realCountType?.let { it1 ->
+                            presenter.saveRealCount(
+                                it,
+                                it1,
+                                (adapter.getListData() as MutableList<CandidateData>),
+                                noVote
+                            )
+                        }
                     }
                 }
             }
@@ -143,13 +150,15 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-                realCountType?.let {
-                    tps?.id?.let { it1 ->
-                        presenter.saveRealCount(
-                            it1,
-                            it,
-                            items
-                        )
+                if (tps?.status != "published") {
+                    realCountType?.let {
+                        tps?.id?.let { it1 ->
+                            presenter.saveRealCount(
+                                it1,
+                                it,
+                                items
+                            )
+                        }
                     }
                 }
             }
@@ -179,9 +188,15 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         adapter.setDatas(data as MutableList<ItemModel>)
         tps?.id?.let {
             realCountType?.let { it1 ->
-                presenter.getRealCount(it, it1)
+                tps?.status?.let { it2 ->
+                    presenter.getRealCount(it, it1, it2)
+                }
             }
         }
+    }
+
+    override fun showFailedGetRealCountAlert() {
+        ToastUtil.show(this@PerhitunganDPRActivity, "Gagal memuat perhitungan")
     }
 
     override fun showGetRealCountListFailedAlert() {

@@ -58,5 +58,9 @@ data class Party(
     var id: Int,
     @SerializedName("total_vote")
     @Expose
-    var totalVote: Int
+    var totalVote: Int,
+    @SerializedName("actor_id")
+    var actorId: Int? = null,
+    @SerializedName("actor_type")
+    var actorType: String? = null
 ) : Serializable
