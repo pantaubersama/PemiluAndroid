@@ -62,6 +62,9 @@ interface PerhitunganDAO {
         @Query("SELECT * FROM c1_form")
         fun getC1s(): MutableList<C1Form>
 
+        @Query("SELECT * FROM c1_form WHERE tpsId = :tpsId")
+        fun getC1s(tpsId: String): MutableList<C1Form>
+
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         fun saveC1(c1Form: C1Form)
 
@@ -85,6 +88,9 @@ interface PerhitunganDAO {
 
         @Query("SELECT * FROM image_doc")
         fun getImages(): MutableList<ImageDoc>
+
+        @Query("SELECT * FROM image_doc WHERE tpsId = :tpsId")
+        fun getImages(tpsId: String): MutableList<ImageDoc>
 
         @Insert
         fun saveImage(imageDoc: ImageDoc)
