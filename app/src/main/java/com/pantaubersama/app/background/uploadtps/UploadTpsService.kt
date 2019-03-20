@@ -61,7 +61,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
 
     private fun getTitle(progress: Int): String {
         return when {
-            progress < 5 -> "Mengunggah Data TPS"
+            progress < 5 -> "Mengunggah RealCountData TPS"
             progress < 10 -> "Mengunggah Perhitungan - Presiden"
             progress < 15 -> "Mengunggah Perhitungan - DPR RI"
             progress < 20 -> "Mengunggah Perhitungan - DPD"
@@ -96,6 +96,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
         mBuilder.setContentIntent(pendingIntent)
         notificationManager.notify(1, mBuilder.build())
         publishResult()
+        presenter.dispatch()
         stopSelf()
     }
 
@@ -121,6 +122,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
 
         mBuilder.setContentIntent(pendingIntent)
         notificationManager.notify(1, mBuilder.build())
+        presenter.dispatch()
         stopSelf()
     }
 }

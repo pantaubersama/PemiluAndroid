@@ -10,7 +10,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.tps.Dapil
-import com.pantaubersama.app.data.model.tps.RealCount
+import com.pantaubersama.app.data.model.tps.realcount.RealCount
 import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.data.model.tps.candidate.Candidate
 import com.pantaubersama.app.di.component.ActivityComponent
@@ -18,6 +18,7 @@ import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.DPRCandi
 import com.pantaubersama.app.utils.PantauConstants.Merayakan.REAL_COUNT_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Merayakan.TPS_DATA
 import com.pantaubersama.app.utils.RxSchedulers
+import com.pantaubersama.app.utils.ToastUtil
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_perhitungan_dpd.*
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
@@ -61,9 +62,14 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
                 presenter.getDPDData(it, type)
             }
         }
+        no_vote_count_field.isEnabled = tps?.status != "published"
         no_vote_inc_button.setOnClickListener {
-            val count = no_vote_count_field.text.toString().toInt()
-            no_vote_count_field.setText(count.plus(1).toString())
+            if (tps?.status != "published") {
+                val count = no_vote_count_field.text.toString().toInt()
+                no_vote_count_field.setText(count.plus(1).toString())
+            } else {
+                ToastUtil.show(this@PerhitunganDPDActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
+            }
         }
 
         RxTextView.textChanges(no_vote_count_field)
@@ -87,14 +93,16 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
                 invalid_vote_count.text = noVote.toString()
                 val allCount = valid_vote_count.text.toString().toInt() + invalid_vote_count.text.toString().toInt()
                 all_vote_count.text = allCount.toString()
-                tps?.id?.let {
-                    realCountType?.let { it1 ->
-                        presenter.saveRealCount(
-                            it,
-                            it1,
-                            (adapter.getListData() as MutableList<Candidate>),
-                            noVote
-                        )
+                if (tps?.status != "published") {
+                    tps?.id?.let {
+                        realCountType?.let { it1 ->
+                            presenter.saveRealCount(
+                                it,
+                                it1,
+                                (adapter.getListData() as MutableList<Candidate>),
+                                noVote
+                            )
+                        }
                     }
                 }
             }
@@ -134,13 +142,15 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-                tps?.id?.let {
-                    realCountType?.let { it1 ->
-                        presenter.saveRealCount(
-                            it,
-                            it1,
-                            (adapter.getListData() as MutableList<Candidate>)
-                        )
+                if (tps?.status != "published") {
+                    tps?.id?.let {
+                        realCountType?.let { it1 ->
+                            presenter.saveRealCount(
+                                it,
+                                it1,
+                                (adapter.getListData() as MutableList<Candidate>)
+                            )
+                        }
                     }
                 }
             }
@@ -151,7 +161,11 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
 
     override fun bindCandidates(candidates: MutableList<Candidate>) {
         adapter.setDatas(candidates as MutableList<ItemModel>)
-        tps?.id?.let { realCountType?.let { it1 -> presenter.getRealCount(it, it1) } }
+        tps?.id?.let { realCountType?.let { it1 -> tps?.status?.let { it2 -> presenter.getRealCount(it, it1, it2) } } }
+    }
+
+    override fun showFailedGetRealCountAlert() {
+        ToastUtil.show(this@PerhitunganDPDActivity, "Gagal memuat perhitungan DPD")
     }
 
     override fun showLoading() {

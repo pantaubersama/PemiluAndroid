@@ -159,4 +159,9 @@ class UploadTpsPresenter @Inject constructor(
                 )
         )
     }
+
+    fun dispatch() {
+        disposables.clear()
+        view = null
+    }
 }

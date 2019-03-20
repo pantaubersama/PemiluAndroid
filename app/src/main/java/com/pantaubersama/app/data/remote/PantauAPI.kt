@@ -10,7 +10,9 @@ import com.pantaubersama.app.data.model.linimasa.FeedsResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatListResponse
 import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
+import com.pantaubersama.app.data.model.tps.c1.C1FormResponse
 import com.pantaubersama.app.data.model.tps.candidate.CandidateResponse
+import com.pantaubersama.app.data.model.tps.realcount.realcountoutput.RealCountResponse
 import com.pantaubersama.app.data.model.wordstadium.LawanDebatResponse
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -297,4 +299,16 @@ interface PantauAPI {
     fun publishRealCount(
         @Path("id") apiTpsId: String
     ): Completable
+
+    @GET("hitung/v1/form_c1")
+    fun getC1(
+        @Query("hitung_real_count_id") tpsId: String,
+        @Query("form_c1_type") c1Type: String
+    ): Single<C1FormResponse>
+
+    @GET("hitung/v1/calculations")
+    fun getRealCount(
+        @Query("hitung_real_count_id") tpsId: String,
+        @Query("calculation_type") realCountType: String
+    ): Single<RealCountResponse>
 }

@@ -1,10 +1,12 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.perhitunganhome
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.View
+import android.view.* // ktlint-disable
 import com.pantaubersama.app.R
 import com.pantaubersama.app.background.uploadtps.UploadTpsService
 import com.pantaubersama.app.base.BaseActivity
@@ -21,6 +23,7 @@ import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_perhitunganmain.*
+import kotlinx.android.synthetic.main.publish_confirmation_dialog.*
 import javax.inject.Inject
 
 class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), PerhitunganMainView, View.OnClickListener {
@@ -187,17 +190,49 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
                 startActivity(Intent(intent))
             }
             submit_button -> {
-                tps?.id?.let {
-                    val intent = Intent(this@PerhitunganMainActivity, UploadTpsService::class.java)
-                    intent.putExtra("tps_id", it)
-                    startService(intent)
-                    finishSection()
-                }
+                showPublishConfirmationDialog()
             }
             submitted_button -> {
-                ToastUtil.show(this@PerhitunganMainActivity, "Data Telah Terkirim")
+                ToastUtil.show(this@PerhitunganMainActivity, "RealCountData Telah Terkirim")
             }
         }
+    }
+
+    private fun showPublishConfirmationDialog() {
+        val dialog = Dialog(this)
+        val dialogLayout = LayoutInflater.from(this@PerhitunganMainActivity).inflate(R.layout.publish_confirmation_dialog, null)
+        dialog.setContentView(dialogLayout)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setOnKeyListener { dialogInterface, i, keyEvent ->
+            if (i == KeyEvent.KEYCODE_BACK) {
+                dialog.dismiss()
+                true
+            } else {
+                false
+            }
+        }
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.no_button.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.yes_button.setOnClickListener {
+            dialog.dismiss()
+            tps?.id?.let {
+                val intent = Intent(this@PerhitunganMainActivity, UploadTpsService::class.java)
+                intent.putExtra("tps_id", it)
+                startService(intent)
+                finishSection()
+            }
+        }
+        val lp = WindowManager.LayoutParams()
+        val window = dialog.window
+        lp.copyFrom(window?.attributes)
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        window?.attributes = lp
+        lp.gravity = Gravity.CENTER
+        window?.attributes = lp
+        dialog.show()
     }
 
     override fun showLoading() {
