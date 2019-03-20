@@ -3,7 +3,7 @@ package com.pantaubersama.app.ui.menguji.home
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.WordStadiumInteractor
-import com.pantaubersama.app.data.model.debat.ChallengeConstants
+import com.pantaubersama.app.data.model.debat.ChallengeConstants.Progress
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.State
 import io.reactivex.rxkotlin.plusAssign
@@ -34,18 +34,19 @@ class MengujiPresenter @Inject constructor(
             })
     }
 
-    fun getChallengeLive() {
+    fun getChallengeCarousel() {
         view?.showChallengeLive(State.Loading, emptyList(), false)
 
         val request = if (isPublik)
-            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.LIVE_NOW)
+            wordStadiumInteractor.getPublicChallenge(Progress.LIVE_NOW, 1, MAX_CAROUSEL_ITEM)
         else
-            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.LIVE_NOW)
+            wordStadiumInteractor.getPersonalChallenge(Progress.IN_PROGRESS, 1, MAX_CAROUSEL_ITEM)
 
         disposables += request
             .subscribe({
-                view?.showChallengeLive(State.Success, it.take(3), it.size > 3)
-                emptyChallenges.onNext(it.isEmpty())
+                val hasMore = (it.meta.pages?.total ?: 1) > 1
+                view?.showChallengeLive(State.Success, it.challenges, hasMore)
+                emptyChallenges.onNext(it.challenges.isEmpty())
             }, {
                 view?.showChallengeLive(State.Error(it.message), emptyList(), false)
             })
@@ -55,14 +56,15 @@ class MengujiPresenter @Inject constructor(
         view?.showChallengeComingSoon(State.Loading, emptyList(), false)
 
         val request = if (isPublik)
-            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.COMING_SOON)
+            wordStadiumInteractor.getPublicChallenge(Progress.COMING_SOON, 1, MAX_SECTION_ITEM)
         else
-            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.COMING_SOON)
+            wordStadiumInteractor.getPersonalChallenge(Progress.COMING_SOON, 1, MAX_SECTION_ITEM)
 
         disposables += request
             .subscribe({
-                view?.showChallengeComingSoon(State.Success, it.take(3), it.size > 3)
-                emptyChallenges.onNext(it.isEmpty())
+                val hasMore = (it.meta.pages?.total ?: 1) > 1
+                view?.showChallengeComingSoon(State.Success, it.challenges, hasMore)
+                emptyChallenges.onNext(it.challenges.isEmpty())
             }, {
                 view?.showChallengeComingSoon(State.Error(it.message), emptyList(), false)
             })
@@ -72,14 +74,15 @@ class MengujiPresenter @Inject constructor(
         view?.showChallengeDone(State.Loading, emptyList(), false)
 
         val request = if (isPublik)
-            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.DONE)
+            wordStadiumInteractor.getPublicChallenge(Progress.DONE, 1, MAX_SECTION_ITEM)
         else
-            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.DONE)
+            wordStadiumInteractor.getPersonalChallenge(Progress.DONE, 1, MAX_SECTION_ITEM)
 
         disposables += request
             .subscribe({
-                view?.showChallengeDone(State.Success, it.take(3), it.size > 3)
-                emptyChallenges.onNext(it.isEmpty())
+                val hasMore = (it.meta.pages?.total ?: 1) > 1
+                view?.showChallengeDone(State.Success, it.challenges, hasMore)
+                emptyChallenges.onNext(it.challenges.isEmpty())
             }, {
                 view?.showChallengeDone(State.Error(it.message), emptyList(), false)
             })
@@ -89,14 +92,15 @@ class MengujiPresenter @Inject constructor(
         view?.showChallengeOngoing(State.Loading, emptyList(), false)
 
         val request = if (isPublik)
-            wordStadiumInteractor.getPublicChallenge(ChallengeConstants.Progress.CHALLENGE)
+            wordStadiumInteractor.getPublicChallenge(Progress.CHALLENGE, 1, MAX_SECTION_ITEM)
         else
-            wordStadiumInteractor.getPersonalChallenge(ChallengeConstants.Progress.CHALLENGE)
+            wordStadiumInteractor.getPersonalChallenge(Progress.CHALLENGE, 1, MAX_SECTION_ITEM)
 
         disposables += request
             .subscribe({
-                view?.showChallengeOngoing(State.Success, it.take(3), it.size > 3)
-                emptyChallenges.onNext(it.isEmpty())
+                val hasMore = (it.meta.pages?.total ?: 1) > 1
+                view?.showChallengeOngoing(State.Success, it.challenges, hasMore)
+                emptyChallenges.onNext(it.challenges.isEmpty())
             }, {
                 view?.showChallengeOngoing(State.Error(it.message), emptyList(), false)
             })
@@ -107,5 +111,10 @@ class MengujiPresenter @Inject constructor(
             .subscribe { emptyResults ->
                 view?.showAllChallengeEmpty(emptyResults.all { it })
             }
+    }
+
+    companion object {
+        private const val MAX_CAROUSEL_ITEM = 5
+        private const val MAX_SECTION_ITEM = 3
     }
 }
