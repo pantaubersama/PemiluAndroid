@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
-import com.pantaubersama.app.data.model.tps.RealCount
+import com.pantaubersama.app.data.model.tps.realcount.RealCount
 import com.pantaubersama.app.data.model.tps.candidate.Candidate
 import com.pantaubersama.app.utils.RxSchedulers
 import com.pantaubersama.app.utils.ToastUtil

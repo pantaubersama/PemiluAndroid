@@ -1,4 +1,4 @@
-package com.pantaubersama.app.data.model.tps
+package com.pantaubersama.app.data.model.tps.realcount
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -7,6 +7,7 @@ import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.pantaubersama.app.data.model.tps.TPS
 import java.io.Serializable
 
 @Entity(
@@ -44,7 +45,11 @@ data class Candidate(
     var id: Int,
     @SerializedName("total_vote")
     @Expose
-    var totalVote: Int
+    var totalVote: Int,
+    @SerializedName("actor_id")
+    var actorId: String? = null,
+    @SerializedName("actor_type")
+    var actorType: String? = null
 ) : Serializable
 
 data class Party(

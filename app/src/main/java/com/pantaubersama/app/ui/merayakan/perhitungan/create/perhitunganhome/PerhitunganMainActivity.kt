@@ -193,7 +193,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
                 showPublishConfirmationDialog()
             }
             submitted_button -> {
-                ToastUtil.show(this@PerhitunganMainActivity, "Data Telah Terkirim")
+                ToastUtil.show(this@PerhitunganMainActivity, "RealCountData Telah Terkirim")
             }
         }
     }

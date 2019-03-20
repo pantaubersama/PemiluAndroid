@@ -9,7 +9,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.tps.Dapil
-import com.pantaubersama.app.data.model.tps.RealCount
+import com.pantaubersama.app.data.model.tps.realcount.RealCount
 import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.data.model.tps.candidate.CandidateData
 import com.pantaubersama.app.di.component.ActivityComponent
