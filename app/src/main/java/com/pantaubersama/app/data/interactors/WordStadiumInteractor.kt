@@ -2,6 +2,7 @@ package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.debat.Challenge
+import com.pantaubersama.app.data.model.debat.ChallengeData
 import com.pantaubersama.app.data.model.debat.WordItem
 import com.pantaubersama.app.data.model.wordstadium.LawanDebat
 import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
@@ -70,18 +71,18 @@ class WordStadiumInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
-    fun getPublicChallenge(progress: String): Single<List<Challenge>> {
+    fun getPublicChallenge(progress: String, page: Int, perPage: Int = 12): Single<ChallengeData> {
         return apiWrapper.getWordStadiumApi()
-            .getPublicChallenge(progress)
-            .map { it.challengeData.challenges }
+            .getPublicChallenge(progress, page, perPage)
+            .map { it.challengeData }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
 
-    fun getPersonalChallenge(progress: String): Single<List<Challenge>> {
+    fun getPersonalChallenge(progress: String, page: Int, perPage: Int = 12): Single<ChallengeData> {
         return apiWrapper.getWordStadiumApi()
-            .getPersonalChallenge(progress)
-            .map { it.challengeData.challenges }
+            .getPersonalChallenge(progress, page, perPage)
+            .map { it.challengeData }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }

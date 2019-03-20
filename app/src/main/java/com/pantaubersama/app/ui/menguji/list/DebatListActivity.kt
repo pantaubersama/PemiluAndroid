@@ -44,14 +44,20 @@ class DebatListActivity : BaseActivity<DebatListPresenter>(), DebatListView {
         recycler_view.adapter = adapter
         recycler_view.isNestedScrollingEnabled = true
 
+        adapter.addSupportLoadMore(recycler_view, 12) {
+            adapter.setLoading()
+            presenter.getChallenges(title, it)
+        }
+
         swipe_refresh.setOnRefreshListener {
             swipe_refresh.isRefreshing = false
-            presenter.getChallenges(title)
+            adapter.setDataEnd(false)
+            presenter.getChallenges(title, 1)
         }
 
         setupHeader()
 
-        presenter.getChallenges(title)
+        presenter.getChallenges(title, 1)
     }
 
     private fun setupHeader() {
@@ -69,11 +75,20 @@ class DebatListActivity : BaseActivity<DebatListPresenter>(), DebatListView {
         adapter.addItem(DebatHeader(text), 0)
     }
 
-    override fun showChallenge(list: List<Challenge>) {
+    override fun showChallenges(list: List<Challenge>) {
         view_empty_state.enableLottie(list.isEmpty(), lottie_empty_state)
         recycler_view.visibleIf(list.isNotEmpty())
         adapter.setDatas(list)
         setupHeader()
+    }
+
+    override fun showMoreChallenges(list: List<Challenge>) {
+        adapter.setLoaded()
+        adapter.addData(list)
+    }
+
+    override fun setNoMoreItems() {
+        adapter.setDataEnd(true)
     }
 
     override fun showLoading() {

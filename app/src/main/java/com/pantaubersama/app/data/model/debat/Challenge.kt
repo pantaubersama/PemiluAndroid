@@ -8,6 +8,7 @@ import com.pantaubersama.app.data.model.debat.ChallengeConstants.Role
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Type
 import com.pantaubersama.app.data.model.image.Image
+import com.pantaubersama.app.data.model.meta.Meta
 import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_AUDIENCE_ITEM
@@ -25,7 +26,9 @@ data class ChallengeItemResponse(
 
 data class ChallengeData(
     @SerializedName("challenges")
-    val challenges: List<Challenge>
+    val challenges: List<Challenge>,
+    @SerializedName("meta")
+    val meta: Meta
 )
 
 data class ChallengeItemData(

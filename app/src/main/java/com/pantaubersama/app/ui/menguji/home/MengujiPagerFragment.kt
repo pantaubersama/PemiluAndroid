@@ -65,7 +65,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
 
     private fun refreshList() {
         presenter.getBanner()
-        presenter.getChallengeLive()
+        presenter.getChallengeCarousel()
         presenter.getChallengeComingSoon()
         presenter.getChallengeDone()
         presenter.getChallengeOngoing()
