@@ -2,6 +2,7 @@ package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.model.rekapitulasi.Percentage
 import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
+import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiResponse
 import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
@@ -30,8 +31,15 @@ class RekapitulasiInteractor @Inject constructor(
             }
     }
 
-    fun getRekapitulasiList(): Single<MutableList<Rekapitulasi>> {
-        return apiWrapper.getPantauApi().getRekapitulasiList()
+    fun getRekapitulasiList(parent: String, regionCode: Long? = null): Single<MutableList<Rekapitulasi>> {
+        var api: Single<RekapitulasiResponse> = apiWrapper.getPantauApi().getRekapitulasiList(0)
+        when (parent) {
+            "provinsi" -> api = apiWrapper.getPantauApi().getRekapitulasiList(1, regionCode)
+            "kabupaten" -> api = apiWrapper.getPantauApi().getRekapitulasiList(2, regionCode)
+            "kecamatan" -> api = apiWrapper.getPantauApi().getRekapitulasiList(3, regionCode)
+            else -> apiWrapper.getPantauApi().getRekapitulasiList(0)
+        }
+        return api
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .map {

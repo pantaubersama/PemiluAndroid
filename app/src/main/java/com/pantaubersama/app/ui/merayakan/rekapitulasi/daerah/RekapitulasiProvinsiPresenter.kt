@@ -1,9 +1,12 @@
 package com.pantaubersama.app.ui.merayakan.rekapitulasi.daerah
 
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.interactors.RekapitulasiInteractor
 import javax.inject.Inject
 
-class RekapitulasiProvinsiPresenter @Inject constructor() : BasePresenter<RekapitulasiProvinsiView>() {
+class RekapitulasiProvinsiPresenter @Inject constructor(
+    private val rekapitulasiInteractor: RekapitulasiInteractor
+) : BasePresenter<RekapitulasiProvinsiView>() {
     fun getRekapitulasiKabupatenData() {
 //        view?.showLoading()
 //        val teamsPercentage: MutableList<TeamPercentage> = ArrayList()
@@ -45,5 +48,23 @@ class RekapitulasiProvinsiPresenter @Inject constructor() : BasePresenter<Rekapi
 //        data.add(RekapitulasiData(2000, "1 mnt lalu", teamsPercentage, "Sumbersari"))
 //        view?.dismissLoading()
 //        view?.bindRekapitulasi(data)
+    }
+
+    fun getRekapitulasi(parent: String, regionCode: Long) {
+        view?.showLoading()
+        disposables.add(
+            rekapitulasiInteractor.getRekapitulasiList(parent, regionCode)
+                .subscribe(
+                    {
+                        view?.dismissLoading()
+                        view?.bindRekapitulasi(it)
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showError(it)
+                        view?.showFailedLoadRekapitulasiAlert()
+                    }
+                )
+        )
     }
 }

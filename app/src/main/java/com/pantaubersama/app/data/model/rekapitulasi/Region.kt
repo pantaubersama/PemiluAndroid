@@ -5,9 +5,9 @@ import java.io.Serializable
 
 data class Region(
     @SerializedName("id")
-    var id: Int,
+    var id: Long,
     @SerializedName("code")
-    var code: Int,
+    var code: Long,
     @SerializedName("name")
     var name: String,
     @SerializedName("level")
@@ -19,5 +19,5 @@ data class Region(
     @SerializedName("updated_at")
     var updatedAt: String,
     @SerializedName("id_wilayah")
-    var idWilayah: Int
+    var idWilayah: Long
 ) : Serializable

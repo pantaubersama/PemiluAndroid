@@ -29,7 +29,7 @@ class RekapitulasiPresenter @Inject constructor(
 
     fun getRekapitulasiData() {
         disposables.add(
-            rekapitulasiInteractor.getRekapitulasiList()
+            rekapitulasiInteractor.getRekapitulasiList("nasional")
                 .subscribe(
                     {
                         view?.dismissLoading()

@@ -8,7 +8,7 @@ data class TotalParticipantData(
     @SerializedName("total")
     var total: Int,
     @SerializedName("last_update")
-    var lastUpdate: String
+    var lastUpdate: LastUpdate
 ) : ItemModel, Serializable {
     override fun getType(): Int {
         return 0

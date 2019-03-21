@@ -8,9 +8,12 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.RekapitulasiAdapter
+import com.pantaubersama.app.ui.merayakan.rekapitulasi.tpslist.TPSListActivity
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.toDp
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -56,24 +59,23 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
     }
 
     private fun loadData() {
-        when (parent) {
-            "provinsi" -> presenter.getRekapitulasiKabupatenData()
-            "kabupaten" -> presenter.getRekapitulasiKecamatanData()
-            "kecamatan" -> presenter.getRekapitulasiKelurahanData()
+        parentData?.region?.code?.let { it1 ->
+            parent?.let { presenter.getRekapitulasi(it, it1) }
         }
     }
 
     private fun setupRekapitulasiList() {
         adapter = RekapitulasiAdapter()
-//        adapter.listener = object : RekapitulasiAdapter.Listener {
-//            override fun onClickItem(item: RekapitulasiData) {
-//                when (parent) {
-//                    "provinsi" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kabupaten")
-//                    "kabupaten" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kecamatan")
-//                    "kecamatan" -> TPSListActivity.start(this@RekapitulasiDaerahActivity)
-//                }
-//            }
-//        }
+        adapter.listener = object : RekapitulasiAdapter.Listener {
+            override fun onClickItem(item: Rekapitulasi) {
+                when (parent) {
+                    "provinsi" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kabupaten", item)
+                    "kabupaten" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kecamatan", item)
+                    "kecamatan" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kelurahan", item)
+                    "kecamatan" -> TPSListActivity.start(this@RekapitulasiDaerahActivity)
+                }
+            }
+        }
         recycler_view.setPadding(0, 8f.toDp(this@RekapitulasiDaerahActivity), 0, 8f.toDp(this@RekapitulasiDaerahActivity))
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = adapter
@@ -83,10 +85,14 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
         }
     }
 
-//    override fun bindRekapitulasi(data: MutableList<RekapitulasiData>) {
-//        recycler_view.visibleIf(true)
-//        adapter.setDatas(data as MutableList<ItemModel>)
-//    }
+    override fun bindRekapitulasi(data: MutableList<Rekapitulasi>) {
+        recycler_view.visibleIf(true)
+        adapter.setDatas(data as MutableList<ItemModel>)
+    }
+
+    override fun showFailedLoadRekapitulasiAlert() {
+        ToastUtil.show(this@RekapitulasiDaerahActivity, "Gagal memuat rekapitulasi daerah")
+    }
 
     override fun showLoading() {
         lottie_loading.enableLottie(true, lottie_loading)

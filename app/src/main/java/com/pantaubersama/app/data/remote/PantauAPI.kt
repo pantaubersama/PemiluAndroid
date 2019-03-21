@@ -324,6 +324,7 @@ interface PantauAPI {
 
     @GET("hitung/v1/summary/president/list")
     fun getRekapitulasiList(
-        @Query("level") level: Int = 0
+        @Query("level") level: Int? = 0,
+        @Query("region") regencyCode: Long? = null
     ): Single<RekapitulasiResponse>
 }

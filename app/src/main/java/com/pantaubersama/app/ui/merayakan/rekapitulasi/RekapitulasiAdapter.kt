@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.rekapitulasi_item.*
@@ -17,28 +18,40 @@ class RekapitulasiAdapter : BaseRecyclerAdapter() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//        (holder as RekapitulasiViewHolder).bind(data[position] as RekapitulasiData)
+        (holder as RekapitulasiViewHolder).bind(data[position] as Rekapitulasi)
     }
 
     inner class RekapitulasiViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-//        fun bind(item: RekapitulasiData) {
-//            province_text.text = item.location
-//            // paslon 1
-//            paslon_1_name.text = item.teams[0].team.title
-//            paslon_1_percentage.text = "${item.teams[0].percentage}%"
-//            // paslon 2
-//            paslon_2_name.text = item.teams[1].team.title
-//            paslon_2_percentage.text = "${item.teams[1].percentage}%"
-//            // golput
-//            golput_count.text = (10).toString() // example
-//            votes_count.text = item.totalParticipant.toInt().toString()
-//            itemView.setOnClickListener {
-//                listener?.onClickItem(item)
-//            }
-//        }
+        fun bind(item: Rekapitulasi) {
+            province_text.text = item.region.name
+            paslon_1_name.text = "Jokowi - Ma'ruf"
+            paslon_2_name.text = "Prabowo - Sandi"
+            if (item.percentages != null) {
+                item.percentages?.candidates?.get(0)?.percentage?.let {
+                    paslon_1_percentage.text = "${String.format("%.2f", it)}%"
+                }
+                item.percentages?.candidates?.get(1)?.percentage?.let {
+                    paslon_2_percentage.text = "${String.format("%.2f", it)}%"
+                }
+                item.percentages?.invalidVote.let {
+                    golput_count.text = it?.total.toString()
+                }
+                item.percentages?.totalVote?.let {
+                    votes_count.text = it.toString()
+                }
+                itemView.setOnClickListener {
+                    listener?.onClickItem(item)
+                }
+            } else {
+                paslon_1_percentage.text = "0%"
+                paslon_2_percentage.text = "0%"
+                golput_count.text = "0"
+                votes_count.text = "0"
+            }
+        }
     }
 
     interface Listener {
-//        fun onClickItem(item: RekapitulasiData)
+        fun onClickItem(item: Rekapitulasi)
     }
 }

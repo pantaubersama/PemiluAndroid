@@ -83,6 +83,7 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
     inner class RekapitulasiTotalParticipantViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: TotalParticipantData) {
             total_participants.text = item.total.toString()
+            last_update_rekapitulasi.text = "Pembaruan terakhir ${item.lastUpdate.createdAtInWord.id}"
         }
     }
 
