@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.model.rekapitulasi
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Region(
     @SerializedName("id")
@@ -19,4 +20,4 @@ data class Region(
     var updatedAt: String,
     @SerializedName("id_wilayah")
     var idWilayah: Int
-)
+) : Serializable

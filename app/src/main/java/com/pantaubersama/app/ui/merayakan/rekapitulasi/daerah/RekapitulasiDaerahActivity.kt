@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.RekapitulasiAdapter
 import com.pantaubersama.app.utils.extensions.enableLottie
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>(), RekapitulasiProvinsiView {
     private lateinit var adapter: RekapitulasiAdapter
     private var parent: String? = null
+    private var parentData: Rekapitulasi? = null
 
     @Inject
     override lateinit var presenter: RekapitulasiProvinsiPresenter
@@ -32,6 +34,7 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
 
     override fun fetchIntentExtra() {
         parent = intent.getStringExtra("parent")
+        parentData = intent.getSerializableExtra("parent_data") as Rekapitulasi
     }
 
     override fun statusBarColor(): Int? {
@@ -44,10 +47,8 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
 
     override fun setupUI(savedInstanceState: Bundle?) {
         var titleDummy = ""
-        when (parent) {
-            "provinsi" -> titleDummy = "Yogyakarta"
-            "kabupaten" -> titleDummy = "Sleman"
-            "kecamatan" -> titleDummy = "Moyudan"
+        parentData?.region?.name?.let {
+            titleDummy = it
         }
         setupToolbar(true, titleDummy, R.color.white, 4f)
         setupRekapitulasiList()
@@ -114,9 +115,10 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
     }
 
     companion object {
-        fun start(context: Context, from: String) {
+        fun start(context: Context, from: String, item: Rekapitulasi) {
             val intent = Intent(context, RekapitulasiDaerahActivity::class.java)
             intent.putExtra("parent", from)
+            intent.putExtra("parent_data", item)
             context.startActivity(intent)
         }
     }

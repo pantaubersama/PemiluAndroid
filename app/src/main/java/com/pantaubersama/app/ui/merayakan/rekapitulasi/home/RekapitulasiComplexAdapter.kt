@@ -63,6 +63,7 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
         fun bind(item: Percentage) {
             // paslon 1
             main_paslon_1_percentage.text = String.format("%.2f", item.candidates?.get(0)?.percentage)
+            paslon_1_average.text = "Rerata ${item.candidates?.get(0)?.totalVote} suara"
             val p1 = paslon_1_strength.layoutParams as LinearLayout.LayoutParams
             item.candidates?.get(0)?.percentage?.toFloat()?.let {
                 p1.weight = it
@@ -70,6 +71,7 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
             paslon_1_strength.layoutParams = p1
             // paslon 2
             main_paslon_2_percentage.text = String.format("%.2f", item.candidates?.get(1)?.percentage)
+            paslon_2_average.text = "Rerata ${item.candidates?.get(1)?.totalVote} suara"
             val p2 = paslon_2_strength.layoutParams as LinearLayout.LayoutParams
             item.candidates?.get(1)?.percentage?.toFloat()?.let {
                 p2.weight = it
@@ -143,7 +145,8 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
     }
 
     fun addFooter() {
-        addItem(Footer(), data.size)
+        this.data.add(itemCount, Footer())
+        notifyItemInserted(itemCount - 1)
     }
 
     class Footer : ItemModel {

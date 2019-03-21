@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_loading_state.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), RekapitulasiView {
@@ -50,7 +51,7 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
             }
 
             override fun onClickItem(item: Rekapitulasi) {
-                RekapitulasiDaerahActivity.start(requireContext(), "provinsi")
+                RekapitulasiDaerahActivity.start(requireContext(), "provinsi", item)
             }
         }
         recycler_view.layoutManager = LinearLayoutManager(requireContext())
@@ -64,7 +65,6 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
     override fun showBanner(it: BannerInfo) {
         adapter.addBanner(it)
         presenter.getTotalParticipant()
-        refreshItem()
     }
 
     override fun showFailedGetTotalParticipantAlert() {
@@ -87,11 +87,12 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
 
     override fun bindRekapitulasiNasional(data: Percentage) {
         adapter.addRekapitulasiHeader(data)
-        presenter.getRekapitulasiData()
+        refreshItem()
     }
 
     override fun bindRekapitulasiList(rekapitulasi: MutableList<Rekapitulasi>) {
         recycler_view.visibleIf(true)
+        Timber.d(rekapitulasi.toString())
         adapter.addData(rekapitulasi as MutableList<ItemModel>)
         adapter.addFooter()
     }
