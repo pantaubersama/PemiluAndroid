@@ -2,6 +2,8 @@ package com.pantaubersama.app.ui.debat.detail
 
 import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.data.model.debat.Challenge
+import com.pantaubersama.app.data.model.urlpreview.UrlItem
+import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
 
 /**
  * @author edityomurti on 01/03/2019 18:04
@@ -10,11 +12,6 @@ import com.pantaubersama.app.data.model.debat.Challenge
 interface DetailDebatView : BaseView {
     fun showChallenge(challenge: Challenge)
     fun onErrorGetChallenge(t: Throwable)
-
-    fun showLoadingStatementSource()
-    fun dismissLoadingStatementSource()
-    fun showStatementSource(url: String)
-    fun onErrorStatementSource(throwable: Throwable)
 
     fun showLoadingConfirmOpponentCandidate()
     fun dismissLoadingConfirmOpponentCandidate()
@@ -35,4 +32,10 @@ interface DetailDebatView : BaseView {
     fun dismissLoadingRejectDirect()
     fun onSuccessRejectDirect()
     fun onErrorRejectDirect(t: Throwable)
+
+    fun showLoadingUrlPreview()
+    fun dismissLoadingUrlPreview()
+    fun showTweetPreview(oEmbedLink: OEmbedLink)
+    fun showUrlPreview(urlItem: UrlItem)
+    fun onErrorUrlPreview(t: Throwable)
 }

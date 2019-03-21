@@ -313,21 +313,14 @@
                     android:textColor="@color/gray_dark_3"
                     android:textSize="8sp" />
 
-                <FrameLayout
+                <LinearLayout
                     android:id="@+id/ll_webview"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/bg_rounded_gray_3"
                     android:visibility="gone">
-
-                    <WebView
-                        android:id="@+id/link_webview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="26dp"
-                        android:layout_marginEnd="10dp"></WebView>
 
                     <TextView
                         android:id="@+id/link_source"
@@ -335,11 +328,11 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:lineSpacingExtra="6sp"
-                        android:text="https://twitter.com/ident_it/status/997050576012591104"
+                        tools:text="https://twitter.com/ident_it/status/997050576012591104"
                         android:textColor="#1da1f2"
                         android:textSize="10sp" />
 
-                </FrameLayout>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/promote_challenge_pernyataan"

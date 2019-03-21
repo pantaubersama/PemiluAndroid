@@ -112,9 +112,9 @@ class PantauConstants {
         const val EXTRA_OPEN_TAB_TYPE = "EXTRA_OPEN_TAB_TYPE"
         const val EXTRA_CHALLENGE_ITEM = "EXTRA_CHALLENGE_ITEM"
         const val EXTRA_CHALLENGE_ID = "EXTRA_CHALLENGE_ID"
-        const val EXTRA_POSITIVE_BTN_TEXT = "EXTRA_POSITIVE_BTN_TEXT"
-        const val EXTRA_MESSAGE_TEXT = "EXTRA_MESSAGE_TEXT"
-        const val EXTRA_DIALOG_LISTENER = "EXTRA_DIALOG_LISTENER"
+        const val EXTRA_DATE_STRING = "EXTRA_DATE_STRING"
+        const val EXTRA_OEMBEDED_LINK = "EXTRA_OEMBEDED_LINK"
+        const val EXTRA_URL_ITEM = "EXTRA_URL_ITEM"
     }
 
     object RequestCode {

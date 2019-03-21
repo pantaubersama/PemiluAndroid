@@ -29,10 +29,15 @@ import timber.log.Timber
 import javax.inject.Inject
 import android.content.ComponentName
 import android.net.Uri
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import com.pantaubersama.app.data.model.urlpreview.UrlItem
 import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_DATE_STRING
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OEMBEDED_LINK
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_URL_ITEM
+import com.pantaubersama.app.utils.extensions.visibleIf
+import com.pantaubersama.app.utils.previewTweet
+import com.pantaubersama.app.utils.previewUrl
 
 class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), PromoteChallengeView {
 
@@ -43,6 +48,7 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
     var date: String? = null
     var fbConnected = false
     var oEmbedLink: OEmbedLink? = null
+    var urlItem: UrlItem? = null
 
     @Inject
     override lateinit var presenter: PromoteChallengePresenter
@@ -52,9 +58,10 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
     }
 
     override fun fetchIntentExtra() {
-        intent.getSerializableExtra("challenge").let { challenge = it as Challenge }
-        intent.getStringExtra("date").let { date = it as String }
-        intent.getSerializableExtra("link").let { oEmbedLink = it as OEmbedLink? }
+        intent.getSerializableExtra(EXTRA_CHALLENGE_ITEM).let { challenge = it as Challenge }
+        intent.getStringExtra(EXTRA_DATE_STRING).let { date = it as String }
+        intent.getSerializableExtra(EXTRA_OEMBEDED_LINK)?.let { oEmbedLink = it as OEmbedLink? }
+            ?: intent.getSerializableExtra(EXTRA_URL_ITEM)?.let { urlItem = it as UrlItem }
     }
 
     override fun statusBarColor(): Int? {
@@ -76,8 +83,7 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
             presenter.openChallenge(challenge.bidangKajian, challenge.pernyataan, challenge.link, date, challenge.saldoWaktu)
         }
 
-        link_webview.webViewClient = MyWebViewClient()
-        previewLink(oEmbedLink?.html)
+        previewLink()
     }
 
     override fun showLoading() {
@@ -101,12 +107,11 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
         infoDialog.show(supportFragmentManager, "success-open")
 
         Handler().postDelayed({
-            infoDialog.dismiss()
             setResult(Activity.RESULT_OK)
             finish()
             if (fbConnected)
                 shareFacebook("Berhasil membuat Tantangan Debat di Pantau Bersama...siapa yang berani menajadi lawannya??? #PantauBersama", "https://pantaubersama.com")
-        }, 4000)
+        }, 3000)
     }
 
     fun setDetailChallenge() {
@@ -336,22 +341,15 @@ class PromoteChallengeActivity : BaseActivity<PromoteChallengePresenter>(), Prom
         startActivity(shareIntent)
     }
 
-    fun previewLink(url: String?) {
-        if (url != null && url.length > 0) {
-            ll_webview.visibility = View.VISIBLE
-            link_webview.settings.loadsImagesAutomatically = true
-            link_webview.settings.javaScriptEnabled = true
-            link_webview.getSettings().setAppCacheEnabled(true)
-            link_webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-            link_webview.loadDataWithBaseURL("https://twitter.com", url.toString(), "text/html", "utf-8", "")
+    private fun previewLink() {
+        oEmbedLink?.html?.let {
+            ll_webview.visibleIf(true)
+            ll_webview.previewTweet(it)
             link_source.text = oEmbedLink?.url
-        }
-    }
-
-    class MyWebViewClient : WebViewClient() {
-        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-            view?.loadUrl(request?.url.toString())
-            return true
+        } ?: urlItem?.let {
+            ll_webview.visibleIf(true)
+            ll_webview.previewUrl(it)
+            link_source.text = urlItem?.sourceUrl
         }
     }
 }

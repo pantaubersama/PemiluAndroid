@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <ImageView
+        android:id="@+id/iv_url_preview"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/ic_avatar_placeholder"/>
+    <TextView
+        android:id="@+id/tv_title_url_preview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        tools:text="Raja Kampreta @raja_kampreeta . 5 des"
+        android:fontFamily="@font/lato_bold"
+        android:textColor="@color/black_2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_url_preview"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:maxLines="3"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:id="@+id/tv_description_url_preview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        tools:text="Prabowo berbasis militer. Disiplin. Sandiaga berbasis wiraswasta. Kreatif. Perpaduan keduanya akan sangat dibutuhkan Indonesia untuk ekonomi ke depannya. #2019gantipresiden yuk!"
+        android:fontFamily="@font/lato_regular"
+        android:textColor="@color/black_2"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_url_preview"
+        app:layout_constraintStart_toEndOf="@id/iv_url_preview"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:maxLines="3"
+        android:ellipsize="end"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
