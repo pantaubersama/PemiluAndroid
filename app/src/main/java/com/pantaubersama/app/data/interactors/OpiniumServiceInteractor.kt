@@ -13,7 +13,7 @@ class OpiniumServiceInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
     private val rxSchedulers: RxSchedulers
 ) {
-    fun getUrlMeta(url: String) : Single<UrlItem> {
+    fun getUrlMeta(url: String): Single<UrlItem> {
         return apiWrapper.getOpiniumServiceApi()
             .getUrlMeta(url)
             .map { it.data.url }

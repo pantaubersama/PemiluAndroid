@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.webkit.CookieManager
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.urlpreview.UrlItem
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.model.wordstadium.Challenge
 import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
@@ -19,9 +17,16 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.ui.wordstadium.InfoDialog
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_DATE_STRING
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OEMBEDED_LINK
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_URL_ITEM
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.visibleIf
+import com.pantaubersama.app.utils.previewTweet
+import com.pantaubersama.app.utils.previewUrl
 import com.twitter.sdk.android.core.* // ktlint-disable
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import com.twitter.sdk.android.core.models.User
@@ -36,6 +41,7 @@ class PreviewChallengeActivity : BaseActivity<PreviewChallengePresenter>(), Prev
     private lateinit var twitterAuthClient: TwitterAuthClient
     var date: String? = null
     var oEmbedLink: OEmbedLink? = null
+    var urlItem: UrlItem? = null
 
     @Inject
     override lateinit var presenter: PreviewChallengePresenter
@@ -45,9 +51,10 @@ class PreviewChallengeActivity : BaseActivity<PreviewChallengePresenter>(), Prev
     }
 
     override fun fetchIntentExtra() {
-        intent.getSerializableExtra("challenge").let { challenge = it as Challenge }
-        intent.getStringExtra("date").let { date = it as String }
-        intent.getSerializableExtra("link").let { oEmbedLink = it as OEmbedLink? }
+        intent.getSerializableExtra(EXTRA_CHALLENGE_ITEM).let { challenge = it as Challenge }
+        intent.getStringExtra(EXTRA_DATE_STRING).let { date = it as String }
+        intent.getSerializableExtra(EXTRA_OEMBEDED_LINK)?.let { oEmbedLink = it as OEmbedLink? }
+            ?: intent.getSerializableExtra(EXTRA_URL_ITEM)?.let { urlItem = it as UrlItem }
     }
 
     override fun statusBarColor(): Int? {
@@ -68,8 +75,7 @@ class PreviewChallengeActivity : BaseActivity<PreviewChallengePresenter>(), Prev
             presenter.directChallenge(challenge.bidangKajian, challenge.pernyataan, challenge.link, date, challenge.saldoWaktu, challenge.invitationId, challenge.screenName)
         }
 
-        link_webview.webViewClient = MyWebViewClient()
-        previewLink(oEmbedLink?.html)
+        previewLink()
     }
 
     override fun showLoading() {
@@ -93,10 +99,9 @@ class PreviewChallengeActivity : BaseActivity<PreviewChallengePresenter>(), Prev
         infoDialog.show(supportFragmentManager, "success-open")
 
         Handler().postDelayed({
-            infoDialog.dismiss()
             setResult(Activity.RESULT_OK)
             finish()
-        }, 4000)
+        }, 3000)
     }
 
     fun setDetailChallenge() {
@@ -202,22 +207,15 @@ class PreviewChallengeActivity : BaseActivity<PreviewChallengePresenter>(), Prev
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    fun previewLink(url: String?) {
-        if (url != null && url.length > 0) {
-            ll_webview.visibility = View.VISIBLE
-            link_webview.settings.loadsImagesAutomatically = true
-            link_webview.settings.javaScriptEnabled = true
-            link_webview.getSettings().setAppCacheEnabled(true)
-            link_webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-            link_webview.loadDataWithBaseURL("https://twitter.com", url.toString(), "text/html", "utf-8", "")
+    private fun previewLink() {
+        oEmbedLink?.html?.let {
+            ll_webview.visibleIf(true)
+            ll_webview.previewTweet(it)
             link_source.text = oEmbedLink?.url
-        }
-    }
-
-    class MyWebViewClient : WebViewClient() {
-        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-            view?.loadUrl(request?.url.toString())
-            return true
+        } ?: urlItem?.let {
+            ll_webview.visibleIf(true)
+            ll_webview.previewUrl(it)
+            link_source.text = urlItem?.sourceUrl
         }
     }
 }

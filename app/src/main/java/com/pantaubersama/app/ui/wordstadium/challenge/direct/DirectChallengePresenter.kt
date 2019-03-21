@@ -19,7 +19,7 @@ class DirectChallengePresenter @Inject constructor(
 
     fun getTweetPreview(url: String) {
         view?.showLoading()
-        if (url.startsWith("https://twitter.com/", true)) {
+        if (url.startsWith("https://twitter.com/", true) || url.startsWith("twitter.com/", true)) {
             disposables += wordStadiumInteractor.getConvertLink(url)
                 .subscribe(
                     {
@@ -33,7 +33,6 @@ class DirectChallengePresenter @Inject constructor(
         } else {
             getUrlPreview(url)
         }
-
     }
 
     fun searchLawanDebat(keyword: String, page: Int, perPage: Int) {

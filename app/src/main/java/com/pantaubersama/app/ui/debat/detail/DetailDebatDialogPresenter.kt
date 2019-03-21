@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.debat.detail
 
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.interactors.OpiniumServiceInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.WordStadiumInteractor
 import com.pantaubersama.app.data.model.user.Profile
@@ -13,22 +14,40 @@ import javax.inject.Inject
 
 class DetailDebatDialogPresenter @Inject constructor(
     private val profileInteractor: ProfileInteractor,
-    private val wordStadiumInteractor: WordStadiumInteractor
+    private val wordStadiumInteractor: WordStadiumInteractor,
+    private val opiniumServiceInteractor: OpiniumServiceInteractor
 ) : BasePresenter<DetailDebatDialogView>() {
     fun getMyProfile(): Profile {
         return profileInteractor.getProfile()
     }
 
-    fun getStatementSourcePreview(url: String) {
-        view?.showLoading()
-        disposables += wordStadiumInteractor.getConvertLink(url)
-            .doOnEvent { _, _ -> view?.dismissLoading() }
+    fun getTweetPreview(url: String) {
+        view?.showLoadingUrlPreview()
+        if (url.startsWith("https://twitter.com/", true) || url.startsWith("twitter.com/", true)) {
+            disposables += wordStadiumInteractor.getConvertLink(url)
+                .subscribe(
+                    {
+                        view?.showTweetPreview(it)
+                        view?.dismissLoadingUrlPreview()
+                    },
+                    {
+                        getUrlPreview(url)
+                    }
+                )
+        } else {
+            getUrlPreview(url)
+        }
+    }
+    private fun getUrlPreview(url: String) {
+        view?.showLoadingUrlPreview()
+        disposables += opiniumServiceInteractor.getUrlMeta(url)
+            .doOnEvent { _, _ -> view?.dismissLoadingUrlPreview() }
             .subscribe(
                 {
-                    it?.html?.let { html -> view?.showStatementSource(html) }
+                    view?.showUrlPreview(it)
                 },
                 {
-                    view?.onErrorStatementSource(it)
+                    view?.onErrorUrlPreview(it)
                 }
             )
     }

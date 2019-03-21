@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.model.urlpreview
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /**
  * @author edityomurti on 20/03/2019 13:53
@@ -30,4 +31,4 @@ data class UrlItem(
     val bestDescriptiom: String?,
     @SerializedName("best_image")
     val bestImage: String?
-)
+) : Serializable

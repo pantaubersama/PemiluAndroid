@@ -19,7 +19,7 @@ class OpenChallengePresenter @Inject constructor(
 
     fun getTweetPreview(url: String) {
         view?.showLoadingUrlPreview()
-        if (url.startsWith("https://twitter.com/", true)) {
+        if (url.startsWith("https://twitter.com/", true) || url.startsWith("twitter.com/", true)) {
             disposables += wordStadiumInteractor.getConvertLink(url)
                 .subscribe(
                     {

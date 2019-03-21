@@ -26,6 +26,10 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.wordstadium.InfoDialog
 import com.pantaubersama.app.ui.wordstadium.challenge.CreateChallengeActivity
 import com.pantaubersama.app.ui.wordstadium.challenge.open.BidangKajianDialog
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_DATE_STRING
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OEMBEDED_LINK
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_URL_ITEM
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -50,6 +54,7 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
     var mTimeString: String? = null
     var mLink: String = ""
     var oEmbedLink: OEmbedLink? = null
+    var urlItem: UrlItem? = null
     var lawanId: String? = null
     var lawanUserName: String? = null
     var lawanName: String? = null
@@ -333,9 +338,10 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
             )
 
             val intent = Intent(this, PreviewChallengeActivity::class.java)
-            intent.putExtra("challenge", challenge)
-            intent.putExtra("date", mDateString + " " + mTimeString)
-            intent.putExtra("link", oEmbedLink)
+            intent.putExtra(EXTRA_CHALLENGE_ITEM, challenge)
+            intent.putExtra(EXTRA_DATE_STRING, mDateString + " " + mTimeString)
+            oEmbedLink?.let { intent.putExtra(EXTRA_OEMBEDED_LINK, it) }
+            urlItem?.let { intent.putExtra(EXTRA_URL_ITEM, it) }
             startActivityForResult(intent, CreateChallengeActivity.DIRECT_CHALLENGE)
         }
     }
@@ -478,10 +484,11 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
                 ll_webview.removeViewAt(1)
             }
         }
+        this.urlItem = urlItem
     }
 
     override fun onErrorUrlPreview(t: Throwable) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun bindData(users: MutableList<LawanDebat>) {

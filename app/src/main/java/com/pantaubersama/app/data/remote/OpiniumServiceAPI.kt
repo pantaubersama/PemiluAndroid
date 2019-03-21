@@ -10,5 +10,5 @@ import retrofit2.http.Query
  */
 interface OpiniumServiceAPI {
     @GET("common/v1/crawl")
-    fun getUrlMeta(@Query("url") url: String) : Single<UrlItemResponse>
+    fun getUrlMeta(@Query("url") url: String): Single<UrlItemResponse>
 }
