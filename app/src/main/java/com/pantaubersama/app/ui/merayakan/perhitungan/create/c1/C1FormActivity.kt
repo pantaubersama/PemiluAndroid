@@ -1,16 +1,18 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.c1
 
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.data.model.tps.C1Form
+import com.pantaubersama.app.data.model.tps.c1.C1Form
 import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.RxSchedulers
+import com.pantaubersama.app.utils.ToastUtil
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_c1_form.*
 import java.util.concurrent.TimeUnit
@@ -95,7 +97,11 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         save_button.setOnClickListener {
             finish()
         }
-        tps?.id?.let { c1Type?.let { it1 -> presenter.getC1Data(it, it1) } }
+        tps?.id?.let { c1Type?.let { it1 -> tps?.status?.let { it2 -> presenter.getC1Data(it, it1, it2) } } }
+    }
+
+    override fun showFailedGetC1Alert() {
+        ToastUtil.show(this@C1FormActivity, "Gagal memuat data C1")
     }
 
     private fun setupSuratSuara() {
@@ -1233,11 +1239,11 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progress_bar.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progress_bar.visibility = View.GONE
     }
 
     override fun onSuccessSaveData() {

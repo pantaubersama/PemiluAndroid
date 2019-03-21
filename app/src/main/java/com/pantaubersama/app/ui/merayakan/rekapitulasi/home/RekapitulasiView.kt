@@ -2,10 +2,17 @@ package com.pantaubersama.app.ui.merayakan.rekapitulasi.home
 
 import com.pantaubersama.app.base.BaseView
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
-import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiData
+import com.pantaubersama.app.data.model.rekapitulasi.Percentage
+import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
+import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
 
 interface RekapitulasiView : BaseView {
     fun showBanner(it: BannerInfo)
     fun showFailedGetBannerAlert()
-    fun bindRekapitulasi(data: MutableList<RekapitulasiData>)
+    fun bindRekapitulasiNasional(data: Percentage)
+    fun showFailedGetTotalParticipantAlert()
+    fun bindTotalParticipantData(totalParticipantData: TotalParticipantData)
+    fun showFailedGetRekapitulasiNasionalAlert()
+    fun bindRekapitulasiList(rekapitulasi: MutableList<Rekapitulasi>)
+    fun showFailedLoadRekapitulasiList()
 }

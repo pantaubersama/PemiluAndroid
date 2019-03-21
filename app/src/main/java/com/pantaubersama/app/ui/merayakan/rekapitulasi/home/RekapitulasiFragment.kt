@@ -7,17 +7,21 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
-import com.pantaubersama.app.data.model.kuis.Team
-import com.pantaubersama.app.data.model.kuis.TeamPercentage
-import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiData
+import com.pantaubersama.app.data.model.rekapitulasi.Percentage
+import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
+import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerahActivity
 import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), RekapitulasiView {
@@ -46,8 +50,8 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
                 startActivityForResult(BannerInfoActivity.setIntent(requireContext(), bannerInfo), PantauConstants.RequestCode.RC_BANNER_REKAPITULASI)
             }
 
-            override fun onClickItem(item: RekapitulasiData) {
-                RekapitulasiDaerahActivity.start(requireContext(), "provinsi")
+            override fun onClickItem(item: Rekapitulasi) {
+                RekapitulasiDaerahActivity.start(requireContext(), "provinsi", item)
             }
         }
         recycler_view.layoutManager = LinearLayoutManager(requireContext())
@@ -60,14 +64,20 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
 
     override fun showBanner(it: BannerInfo) {
         adapter.addBanner(it)
-        val teamsPercentage: MutableList<TeamPercentage> = ArrayList()
-        teamsPercentage.add(TeamPercentage(Team(1, "Jokowi-Ma'ruf", ""), 52f, 200000))
-        teamsPercentage.add(TeamPercentage(Team(2, "Prabowo-Sandi", ""), 48f, 200000))
-        teamsPercentage.add(TeamPercentage(Team(2, "Tidak sah", ""), 6f, 200000))
-        adapter.addHeader(
-            RekapitulasiData(100000, "1 mnt lalu", teamsPercentage, "Jawa Timur")
-        )
-        refreshItem()
+        presenter.getTotalParticipant()
+    }
+
+    override fun showFailedGetTotalParticipantAlert() {
+        ToastUtil.show(requireContext(), "Gagal memuat data total partisipan")
+    }
+
+    override fun bindTotalParticipantData(totalParticipantData: TotalParticipantData) {
+        adapter.addItem(totalParticipantData as ItemModel)
+        presenter.getRekapitulasiNasional()
+    }
+
+    override fun showFailedGetRekapitulasiNasionalAlert() {
+        ToastUtil.show(requireContext(), "Gagal memuat data rekapitulasi")
     }
 
     private fun refreshItem() {
@@ -75,10 +85,20 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
         presenter.getRekapitulasiData()
     }
 
-    override fun bindRekapitulasi(data: MutableList<RekapitulasiData>) {
+    override fun bindRekapitulasiNasional(data: Percentage) {
+        adapter.addRekapitulasiHeader(data)
+        refreshItem()
+    }
+
+    override fun bindRekapitulasiList(rekapitulasi: MutableList<Rekapitulasi>) {
         recycler_view.visibleIf(true)
-        adapter.addData(data as MutableList<ItemModel>)
+        Timber.d(rekapitulasi.toString())
+        adapter.addData(rekapitulasi as MutableList<ItemModel>)
         adapter.addFooter()
+    }
+
+    override fun showFailedLoadRekapitulasiList() {
+        ToastUtil.show(requireContext(), "Gagal memuat list data rekapitulasi")
     }
 
     override fun showFailedGetBannerAlert() {
@@ -94,10 +114,14 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        lottie_loading.enableLottie(true, lottie_loading)
+        view_empty_state.enableLottie(false, lottie_empty_state)
+        view_fail_state.enableLottie(false, lottie_fail_state)
+        recycler_view.visibleIf(false)
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        lottie_loading.enableLottie(false, lottie_loading)
+        recycler_view.visibleIf(false)
     }
 }

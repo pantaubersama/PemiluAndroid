@@ -38,9 +38,27 @@ class C1FormPresenter @Inject constructor(private val c1Interactor: C1Interactor
         )
     }
 
-    fun getC1Data(tpsId: String, c1Type: String) {
-        c1Interactor.getC1(tpsId, c1Type)?.let {
-            view?.bindC1Data(it)
+    fun getC1Data(tpsId: String, c1Type: String, tpsStatus: String) {
+        if (tpsStatus != "published") {
+            c1Interactor.getC1(tpsId, c1Type)?.let {
+                view?.bindC1Data(it)
+            }
+        } else {
+            view?.showLoading()
+            disposables.add(
+                c1Interactor.getC1Remote(tpsId, c1Type)
+                    .subscribe(
+                        {
+                            view?.bindC1Data(it)
+                            view?.dismissLoading()
+                        },
+                        {
+                            view?.showError(it)
+                            view?.showFailedGetC1Alert()
+                            view?.dismissLoading()
+                        }
+                    )
+            )
         }
     }
 

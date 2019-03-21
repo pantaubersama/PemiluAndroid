@@ -7,7 +7,7 @@ import android.view.View
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.data.model.tps.RealCount
+import com.pantaubersama.app.data.model.tps.realcount.RealCount
 import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants
@@ -53,13 +53,17 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
         setupCandidate1()
         setupCandidate2()
         setupNoVotes()
-        if (tps?.id != null) {
-            tps?.id?.let {
-                presenter.getRealCount(it, realCountType)
+        tps?.id?.let {
+            tps?.status?.let { it1 ->
+                presenter.getRealCount(it, it1, realCountType)
             }
         }
 
         save_button.setOnClickListener(this)
+    }
+
+    override fun showFailedGetRealCountAlert() {
+        ToastUtil.show(this@PerhitunganPresidenActivity, "Gagal memuat perhitungan presiden")
     }
 
     private fun setupCandidate1() {
@@ -241,11 +245,11 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
 //    }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progress_bar.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progress_bar.visibility = View.GONE
     }
 
     override fun bindRealCount(realCount: RealCount?) {

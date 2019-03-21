@@ -9,7 +9,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.data.model.tps.RealCount
+import com.pantaubersama.app.data.model.tps.realcount.RealCount
 import com.pantaubersama.app.data.model.tps.candidate.CandidateData
 import com.pantaubersama.app.utils.RxSchedulers
 import com.pantaubersama.app.utils.ToastUtil
@@ -37,11 +37,11 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers, private var isInc
     fun updateData(realCount: RealCount) {
         realCount.parties.forEachIndexed { i, partyFromDB ->
             data.forEachIndexed { j, partyFromAdapter ->
-                if (partyFromDB.id == (partyFromAdapter as CandidateData).id) {
+                if ((partyFromAdapter as CandidateData).id == partyFromDB.id || (partyFromAdapter as CandidateData).id == partyFromDB.actorId) {
                     val candidateCounts: MutableList<Int> = ArrayList()
                     realCount.candidates.forEachIndexed { k, candidateDb ->
                         partyFromAdapter.candidates.forEachIndexed { l, candidateData ->
-                            if (candidateData.id == candidateDb.id) {
+                            if (candidateData.id == candidateDb.id || candidateData.id == candidateDb.actorId) {
                                 candidateData.candidateCount = candidateDb.totalVote
                                 candidateCounts.add(candidateData.candidateCount)
                             }

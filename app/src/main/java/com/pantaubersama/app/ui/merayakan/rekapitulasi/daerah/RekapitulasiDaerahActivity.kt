@@ -8,11 +8,9 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiData
+import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.RekapitulasiAdapter
-import com.pantaubersama.app.ui.merayakan.rekapitulasi.tpslist.TPSListActivity
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.toDp
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -25,6 +23,7 @@ import javax.inject.Inject
 class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>(), RekapitulasiProvinsiView {
     private lateinit var adapter: RekapitulasiAdapter
     private var parent: String? = null
+    private var parentData: Rekapitulasi? = null
 
     @Inject
     override lateinit var presenter: RekapitulasiProvinsiPresenter
@@ -35,6 +34,7 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
 
     override fun fetchIntentExtra() {
         parent = intent.getStringExtra("parent")
+        parentData = intent.getSerializableExtra("parent_data") as Rekapitulasi
     }
 
     override fun statusBarColor(): Int? {
@@ -47,10 +47,8 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
 
     override fun setupUI(savedInstanceState: Bundle?) {
         var titleDummy = ""
-        when (parent) {
-            "provinsi" -> titleDummy = "Yogyakarta"
-            "kabupaten" -> titleDummy = "Sleman"
-            "kecamatan" -> titleDummy = "Moyudan"
+        parentData?.region?.name?.let {
+            titleDummy = it
         }
         setupToolbar(true, titleDummy, R.color.white, 4f)
         setupRekapitulasiList()
@@ -67,15 +65,15 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
 
     private fun setupRekapitulasiList() {
         adapter = RekapitulasiAdapter()
-        adapter.listener = object : RekapitulasiAdapter.Listener {
-            override fun onClickItem(item: RekapitulasiData) {
-                when (parent) {
-                    "provinsi" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kabupaten")
-                    "kabupaten" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kecamatan")
-                    "kecamatan" -> TPSListActivity.start(this@RekapitulasiDaerahActivity)
-                }
-            }
-        }
+//        adapter.listener = object : RekapitulasiAdapter.Listener {
+//            override fun onClickItem(item: RekapitulasiData) {
+//                when (parent) {
+//                    "provinsi" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kabupaten")
+//                    "kabupaten" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kecamatan")
+//                    "kecamatan" -> TPSListActivity.start(this@RekapitulasiDaerahActivity)
+//                }
+//            }
+//        }
         recycler_view.setPadding(0, 8f.toDp(this@RekapitulasiDaerahActivity), 0, 8f.toDp(this@RekapitulasiDaerahActivity))
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = adapter
@@ -85,10 +83,10 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
         }
     }
 
-    override fun bindRekapitulasi(data: MutableList<RekapitulasiData>) {
-        recycler_view.visibleIf(true)
-        adapter.setDatas(data as MutableList<ItemModel>)
-    }
+//    override fun bindRekapitulasi(data: MutableList<RekapitulasiData>) {
+//        recycler_view.visibleIf(true)
+//        adapter.setDatas(data as MutableList<ItemModel>)
+//    }
 
     override fun showLoading() {
         lottie_loading.enableLottie(true, lottie_loading)
@@ -117,9 +115,10 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
     }
 
     companion object {
-        fun start(context: Context, from: String) {
+        fun start(context: Context, from: String, item: Rekapitulasi) {
             val intent = Intent(context, RekapitulasiDaerahActivity::class.java)
             intent.putExtra("parent", from)
+            intent.putExtra("parent_data", item)
             context.startActivity(intent)
         }
     }

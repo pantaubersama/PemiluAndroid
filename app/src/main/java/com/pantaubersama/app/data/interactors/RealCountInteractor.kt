@@ -4,6 +4,9 @@ import com.pantaubersama.app.data.db.AppDB
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
 import com.pantaubersama.app.data.model.tps.candidate.CandidateData
+import com.pantaubersama.app.data.model.tps.realcount.Candidate
+import com.pantaubersama.app.data.model.tps.realcount.Party
+import com.pantaubersama.app.data.model.tps.realcount.RealCount
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Completable
@@ -258,5 +261,14 @@ class RealCountInteractor @Inject constructor(
                 )
             }
         }
+    }
+
+    fun getApiRealCount(tpsId: String, realCountType: String): Single<RealCount> {
+        return apiWrapper.getPantauApi().getRealCount(tpsId, realCountType)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .map {
+                it.data.calculation
+            }
     }
 }

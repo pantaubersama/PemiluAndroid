@@ -1,15 +1,15 @@
 package com.pantaubersama.app.data.model.rekapitulasi
 
-import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.data.model.kuis.TeamPercentage
+import com.google.gson.annotations.SerializedName
+import com.pantaubersama.app.data.model.user.Profile
 
 data class RekapitulasiData(
-    var totalParticipant: Long,
-    var updatedAt: String,
-    var teams: List<TeamPercentage>,
-    var location: String
-) : ItemModel {
-    override fun getType(): Int {
-        return 15
-    }
-}
+    @SerializedName("tps")
+    var tps: String,
+    @SerializedName("user")
+    var user: Profile,
+    @SerializedName("percentage")
+    var percentage: Percentage,
+    @SerializedName("percentages")
+    var percentages: MutableList<Rekapitulasi>
+)

@@ -104,31 +104,45 @@ class UploadTpsPresenter @Inject constructor(
     private fun uploadImages(apiTpsId: String, dbTpsId: String, imagesUploadType: String) {
         val images = tpsInteractor.getImagesWithType(dbTpsId, imagesUploadType)
         if (images != null) {
-            images.forEachIndexed { i, it ->
-                disposables.add(
-                    tpsInteractor.uploadImage(apiTpsId, imagesUploadType, it.uri)
-                        .subscribe(
-                            {
-                                if (i == images.size - 1) {
-                                    view?.increaseProgress(5)
-                                    when (imagesUploadType) {
-                                        "c1_presiden" -> uploadImages(apiTpsId, dbTpsId, "c1_dpr_ri")
-                                        "c1_dpr_ri" -> uploadImages(apiTpsId, dbTpsId, "c1_dpd")
-                                        "c1_dpd" -> uploadImages(apiTpsId, dbTpsId, "c1_dprd_provinsi")
-                                        "c1_dprd_provinsi" -> uploadImages(apiTpsId, dbTpsId, "c1_dprd_kabupaten")
-                                        "c1_dprd_kabupaten" -> uploadImages(apiTpsId, dbTpsId, "suasana_tps")
-                                        "suasana_tps" -> {
-                                            publishRealCount(apiTpsId, dbTpsId)
+            if (images.size != 0) {
+                images.forEachIndexed { i, it ->
+                    disposables.add(
+                        tpsInteractor.uploadImage(apiTpsId, imagesUploadType, it.uri)
+                            .subscribe(
+                                {
+                                    if (i == images.size - 1) {
+                                        view?.increaseProgress(5)
+                                        when (imagesUploadType) {
+                                            "c1_presiden" -> uploadImages(apiTpsId, dbTpsId, "c1_dpr_ri")
+                                            "c1_dpr_ri" -> uploadImages(apiTpsId, dbTpsId, "c1_dpd")
+                                            "c1_dpd" -> uploadImages(apiTpsId, dbTpsId, "c1_dprd_provinsi")
+                                            "c1_dprd_provinsi" -> uploadImages(apiTpsId, dbTpsId, "c1_dprd_kabupaten")
+                                            "c1_dprd_kabupaten" -> uploadImages(apiTpsId, dbTpsId, "suasana_tps")
+                                            "suasana_tps" -> {
+                                                publishRealCount(apiTpsId, dbTpsId)
+                                            }
                                         }
                                     }
+                                },
+                                {
+                                    view?.showError(it)
+                                    view?.showFailed()
                                 }
-                            },
-                            {
-                                view?.showError(it)
-                                view?.showFailed()
-                            }
-                        )
-                )
+                            )
+                    )
+                }
+            } else {
+                view?.increaseProgress(5)
+                when (imagesUploadType) {
+                    "c1_presiden" -> uploadImages(apiTpsId, dbTpsId, "c1_dpr_ri")
+                    "c1_dpr_ri" -> uploadImages(apiTpsId, dbTpsId, "c1_dpd")
+                    "c1_dpd" -> uploadImages(apiTpsId, dbTpsId, "c1_dprd_provinsi")
+                    "c1_dprd_provinsi" -> uploadImages(apiTpsId, dbTpsId, "c1_dprd_kabupaten")
+                    "c1_dprd_kabupaten" -> uploadImages(apiTpsId, dbTpsId, "suasana_tps")
+                    "suasana_tps" -> {
+                        publishRealCount(apiTpsId, dbTpsId)
+                    }
+                }
             }
         } else {
             view?.increaseProgress(5)
@@ -158,5 +172,10 @@ class UploadTpsPresenter @Inject constructor(
                     }
                 )
         )
+    }
+
+    fun dispatch() {
+        disposables.clear()
+        view = null
     }
 }

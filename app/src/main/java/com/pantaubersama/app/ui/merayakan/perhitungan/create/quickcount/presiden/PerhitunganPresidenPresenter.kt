@@ -60,7 +60,27 @@ class PerhitunganPresidenPresenter @Inject constructor(
         }
     }
 
-    fun getRealCount(tpsId: String, realCountType: String) {
-        view?.bindRealCount(realCountInteractor.getPresidentRealCount(tpsId, realCountType))
+    fun getRealCount(tpsId: String, tpsStatus: String, realCountType: String) {
+        when (tpsStatus) {
+            "published" -> {
+                view?.showLoading()
+                disposables.add(
+                    realCountInteractor.getApiRealCount(tpsId, realCountType)
+                        .subscribe(
+                            {
+                                view?.dismissLoading()
+                                view?.bindRealCount(it)
+                            },
+                            {
+                                view?.dismissLoading()
+                                view?.showFailedGetRealCountAlert()
+                                view?.showError(it)
+                            }
+                        )
+                )
+            }
+            "draft" -> view?.bindRealCount(realCountInteractor.getPresidentRealCount(tpsId, realCountType))
+            else -> view?.bindRealCount(realCountInteractor.getPresidentRealCount(tpsId, realCountType))
+        }
     }
 }

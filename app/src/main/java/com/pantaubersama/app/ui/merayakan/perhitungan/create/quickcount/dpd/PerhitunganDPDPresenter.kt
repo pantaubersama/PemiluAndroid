@@ -58,7 +58,27 @@ class PerhitunganDPDPresenter @Inject constructor(
         )
     }
 
-    fun getRealCount(tpsId: String, realCountType: String) {
-        realCountInteractor.getRealCount(tpsId, realCountType)?.let { view?.bindRealCount(it) }
+    fun getRealCount(tpsId: String, realCountType: String, tpsStatus: String) {
+        when (tpsStatus) {
+            "published" -> {
+                view?.showLoading()
+                disposables.add(
+                    realCountInteractor.getApiRealCount(tpsId, realCountType)
+                        .subscribe(
+                            {
+                                view?.dismissLoading()
+                                view?.bindRealCount(it)
+                            },
+                            {
+                                view?.dismissLoading()
+                                view?.showError(it)
+                                view?.showFailedGetRealCountAlert()
+                            }
+                        )
+                )
+            }
+            "draft" -> realCountInteractor.getRealCount(tpsId, realCountType)?.let { view?.bindRealCount(it) }
+            else -> realCountInteractor.getRealCount(tpsId, realCountType)?.let { view?.bindRealCount(it) }
+        }
     }
 }

@@ -356,10 +356,10 @@ class TPSInteractor @Inject constructor(
                         appDB.getRealCountDao().getRealCounts(tps.id).forEach {
                             appDB.getRealCountDao().deleteRealCount(it)
                         }
-                        appDB.getC1Dao().getC1s().forEach {
+                        appDB.getC1Dao().getC1s(tps.id).forEach {
                             appDB.getC1Dao().deleteC1(it)
                         }
-                        appDB.getImagesDao().getImages().forEach {
+                        appDB.getImagesDao().getImages(tps.id).forEach {
                             appDB.getImagesDao().deleteImage(it)
                         }
                         appDB.getTPSDAO().deleteTPS(tps)
@@ -368,10 +368,10 @@ class TPSInteractor @Inject constructor(
                         appDB.getRealCountDao().getRealCounts(tps.id).forEach {
                             appDB.getRealCountDao().deleteRealCount(it)
                         }
-                        appDB.getC1Dao().getC1s().forEach {
+                        appDB.getC1Dao().getC1s(tps.id).forEach {
                             appDB.getC1Dao().deleteC1(it)
                         }
-                        appDB.getImagesDao().getImages().forEach {
+                        appDB.getImagesDao().getImages(tps.id).forEach {
                             appDB.getImagesDao().deleteImage(it)
                         }
                         appDB.getTPSDAO().deleteTPS(tps)
