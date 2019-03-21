@@ -12,8 +12,10 @@ import com.pantaubersama.app.data.model.rekapitulasi.Percentage
 import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
 import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
 import com.pantaubersama.app.ui.widget.BannerViewHolder
+import com.pantaubersama.app.utils.* // ktlint-disable
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.rekapitulasi_footer_layout.*
 import kotlinx.android.synthetic.main.rekapitulasi_item.*
 import kotlinx.android.synthetic.main.rekapitulasi_nasional_layout.*
 import kotlinx.android.synthetic.main.rekapitulasi_total_participants_layout.*
@@ -114,6 +116,11 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
 
     inner class RekapitulasiFooterViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind() {
+            LinkifySpannedString(itemView.context.getString(R.string.rekapitulasi_footer_hint), footer_text, object : CustomClickableSpan.Callback {
+                override fun onClickUrl(url: String?) {
+                    ChromeTabUtil(itemView.context).loadUrl(url)
+                }
+            })
         }
     }
 
