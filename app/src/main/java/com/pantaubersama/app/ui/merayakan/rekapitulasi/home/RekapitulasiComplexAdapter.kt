@@ -9,10 +9,13 @@ import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.rekapitulasi.Percentage
+import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
 import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
 import com.pantaubersama.app.ui.widget.BannerViewHolder
+import com.pantaubersama.app.utils.* // ktlint-disable
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.rekapitulasi_footer_layout.*
 import kotlinx.android.synthetic.main.rekapitulasi_item.*
 import kotlinx.android.synthetic.main.rekapitulasi_nasional_layout.*
 import kotlinx.android.synthetic.main.rekapitulasi_total_participants_layout.*
@@ -27,6 +30,8 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
             return VIEW_TYPE_TOTAL_PARTICIPANT
         } else if (data[position] is Percentage && position == 2) {
             return VIEW_TYPE_NASIONAL
+        } else if (data[position] is Rekapitulasi && position > 2) {
+            return VIEW_TYPE_ITEM
         } else if (data[position] is Footer) {
             return VIEW_TYPE_FOOTER
         } else {
@@ -50,23 +55,23 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
         (holder as? BannerViewHolder)?.bind(data[position] as BannerInfo)
         (holder as? RekapitulasiTotalParticipantViewHolder)?.bind(data[position] as TotalParticipantData)
         (holder as? RekapitulasiNasionalViewHolder)?.bind(data[position] as Percentage)
-        (holder as? RekapitulasiViewHolder)?.bind(data[position] as Percentage)
+        (holder as? RekapitulasiViewHolder)?.bind(data[position] as Rekapitulasi)
         (holder as? RekapitulasiFooterViewHolder)?.bind()
     }
 
     inner class RekapitulasiNasionalViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: Percentage) {
             // paslon 1
-            main_paslon_1_percentage.text = String.format("%.2f", item.candidates[0].percentage)
+            main_paslon_1_percentage.text = String.format("%.2f", item.candidates?.get(0)?.percentage)
             val p1 = paslon_1_strength.layoutParams as LinearLayout.LayoutParams
-            item.candidates[0].percentage?.toFloat()?.let {
+            item.candidates?.get(0)?.percentage?.toFloat()?.let {
                 p1.weight = it
             }
             paslon_1_strength.layoutParams = p1
             // paslon 2
-            main_paslon_2_percentage.text = String.format("%.2f", item.candidates[1].percentage)
+            main_paslon_2_percentage.text = String.format("%.2f", item.candidates?.get(1)?.percentage)
             val p2 = paslon_2_strength.layoutParams as LinearLayout.LayoutParams
-            item.candidates[1].percentage?.toFloat()?.let {
+            item.candidates?.get(1)?.percentage?.toFloat()?.let {
                 p2.weight = it
             }
             paslon_2_strength.layoutParams = p2
@@ -80,24 +85,42 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
     }
 
     inner class RekapitulasiViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: Percentage) {
+        fun bind(item: Rekapitulasi) {
             province_text.text = item.region.name
-            // paslon 1
             paslon_1_name.text = "Jokowi - Ma'ruf"
-            paslon_1_percentage.text = item.candidates[0].percentage.toString()
-            // paslon 2
             paslon_2_name.text = "Prabowo - Sandi"
-            paslon_2_percentage.text = item.candidates[1].percentage.toString()
-            // golput
-            golput_count.text = item.invalidVote.percentage.toString()
-            itemView.setOnClickListener {
-                listener?.onClickItem(item)
+            if (item.percentages != null) {
+                item.percentages?.candidates?.get(0)?.percentage?.let {
+                    paslon_1_percentage.text = "${String.format("%.2f", it)}%"
+                }
+                item.percentages?.candidates?.get(1)?.percentage?.let {
+                    paslon_2_percentage.text = "${String.format("%.2f", it)}%"
+                }
+                item.percentages?.invalidVote.let {
+                    golput_count.text = it?.total.toString()
+                }
+                item.percentages?.totalVote?.let {
+                    votes_count.text = it.toString()
+                }
+                itemView.setOnClickListener {
+                    listener?.onClickItem(item)
+                }
+            } else {
+                paslon_1_percentage.text = "0%"
+                paslon_2_percentage.text = "0%"
+                golput_count.text = "0"
+                votes_count.text = "0"
             }
         }
     }
 
     inner class RekapitulasiFooterViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind() {
+            LinkifySpannedString(itemView.context.getString(R.string.rekapitulasi_footer_hint), footer_text, object : CustomClickableSpan.Callback {
+                override fun onClickUrl(url: String?) {
+                    ChromeTabUtil(itemView.context).loadUrl(url)
+                }
+            })
         }
     }
 
@@ -129,12 +152,13 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
         }
     }
 
-    fun addHeader(data: Percentage) {
-        addItem(data, 1)
+    fun addRekapitulasiHeader(data: Percentage) {
+        this.data.add(2, data)
+        notifyItemInserted(itemCount - 1)
     }
 
     interface Listener {
         fun onClickBanner(bannerInfo: BannerInfo)
-        fun onClickItem(item: Percentage)
+        fun onClickItem(item: Rekapitulasi)
     }
 }

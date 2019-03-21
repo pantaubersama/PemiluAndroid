@@ -321,4 +321,9 @@ interface PantauAPI {
 
     @GET("hitung/v1/summary/contribution")
     fun getTotalParticipant(): Single<TotalParticipantResponse>
+
+    @GET("hitung/v1/summary/president/list")
+    fun getRekapitulasiList(
+        @Query("level") level: Int = 0
+    ): Single<RekapitulasiResponse>
 }

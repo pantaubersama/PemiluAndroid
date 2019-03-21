@@ -28,9 +28,20 @@ class RekapitulasiPresenter @Inject constructor(
     }
 
     fun getRekapitulasiData() {
-//        disposables.add(
-//            rekapitulasiInteractor.get
-//        )
+        disposables.add(
+            rekapitulasiInteractor.getRekapitulasiList()
+                .subscribe(
+                    {
+                        view?.dismissLoading()
+                        view?.bindRekapitulasiList(it)
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showError(it)
+                        view?.showFailedLoadRekapitulasiList()
+                    }
+                )
+        )
     }
 
     fun getRekapitulasiNasional() {
@@ -38,7 +49,6 @@ class RekapitulasiPresenter @Inject constructor(
             rekapitulasiInteractor.getRekapitulasiNasional()
                 .subscribe(
                     {
-                        view?.dismissLoading()
                         view?.bindRekapitulasiNasional(it)
                     },
                     {
