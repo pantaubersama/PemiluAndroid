@@ -197,8 +197,8 @@ class WordsFighterAdapter(val isMyChallenge: Boolean = false) : BaseRecyclerAdap
         }
     }
 
-    fun getMyTimeLeft(myRole: String): Int {
+    fun getMyTimeLeft(myRole: String): Int? {
         val myLastArgumen = data.find { (it as? WordItem?)?.author?.role == myRole }
-        return Math.round((myLastArgumen as WordItem).timeLeft)
+        return (myLastArgumen as? WordItem)?.timeLeft?.let { Math.round(it) }
     }
 }

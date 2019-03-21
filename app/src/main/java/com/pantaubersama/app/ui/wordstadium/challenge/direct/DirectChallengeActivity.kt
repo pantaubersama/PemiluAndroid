@@ -10,15 +10,13 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.CompoundButton
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.urlpreview.UrlItem
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.model.wordstadium.BidangKajian
 import com.pantaubersama.app.data.model.wordstadium.Challenge
@@ -28,9 +26,16 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.wordstadium.InfoDialog
 import com.pantaubersama.app.ui.wordstadium.challenge.CreateChallengeActivity
 import com.pantaubersama.app.ui.wordstadium.challenge.open.BidangKajianDialog
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_DATE_STRING
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OEMBEDED_LINK
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_URL_ITEM
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.visibleIf
+import com.pantaubersama.app.utils.previewTweet
+import com.pantaubersama.app.utils.previewUrl
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_direct_challenge.*
 import kotlinx.android.synthetic.main.close_challenge.view.*
@@ -49,6 +54,7 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
     var mTimeString: String? = null
     var mLink: String = ""
     var oEmbedLink: OEmbedLink? = null
+    var urlItem: UrlItem? = null
     var lawanId: String? = null
     var lawanUserName: String? = null
     var lawanName: String? = null
@@ -80,8 +86,6 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
         presenter.getUserProfile()
         actionClick()
         bidangKajianActive()
-
-        link_webview.webViewClient = MyWebViewClient()
     }
 
     override fun showLoading() {
@@ -168,7 +172,7 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
                 val url = text.text.toString()
                 mLink = url
                 dialog.dismiss()
-                presenter.getConvertLink(url)
+                presenter.getTweetPreview(url)
             }
         }
 
@@ -334,9 +338,10 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
             )
 
             val intent = Intent(this, PreviewChallengeActivity::class.java)
-            intent.putExtra("challenge", challenge)
-            intent.putExtra("date", mDateString + " " + mTimeString)
-            intent.putExtra("link", oEmbedLink)
+            intent.putExtra(EXTRA_CHALLENGE_ITEM, challenge)
+            intent.putExtra(EXTRA_DATE_STRING, mDateString + " " + mTimeString)
+            oEmbedLink?.let { intent.putExtra(EXTRA_OEMBEDED_LINK, it) }
+            urlItem?.let { intent.putExtra(EXTRA_URL_ITEM, it) }
             startActivityForResult(intent, CreateChallengeActivity.DIRECT_CHALLENGE)
         }
     }
@@ -441,30 +446,49 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
     fun previewLink(url: String?) {
         if (url != null && url.length > 0) {
             ll_webview.visibility = View.VISIBLE
-            link_webview.settings.loadsImagesAutomatically = true
-            link_webview.settings.javaScriptEnabled = true
-            link_webview.getSettings().setAppCacheEnabled(true)
-            link_webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-            link_webview.loadDataWithBaseURL("https://twitter.com", url.toString(), "text/html", "utf-8", "")
+            ll_webview.previewTweet(url)
             link_pernyataan.visibility = View.GONE
         }
         link_close.setOnClickListener {
             ll_webview.visibility = View.GONE
             link_pernyataan.visibility = View.VISIBLE
+            if (ll_webview.childCount > 1) {
+                ll_webview.removeViewAt(1)
+            }
         }
     }
 
-    class MyWebViewClient : WebViewClient() {
-        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-            view?.loadUrl(request?.url.toString())
-            return true
-        }
-    }
-
-    override fun onSuccessConvertLink(oEmbedLink: OEmbedLink) {
+    override fun onSuccessTweetPreview(oEmbedLink: OEmbedLink) {
         link_source.text = oEmbedLink.url
         previewLink(oEmbedLink.html)
         this.oEmbedLink = oEmbedLink
+    }
+
+    override fun showLoadingUrlPreview() {
+        progress_bar_url_preview.visibleIf(true)
+    }
+
+    override fun dismissLoadingUrlPreview() {
+        progress_bar_url_preview.visibleIf(false)
+    }
+
+    override fun showUrlPreview(urlItem: UrlItem) {
+        link_source.text = urlItem.sourceUrl
+        ll_webview.previewUrl(urlItem)
+        ll_webview.visibility = View.VISIBLE
+        link_pernyataan.visibility = View.GONE
+        link_close.setOnClickListener {
+            ll_webview.visibility = View.GONE
+            link_pernyataan.visibility = View.VISIBLE
+            if (ll_webview.childCount > 1) {
+                ll_webview.removeViewAt(1)
+            }
+        }
+        this.urlItem = urlItem
+    }
+
+    override fun onErrorUrlPreview(t: Throwable) {
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun bindData(users: MutableList<LawanDebat>) {

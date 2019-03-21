@@ -13,6 +13,7 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -20,7 +21,6 @@ import javax.inject.Singleton
  */
 @Module
 class ApiModule {
-
     @Provides
     @Singleton
     fun provideNetworkErrorInterceptor(connectionState: ConnectionState): NetworkErrorInterceptor {
@@ -68,6 +68,26 @@ class ApiModule {
     }
 
     @Provides
+    @Named("OpiniumService")
+    @Singleton
+    fun opiniumServiceHttpClient(
+        loggingInterceptor: HttpLoggingInterceptor,
+        networkErrorInterceptor: NetworkErrorInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .addNetworkInterceptor(StethoInterceptor())
+            .addInterceptor { chain ->
+                val request = chain.request().newBuilder().addHeader("ApiKey", "Bearer " + BuildConfig.OPINIUM_SERVICE_API_KEY).build()
+                return@addInterceptor chain.proceed(request)
+            }
+            .addInterceptor(networkErrorInterceptor)
+            .addInterceptor(loggingInterceptor)
+            .build()
+    }
+
+    @Provides
     @Singleton
     fun providePantauAPI(httpClient: OkHttpClient): PantauAPI {
         return APIWrapper.createRetrofit(BuildConfig.PANTAU_BASE_URL, httpClient).create(PantauAPI::class.java)
@@ -89,5 +109,11 @@ class ApiModule {
     @Singleton
     fun provideOEmbedAPI(httpClient: OkHttpClient): OEmbedApi {
         return APIWrapper.createRetrofit("https://publish.twitter.com/", httpClient).create(OEmbedApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOpiniumServiceAPI(@Named("OpiniumService") opiniumServiceHttpClient: OkHttpClient): OpiniumServiceAPI {
+        return APIWrapper.createRetrofit(BuildConfig.OPINIUM_SERVICE_BASE_URL, opiniumServiceHttpClient).create(OpiniumServiceAPI::class.java)
     }
 }

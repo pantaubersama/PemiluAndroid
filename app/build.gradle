@@ -52,6 +52,8 @@ android {
             it.buildConfigField("String", "SYMBOLIC_CLIENT_SECRET", SYMBOLIC_CLIENT_SECRET)
             it.buildConfigField("String", "SYMBOLIC_REDIRECT_URI", SYMBOLIC_REDIRECT_URI)
             it.buildConfigField("String", "PANTAU_WEB_URL", PANTAU_WEB_URL)
+            it.buildConfigField("String", "OPINIUM_SERVICE_BASE_URL", OPINIUM_SERVICE_BASE_URL)
+            it.buildConfigField("String", "OPINIUM_SERVICE_API_KEY", OPINIUM_SERVICE_API_KEY)
             it.resValue("string", "symbolic_url", SYMBOLIC_URL_NO_SCHEME)
             it.resValue("string", "facebook_app_id", FACEBOOK_APP_ID)
             it.resValue("string", "facebook_login_protocol_scheme", FACEBOOK_LOGIN_PROTOCOL_SCHEME)

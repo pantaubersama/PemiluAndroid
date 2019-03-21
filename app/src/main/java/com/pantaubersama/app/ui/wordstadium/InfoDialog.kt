@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.wordstadium
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,13 +20,15 @@ class InfoDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val layout: Int = arguments!!.getInt("layout")
-        val alertDialog = AlertDialog.Builder(activity)
+        val dialog = Dialog(requireContext())
         val view = LayoutInflater.from(activity).inflate(layout, null)
         val btnClose = view.findViewById<View>(R.id.go_it)
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
         btnClose.setOnClickListener {
             dismiss()
         }
-        alertDialog.setView(view)
-        return alertDialog.create()
+        dialog.setContentView(view)
+        return dialog
     }
 }

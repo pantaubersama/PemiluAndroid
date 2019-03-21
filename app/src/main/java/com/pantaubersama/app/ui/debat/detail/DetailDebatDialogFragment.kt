@@ -1,19 +1,21 @@
 package com.pantaubersama.app.ui.debat.detail
 
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
 import androidx.fragment.app.FragmentManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseDialogFragment
 import com.pantaubersama.app.data.model.debat.Challenge
+import com.pantaubersama.app.data.model.urlpreview.UrlItem
+import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.widget.PreviewWebViewClient
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
 import com.pantaubersama.app.utils.extensions.isVisible
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.parseDate
 import com.pantaubersama.app.utils.extensions.visibleIf
+import com.pantaubersama.app.utils.previewTweet
+import com.pantaubersama.app.utils.previewUrl
 import kotlinx.android.synthetic.main.layout_detail_debat.*
 import javax.inject.Inject
 
@@ -51,9 +53,9 @@ class DetailDebatDialogFragment : BaseDialogFragment<DetailDebatDialogPresenter>
     override fun initView(view: View, savedInstanceState: Bundle?) {
         tv_label_detail.text = challenge.topicList.firstOrNull()
 
-        cl_statement.visibleIf(challenge.statementSource.isNotEmpty())
-        if (cl_statement.isVisible()) {
-            presenter.getStatementSourcePreview(challenge.statementSource)
+        ll_webview.visibleIf(challenge.statementSource.isNotEmpty())
+        if (ll_webview.isVisible()) {
+            presenter.getTweetPreview(challenge.statementSource)
             tv_statement_url.text = challenge.statementSource
         }
 
@@ -61,8 +63,12 @@ class DetailDebatDialogFragment : BaseDialogFragment<DetailDebatDialogPresenter>
 
         val opponent = challenge.opponent
         iv_opponent_avatar.loadUrl(opponent?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
-        tv_opponent_name.text = opponent?.fullName
-        tv_opponent_username.text = "@${opponent?.username}"
+        opponent?.fullName?.let {
+            tv_opponent_name.text = it
+            tv_opponent_username.text = opponent.username.let { username -> if (username.startsWith("@")) username else "@$username" }
+        } ?: run {
+            tv_opponent_name.text = opponent?.username?.let { username -> if (username.startsWith("@")) username else "@$username" }
+        }
 
         tv_date_detail.text = challenge.showTimeAt.parseDate(toFormat = "EEEE, dd MMMM yyyy")
         tv_hour_detail.text = challenge.showTimeAt.parseDate(toFormat = "HH.mm")
@@ -90,22 +96,23 @@ class DetailDebatDialogFragment : BaseDialogFragment<DetailDebatDialogPresenter>
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showStatementSource(url: String) {
-        if (!link_webview.isVisible()) link_webview.visibleIf(true)
-        link_webview.webViewClient = PreviewWebViewClient()
-        link_webview.settings.loadsImagesAutomatically = true
-        link_webview.settings.javaScriptEnabled = true
-        link_webview.settings.setAppCacheEnabled(true)
-        link_webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-        link_webview.loadDataWithBaseURL("https://twitter.com", url, "text/html", "utf-8", "")
-        link_webview.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
-                return true
-            }
-        })
+    override fun showLoadingUrlPreview() {
+        progress_bar_url_preview.visibleIf(true)
     }
 
-    override fun onErrorStatementSource(throwable: Throwable) {
-        link_webview.visibleIf(false)
+    override fun dismissLoadingUrlPreview() {
+        progress_bar_url_preview.visibleIf(false)
+    }
+
+    override fun showTweetPreview(oEmbedLink: OEmbedLink) {
+        oEmbedLink.html?.let { ll_webview.previewTweet(it) }
+    }
+
+    override fun showUrlPreview(urlItem: UrlItem) {
+        ll_webview?.previewUrl(urlItem)
+    }
+
+    override fun onErrorUrlPreview(t: Throwable) {
+//        ll_webview?.visibleIf(false)
     }
 }

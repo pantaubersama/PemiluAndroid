@@ -1,14 +1,13 @@
 package com.pantaubersama.app.ui.debat.detail
 
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
+import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +21,8 @@ import com.pantaubersama.app.data.model.debat.Challenge
 import com.pantaubersama.app.data.model.debat.ChallengeConstants
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Progress
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
+import com.pantaubersama.app.data.model.urlpreview.UrlItem
+import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
 import com.pantaubersama.app.data.remote.exception.ErrorException
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.debat.DebatActivity
@@ -29,11 +30,12 @@ import com.pantaubersama.app.ui.debat.TerimaChallengeDialog
 import com.pantaubersama.app.ui.debat.TolakChallengeDialog
 import com.pantaubersama.app.ui.debat.adapter.OpponentCandidateAdapter
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
-import com.pantaubersama.app.ui.widget.PreviewWebViewClient
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ID
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable
+import com.pantaubersama.app.utils.previewTweet
+import com.pantaubersama.app.utils.previewUrl
 import com.pantaubersama.app.utils.spannable
 import kotlinx.android.synthetic.main.activity_detail_debat.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
@@ -236,7 +238,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         ll_content_detail_debat.addView(inflate(R.layout.layout_detail_debat))
         findViewById<TextView>(R.id.tv_label_detail).text = challenge?.topicList?.firstOrNull()
 
-        val cl_statement = findViewById<ConstraintLayout>(R.id.cl_statement)
+        val ll_webview = findViewById<LinearLayout>(R.id.ll_webview)
         val tv_statement_url = findViewById<TextView>(R.id.tv_statement_url)
         val tv_title_detail = findViewById<TextView>(R.id.tv_title_detail)
         val cl_opponent_detail = findViewById<ConstraintLayout>(R.id.cl_opponent_detail)
@@ -251,9 +253,9 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         val tv_creator_bio_detail = findViewById<TextView>(R.id.tv_creator_bio_detail)
         val tv_posted_time_detail = findViewById<TextView>(R.id.tv_posted_time_detail)
         val tv_label_saldo_waktu_desc = findViewById<TextView>(R.id.tv_label_saldo_waktu_desc)
-        challenge?.statementSource?.let { cl_statement.visibleIf(it.isNotEmpty()) }
-        if (cl_statement.isVisible()) {
-            challenge?.statementSource?.let { presenter.getStatementSourcePreview(it) }
+        challenge?.statementSource?.let { ll_webview.visibleIf(it.isNotEmpty()) }
+        if (ll_webview.isVisible()) {
+            challenge?.statementSource?.let { presenter.getTweetPreview(it) }
             tv_statement_url.text = challenge?.statementSource
         }
 
@@ -261,10 +263,14 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
         cl_opponent_detail.visibleIf(challenge?.opponent != null || challenge?.type == ChallengeConstants.Type.DIRECT_CHALLENGE)
         if (cl_opponent_detail.isVisible()) {
-            val opponent = challenge?.opponent ?: challenge?.opponentCandidates?.first()
+            val opponent = challenge?.opponent ?: challenge?.opponentCandidates?.firstOrNull()
             iv_opponent_avatar.loadUrl(opponent?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
-            tv_opponent_name.text = opponent?.fullName
-            tv_opponent_username.text = "@${opponent?.username}"
+            opponent?.fullName?.let {
+                tv_opponent_name.text = it
+                tv_opponent_username.text = opponent.username.let { username -> if (username.startsWith("@")) username else "@$username" }
+            } ?: run {
+                tv_opponent_name.text = opponent?.username?.let { username -> if (username.startsWith("@")) username else "@$username" }
+            }
         }
 
         tv_date_detail.text = challenge?.showTimeAt?.parseDate(toFormat = "EEEE, dd MMMM yyyy")
@@ -286,34 +292,26 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         }
     }
 
-    override fun showLoadingStatementSource() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showLoadingUrlPreview() {
+        findViewById<ProgressBar?>(R.id.progress_bar_url_preview)?.visibleIf(true)
     }
 
-    override fun dismissLoadingStatementSource() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun dismissLoadingUrlPreview() {
+        findViewById<ProgressBar?>(R.id.progress_bar_url_preview)?.visibleIf(false)
     }
 
-    override fun onErrorStatementSource(throwable: Throwable) {
-        val link_webview = findViewById<WebView>(R.id.link_webview)
-        link_webview.visibleIf(false)
+    override fun showTweetPreview(oEmbedLink: OEmbedLink) {
+        val ll_webview = findViewById<LinearLayout?>(R.id.ll_webview)
+        oEmbedLink.html?.let { ll_webview?.previewTweet(it) }
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    override fun showStatementSource(url: String) {
-        val link_webview = findViewById<WebView>(R.id.link_webview)
-        if (!link_webview.isVisible()) link_webview.visibleIf(true)
-        link_webview.webViewClient = PreviewWebViewClient()
-        link_webview.settings.loadsImagesAutomatically = true
-        link_webview.settings.javaScriptEnabled = true
-        link_webview.settings.setAppCacheEnabled(true)
-        link_webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-        link_webview.loadDataWithBaseURL("https://twitter.com", url, "text/html", "utf-8", "")
-        link_webview.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
-                return true
-            }
-        })
+    override fun showUrlPreview(urlItem: UrlItem) {
+        val ll_webview = findViewById<LinearLayout?>(R.id.ll_webview)
+        ll_webview?.previewUrl(urlItem)
+    }
+
+    override fun onErrorUrlPreview(t: Throwable) {
+//        findViewById<WebView?>(R.id.ll_webview)?.visibleIf(false)
     }
 
     private fun onComingSoon() {
@@ -377,7 +375,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     private fun onDirectChallenge() {
-        if (challenge?.opponentCandidates?.first()?.userId == presenter.getMyProfile().id) {
+        if (challenge?.opponentCandidates?.firstOrNull()?.userId == presenter.getMyProfile().id) {
             ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_direct_accept_confirmation_as_opponent))
             val message = spannable {
                 + "Kamu akan menerima Direct Challenge dari "
@@ -402,20 +400,20 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
             }
         } else {
             ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_direct_waiting_confirmation))
-            val opponent = challenge?.opponentCandidates?.first()
-            findViewById<TextView>(R.id.tv_content_subtitle).text = "${opponent?.fullName ?: opponent?.username} mengkonfirmasi tantangan"
+            val opponent = challenge?.opponentCandidates?.firstOrNull()
+            findViewById<TextView>(R.id.tv_content_subtitle).text = "${opponent?.fullName ?: opponent?.username ?: "lawan"} mengkonfirmasi tantangan"
         }
     }
 
     private fun onDenied() {
         ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_direct_rejected))
-        val opponent = challenge?.opponentCandidates?.first()
+        val opponent = challenge?.opponentCandidates?.firstOrNull()
         findViewById<RoundedImageView>(R.id.iv_avatar).loadUrl(opponent?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
         findViewById<TextView>(R.id.tv_name).text = opponent?.fullName
         findViewById<TextView>(R.id.tv_username).text = opponent?.username
         findViewById<TextView>(R.id.tv_content_reject_description)
             .text = challenge?.reasonRejected
-            ?: "${challenge?.opponentCandidates?.first()?.fullName} tidak menulis alasan/pernyataan"
+            ?: "${challenge?.opponentCandidates?.firstOrNull()?.fullName} tidak menulis alasan/pernyataan"
     }
 
     private fun onExpired() {
