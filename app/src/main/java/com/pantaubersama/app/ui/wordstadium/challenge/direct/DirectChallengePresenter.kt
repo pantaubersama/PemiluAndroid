@@ -1,32 +1,39 @@
 package com.pantaubersama.app.ui.wordstadium.challenge.direct
 
 import com.pantaubersama.app.base.BasePresenter
+import com.pantaubersama.app.data.interactors.OpiniumServiceInteractor
 import com.pantaubersama.app.data.interactors.ProfileInteractor
 import com.pantaubersama.app.data.interactors.WordStadiumInteractor
+import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
 class DirectChallengePresenter @Inject constructor(
     private val profileInteractor: ProfileInteractor,
-    private val wordStadiumInteractor: WordStadiumInteractor
+    private val wordStadiumInteractor: WordStadiumInteractor,
+    private val opiniumServiceInteractor: OpiniumServiceInteractor
 ) : BasePresenter<DirectChallengeView>() {
 
     fun getUserProfile() {
         view?.showProfile(profileInteractor.getProfile())
     }
 
-    fun getConvertLink(url: String) {
+    fun getTweetPreview(url: String) {
         view?.showLoading()
-        disposables.add(wordStadiumInteractor.getConvertLink(url)
-                .doOnEvent { _, _ -> view?.dismissLoading() }
+        if (url.startsWith("https://twitter.com/", true)) {
+            disposables += wordStadiumInteractor.getConvertLink(url)
                 .subscribe(
-                        {
-                            view?.onSuccessConvertLink(it)
-                        },
-                        {
-                            view?.showError(it)
-                        }
+                    {
+                        view?.onSuccessTweetPreview(it)
+                        view?.dismissLoading()
+                    },
+                    {
+                        getUrlPreview(url)
+                    }
                 )
-        )
+        } else {
+            getUrlPreview(url)
+        }
+
     }
 
     fun searchLawanDebat(keyword: String, page: Int, perPage: Int) {
@@ -57,7 +64,7 @@ class DirectChallengePresenter @Inject constructor(
     }
 
     fun searchPerson(keyword: String, page: Int, perPage: Int) {
-        view?.showLoading()
+        view?.showLoadingUrlPreview()
         disposables.add(
                 wordStadiumInteractor.searchPerson(keyword, page, perPage)
                         .subscribe(
@@ -81,5 +88,19 @@ class DirectChallengePresenter @Inject constructor(
                                 }
                         )
         )
+    }
+
+    private fun getUrlPreview(url: String) {
+        view?.showLoadingUrlPreview()
+        disposables += opiniumServiceInteractor.getUrlMeta(url)
+            .doOnEvent { _, _ -> view?.dismissLoadingUrlPreview() }
+            .subscribe(
+                {
+                    view?.showUrlPreview(it)
+                },
+                {
+                    view?.onErrorUrlPreview(it)
+                }
+            )
     }
 }

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +15,7 @@ import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.urlpreview.UrlItem
 import com.pantaubersama.app.data.model.user.Profile
 import com.pantaubersama.app.data.model.wordstadium.BidangKajian
 import com.pantaubersama.app.data.model.wordstadium.Challenge
@@ -25,9 +27,13 @@ import com.pantaubersama.app.ui.wordstadium.challenge.CreateChallengeActivity
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enable
 import com.pantaubersama.app.utils.extensions.loadUrl
+import com.pantaubersama.app.utils.extensions.visibleIf
+import com.pantaubersama.app.utils.previewTweet
+import com.pantaubersama.app.utils.previewUrl
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_open_challenge.*
 import kotlinx.android.synthetic.main.close_challenge.view.*
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import javax.inject.Inject
@@ -64,8 +70,6 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
         presenter.getUserProfile()
         actionClick()
         bidangKajianActive()
-
-        link_webview.webViewClient = PreviewWebViewClient()
     }
 
     override fun showLoading() {
@@ -148,7 +152,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
                 val url = text.text.toString()
                 mLink = url
                 dialog.dismiss()
-                presenter.getConvertLink(url)
+                presenter.getTweetPreview(url)
             }
         }
 
@@ -236,6 +240,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
             val intent = Intent(this, PromoteChallengeActivity::class.java)
             intent.putExtra("challenge", challenge)
             intent.putExtra("date", mDateString + " " + mTimeString)
+            TODO("GANTI 'link' DENGAN TIPE STRING")
             intent.putExtra("link", oEmbedLink)
             startActivityForResult(intent, CreateChallengeActivity.OPEN_CHALLENGE)
         }
@@ -327,23 +332,49 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
     fun previewLink(url: String?) {
         if (url != null && url.length > 0) {
             ll_webview.visibility = View.VISIBLE
-            link_webview.settings.loadsImagesAutomatically = true
-            link_webview.settings.javaScriptEnabled = true
-            link_webview.getSettings().setAppCacheEnabled(true)
-            link_webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-            link_webview.loadDataWithBaseURL("https://twitter.com", url.toString(), "text/html", "utf-8", "")
+            ll_webview.previewTweet(url)
             link_pernyataan.visibility = View.GONE
         }
         link_close.setOnClickListener {
             ll_webview.visibility = View.GONE
             link_pernyataan.visibility = View.VISIBLE
+            if (ll_webview.childCount > 1) {
+                ll_webview.removeViewAt(1)
+            }
         }
     }
 
-    override fun onSuccessConvertLink(oEmbedLink: OEmbedLink) {
+    override fun onSuccessTweetPreview(oEmbedLink: OEmbedLink) {
         link_source.text = oEmbedLink.url
         previewLink(oEmbedLink.html)
         this.oEmbedLink = oEmbedLink
+    }
+
+    override fun showLoadingUrlPreview() {
+        progress_bar_url_preview.visibleIf(true)
+    }
+
+    override fun dismissLoadingUrlPreview() {
+        progress_bar_url_preview.visibleIf(false)
+    }
+
+    override fun showUrlPreview(urlItem: UrlItem) {
+        link_source.text = urlItem.sourceUrl
+        ll_webview.previewUrl(urlItem)
+        ll_webview.visibility = View.VISIBLE
+        link_pernyataan.visibility = View.GONE
+        link_close.setOnClickListener {
+            ll_webview.visibility = View.GONE
+            link_pernyataan.visibility = View.VISIBLE
+            if (ll_webview.childCount > 1) {
+                ll_webview.removeViewAt(1)
+            }
+        }
+    }
+
+    override fun onErrorUrlPreview(t: Throwable) {
+        Timber.e(t)
+        ToastUtil.show(this, getString(R.string.link_tidak_valid))
     }
 
     fun back() {

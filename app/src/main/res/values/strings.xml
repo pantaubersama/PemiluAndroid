@@ -388,4 +388,5 @@
     <string name="c1_form_dprd_provinsi_hint">Silahkan masukkan data Model C1-DPRD Provinsi pada kolom dibawah ini:</string>
     <string name="c1_form_dprd_kabupaten_hint">Silahkan masukkan data Model C1-DPRD Kabupaten pada kolom dibawah ini:</string>
     <string name="upload_suasana_tps_hint">Upload suasana kemeriahan TPS dan bagikan ke pengguna yang lain</string>
+    <string name="link_tidak_valid">Link tidak valid</string>
 </resources>

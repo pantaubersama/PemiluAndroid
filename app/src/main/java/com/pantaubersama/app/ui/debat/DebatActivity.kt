@@ -398,9 +398,8 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     override fun updateMyTimeLeft() {
         runOnUiThread {
             if (isMyChallenge && !isDone) {
-                tv_sisa_waktu.text = if (wordsFighterAdapter.itemCount > 1) {
-                    "${wordsFighterAdapter.getMyTimeLeft(myRole)} MENIT"
-                } else "${challenge.timeLimit} MENIT"
+                tv_sisa_waktu.text = wordsFighterAdapter.getMyTimeLeft(myRole)?.let { "$it MENIT" }
+                    ?: "${challenge.timeLimit} MENIT"
             }
             invalidateToolbar()
         }
