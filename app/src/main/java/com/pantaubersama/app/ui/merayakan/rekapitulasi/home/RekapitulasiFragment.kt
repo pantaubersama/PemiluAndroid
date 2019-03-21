@@ -93,6 +93,7 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
     override fun bindRekapitulasiList(rekapitulasi: MutableList<Rekapitulasi>) {
         recycler_view.visibleIf(true)
         adapter.addData(rekapitulasi as MutableList<ItemModel>)
+        adapter.addFooter()
     }
 
     override fun showFailedLoadRekapitulasiList() {
