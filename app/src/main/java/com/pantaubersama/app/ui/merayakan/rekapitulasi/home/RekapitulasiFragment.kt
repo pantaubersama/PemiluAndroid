@@ -8,6 +8,7 @@ import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.rekapitulasi.Percentage
+import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
 import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
@@ -15,8 +16,11 @@ import com.pantaubersama.app.ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerah
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
+import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
 class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), RekapitulasiView {
@@ -45,7 +49,7 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
                 startActivityForResult(BannerInfoActivity.setIntent(requireContext(), bannerInfo), PantauConstants.RequestCode.RC_BANNER_REKAPITULASI)
             }
 
-            override fun onClickItem(item: Percentage) {
+            override fun onClickItem(item: Rekapitulasi) {
                 RekapitulasiDaerahActivity.start(requireContext(), "provinsi")
             }
         }
@@ -82,7 +86,17 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
     }
 
     override fun bindRekapitulasiNasional(data: Percentage) {
-        adapter.addItem(data as ItemModel)
+        adapter.addRekapitulasiHeader(data)
+        presenter.getRekapitulasiData()
+    }
+
+    override fun bindRekapitulasiList(rekapitulasi: MutableList<Rekapitulasi>) {
+        recycler_view.visibleIf(true)
+        adapter.addData(rekapitulasi as MutableList<ItemModel>)
+    }
+
+    override fun showFailedLoadRekapitulasiList() {
+        ToastUtil.show(requireContext(), "Gagal memuat list data rekapitulasi")
     }
 
     override fun showFailedGetBannerAlert() {
@@ -98,10 +112,14 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
     }
 
     override fun showLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        lottie_loading.enableLottie(true, lottie_loading)
+        view_empty_state.enableLottie(false, lottie_empty_state)
+        view_fail_state.enableLottie(false, lottie_fail_state)
+        recycler_view.visibleIf(false)
     }
 
     override fun dismissLoading() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        lottie_loading.enableLottie(false, lottie_loading)
+        recycler_view.visibleIf(false)
     }
 }

@@ -1,6 +1,7 @@
 package com.pantaubersama.app.data.interactors
 
 import com.pantaubersama.app.data.model.rekapitulasi.Percentage
+import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
 import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
@@ -26,6 +27,15 @@ class RekapitulasiInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
             .map {
                 it.data
+            }
+    }
+
+    fun getRekapitulasiList(): Single<MutableList<Rekapitulasi>> {
+        return apiWrapper.getPantauApi().getRekapitulasiList()
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .map {
+                it.data.percentages
             }
     }
 }

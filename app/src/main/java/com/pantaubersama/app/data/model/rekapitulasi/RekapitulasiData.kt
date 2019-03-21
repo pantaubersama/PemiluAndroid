@@ -11,5 +11,5 @@ data class RekapitulasiData(
     @SerializedName("percentage")
     var percentage: Percentage,
     @SerializedName("percentages")
-    var percentages: MutableList<Percentage>
+    var percentages: MutableList<Rekapitulasi>
 )

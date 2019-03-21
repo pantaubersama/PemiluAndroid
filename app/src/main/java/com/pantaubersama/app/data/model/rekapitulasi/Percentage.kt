@@ -9,9 +9,9 @@ data class Percentage(
     @SerializedName("summary_type")
     var summaryType: String,
     @SerializedName("candidates")
-    var candidates: List<Candidate>,
+    var candidates: List<Candidate>?,
     @SerializedName("invalid_vote")
-    var invalidVote: InvalidVote,
+    var invalidVote: InvalidVote?,
     @SerializedName("total_vote")
     var totalVote: Int,
     @SerializedName("region")
