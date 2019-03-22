@@ -8,7 +8,7 @@ import com.pantaubersama.app.data.db.AppDB
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
-import com.pantaubersama.app.data.model.tps.image.Image
+import com.pantaubersama.app.data.model.tps.image.ImageLocalModel
 import com.pantaubersama.app.data.model.tps.image.ImageDoc
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.remote.APIWrapper
@@ -246,12 +246,12 @@ class TPSInteractor @Inject constructor(
 
     fun saveImageDoc(
         tpsId: String,
-        presiden: MutableList<Image>,
-        dpr: MutableList<Image>,
-        dpd: MutableList<Image>,
-        dprdProv: MutableList<Image>,
-        dprdKab: MutableList<Image>,
-        suasanaTps: MutableList<Image>
+        presiden: MutableList<ImageLocalModel>,
+        dpr: MutableList<ImageLocalModel>,
+        dpd: MutableList<ImageLocalModel>,
+        dprdProv: MutableList<ImageLocalModel>,
+        dprdKab: MutableList<ImageLocalModel>,
+        suasanaTps: MutableList<ImageLocalModel>
     ): Completable {
         if (appDB.getImagesDao().getImage(tpsId) != null) {
             val imageDoc = appDB.getImagesDao().getImage(tpsId)
@@ -331,7 +331,7 @@ class TPSInteractor @Inject constructor(
         return newFile
     }
 
-    fun getImagesWithType(dbTpsId: String, imagesUploadType: String): MutableList<Image>? {
+    fun getImagesWithType(dbTpsId: String, imagesUploadType: String): MutableList<ImageLocalModel>? {
         when (imagesUploadType) {
             "c1_presiden" -> return appDB.getImagesDao().getImage(dbTpsId)?.presiden
             "c1_dpr_ri" -> return appDB.getImagesDao().getImage(dbTpsId)?.dpr

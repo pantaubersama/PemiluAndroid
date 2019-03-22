@@ -16,7 +16,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.tps.TPS
-import com.pantaubersama.app.data.model.tps.image.Image
+import com.pantaubersama.app.data.model.tps.image.ImageLocalModel
 import com.pantaubersama.app.data.model.tps.image.ImageDoc
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.widget.ImageChooserTools
@@ -74,12 +74,12 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
             tps?.id?.let { it1 ->
                 presenter.saveImages(
                     it1,
-                    c1PresidenAdapter.getListData() as MutableList<Image>,
-                    c1DprAdapter.getListData() as MutableList<Image>,
-                    c1DpdAdapter.getListData() as MutableList<Image>,
-                    c1DprdProvAdapter.getListData() as MutableList<Image>,
-                    c1DprdKabAdapter.getListData() as MutableList<Image>,
-                    suasanaTpsAdapter.getListData() as MutableList<Image>
+                    c1PresidenAdapter.getListData() as MutableList<ImageLocalModel>,
+                    c1DprAdapter.getListData() as MutableList<ImageLocalModel>,
+                    c1DpdAdapter.getListData() as MutableList<ImageLocalModel>,
+                    c1DprdProvAdapter.getListData() as MutableList<ImageLocalModel>,
+                    c1DprdKabAdapter.getListData() as MutableList<ImageLocalModel>,
+                    suasanaTpsAdapter.getListData() as MutableList<ImageLocalModel>
                 )
             }
         }
@@ -118,7 +118,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //        c1PresidenImagesPart = ArrayList()
         suasanaTpsAdapter = C1ImagesAdapter()
         suasanaTpsAdapter.listener = object : C1ImagesAdapter.Listener {
-            override fun onClickDelete(item: Image, adapterPosition: Int) {
+            override fun onClickDelete(item: ImageLocalModel, adapterPosition: Int) {
                 suasanaTpsAdapter.deleteItem(adapterPosition)
             }
         }
@@ -139,7 +139,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //        c1PresidenImagesPart = ArrayList()
         c1DprdKabAdapter = C1ImagesAdapter()
         c1DprdKabAdapter.listener = object : C1ImagesAdapter.Listener {
-            override fun onClickDelete(item: Image, adapterPosition: Int) {
+            override fun onClickDelete(item: ImageLocalModel, adapterPosition: Int) {
                 c1DprdKabAdapter.deleteItem(adapterPosition)
             }
         }
@@ -160,7 +160,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //        c1PresidenImagesPart = ArrayList()
         c1DprdProvAdapter = C1ImagesAdapter()
         c1DprdProvAdapter.listener = object : C1ImagesAdapter.Listener {
-            override fun onClickDelete(item: Image, adapterPosition: Int) {
+            override fun onClickDelete(item: ImageLocalModel, adapterPosition: Int) {
                 c1DprdProvAdapter.deleteItem(adapterPosition)
             }
         }
@@ -181,7 +181,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //        c1PresidenImagesPart = ArrayList()
         c1DpdAdapter = C1ImagesAdapter()
         c1DpdAdapter.listener = object : C1ImagesAdapter.Listener {
-            override fun onClickDelete(item: Image, adapterPosition: Int) {
+            override fun onClickDelete(item: ImageLocalModel, adapterPosition: Int) {
                 c1DpdAdapter.deleteItem(adapterPosition)
             }
         }
@@ -202,7 +202,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //        c1PresidenImagesPart = ArrayList()
         c1DprAdapter = C1ImagesAdapter()
         c1DprAdapter.listener = object : C1ImagesAdapter.Listener {
-            override fun onClickDelete(item: Image, adapterPosition: Int) {
+            override fun onClickDelete(item: ImageLocalModel, adapterPosition: Int) {
                 c1DprAdapter.deleteItem(adapterPosition)
             }
         }
@@ -223,7 +223,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //        c1PresidenImagesPart = ArrayList()
         c1PresidenAdapter = C1ImagesAdapter()
         c1PresidenAdapter.listener = object : C1ImagesAdapter.Listener {
-            override fun onClickDelete(item: Image, adapterPosition: Int) {
+            override fun onClickDelete(item: ImageLocalModel, adapterPosition: Int) {
                 c1PresidenAdapter.deleteItem(adapterPosition)
             }
         }
@@ -339,7 +339,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            proceedCamera(file)?.let {
 //                                c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                            }
-                            c1PresidenAdapter.addItem(Image(file.absolutePath) as ItemModel)
+                            c1PresidenAdapter.addItem(ImageLocalModel(file.absolutePath) as ItemModel)
                         }
 
                         override fun onFailed(throwable: Throwable) {
@@ -362,7 +362,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                        }
                         c1PresidenAdapter.addItem(
-                            Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity).absolutePath) as ItemModel
+                            ImageLocalModel(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity).absolutePath) as ItemModel
                         )
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -377,7 +377,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            proceedCamera(file)?.let {
 //                                c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                            }
-                            c1DprAdapter.addItem(Image(file.absolutePath) as ItemModel)
+                            c1DprAdapter.addItem(ImageLocalModel(file.absolutePath) as ItemModel)
                         }
 
                         override fun onFailed(throwable: Throwable) {
@@ -400,7 +400,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                        }
                         c1DprAdapter.addItem(
-                            Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity).absolutePath) as ItemModel
+                            ImageLocalModel(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity).absolutePath) as ItemModel
                         )
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -415,7 +415,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            proceedCamera(file)?.let {
 //                                c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                            }
-                            c1DpdAdapter.addItem(Image(file.absolutePath) as ItemModel)
+                            c1DpdAdapter.addItem(ImageLocalModel(file.absolutePath) as ItemModel)
                         }
 
                         override fun onFailed(throwable: Throwable) {
@@ -438,7 +438,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                        }
                         c1DpdAdapter.addItem(
-                            Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity).absolutePath) as ItemModel
+                            ImageLocalModel(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity).absolutePath) as ItemModel
                         )
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -453,7 +453,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            proceedCamera(file)?.let {
 //                                c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                            }
-                            c1DprdProvAdapter.addItem(Image(file.absolutePath) as ItemModel)
+                            c1DprdProvAdapter.addItem(ImageLocalModel(file.absolutePath) as ItemModel)
                         }
 
                         override fun onFailed(throwable: Throwable) {
@@ -476,7 +476,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                        }
                         c1DprdProvAdapter.addItem(
-                            Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity).absolutePath) as ItemModel
+                            ImageLocalModel(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity).absolutePath) as ItemModel
                         )
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -491,7 +491,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            proceedCamera(file)?.let {
 //                                c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                            }
-                            c1DprdKabAdapter.addItem(Image(file.absolutePath) as ItemModel)
+                            c1DprdKabAdapter.addItem(ImageLocalModel(file.absolutePath) as ItemModel)
                         }
 
                         override fun onFailed(throwable: Throwable) {
@@ -514,7 +514,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                        }
                         c1DprdKabAdapter.addItem(
-                            Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity).absolutePath) as ItemModel
+                            ImageLocalModel(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity).absolutePath) as ItemModel
                         )
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -529,7 +529,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            proceedCamera(file)?.let {
 //                                c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                            }
-                            suasanaTpsAdapter.addItem(Image(file.absolutePath) as ItemModel)
+                            suasanaTpsAdapter.addItem(ImageLocalModel(file.absolutePath) as ItemModel)
                         }
 
                         override fun onFailed(throwable: Throwable) {
@@ -552,7 +552,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 //                            c1PresidenImagesPart.add(c1PresidenImagesPart.size, it)
 //                        }
                         suasanaTpsAdapter.addItem(
-                            Image(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity).absolutePath) as ItemModel
+                            ImageLocalModel(ImageChooserTools.proccedImageFromStorage(data, this@UploadDocumentActivity).absolutePath) as ItemModel
                         )
                     } catch (e: Exception) {
                         e.printStackTrace()

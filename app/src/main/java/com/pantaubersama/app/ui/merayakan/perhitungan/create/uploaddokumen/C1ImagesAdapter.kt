@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
-import com.pantaubersama.app.data.model.tps.image.Image
+import com.pantaubersama.app.data.model.tps.image.ImageLocalModel
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.c1_images_layout.*
@@ -17,7 +17,7 @@ class C1ImagesAdapter : BaseRecyclerAdapter() {
     var listener: Listener? = null
 
     inner class C1ImagesViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(item: Image) {
+        fun bind(item: ImageLocalModel) {
             val file = File(Uri.parse(item.uri).path)
             c1_model_image.setImageBitmap(BitmapFactory.decodeFile(file.absolutePath))
             c1_model_image_name.text = file.absolutePath.substring(file.absolutePath.lastIndexOf("/") + 1)
@@ -32,10 +32,10 @@ class C1ImagesAdapter : BaseRecyclerAdapter() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as C1ImagesViewHolder).bind(data[position] as Image)
+        (holder as C1ImagesViewHolder).bind(data[position] as ImageLocalModel)
     }
 
     interface Listener {
-        fun onClickDelete(item: Image, adapterPosition: Int)
+        fun onClickDelete(item: ImageLocalModel, adapterPosition: Int)
     }
 }

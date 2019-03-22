@@ -10,10 +10,13 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.rekapitulasi.Percentage
 import com.pantaubersama.app.data.model.tps.TPS
+import com.pantaubersama.app.data.model.tps.image.Image
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants.Merayakan.TPS_DATA
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.loadUrl
 import kotlinx.android.synthetic.main.activity_detail_tps.*
+import kotlinx.android.synthetic.main.rekapitulasi_images_layout.view.*
 import javax.inject.Inject
 
 class DetailTPSActivity : BaseActivity<DetailTPSPresenter>(), DetailTPSView {
@@ -84,6 +87,22 @@ class DetailTPSActivity : BaseActivity<DetailTPSPresenter>(), DetailTPSView {
 
     override fun dismissLoading() {
         progress_bar.visibility = View.GONE
+    }
+
+    override fun showFailedGetImagesAlert() {
+        ToastUtil.show(this@DetailTPSActivity, "Gagal memuat dokumen gambar")
+    }
+
+    override fun bindImages(images: MutableList<Image>) {
+
+        if (images.size != 0) {
+            presiden_c1_container.visibility = View.VISIBLE
+            images.forEach {
+                val child = layoutInflater.inflate(R.layout.rekapitulasi_images_layout, null)
+                child.c1_image.loadUrl(it.file.url, R.drawable.ic_avatar_placeholder)
+                presiden_images_container.addView(child)
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

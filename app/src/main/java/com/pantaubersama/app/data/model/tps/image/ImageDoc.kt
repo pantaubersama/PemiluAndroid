@@ -8,10 +8,10 @@ data class ImageDoc(
     @PrimaryKey
     var id: String,
     var tpsId: String,
-    var presiden: MutableList<Image>,
-    var dpr: MutableList<Image>,
-    var dpd: MutableList<Image>,
-    var dprdProv: MutableList<Image>,
-    var dprdKab: MutableList<Image>,
-    var suasanaTps: MutableList<Image>
+    var presiden: MutableList<ImageLocalModel>,
+    var dpr: MutableList<ImageLocalModel>,
+    var dpd: MutableList<ImageLocalModel>,
+    var dprdProv: MutableList<ImageLocalModel>,
+    var dprdKab: MutableList<ImageLocalModel>,
+    var suasanaTps: MutableList<ImageLocalModel>
 )
