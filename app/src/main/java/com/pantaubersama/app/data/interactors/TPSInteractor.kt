@@ -9,6 +9,7 @@ import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
 import com.pantaubersama.app.data.model.tps.image.Image
+import com.pantaubersama.app.data.model.tps.image.ImageLocalModel
 import com.pantaubersama.app.data.model.tps.image.ImageDoc
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
 import com.pantaubersama.app.data.remote.APIWrapper
@@ -106,9 +107,9 @@ class TPSInteractor @Inject constructor(
         return Single.just(tps)
     }
 
-    fun getTpses(page: Int, perPage: Int): Single<MutableList<TPS>> {
+    fun getMyTpses(page: Int, perPage: Int): Single<MutableList<TPS>> {
         return apiWrapper.getPantauApi()
-                .getTPSes(
+                .getMyTPSes(
                     page,
                     perPage,
                     dataCache.loadUserProfile().id
@@ -246,12 +247,12 @@ class TPSInteractor @Inject constructor(
 
     fun saveImageDoc(
         tpsId: String,
-        presiden: MutableList<Image>,
-        dpr: MutableList<Image>,
-        dpd: MutableList<Image>,
-        dprdProv: MutableList<Image>,
-        dprdKab: MutableList<Image>,
-        suasanaTps: MutableList<Image>
+        presiden: MutableList<ImageLocalModel>,
+        dpr: MutableList<ImageLocalModel>,
+        dpd: MutableList<ImageLocalModel>,
+        dprdProv: MutableList<ImageLocalModel>,
+        dprdKab: MutableList<ImageLocalModel>,
+        suasanaTps: MutableList<ImageLocalModel>
     ): Completable {
         if (appDB.getImagesDao().getImage(tpsId) != null) {
             val imageDoc = appDB.getImagesDao().getImage(tpsId)
@@ -331,7 +332,7 @@ class TPSInteractor @Inject constructor(
         return newFile
     }
 
-    fun getImagesWithType(dbTpsId: String, imagesUploadType: String): MutableList<Image>? {
+    fun getImagesWithType(dbTpsId: String, imagesUploadType: String): MutableList<ImageLocalModel>? {
         when (imagesUploadType) {
             "c1_presiden" -> return appDB.getImagesDao().getImage(dbTpsId)?.presiden
             "c1_dpr_ri" -> return appDB.getImagesDao().getImage(dbTpsId)?.dpr
@@ -377,6 +378,24 @@ class TPSInteractor @Inject constructor(
                         appDB.getTPSDAO().deleteTPS(tps)
                     }
                 }
+            }
+    }
+
+    fun getTpses(page: Int, perPage: Int, villageCode: Long): Single<MutableList<TPS>> {
+        return apiWrapper.getPantauApi().getTPSes(page, perPage, villageCode)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .map {
+                it.tpsData.tpses
+            }
+    }
+
+    fun getImagesFromApi(tpsId: String): Single<MutableList<Image>> {
+        return apiWrapper.getPantauApi().getImages(tpsId)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .map {
+                it.data.image
             }
     }
 }

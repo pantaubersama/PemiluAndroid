@@ -51,7 +51,7 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
             }
 
             override fun onClickItem(item: Rekapitulasi) {
-                RekapitulasiDaerahActivity.start(requireContext(), "provinsi", item)
+                RekapitulasiDaerahActivity.start(requireContext(), "provinsi", item, 464)
             }
         }
         recycler_view.layoutManager = LinearLayoutManager(requireContext())

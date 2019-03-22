@@ -4,6 +4,8 @@ import com.pantaubersama.app.data.model.rekapitulasi.Percentage
 import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
 import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiResponse
 import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
+import com.pantaubersama.app.data.model.tps.c1.C1Form
+import com.pantaubersama.app.data.model.tps.image.Image
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
 import io.reactivex.Single
@@ -45,5 +47,28 @@ class RekapitulasiInteractor @Inject constructor(
             .map {
                 it.data.percentages
             }
+    }
+
+    fun getRekapitulasiDetail(tpsId: String, villageCode: Long, tpsNumber: Int): Single<Percentage> {
+        return apiWrapper.getPantauApi().getRekapitulasiDetail(tpsId, villageCode, tpsNumber)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .map {
+                it.data.percentage
+            }
+    }
+
+    fun getImages(tpsId: String, imagesType: String): Single<MutableList<Image>> {
+        return apiWrapper.getPantauApi().getImages(tpsId, imagesType)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .map { it.data.image }
+    }
+
+    fun getC1Summary(tpsId: String, c1Type: String): Single<C1Form> {
+        return apiWrapper.getPantauApi().getC1(tpsId, c1Type)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .map { it.data.c1Form }
     }
 }

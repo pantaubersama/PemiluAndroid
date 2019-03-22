@@ -14,6 +14,7 @@ import com.pantaubersama.app.data.model.tanyakandidat.TanyaKandidatResponse
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
 import com.pantaubersama.app.data.model.tps.c1.C1FormResponse
 import com.pantaubersama.app.data.model.tps.candidate.CandidateResponse
+import com.pantaubersama.app.data.model.tps.image.ImageResponse
 import com.pantaubersama.app.data.model.tps.realcount.realcountoutput.RealCountResponse
 import com.pantaubersama.app.data.model.wordstadium.LawanDebatResponse
 import io.reactivex.Completable
@@ -221,7 +222,7 @@ interface PantauAPI {
     ): Single<LocationResponse<VillageData>>
 
     @GET("hitung/v1/real_counts")
-    fun getTPSes(
+    fun getMyTPSes(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
         @Query("user_id") userId: String?
@@ -327,4 +328,25 @@ interface PantauAPI {
         @Query("level") level: Int? = 0,
         @Query("region") regencyCode: Long? = null
     ): Single<RekapitulasiResponse>
+
+    @GET("hitung/v1/real_counts")
+    fun getTPSes(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("village_code") villageCode: Long
+    ): Single<TpsResponse>
+
+    @GET("hitung/v1/summary/president/show")
+    fun getRekapitulasiDetail(
+        @Query("hitung_real_count_id") tpsId: String,
+        @Query("region") villageCode: Long,
+        @Query("tps") tpsNumber: Int,
+        @Query("level") level: Int = 6
+    ): Single<RekapitulasiResponse>
+
+    @GET("hitung/v1/images")
+    fun getImages(
+        @Query("hitung_real_count_id") tpsId: String,
+        @Query("image_type") imagesType: String? = null
+    ): Single<ImageResponse>
 }
