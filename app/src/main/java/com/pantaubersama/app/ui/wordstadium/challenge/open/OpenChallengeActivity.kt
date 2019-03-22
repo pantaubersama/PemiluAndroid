@@ -161,6 +161,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
 
         ll_date.setOnClickListener {
             val c = Calendar.getInstance()
+            c.add(Calendar.DATE, 1)
             mYear = c.get(Calendar.YEAR)
             mMonth = c.get(Calendar.MONTH)
             mDay = c.get(Calendar.DAY_OF_MONTH)
@@ -184,7 +185,9 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
                         }
                     }, mYear, mMonth, mDay)
 
-            datePickerDialog.datePicker.minDate = Calendar.getInstance().timeInMillis
+            datePickerDialog.datePicker.minDate = c.timeInMillis
+            c.add(Calendar.DATE, 30)
+            datePickerDialog.datePicker.maxDate = c.timeInMillis
             datePickerDialog.show()
         }
 
@@ -203,10 +206,6 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
                     dateTimeDone()
                     mTimeString = "$hour:$mnt"
                 }, mHour, mMinute, true)
-
-                if (mDateString == SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().time)) {
-                    timePickerDialog.setMinTime(mHour, mMinute, 0)
-                }
 
                 timePickerDialog.show(supportFragmentManager, "TimePickerDialog")
             } else {
