@@ -71,7 +71,7 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
                 when (parent) {
                     "provinsi" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kabupaten", item)
                     "kabupaten" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kecamatan", item)
-                    "kecamatan" -> TPSListActivity.start(this@RekapitulasiDaerahActivity)
+                    "kecamatan" -> TPSListActivity.start(this@RekapitulasiDaerahActivity, item)
                 }
             }
         }

@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
 import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.detailtps.DetailTPSActivity
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.toDp
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -27,8 +29,16 @@ class TPSListActivity : BaseActivity<TPSListPresenter>(), TPSListView {
     @Inject
     override lateinit var presenter: TPSListPresenter
 
+    private var rekapitulasi: Rekapitulasi? = null
+    private var page = 1
+    private var perPage = 25
+
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
+    }
+
+    override fun fetchIntentExtra() {
+        rekapitulasi = intent.getSerializableExtra("rekapitulasi") as Rekapitulasi
     }
 
     override fun statusBarColor(): Int? {
@@ -40,9 +50,13 @@ class TPSListActivity : BaseActivity<TPSListPresenter>(), TPSListView {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
-        setupToolbar(true, "Sumberarum", R.color.white, 4f)
+        var title = ""
+        rekapitulasi?.let {
+            title = it.region.name
+        }
+        setupToolbar(true, title, R.color.white, 4f)
         setupTPSList()
-        presenter.getTPSListData()
+        loadData()
     }
 
     private fun setupTPSList() {
@@ -52,14 +66,49 @@ class TPSListActivity : BaseActivity<TPSListPresenter>(), TPSListView {
                 DetailTPSActivity.start(this@TPSListActivity)
             }
         }
+        adapter.addSupportLoadMore(recycler_view, 5) {
+            adapter.setLoading()
+            loadData()
+        }
         recycler_view.setPadding(0, 8f.toDp(this@TPSListActivity), 0, 8f.toDp(this@TPSListActivity))
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = adapter
+        swipe_refresh.setOnRefreshListener {
+            loadData()
+        }
     }
 
-    override fun bindPerhitungan(tpses: MutableList<TPS>) {
+    private fun loadData() {
+        swipe_refresh.isRefreshing = false
+        rekapitulasi?.let {
+            presenter.getTPSListData(page, perPage, it.region.code)
+        }
+    }
+
+    override fun bindTpses(tpses: MutableList<TPS>) {
         recycler_view.visibleIf(true)
         adapter.setDatas(tpses as MutableList<ItemModel>)
+    }
+
+    override fun showEmptyDataAlert() {
+        view_empty_state.enableLottie(true, lottie_empty_state)
+    }
+
+    override fun setDataEnd() {
+        adapter.setDataEnd(true)
+    }
+
+    override fun bindNextTpses(tpses: MutableList<TPS>) {
+        adapter.setLoaded()
+        adapter.addData(tpses as MutableList<ItemModel>)
+    }
+
+    override fun showEmptyNextDataAlert() {
+        ToastUtil.show(this@TPSListActivity, "Gagal memuat lebih banyak data")
+    }
+
+    override fun showFailedLoadDataAlert() {
+        view_fail_state.enableLottie(true, lottie_fail_state)
     }
 
     override fun showLoading() {
@@ -89,8 +138,10 @@ class TPSListActivity : BaseActivity<TPSListPresenter>(), TPSListView {
     }
 
     companion object {
-        fun start(context: Context) {
-            context.startActivity(Intent(context, TPSListActivity::class.java))
+        fun start(context: Context, item: Rekapitulasi) {
+            val intent = Intent(context, TPSListActivity::class.java)
+            intent.putExtra("rekapitulasi", item)
+            context.startActivity(intent)
         }
     }
 }

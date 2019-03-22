@@ -106,9 +106,9 @@ class TPSInteractor @Inject constructor(
         return Single.just(tps)
     }
 
-    fun getTpses(page: Int, perPage: Int): Single<MutableList<TPS>> {
+    fun getMyTpses(page: Int, perPage: Int): Single<MutableList<TPS>> {
         return apiWrapper.getPantauApi()
-                .getTPSes(
+                .getMyTPSes(
                     page,
                     perPage,
                     dataCache.loadUserProfile().id
@@ -377,6 +377,15 @@ class TPSInteractor @Inject constructor(
                         appDB.getTPSDAO().deleteTPS(tps)
                     }
                 }
+            }
+    }
+
+    fun getTpses(page: Int, perPage: Int, villageCode: Long): Single<MutableList<TPS>> {
+        return apiWrapper.getPantauApi().getTPSes(page, perPage, villageCode)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .map {
+                it.tpsData.tpses
             }
     }
 }

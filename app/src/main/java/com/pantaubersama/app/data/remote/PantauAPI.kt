@@ -221,7 +221,7 @@ interface PantauAPI {
     ): Single<LocationResponse<VillageData>>
 
     @GET("hitung/v1/real_counts")
-    fun getTPSes(
+    fun getMyTPSes(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
         @Query("user_id") userId: String?
@@ -327,4 +327,11 @@ interface PantauAPI {
         @Query("level") level: Int? = 0,
         @Query("region") regencyCode: Long? = null
     ): Single<RekapitulasiResponse>
+
+    @GET("hitung/v1/real_counts")
+    fun getTPSes(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("village_code") villageCode: Long
+    ): Single<TpsResponse>
 }
