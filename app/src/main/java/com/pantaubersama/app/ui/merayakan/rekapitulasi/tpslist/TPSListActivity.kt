@@ -64,7 +64,7 @@ class TPSListActivity : BaseActivity<TPSListPresenter>(), TPSListView {
         adapter = TPSAdapter()
         adapter.listener = object : TPSAdapter.Listener {
             override fun onClickItem(item: TPS) {
-                DetailTPSActivity.start(this@TPSListActivity)
+                DetailTPSActivity.start(this@TPSListActivity, item, 468)
             }
         }
         adapter.addSupportLoadMore(recycler_view, 5) {

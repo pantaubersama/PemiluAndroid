@@ -334,4 +334,12 @@ interface PantauAPI {
         @Query("per_page") perPage: Int,
         @Query("village_code") villageCode: Long
     ): Single<TpsResponse>
+
+    @GET("hitung/v1/summary/president/show")
+    fun getRekapitulasiDetail(
+        @Query("hitung_real_count_id") tpsId: String,
+        @Query("region") villageCode: Long,
+        @Query("tps") tpsNumber: Int,
+        @Query("level") level: Int = 6
+    ): Single<RekapitulasiResponse>
 }

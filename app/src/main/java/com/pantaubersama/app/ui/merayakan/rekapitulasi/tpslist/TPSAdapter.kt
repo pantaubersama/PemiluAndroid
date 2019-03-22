@@ -27,7 +27,7 @@ class TPSAdapter : BaseRecyclerAdapter() {
             user_avatar.loadUrl(item.user.avatar?.url, R.drawable.ic_avatar_placeholder)
             user_name.text = item.user.fullName
             user_cluster.text = item.user.cluster?.name
-            tps_number.text = item.tps.toString()
+            tps_number.text = "TPS ${item.tps}"
             tps_address.text = "${item.province.name}, ${item.regency.name}, ${item.district.name}, ${item.village.name}"
             itemView.setOnClickListener {
                 listener?.onClickItem(item)

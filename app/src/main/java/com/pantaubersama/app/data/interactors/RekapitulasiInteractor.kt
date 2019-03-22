@@ -46,4 +46,13 @@ class RekapitulasiInteractor @Inject constructor(
                 it.data.percentages
             }
     }
+
+    fun getRekapitulasiDetail(tpsId: String, villageCode: Long, tpsNumber: Int): Single<Percentage> {
+        return apiWrapper.getPantauApi().getRekapitulasiDetail(tpsId, villageCode, tpsNumber)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .map {
+                it.data.percentage
+            }
+    }
 }
