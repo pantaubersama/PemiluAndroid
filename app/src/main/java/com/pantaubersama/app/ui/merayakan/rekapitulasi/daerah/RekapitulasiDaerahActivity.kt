@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.merayakan.rekapitulasi.daerah
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_loading_state.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>(), RekapitulasiProvinsiView {
@@ -69,9 +71,9 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
         adapter.listener = object : RekapitulasiAdapter.Listener {
             override fun onClickItem(item: Rekapitulasi) {
                 when (parent) {
-                    "provinsi" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kabupaten", item)
-                    "kabupaten" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kecamatan", item)
-                    "kecamatan" -> TPSListActivity.start(this@RekapitulasiDaerahActivity, item)
+                    "provinsi" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kabupaten", item, 465)
+                    "kabupaten" -> RekapitulasiDaerahActivity.start(this@RekapitulasiDaerahActivity, "kecamatan", item, 466)
+                    "kecamatan" -> TPSListActivity.start(this@RekapitulasiDaerahActivity, item, 467)
                 }
             }
         }
@@ -113,18 +115,30 @@ class RekapitulasiDaerahActivity : BaseActivity<RekapitulasiProvinsiPresenter>()
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.close_action -> {
-//                finish()
+                setResult(Activity.RESULT_OK)
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
     companion object {
-        fun start(context: Context, from: String, item: Rekapitulasi) {
+        fun start(context: Context, from: String, item: Rekapitulasi, requsetCode: Int? = null) {
             val intent = Intent(context, RekapitulasiDaerahActivity::class.java)
             intent.putExtra("parent", from)
             intent.putExtra("parent_data", item)
-            context.startActivity(intent)
+            if (requsetCode != null) {
+                (context as Activity).startActivityForResult(intent, requsetCode)
+            } else {
+                context.startActivity(intent)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            setResult(Activity.RESULT_OK)
+            finish()
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.merayakan.rekapitulasi.tpslist
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -131,17 +132,22 @@ class TPSListActivity : BaseActivity<TPSListPresenter>(), TPSListView {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.close_action -> {
-//                finish()
+                setResult(Activity.RESULT_OK)
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
     companion object {
-        fun start(context: Context, item: Rekapitulasi) {
+        fun start(context: Context, item: Rekapitulasi, requstCode: Int? = null) {
             val intent = Intent(context, TPSListActivity::class.java)
             intent.putExtra("rekapitulasi", item)
-            context.startActivity(intent)
+            if (requstCode != null) {
+                (context as Activity).startActivityForResult(intent, requstCode)
+            } else {
+                context.startActivity(intent)
+            }
         }
     }
 }
