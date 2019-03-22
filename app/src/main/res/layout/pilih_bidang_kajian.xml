@@ -18,7 +18,7 @@
         android:paddingBottom="8dp">
 
         <EditText
-            android:id="@+id/pilih_bidang_kajian_search"
+            android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -27,6 +27,7 @@
             android:drawablePadding="8dp"
             android:fontFamily="@font/lato_italic"
             android:hint="Pilih bidang kajian"
+            android:inputType="text"
             android:imeOptions="actionSearch"
             android:lineSpacingExtra="12sp"
             android:paddingTop="4dp"

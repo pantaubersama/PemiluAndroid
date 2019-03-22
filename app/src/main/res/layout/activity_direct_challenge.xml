@@ -153,7 +153,9 @@
                         android:id="@+id/pilih_bid_kajian"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
                         android:fontFamily="@font/bw_modelica_bold"
                         android:lineSpacingExtra="7sp"
                         android:text="Pilih bidang kajian"
@@ -165,18 +167,18 @@
                         android:id="@+id/bid_kajian"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="2dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
                         android:background="@drawable/bg_rounded_orange_outline"
                         android:fontFamily="@font/lato_italic"
                         android:gravity="center_horizontal"
                         android:lineSpacingExtra="2sp"
                         android:paddingStart="8dp"
-                        android:paddingTop="2dp"
                         android:paddingEnd="8dp"
-                        android:paddingBottom="2dp"
-                        android:text="ekonomi"
+                        tools:text="ekonomi"
                         android:textColor="@color/gray_dark_3"
-                        android:textSize="8sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
