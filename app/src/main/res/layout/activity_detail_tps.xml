@@ -425,7 +425,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/male_count_1_a_1"
+                                android:id="@+id/dpt_a3_kpu_l_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -464,7 +464,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/female_count_1_a_1"
+                                android:id="@+id/dpt_a3_kpu_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -503,7 +503,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/all_count_1_a_1"
+                                android:id="@+id/dpt_a3_kpu_l_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -564,7 +564,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/male_count_1_a_2"
+                                android:id="@+id/dpt_b_a4_kpu_l_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -603,7 +603,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/female_count_1_a_2"
+                                android:id="@+id/dpt_b_a4_kpu_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -642,7 +642,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/all_count_1_a_2"
+                                android:id="@+id/dpt_b_a4_kpu_l_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -703,7 +703,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/male_count_1_a_3"
+                                android:id="@+id/dpk_a_kpu_l_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -742,7 +742,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/female_count_1_a_3"
+                                android:id="@+id/dpk_a_kpu_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -781,7 +781,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/all_count_1_a_3"
+                                android:id="@+id/dpk_a_kpu_l_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -842,7 +842,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/male_count_1_a_4"
+                                android:id="@+id/a1_a2_a3_l"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -881,7 +881,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/female_count_1_a_4"
+                                android:id="@+id/a1_a2_a3_p"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -920,7 +920,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/all_count_1_a_4"
+                                android:id="@+id/a1_a2_a3_l_p"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -994,7 +994,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/male_count_1_b_1"
+                                android:id="@+id/dpt_c7_l_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1033,7 +1033,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/female_count_1_b_1"
+                                android:id="@+id/dpt_c7_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1072,7 +1072,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/all_count_1_b_1"
+                                android:id="@+id/dpt_c7_l_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1133,7 +1133,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/male_count_1_b_2"
+                                android:id="@+id/dpt_b_c7_l_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1172,7 +1172,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/female_count_1_b_2"
+                                android:id="@+id/dpt_b_c7_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1211,7 +1211,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/all_count_1_b_2"
+                                android:id="@+id/dpt_b_c7_l_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1272,7 +1272,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/male_count_1_b_3"
+                                android:id="@+id/dpk_c7_l_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1311,7 +1311,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/female_count_1_b_3"
+                                android:id="@+id/dpk_c7_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1350,7 +1350,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/all_count_1_b_3"
+                                android:id="@+id/dpk_c7_l_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1411,7 +1411,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/male_count_1_b_4"
+                                android:id="@+id/b1_b2_b3_l"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1450,7 +1450,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/female_count_1_b_4"
+                                android:id="@+id/b1_b2_b3_p"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1489,7 +1489,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/all_count_1_b_4"
+                                android:id="@+id/b1_b2_b3_l_p"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1570,7 +1570,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/male_count_2_1"
+                                android:id="@+id/disabilitas_l_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1609,7 +1609,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/female_count_2_1"
+                                android:id="@+id/disabilitas_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1648,7 +1648,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/all_count_2_1"
+                                android:id="@+id/disabilitas_l_p_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1709,7 +1709,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/male_count_2_2"
+                                android:id="@+id/disabilitas_l_voted_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1748,7 +1748,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/female_count_2_2"
+                                android:id="@+id/disabilitas_p_voted_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1787,7 +1787,7 @@
                                 android:layout_marginLeft="24dp"/>
 
                             <TextView
-                                android:id="@+id/all_count_2_2"
+                                android:id="@+id/disabilitas_l_p_voted_count"
                                 android:layout_width="0dp"
                                 android:layout_weight="12"
                                 android:layout_height="wrap_content"
@@ -1845,7 +1845,7 @@
                             android:padding="12dp"
                             android:layout_marginStart="12dp"
                             android:layout_marginLeft="12dp"
-                            android:hint="0"
+                            android:text="0"
                             android:fontFamily="@font/lato_regular"
                             android:textSize="14sp"
                             android:textColor="@color/black_3"
@@ -1883,7 +1883,7 @@
                             android:padding="12dp"
                             android:layout_marginStart="12dp"
                             android:layout_marginLeft="12dp"
-                            android:hint="0"
+                            android:text="0"
                             android:fontFamily="@font/lato_regular"
                             android:textSize="14sp"
                             android:textColor="@color/black_3"
@@ -1921,7 +1921,7 @@
                             android:padding="12dp"
                             android:layout_marginStart="12dp"
                             android:layout_marginLeft="12dp"
-                            android:hint="0"
+                            android:text="0"
                             android:fontFamily="@font/lato_regular"
                             android:textSize="14sp"
                             android:textColor="@color/black_3"
@@ -1959,7 +1959,7 @@
                             android:padding="12dp"
                             android:layout_marginStart="12dp"
                             android:layout_marginLeft="12dp"
-                            android:hint="0"
+                            android:text="0"
                             android:fontFamily="@font/lato_regular"
                             android:textSize="14sp"
                             android:textColor="@color/black_3"

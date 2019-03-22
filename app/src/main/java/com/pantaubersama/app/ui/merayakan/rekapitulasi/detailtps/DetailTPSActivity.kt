@@ -4,12 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.rekapitulasi.Percentage
 import com.pantaubersama.app.data.model.tps.TPS
+import com.pantaubersama.app.data.model.tps.c1.C1Form
 import com.pantaubersama.app.data.model.tps.image.Image
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.PantauConstants.Merayakan.TPS_DATA
@@ -94,7 +96,6 @@ class DetailTPSActivity : BaseActivity<DetailTPSPresenter>(), DetailTPSView {
     }
 
     override fun bindImages(images: MutableList<Image>) {
-
         if (images.size != 0) {
             presiden_c1_container.visibility = View.VISIBLE
             images.forEach {
@@ -103,6 +104,51 @@ class DetailTPSActivity : BaseActivity<DetailTPSPresenter>(), DetailTPSView {
                 presiden_images_container.addView(child)
             }
         }
+    }
+
+    override fun showFailedGetC1SummaryAlert() {
+        ToastUtil.show(this@DetailTPSActivity, "Gagal memuat rekapitulasi C1")
+    }
+
+    override fun bindC1Summary(c1Form: C1Form) {
+        dpt_a3_kpu_l_count.text = c1Form.a3L.toString()
+        dpt_a3_kpu_p_count.text = c1Form.a3P.toString()
+        dpt_a3_kpu_l_p_count.text = (c1Form.a3L+c1Form.a3P).toString()
+        dpt_b_a4_kpu_l_count.text = c1Form.a4L.toString()
+        dpt_b_a4_kpu_p_count.text = c1Form.a4P.toString()
+        dpt_b_a4_kpu_l_p_count.text = (c1Form.a4L+c1Form.a4P).toString()
+        dpk_a_kpu_l_count.text = c1Form.aDpkL.toString()
+        dpk_a_kpu_p_count.text = c1Form.aDpkP.toString()
+        dpk_a_kpu_l_p_count.text = (c1Form.aDpkL+c1Form.aDpkP).toString()
+        a1_a2_a3_l.text = (c1Form.a3L+c1Form.a4L+c1Form.aDpkL).toString()
+        a1_a2_a3_p.text = (c1Form.a3P+c1Form.a4P+c1Form.aDpkP).toString()
+        a1_a2_a3_l_p.text = ((c1Form.a3L+c1Form.a4L+c1Form.aDpkL)+(c1Form.a3P+c1Form.a4P+c1Form.aDpkP)).toString()
+        dpt_c7_l_count.text = c1Form.c7DptL.toString()
+        dpt_c7_p_count.text = c1Form.c7DptP.toString()
+        dpt_c7_l_p_count.text = (c1Form.c7DptL+c1Form.c7DptP).toString()
+        dpt_b_c7_l_count.text = c1Form.c7DptBL.toString()
+        dpt_b_c7_p_count.text = c1Form.c7DptBP.toString()
+        dpt_b_c7_l_p_count.text = (c1Form.c7DptBL+c1Form.c7DptBP).toString()
+        dpk_c7_l_count.text = c1Form.c7DpkL.toString()
+        dpk_c7_p_count.text = c1Form.c7DpkP.toString()
+        dpk_c7_l_p_count.text = (c1Form.c7DpkL+c1Form.c7DpkP).toString()
+        b1_b2_b3_l.text = (c1Form.c7DptL+c1Form.c7DptBL+c1Form.c7DpkL).toString()
+        b1_b2_b3_p.text = (c1Form.c7DptP+c1Form.c7DptBP+c1Form.c7DpkP).toString()
+        b1_b2_b3_l_p.text = ((c1Form.c7DptL+c1Form.c7DptBL+c1Form.c7DpkL)+(c1Form.c7DptP+c1Form.c7DptBP+c1Form.c7DpkP)).toString()
+        disabilitas_l_count.text = c1Form.disabilitasTerdaftarL.toString()
+        disabilitas_p_count.text = c1Form.disabilitasTerdaftarP.toString()
+        disabilitas_l_p_count.text = (c1Form.disabilitasTerdaftarL+c1Form.disabilitasTerdaftarP).toString()
+        disabilitas_l_voted_count.text = c1Form.disabilitasHakPilihL.toString()
+        disabilitas_p_voted_count.text = c1Form.disabilitasHakPilihP.toString()
+        disabilitas_l_p_voted_count.text = (c1Form.disabilitasHakPilihL+c1Form.disabilitasHakPilihP).toString()
+        rejected_documents_count.text = c1Form.suratDikembalikan.toString()
+        unused_documents_count.text = c1Form.suratTidakDigunakan.toString()
+        used_documents_count.text = c1Form.suratDigunakan.toString()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_close, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -119,7 +165,11 @@ class DetailTPSActivity : BaseActivity<DetailTPSPresenter>(), DetailTPSView {
         fun start(context: Context, item: TPS, requestCode: Int? = null) {
             val intent = Intent(context, DetailTPSActivity::class.java)
             intent.putExtra(TPS_DATA, item)
-            context.startActivity(intent)
+            if (requestCode != null) {
+                (context as Activity).startActivityForResult(intent, requestCode)
+            } else {
+                context.startActivity(intent)
+            }
         }
     }
 }

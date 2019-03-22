@@ -4,6 +4,7 @@ import com.pantaubersama.app.data.model.rekapitulasi.Percentage
 import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
 import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiResponse
 import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
+import com.pantaubersama.app.data.model.tps.c1.C1Form
 import com.pantaubersama.app.data.model.tps.image.Image
 import com.pantaubersama.app.data.remote.APIWrapper
 import com.pantaubersama.app.utils.RxSchedulers
@@ -62,5 +63,12 @@ class RekapitulasiInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .map { it.data.image }
+    }
+
+    fun getC1Summary(tpsId: String, c1Type: String): Single<C1Form> {
+        return apiWrapper.getPantauApi().getC1(tpsId, c1Type)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .map { it.data.c1Form }
     }
 }

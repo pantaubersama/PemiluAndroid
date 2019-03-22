@@ -31,12 +31,29 @@ class DetailTPSPresenter @Inject constructor(
                 .subscribe(
                     {
                         view?.bindImages(it)
-//                        rekapitulasiInteractor.getC1Summary()
+                        loadC1Summary(tpsId, "presiden")
                     },
                     {
                         view?.dismissLoading()
                         view?.showError(it)
                         view?.showFailedGetImagesAlert()
+                    }
+                )
+        )
+    }
+
+    private fun loadC1Summary(tpsId: String, c1Type: String) {
+        disposables.add(
+            rekapitulasiInteractor.getC1Summary(tpsId, c1Type)
+                .subscribe(
+                    {
+                        view?.dismissLoading()
+                        view?.bindC1Summary(it)
+                    },
+                    {
+                        view?.dismissLoading()
+                        view?.showError(it)
+                        view?.showFailedGetC1SummaryAlert()
                     }
                 )
         )
