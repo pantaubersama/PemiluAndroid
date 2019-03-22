@@ -9,8 +9,7 @@ import javax.inject.Inject
  */
 class ClusterListDialogPresenter @Inject constructor(
     private val clusterInteractor: ClusterInteractor
-)
-    : BasePresenter<ClusterListDialogView>() {
+) : BasePresenter<ClusterListDialogView>() {
 
     var perPage = 20
 

@@ -12,7 +12,6 @@ class OpenChallengePresenter @Inject constructor(
     private val wordStadiumInteractor: WordStadiumInteractor,
     private val opiniumServiceInteractor: OpiniumServiceInteractor
 ) : BasePresenter<OpenChallengeView>() {
-
     fun getUserProfile() {
         view?.showProfile(profileInteractor.getProfile())
     }

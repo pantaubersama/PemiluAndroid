@@ -16,16 +16,16 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.tags.TagItem
 import com.pantaubersama.app.data.model.urlpreview.UrlItem
 import com.pantaubersama.app.data.model.user.Profile
-import com.pantaubersama.app.data.model.wordstadium.BidangKajian
 import com.pantaubersama.app.data.model.wordstadium.Challenge
 import com.pantaubersama.app.data.model.wordstadium.LawanDebat
 import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.wordstadium.InfoDialog
 import com.pantaubersama.app.ui.wordstadium.challenge.CreateChallengeActivity
-import com.pantaubersama.app.ui.wordstadium.challenge.open.BidangKajianDialog
+import com.pantaubersama.app.ui.bidangkajiandialog.BidangKajianDialog
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_DATE_STRING
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OEMBEDED_LINK
@@ -126,11 +126,19 @@ class DirectChallengeActivity : BaseActivity<DirectChallengePresenter>(), Direct
 
         pilih_bid_kajian.setOnClickListener {
             BidangKajianDialog.show(supportFragmentManager, object : BidangKajianDialog.DialogListener {
-                override fun onClickItem(bidangKajian: BidangKajian) {
-                    bid_kajian.text = bidangKajian.bidangKajian
+                override fun onClickItem(item: TagItem) {
+                    bid_kajian.text = item.name
                     pilih_bid_kajian.visibility = View.GONE
                     bid_kajian.visibility = View.VISIBLE
                     bidangKajianDone()
+                }
+            })
+        }
+
+        bid_kajian.setOnClickListener {
+            BidangKajianDialog.show(supportFragmentManager, object : BidangKajianDialog.DialogListener {
+                override fun onClickItem(item: TagItem) {
+                    bid_kajian.text = item.name
                 }
             })
         }
