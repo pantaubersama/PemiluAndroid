@@ -222,9 +222,8 @@ class PantauConstants {
         const val TYPE_PARTAI = 11
         const val TYPE_HEADER = 12
         const val TYPE_CHALLENGE_ITEM = 13
-        const val TYPE_BIDANG_KAJIAN = 14
-        const val TYPE_KOMENTAR_ITEM = 15
-        const val TYPE_AUDIENCE_ITEM = 16
+        const val TYPE_TAG_ITEM = 14
+        const val TYPE_AUDIENCE_ITEM = 15
     }
 
     object Profile {

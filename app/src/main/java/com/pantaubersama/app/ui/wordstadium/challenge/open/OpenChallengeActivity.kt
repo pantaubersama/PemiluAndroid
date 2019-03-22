@@ -14,12 +14,13 @@ import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.tags.TagItem
 import com.pantaubersama.app.data.model.urlpreview.UrlItem
 import com.pantaubersama.app.data.model.user.Profile
-import com.pantaubersama.app.data.model.wordstadium.BidangKajian
 import com.pantaubersama.app.data.model.wordstadium.Challenge
 import com.pantaubersama.app.data.model.wordstadium.OEmbedLink
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.bidangkajiandialog.BidangKajianDialog
 import com.pantaubersama.app.ui.wordstadium.InfoDialog
 import com.pantaubersama.app.ui.wordstadium.challenge.CreateChallengeActivity
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
@@ -109,11 +110,19 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
 
         pilih_bid_kajian.setOnClickListener {
             BidangKajianDialog.show(supportFragmentManager, object : BidangKajianDialog.DialogListener {
-                override fun onClickItem(bidangKajian: BidangKajian) {
-                    bid_kajian.text = bidangKajian.bidangKajian
+                override fun onClickItem(item: TagItem) {
+                    bid_kajian.text = item.name
                     pilih_bid_kajian.visibility = View.GONE
                     bid_kajian.visibility = View.VISIBLE
                     bidangKajianDone()
+                }
+            })
+        }
+
+        bid_kajian.setOnClickListener {
+            BidangKajianDialog.show(supportFragmentManager, object : BidangKajianDialog.DialogListener {
+                override fun onClickItem(item: TagItem) {
+                    bid_kajian.text = item.name
                 }
             })
         }
@@ -161,6 +170,7 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
 
         ll_date.setOnClickListener {
             val c = Calendar.getInstance()
+            c.add(Calendar.DATE, 1)
             mYear = c.get(Calendar.YEAR)
             mMonth = c.get(Calendar.MONTH)
             mDay = c.get(Calendar.DAY_OF_MONTH)
@@ -184,7 +194,9 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
                         }
                     }, mYear, mMonth, mDay)
 
-            datePickerDialog.datePicker.minDate = Calendar.getInstance().timeInMillis
+            datePickerDialog.datePicker.minDate = c.timeInMillis
+            c.add(Calendar.DATE, 30)
+            datePickerDialog.datePicker.maxDate = c.timeInMillis
             datePickerDialog.show()
         }
 
@@ -203,10 +215,6 @@ class OpenChallengeActivity : BaseActivity<OpenChallengePresenter>(), OpenChalle
                     dateTimeDone()
                     mTimeString = "$hour:$mnt"
                 }, mHour, mMinute, true)
-
-                if (mDateString == SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().time)) {
-                    timePickerDialog.setMinTime(mHour, mMinute, 0)
-                }
 
                 timePickerDialog.show(supportFragmentManager, "TimePickerDialog")
             } else {
