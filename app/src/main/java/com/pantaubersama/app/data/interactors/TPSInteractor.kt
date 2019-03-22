@@ -8,6 +8,7 @@ import com.pantaubersama.app.data.db.AppDB
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.createdat.CreatedAtInWord
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
+import com.pantaubersama.app.data.model.tps.image.Image
 import com.pantaubersama.app.data.model.tps.image.ImageLocalModel
 import com.pantaubersama.app.data.model.tps.image.ImageDoc
 import com.pantaubersama.app.data.model.user.EMPTY_PROFILE
@@ -386,6 +387,15 @@ class TPSInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
             .map {
                 it.tpsData.tpses
+            }
+    }
+
+    fun getImagesFromApi(tpsId: String): Single<MutableList<Image>> {
+        return apiWrapper.getPantauApi().getImages(tpsId)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+            .map {
+                it.data.image
             }
     }
 }

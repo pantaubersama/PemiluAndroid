@@ -347,6 +347,6 @@ interface PantauAPI {
     @GET("hitung/v1/images")
     fun getImages(
         @Query("hitung_real_count_id") tpsId: String,
-        @Query("image_type") imagesType: String
+        @Query("image_type") imagesType: String? = null
     ): Single<ImageResponse>
 }

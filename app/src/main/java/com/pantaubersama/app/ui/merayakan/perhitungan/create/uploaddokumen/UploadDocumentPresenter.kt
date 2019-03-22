@@ -43,4 +43,19 @@ class UploadDocumentPresenter @Inject constructor(
             view?.bindImages(it)
         }
     }
+
+    fun getImagesSavedApi(tpsId: String) {
+        disposables.add(
+            tpsInteractor.getImagesFromApi(tpsId)
+                .subscribe(
+                    {
+                        view?.bindImagesFromApi(it)
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedGetImagesAlert()
+                    }
+                )
+        )
+    }
 }

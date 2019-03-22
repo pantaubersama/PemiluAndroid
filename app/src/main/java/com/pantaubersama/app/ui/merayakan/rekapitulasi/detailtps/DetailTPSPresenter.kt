@@ -30,8 +30,8 @@ class DetailTPSPresenter @Inject constructor(
             rekapitulasiInteractor.getImages(tpsId, imagesType)
                 .subscribe(
                     {
-                        view?.dismissLoading()
                         view?.bindImages(it)
+//                        rekapitulasiInteractor.getC1Summary()
                     },
                     {
                         view?.dismissLoading()
