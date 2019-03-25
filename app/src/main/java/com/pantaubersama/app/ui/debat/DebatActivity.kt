@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
@@ -15,6 +14,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.* // ktlint-disable
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
@@ -43,6 +43,8 @@ import com.pantaubersama.app.data.model.debat.ChallengeConstants.Role
 import com.pantaubersama.app.utils.WordsPNHandler
 import com.pantaubersama.app.utils.spannable
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_debat.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
@@ -53,6 +55,8 @@ import kotlinx.android.synthetic.main.layout_status_debat.*
 import kotlinx.android.synthetic.main.layout_toolbar_debat.*
 import net.frakbot.jumpingbeans.JumpingBeans
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
+import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.OnGotNewWordsListener {
@@ -67,6 +71,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     private var isMainToolbarShown = true
     private var isAppbarExpanded = true
     private var isKeyboardShown = false
+    private var mCoordinatorHeight = 0
 
     private lateinit var wordsFighterAdapter: WordsFighterAdapter
     private lateinit var komentarAdapter: KomentarAdapter
@@ -129,7 +134,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     override fun setupUI(savedInstanceState: Bundle?) {
         setupLayoutBehaviour()
         setupHeader()
-        setupDebatList()
+        setupArgumenList()
         setupKomentarList()
     }
 
@@ -160,15 +165,15 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     private fun getList() {
-        presenter.getWordsFighter(challenge.id)
+        wordsFighterAdapter.setDataEnd(false)
+        presenter.getWordsFighter(challenge.id, 1)
         presenter.getWordsAudience(challenge.id)
     }
 
-    private fun setupDebatList() {
+    private fun setupArgumenList() {
         wordsFighterAdapter = WordsFighterAdapter(isMyChallenge)
         val layoutManager = LinearLayoutManager(this)
         layoutManager.reverseLayout = true
-        layoutManager.stackFromEnd = true
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = wordsFighterAdapter
         wordsFighterAdapter.listener = object : WordsFighterAdapter.AdapterListener {
@@ -180,8 +185,11 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
                 if (isFocused) {
                     if (isAppbarExpanded) app_bar.setExpanded(false)
                     recycler_view.smoothScrollToPosition(0)
+                    Completable.timer(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                        .subscribe { isWordsInputFocused = true }
+                } else {
+                    isWordsInputFocused = false
                 }
-                isWordsInputFocused = isFocused
             }
 
             override fun onPublish(words: String) {
@@ -189,8 +197,9 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
             }
         }
 
-        swipe_refresh.setOnRefreshListener {
-            getList()
+        wordsFighterAdapter.addSupportLoadMore(recycler_view, 3) {
+            wordsFighterAdapter.setLoading()
+            presenter.getWordsFighter(challenge.id, it)
         }
     }
 
@@ -214,10 +223,19 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
         recycler_view.visibleIf(true)
         wordsFighterAdapter.setDatas(wordList)
         updateInputTurn()
+        recycler_view.scrollToPosition(0)
 
-        Handler().postDelayed({
-            showFAB(true)
-        }, 500)
+        if (wordList.size < presenter.perPage) {
+            wordsFighterAdapter.setDataEnd(true)
+        }
+    }
+
+    override fun showMoreWordsFighter(wordList: MutableList<WordItem>) {
+        wordsFighterAdapter.setLoaded()
+        if (wordList.size < presenter.perPage) {
+            wordsFighterAdapter.setDataEnd(true)
+        }
+        wordsFighterAdapter.addData(wordList)
     }
 
     override fun showLoadingWordsFighter() {
@@ -233,7 +251,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
 
     override fun dismissLoadingWordsFighter() {
         lottie_loading.enableLottie(false, lottie_loading)
-        if (swipe_refresh.isRefreshing) swipe_refresh.isRefreshing = false
     }
 
     override fun onEmptyWordsFighter() {
@@ -257,6 +274,11 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
         layoutParams.topMargin = dip(20)
         tv_fail_state.layoutParams = layoutParams
         tv_fail_state.text = t.message
+    }
+
+    override fun onErrorGetMoreWordsFighter(t: Throwable) {
+        wordsFighterAdapter.setLoaded()
+        if (t.message?.contains("expected :page") == true) wordsFighterAdapter.setDataEnd(true)
     }
 
     override fun showKomentar(komentarList: MutableList<WordItem>) {
@@ -359,9 +381,17 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
 
     override fun updateInputTurn() {
         if (!isDone) {
-            var turnActorRole =
-                if (!wordsFighterAdapter.itemCount.isOdd()) {
-                    Role.CHALLENGER } else Role.OPPONENT
+//            TODO("UBAH BUKAN BERDASARKAN JUMLAH ITEM TAPI ITEM TERAKHIR")
+            val turnActorRole =
+                if (wordsFighterAdapter.itemCount != 0) {
+                    when {
+                        wordsFighterAdapter.get(0) is WordItem -> if ((wordsFighterAdapter.get(0) as WordItem).author.role == Role.CHALLENGER) Role.OPPONENT else Role.CHALLENGER
+                        wordsFighterAdapter.get(1) != null -> if ((wordsFighterAdapter.get(1) as WordItem).author.role == Role.CHALLENGER) Role.OPPONENT else Role.CHALLENGER
+                        else -> Role.CHALLENGER
+                    }
+                } else {
+                    Role.CHALLENGER
+                }
 
             isMyTurn = myRole == turnActorRole
 
@@ -369,13 +399,6 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
                 if ((wordsFighterAdapter.itemCount == 0 || wordsFighterAdapter.get(0) !is WordInputItem)) {
                     showWordsInputBox()
                 } else {
-                    turnActorRole = if (turnActorRole == Role.CHALLENGER) {
-                        Role.OPPONENT
-                    } else {
-                        Role.CHALLENGER
-                    }
-
-                    isMyTurn = myRole == turnActorRole
                     wordsFighterAdapter.clearInputMessage(isMyTurn)
                 }
             }
@@ -396,13 +419,11 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     override fun updateMyTimeLeft() {
-        runOnUiThread {
-            if (isMyChallenge && !isDone) {
-                tv_sisa_waktu.text = wordsFighterAdapter.getMyTimeLeft(myRole)?.let { "$it MENIT" }
-                    ?: "${challenge.timeLimit} MENIT"
-            }
-            invalidateToolbar()
+        if (isMyChallenge && !isDone) {
+            tv_sisa_waktu.text = wordsFighterAdapter.getMyTimeLeft(myRole)?.let { "$it MENIT" }
+                ?: "${challenge.timeLimit} MENIT"
         }
+        invalidateToolbar()
     }
 
     override fun onSuccessPostWordsFighter(wordItem: WordItem) {
@@ -413,35 +434,35 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
 
     override fun onFailedPostWordsFighter(t: Throwable) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        wordsFighterAdapter.clearInputMessage(isMyTurn)
     }
 
     override fun gotNewArgumen(word: WordItem) {
-        runOnUiThread {
-            wordsFighterAdapter.addItem(word)
-            updateInputTurn()
-        }
+        if (!recycler_view.isVisible()) recycler_view.visibleIf(true)
+        if (view_empty_state.isVisible()) view_empty_state.enableLottie(false, lottie_empty_state)
+        if (view_fail_state.isVisible()) view_fail_state.enableLottie(false, lottie_fail_state)
+        wordsFighterAdapter.addItem(word)
+        updateInputTurn()
     }
 
     override fun gotNewComment(word: WordItem) {
-        runOnUiThread {
-            if (tv_comment_in_state.isVisible()) tv_comment_in_state.visibleIf(false)
-            if (!recycler_view_komentar.isVisible()) recycler_view_komentar.visibleIf(true)
-            komentarAdapter.addItem(word)
+        if (tv_comment_in_state.isVisible()) tv_comment_in_state.visibleIf(false)
+        if (!recycler_view_komentar.isVisible()) recycler_view_komentar.visibleIf(true)
+        komentarAdapter.addItem(word)
 
-            if (isMyChallenge || isDone) {
-                val commentPreviewText = spannable {
-                    word.author.fullName?.let { bold { textColor(color(R.color.black_2)) { +it } } }
-                    + "  "
-                    + word.body
-                }.toCharSequence()
-                et_comment_main.setText(commentPreviewText)
-                et_comment_main.inputType = InputType.TYPE_NULL
-                et_comment_main.maxLines = 2
-                et_comment_main.setTextColor(color(R.color.black_1))
-                iv_avatar_comment_main.visibleIf(true)
-                word.author.avatar?.medium?.url?.let { iv_avatar_comment_main.loadUrl(it, R.drawable.ic_avatar_placeholder) }
-                    ?: iv_avatar_comment_main.setImageResource(R.drawable.ic_avatar_placeholder)
-            }
+        if (isMyChallenge || isDone) {
+            val commentPreviewText = spannable {
+                word.author.fullName?.let { bold { textColor(color(R.color.black_2)) { +it } } }
+                + "  "
+                + word.body
+            }.toCharSequence()
+            et_comment_main.setText(commentPreviewText)
+            et_comment_main.inputType = InputType.TYPE_NULL
+            et_comment_main.maxLines = 2
+            et_comment_main.setTextColor(color(R.color.black_1))
+            iv_avatar_comment_main.visibleIf(true)
+            word.author.avatar?.medium?.url?.let { iv_avatar_comment_main.loadUrl(it, R.drawable.ic_avatar_placeholder) }
+                ?: iv_avatar_comment_main.setImageResource(R.drawable.ic_avatar_placeholder)
         }
     }
 
@@ -477,7 +498,11 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
 
         btn_back.setOnClickListener { onBackPressed() }
 
-        app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+        tv_toolbar_title.setOnClickListener {
+            if (!isAppbarExpanded) app_bar.setExpanded(true)
+        }
+
+        app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (verticalOffset < -30) {
                 if (isMainToolbarShown) {
                     isMainToolbarShown = false
@@ -504,6 +529,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
                     }
                 }
             }
+            adjustContentLayoutHeight(appBarLayout.bottom)
         })
 
         app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
@@ -547,8 +573,22 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
                 super.onScrolled(recyclerView, dx, dy)
 
                 if (dy < 0) { // scrolling up
-                    if (isKeyboardShown && isWordsInputFocused) hideKeyboard(this@DebatActivity)
+                    Timber.d("onScrolled hideKeyboard() isWordInputFocused : $isWordsInputFocused")
+                    Timber.d("onScrolled hideKeyboard() isKeyboardShown : $isKeyboardShown")
+                    if (isKeyboardShown && isWordsInputFocused) {
+                        hideKeyboard(this@DebatActivity)
+                    }
                 }
+            }
+        })
+
+        // Wait for just before drawing the view to get its height.
+        coordinator.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+            override fun onPreDraw(): Boolean {
+                coordinator.viewTreeObserver.removeOnPreDrawListener(this)
+                mCoordinatorHeight = coordinator.height
+                adjustContentLayoutHeight(app_bar.bottom)
+                return false
             }
         })
 
@@ -607,7 +647,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
             isKeyboardShown = isOpen
             if (isOpen) {
                 showFAB(false)
-                if (isWordsInputFocused && layout_box_komentar_main.isVisible()) {
+                if (isWordsInputFocused && layout_box_komentar_main.isVisible() || isMyChallenge) {
                     layout_box_komentar_main.visibleIf(false)
                     adjustRvPadding(true)
                 } else {
@@ -619,6 +659,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
                     adjustRvPadding()
                 }
                 btn_comment_main.setImageResource(R.drawable.ic_arrow_expand_more)
+                adjustContentLayoutHeight(app_bar.height)
             }
         }
 
@@ -691,11 +732,17 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
         }
     }
 
+    private fun adjustContentLayoutHeight(newHeight: Int) {
+        if (!isKeyboardShown && recycler_view.isVisible()) recycler_view.setPadding(0, 0, 0, newHeight)
+    }
+
     private fun adjustRvPadding(removePadding: Boolean = false) {
-        if (removePadding) {
-            recycler_view.setPadding(0, 0, 0, 0)
-        } else {
-            recycler_view.setPadding(0, 0, 0, layout_box_komentar_main.height)
+        if (recycler_view.isVisible()) {
+            if (removePadding) {
+                recycler_view.setPadding(0, 0, 0, 0)
+            } else {
+                recycler_view.setPadding(0, 0, 0, layout_box_komentar_main.height)
+            }
         }
     }
 

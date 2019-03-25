@@ -150,9 +150,9 @@ class WordStadiumInteractor @Inject constructor(
             .observeOn(rxSchedulers.mainThread())
     }
 
-    fun getWordsFighter(challengeId: String): Single<MutableList<WordItem>> {
+    fun getWordsFighter(challengeId: String, page: Int, perPage: Int): Single<MutableList<WordItem>> {
         return apiWrapper.getWordStadiumApi()
-            .getWordsFighter(challengeId)
+            .getWordsFighter(challengeId, page, perPage)
             .map { it.wordListData.wordList }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -188,8 +188,8 @@ class WordStadiumInteractor @Inject constructor(
 
     fun handleWords(wordItem: WordItem): Completable {
         return wordsPNHandler.handleWordsPN(wordItem)
-//            .observeOn(rxSchedulers.io())
-//            .subscribeOn(rxSchedulers.mainThread())
+            .observeOn(rxSchedulers.io())
+            .subscribeOn(rxSchedulers.mainThread())
     }
 
     fun putWordsClap(wordId: String): Completable {

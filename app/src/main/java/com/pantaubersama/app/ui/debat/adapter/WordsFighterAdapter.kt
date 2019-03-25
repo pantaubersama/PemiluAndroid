@@ -13,7 +13,9 @@ import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.base.viewholder.LoadingViewHolder
 import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.LoadingModel
 import com.pantaubersama.app.data.model.debat.WordInputItem
 import com.pantaubersama.app.data.model.debat.WordItem
 import com.pantaubersama.app.utils.PantauConstants.Word.WORD_INPUT_CHALLENGER
@@ -44,13 +46,14 @@ class WordsFighterAdapter(val isMyChallenge: Boolean = false) : BaseRecyclerAdap
             WORD_TYPE_OPPONENT -> WordFighterViewholder(parent.inflate(R.layout.item_words_opponent))
             WORD_INPUT_CHALLENGER -> WordInputViewHolder(parent.inflate(R.layout.item_words_input_challenger))
             WORD_INPUT_OPPONENT -> WordInputViewHolder(parent.inflate(R.layout.item_words_input_opponent))
-            else -> throw IllegalArgumentException("unkown view type $viewType")
+            else -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as? WordFighterViewholder)?.bind(data[position] as WordItem)
         (holder as? WordInputViewHolder)?.bind(data[position] as WordInputItem)
+        (holder as? LoadingViewHolder)?.bind()
     }
 
     inner class WordFighterViewholder(override val containerView: View)
@@ -190,10 +193,14 @@ class WordsFighterAdapter(val isMyChallenge: Boolean = false) : BaseRecyclerAdap
     }
 
     override fun addItem(item: ItemModel) {
-        val position = if (!data.isEmpty() && data[0] is WordInputItem) 1 else 0
-        if (data.find { (it as? WordItem)?.id == (item as WordItem).id } == null) {
-            super.addItem(item, position)
-            recyclerView.layoutManager?.scrollToPosition(0)
+        if (item !is LoadingModel) {
+            val position = if (!data.isEmpty() && data[0] is WordInputItem) 1 else 0
+            if (data.find { (it as? WordItem)?.id == (item as WordItem).id } == null) {
+                super.addItem(item, position)
+                recyclerView.layoutManager?.scrollToPosition(0)
+            }
+        } else {
+            super.addItem(item)
         }
     }
 

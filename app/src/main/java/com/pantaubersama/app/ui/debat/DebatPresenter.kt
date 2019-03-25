@@ -15,26 +15,36 @@ class DebatPresenter @Inject constructor(
     private val wordStadiumInteractor: WordStadiumInteractor,
     private val profileInteractor: ProfileInteractor
 ) : BasePresenter<DebatView>() {
+    val perPage = 50
+
     fun getMyProfile(): Profile {
         return profileInteractor.getProfile()
     }
 
-    fun getWordsFighter(challengeId: String) {
-        view?.showLoadingWordsFighter()
-        disposables += wordStadiumInteractor.getWordsFighter(challengeId)
-            .doOnEvent { _, _ -> view?.dismissLoadingWordsFighter() }
+    fun getWordsFighter(challengeId: String, page: Int) {
+        if (page == 1) view?.showLoadingWordsFighter()
+        disposables += wordStadiumInteractor.getWordsFighter(challengeId, page, perPage)
+            .doOnEvent { _, _ -> if (page == 1) view?.dismissLoadingWordsFighter() }
             .subscribe(
                 {
-                    if (!it.isEmpty()) {
-                        view?.showWordsFighter(it.asReversed())
+                    if (page == 1) {
+                        if (!it.isEmpty()) {
+                            view?.showWordsFighter(it.asReversed())
+                        } else {
+                            view?.onEmptyWordsFighter()
+                        }
+                        view?.updateMyTimeLeft()
                     } else {
-                        view?.onEmptyWordsFighter()
+                        view?.showMoreWordsFighter(it.asReversed())
                     }
-                    view?.updateMyTimeLeft()
                 },
                 {
-                    view?.showError(it)
-                    view?.onErrorGetWordsFighter(it)
+                    if (page == 1) {
+                        view?.onErrorGetWordsFighter(it)
+                        view?.showError(it)
+                    } else {
+                        view?.onErrorGetMoreWordsFighter(it)
+                    }
                 }
             )
     }

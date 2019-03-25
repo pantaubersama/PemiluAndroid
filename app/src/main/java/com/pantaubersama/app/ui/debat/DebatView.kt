@@ -9,10 +9,12 @@ import com.pantaubersama.app.data.model.debat.WordItem
 
 interface DebatView : BaseView {
     fun showWordsFighter(wordList: MutableList<WordItem>)
+    fun showMoreWordsFighter(wordList: MutableList<WordItem>)
     fun showLoadingWordsFighter()
     fun dismissLoadingWordsFighter()
     fun onEmptyWordsFighter()
     fun onErrorGetWordsFighter(t: Throwable)
+    fun onErrorGetMoreWordsFighter(t: Throwable)
 
     fun showKomentar(komentarList: MutableList<WordItem>)
     fun showLoadingKomentar()
