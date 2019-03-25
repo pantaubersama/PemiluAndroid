@@ -190,7 +190,11 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
                 startActivity(Intent(intent))
             }
             submit_button -> {
-                showPublishConfirmationDialog()
+                if (tps?.status != "sandbox") {
+                    showPublishConfirmationDialog()
+                } else {
+                    finishSection()
+                }
             }
             submitted_button -> {
                 ToastUtil.show(this@PerhitunganMainActivity, "RealCountData Telah Terkirim")
