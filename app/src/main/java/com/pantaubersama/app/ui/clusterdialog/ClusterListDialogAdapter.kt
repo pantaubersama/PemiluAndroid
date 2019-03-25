@@ -8,7 +8,6 @@ import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.base.viewholder.LoadingViewHolder
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.cluster.ClusterItem
-import com.pantaubersama.app.utils.PantauConstants.ItemModel.CATEGORY_ITEM
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_CLUSTER_ITEM
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl

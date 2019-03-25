@@ -2,6 +2,7 @@ package com.pantaubersama.app.data.model.tps.candidate
 
 import com.google.gson.annotations.SerializedName
 import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.image.Image
 import java.io.Serializable
 
 data class CandidateData(
@@ -14,7 +15,7 @@ data class CandidateData(
     @SerializedName("acronym")
     var acronym: String,
     @SerializedName("logo")
-    var logo: String,
+    var logo: Image,
     @SerializedName("actor_type")
     var actorType: String,
     @SerializedName("candidates")

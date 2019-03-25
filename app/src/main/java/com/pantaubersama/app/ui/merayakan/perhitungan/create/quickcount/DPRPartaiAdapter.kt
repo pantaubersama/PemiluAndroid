@@ -65,7 +65,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers, private var isInc
 
     inner class DPRViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: CandidateData) {
-            party_thumbnail.loadUrl(item.logo)
+            party_thumbnail.loadUrl(item.logo.url, R.drawable.ic_avatar_placeholder)
             party_name.text = item.name
             party_number.text = "No. Urut ${item.serialNumber}"
             party_count_field.setText(item.partyCount.toString())
