@@ -2,7 +2,7 @@ package com.pantaubersama.app.ui.merayakan.perhitungan.create.uploaddokumen
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.TPSInteractor
-import com.pantaubersama.app.data.model.tps.image.Image
+import com.pantaubersama.app.data.model.tps.image.ImageLocalModel
 import javax.inject.Inject
 
 class UploadDocumentPresenter @Inject constructor(
@@ -10,12 +10,12 @@ class UploadDocumentPresenter @Inject constructor(
 ) : BasePresenter<UploadDocumentView>() {
     fun saveImages(
         tpsId: String,
-        presiden: MutableList<Image>,
-        dpr: MutableList<Image>,
-        dpd: MutableList<Image>,
-        dprdProv: MutableList<Image>,
-        dprdKab: MutableList<Image>,
-        suasanaTps: MutableList<Image>
+        presiden: MutableList<ImageLocalModel>,
+        dpr: MutableList<ImageLocalModel>,
+        dpd: MutableList<ImageLocalModel>,
+        dprdProv: MutableList<ImageLocalModel>,
+        dprdKab: MutableList<ImageLocalModel>,
+        suasanaTps: MutableList<ImageLocalModel>
     ) {
         disposables.add(
             tpsInteractor.saveImageDoc(
@@ -42,5 +42,20 @@ class UploadDocumentPresenter @Inject constructor(
         tpsInteractor.getImages(tpsId)?.let {
             view?.bindImages(it)
         }
+    }
+
+    fun getImagesSavedApi(tpsId: String) {
+        disposables.add(
+            tpsInteractor.getImagesFromApi(tpsId)
+                .subscribe(
+                    {
+                        view?.bindImagesFromApi(it)
+                    },
+                    {
+                        view?.showError(it)
+                        view?.showFailedGetImagesAlert()
+                    }
+                )
+        )
     }
 }

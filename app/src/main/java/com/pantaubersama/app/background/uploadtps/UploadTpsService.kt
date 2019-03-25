@@ -109,7 +109,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
         Timber.e(throwable)
     }
 
-    override fun showFailed() {
+    override fun showFailed(message: String?) {
         val pendingIntent = PendingIntent.getActivity(this@UploadTpsService, 1, notificationIntent, 0)
         val mBuilder = NotificationCompat.Builder(this@UploadTpsService)
             .setSmallIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -118,7 +118,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
                 R.drawable.ic_logo_notification_transparent_in
             })
             .setContentTitle("Gagal mengunggah data")
-            .setContentText("Terjadi masalah saat mengunggah data")
+            .setContentText(message)
 
         mBuilder.setContentIntent(pendingIntent)
         notificationManager.notify(1, mBuilder.build())

@@ -25,7 +25,7 @@ class UploadTpsPresenter @Inject constructor(
                     },
                     {
                         view?.showError(it)
-                        view?.showFailed()
+                        view?.showFailed(it.message)
                     }
                 )
         )
@@ -49,7 +49,7 @@ class UploadTpsPresenter @Inject constructor(
                 },
                 {
                     view?.showError(it)
-                    view?.showFailed()
+                    view?.showFailed(it.message)
                 }
             ).addTo(disposables)
         } else {
@@ -84,7 +84,7 @@ class UploadTpsPresenter @Inject constructor(
                 },
                 {
                     view?.showError(it)
-                    view?.showFailed()
+                    view?.showFailed(it.message)
                 }
             ).addTo(disposables)
         } else {
@@ -126,7 +126,7 @@ class UploadTpsPresenter @Inject constructor(
                                 },
                                 {
                                     view?.showError(it)
-                                    view?.showFailed()
+                                    view?.showFailed(it.message)
                                 }
                             )
                     )
@@ -168,7 +168,7 @@ class UploadTpsPresenter @Inject constructor(
                     },
                     {
                         view?.showError(it)
-                        view?.showFailed()
+                        view?.showFailed(it.message)
                     }
                 )
         )
