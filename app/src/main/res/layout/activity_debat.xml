@@ -95,6 +95,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
+            android:id="@+id/fl_debat_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             sothree:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -105,22 +106,16 @@
             <include
                 layout="@layout/layout_fail_state"/>
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_refresh"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true">
+                android:background="@color/white"
+                android:clipToPadding="false"
+                android:paddingBottom="16dp"
+                android:visibility="gone">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:clipToPadding="false"
-                    android:paddingBottom="16dp">
-
-                </androidx.recyclerview.widget.RecyclerView>
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <include layout="@layout/layout_loading_state"/>
 

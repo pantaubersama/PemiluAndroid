@@ -74,7 +74,11 @@ interface WordStadiumAPI {
     fun getChallengeItem(@Path("id") id: String): Single<ChallengeItemResponse>
 
     @GET("word_stadium/v1/words/fighter")
-    fun getWordsFighter(@Query("challenge_id") challengeId: String): Single<WordListResponse>
+    fun getWordsFighter(
+        @Query("challenge_id") challengeId: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
+    ): Single<WordListResponse>
 
     @FormUrlEncoded
     @POST("word_stadium/v1/words/fighter/attack")

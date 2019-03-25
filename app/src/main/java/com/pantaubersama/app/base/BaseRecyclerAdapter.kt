@@ -51,8 +51,8 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
         return data.size
     }
 
-    fun get(position: Int): ItemModel {
-        return data[position]
+    fun get(position: Int): ItemModel? {
+        return if (position < data.size) data[position] else null
     }
 
     fun getPosition(item: ItemModel): Int {

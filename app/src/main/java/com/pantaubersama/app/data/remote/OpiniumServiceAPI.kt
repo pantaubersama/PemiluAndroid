@@ -14,7 +14,9 @@ interface OpiniumServiceAPI {
     fun getUrlMeta(@Query("url") url: String): Single<UrlItemResponse>
 
     @GET("opinium_service/v1/tags")
-    fun getTags(@Query("page") page: Int,
-                @Query("per_page") perPage: Int,
-                @Query("q") keyword: String): Single<TagsResponse>
+    fun getTags(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("q") keyword: String
+    ): Single<TagsResponse>
 }

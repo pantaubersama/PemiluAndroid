@@ -101,7 +101,6 @@ class BidangKajianDialog : BaseDialogFragment<BidangKajianPresenter>(), BidangKa
                     getData()
                 }
             }
-
         })
     }
 

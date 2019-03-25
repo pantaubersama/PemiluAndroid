@@ -100,7 +100,7 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
             }
             false
         }
-        et_search.addTextChangedListener(object : TextWatcher{
+        et_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {}
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(query: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -109,7 +109,6 @@ class ClusterListDialog : BaseDialogFragment<ClusterListDialogPresenter>(), Clus
                     getData()
                 }
             }
-
         })
     }
 
