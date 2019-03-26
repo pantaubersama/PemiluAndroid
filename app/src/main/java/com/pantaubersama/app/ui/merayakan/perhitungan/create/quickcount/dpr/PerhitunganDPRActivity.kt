@@ -22,6 +22,7 @@ import javax.inject.Inject
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.UndoRedoTools
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
 
@@ -36,7 +37,7 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     private var tps: TPS? = null
     private var partySelectedPosition: Int? = null
     private var candidateSelectedPosition: Int? = null
-    private var undoType: String? = null
+    private lateinit var undoType: String
 
     override fun showLoading() {
         progress_bar.visibility = View.VISIBLE
@@ -117,6 +118,8 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
                         }
                     }
                 }
+                undoType = "invalid"
+                adapter.undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
             }
             .doOnError {
                 it.printStackTrace()
@@ -132,8 +135,6 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         adapter = DPRPartaiAdapter(rxSchedulers, tps?.status != "published")
         adapter.listener = object : DPRPartaiAdapter.Listener {
             override fun saveRealCount(items: MutableList<CandidateData>, selectedPartyPosition: Int) {
-                undoType = "party"
-                partySelectedPosition = selectedPartyPosition
                 val allValidCounts: MutableList<Int> = ArrayList()
                 items.forEachIndexed { index, candidateData ->
                     allValidCounts.add(candidateData.totalCount)
@@ -161,6 +162,8 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
                         }
                     }
                 }
+                undoType = "party"
+                partySelectedPosition = selectedPartyPosition
             }
 
             override fun onCandidateChanged(partyPosition: Int, candidateUndoPosition: Int) {
@@ -242,12 +245,12 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     }
 
     private fun undo() {
-        if (undoType == "party") {
-            partySelectedPosition?.let { partyPos ->
+        when (undoType) {
+            "invalid" -> adapter.undoRedoToolses[adapter.getListData().size].undo()
+            "party" -> partySelectedPosition?.let { partyPos ->
                 adapter.undoParty(partyPos)
             }
-        } else if (undoType == "candidate") {
-            partySelectedPosition?.let { partyPos ->
+            "candidate" -> partySelectedPosition?.let { partyPos ->
                 candidateSelectedPosition?.let { candidatePost ->
                     adapter.undoCandidate(partyPos, candidatePost)
                 }
