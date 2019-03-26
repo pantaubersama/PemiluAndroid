@@ -195,8 +195,10 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         }
     }
 
-    override fun showFailedGetRealCountAlert() {
-        ToastUtil.show(this@PerhitunganDPRActivity, "Gagal memuat perhitungan")
+    override fun showFailedGetRealCountAlert(message: String?) {
+        if (message != "Belum ada perhitungan") {
+            ToastUtil.show(this@PerhitunganDPRActivity, "Gagal memuat perhitungan")
+        }
     }
 
     override fun showGetRealCountListFailedAlert() {

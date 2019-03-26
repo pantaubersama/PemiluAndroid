@@ -13,5 +13,5 @@ interface PerhitunganDPDView : BaseView {
     fun bindCandidates(candidates: MutableList<Candidate>)
     fun onSuccessSaveRealCount()
     fun bindRealCount(realCount: RealCount)
-    fun showFailedGetRealCountAlert()
+    fun showFailedGetRealCountAlert(message: String?)
 }

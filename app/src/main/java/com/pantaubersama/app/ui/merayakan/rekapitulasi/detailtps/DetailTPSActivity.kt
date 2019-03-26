@@ -106,8 +106,10 @@ class DetailTPSActivity : BaseActivity<DetailTPSPresenter>(), DetailTPSView {
         }
     }
 
-    override fun showFailedGetC1SummaryAlert() {
-        ToastUtil.show(this@DetailTPSActivity, "Gagal memuat rekapitulasi C1")
+    override fun showFailedGetC1SummaryAlert(message: String?) {
+        if (message != "Belum ada") {
+            ToastUtil.show(this@DetailTPSActivity, "Gagal memuat rekapitulasi C1")
+        }
     }
 
     override fun bindC1Summary(c1Form: C1Form) {

@@ -62,8 +62,10 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
         save_button.setOnClickListener(this)
     }
 
-    override fun showFailedGetRealCountAlert() {
-        ToastUtil.show(this@PerhitunganPresidenActivity, "Gagal memuat perhitungan presiden")
+    override fun showFailedGetRealCountAlert(message: String?) {
+        if (message != "Belum ada perhitungan") {
+            ToastUtil.show(this@PerhitunganPresidenActivity, "Gagal memuat perhitungan presiden")
+        }
     }
 
     private fun setupCandidate1() {

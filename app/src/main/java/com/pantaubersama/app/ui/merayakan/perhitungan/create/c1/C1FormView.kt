@@ -7,5 +7,5 @@ interface C1FormView : BaseView {
     fun bindC1Data(c1Form: C1Form)
     fun onSuccessSaveData()
     fun showFailedSaveDataAlert()
-    fun showFailedGetC1Alert()
+    fun showFailedGetC1Alert(message: String?)
 }

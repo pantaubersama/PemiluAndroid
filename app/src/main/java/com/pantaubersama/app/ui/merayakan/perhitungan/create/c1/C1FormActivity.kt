@@ -100,8 +100,10 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         tps?.id?.let { c1Type?.let { it1 -> tps?.status?.let { it2 -> presenter.getC1Data(it, it1, it2) } } }
     }
 
-    override fun showFailedGetC1Alert() {
-        ToastUtil.show(this@C1FormActivity, "Gagal memuat data C1")
+    override fun showFailedGetC1Alert(message: String?) {
+        if (message != "Belum ada") {
+            ToastUtil.show(this@C1FormActivity, "Gagal memuat data C1")
+        }
     }
 
     private fun setupSuratSuara() {

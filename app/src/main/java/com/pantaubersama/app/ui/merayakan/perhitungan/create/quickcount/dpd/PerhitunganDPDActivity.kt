@@ -164,8 +164,10 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
         tps?.id?.let { realCountType?.let { it1 -> tps?.status?.let { it2 -> presenter.getRealCount(it, it1, it2) } } }
     }
 
-    override fun showFailedGetRealCountAlert() {
-        ToastUtil.show(this@PerhitunganDPDActivity, "Gagal memuat perhitungan DPD")
+    override fun showFailedGetRealCountAlert(message: String?) {
+        if (message != "Belum ada perhitungan") {
+            ToastUtil.show(this@PerhitunganDPDActivity, "Gagal memuat perhitungan DPD")
+        }
     }
 
     override fun showLoading() {

@@ -53,7 +53,7 @@ class DetailTPSPresenter @Inject constructor(
                     {
                         view?.dismissLoading()
                         view?.showError(it)
-                        view?.showFailedGetC1SummaryAlert()
+                        view?.showFailedGetC1SummaryAlert(it.message)
                     }
                 )
         )
