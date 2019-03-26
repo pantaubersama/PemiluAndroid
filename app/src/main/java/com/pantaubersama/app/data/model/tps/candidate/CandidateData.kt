@@ -20,9 +20,9 @@ data class CandidateData(
     var actorType: String,
     @SerializedName("candidates")
     var candidates: MutableList<Candidate>,
-    var partyCount: Int,
-    var allCandidateCount: Int,
-    var totalCount: Int
+    var partyCount: Long,
+    var allCandidateCount: Long,
+    var totalCount: Long
 ) : ItemModel, Serializable {
 
     override fun getType(): Int {

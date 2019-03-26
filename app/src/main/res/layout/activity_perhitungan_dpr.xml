@@ -198,6 +198,7 @@
                     android:paddingBottom="12dp"
                     android:text="0"
                     android:inputType="number"
+                    android:maxLength="11"
                     android:textColor="@color/colorPrimary" />
 
                 <LinearLayout

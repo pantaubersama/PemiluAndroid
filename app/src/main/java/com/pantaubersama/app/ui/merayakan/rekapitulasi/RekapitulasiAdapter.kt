@@ -39,14 +39,14 @@ class RekapitulasiAdapter : BaseRecyclerAdapter() {
                 item.percentages?.totalVote?.let {
                     votes_count.text = it.toString()
                 }
-                itemView.setOnClickListener {
-                    listener?.onClickItem(item)
-                }
             } else {
                 paslon_1_percentage.text = "0%"
                 paslon_2_percentage.text = "0%"
                 golput_count.text = "0"
                 votes_count.text = "0"
+            }
+            itemView.setOnClickListener {
+                listener?.onClickItem(item)
             }
         }
     }

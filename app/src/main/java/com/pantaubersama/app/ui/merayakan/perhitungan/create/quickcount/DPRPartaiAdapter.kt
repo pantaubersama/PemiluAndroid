@@ -38,7 +38,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers, private var isInc
         realCount.parties.forEachIndexed { i, partyFromDB ->
             data.forEachIndexed { j, partyFromAdapter ->
                 if ((partyFromAdapter as CandidateData).id == partyFromDB.id || (partyFromAdapter as CandidateData).id == partyFromDB.actorId) {
-                    val candidateCounts: MutableList<Int> = ArrayList()
+                    val candidateCounts: MutableList<Long> = ArrayList()
                     realCount.candidates.forEachIndexed { k, candidateDb ->
                         partyFromAdapter.candidates.forEachIndexed { l, candidateData ->
                             if (candidateData.id == candidateDb.id || candidateData.id == candidateDb.actorId) {
@@ -76,7 +76,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers, private var isInc
             party_inc_button.setOnClickListener {
                 if (isIncrementEnable) {
                     val count = if (party_count_field.text.isNotEmpty()) {
-                        party_count_field.text.toString().toInt()
+                        party_count_field.text.toString().toLong()
                     } else {
                         0
                     }
@@ -98,12 +98,12 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers, private var isInc
                     it.toString()
                 }
                 .map {
-                    it.toInt()
+                    it.toLong()
                 }
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
                 .doOnNext {
-                    val candidateCounts: MutableList<Int> = ArrayList()
+                    val candidateCounts: MutableList<Long> = ArrayList()
                     item.candidates.forEachIndexed { index, candidate ->
                         candidateCounts.add(candidate.candidateCount)
                     }
@@ -133,7 +133,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers, private var isInc
                     it.toString()
                 }
                 .map {
-                    it.toInt()
+                    it.toLong()
                 }
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
@@ -150,12 +150,12 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers, private var isInc
             adapters[adapterPosition].listener = object : DPRCandidateAdapter.Listener {
                 override fun onCandidateCountChange(candidateUndoPosition: Int) {
                     listener?.onCandidateChanged(adapterPosition, candidateUndoPosition)
-                    val candidateCounts: MutableList<Int> = ArrayList()
+                    val candidateCounts: MutableList<Long> = ArrayList()
                     item.candidates.forEach { candidate ->
                         candidateCounts.add(candidate.candidateCount)
                     }
                     val allCount = if (party_count_field.text.isNotEmpty()) {
-                        party_count_field.text.toString().toInt()
+                        party_count_field.text.toString().toLong()
                     } else {
                         0
                     } + candidateCounts.sum()

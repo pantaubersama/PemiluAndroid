@@ -34,7 +34,7 @@ data class RealCount(
     var candidates: MutableList<Candidate>,
     @SerializedName("invalid_vote")
     @Expose
-    var invalidVote: Int,
+    var invalidVote: Long,
     @SerializedName("parties")
     @Expose
     var parties: MutableList<Party>
@@ -46,7 +46,7 @@ data class Candidate(
     var id: Int,
     @SerializedName("total_vote")
     @Expose
-    var totalVote: Int,
+    var totalVote: Long,
     @SerializedName("actor_id")
     var actorId: Int? = null,
     @SerializedName("actor_type")
@@ -65,7 +65,7 @@ data class Party(
     var id: Int,
     @SerializedName("total_vote")
     @Expose
-    var totalVote: Int,
+    var totalVote: Long,
     @SerializedName("actor_id")
     var actorId: Int? = null,
     @SerializedName("actor_type")
