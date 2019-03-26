@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_loading_state.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), RekapitulasiView {
@@ -82,17 +81,16 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
 
     private fun refreshItem() {
         adapter.setDataEnd(false)
-        presenter.getRekapitulasiData()
+        presenter.getTotalParticipant()
     }
 
     override fun bindRekapitulasiNasional(data: Percentage) {
         adapter.addRekapitulasiHeader(data)
-        refreshItem()
+        presenter.getRekapitulasiData()
     }
 
     override fun bindRekapitulasiList(rekapitulasi: MutableList<Rekapitulasi>) {
         recycler_view.visibleIf(true)
-        Timber.d(rekapitulasi.toString())
         adapter.addData(rekapitulasi as MutableList<ItemModel>)
         adapter.addFooter()
     }
