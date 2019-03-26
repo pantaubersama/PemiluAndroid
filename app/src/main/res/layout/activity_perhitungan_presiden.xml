@@ -222,6 +222,7 @@
                                 android:maxLength="11"
                                 android:textColor="@color/colorPrimary"/>
 
+
                             <LinearLayout
                                 android:id="@+id/no_vote_inc_button"
                                 android:layout_width="wrap_content"
