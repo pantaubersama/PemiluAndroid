@@ -18,12 +18,12 @@ class C1Interactor @Inject constructor(
 ) {
     fun saveSection1(
         tpsId: String,
-        a3L: Int,
-        a3P: Int,
-        a4L: Int,
-        a4P: Int,
-        aDpkL: Int,
-        aDpkP: Int,
+        a3L: Long,
+        a3P: Long,
+        a4L: Long,
+        a4P: Long,
+        aDpkL: Long,
+        aDpkP: Long,
         c1Type: String
     ): Completable {
         if (appDB.getC1Dao().getC1(tpsId, c1Type) != null) {
@@ -80,12 +80,12 @@ class C1Interactor @Inject constructor(
 
     fun saveSection2(
         tpsId: String,
-        dptC7L: Int,
-        dptC7P: Int,
-        dptBC7L: Int,
-        dptBC7P: Int,
-        dpkC7L: Int,
-        dpkC7P: Int,
+        dptC7L: Long,
+        dptC7P: Long,
+        dptBC7L: Long,
+        dptBC7P: Long,
+        dpkC7L: Long,
+        dpkC7P: Long,
         c1Type: String
     ): Completable {
         if (appDB.getC1Dao().getC1(tpsId, c1Type) != null) {
@@ -136,7 +136,7 @@ class C1Interactor @Inject constructor(
         }
     }
 
-    fun saveDisabilitas(tpsId: String, disabilitasL: Int, disabilitasP: Int, c1Type: String): Completable {
+    fun saveDisabilitas(tpsId: String, disabilitasL: Long, disabilitasP: Long, c1Type: String): Completable {
         if (appDB.getC1Dao().getC1(tpsId, c1Type) != null) {
             val c1 = appDB.getC1Dao().getC1(tpsId, c1Type)
             c1?.disabilitasTerdaftarL = disabilitasL
@@ -181,7 +181,7 @@ class C1Interactor @Inject constructor(
         }
     }
 
-    fun saveHakPilihDisabilitas(tpsId: String, disabilitasL: Int, disabilitasP: Int, c1Type: String): Completable {
+    fun saveHakPilihDisabilitas(tpsId: String, disabilitasL: Long, disabilitasP: Long, c1Type: String): Completable {
         if (appDB.getC1Dao().getC1(tpsId, c1Type) != null) {
             val c1 = appDB.getC1Dao().getC1(tpsId, c1Type)
             c1?.disabilitasHakPilihL = disabilitasL
@@ -226,7 +226,7 @@ class C1Interactor @Inject constructor(
         }
     }
 
-    fun saveSuratSuaraSection(tpsId: String, reject: Int, unused: Int, used: Int, c1Type: String): Completable {
+    fun saveSuratSuaraSection(tpsId: String, reject: Long, unused: Long, used: Long, c1Type: String): Completable {
         if (appDB.getC1Dao().getC1(tpsId, c1Type) != null) {
             val c1 = appDB.getC1Dao().getC1(tpsId, c1Type)
             c1?.suratDikembalikan = reject

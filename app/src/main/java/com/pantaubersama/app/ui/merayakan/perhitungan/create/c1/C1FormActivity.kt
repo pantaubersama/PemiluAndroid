@@ -120,7 +120,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -130,7 +130,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 } else {
                     0
                 } + if (used_documents_count.text.isNotEmpty()) {
-                    used_documents_count.text.toString().toInt()
+                    used_documents_count.text.toString().toLong()
                 } else {
                     0
                 }
@@ -155,7 +155,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -165,7 +165,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 } else {
                     0
                 } + if (used_documents_count.text.isNotEmpty()) {
-                    used_documents_count.text.toString().toInt()
+                    used_documents_count.text.toString().toLong()
                 } else {
                     0
                 }
@@ -190,7 +190,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -200,7 +200,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 } else {
                     0
                 } + if (unused_documents_count.text.isNotEmpty()) {
-                    unused_documents_count.text.toString().toInt()
+                    unused_documents_count.text.toString().toLong()
                 } else {
                     0
                 }
@@ -225,7 +225,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -268,7 +268,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -300,7 +300,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -332,7 +332,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -369,7 +369,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -401,7 +401,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -433,7 +433,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -477,7 +477,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -509,7 +509,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -541,7 +541,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -582,7 +582,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -627,7 +627,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -675,7 +675,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -720,7 +720,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -768,7 +768,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -813,7 +813,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -868,7 +868,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -900,7 +900,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -932,7 +932,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -973,7 +973,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -1019,7 +1019,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -1067,7 +1067,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -1113,7 +1113,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -1161,7 +1161,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -1206,7 +1206,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -1276,17 +1276,17 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         used_documents_count.setText(c1Form.suratDigunakan.toString())
     }
 
-    private fun EditText.getInt(): Int {
+    private fun EditText.getInt(): Long {
         return if (this.text.isNotEmpty()) {
-            this.text.toString().toInt()
+            this.text.toString().toLong()
         } else {
             0
         }
     }
 
-    private fun TextView.getInt(): Int {
+    private fun TextView.getInt(): Long {
         return if (this.text.isNotEmpty()) {
-            this.text.toString().toInt()
+            this.text.toString().toLong()
         } else {
             0
         }

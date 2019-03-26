@@ -7,12 +7,12 @@ import javax.inject.Inject
 class C1FormPresenter @Inject constructor(private val c1Interactor: C1Interactor) : BasePresenter<C1FormView>() {
     fun saveSection1(
         tpsId: String,
-        a3L: Int,
-        a3P: Int,
-        a4L: Int,
-        a4P: Int,
-        aDpkL: Int,
-        aDpkP: Int,
+        a3L: Long,
+        a3P: Long,
+        a4L: Long,
+        a4P: Long,
+        aDpkL: Long,
+        aDpkP: Long,
         c1Type: String
     ) {
         disposables.add(
@@ -64,12 +64,12 @@ class C1FormPresenter @Inject constructor(private val c1Interactor: C1Interactor
 
     fun saveSection2(
         tpsId: String,
-        dptC7L: Int,
-        dptC7P: Int,
-        dptBC7L: Int,
-        dptBC7P: Int,
-        dpkC7L: Int,
-        dpkC7P: Int,
+        dptC7L: Long,
+        dptC7P: Long,
+        dptBC7L: Long,
+        dptBC7P: Long,
+        dpkC7L: Long,
+        dpkC7P: Long,
         c1Type: String
     ) {
         disposables.add(
@@ -95,7 +95,7 @@ class C1FormPresenter @Inject constructor(private val c1Interactor: C1Interactor
         )
     }
 
-    fun saveDisabilitas(tpsId: String, disabilitasL: Int, disabilitasP: Int, c1Type: String) {
+    fun saveDisabilitas(tpsId: String, disabilitasL: Long, disabilitasP: Long, c1Type: String) {
         disposables.add(
             c1Interactor.saveDisabilitas(
                 tpsId,
@@ -115,7 +115,7 @@ class C1FormPresenter @Inject constructor(private val c1Interactor: C1Interactor
         )
     }
 
-    fun saveHakPilihDisabilitas(tpsId: String, disabilitasL: Int, disabilitasP: Int, c1Type: String) {
+    fun saveHakPilihDisabilitas(tpsId: String, disabilitasL: Long, disabilitasP: Long, c1Type: String) {
         disposables.add(
             c1Interactor.saveHakPilihDisabilitas(
                 tpsId,
@@ -135,7 +135,7 @@ class C1FormPresenter @Inject constructor(private val c1Interactor: C1Interactor
         )
     }
 
-    fun saveSuratSuaraSection(tpsId: String, reject: Int, unused: Int, used: Int, c1Type: String) {
+    fun saveSuratSuaraSection(tpsId: String, reject: Long, unused: Long, used: Long, c1Type: String) {
         disposables.add(
             c1Interactor.saveSuratSuaraSection(
                 tpsId,
