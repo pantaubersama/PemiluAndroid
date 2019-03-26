@@ -67,7 +67,7 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
         no_vote_count_field.isEnabled = tps?.status != "published"
         no_vote_inc_button.setOnClickListener {
             if (tps?.status != "published") {
-                val count = no_vote_count_field.text.toString().toInt()
+                val count = no_vote_count_field.text.toString().toLong()
                 no_vote_count_field.setText(count.plus(1).toString())
             } else {
                 ToastUtil.show(this@PerhitunganDPDActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
@@ -87,13 +87,13 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext { noVote ->
                 invalid_vote_count.text = noVote.toString()
-                val allCount = valid_vote_count.text.toString().toInt() + invalid_vote_count.text.toString().toInt()
+                val allCount = valid_vote_count.text.toString().toLong() + invalid_vote_count.text.toString().toLong()
                 all_vote_count.text = allCount.toString()
                 if (tps?.status != "published") {
                     tps?.id?.let {
@@ -130,7 +130,7 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
         )
         adapter.listener = object : DPRCandidateAdapter.Listener {
             override fun onCandidateCountChange(candidateUndoPosition: Int) {
-                val allValidCount: MutableList<Int> = ArrayList()
+                val allValidCount: MutableList<Long> = ArrayList()
                 adapter.getListData().forEachIndexed { index, candidate ->
                     allValidCount.add((candidate as Candidate).candidateCount)
                 }
@@ -140,7 +140,7 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
                     e.printStackTrace()
                 }
                 try {
-                    val allCount = valid_vote_count.text.toString().toInt() + invalid_vote_count.text.toString().toInt()
+                    val allCount = valid_vote_count.text.toString().toLong() + invalid_vote_count.text.toString().toLong()
                     all_vote_count.text = allCount.toString()
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -204,12 +204,12 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
 
     override fun bindRealCount(realCount: RealCount) {
         no_vote_count_field.setText(realCount.invalidVote.toString())
-        val totalValidCount: MutableList<Int> = ArrayList()
+        val totalValidCount: MutableList<Long> = ArrayList()
         realCount.candidates.forEachIndexed { index, candidate ->
             totalValidCount.add(candidate.totalVote)
         }
         valid_vote_count.text = totalValidCount.sum().toString()
-        val totalCount = totalValidCount.sum().toString().toInt() + invalid_vote_count.text.toString().toInt()
+        val totalCount = totalValidCount.sum().toString().toLong() + invalid_vote_count.text.toString().toLong()
         all_vote_count.text = totalCount.toString()
         adapter.updateData(realCount)
     }

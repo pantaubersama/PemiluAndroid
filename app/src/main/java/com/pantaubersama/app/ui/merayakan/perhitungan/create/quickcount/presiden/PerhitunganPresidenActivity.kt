@@ -84,7 +84,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -117,7 +117,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -150,7 +150,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                 it.toString()
             }
             .map {
-                it.toInt()
+                it.toLong()
             }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
@@ -173,7 +173,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
         }
     }
 
-    override fun bindCounter(validCount: Int, invalidCount: Int, allCount: Int) {
+    override fun bindCounter(validCount: Long, invalidCount: Long, allCount: Long) {
         valid_vote_count.text = validCount.toString()
         invalid_vote_count.text = invalidCount.toString()
         all_vote_count.text = allCount.toString()
@@ -186,7 +186,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                     ToastUtil.show(this@PerhitunganPresidenActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
                 } else {
                     val count = if (candidate_1_count_field.text.isNotEmpty()) {
-                        candidate_1_count_field.text.toString().toInt()
+                        candidate_1_count_field.text.toString().toLong()
                     } else {
                         0
                     }
@@ -199,7 +199,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                     ToastUtil.show(this@PerhitunganPresidenActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
                 } else {
                     val count = if (candidate_2_count_field.text.isNotEmpty()) {
-                        candidate_2_count_field.text.toString().toInt()
+                        candidate_2_count_field.text.toString().toLong()
                     } else {
                         0
                     }
@@ -212,7 +212,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                     ToastUtil.show(this@PerhitunganPresidenActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
                 } else {
                     val count = if (no_vote_count_field.text.isNotEmpty()) {
-                        no_vote_count_field.text.toString().toInt()
+                        no_vote_count_field.text.toString().toLong()
                     } else {
                         0
                     }

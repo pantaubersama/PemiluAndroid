@@ -53,7 +53,7 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers, private var is
             candidate_inc_button.setOnClickListener {
                 if (isIncrementEnable) {
                     val count = if (candidate_count_field.text.isNotEmpty()) {
-                        candidate_count_field.text.toString().toInt()
+                        candidate_count_field.text.toString().toLong()
                     } else {
                         0
                     }
@@ -75,7 +75,7 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers, private var is
                     it.toString()
                 }
                 .map {
-                    it.toInt()
+                    it.toLong()
                 }
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
