@@ -71,7 +71,6 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             candidate_1_count_field.isEnabled = false
 //            candidate_1_inc_button.isEnabled = false
         }
-        undoRedoToolses.add(0, UndoRedoTools(candidate_1_count_field))
         candidate_1_inc_button.setOnClickListener(this)
 //        candidate_1_count_field.onFocusChangeListener = this
         RxTextView.textChanges(candidate_1_count_field)
@@ -88,6 +87,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
+                undoRedoToolses.add(0, UndoRedoTools(candidate_1_count_field))
                 undoPosition = 0
                 if (tps?.status == "draft" || tps?.status == "sandbox") {
                     tps?.id?.let { it1 -> presenter.saveCandidate1Count(it, it1, realCountType) }
@@ -104,7 +104,6 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             candidate_2_count_field.isEnabled = false
 //            candidate_2_inc_button.isEnabled = false
         }
-        undoRedoToolses.add(1, UndoRedoTools(candidate_2_count_field))
         candidate_2_inc_button.setOnClickListener(this)
 //        candidate_1_count_field.onFocusChangeListener = this
         RxTextView.textChanges(candidate_2_count_field)
@@ -121,6 +120,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
+                undoRedoToolses.add(1, UndoRedoTools(candidate_2_count_field))
                 undoPosition = 1
                 if (tps?.status == "draft" || tps?.status == "sandbox") {
                     tps?.id?.let { it1 -> presenter.saveCandidate2Count(it, it1, realCountType) }
@@ -137,7 +137,6 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             no_vote_count_field.isEnabled = false
 //            no_vote_inc_button.isEnabled = false
         }
-        undoRedoToolses.add(2, UndoRedoTools(no_vote_count_field))
         no_vote_inc_button.setOnClickListener(this)
 //        no_vote_count_field.onFocusChangeListener = this
         RxTextView.textChanges(no_vote_count_field)
@@ -154,6 +153,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
+                undoRedoToolses.add(2, UndoRedoTools(no_vote_count_field))
                 undoPosition = 2
                 if (tps?.status == "draft" || tps?.status == "sandbox") {
                     tps?.id?.let { it1 -> presenter.saveInvalidVoteCount(it, it1, realCountType) }
