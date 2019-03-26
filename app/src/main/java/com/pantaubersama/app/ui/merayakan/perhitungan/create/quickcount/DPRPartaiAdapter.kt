@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit
 class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers, private var isIncrementEnable: Boolean) : BaseRecyclerAdapter() {
     var listener: Listener? = null
     var adapters: MutableList<DPRCandidateAdapter> = ArrayList()
-    private var undoRedoToolses: MutableList<UndoRedoTools> = ArrayList()
+    var undoRedoToolses: MutableList<UndoRedoTools> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return DPRViewHolder(parent.inflate(R.layout.kandidat_partai_item))

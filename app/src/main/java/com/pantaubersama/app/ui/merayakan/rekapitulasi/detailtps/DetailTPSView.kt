@@ -10,6 +10,6 @@ interface DetailTPSView : BaseView {
     fun bindRealCount(rekapitulasi: Percentage)
     fun showFailedGetImagesAlert()
     fun bindImages(images: MutableList<Image>)
-    fun showFailedGetC1SummaryAlert()
+    fun showFailedGetC1SummaryAlert(message: String?)
     fun bindC1Summary(c1Form: C1Form)
 }

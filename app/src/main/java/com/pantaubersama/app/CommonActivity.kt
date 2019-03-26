@@ -100,7 +100,9 @@ abstract class CommonActivity : AppCompatActivity() {
     }
 
     open fun showError(throwable: Throwable) {
-        window?.decorView?.findViewById<View>(android.R.id.content)?.snackBar(throwable.message!!)
+//        if (!throwable.message?.toLowerCase()?.contains("belum ada")!!) {
+            window?.decorView?.findViewById<View>(android.R.id.content)?.snackBar(throwable.message!!)
+//        }
 //        Timber.e(throwable)
         throwable.printStackTrace()
     }

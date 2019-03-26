@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.kandidat_person_item.*
 
 class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers, private var isIncrementEnable: Boolean) : BaseRecyclerAdapter() {
     var listener: Listener? = null
-    private var undoRedoToolses: MutableList<UndoRedoTools> = ArrayList()
+    var undoRedoToolses: MutableList<UndoRedoTools> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return CandidatesViewHolder(parent.inflate(R.layout.kandidat_person_item))

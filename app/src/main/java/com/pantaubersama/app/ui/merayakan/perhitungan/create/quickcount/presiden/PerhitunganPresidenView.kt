@@ -8,5 +8,5 @@ interface PerhitunganPresidenView : BaseView {
     fun showFailedSaveDataAlert()
     fun bindRealCount(realCount: RealCount?)
     fun bindCounter(validCount: Int, invalidCount: Int, allCount: Int)
-    fun showFailedGetRealCountAlert()
+    fun showFailedGetRealCountAlert(message: String?)
 }

@@ -19,6 +19,7 @@ import com.pantaubersama.app.utils.PantauConstants.Merayakan.REAL_COUNT_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Merayakan.TPS_DATA
 import com.pantaubersama.app.utils.RxSchedulers
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.UndoRedoTools
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_perhitungan_dpd.*
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
@@ -27,6 +28,7 @@ import javax.inject.Inject
 class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), PerhitunganDPDView {
     private lateinit var adapter: DPRCandidateAdapter
     private var candidateSelectedPosition: Int? = null
+    private lateinit var undoType: String
 
     @Inject
     override lateinit var presenter: PerhitunganDPDPresenter
@@ -105,6 +107,8 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
                         }
                     }
                 }
+                undoType = "invalid"
+                adapter.undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
             }
             .doOnError {
                 it.printStackTrace()
@@ -126,7 +130,6 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
         )
         adapter.listener = object : DPRCandidateAdapter.Listener {
             override fun onCandidateCountChange(candidateUndoPosition: Int) {
-                candidateSelectedPosition = candidateUndoPosition
                 val allValidCount: MutableList<Int> = ArrayList()
                 adapter.getListData().forEachIndexed { index, candidate ->
                     allValidCount.add((candidate as Candidate).candidateCount)
@@ -153,6 +156,8 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
                         }
                     }
                 }
+                undoType = "candidate"
+                candidateSelectedPosition = candidateUndoPosition
             }
         }
         dpd_list.layoutManager = LinearLayoutManager(this@PerhitunganDPDActivity)
@@ -164,8 +169,10 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
         tps?.id?.let { realCountType?.let { it1 -> tps?.status?.let { it2 -> presenter.getRealCount(it, it1, it2) } } }
     }
 
-    override fun showFailedGetRealCountAlert() {
-        ToastUtil.show(this@PerhitunganDPDActivity, "Gagal memuat perhitungan DPD")
+    override fun showFailedGetRealCountAlert(message: String?) {
+        if (message != "Belum ada perhitungan") {
+            ToastUtil.show(this@PerhitunganDPDActivity, "Gagal memuat perhitungan DPD")
+        }
     }
 
     override fun showLoading() {
@@ -215,9 +222,17 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.undo_action -> {
-                candidateSelectedPosition?.let { adapter.undoCandidate(it) }
+                undo()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun undo() {
+        if (undoType == "invalid") {
+            adapter.undoRedoToolses[adapter.getListData().size].undo()
+        } else if (undoType == "candidate") {
+            candidateSelectedPosition?.let { adapter.undoCandidate(it) }
+        }
     }
 }
