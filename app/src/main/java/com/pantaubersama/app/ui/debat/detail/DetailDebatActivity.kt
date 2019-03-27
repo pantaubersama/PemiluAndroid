@@ -325,8 +325,10 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
         ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_done))
         findViewById<RoundedImageView>(R.id.iv_avatar_challenger_content).loadUrl(challenger?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+        findViewById<TextView>(R.id.tv_clap_count_challenger_content).text = challenger?.clapCount?.toString() ?: "0"
 
         findViewById<RoundedImageView>(R.id.iv_avatar_opponent_content).loadUrl(opponent?.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+        findViewById<TextView>(R.id.tv_clap_count_opponent_content).text = opponent?.clapCount?.toString() ?: "0"
 
         findViewById<MaterialButton>(R.id.btn_lihat_debat).setOnClickListener { challenge?.let { startActivity(DebatActivity.setIntent(this, it)) } }
     }

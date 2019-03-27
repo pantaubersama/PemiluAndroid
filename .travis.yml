@@ -31,6 +31,8 @@ jobs:
         - echo "PANTAU_WEB_URL_NO_SCHEME=$PANTAU_WEB_URL_NO_SCHEME_STAG" >> gradle.properties
         - echo "PANTAU_SHARE_URL=$PANTAU_SHARE_URL_STAG" >> gradle.properties
         - echo "PANTAU_SHARE_URL_NO_SCHEME=$PANTAU_SHARE_URL_NO_SCHEME_STAG" >> gradle.properties
+        - echo "OPINIUM_SERVICE_BASE_URL=$OPINIUM_SERVICE_BASE_URL_STAG" >> gradle.properties
+        - echo "OPINIUM_SERVICE_API_KEY=$OPINIUM_SERVICE_API_KEY_STAG" >> gradle.properties
         - echo "android.useAndroidX=true" >> gradle.properties
         - echo "android.enableJetifier=true" >> gradle.properties
         - ./gradlew assembleStagingDebug
