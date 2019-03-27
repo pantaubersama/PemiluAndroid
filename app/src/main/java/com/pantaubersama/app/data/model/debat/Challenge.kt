@@ -106,7 +106,9 @@ data class Audience(
     @SerializedName("user_id")
     val userId: Any?,
     @SerializedName("username")
-    val username: String
+    val username: String,
+    @SerializedName("clap_count")
+    val clapCount: Int
 ) : Serializable, ItemModel {
     override fun getType(): Int = TYPE_AUDIENCE_ITEM
 }
