@@ -62,8 +62,8 @@ class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(vi
                 text_status.text = challenge.showTimeAt.parseDate()
             }
             Status.DONE -> {
-                text_clap_1.text = "70"
-                text_clap_2.text = "70"
+                text_clap_1.text = challenge.challenger.clapCount?.toString() ?: "0"
+                text_clap_2.text = challenge.opponent?.clapCount?.toString() ?: "0"
                 text_favorite_count.text = "50"
             }
             else -> {
