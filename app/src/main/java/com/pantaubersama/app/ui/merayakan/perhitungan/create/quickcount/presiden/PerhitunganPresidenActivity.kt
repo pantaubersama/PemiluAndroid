@@ -89,7 +89,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
-                undoRedoToolses.add(0, UndoRedoTools(candidate_1_count_field))
+                undoRedoToolses.add(UndoRedoTools(candidate_1_count_field))
                 undoPosition = 0
                 if (tps?.status == "draft" || tps?.status == "sandbox") {
                     tps?.id?.let { it1 -> presenter.saveCandidate1Count(it, it1, realCountType) }
@@ -122,7 +122,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
-                undoRedoToolses.add(1, UndoRedoTools(candidate_2_count_field))
+                undoRedoToolses.add(UndoRedoTools(candidate_2_count_field))
                 undoPosition = 1
                 if (tps?.status == "draft" || tps?.status == "sandbox") {
                     tps?.id?.let { it1 -> presenter.saveCandidate2Count(it, it1, realCountType) }
@@ -155,7 +155,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
-                undoRedoToolses.add(2, UndoRedoTools(no_vote_count_field))
+                undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
                 undoPosition = 2
                 if (tps?.status == "draft" || tps?.status == "sandbox") {
                     tps?.id?.let { it1 -> presenter.saveInvalidVoteCount(it, it1, realCountType) }

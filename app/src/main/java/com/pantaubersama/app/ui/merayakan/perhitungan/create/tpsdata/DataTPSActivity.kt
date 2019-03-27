@@ -197,6 +197,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                     provinces_empty_alert.visibility = View.GONE
                     selectedProvince = provinces[position - 1]
                     presenter.getRegenciesData(provinces[position - 1].id)
+                } else {
+                    regencies_dropdown.setSelection(0)
+                    regencies_dropdown.isEnabled = false
                 }
             }
         }
@@ -238,6 +241,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                     regencies_empty_alert.visibility = View.GONE
                     selectedRegency = regencies[position - 1]
                     presenter.getDistrictsData(regencies[position - 1].id)
+                } else {
+                    districts_dropdown.setSelection(0)
+                    districts_dropdown.isEnabled = false
                 }
             }
         }
@@ -282,6 +288,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                     districts_empty_alert.visibility = View.GONE
                     selectedDistrict = districts[position - 1]
                     presenter.getVillagesData(districts[position - 1].id)
+                } else {
+                    villages_dropdown.setSelection(0)
+                    villages_dropdown.isEnabled = false
                 }
             }
         }
