@@ -138,6 +138,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
         setupKomentarList()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupHeader() {
         val challenger = challenge.challenger
         val opponent = challenge.opponent
@@ -161,6 +162,8 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
             tv_toolbar_title.text = "Result"
             tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             cl_clap_count.visibleIf(true)
+            tv_clap_count_challenger_header.text = "${challenger.clapCount?.let { it } ?: "0"} total"
+            tv_clap_count_opponent_header.text = "${opponent?.clapCount?.let { it } ?: "0"} total"
         }
     }
 
@@ -303,13 +306,13 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
 
     override fun onEmptyWordsAudience() {
         if (isMyChallenge || isDone) {
-            et_comment_main.setText("Belum ada komentar")
+            et_comment_main.setText((if (!isDone) "Belum" else "Tidak") + "ada komentar")
             et_comment_main.inputType = InputType.TYPE_NULL
             iv_avatar_comment_main.setImageDrawable(null)
             et_comment_main.setTextColor(color(R.color.gray))
         }
 
-        tv_comment_in_state.text = "Belum ada komentar"
+        tv_comment_in_state.text = (if (!isDone) "Belum" else "Tidak") + "ada komentar"
         tv_comment_in_state.visibleIf(true)
     }
 
