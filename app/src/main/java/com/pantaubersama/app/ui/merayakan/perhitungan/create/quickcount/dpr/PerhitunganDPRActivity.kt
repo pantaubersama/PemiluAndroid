@@ -78,7 +78,12 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         realCountType?.let { tps?.let { it1 -> presenter.getRealCountList(it1, it) } }
         no_vote_inc_button.setOnClickListener {
             if (tps?.status != "published") {
-                val count = no_vote_count_field.text.toString().toLong()
+                val count = if (no_vote_count_field.text.isNotEmpty()) {
+                    no_vote_count_field.text.toString().toLong()
+                } else {
+                    0
+                }
+
                 no_vote_count_field.setText(count.plus(1).toString())
             } else {
                 ToastUtil.show(this@PerhitunganDPRActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
