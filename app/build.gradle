@@ -10,10 +10,6 @@ apply plugin: 'io.fabric'
 android {
     signingConfigs {
         config {
-            keyAlias 'pantau_bersama'
-            keyPassword 'barokah100'
-            storePassword 'barokah100'
-            storeFile file('../pantau_bersama.keystore')
         }
     }
     compileSdkVersion 28
