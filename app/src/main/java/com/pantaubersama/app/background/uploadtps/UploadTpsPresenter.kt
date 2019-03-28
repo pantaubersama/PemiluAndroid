@@ -146,16 +146,7 @@ class UploadTpsPresenter @Inject constructor(
             }
         } else {
             view?.increaseProgress(5)
-            when (imagesUploadType) {
-                "c1_presiden" -> uploadImages(apiTpsId, dbTpsId, "c1_dpr_ri")
-                "c1_dpr_ri" -> uploadImages(apiTpsId, dbTpsId, "c1_dpd")
-                "c1_dpd" -> uploadImages(apiTpsId, dbTpsId, "c1_dprd_provinsi")
-                "c1_dprd_provinsi" -> uploadImages(apiTpsId, dbTpsId, "c1_dprd_kabupaten")
-                "c1_dprd_kabupaten" -> uploadImages(apiTpsId, dbTpsId, "suasana_tps")
-                "suasana_tps" -> {
-                    publishRealCount(apiTpsId, dbTpsId)
-                }
-            }
+            publishRealCount(apiTpsId, dbTpsId)
         }
     }
 
