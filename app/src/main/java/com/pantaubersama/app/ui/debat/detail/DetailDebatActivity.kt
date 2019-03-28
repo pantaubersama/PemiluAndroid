@@ -85,6 +85,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         intent.getSerializableExtra(EXTRA_CHALLENGE_ITEM)?.let {
             challenge = it as Challenge
             challengeId = it.id
+            isLiked = it.isLiked
         }
         intent.getStringExtra(EXTRA_CHALLENGE_ID)?.let { challengeId = it }
     }
@@ -105,6 +106,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     override fun showLoading() {
         fl_progress_bar.visibleIf(true)
         view_fail_state.visibleIf(false)
+        ll_content_detail_debat.visibleIf(false)
     }
 
     override fun dismissLoading() {
@@ -113,7 +115,9 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     override fun showChallenge(challenge: Challenge) {
+        ll_content_detail_debat.visibleIf(true)
         this.challenge = challenge
+        isLiked = challenge.isLiked
         isMyChallenge = challenge.challenger.userId == presenter.getMyProfile().id
         setupHeader()
         setupContent()
@@ -196,6 +200,8 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
         btn_like.visibleIf(challenge?.status == Status.DONE)
         if (btn_like.isVisible()) {
+            tv_like_count.text = challenge?.likeCount?.toString() ?: "0"
+
             val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
             lottie_love.progress = if (isLiked) 1.0f else 0.0f
 
@@ -203,13 +209,17 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
                 if (!animator.isRunning) {
                     isLiked = !isLiked
                     if (isLiked) {
+                        challengeId?.let { presenter.putLikeChallenge(it) }
                         tv_like_count.text = (tv_like_count.text.toString().toInt() + 1).toString()
+                        challenge?.likeCount?.apply { +1 }
                         animator.addUpdateListener { animation ->
                             lottie_love.progress = animation.animatedValue as Float
                         }
                         animator.start()
                     } else {
+                        challengeId?.let { presenter.unlikeChallenge(it) }
                         tv_like_count.text = (tv_like_count.text.toString().toInt() - 1).toString()
+                        challenge?.likeCount?.apply { -1 }
                         lottie_love.progress = 0.0f
                     }
                 }
@@ -519,6 +529,29 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
     override fun onErrorRejectDirect(t: Throwable) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    /* Like Challenge View */
+    override fun onSuccessLikeChallenge() {
+        // do nothing
+    }
+
+    override fun onErrorLikeChallenge(t: Throwable) {
+        lottie_love.progress = 0f
+        challenge?.isLiked = false
+        challenge?.likeCount?.apply { -1 }
+        tv_like_count.text = challenge?.likeCount?.toString()
+    }
+
+    override fun onSuccessUnikeChallenge() {
+        // do nothing
+    }
+
+    override fun onErrorUnlikeChallenge(t: Throwable) {
+        lottie_love.progress = 1f
+        challenge?.isLiked = true
+        challenge?.likeCount?.apply { +1 }
+        tv_like_count.text = challenge?.likeCount?.toString()
     }
 
     private fun reloadChallenge() {

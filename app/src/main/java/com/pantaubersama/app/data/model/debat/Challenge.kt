@@ -60,7 +60,11 @@ data class Challenge(
     @SerializedName("type")
     val type: String,
     @SerializedName("reason_rejected")
-    val reasonRejected: String?
+    val reasonRejected: String?,
+    @SerializedName("like_count")
+    var likeCount: Int?,
+    @SerializedName("is_liked")
+    var isLiked: Boolean
 ) : ItemModel, Serializable {
 
     override fun getType(): Int = PantauConstants.ItemModel.TYPE_CHALLENGE_ITEM
