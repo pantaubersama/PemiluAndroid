@@ -170,6 +170,7 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
     }
 
     override fun bindCandidates(candidates: MutableList<Candidate>) {
+        no_vote_container.visibility = View.VISIBLE
         adapter.setDatas(candidates as MutableList<ItemModel>)
         tps?.id?.let { realCountType?.let { it1 -> tps?.status?.let { it2 -> presenter.getRealCount(it, it1, it2) } } }
     }

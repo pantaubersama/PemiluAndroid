@@ -248,12 +248,20 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
     }
 
     override fun onBackPressed() {
+        if (intent.getBooleanExtra("is_new", false)) {
+            setResult(Activity.RESULT_OK)
+        }
         finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            android.R.id.home -> finish()
+            android.R.id.home -> {
+                if (intent.getBooleanExtra("is_new", false)) {
+                    setResult(Activity.RESULT_OK)
+                }
+                finish()
+            }
         }
         return false
     }

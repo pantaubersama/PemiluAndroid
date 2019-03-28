@@ -515,6 +515,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     override fun onSuccessSaveTPS(tps: TPS) {
         val intent = Intent(this@DataTPSActivity, PerhitunganMainActivity::class.java)
         intent.putExtra("tps_data", tps)
+        intent.putExtra("is_new", true)
         startActivityForResult(intent, 1)
     }
 
