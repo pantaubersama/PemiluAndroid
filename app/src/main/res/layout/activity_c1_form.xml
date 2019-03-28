@@ -952,7 +952,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="4. Jumlah Pemilih (A.1 + A.2 + A.3)"
+                            android:text="4. Jumlah Pemilih (B.1 + B.2 + B.3)"
                             android:textColor="@color/black_3"
                             android:fontFamily="@font/bw_modelica_bold"
                             android:textSize="12sp"/>
