@@ -306,13 +306,13 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
 
     override fun onEmptyWordsAudience() {
         if (isMyChallenge || isDone) {
-            et_comment_main.setText((if (!isDone) "Belum" else "Tidak") + "ada komentar")
+            et_comment_main.setText((if (!isDone) "Belum" else "Tidak") + " ada komentar")
             et_comment_main.inputType = InputType.TYPE_NULL
             iv_avatar_comment_main.setImageDrawable(null)
             et_comment_main.setTextColor(color(R.color.gray))
         }
 
-        tv_comment_in_state.text = (if (!isDone) "Belum" else "Tidak") + "ada komentar"
+        tv_comment_in_state.text = (if (!isDone) "Belum" else "Tidak") + " ada komentar"
         tv_comment_in_state.visibleIf(true)
     }
 

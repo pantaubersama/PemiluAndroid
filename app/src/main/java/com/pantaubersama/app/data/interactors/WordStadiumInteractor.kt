@@ -198,4 +198,18 @@ class WordStadiumInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun putLikeChallenge(challengeId: String): Completable {
+        return apiWrapper.getWordStadiumApi()
+            .putLikeChallenge(challengeId)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
+
+    fun unlikeChallenge(challengeId: String): Completable {
+        return apiWrapper.getWordStadiumApi()
+            .unlikeChallenge(challengeId)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }

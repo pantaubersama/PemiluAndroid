@@ -130,4 +130,28 @@ class DetailDebatPresenter @Inject constructor(
                 }
             )
     }
+
+    fun putLikeChallenge(challengeId: String) {
+        disposables += wordStadiumInteractor.putLikeChallenge(challengeId)
+            .subscribe(
+                {
+                    view?.onSuccessLikeChallenge()
+                },
+                {
+                    view?.onErrorLikeChallenge(it)
+                }
+            )
+    }
+
+    fun unlikeChallenge(challengeId: String) {
+        disposables += wordStadiumInteractor.unlikeChallenge(challengeId)
+            .subscribe(
+                {
+                    view?.onSuccessUnikeChallenge()
+                },
+                {
+                    view?.onErrorUnlikeChallenge(it)
+                }
+            )
+    }
 }

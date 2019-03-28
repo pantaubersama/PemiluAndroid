@@ -38,4 +38,9 @@ interface DetailDebatView : BaseView {
     fun showTweetPreview(oEmbedLink: OEmbedLink)
     fun showUrlPreview(urlItem: UrlItem)
     fun onErrorUrlPreview(t: Throwable)
+
+    fun onSuccessLikeChallenge()
+    fun onErrorLikeChallenge(t: Throwable)
+    fun onSuccessUnikeChallenge()
+    fun onErrorUnlikeChallenge(t: Throwable)
 }

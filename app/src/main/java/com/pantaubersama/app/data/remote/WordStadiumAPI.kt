@@ -100,4 +100,11 @@ interface WordStadiumAPI {
     @FormUrlEncoded
     @PUT("word_stadium/v1/words/clap")
     fun putWordsClap(@Field("word_id") wordId: String): Completable
+
+    @FormUrlEncoded
+    @PUT("word_stadium/v1/challenges/like")
+    fun putLikeChallenge(@Field("challenge_id") challengeId: String): Completable
+
+    @DELETE("word_stadium/v1/challenges/like")
+    fun unlikeChallenge(@Query("challenge_id") challengeId: String): Completable
 }
