@@ -248,12 +248,12 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
     }
 
     override fun onBackPressed() {
-        finishSection()
+        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            android.R.id.home -> finishSection()
+            android.R.id.home -> finish()
         }
         return false
     }
@@ -261,13 +261,14 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == PantauConstants.Merayakan.CREATE_PERHITUNGAN_REQUEST_CODE) {
+                setResult(Activity.RESULT_OK)
                 tps?.id?.let { presenter.getTps(it) }
             }
         }
     }
 
     override fun bindTps(tps: TPS) {
-        setResult(Activity.RESULT_OK)
+//        setResult(Activity.RESULT_OK)
         bindData(tps)
     }
 
