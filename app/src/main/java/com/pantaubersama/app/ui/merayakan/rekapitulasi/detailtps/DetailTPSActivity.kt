@@ -75,9 +75,9 @@ class DetailTPSActivity : BaseActivity<DetailTPSPresenter>(), DetailTPSView {
     }
 
     override fun bindRealCount(rekapitulasi: Percentage) {
-        paslon_1_percentage.text = String.format("%.2f", rekapitulasi.candidates?.get(0)?.percentage)
+        paslon_1_percentage.text = String.format("%.2f", rekapitulasi.candidates?.get(0)?.percentage) + "%"
         paslon_1_votes_count.text = "${rekapitulasi.candidates?.get(0)?.totalVote} suara"
-        paslon_2_percentage.text = String.format("%.2f", rekapitulasi.candidates?.get(1)?.percentage)
+        paslon_2_percentage.text = String.format("%.2f", rekapitulasi.candidates?.get(1)?.percentage) + "%"
         paslon_2_votes_count.text = "${rekapitulasi.candidates?.get(1)?.totalVote} suara"
         invalid_vite_count.text = rekapitulasi.invalidVote?.total.toString()
         votes_count.text = rekapitulasi.totalVote.toString()
