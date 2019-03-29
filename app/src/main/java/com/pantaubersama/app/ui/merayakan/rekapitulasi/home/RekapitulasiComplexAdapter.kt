@@ -161,6 +161,11 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
         notifyItemInserted(itemCount - 1)
     }
 
+    fun clearData() {
+        data.clear()
+        clear()
+    }
+
     interface Listener {
         fun onClickBanner(bannerInfo: BannerInfo)
         fun onClickItem(item: Rekapitulasi)

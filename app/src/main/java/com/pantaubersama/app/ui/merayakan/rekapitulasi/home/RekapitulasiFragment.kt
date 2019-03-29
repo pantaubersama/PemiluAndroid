@@ -62,6 +62,7 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
     }
 
     override fun showBanner(it: BannerInfo) {
+        adapter.clearData()
         adapter.addBanner(it)
         presenter.getTotalParticipant()
     }
@@ -81,7 +82,7 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
 
     private fun refreshItem() {
         adapter.setDataEnd(false)
-        presenter.getTotalParticipant()
+        presenter.getBanner()
     }
 
     override fun bindRekapitulasiNasional(data: Percentage) {
