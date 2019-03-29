@@ -98,7 +98,7 @@
                                     android:text="0"
                                     android:gravity="center"
                                     android:inputType="number"
-                                    android:maxLength="11"
+                                    android:maxLength="3"
                                     android:textColor="@color/colorAccent"/>
 
                                 <LinearLayout
@@ -154,7 +154,7 @@
                                     android:text="0"
                                     android:gravity="center"
                                     android:inputType="number"
-                                    android:maxLength="11"
+                                    android:maxLength="3"
                                     android:textColor="@color/colorAccent"/>
 
                                 <LinearLayout
@@ -219,7 +219,7 @@
                                 android:text="0"
                                 android:gravity="center"
                                 android:inputType="number"
-                                android:maxLength="11"
+                                android:maxLength="3"
                                 android:textColor="@color/colorPrimary"/>
 
 

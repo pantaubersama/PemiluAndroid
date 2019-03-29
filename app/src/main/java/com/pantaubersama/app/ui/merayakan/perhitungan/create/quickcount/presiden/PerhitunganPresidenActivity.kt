@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -10,13 +11,11 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.tps.realcount.RealCount
 import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.utils.PantauConstants
-import com.pantaubersama.app.utils.RxSchedulers
-import com.pantaubersama.app.utils.ToastUtil
-import com.pantaubersama.app.utils.UndoRedoTools
 import kotlinx.android.synthetic.main.activity_perhitungan_presiden.*
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
 import javax.inject.Inject
+import com.pantaubersama.app.utils.*
+
 
 class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>(), PerhitunganPresidenView, View.OnClickListener {
     @Inject
@@ -69,6 +68,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     }
 
     private fun setupCandidate1() {
+        candidate_1_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
         if (tps?.status == "published") {
             candidate_1_count_field.isEnabled = false
 //            candidate_1_inc_button.isEnabled = false
@@ -102,6 +102,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     }
 
     private fun setupCandidate2() {
+        candidate_2_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
         if (tps?.status == "published") {
             candidate_2_count_field.isEnabled = false
 //            candidate_2_inc_button.isEnabled = false
@@ -135,6 +136,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     }
 
     private fun setupNoVotes() {
+        no_vote_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
         if (tps?.status == "published") {
             no_vote_count_field.isEnabled = false
 //            no_vote_inc_button.isEnabled = false

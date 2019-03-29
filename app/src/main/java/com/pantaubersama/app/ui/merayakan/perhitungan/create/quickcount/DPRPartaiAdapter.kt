@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount
 
+import android.text.InputFilter
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.tps.realcount.RealCount
 import com.pantaubersama.app.data.model.tps.candidate.CandidateData
+import com.pantaubersama.app.utils.MinMaxInputFilter
 import com.pantaubersama.app.utils.RxSchedulers
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.UndoRedoTools
@@ -65,6 +67,7 @@ class DPRPartaiAdapter(private val rxSchedulers: RxSchedulers, private var isInc
 
     inner class DPRViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: CandidateData) {
+            party_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
             party_thumbnail.loadUrl(item.logo.url, R.drawable.ic_avatar_placeholder)
             party_name.text = item.name
             party_number.text = "No. Urut ${item.serialNumber}"

@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -15,6 +16,7 @@ import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.data.model.tps.candidate.Candidate
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.DPRCandidateAdapter
+import com.pantaubersama.app.utils.MinMaxInputFilter
 import com.pantaubersama.app.utils.PantauConstants.Merayakan.REAL_COUNT_TYPE
 import com.pantaubersama.app.utils.PantauConstants.Merayakan.TPS_DATA
 import com.pantaubersama.app.utils.RxSchedulers
@@ -78,7 +80,7 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
                 ToastUtil.show(this@PerhitunganDPDActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
             }
         }
-
+        no_vote_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
         RxTextView.textChanges(no_vote_count_field)
             .skipInitialValue()
             .flatMap {

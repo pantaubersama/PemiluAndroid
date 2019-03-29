@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpr
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_perhitungan_dpr.*
 import javax.inject.Inject
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.jakewharton.rxbinding2.widget.RxTextView
+import com.pantaubersama.app.utils.MinMaxInputFilter
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.UndoRedoTools
 import io.reactivex.Observable
@@ -90,6 +92,7 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
             }
         }
         no_vote_count_field.isEnabled = tps?.status != "published"
+        no_vote_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
         RxTextView.textChanges(no_vote_count_field)
             .skipInitialValue()
             .flatMap {

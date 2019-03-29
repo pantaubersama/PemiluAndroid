@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount
 
+import android.text.InputFilter
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +9,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.tps.realcount.RealCount
 import com.pantaubersama.app.data.model.tps.candidate.Candidate
+import com.pantaubersama.app.utils.MinMaxInputFilter
 import com.pantaubersama.app.utils.RxSchedulers
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.UndoRedoTools
@@ -45,6 +47,7 @@ class DPRCandidateAdapter(private val rxSchedulers: RxSchedulers, private var is
 
     inner class CandidatesViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: Candidate) {
+            candidate_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
             candidate_name.text = "${item.serialNumber}. ${item.name}"
             candidate_count_field.setText(item.candidateCount.toString())
             if (!isIncrementEnable) {
