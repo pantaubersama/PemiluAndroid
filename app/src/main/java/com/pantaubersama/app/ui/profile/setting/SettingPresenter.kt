@@ -27,6 +27,7 @@ class SettingPresenter @Inject constructor(
                         loginInteractor.clearDataCache()
                         loginInteractor.clearDatabase()
                         loginInteractor.setOnboardingComplete()
+                        view?.dismissLoading()
                         view?.goToLogin()
                     },
                     {
@@ -129,6 +130,7 @@ class SettingPresenter @Inject constructor(
     }
 
     fun revokeFirebaseToken() {
+        view?.showLoading()
         disposables.add(
             loginInteractor.updateFirebaseToken("")
                 .subscribe(
