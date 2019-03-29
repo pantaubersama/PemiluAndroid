@@ -81,6 +81,25 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
         setupToolbar(true, "CandidateData TPS", R.color.white, 4f)
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         geocoder = Geocoder(this, Locale.getDefault())
+        bindLocationFromData()
+        update_location_button.setOnClickListener {
+            if (isLocationEnabled(this@DataTPSActivity)) {
+                location_progressbar.visibility = View.VISIBLE
+                address_text.visibility = View.GONE
+                bindLocationFromData()
+            } else {
+                showGPSDisabledAlert()
+            }
+        }
+        getLocationPermission()
+        setupProvincesDropdown()
+        setupRegenciesDropdown()
+        setupDistrictsDropdown()
+        setupVillagesDropdown()
+        presenter.getProvincesData()
+    }
+
+    private fun bindLocationFromData() {
         if (tps != null) {
             tps_number_field.setText(tps?.tps.toString())
             tps?.latitude?.let {
@@ -99,17 +118,6 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 }
             }
         }
-        if (tps == null) {
-            update_location_button.setOnClickListener {
-                showGPSDisabledAlert()
-            }
-        }
-        getLocationPermission()
-        setupProvincesDropdown()
-        setupRegenciesDropdown()
-        setupDistrictsDropdown()
-        setupVillagesDropdown()
-        presenter.getProvincesData()
     }
 
     private fun setupVillagesDropdown() {
