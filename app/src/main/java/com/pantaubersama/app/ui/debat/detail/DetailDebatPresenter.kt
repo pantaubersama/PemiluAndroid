@@ -154,4 +154,18 @@ class DetailDebatPresenter @Inject constructor(
                 }
             )
     }
+
+    fun promoteChallenge(challengeId: String) {
+        view?.showLoadingPromoteChallenge()
+        disposables += wordStadiumInteractor.promoteOpenChallenge(challengeId)
+            .doOnEvent { view?.dismissLoadingPromoteChallenge() }
+            .subscribe(
+                {
+                    view?.onSuccessPromoteChallenge()
+                },
+                {
+                    view?.onErrorPromoteChallenge(it)
+                }
+            )
+    }
 }

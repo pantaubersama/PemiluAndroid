@@ -43,4 +43,9 @@ interface DetailDebatView : BaseView {
     fun onErrorLikeChallenge(t: Throwable)
     fun onSuccessUnikeChallenge()
     fun onErrorUnlikeChallenge(t: Throwable)
+
+    fun showLoadingPromoteChallenge()
+    fun dismissLoadingPromoteChallenge()
+    fun onSuccessPromoteChallenge()
+    fun onErrorPromoteChallenge(t: Throwable)
 }

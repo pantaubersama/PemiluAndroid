@@ -107,4 +107,7 @@ interface WordStadiumAPI {
 
     @DELETE("word_stadium/v1/challenges/like")
     fun unlikeChallenge(@Query("challenge_id") challengeId: String): Completable
+
+    @POST("word_stadium/v1/challenges/open/promote/{id}")
+    fun promoteOpenChallenge(@Path("id") challengeId: String): Completable
 }

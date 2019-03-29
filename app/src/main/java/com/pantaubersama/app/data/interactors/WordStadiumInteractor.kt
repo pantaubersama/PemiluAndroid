@@ -212,4 +212,11 @@ class WordStadiumInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun promoteOpenChallenge(challengeId: String): Completable {
+        return apiWrapper.getWordStadiumApi()
+            .promoteOpenChallenge(challengeId)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }

@@ -8,6 +8,8 @@ import androidx.fragment.app.DialogFragment
 import com.pantaubersama.app.R
 
 class InfoDialog : DialogFragment() {
+    lateinit var infoDialog: Dialog
+
     companion object {
         fun newInstance(layout: Int): InfoDialog {
             val frag = InfoDialog()
@@ -29,6 +31,11 @@ class InfoDialog : DialogFragment() {
             dismiss()
         }
         dialog.setContentView(view)
+        this.infoDialog = dialog
         return dialog
+    }
+
+    fun isShowing(): Boolean {
+        return infoDialog.isShowing
     }
 }

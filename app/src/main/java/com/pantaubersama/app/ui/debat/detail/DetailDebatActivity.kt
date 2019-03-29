@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.debat.detail
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -30,6 +31,7 @@ import com.pantaubersama.app.ui.debat.TerimaChallengeDialog
 import com.pantaubersama.app.ui.debat.TolakChallengeDialog
 import com.pantaubersama.app.ui.debat.adapter.OpponentCandidateAdapter
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
+import com.pantaubersama.app.ui.wordstadium.InfoDialog
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ID
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
 import com.pantaubersama.app.utils.ToastUtil
@@ -37,10 +39,14 @@ import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import com.pantaubersama.app.utils.previewTweet
 import com.pantaubersama.app.utils.previewUrl
 import com.pantaubersama.app.utils.spannable
+import com.twitter.sdk.android.core.TwitterCore
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_detail_debat.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_header_detail_debat.*
 import kotlinx.android.synthetic.main.layout_toolbar_centered_title.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatView {
@@ -352,6 +358,13 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
                 }
                 Progress.WAITING_OPPONENT -> {
                     ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_open_waiting_opponent_as_challenger))
+                    val btn_promosikan = findViewById<MaterialButton>(R.id.btn_promosikan)
+                    btn_promosikan.visibleIf(TwitterCore.getInstance().sessionManager.activeSession != null)
+                    if (btn_promosikan.isVisible()) {
+                        btn_promosikan.setOnClickListener {
+                            challengeId?.let { presenter.promoteChallenge(it) }
+                        }
+                    }
                 }
             }
         } else {
@@ -552,6 +565,31 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         challenge?.isLiked = true
         challenge?.likeCount?.apply { +1 }
         tv_like_count.text = challenge?.likeCount?.toString()
+    }
+
+    /* Promote Challenge View */
+    override fun showLoadingPromoteChallenge() {
+        showProgressDialog(getString(R.string.txt_mohon_tunggu))
+    }
+
+    override fun dismissLoadingPromoteChallenge() {
+        dismissProgressDialog()
+    }
+
+    @SuppressLint("CheckResult")
+    override fun onSuccessPromoteChallenge() {
+        val infoDialog = InfoDialog.newInstance(R.layout.info_success_open_challenge)
+        infoDialog.show(supportFragmentManager, "success-open")
+
+        Observable.timer(3000, TimeUnit.MILLISECONDS)
+            .map { if (infoDialog.isShowing()) infoDialog.dismiss() }
+            .observeOn(AndroidSchedulers.mainThread())
+
+        findViewById<MaterialButton>(R.id.btn_promosikan).visibleIf(false)
+    }
+
+    override fun onErrorPromoteChallenge(t: Throwable) {
+        showError(t)
     }
 
     private fun reloadChallenge() {
