@@ -223,8 +223,6 @@ interface PantauAPI {
 
     @GET("hitung/v1/real_counts")
     fun getMyTPSes(
-        @Query("page") page: Int,
-        @Query("per_page") perPage: Int,
         @Query("user_id") userId: String?
     ): Single<TpsResponse>
 

@@ -107,18 +107,26 @@ class TPSInteractor @Inject constructor(
         return Single.just(tps)
     }
 
-    fun getMyTpses(page: Int, perPage: Int): Single<MutableList<TPS>> {
+    fun getMyTpses(): Single<MutableList<TPS>> {
         return apiWrapper.getPantauApi()
-                .getMyTPSes(
-                    page,
-                    perPage,
-                    dataCache.loadUserProfile().id
-                )
-                .map {
-                    it.tpsData.tpses
+            .getMyTPSes(
+                dataCache.loadUserProfile().id
+            )
+            .map {
+                it.tpsData.tpses
+            }
+            .toFlowable()
+            .concatMapIterable { tpses ->
+                tpses.forEachIndexed { index, tps ->
+                    if (tps.status == "draft") {
+                        tpses.removeAt(index)
+                    }
                 }
-                .subscribeOn(rxSchedulers.io())
-                .observeOn(rxSchedulers.mainThread())
+                tpses
+            }
+            .toList()
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
     }
 
     fun deleteTps(tps: TPS): Completable {

@@ -20,7 +20,7 @@ class PerhitunganPresenter @Inject constructor(
     fun getPerhitunganData(page: Int, perPage: Int) {
         view?.showLoading()
         disposables.add(
-            tpsInteractor.getMyTpses(page, perPage)
+            tpsInteractor.getMyTpses()
                 .subscribe(
                     {
                         view?.dismissLoading()

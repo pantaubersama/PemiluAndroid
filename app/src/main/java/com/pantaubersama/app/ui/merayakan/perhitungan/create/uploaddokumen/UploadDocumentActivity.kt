@@ -130,7 +130,6 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
     }
 
     override fun finishSection() {
-        ToastUtil.show(this@UploadDocumentActivity, "Gambar berhasil disimpan")
         finish()
     }
 
