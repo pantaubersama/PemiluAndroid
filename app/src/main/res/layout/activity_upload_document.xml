@@ -508,7 +508,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="7. Suasana TPS"
+                            android:text="6. Suasana TPS"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentLeft="true"
                             android:fontFamily="@font/bw_modelica_bold"

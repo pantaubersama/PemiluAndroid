@@ -134,7 +134,6 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
     }
 
     private fun setupSuasanaTps() {
-        c1_suasana_tps_list
         suasanaTpsFiles = ArrayList()
         suasanaTpsAdapter = C1ImagesAdapter(tps?.status == "published")
         suasanaTpsAdapter.listener = object : C1ImagesAdapter.Listener {
