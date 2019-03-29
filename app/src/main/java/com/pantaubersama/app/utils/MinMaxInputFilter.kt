@@ -3,7 +3,7 @@ package com.pantaubersama.app.utils
 import android.text.InputFilter
 import android.text.Spanned
 
-class MinMaxInputFilter(private val min: String, private val max: String): InputFilter {
+class MinMaxInputFilter(private val min: String, private val max: String) : InputFilter {
 
     override fun filter(source: CharSequence?, start: Int, end: Int, dest: Spanned?, dstart: Int, dend: Int): CharSequence? {
         try {
