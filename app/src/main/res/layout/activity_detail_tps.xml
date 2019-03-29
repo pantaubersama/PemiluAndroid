@@ -300,7 +300,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Total Suara Masuk :"
+                                android:text="Rata-rata Suara Masuk :"
                                 android:textColor="@color/black_3"
                                 android:textSize="11sp"
                                 android:fontFamily="@font/lato_regular"/>
