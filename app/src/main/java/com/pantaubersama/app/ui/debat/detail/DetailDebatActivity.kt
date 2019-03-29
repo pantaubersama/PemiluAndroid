@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.debat.detail
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -30,6 +31,7 @@ import com.pantaubersama.app.ui.debat.TerimaChallengeDialog
 import com.pantaubersama.app.ui.debat.TolakChallengeDialog
 import com.pantaubersama.app.ui.debat.adapter.OpponentCandidateAdapter
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
+import com.pantaubersama.app.ui.wordstadium.InfoDialog
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ID
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
 import com.pantaubersama.app.utils.ToastUtil
@@ -37,10 +39,14 @@ import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import com.pantaubersama.app.utils.previewTweet
 import com.pantaubersama.app.utils.previewUrl
 import com.pantaubersama.app.utils.spannable
+import com.twitter.sdk.android.core.TwitterCore
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_detail_debat.*
 import kotlinx.android.synthetic.main.layout_fail_state.*
 import kotlinx.android.synthetic.main.layout_header_detail_debat.*
 import kotlinx.android.synthetic.main.layout_toolbar_centered_title.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatView {
@@ -85,6 +91,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         intent.getSerializableExtra(EXTRA_CHALLENGE_ITEM)?.let {
             challenge = it as Challenge
             challengeId = it.id
+            isLiked = it.isLiked
         }
         intent.getStringExtra(EXTRA_CHALLENGE_ID)?.let { challengeId = it }
     }
@@ -105,6 +112,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     override fun showLoading() {
         fl_progress_bar.visibleIf(true)
         view_fail_state.visibleIf(false)
+        ll_content_detail_debat.visibleIf(false)
     }
 
     override fun dismissLoading() {
@@ -113,7 +121,9 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     override fun showChallenge(challenge: Challenge) {
+        ll_content_detail_debat.visibleIf(true)
         this.challenge = challenge
+        isLiked = challenge.isLiked
         isMyChallenge = challenge.challenger.userId == presenter.getMyProfile().id
         setupHeader()
         setupContent()
@@ -196,6 +206,8 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
         btn_like.visibleIf(challenge?.status == Status.DONE)
         if (btn_like.isVisible()) {
+            tv_like_count.text = challenge?.likeCount?.toString() ?: "0"
+
             val animator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(1000)
             lottie_love.progress = if (isLiked) 1.0f else 0.0f
 
@@ -203,13 +215,17 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
                 if (!animator.isRunning) {
                     isLiked = !isLiked
                     if (isLiked) {
+                        challengeId?.let { presenter.putLikeChallenge(it) }
                         tv_like_count.text = (tv_like_count.text.toString().toInt() + 1).toString()
+                        challenge?.likeCount?.apply { +1 }
                         animator.addUpdateListener { animation ->
                             lottie_love.progress = animation.animatedValue as Float
                         }
                         animator.start()
                     } else {
+                        challengeId?.let { presenter.unlikeChallenge(it) }
                         tv_like_count.text = (tv_like_count.text.toString().toInt() - 1).toString()
+                        challenge?.likeCount?.apply { -1 }
                         lottie_love.progress = 0.0f
                     }
                 }
@@ -342,6 +358,13 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
                 }
                 Progress.WAITING_OPPONENT -> {
                     ll_content_detail_debat.addView(inflate(R.layout.layout_content_detail_debat_open_waiting_opponent_as_challenger))
+                    val btn_promosikan = findViewById<MaterialButton>(R.id.btn_promosikan)
+                    btn_promosikan.visibleIf(TwitterCore.getInstance().sessionManager.activeSession != null)
+                    if (btn_promosikan.isVisible()) {
+                        btn_promosikan.setOnClickListener {
+                            challengeId?.let { presenter.promoteChallenge(it) }
+                        }
+                    }
                 }
             }
         } else {
@@ -519,6 +542,54 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
     override fun onErrorRejectDirect(t: Throwable) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    /* Like Challenge View */
+    override fun onSuccessLikeChallenge() {
+        // do nothing
+    }
+
+    override fun onErrorLikeChallenge(t: Throwable) {
+        lottie_love.progress = 0f
+        challenge?.isLiked = false
+        challenge?.likeCount?.apply { -1 }
+        tv_like_count.text = challenge?.likeCount?.toString()
+    }
+
+    override fun onSuccessUnikeChallenge() {
+        // do nothing
+    }
+
+    override fun onErrorUnlikeChallenge(t: Throwable) {
+        lottie_love.progress = 1f
+        challenge?.isLiked = true
+        challenge?.likeCount?.apply { +1 }
+        tv_like_count.text = challenge?.likeCount?.toString()
+    }
+
+    /* Promote Challenge View */
+    override fun showLoadingPromoteChallenge() {
+        showProgressDialog(getString(R.string.txt_mohon_tunggu))
+    }
+
+    override fun dismissLoadingPromoteChallenge() {
+        dismissProgressDialog()
+    }
+
+    @SuppressLint("CheckResult")
+    override fun onSuccessPromoteChallenge() {
+        val infoDialog = InfoDialog.newInstance(R.layout.info_success_open_challenge)
+        infoDialog.show(supportFragmentManager, "success-open")
+
+        Observable.timer(3000, TimeUnit.MILLISECONDS)
+            .map { if (infoDialog.isShowing()) infoDialog.dismiss() }
+            .observeOn(AndroidSchedulers.mainThread())
+
+        findViewById<MaterialButton>(R.id.btn_promosikan).visibleIf(false)
+    }
+
+    override fun onErrorPromoteChallenge(t: Throwable) {
+        showError(t)
     }
 
     private fun reloadChallenge() {
