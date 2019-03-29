@@ -115,16 +115,6 @@ class TPSInteractor @Inject constructor(
             .map {
                 it.tpsData.tpses
             }
-            .toFlowable()
-            .concatMapIterable { tpses ->
-                tpses.forEachIndexed { index, tps ->
-                    if (tps.status == "draft") {
-                        tpses.removeAt(index)
-                    }
-                }
-                tpses
-            }
-            .toList()
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }

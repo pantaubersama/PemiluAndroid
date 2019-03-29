@@ -28,10 +28,12 @@ class PerhitunganPresenter @Inject constructor(
                         if (tpsInteractor.getLocalTpses().size != 0) {
                             it.addAll(tpsInteractor.getLocalTpses())
                             it.forEach { tps ->
-                                if (tps.status == "sandbox") {
-                                    tpses.add(0, tps)
-                                } else {
-                                    tpses.add(tps)
+                                if (tps.status != "draft") {
+                                    if (tps.status == "sandbox") {
+                                        tpses.add(0, tps)
+                                    } else {
+                                        tpses.add(tps)
+                                    }
                                 }
                             }
                         }
