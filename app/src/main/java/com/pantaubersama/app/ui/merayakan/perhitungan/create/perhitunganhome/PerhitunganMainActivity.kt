@@ -114,7 +114,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
         if (tps?.status == "published") {
             submit_button.visibility = View.GONE
             submitted_button.visibility = View.VISIBLE
-        } else if (tps?.status == "draft") {
+        } else if (tps?.status == "local") {
             submit_button.visibility = View.VISIBLE
             submitted_button.visibility = View.GONE
         } else {

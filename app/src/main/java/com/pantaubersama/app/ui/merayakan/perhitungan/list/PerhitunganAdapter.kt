@@ -51,7 +51,7 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
                     tps_number.setTextColor(ContextCompat.getColor(itemView.context, R.color.black_3))
                     tps_container.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.gray_1))
                 }
-                "draft" -> {
+                "local" -> {
                     quick_count_status.text = "Belum Dikirim"
                     quick_count_status_container.setBackgroundResource(R.drawable.rounded_red)
                     tps_number.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorPrimary))

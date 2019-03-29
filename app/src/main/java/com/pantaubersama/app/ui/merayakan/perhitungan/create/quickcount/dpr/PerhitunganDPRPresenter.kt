@@ -62,7 +62,7 @@ class PerhitunganDPRPresenter @Inject constructor(
                         )
                 )
             }
-            "draft" -> realCountInteractor.getRealCount(tpsId, realCountType)?.let {
+            "local" -> realCountInteractor.getRealCount(tpsId, realCountType)?.let {
                 view?.bindRealCount(it)
             }
             else -> realCountInteractor.getRealCount(tpsId, realCountType)?.let {

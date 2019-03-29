@@ -98,7 +98,7 @@ class TPSInteractor @Inject constructor(
             selectedVillage,
             lat,
             long,
-            "draft",
+            "local",
             "",
             CreatedAtInWord("", "", ""),
             dataCache.loadUserProfile()
@@ -126,7 +126,7 @@ class TPSInteractor @Inject constructor(
             "published" -> apiWrapper.getPantauApi().deleteTPS(tps.id)
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
-            "draft" -> Completable.fromCallable {
+            "local" -> Completable.fromCallable {
                 appDB.getTPSDAO().deleteTPS(tps)
             }
                 .doOnComplete {
@@ -169,7 +169,7 @@ class TPSInteractor @Inject constructor(
             )
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
-            "draft" -> {
+            "local" -> {
                 val tps = appDB.getTPSDAO().getTps(tpsId)
                 tps.tps = tpsNumber
                 return Completable.fromCallable {
@@ -365,7 +365,7 @@ class TPSInteractor @Inject constructor(
         return apiWrapper.getPantauApi().publishRealCount(apiTpsId)
             .doOnComplete {
                 when (tps.status) {
-                    "draft" -> {
+                    "local" -> {
                         appDB.getTPSDAO().deleteTPS(tps)
                         appDB.getRealCountDao().getRealCounts(tps.id).forEach {
                             appDB.getRealCountDao().deleteRealCount(it)

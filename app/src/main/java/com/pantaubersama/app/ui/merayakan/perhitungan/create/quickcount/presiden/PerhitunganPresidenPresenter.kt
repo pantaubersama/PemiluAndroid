@@ -79,7 +79,7 @@ class PerhitunganPresidenPresenter @Inject constructor(
                         )
                 )
             }
-            "draft" -> view?.bindRealCount(realCountInteractor.getPresidentRealCount(tpsId, realCountType))
+            "local" -> view?.bindRealCount(realCountInteractor.getPresidentRealCount(tpsId, realCountType))
             else -> view?.bindRealCount(realCountInteractor.getPresidentRealCount(tpsId, realCountType))
         }
     }
