@@ -89,8 +89,12 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                     long = it
                     geocoder?.getFromLocation(it, it1, 1)?.let {
                         addresses = it
-                        val address = addresses[0].getAddressLine(0)
-                        address_text.text = address
+                        try {
+                            val address = addresses[0].getAddressLine(0)
+                            address_text.text = address
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                 }
             }
@@ -344,12 +348,10 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 
     private val locationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
-            if (tps == null) {
-                update_location_button.setOnClickListener {
-                    location_progressbar.visibility = View.VISIBLE
-                    address_text.visibility = View.GONE
-                    bindLocation(location)
-                }
+            update_location_button.setOnClickListener {
+                location_progressbar.visibility = View.VISIBLE
+                address_text.visibility = View.GONE
+                bindLocation(location)
             }
         }
 
