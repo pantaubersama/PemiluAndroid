@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.c1
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -10,6 +11,7 @@ import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.tps.c1.C1Form
 import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.utils.MinMaxInputFilter
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.RxSchedulers
 import com.pantaubersama.app.utils.ToastUtil
@@ -70,26 +72,9 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         }
         setupToolbar(false, title, R.color.white, 4f)
         if (tps?.status == "published") {
-            dpt_a3_kpu_l_count.isEnabled = false
-            dpt_a3_kpu_p_count.isEnabled = false
-            dpt_b_a4_kpu_l_count.isEnabled = false
-            dpt_b_a4_kpu_p_count.isEnabled = false
-            dpk_a_kpu_l_count.isEnabled = false
-            dpk_a_kpu_p_count.isEnabled = false
-            dpt_c7_l_count.isEnabled = false
-            dpt_c7_p_count.isEnabled = false
-            dpt_b_c7_l_count.isEnabled = false
-            dpt_b_c7_p_count.isEnabled = false
-            dpk_c7_l_count.isEnabled = false
-            dpk_c7_p_count.isEnabled = false
-            disabilitas_l_count.isEnabled = false
-            disabilitas_p_count.isEnabled = false
-            disabilitas_l_voted_count.isEnabled = false
-            disabilitas_p_voted_count.isEnabled = false
-            rejected_documents_count.isEnabled = false
-            unused_documents_count.isEnabled = false
-            used_documents_count.isEnabled = false
+            disableField()
         }
+        setupFieldFilter()
         setupAllSection1()
         setupAllSection2()
         setupAllDisabilitasSection()
@@ -98,6 +83,50 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
             finish()
         }
         tps?.id?.let { c1Type?.let { it1 -> tps?.status?.let { it2 -> presenter.getC1Data(it, it1, it2) } } }
+    }
+
+    private fun disableField() {
+        dpt_a3_kpu_l_count.isEnabled = false
+        dpt_a3_kpu_p_count.isEnabled = false
+        dpt_b_a4_kpu_l_count.isEnabled = false
+        dpt_b_a4_kpu_p_count.isEnabled = false
+        dpk_a_kpu_l_count.isEnabled = false
+        dpk_a_kpu_p_count.isEnabled = false
+        dpt_c7_l_count.isEnabled = false
+        dpt_c7_p_count.isEnabled = false
+        dpt_b_c7_l_count.isEnabled = false
+        dpt_b_c7_p_count.isEnabled = false
+        dpk_c7_l_count.isEnabled = false
+        dpk_c7_p_count.isEnabled = false
+        disabilitas_l_count.isEnabled = false
+        disabilitas_p_count.isEnabled = false
+        disabilitas_l_voted_count.isEnabled = false
+        disabilitas_p_voted_count.isEnabled = false
+        rejected_documents_count.isEnabled = false
+        unused_documents_count.isEnabled = false
+        used_documents_count.isEnabled = false
+    }
+
+    private fun setupFieldFilter() {
+        dpt_a3_kpu_l_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        dpt_a3_kpu_p_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        dpt_b_a4_kpu_l_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        dpt_b_a4_kpu_p_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        dpk_a_kpu_l_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        dpk_a_kpu_p_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        dpt_c7_l_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        dpt_c7_p_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        dpt_b_c7_l_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        dpt_b_c7_p_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        dpk_c7_l_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        dpk_c7_p_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        disabilitas_l_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        disabilitas_p_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        disabilitas_l_voted_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        disabilitas_p_voted_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        rejected_documents_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        unused_documents_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        used_documents_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
     }
 
     override fun showFailedGetC1Alert(message: String?) {
