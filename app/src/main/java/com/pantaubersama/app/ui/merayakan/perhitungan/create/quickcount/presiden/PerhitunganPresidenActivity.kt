@@ -14,8 +14,7 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_perhitungan_presiden.*
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
 import javax.inject.Inject
-import com.pantaubersama.app.utils.*
-
+import com.pantaubersama.app.utils.* // ktlint-disable
 
 class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>(), PerhitunganPresidenView, View.OnClickListener {
     @Inject
