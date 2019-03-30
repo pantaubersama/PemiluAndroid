@@ -35,6 +35,8 @@ jobs:
         - echo "OPINIUM_SERVICE_API_KEY=$OPINIUM_SERVICE_API_KEY_STAG" >> gradle.properties
         - echo "android.useAndroidX=true" >> gradle.properties
         - echo "android.enableJetifier=true" >> gradle.properties
+        - mkdir $PWD/app/src/staging
+        - mkdir $PWD/app/src/production
         - echo "$GOOGLE_SERVICE_JSON_STAG" >> $PWD/app/src/staging/google-services.json
         - echo "$GOOGLE_SERVICE_JSON_PROD" >> $PWD/app/src/production/google-services.json
         - ./gradlew assembleStagingDebug
