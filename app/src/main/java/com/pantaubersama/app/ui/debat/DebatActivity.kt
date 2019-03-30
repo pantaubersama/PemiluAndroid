@@ -115,6 +115,8 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     }
 
     companion object {
+        const val RUN_OUT_OF_TIME = "sudah habis"
+
         fun setIntent(context: Context, challenge: Challenge): Intent {
             val intent = Intent(context, DebatActivity::class.java)
             intent.putExtra(EXTRA_CHALLENGE_ITEM, challenge)
@@ -393,7 +395,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
                     Role.CHALLENGER
                 }
 
-            isMyTurn = myRole == turnActorRole
+            isMyTurn = myRole == turnActorRole && wordsFighterAdapter.getMyTimeLeft(myRole) != null
 
             if (isMyChallenge) {
                 if ((wordsFighterAdapter.itemCount == 0 || wordsFighterAdapter.get(0) !is WordInputItem)) {
@@ -420,7 +422,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
 
     override fun updateMyTimeLeft() {
         if (isMyChallenge && !isDone) {
-            tv_sisa_waktu.text = wordsFighterAdapter.getMyTimeLeft(myRole)?.let { "$it MENIT" }
+            tv_sisa_waktu.text = wordsFighterAdapter.getMyTimeLeft(myRole)?.let { if (it > 0) "$it MENIT" else RUN_OUT_OF_TIME }
                 ?: "${challenge.timeLimit} MENIT"
         }
         invalidateToolbar()
@@ -510,7 +512,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
                     toolbar_debat.background = toolbarBackground.also { it.startTransition(150) }
 
                     if (isMyChallenge && !isDone) {
-                        tv_toolbar_title.text = "${tv_sisa_waktu.text.toString().toLowerCase()} tersisa"
+                        tv_toolbar_title.text = wordsFighterAdapter.getMyTimeLeft(myRole)?.let { if (it > 0) "$it menit tersisa" else "saldo waktu sudah habis" } ?: "${challenge.timeLimit} MENIT"
                         tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_saldo_waktu_white_24, 0, 0, 0)
                     }
                 }
@@ -726,7 +728,7 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
     private fun invalidateToolbar() {
         if (isMyChallenge && !isDone) {
             if (!isMainToolbarShown) {
-                tv_toolbar_title.text = "${tv_sisa_waktu.text.toString().toLowerCase()} tersisa"
+                tv_toolbar_title.text = wordsFighterAdapter.getMyTimeLeft(myRole)?.let { if (it > 0) "$it menit tersisa" else "saldo waktu sudah habis" } ?: "${challenge.timeLimit} MENIT"
                 tv_toolbar_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_saldo_waktu_white_24, 0, 0, 0)
             }
         }
