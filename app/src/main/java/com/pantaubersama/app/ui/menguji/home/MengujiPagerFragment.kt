@@ -1,5 +1,6 @@
 package com.pantaubersama.app.ui.menguji.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,9 @@ import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_CHALLENGE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_COMING_SOON
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_DONE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_LIVE_NOW
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_POSITION
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_DEBAT
+import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_CHALLENGE
 import com.pantaubersama.app.utils.State
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import kotlinx.android.synthetic.main.fragment_menguji_pager.*
@@ -190,6 +194,30 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     override fun dismissLoading() {
         lottie_loading.enableLottie(false, lottie_loading)
         swipe_refresh.visibleIf(true)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            RC_OPEN_DETAIL_DEBAT -> {
+                when (resultCode) {
+                    RESULT_DELETE_CHALLENGE -> {
+                        data?.getIntExtra(EXTRA_CHALLENGE_POSITION, -1)?.let {
+                            onDeletedChallenge(it)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun onDeletedChallenge(position: Int) {
+        debatOpenAdapter.apply {
+            if (position != -1 && position < challenges.size) {
+                challenges.toMutableList().removeAt(position)
+                notifyItemRemoved(position)
+            }
+        }
     }
 
     companion object {

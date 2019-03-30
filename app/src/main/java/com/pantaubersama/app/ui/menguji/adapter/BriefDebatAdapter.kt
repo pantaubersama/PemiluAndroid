@@ -8,11 +8,7 @@ import com.pantaubersama.app.data.model.debat.Challenge
 import com.pantaubersama.app.utils.extensions.inflate
 
 /**
-<<<<<<< HEAD
  * This adapter is used for showing only a few [Challenge]s on the RecyclerView. So it doesn't
-=======
- * This presidentAdapter is used for showing only a few [DebatItem]s on the RecyclerView. So it doesn't
->>>>>>> develop
  * support pagination.
  * */
 class BriefDebatAdapter(
