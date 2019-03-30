@@ -1,8 +1,10 @@
 package com.pantaubersama.app.ui.menguji.adapter
 
+import android.app.Activity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.debat.Challenge
@@ -10,6 +12,8 @@ import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Progress
 import com.pantaubersama.app.ui.debat.DebatActivity
 import com.pantaubersama.app.ui.debat.detail.DetailDebatActivity
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_DEBAT
+import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_CHALLENGE
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.parseDate
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -64,7 +68,7 @@ class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(vi
             Status.DONE -> {
                 text_clap_1.text = challenge.challenger.clapCount?.toString() ?: "0"
                 text_clap_2.text = challenge.opponent?.clapCount?.toString() ?: "0"
-                text_favorite_count.text = "50"
+                text_favorite_count.text = challenge.likeCount?.toString() ?: "0"
             }
             else -> {
                 text_status.text = when {
@@ -80,7 +84,10 @@ class DebatSmallViewHolder(view: View, fm: FragmentManager) : DebatViewHolder(vi
             if (challenge.status == Status.LIVE_NOW) {
                 it.context.startActivity(DebatActivity.setIntent(it.context, challenge))
             } else {
-                it.context.startActivity(DetailDebatActivity.setIntent(it.context, challenge))
+                (it.context as FragmentActivity)
+                    .startActivityForResult(
+                        DetailDebatActivity.setIntent(it.context, challenge, adapterPosition),
+                        RC_OPEN_DETAIL_DEBAT)
             }
         }
     }

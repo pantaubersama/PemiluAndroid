@@ -10,6 +10,8 @@ import com.pantaubersama.app.data.model.debat.Challenge
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Progress
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
+import com.pantaubersama.app.utils.CopyUtil
+import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -66,13 +68,14 @@ abstract class DebatViewHolder(
     }
 
     private fun showOptionDialog(challenge: Challenge) {
-        val showDeleteButton = challenge.progress == Progress.WAITING_OPPONENT
+//        val showDeleteButton = challenge.progress == Progress.WAITING_OPPONENT //disable dulu @edityo 30/03/19
+        val showDeleteButton = false
         optionDialog.setViewVisibility(R.id.delete_action, showDeleteButton)
         optionDialog.listener = View.OnClickListener {
             when (it.id) {
-                R.id.copy_link_action -> ToastUtil.show(it.context, "Salin Tautan")
-                R.id.share_action -> ToastUtil.show(it.context, "Bagikan")
-                R.id.delete_action -> ToastUtil.show(it.context, "Hapus")
+                R.id.copy_link_action -> CopyUtil.copyChallenge(it.context, challenge)
+                R.id.share_action -> ShareUtil.shareItem(it.context, challenge)
+//                R.id.delete_action -> ToastUtil.show(it.context, "Hapus")
             }
             optionDialog.dismiss()
         }

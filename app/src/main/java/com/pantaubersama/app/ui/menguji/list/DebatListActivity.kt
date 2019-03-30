@@ -11,6 +11,9 @@ import com.pantaubersama.app.data.model.debat.DebatHeader
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.menguji.adapter.DebatListAdapter
 import com.pantaubersama.app.utils.PantauConstants.Debat
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_POSITION
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_DEBAT
+import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_CHALLENGE
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.unSyncLazy
 import com.pantaubersama.app.utils.extensions.visibleIf
@@ -107,6 +110,29 @@ class DebatListActivity : BaseActivity<DebatListPresenter>(), DebatListView {
         super.showError(throwable)
         recycler_view.visibleIf(false)
         view_fail_state.enableLottie(true, lottie_fail_state)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            RC_OPEN_DETAIL_DEBAT -> {
+                when (resultCode) {
+                    RESULT_DELETE_CHALLENGE -> {
+                        data?.getIntExtra(EXTRA_CHALLENGE_POSITION, -1)?.let {
+                            onDeletedChallenge(it)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun onDeletedChallenge(position: Int) {
+        adapter.apply {
+            if (position != -1 && position < itemCount) {
+                deleteItem(position)
+            }
+        }
     }
 
     companion object {

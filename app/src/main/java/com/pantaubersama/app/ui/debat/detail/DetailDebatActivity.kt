@@ -30,15 +30,15 @@ import com.pantaubersama.app.ui.debat.DebatActivity
 import com.pantaubersama.app.ui.debat.TerimaChallengeDialog
 import com.pantaubersama.app.ui.debat.TolakChallengeDialog
 import com.pantaubersama.app.ui.debat.adapter.OpponentCandidateAdapter
+import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
 import com.pantaubersama.app.ui.wordstadium.InfoDialog
+import com.pantaubersama.app.utils.*
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ID
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
-import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_POSITION
+import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_CHALLENGE
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable
-import com.pantaubersama.app.utils.previewTweet
-import com.pantaubersama.app.utils.previewUrl
-import com.pantaubersama.app.utils.spannable
 import com.twitter.sdk.android.core.TwitterCore
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -65,6 +65,8 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
 
     private var savedInstanceState: Bundle? = null
 
+    private var positionInList: Int? = null
+
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
     }
@@ -74,9 +76,10 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     companion object {
-        fun setIntent(context: Context, challenge: Challenge): Intent {
+        fun setIntent(context: Context, challenge: Challenge, position: Int = -1): Intent {
             val intent = Intent(context, DetailDebatActivity::class.java)
             intent.putExtra(EXTRA_CHALLENGE_ITEM, challenge)
+            intent.putExtra(EXTRA_CHALLENGE_POSITION, position)
             return intent
         }
 
@@ -94,6 +97,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
             isLiked = it.isLiked
         }
         intent.getStringExtra(EXTRA_CHALLENGE_ID)?.let { challengeId = it }
+        intent.getIntExtra(EXTRA_CHALLENGE_POSITION, -1).let { positionInList = it }
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
@@ -178,9 +182,19 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
             optionDialog.setViewVisibility(R.id.delete_action, showDeleteButton)
             optionDialog.listener = View.OnClickListener {
                 when (it.id) {
-                    R.id.copy_link_action -> ToastUtil.show(it.context, "Salin Tautan")
-                    R.id.share_action -> ToastUtil.show(it.context, "Bagikan")
-                    R.id.delete_action -> ToastUtil.show(it.context, "Hapus")
+                    R.id.copy_link_action -> challenge?.let { item -> CopyUtil.copyChallenge(this, item) }
+                    R.id.share_action -> ShareUtil.shareItem(this, challenge)
+                    R.id.delete_action -> ConfirmationDialog.Builder()
+                        .with(this)
+                        .setDialogTitle("Hapus Challenge")
+                        .setAlert("Apakah Anda takin untuk menghapus challenge ini?")
+                        .setCancelText("Batal")
+                        .setOkText("YA")
+                        .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                            override fun onClickOk() {
+                                challengeId?.let { id -> presenter.deleteChallenge(id) }
+                            }
+                        }).show()
                 }
                 optionDialog.dismiss()
             }
@@ -589,6 +603,31 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
     }
 
     override fun onErrorPromoteChallenge(t: Throwable) {
+        showError(t)
+    }
+
+    /* Delete Challenge View */
+    override fun showLoadingDeleteChallenge() {
+        showProgressDialog(getString(R.string.txt_mohon_tunggu))
+    }
+
+    override fun dismissLoadingDeleteChallenge() {
+        dismissProgressDialog()
+    }
+
+    override fun onSuccessDeleteChallenge() {
+        positionInList?.let {
+            if (it != -1) {
+                val extras = Intent()
+                extras.putExtra(EXTRA_CHALLENGE_POSITION, it)
+                setResult(RESULT_DELETE_CHALLENGE, extras)
+            }
+        }
+
+        finish()
+    }
+
+    override fun onErrorDeleteChallenge(t: Throwable) {
         showError(t)
     }
 

@@ -36,12 +36,9 @@ import com.pantaubersama.app.ui.debat.adapter.WordsFighterAdapter
 import com.pantaubersama.app.ui.debat.detail.DetailDebatDialogFragment
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
-import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable
-import com.pantaubersama.app.utils.hideKeyboard
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Role
-import com.pantaubersama.app.utils.WordsPNHandler
-import com.pantaubersama.app.utils.spannable
+import com.pantaubersama.app.utils.*
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -545,8 +542,8 @@ class DebatActivity : BaseActivity<DebatPresenter>(), DebatView, WordsPNHandler.
             optionDialog.setViewVisibility(R.id.delete_action, false)
             optionDialog.listener = View.OnClickListener {
                 when (it.id) {
-                    R.id.copy_link_action -> ToastUtil.show(it.context, "Salin Tautan")
-                    R.id.share_action -> ToastUtil.show(it.context, "Bagikan")
+                    R.id.copy_link_action -> CopyUtil.copyChallenge(it.context, challenge)
+                    R.id.share_action -> ShareUtil.shareItem(it.context, challenge)
                 }
                 optionDialog.dismiss()
             }

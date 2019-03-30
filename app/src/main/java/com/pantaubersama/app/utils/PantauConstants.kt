@@ -115,6 +115,7 @@ class PantauConstants {
         const val EXTRA_DATE_STRING = "EXTRA_DATE_STRING"
         const val EXTRA_OEMBEDED_LINK = "EXTRA_OEMBEDED_LINK"
         const val EXTRA_URL_ITEM = "EXTRA_URL_ITEM"
+        const val EXTRA_CHALLENGE_POSITION = "EXTRA_CHALLENGE_POSITION"
     }
 
     object RequestCode {
@@ -140,12 +141,14 @@ class PantauConstants {
         const val RC_FILTER_CLUSTER = 1013
         const val RC_SHARE = 1014
         const val RC_OPEN_CHROME_TAB = 1015
+        const val RC_OPEN_DETAIL_DEBAT = 1016
     }
 
     object ResultCode {
         const val RESULT_DELETE_ITEM_JANPOL = 111
         const val RESULT_DELETE_ITEM_QUESTION = 112
         const val RESULT_ITEM_CHANGED_QUESTION = 113
+        const val RESULT_DELETE_CHALLENGE = 114
     }
 
     object Networking {
@@ -274,6 +277,7 @@ class PantauConstants {
         const val SHARE_HASIL_KUIS_PATH = "share/hasilkuis/"
         const val SHARE_KECENDERUNGAN_PATH = "share/kecenderungan/"
         const val SHARE_BADGE_PATH = "share/badge/"
+        const val SHARE_CHALLENGE_PATH = "share/wordstadium"
     }
 
     object Onboarding {

@@ -219,4 +219,11 @@ class WordStadiumInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }
+
+    fun deleteChallenge(challengeId: String): Completable {
+        return apiWrapper.getWordStadiumApi()
+            .deleteChallenge(challengeId)
+            .subscribeOn(rxSchedulers.io())
+            .observeOn(rxSchedulers.mainThread())
+    }
 }

@@ -48,4 +48,9 @@ interface DetailDebatView : BaseView {
     fun dismissLoadingPromoteChallenge()
     fun onSuccessPromoteChallenge()
     fun onErrorPromoteChallenge(t: Throwable)
+
+    fun showLoadingDeleteChallenge()
+    fun dismissLoadingDeleteChallenge()
+    fun onSuccessDeleteChallenge()
+    fun onErrorDeleteChallenge(t: Throwable)
 }

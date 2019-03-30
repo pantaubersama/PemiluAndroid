@@ -168,4 +168,18 @@ class DetailDebatPresenter @Inject constructor(
                 }
             )
     }
+
+    fun deleteChallenge(challengeId: String) {
+        view?.showLoadingDeleteChallenge()
+        disposables += wordStadiumInteractor.deleteChallenge(challengeId)
+            .doOnEvent { view?.dismissLoadingDeleteChallenge() }
+            .subscribe(
+                {
+                    view?.onSuccessDeleteChallenge()
+                },
+                {
+                    view?.onErrorDeleteChallenge(it)
+                }
+            )
+    }
 }
