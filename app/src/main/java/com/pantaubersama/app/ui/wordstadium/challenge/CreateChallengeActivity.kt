@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.activity_create_challenge.*
 
 class CreateChallengeActivity : BaseActivity<CreateChallengePresenter>(), CreateChallengeView {
 
+    override fun setLayout(): Int = R.layout.activity_create_challenge
+
     companion object {
         val OPEN_CHALLENGE = 1
         val DIRECT_CHALLENGE = 2
@@ -22,9 +24,6 @@ class CreateChallengeActivity : BaseActivity<CreateChallengePresenter>(), Create
         return 0
     }
 
-    override fun setLayout(): Int {
-        return R.layout.activity_create_challenge
-    }
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_buat_tantangan), R.color.white, 4f)
