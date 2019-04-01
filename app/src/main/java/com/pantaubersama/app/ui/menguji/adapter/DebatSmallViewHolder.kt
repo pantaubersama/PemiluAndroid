@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.menguji.adapter
 
-import android.app.Activity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,7 +12,6 @@ import com.pantaubersama.app.data.model.debat.ChallengeConstants.Progress
 import com.pantaubersama.app.ui.debat.DebatActivity
 import com.pantaubersama.app.ui.debat.detail.DetailDebatActivity
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_DEBAT
-import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_CHALLENGE
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.parseDate
 import com.pantaubersama.app.utils.extensions.visibleIf

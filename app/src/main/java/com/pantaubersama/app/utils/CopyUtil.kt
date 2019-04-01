@@ -5,7 +5,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import com.pantaubersama.app.R
 import com.pantaubersama.app.data.model.debat.Challenge
-import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_CHALLENGE_PATH
 
 class CopyUtil {
