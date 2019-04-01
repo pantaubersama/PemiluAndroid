@@ -22,8 +22,6 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     @Inject
     lateinit var rxSchedulers: RxSchedulers
 
-    private lateinit var undoRedoToolses: MutableList<UndoRedoTools>
-    private var undoPosition: Int? = null
     private var tps: TPS? = null
     private var realCountType = "presiden"
 
@@ -47,7 +45,6 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Presiden", R.color.white, 4f)
-        undoRedoToolses = ArrayList()
         setupCandidate1()
         setupCandidate2()
         setupNoVotes()
@@ -88,10 +85,12 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
-                undoRedoToolses.add(UndoRedoTools(candidate_1_count_field))
-                undoPosition = 0
                 if (tps?.status == "local" || tps?.status == "sandbox") {
-                    tps?.id?.let { it1 -> presenter.saveCandidate1Count(it, it1, realCountType) }
+                    tps?.id?.let { it1 -> presenter.saveCandidate1Count(
+                        it,
+                        candidate_2_count_field.text.toString().toLong(),
+                        no_vote_count_field.text.toString().toLong(),
+                        it1, realCountType) }
                 }
             }
             .doOnError {
@@ -122,10 +121,12 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
-                undoRedoToolses.add(UndoRedoTools(candidate_2_count_field))
-                undoPosition = 1
                 if (tps?.status == "local" || tps?.status == "sandbox") {
-                    tps?.id?.let { it1 -> presenter.saveCandidate2Count(it, it1, realCountType) }
+                    tps?.id?.let { it1 -> presenter.saveCandidate1Count(
+                        candidate_1_count_field.text.toString().toLong(),
+                        it,
+                        no_vote_count_field.text.toString().toLong(),
+                        it1, realCountType) }
                 }
             }
             .doOnError {
@@ -156,10 +157,12 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
-                undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
-                undoPosition = 2
                 if (tps?.status == "local" || tps?.status == "sandbox") {
-                    tps?.id?.let { it1 -> presenter.saveInvalidVoteCount(it, it1, realCountType) }
+                    tps?.id?.let { it1 -> presenter.saveCandidate1Count(
+                        candidate_1_count_field.text.toString().toLong(),
+                        candidate_2_count_field.text.toString().toLong(),
+                        it,
+                        it1, realCountType) }
                 }
             }
             .doOnError {
@@ -169,9 +172,9 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     }
 
     override fun onSuccessVoteCandidateCount() {
-        tps?.id?.let {
-            presenter.getCounter(it, realCountType)
-        }
+//        tps?.id?.let {
+//            presenter.getCounter(it, realCountType)
+//        }
     }
 
     override fun bindCounter(validCount: Long, invalidCount: Long, allCount: Long) {
@@ -192,7 +195,6 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                         0
                     }
                     candidate_1_count_field.setText(count.plus(1).toString())
-                    undoPosition = 0
                 }
             }
             candidate_2_inc_button -> {
@@ -204,7 +206,6 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                     } else {
                         0
                     }
-                    undoPosition = 1
                     candidate_2_count_field.setText(count.plus(1).toString())
                 }
             }
@@ -217,7 +218,6 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                     } else {
                         0
                     }
-                    undoPosition = 2
                     no_vote_count_field.setText(count.plus(1).toString())
                 }
             }
@@ -271,9 +271,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.undo_action -> {
-                undoPosition?.let {
-                    undoRedoToolses[it].undo()
-                }
+
             }
         }
         return super.onOptionsItemSelected(item)
