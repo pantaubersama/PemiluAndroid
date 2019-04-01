@@ -117,7 +117,7 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
                         }
                     }
                 }
-                Handler().postDelayed({  /* @edityo 5/3/19  delayed bcs response getItemChallenge not changed immediately */
+                Handler().postDelayed({
                     undoType = "invalid"
                     adapter.undoRedoToolses.add(undoRedoTools)
                 }, 500)
