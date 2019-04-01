@@ -26,11 +26,11 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
     override fun getItemViewType(position: Int): Int {
         if (data[position] is BannerInfo) {
             return VIEW_TYPE_BANNER
-        } else if (data[position] is TotalParticipantData && position == 1) {
+        } else if (data[position] is TotalParticipantData) {
             return VIEW_TYPE_TOTAL_PARTICIPANT
-        } else if (data[position] is Percentage && position == 2) {
+        } else if (data[position] is Percentage) {
             return VIEW_TYPE_NASIONAL
-        } else if (data[position] is Rekapitulasi && position > 2) {
+        } else if (data[position] is Rekapitulasi) {
             return VIEW_TYPE_ITEM
         } else if (data[position] is Footer) {
             return VIEW_TYPE_FOOTER
