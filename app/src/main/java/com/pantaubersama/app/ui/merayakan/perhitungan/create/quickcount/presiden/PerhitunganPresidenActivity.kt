@@ -91,7 +91,11 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                 undoRedoToolses.add(UndoRedoTools(candidate_1_count_field))
                 undoPosition = 0
                 if (tps?.status == "local" || tps?.status == "sandbox") {
-                    tps?.id?.let { it1 -> presenter.saveCandidate1Count(it, it1, realCountType) }
+                    tps?.id?.let { it1 -> presenter.saveCandidate1Count(
+                        it,
+                        candidate_2_count_field.text.toString().toLong(),
+                        no_vote_count_field.text.toString().toLong(),
+                        it1, realCountType) }
                 }
             }
             .doOnError {
@@ -125,7 +129,11 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                 undoRedoToolses.add(UndoRedoTools(candidate_2_count_field))
                 undoPosition = 1
                 if (tps?.status == "local" || tps?.status == "sandbox") {
-                    tps?.id?.let { it1 -> presenter.saveCandidate2Count(it, it1, realCountType) }
+                    tps?.id?.let { it1 -> presenter.saveCandidate1Count(
+                        candidate_1_count_field.text.toString().toLong(),
+                        it,
+                        no_vote_count_field.text.toString().toLong(),
+                        it1, realCountType) }
                 }
             }
             .doOnError {
@@ -159,7 +167,11 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                 undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
                 undoPosition = 2
                 if (tps?.status == "local" || tps?.status == "sandbox") {
-                    tps?.id?.let { it1 -> presenter.saveInvalidVoteCount(it, it1, realCountType) }
+                    tps?.id?.let { it1 -> presenter.saveCandidate1Count(
+                        candidate_1_count_field.text.toString().toLong(),
+                        candidate_2_count_field.text.toString().toLong(),
+                        it,
+                        it1, realCountType) }
                 }
             }
             .doOnError {
@@ -169,9 +181,9 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     }
 
     override fun onSuccessVoteCandidateCount() {
-        tps?.id?.let {
-            presenter.getCounter(it, realCountType)
-        }
+//        tps?.id?.let {
+//            presenter.getCounter(it, realCountType)
+//        }
     }
 
     override fun bindCounter(validCount: Long, invalidCount: Long, allCount: Long) {
@@ -281,9 +293,5 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
 
     override fun showFailedSaveDataAlert() {
         ToastUtil.show(this@PerhitunganPresidenActivity, "Gagal menyimpan data")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }

@@ -12,7 +12,6 @@ import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
 import com.pantaubersama.app.utils.CopyUtil
 import com.pantaubersama.app.utils.ShareUtil
-import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.loadUrl
 import com.pantaubersama.app.utils.extensions.unSyncLazy
