@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpr
 
 import android.os.Bundle
+import android.os.Handler
 import android.text.InputFilter
 import android.view.Menu
 import android.view.MenuItem
@@ -39,6 +40,7 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     private var tps: TPS? = null
     private var partySelectedPosition: Int? = null
     private var candidateSelectedPosition: Int? = null
+    private lateinit var undoRedoTools: UndoRedoTools
     private var undoType: String = ""
 
     override fun showLoading() {
@@ -93,6 +95,7 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         }
         no_vote_count_field.isEnabled = tps?.status != "published"
         no_vote_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+        undoRedoTools = UndoRedoTools(no_vote_count_field)
         RxTextView.textChanges(no_vote_count_field)
             .skipInitialValue()
             .flatMap {
@@ -126,8 +129,10 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
                         }
                     }
                 }
-                undoType = "invalid"
-                adapter.undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
+                Handler().postDelayed({  /* @edityo 5/3/19  delayed bcs response getItemChallenge not changed immediately */
+                    adapter.undoRedoToolses.add(undoRedoTools)
+                    undoType = "invalid"
+                    }, 500)
             }
             .doOnError {
                 it.printStackTrace()
