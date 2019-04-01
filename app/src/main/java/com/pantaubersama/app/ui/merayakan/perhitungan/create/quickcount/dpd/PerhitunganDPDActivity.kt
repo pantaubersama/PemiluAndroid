@@ -30,7 +30,7 @@ import javax.inject.Inject
 class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), PerhitunganDPDView {
     private lateinit var adapter: DPRCandidateAdapter
     private var candidateSelectedPosition: Int? = null
-    private lateinit var undoType: String
+    private var undoType: String = ""
 
     @Inject
     override lateinit var presenter: PerhitunganDPDPresenter

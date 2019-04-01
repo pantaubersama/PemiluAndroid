@@ -39,7 +39,7 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     private var tps: TPS? = null
     private var partySelectedPosition: Int? = null
     private var candidateSelectedPosition: Int? = null
-    private lateinit var undoType: String
+    private var undoType: String = ""
 
     override fun showLoading() {
         progress_bar.visibility = View.VISIBLE
