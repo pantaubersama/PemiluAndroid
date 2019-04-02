@@ -45,7 +45,7 @@ class RealCountInteractor @Inject constructor(
             }
             return Completable.fromCallable {
                 appDB.getRealCountDao().saveRealCount(
-                    RealCount(newId.toString(), tpsId, "presiden", candidates, invalidCount, parties)
+                    RealCount(newId.toString(), tpsId, realCountType, candidates, invalidCount, parties)
                 )
             }
         }

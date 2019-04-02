@@ -31,7 +31,6 @@ import javax.inject.Inject
 class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), PerhitunganDPDView {
     private lateinit var adapter: DPRCandidateAdapter
     private var candidateSelectedPosition: Int? = null
-    private lateinit var undoRedoTools: UndoRedoTools
     private var undoType: String = ""
 
     @Inject
@@ -83,7 +82,6 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
             }
         }
         no_vote_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
-        undoRedoTools = UndoRedoTools(no_vote_count_field)
         RxTextView.textChanges(no_vote_count_field)
             .skipInitialValue()
             .flatMap {
@@ -119,7 +117,7 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
                 }
                 Handler().postDelayed({
                     undoType = "invalid"
-                    adapter.undoRedoToolses.add(undoRedoTools)
+                    adapter.undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
                 }, 500)
             }
             .doOnError {

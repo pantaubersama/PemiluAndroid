@@ -40,7 +40,6 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     private var tps: TPS? = null
     private var partySelectedPosition: Int? = null
     private var candidateSelectedPosition: Int? = null
-    private lateinit var undoRedoTools: UndoRedoTools
     private var undoType: String = ""
 
     override fun showLoading() {
@@ -95,7 +94,6 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         }
         no_vote_count_field.isEnabled = tps?.status != "published"
         no_vote_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
-        undoRedoTools = UndoRedoTools(no_vote_count_field)
         RxTextView.textChanges(no_vote_count_field)
             .skipInitialValue()
             .flatMap {
@@ -130,7 +128,7 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
                     }
                 }
                 Handler().postDelayed({
-                    adapter.undoRedoToolses.add(undoRedoTools)
+                    adapter.undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
                     undoType = "invalid"
                     }, 500)
             }

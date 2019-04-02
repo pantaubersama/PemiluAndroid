@@ -7,7 +7,7 @@ import javax.inject.Inject
 class PerhitunganPresidenPresenter @Inject constructor(
     private val realCountInteractor: RealCountInteractor
 ) : BasePresenter<PerhitunganPresidenView>() {
-    fun saveCandidate1Count(candidate1Count: Long, candidate2Count: Long, invalidCount: Long, tpsId: String, realCountType: String) {
+    fun saveCandidateCount(candidate1Count: Long, candidate2Count: Long, invalidCount: Long, tpsId: String, realCountType: String) {
         disposables.add(
             realCountInteractor.savePresidentRealCount(candidate1Count, candidate2Count, invalidCount, tpsId, realCountType)
                 .subscribe(
