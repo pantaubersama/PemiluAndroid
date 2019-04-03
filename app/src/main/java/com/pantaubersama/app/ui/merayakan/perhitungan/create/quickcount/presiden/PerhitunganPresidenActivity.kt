@@ -217,7 +217,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                 when (undoType) {
                     "invalid" -> adapter.undoRedoToolses[adapter.getListData().size].undo()
                     else -> undoPosition?.let {
-                        adapter.undoRedoToolses[it].undo()
+                        adapter.undoPresiden(it)
                     }
                 }
             }

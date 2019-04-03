@@ -33,10 +33,16 @@ class PresidenAdapter(private val rxSchedulers: RxSchedulers, private val isIncr
     fun setVote(realCount: RealCount) {
         (data[0] as Candidate).totalVote = realCount.candidates[0].totalVote
         (data[1] as Candidate).totalVote = realCount.candidates[1].totalVote
+        notifyDataSetChanged()
+    }
+
+    fun undoPresiden(position: Int) {
+        undoRedoToolses[position].undo()
     }
 
     inner class PresidenViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(candidate: Candidate) {
+            candidate_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
             when (adapterPosition) {
                 0 -> paslon_image.setImageResource(R.drawable.ava_calon_1)
                 1 -> paslon_image.setImageResource(R.drawable.ava_calon_2)
@@ -82,8 +88,7 @@ class PresidenAdapter(private val rxSchedulers: RxSchedulers, private val isIncr
                     it.printStackTrace()
                 }
                 .subscribe()
-            candidate_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
-            undoRedoToolses.add(UndoRedoTools(candidate_count_field))
+            undoRedoToolses.add(adapterPosition, UndoRedoTools(candidate_count_field))
         }
     }
 
