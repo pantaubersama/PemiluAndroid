@@ -107,6 +107,7 @@ class DetailDebatActivity : BaseActivity<DetailDebatPresenter>(), DetailDebatVie
         challenge?.let { showChallenge(it) } ?: challengeId?.let { presenter.getChallengeItem(it) }
 
         btn_back.setOnClickListener { onBackPressed() }
+        btn_share.setOnClickListener { ShareUtil.shareItem(this, challenge) }
 
         swipe_refresh.setOnRefreshListener {
             reloadChallenge()
