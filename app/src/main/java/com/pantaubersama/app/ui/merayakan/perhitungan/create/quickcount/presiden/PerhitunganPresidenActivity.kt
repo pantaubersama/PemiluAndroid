@@ -140,14 +140,16 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     }
 
     override fun onSuccessVoteCandidateCount() {
-//        tps?.id?.let {
-//            presenter.getCounter(it, realCountType)
-//        }
+        tps?.id?.let {
+            presenter.getCounter(it, realCountType)
+        }
     }
 
-    override fun bindCounter(validCount: Long, invalidCount: Long, allCount: Long) {
+    override fun bindCounter(realCount: RealCount) {
+        val validCount = realCount.candidates[0].totalVote + realCount.candidates[1].totalVote
+        val allCount = validCount + realCount.invalidVote
         valid_vote_count.text = validCount.toString()
-        invalid_vote_count.text = invalidCount.toString()
+        invalid_vote_count.text = realCount.invalidVote.toString()
         all_vote_count.text = allCount.toString()
     }
 

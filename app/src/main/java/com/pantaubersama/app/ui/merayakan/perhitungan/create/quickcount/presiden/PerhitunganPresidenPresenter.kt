@@ -45,4 +45,8 @@ class PerhitunganPresidenPresenter @Inject constructor(
             else -> view?.bindRealCount(realCountInteractor.getPresidentRealCount(tpsId, realCountType))
         }
     }
+
+    fun getCounter(tpsId: String, realCountType: String) {
+        realCountInteractor.getRealCount(tpsId, realCountType)?.let { view?.bindCounter(it) }
+    }
 }

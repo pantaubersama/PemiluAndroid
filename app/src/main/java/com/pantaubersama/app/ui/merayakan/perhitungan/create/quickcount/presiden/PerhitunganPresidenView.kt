@@ -7,6 +7,6 @@ interface PerhitunganPresidenView : BaseView {
     fun onSuccessVoteCandidateCount()
     fun showFailedSaveDataAlert()
     fun bindRealCount(realCount: RealCount?)
-    fun bindCounter(validCount: Long, invalidCount: Long, allCount: Long)
+    fun bindCounter(realCount: RealCount)
     fun showFailedGetRealCountAlert(message: String?)
 }
