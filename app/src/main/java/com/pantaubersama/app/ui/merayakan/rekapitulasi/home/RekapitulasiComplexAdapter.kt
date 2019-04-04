@@ -100,7 +100,7 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
                     paslon_2_percentage.text = "${String.format("%.2f", it)}%"
                 }
                 item.percentages?.invalidVote.let {
-                    golput_count.text = it?.total.toString()
+                    no_vote_count.text = it?.total.toString()
                 }
                 item.percentages?.totalVote?.let {
                     votes_count.text = it.toString()
@@ -111,7 +111,7 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
             } else {
                 paslon_1_percentage.text = "0%"
                 paslon_2_percentage.text = "0%"
-                golput_count.text = "0"
+                no_vote_count.text = "0"
                 votes_count.text = "0"
             }
         }
