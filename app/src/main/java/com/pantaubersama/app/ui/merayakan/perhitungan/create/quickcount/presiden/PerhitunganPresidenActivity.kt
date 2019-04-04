@@ -128,8 +128,8 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
 
     private fun getData(): List<ItemModel> {
         val datas: MutableList<Candidate> = ArrayList()
-        datas.add(Candidate(0, 0, 0, "presiden", 0.0))
-        datas.add(Candidate(0, 0, 0, "presiden", 0.0))
+        datas.add(Candidate(1, 0, 0, "presiden", 0.0))
+        datas.add(Candidate(2, 0, 0, "presiden", 0.0))
         return datas
     }
 

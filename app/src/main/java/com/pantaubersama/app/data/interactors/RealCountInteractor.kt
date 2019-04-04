@@ -34,8 +34,8 @@ class RealCountInteractor @Inject constructor(
             }
         } else {
             val candidates: MutableList<Candidate> = ArrayList()
-            candidates.add(Candidate(0, candidate1Count))
-            candidates.add(Candidate(1, candidate2Count))
+            candidates.add(Candidate(1, candidate1Count))
+            candidates.add(Candidate(2, candidate2Count))
             val parties: MutableList<Party> = ArrayList()
 
             var newId: Int = 0
