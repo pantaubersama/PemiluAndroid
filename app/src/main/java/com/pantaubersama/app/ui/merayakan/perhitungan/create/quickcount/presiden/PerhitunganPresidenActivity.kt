@@ -109,14 +109,16 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             override fun saveRealCount(adapterPosition: Int) {
                 undoType = "item"
                 undoPosition = adapterPosition
-                tps?.id?.let {
-                    presenter.saveCandidateCount(
-                        (adapter.getListData()[0] as Candidate).totalVote,
-                        (adapter.getListData()[1] as Candidate).totalVote,
-                        no_vote_count_field.text.toString().toLong(),
-                        it,
-                        realCountType
-                    )
+                if (tps?.status == "local" || tps?.status == "sandbox") {
+                    tps?.id?.let {
+                        presenter.saveCandidateCount(
+                            (adapter.getListData()[0] as Candidate).totalVote,
+                            (adapter.getListData()[1] as Candidate).totalVote,
+                            no_vote_count_field.text.toString().toLong(),
+                            it,
+                            realCountType
+                        )
+                    }
                 }
             }
         }
