@@ -19,70 +19,11 @@ class RealCountInteractor @Inject constructor(
     private val appDB: AppDB,
     private val dataCache: DataCache
 ) {
-    fun savePresidentCandidate1Count(candidate1Count: Long, tpsId: String, realCountType: String): Completable {
+    fun savePresidentRealCount(candidate1Count: Long, candidate2Count: Long, invalidCount: Long, tpsId: String, realCountType: String): Completable {
         if (appDB.getRealCountDao().getRealCount(tpsId, realCountType) != null) {
             val realCount = appDB.getRealCountDao().getRealCount(tpsId, realCountType)
             realCount?.candidates?.get(0)?.totalVote = candidate1Count
-            return Completable.fromCallable {
-                realCount?.let {
-                    appDB.getRealCountDao().updateRealCount(
-                        it
-                    )
-                }
-            }
-        } else {
-            val candidates: MutableList<Candidate> = ArrayList()
-            candidates.add(Candidate(1, candidate1Count))
-            candidates.add(Candidate(2, 0))
-            val parties: MutableList<Party> = ArrayList()
-
-            var newId: Int = 0
-
-            appDB.getRealCountDao().getRealCounts().forEachIndexed { index, realCount ->
-                newId = index + 1
-            }
-            return Completable.fromCallable {
-                appDB.getRealCountDao().saveRealCount(
-                    RealCount(newId.toString(), tpsId, "presiden", candidates, 0, parties)
-                )
-            }
-        }
-    }
-
-    fun savePresidentCandidate2Count(candidate2Count: Long, tpsId: String, realCountType: String): Completable {
-        if (appDB.getRealCountDao().getRealCount(tpsId, realCountType) != null) {
-            val realCount = appDB.getRealCountDao().getRealCount(tpsId, realCountType)
             realCount?.candidates?.get(1)?.totalVote = candidate2Count
-            return Completable.fromCallable {
-                realCount?.let {
-                    appDB.getRealCountDao().updateRealCount(
-                        it
-                    )
-                }
-            }
-        } else {
-            val candidates: MutableList<Candidate> = ArrayList()
-            candidates.add(Candidate(1, 0))
-            candidates.add(Candidate(2, candidate2Count))
-            val parties: MutableList<Party> = ArrayList()
-
-            var newId: Int = 0
-
-            appDB.getRealCountDao().getRealCounts().forEachIndexed { index, realCount ->
-                newId = index + 1
-            }
-
-            return Completable.fromCallable {
-                appDB.getRealCountDao().saveRealCount(
-                    RealCount(newId.toString(), tpsId, "presiden", candidates, 0, parties)
-                )
-            }
-        }
-    }
-
-    fun saveInvalidCount(invalidCount: Long, tpsId: String, realCountType: String): Completable {
-        if (appDB.getRealCountDao().getRealCount(tpsId, realCountType) != null) {
-            val realCount = appDB.getRealCountDao().getRealCount(tpsId, realCountType)
             realCount?.invalidVote = invalidCount
             return Completable.fromCallable {
                 realCount?.let {
@@ -93,8 +34,8 @@ class RealCountInteractor @Inject constructor(
             }
         } else {
             val candidates: MutableList<Candidate> = ArrayList()
-            candidates.add(Candidate(1, 0))
-            candidates.add(Candidate(2, 0))
+            candidates.add(Candidate(1, candidate1Count))
+            candidates.add(Candidate(2, candidate2Count))
             val parties: MutableList<Party> = ArrayList()
 
             var newId: Int = 0
@@ -102,10 +43,9 @@ class RealCountInteractor @Inject constructor(
             appDB.getRealCountDao().getRealCounts().forEachIndexed { index, realCount ->
                 newId = index + 1
             }
-
             return Completable.fromCallable {
                 appDB.getRealCountDao().saveRealCount(
-                    RealCount(newId.toString(), tpsId, "presiden", candidates, 0, parties)
+                    RealCount(newId.toString(), tpsId, realCountType, candidates, invalidCount, parties)
                 )
             }
         }

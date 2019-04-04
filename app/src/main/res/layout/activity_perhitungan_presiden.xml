@@ -25,26 +25,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ScrollView
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fillViewport="true"
-                android:layout_above="@id/save_button">
+                android:layout_above="@id/save_button"
+                android:layout_marginBottom="-2dp"
+                android:fillViewport="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:background="@color/white">
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/gray_3"
-                        android:gravity="center"
-                        android:padding="16dp"
                         android:focusable="true"
-                        android:focusableInTouchMode="true">
+                        android:focusableInTouchMode="true"
+                        android:gravity="center"
+                        android:padding="16dp">
 
                         <TextView
                             android:id="@+id/data_tps_hint"
@@ -58,184 +59,72 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/presiden_list"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="24dp"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center">
+                        android:layout_marginTop="16dp"
+                        android:nestedScrollingEnabled="false">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingRight="12dp"
-                            android:paddingEnd="12dp"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="160dp"
-                                android:layout_height="160dp"
-                                android:src="@drawable/paslon_1_perhitungan"/>
-
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp">
-
-                                <EditText
-                                    android:id="@+id/candidate_1_count_field"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/outline_graydark_1"
-                                    android:paddingTop="12dp"
-                                    android:paddingBottom="12dp"
-                                    android:paddingLeft="12dp"
-                                    android:paddingStart="12dp"
-                                    android:paddingRight="24dp"
-                                    android:paddingEnd="24dp"
-                                    android:layout_marginRight="24dp"
-                                    android:text="0"
-                                    android:gravity="center"
-                                    android:inputType="number"
-                                    android:maxLength="3"
-                                    android:textColor="@color/colorAccent"/>
-
-                                <LinearLayout
-                                    android:id="@+id/candidate_1_inc_button"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/circle_background_accent"
-                                    android:layout_gravity="end"
-                                    android:gravity="center"
-                                    android:foreground="?selectableItemBackground">
-
-                                    <ImageView
-                                        android:layout_width="24dp"
-                                        android:layout_height="24dp"
-                                        android:src="@drawable/ic_add"/>
-
-                                </LinearLayout>
-
-                            </FrameLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingStart="12dp"
-                            android:paddingLeft="12dp"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="160dp"
-                                android:layout_height="160dp"
-                                android:src="@drawable/paslon_2_perhitungan"/>
-
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp">
-
-                                <EditText
-                                    android:id="@+id/candidate_2_count_field"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/outline_graydark_1"
-                                    android:paddingTop="12dp"
-                                    android:paddingBottom="12dp"
-                                    android:paddingLeft="12dp"
-                                    android:paddingStart="12dp"
-                                    android:paddingRight="24dp"
-                                    android:paddingEnd="24dp"
-                                    android:layout_marginRight="24dp"
-                                    android:text="0"
-                                    android:gravity="center"
-                                    android:inputType="number"
-                                    android:maxLength="3"
-                                    android:textColor="@color/colorAccent"/>
-
-                                <LinearLayout
-                                    android:id="@+id/candidate_2_inc_button"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/circle_background_accent"
-                                    android:layout_gravity="end"
-                                    android:gravity="center"
-                                    android:foreground="?selectableItemBackground">
-
-                                    <ImageView
-                                        android:layout_width="24dp"
-                                        android:layout_height="24dp"
-                                        android:src="@drawable/ic_add"/>
-
-                                </LinearLayout>
-
-                            </FrameLayout>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
+                    </androidx.recyclerview.widget.RecyclerView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:gravity="center_horizontal"
+                        android:orientation="vertical"
                         android:padding="16dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Surat Suara Tidak Sah"
+                            android:layout_marginTop="16dp"
                             android:fontFamily="@font/bw_modelica_bold"
-                            android:textSize="12sp"
+                            android:text="Surat Suara Tidak Sah"
                             android:textColor="@color/black_3"
-                            android:layout_marginTop="16dp"/>
+                            android:textSize="12sp" />
 
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:paddingLeft="86dp"
                             android:paddingStart="86dp"
-                            android:paddingRight="86dp"
-                            android:paddingEnd="86dp">
+                            android:paddingLeft="86dp"
+                            android:paddingEnd="86dp"
+                            android:paddingRight="86dp">
 
                             <EditText
                                 android:id="@+id/no_vote_count_field"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/outline_graydark_1"
-                                android:paddingTop="12dp"
-                                android:paddingBottom="12dp"
-                                android:paddingLeft="12dp"
-                                android:paddingStart="12dp"
-                                android:paddingRight="24dp"
-                                android:paddingEnd="24dp"
                                 android:layout_marginRight="24dp"
-                                android:text="0"
+                                android:background="@drawable/outline_graydark_1"
                                 android:gravity="center"
                                 android:inputType="number"
                                 android:maxLength="3"
-                                android:textColor="@color/colorPrimary"/>
+                                android:paddingStart="12dp"
+                                android:paddingLeft="12dp"
+                                android:paddingTop="12dp"
+                                android:paddingEnd="24dp"
+                                android:paddingRight="24dp"
+                                android:paddingBottom="12dp"
+                                android:text="0"
+                                android:textColor="@color/colorPrimary" />
 
 
                             <LinearLayout
                                 android:id="@+id/no_vote_inc_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/circle_background_primary"
                                 android:layout_gravity="end"
-                                android:gravity="center"
-                                android:foreground="?selectableItemBackground">
+                                android:background="@drawable/circle_background_primary"
+                                android:foreground="?selectableItemBackground"
+                                android:gravity="center">
 
                                 <ImageView
                                     android:layout_width="24dp"
                                     android:layout_height="24dp"
-                                    android:src="@drawable/ic_add"/>
+                                    android:src="@drawable/ic_add" />
 
                             </LinearLayout>
 
@@ -255,7 +144,7 @@
 
                 </LinearLayout>
 
-            </ScrollView>
+            </androidx.core.widget.NestedScrollView>
 
             <RelativeLayout
                 android:orientation="horizontal"

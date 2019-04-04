@@ -1,15 +1,19 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden
 
 import android.os.Bundle
+import android.os.Handler
 import android.text.InputFilter
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.tps.realcount.RealCount
 import com.pantaubersama.app.data.model.tps.TPS
+import com.pantaubersama.app.data.model.tps.realcount.Candidate
 import com.pantaubersama.app.di.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_perhitungan_presiden.*
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
@@ -22,10 +26,11 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     @Inject
     lateinit var rxSchedulers: RxSchedulers
 
-    private lateinit var undoRedoToolses: MutableList<UndoRedoTools>
-    private var undoPosition: Int? = null
+    private lateinit var adapter: PresidenAdapter
     private var tps: TPS? = null
     private var realCountType = "presiden"
+    private var undoType = ""
+    private var undoPosition: Int? = null
 
     override fun initInjection(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -47,9 +52,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Presiden", R.color.white, 4f)
-        undoRedoToolses = ArrayList()
-        setupCandidate1()
-        setupCandidate2()
+        setupPresidenList()
         setupNoVotes()
         tps?.id?.let {
             tps?.status?.let { it1 ->
@@ -58,80 +61,6 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
         }
 
         save_button.setOnClickListener(this)
-    }
-
-    override fun showFailedGetRealCountAlert(message: String?) {
-        if (message != "Belum ada perhitungan") {
-            ToastUtil.show(this@PerhitunganPresidenActivity, "Gagal memuat perhitungan presiden")
-        }
-    }
-
-    private fun setupCandidate1() {
-        candidate_1_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
-        if (tps?.status == "published") {
-            candidate_1_count_field.isEnabled = false
-//            candidate_1_inc_button.isEnabled = false
-        }
-        candidate_1_inc_button.setOnClickListener(this)
-//        candidate_1_count_field.onFocusChangeListener = this
-        RxTextView.textChanges(candidate_1_count_field)
-            .skipInitialValue()
-            .filter {
-                it.isNotEmpty()
-            }
-            .map {
-                it.toString()
-            }
-            .map {
-                it.toLong()
-            }
-            .subscribeOn(rxSchedulers.io())
-            .observeOn(rxSchedulers.mainThread())
-            .doOnNext {
-                undoRedoToolses.add(UndoRedoTools(candidate_1_count_field))
-                undoPosition = 0
-                if (tps?.status == "local" || tps?.status == "sandbox") {
-                    tps?.id?.let { it1 -> presenter.saveCandidate1Count(it, it1, realCountType) }
-                }
-            }
-            .doOnError {
-                it.printStackTrace()
-            }
-            .subscribe()
-    }
-
-    private fun setupCandidate2() {
-        candidate_2_count_field.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
-        if (tps?.status == "published") {
-            candidate_2_count_field.isEnabled = false
-//            candidate_2_inc_button.isEnabled = false
-        }
-        candidate_2_inc_button.setOnClickListener(this)
-//        candidate_1_count_field.onFocusChangeListener = this
-        RxTextView.textChanges(candidate_2_count_field)
-            .skipInitialValue()
-            .filter {
-                it.isNotEmpty()
-            }
-            .map {
-                it.toString()
-            }
-            .map {
-                it.toLong()
-            }
-            .subscribeOn(rxSchedulers.io())
-            .observeOn(rxSchedulers.mainThread())
-            .doOnNext {
-                undoRedoToolses.add(UndoRedoTools(candidate_2_count_field))
-                undoPosition = 1
-                if (tps?.status == "local" || tps?.status == "sandbox") {
-                    tps?.id?.let { it1 -> presenter.saveCandidate2Count(it, it1, realCountType) }
-                }
-            }
-            .doOnError {
-                it.printStackTrace()
-            }
-            .subscribe()
     }
 
     private fun setupNoVotes() {
@@ -156,16 +85,58 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .doOnNext {
-                undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
-                undoPosition = 2
                 if (tps?.status == "local" || tps?.status == "sandbox") {
-                    tps?.id?.let { it1 -> presenter.saveInvalidVoteCount(it, it1, realCountType) }
+                    tps?.id?.let { it1 -> presenter.saveCandidateCount(
+                        (adapter.getListData()[0] as Candidate).totalVote,
+                        (adapter.getListData()[1] as Candidate).totalVote,
+                        it,
+                        it1, realCountType) }
                 }
+                Handler().postDelayed({
+                    undoType = "invalid"
+                    adapter.undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
+                }, 500)
             }
             .doOnError {
                 it.printStackTrace()
             }
             .subscribe()
+    }
+
+    private fun setupPresidenList() {
+        adapter = PresidenAdapter(rxSchedulers, tps?.status != "published")
+        adapter.listener = object : PresidenAdapter.Listener {
+            override fun saveRealCount(adapterPosition: Int) {
+                undoType = "item"
+                undoPosition = adapterPosition
+                tps?.id?.let {
+                    presenter.saveCandidateCount(
+                        (adapter.getListData()[0] as Candidate).totalVote,
+                        (adapter.getListData()[1] as Candidate).totalVote,
+                        no_vote_count_field.text.toString().toLong(),
+                        it,
+                        realCountType
+                    )
+                }
+            }
+        }
+        presiden_list.layoutManager = GridLayoutManager(this@PerhitunganPresidenActivity, 2)
+        presiden_list.adapter = adapter
+
+        adapter.setDatas(getData())
+    }
+
+    private fun getData(): List<ItemModel> {
+        val datas: MutableList<Candidate> = ArrayList()
+        datas.add(Candidate(1, 0, 0, "presiden", 0.0))
+        datas.add(Candidate(2, 0, 0, "presiden", 0.0))
+        return datas
+    }
+
+    override fun showFailedGetRealCountAlert(message: String?) {
+        if (message != "Belum ada perhitungan") {
+            ToastUtil.show(this@PerhitunganPresidenActivity, "Gagal memuat perhitungan presiden")
+        }
     }
 
     override fun onSuccessVoteCandidateCount() {
@@ -174,40 +145,16 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
         }
     }
 
-    override fun bindCounter(validCount: Long, invalidCount: Long, allCount: Long) {
+    override fun bindCounter(realCount: RealCount) {
+        val validCount = realCount.candidates[0].totalVote + realCount.candidates[1].totalVote
+        val allCount = validCount + realCount.invalidVote
         valid_vote_count.text = validCount.toString()
-        invalid_vote_count.text = invalidCount.toString()
+        invalid_vote_count.text = realCount.invalidVote.toString()
         all_vote_count.text = allCount.toString()
     }
 
     override fun onClick(view: View) {
         when (view) {
-            candidate_1_inc_button -> {
-                if (tps?.status == "published") {
-                    ToastUtil.show(this@PerhitunganPresidenActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
-                } else {
-                    val count = if (candidate_1_count_field.text.isNotEmpty()) {
-                        candidate_1_count_field.text.toString().toLong()
-                    } else {
-                        0
-                    }
-                    candidate_1_count_field.setText(count.plus(1).toString())
-                    undoPosition = 0
-                }
-            }
-            candidate_2_inc_button -> {
-                if (tps?.status == "published") {
-                    ToastUtil.show(this@PerhitunganPresidenActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
-                } else {
-                    val count = if (candidate_2_count_field.text.isNotEmpty()) {
-                        candidate_2_count_field.text.toString().toLong()
-                    } else {
-                        0
-                    }
-                    undoPosition = 1
-                    candidate_2_count_field.setText(count.plus(1).toString())
-                }
-            }
             no_vote_inc_button -> {
                 if (tps?.status == "published") {
                     ToastUtil.show(this@PerhitunganPresidenActivity, "Perhitungan kamu telah dikirim dan tidak dapat diubah")
@@ -217,7 +164,6 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                     } else {
                         0
                     }
-                    undoPosition = 2
                     no_vote_count_field.setText(count.plus(1).toString())
                 }
             }
@@ -257,9 +203,8 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
 
     override fun bindRealCount(realCount: RealCount?) {
         realCount?.let {
-            candidate_1_count_field.setText(it.candidates[0].totalVote.toString())
-            candidate_2_count_field.setText(it.candidates[1].totalVote.toString())
-            no_vote_count_field.setText(it.invalidVote.toString())
+            no_vote_count_field.setText(realCount.invalidVote.toString())
+            adapter.setVote(it)
         }
     }
 
@@ -271,8 +216,11 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.undo_action -> {
-                undoPosition?.let {
-                    undoRedoToolses[it].undo()
+                when (undoType) {
+                    "invalid" -> adapter.undoRedoToolses[adapter.getListData().size].undo()
+                    "item" -> undoPosition?.let {
+                        adapter.undoPresiden(it)
+                    }
                 }
             }
         }
@@ -281,9 +229,5 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
 
     override fun showFailedSaveDataAlert() {
         ToastUtil.show(this@PerhitunganPresidenActivity, "Gagal menyimpan data")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }

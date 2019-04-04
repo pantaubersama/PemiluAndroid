@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpr
 
 import android.os.Bundle
+import android.os.Handler
 import android.text.InputFilter
 import android.view.Menu
 import android.view.MenuItem
@@ -39,7 +40,7 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     private var tps: TPS? = null
     private var partySelectedPosition: Int? = null
     private var candidateSelectedPosition: Int? = null
-    private lateinit var undoType: String
+    private var undoType: String = ""
 
     override fun showLoading() {
         progress_bar.visibility = View.VISIBLE
@@ -126,8 +127,10 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
                         }
                     }
                 }
-                undoType = "invalid"
-                adapter.undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
+                Handler().postDelayed({
+                    adapter.undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
+                    undoType = "invalid"
+                    }, 500)
             }
             .doOnError {
                 it.printStackTrace()

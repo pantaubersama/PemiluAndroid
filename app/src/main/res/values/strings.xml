@@ -373,7 +373,7 @@
     <string name="presiden_counter_hint">Kamu bisa menambah atau langsung input jumlah perolehan suara sesuai pengamatan di TPS. Tap Undo untuk membatalkan perhitungan terakhir.</string>
     <string name="undo_action">Undo</string>
     <string name="rekapitulasi_footer_hint">Buka di web.pantaubersama.com Untuk penyajian data yang lebih lengkap, hingga ke perhitungan Legislatif</string>
-    <string name="votes_count_hint">Pengguna telah berpartisipasi merayakan peritungan melalui Pantau Bersama Pemilu 2019.</string>
+    <string name="votes_count_hint">Pengguna telah berpartisipasi merayakan perhitungan melalui Pantau Bersama Pemilu 2019.</string>
     <string name="close_action">Close</string>
     <string name="upload_document_hint">Unggah data langsung dari kamera atau pilih dari galeri perangkat kamu.</string>
     <string name="komentar">Komentar</string>

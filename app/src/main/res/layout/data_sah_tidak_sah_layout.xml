@@ -109,7 +109,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2. Jumlah seluruh suara sah dan tidak sah"
+            android:text="3. Jumlah seluruh suara sah dan tidak sah"
             android:textSize="12sp"
             android:textColor="@color/black_3"
             android:fontFamily="@font/bw_modelica_bold"

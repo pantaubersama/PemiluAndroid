@@ -50,7 +50,7 @@ class ShareUtil {
                 is AchievedBadge -> "Yeay! I got the badge \uD83E\uDD18 #PantauBersama " + baseShareUrl + SHARE_BADGE_PATH + item.achievedId
                 is Challenge -> {
                         val shareUrl = "$baseShareUrl$SHARE_CHALLENGE_PATH?challenge_id=${item.id}"
-                        when(item.status) {
+                        when (item.status) {
                             Status.LIVE_NOW -> "\uD83D\uDE31 BREAKING! Ada debat seru sedang berlangsung. Wajib disimak sekarang dong, Boskuu~ #PantauBersama $shareUrl"
                             Status.COMING_SOON -> "\uD83D\uDCCC Ini nih debat yang harus kamu catat jadwalnya. Jangan lewatkan adu argumentasinya, yaa! \uD83E\uDD41 #PantauBersama $shareUrl"
                             Status.DONE -> "Debat sudah selesai. Coba direview mana yang bagus aja dan mana yang bagus banget \uD83D\uDE0C\uD83D\uDC4F #PantauBersama $shareUrl"

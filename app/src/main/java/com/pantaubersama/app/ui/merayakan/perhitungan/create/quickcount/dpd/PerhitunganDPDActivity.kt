@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd
 
 import android.os.Bundle
+import android.os.Handler
 import android.text.InputFilter
 import android.view.Menu
 import android.view.MenuItem
@@ -30,7 +31,7 @@ import javax.inject.Inject
 class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), PerhitunganDPDView {
     private lateinit var adapter: DPRCandidateAdapter
     private var candidateSelectedPosition: Int? = null
-    private lateinit var undoType: String
+    private var undoType: String = ""
 
     @Inject
     override lateinit var presenter: PerhitunganDPDPresenter
@@ -114,8 +115,10 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
                         }
                     }
                 }
-                undoType = "invalid"
-                adapter.undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
+                Handler().postDelayed({
+                    undoType = "invalid"
+                    adapter.undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
+                }, 500)
             }
             .doOnError {
                 it.printStackTrace()

@@ -1371,7 +1371,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:text="2. Jumlah surat suara yang dikembalikan oleh pemilik karena rusak/keliru coblos"
+                            android:text="2. Jumlah surat suara yang dikembalikan oleh pemilih karena rusak/keliru coblos"
                             android:textColor="@color/black_3"
                             android:layout_gravity="center_vertical"
                             android:fontFamily="@font/bw_modelica_bold"

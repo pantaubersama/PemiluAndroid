@@ -51,7 +51,9 @@
                             android:id="@+id/user_avatar"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_avatar_placeholder"/>
+                            android:src="@drawable/ic_avatar_placeholder"
+                            app:riv_oval="true"
+                            android:scaleType="centerCrop"/>
 
                         <TextView
                             android:id="@+id/user_name"

@@ -26,11 +26,11 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
     override fun getItemViewType(position: Int): Int {
         if (data[position] is BannerInfo) {
             return VIEW_TYPE_BANNER
-        } else if (data[position] is TotalParticipantData && position == 1) {
+        } else if (data[position] is TotalParticipantData) {
             return VIEW_TYPE_TOTAL_PARTICIPANT
-        } else if (data[position] is Percentage && position == 2) {
+        } else if (data[position] is Percentage) {
             return VIEW_TYPE_NASIONAL
-        } else if (data[position] is Rekapitulasi && position > 2) {
+        } else if (data[position] is Rekapitulasi) {
             return VIEW_TYPE_ITEM
         } else if (data[position] is Footer) {
             return VIEW_TYPE_FOOTER
@@ -100,7 +100,7 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
                     paslon_2_percentage.text = "${String.format("%.2f", it)}%"
                 }
                 item.percentages?.invalidVote.let {
-                    golput_count.text = it?.total.toString()
+                    no_vote_count.text = it?.total.toString()
                 }
                 item.percentages?.totalVote?.let {
                     votes_count.text = it.toString()
@@ -111,7 +111,7 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
             } else {
                 paslon_1_percentage.text = "0%"
                 paslon_2_percentage.text = "0%"
-                golput_count.text = "0"
+                no_vote_count.text = "0"
                 votes_count.text = "0"
             }
         }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="16dp"
@@ -98,7 +99,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:layout_marginStart="12dp"
-                        android:text="30%"
                         android:textColor="@color/colorPrimary"
                         android:fontFamily="@font/lato_bold"
                         android:textSize="12sp"/>
@@ -138,7 +138,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:layout_marginStart="12dp"
-                        android:text="30%"
                         android:textColor="@color/colorPrimary"
                         android:fontFamily="@font/lato_bold"
                         android:textSize="12sp"/>
@@ -156,16 +155,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Suara Tidak Sah :"
+                    android:text="Rata-rata Suara Tidak Sah :"
                     android:textColor="@color/black_3"
                     android:textSize="11sp"
                     android:fontFamily="@font/lato_regular"/>
 
                 <TextView
-                    android:id="@+id/golput_count"
+                    android:id="@+id/no_vote_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="30"
                     android:textColor="@color/black_3"
                     android:textSize="11sp"
                     android:fontFamily="@font/lato_bold"
@@ -192,7 +190,6 @@
                     android:id="@+id/votes_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10.000"
                     android:textColor="@color/black_3"
                     android:textSize="11sp"
                     android:fontFamily="@font/lato_bold"
