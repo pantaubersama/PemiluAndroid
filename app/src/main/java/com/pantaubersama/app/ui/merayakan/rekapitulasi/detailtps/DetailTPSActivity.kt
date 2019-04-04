@@ -146,6 +146,7 @@ class DetailTPSActivity : BaseActivity<DetailTPSPresenter>(), DetailTPSView {
         rejected_documents_count.text = c1Form.suratDikembalikan.toString()
         unused_documents_count.text = c1Form.suratTidakDigunakan.toString()
         used_documents_count.text = c1Form.suratDigunakan.toString()
+        accepted_documents_count.text = (c1Form.suratDikembalikan + c1Form.suratTidakDigunakan + c1Form.suratDigunakan).toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
