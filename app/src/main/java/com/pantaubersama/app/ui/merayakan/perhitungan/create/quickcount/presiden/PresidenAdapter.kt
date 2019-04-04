@@ -19,7 +19,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.presiden_item_layout.*
 
 class PresidenAdapter(private val rxSchedulers: RxSchedulers, private val isIncrementEnable: Boolean) : BaseRecyclerAdapter() {
-    val undoRedoToolses: MutableList<UndoRedoTools> = ArrayList()
+    var undoRedoToolses: MutableList<UndoRedoTools> = ArrayList()
     var listener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

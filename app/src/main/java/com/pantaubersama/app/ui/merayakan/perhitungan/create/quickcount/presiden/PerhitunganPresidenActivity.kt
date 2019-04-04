@@ -93,8 +93,8 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                         it1, realCountType) }
                 }
                 Handler().postDelayed({
-                    adapter.undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
                     undoType = "invalid"
+                    adapter.undoRedoToolses.add(UndoRedoTools(no_vote_count_field))
                 }, 500)
             }
             .doOnError {
@@ -216,7 +216,7 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
             R.id.undo_action -> {
                 when (undoType) {
                     "invalid" -> adapter.undoRedoToolses[adapter.getListData().size].undo()
-                    else -> undoPosition?.let {
+                    "item" -> undoPosition?.let {
                         adapter.undoPresiden(it)
                     }
                 }
