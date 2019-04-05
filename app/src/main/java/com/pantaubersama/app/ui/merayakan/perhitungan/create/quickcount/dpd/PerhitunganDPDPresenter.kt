@@ -14,26 +14,30 @@ class PerhitunganDPDPresenter @Inject constructor(
         disposables.add(
             realCountInteractor.getDapil(tps, realCountType)
                 .subscribe(
-                    { dapil ->
-                        view?.bindDapilData(dapil)
-                        disposables.add(
-                            realCountInteractor.getRealCountList(dapil.id, realCountType)
-                                .subscribe(
-                                    {
-                                        if (it.size != 0) {
+                    {
+                        if (it.data != null) {
+                            view?.bindDapilData(it.data)
+                            disposables.add(
+                                realCountInteractor.getRealCountList(it.data.id, realCountType)
+                                    .subscribe(
+                                        {
+                                            if (it.size != 0) {
+                                                view?.dismissLoading()
+                                                view?.bindCandidates(it[0].candidates)
+                                            } else {
+                                                view?.showEmptyRealCountList()
+                                            }
+                                        },
+                                        {
                                             view?.dismissLoading()
-                                            view?.bindCandidates(it[0].candidates)
-                                        } else {
-                                            view?.showEmptyRealCountList()
+                                            view?.showError(it)
+                                            view?.showGetRealCountListFailedAlert()
                                         }
-                                    },
-                                    {
-                                        view?.dismissLoading()
-                                        view?.showError(it)
-                                        view?.showGetRealCountListFailedAlert()
-                                    }
-                                )
-                        )
+                                    )
+                            )
+                        } else {
+                            view?.showGetDapilFailedAlert()
+                        }
                     },
                     {
                         view?.dismissLoading()

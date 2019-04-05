@@ -55,16 +55,13 @@ class RealCountInteractor @Inject constructor(
         return appDB.getRealCountDao().getRealCount(tpsId, realCountType)
     }
 
-    fun getDapil(tps: TPS, realCountType: String): Single<Dapil> {
+    fun getDapil(tps: TPS, realCountType: String): Single<DapilResponse> {
         return apiWrapper.getPantauApi().getDapil(
             tps.province.code,
             tps.regency.code,
             tps.district.code,
             realCountType
         )
-            .map {
-                it.data
-            }
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
     }

@@ -6,5 +6,5 @@ import com.google.gson.annotations.SerializedName
 data class DapilResponse(
     @SerializedName("data")
     @Expose
-    val data: Dapil
+    val data: Dapil?
 )
