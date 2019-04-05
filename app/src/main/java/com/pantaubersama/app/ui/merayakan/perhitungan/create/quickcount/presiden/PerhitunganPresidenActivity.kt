@@ -210,24 +210,24 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_undo, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.undo_action -> {
-                when (undoType) {
-                    "invalid" -> adapter.undoRedoToolses[adapter.getListData().size].undo()
-                    "item" -> undoPosition?.let {
-                        adapter.undoPresiden(it)
-                    }
-                }
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.menu_undo, menu)
+//        return true
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+//        when (item?.itemId) {
+//            R.id.undo_action -> {
+//                when (undoType) {
+//                    "invalid" -> adapter.undoRedoToolses[adapter.getListData().size].undo()
+//                    "item" -> undoPosition?.let {
+//                        adapter.undoPresiden(it)
+//                    }
+//                }
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     override fun showFailedSaveDataAlert() {
         ToastUtil.show(this@PerhitunganPresidenActivity, "Gagal menyimpan data")
