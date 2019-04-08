@@ -9,8 +9,7 @@ apply plugin: 'io.fabric'
 
 android {
     signingConfigs {
-        config {
-        }
+        release
     }
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
@@ -30,7 +29,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+            signingConfig signingConfigs.release
         }
         debug {
             applicationIdSuffix ".staging"
@@ -77,6 +76,32 @@ android {
         exclude 'META-INF/ASL2.0'
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
+    Properties props = new Properties()
+    def propFile = new File('signing.properties')
+    if (propFile.canRead()){
+        props.load(new FileInputStream(propFile))
+
+        if (props!=null && props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD') &&
+                props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+            android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
+            android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
+            android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
+            android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
+        } else {
+            println 'signing.properties found but some entries are missing'
+            android.buildTypes.release.signingConfig = null
+        }
+    }else {
+        println 'signing.properties not found'
+        android.buildTypes.release.signingConfig = null
     }
 }
 
@@ -138,7 +163,6 @@ dependencies {
     ktlint "com.github.shyiko:ktlint:0.29.0"
 }
 
-
 task ktlint(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."
     classpath = configurations.ktlint
@@ -146,4 +170,5 @@ task ktlint(type: JavaExec, group: "verification") {
     args "src/**/*.kt"
     // args "--reporter=checkstyle, output=${buildDir}/ktlint.xml
 }
+
 apply plugin: 'com.google.gms.google-services'
