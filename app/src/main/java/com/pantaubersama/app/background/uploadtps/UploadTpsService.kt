@@ -38,7 +38,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
             this@UploadTpsService, 0, notificationIntent, 0)
         notificationBuilder = NotificationCompat.Builder(this@UploadTpsService,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                createNotificationChannel("upload", "Mengunggah Perhitungan")
+                createNotificationChannel("upload", "Unggah Perhitungan")
             } else {
                 ""
             }
@@ -109,27 +109,14 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     }
 
     override fun onSuccessPublishTps() {
-        notificationBuilder
-            .setSmallIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                R.drawable.ic_notification_icon
-            } else {
-                R.drawable.ic_logo_notification_transparent_in
-            })
-            .setContentTitle("Berhasil Mengunggah Perhitungan")
-            .setContentText("Selamat. Perhitungan Kamu Berhasil Terunggah")
-
-//        notificationManager.notify(1, mBuilder.build())
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//
-//        }
-        startForeground(1, notificationBuilder.build())
         presenter.detach()
-        publishResult()
-        stopSelf()
+        publishResult(true, "")
     }
 
-    private fun publishResult() {
+    private fun publishResult(isSuccess: Boolean, message: String?) {
         val intent = Intent("upload")
+        intent.putExtra("status", isSuccess)
+        intent.putExtra("message", message)
         sendBroadcast(intent)
     }
 
@@ -138,23 +125,8 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     }
 
     override fun showFailed(message: String?) {
-        notificationBuilder
-            .setSmallIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                R.drawable.ic_notification_icon
-            } else {
-                R.drawable.ic_logo_notification_transparent_in
-            })
-            .setContentTitle("Gagal mengunggah data")
-            .setContentText(message)
-
-//        notificationManager.notify(1, mBuilder.build())
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//
-//        }
-        startForeground(1, notificationBuilder.build())
-        publishResult()
+        publishResult(false, message)
         presenter.detach()
-        stopSelf()
     }
 
     override fun onDestroy() {
