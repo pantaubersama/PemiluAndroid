@@ -33,15 +33,16 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     override fun onHandleIntent(intent: Intent) {
         tpsId = intent.getStringExtra("tps_id")
         presenter.init(this)
-        val channelId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel("upload", "Upload Perhitungan")
-        } else {
-            ""
-        }
         notificationIntent = Intent()
         pendingIntent = PendingIntent.getActivity(
             this@UploadTpsService, 0, notificationIntent, 0)
-        notificationBuilder = NotificationCompat.Builder(this@UploadTpsService, channelId)
+        notificationBuilder = NotificationCompat.Builder(this@UploadTpsService,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                createNotificationChannel("upload", "Mengunggah Perhitungan")
+            } else {
+                ""
+            }
+        )
             .setSmallIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 R.drawable.ic_notification_icon
             } else {
@@ -49,6 +50,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
             })
             .setContentTitle(getTitle(progress))
             .setOngoing(true)
+            .setAutoCancel(false)
 
         notificationBuilder.setContentIntent(pendingIntent)
 //        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -107,13 +109,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     }
 
     override fun onSuccessPublishTps() {
-        val pendingIntent = PendingIntent.getActivity(this@UploadTpsService, 1, notificationIntent, 0)
-        val channelId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel("upload", "Upload Perhitungan")
-        } else {
-            ""
-        }
-        val mBuilder = NotificationCompat.Builder(this@UploadTpsService, channelId)
+        notificationBuilder
             .setSmallIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 R.drawable.ic_notification_icon
             } else {
@@ -122,14 +118,13 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
             .setContentTitle("Berhasil Mengunggah Perhitungan")
             .setContentText("Selamat. Perhitungan Kamu Berhasil Terunggah")
 
-        mBuilder.setContentIntent(pendingIntent)
 //        notificationManager.notify(1, mBuilder.build())
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 //
 //        }
         startForeground(1, notificationBuilder.build())
+        presenter.detach()
         publishResult()
-        presenter.dispatch()
         stopSelf()
     }
 
@@ -143,13 +138,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     }
 
     override fun showFailed(message: String?) {
-        val pendingIntent = PendingIntent.getActivity(this@UploadTpsService, 1, notificationIntent, 0)
-        val channelId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel("upload", "Upload Perhitungan")
-        } else {
-            ""
-        }
-        val mBuilder = NotificationCompat.Builder(this@UploadTpsService, channelId)
+        notificationBuilder
             .setSmallIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 R.drawable.ic_notification_icon
             } else {
@@ -158,13 +147,20 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
             .setContentTitle("Gagal mengunggah data")
             .setContentText(message)
 
-        mBuilder.setContentIntent(pendingIntent)
 //        notificationManager.notify(1, mBuilder.build())
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 //
 //        }
         startForeground(1, notificationBuilder.build())
-        presenter.dispatch()
+        publishResult()
+        presenter.detach()
         stopSelf()
+    }
+
+    override fun onDestroy() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            stopForeground(false)
+        }
+        super.onDestroy()
     }
 }
