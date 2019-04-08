@@ -3,8 +3,6 @@ package com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.preside
 import android.os.Bundle
 import android.os.Handler
 import android.text.InputFilter
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jakewharton.rxbinding2.widget.RxTextView

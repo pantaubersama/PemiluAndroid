@@ -24,7 +24,6 @@ class CreateChallengeActivity : BaseActivity<CreateChallengePresenter>(), Create
         return 0
     }
 
-
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_buat_tantangan), R.color.white, 4f)
 

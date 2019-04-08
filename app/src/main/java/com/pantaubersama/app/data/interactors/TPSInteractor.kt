@@ -20,7 +20,6 @@ import javax.inject.Inject
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import timber.log.Timber
 import java.io.File
 
 class TPSInteractor @Inject constructor(
@@ -325,7 +324,6 @@ class TPSInteractor @Inject constructor(
         return if (c1 != null) {
             c1.tpsId = apiTpsId
             val c1Json = gson.toJson(c1)
-            Timber.d(c1Json.toString())
             val c1Body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), c1Json)
             apiWrapper.getPantauApi().uploadC1Form(c1Body)
         } else {

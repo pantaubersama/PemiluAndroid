@@ -1,14 +1,14 @@
 package com.pantaubersama.app.background.uploadtps
 
-import android.app.IntentService
+import android.app.* // ktlint-disable
 import android.content.Intent
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.di.module.ServiceModule
 import javax.inject.Inject
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.pantaubersama.app.R
 import timber.log.Timber
@@ -20,7 +20,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     lateinit var notificationIntent: Intent
     lateinit var pendingIntent: PendingIntent
     lateinit var notificationBuilder: NotificationCompat.Builder
-    lateinit var notificationManager: NotificationManager
+//    lateinit var notificationManager: NotificationManager
     var progress: Int = 0
 
     lateinit var tpsId: String
@@ -31,12 +31,17 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     }
 
     override fun onHandleIntent(intent: Intent) {
-        presenter.init(this)
         tpsId = intent.getStringExtra("tps_id")
+        presenter.init(this)
+        val channelId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel("upload", "Upload Perhitungan")
+        } else {
+            ""
+        }
         notificationIntent = Intent()
         pendingIntent = PendingIntent.getActivity(
             this@UploadTpsService, 0, notificationIntent, 0)
-        notificationBuilder = NotificationCompat.Builder(this@UploadTpsService)
+        notificationBuilder = NotificationCompat.Builder(this@UploadTpsService, channelId)
             .setSmallIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 R.drawable.ic_notification_icon
             } else {
@@ -46,22 +51,41 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
             .setOngoing(true)
 
         notificationBuilder.setContentIntent(pendingIntent)
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationBuilder.setProgress(100, progress, false)
-        notificationManager.notify(1, notificationBuilder.build())
+//        notificationManager.notify(1, notificationBuilder.build())
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//
+//        }
+        startForeground(1, notificationBuilder.build())
         presenter.uploadTpsData(tpsId)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel(channelId: String, channelName: String): String {
+        val chan = NotificationChannel(channelId,
+            channelName, NotificationManager.IMPORTANCE_NONE)
+        chan.lightColor = Color.BLUE
+        chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+        val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        service.createNotificationChannel(chan)
+        return channelId
     }
 
     override fun increaseProgress(progress: Int) {
         this.progress += progress
         notificationBuilder.setContentTitle(getTitle(this.progress))
         notificationBuilder.setProgress(100, this.progress, false)
-        notificationManager.notify(1, notificationBuilder.build())
+//        notificationManager.notify(1, notificationBuilder.build())
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//
+//        }
+        startForeground(1, notificationBuilder.build())
     }
 
     private fun getTitle(progress: Int): String {
         return when {
-            progress < 5 -> "Mengunggah RealCountData TPS"
+            progress < 5 -> "Mengunggah Perhitungan TPS"
             progress < 10 -> "Mengunggah Perhitungan - Presiden"
             progress < 15 -> "Mengunggah Perhitungan - DPR RI"
             progress < 20 -> "Mengunggah Perhitungan - DPD"
@@ -84,7 +108,12 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
 
     override fun onSuccessPublishTps() {
         val pendingIntent = PendingIntent.getActivity(this@UploadTpsService, 1, notificationIntent, 0)
-        val mBuilder = NotificationCompat.Builder(this@UploadTpsService)
+        val channelId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel("upload", "Upload Perhitungan")
+        } else {
+            ""
+        }
+        val mBuilder = NotificationCompat.Builder(this@UploadTpsService, channelId)
             .setSmallIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 R.drawable.ic_notification_icon
             } else {
@@ -94,7 +123,11 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
             .setContentText("Selamat. Perhitungan Kamu Berhasil Terunggah")
 
         mBuilder.setContentIntent(pendingIntent)
-        notificationManager.notify(1, mBuilder.build())
+//        notificationManager.notify(1, mBuilder.build())
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//
+//        }
+        startForeground(1, notificationBuilder.build())
         publishResult()
         presenter.dispatch()
         stopSelf()
@@ -111,7 +144,12 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
 
     override fun showFailed(message: String?) {
         val pendingIntent = PendingIntent.getActivity(this@UploadTpsService, 1, notificationIntent, 0)
-        val mBuilder = NotificationCompat.Builder(this@UploadTpsService)
+        val channelId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel("upload", "Upload Perhitungan")
+        } else {
+            ""
+        }
+        val mBuilder = NotificationCompat.Builder(this@UploadTpsService, channelId)
             .setSmallIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 R.drawable.ic_notification_icon
             } else {
@@ -121,7 +159,11 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
             .setContentText(message)
 
         mBuilder.setContentIntent(pendingIntent)
-        notificationManager.notify(1, mBuilder.build())
+//        notificationManager.notify(1, mBuilder.build())
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//
+//        }
+        startForeground(1, notificationBuilder.build())
         presenter.dispatch()
         stopSelf()
     }
