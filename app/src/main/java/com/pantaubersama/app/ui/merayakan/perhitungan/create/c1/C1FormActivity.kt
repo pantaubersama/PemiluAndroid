@@ -86,7 +86,7 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
     }
 
     private fun finishSection() {
-        if (used_documents_count.text.toString().toLong() <= 500) {
+        if (accepted_documents_count.text.toString().toLong() <= 500) {
             finish()
         } else {
             ToastUtil.show(this@C1FormActivity, "Total suara (${used_documents_count.text}) melebihi 500")
