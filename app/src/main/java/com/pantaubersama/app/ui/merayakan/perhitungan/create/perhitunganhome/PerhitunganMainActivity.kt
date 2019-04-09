@@ -83,6 +83,11 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
         village_text.text = tps?.village?.name
         tps_options.setOnClickListener {
             val dialog = OptionDialog(this@PerhitunganMainActivity, R.layout.layout_option_dialog_tps)
+            if (tps?.status == "published") {
+                dialog.removeItem(R.id.edit_tps_data_action)
+            } else if (tps?.status == "sandbox") {
+                dialog.removeItem(R.id.delete_tps_item_action)
+            }
             dialog.show()
             dialog.listener = object : OptionDialog.DialogListener {
                 override fun onClick(viewId: Int) {
