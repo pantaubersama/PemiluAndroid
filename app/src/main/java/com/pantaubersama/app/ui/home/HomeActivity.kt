@@ -99,7 +99,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
             val (fragment, tag) = when (item.itemId) {
                 R.id.navigation_menyerap -> LinimasaFragment() to LinimasaFragment.TAG
                 R.id.navigation_menggali -> PenPolFragment.newInstance() to PenPolFragment.TAG
-                R.id.navigation_menguji -> MengujiHomeFragment.newInstance() to MengujiHomeFragment.TAG
+//                R.id.navigation_menguji -> MengujiHomeFragment.newInstance() to MengujiHomeFragment.TAG
 //                R.id.navigation_menjaga -> MenjagaFragment.newInstance() to MenjagaFragment.TAG   // di hide dulu, production belum ada api nya @edityo 30/01/19
                 R.id.navigation_merayakan -> MerayakanFragment.newInstance() to MerayakanFragment.TAG
                 else -> throw IllegalStateException("unknown menu")
