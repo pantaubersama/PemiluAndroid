@@ -202,6 +202,8 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
                 val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tps)
                 if (tps.status == "published") {
                     dialog.removeItem(R.id.edit_tps_data_action)
+                } else if (tps.status == "sandbox") {
+                    dialog.removeItem(R.id.delete_tps_item_action)
                 }
                 dialog.show()
                 dialog.listener = object : OptionDialog.DialogListener {
@@ -214,23 +216,19 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
                                 dialog.dismiss()
                             }
                             R.id.delete_tanya_kandidat_item_action -> {
-                                if (tps.status != "sandbox") {
-                                    ConfirmationDialog.Builder()
-                                        .with(requireActivity())
-                                        .setDialogTitle("Hapus Perhitungan")
-                                        .setAlert("Apakah kamu yakin untuk menghapus item ini?")
-                                        .setCancelText("Batal")
-                                        .setOkText("Ya, Hapus")
-                                        .addOkListener(object : ConfirmationDialog.DialogOkListener {
-                                            override fun onClickOk() {
-                                                presenter.deletePerhitungan(tps, position)
-                                            }
-                                        })
-                                        .show()
-                                    dialog.dismiss()
-                                } else {
-                                    ToastUtil.show(requireContext(), "TPS Uji Coba tidak dapat dihapus")
-                                }
+                                ConfirmationDialog.Builder()
+                                    .with(requireActivity())
+                                    .setDialogTitle("Hapus Perhitungan")
+                                    .setAlert("Apakah kamu yakin untuk menghapus item ini?")
+                                    .setCancelText("Batal")
+                                    .setOkText("Ya, Hapus")
+                                    .addOkListener(object : ConfirmationDialog.DialogOkListener {
+                                        override fun onClickOk() {
+                                            presenter.deletePerhitungan(tps, position)
+                                        }
+                                    })
+                                    .show()
+                                dialog.dismiss()
                             }
                         }
                     }

@@ -5,7 +5,7 @@
     android:background="@color/white">
 
     <LinearLayout
-        android:id="@+id/delete_tanya_kandidat_item_action"
+        android:id="@+id/delete_tps_item_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
