@@ -168,30 +168,22 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
                 }
             }
             save_button -> {
-                finish()
+                finishSection()
             }
         }
     }
 
-//    override fun onFocusChange(view: View, isFocus: Boolean) {
-//        when (view) {
-//            candidate_1_count_field -> {
-//                if (isFocus) {
-//                    undoPosition = 0
-//                }
-//            }
-//            candidate_2_count_field -> {
-//                if (isFocus) {
-//                    undoPosition = 1
-//                }
-//            }
-//            no_vote_count_field -> {
-//                if (isFocus) {
-//                    undoPosition = 2
-//                }
-//            }
-//        }
-//    }
+    private fun finishSection() {
+        if (all_vote_count.text.toString().toLong() <= 500) {
+            finish()
+        } else {
+            ToastUtil.show(this@PerhitunganPresidenActivity, "Total suara (${all_vote_count.text}) melebihi 500")
+        }
+    }
+
+    override fun onBackPressed() {
+        finishSection()
+    }
 
     override fun showLoading() {
         progress_bar.visibility = View.VISIBLE

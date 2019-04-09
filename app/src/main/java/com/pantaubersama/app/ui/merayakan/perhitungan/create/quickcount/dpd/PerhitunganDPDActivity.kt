@@ -124,8 +124,20 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
             .subscribe()
 
         save_button.setOnClickListener {
-            finish()
+            finishSection()
         }
+    }
+
+    private fun finishSection() {
+        if (all_vote_count.text.toString().toLong() <= 500) {
+            finish()
+        } else {
+            ToastUtil.show(this@PerhitunganDPDActivity, "Total suara (${all_vote_count.text}) melebihi 500")
+        }
+    }
+
+    override fun onBackPressed() {
+        finishSection()
     }
 
     override fun onSuccessSaveRealCount() {
