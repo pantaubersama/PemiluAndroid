@@ -80,9 +80,21 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         setupAllDisabilitasSection()
         setupSuratSuara()
         save_button.setOnClickListener {
-            finish()
+            finishSection()
         }
         tps?.id?.let { c1Type?.let { it1 -> tps?.status?.let { it2 -> presenter.getC1Data(it, it1, it2) } } }
+    }
+
+    private fun finishSection() {
+        if (used_documents_count.text.toString().toLong() <= 500) {
+            finish()
+        } else {
+            ToastUtil.show(this@C1FormActivity, "Total suara (${used_documents_count.text}) melebihi 500")
+        }
+    }
+
+    override fun onBackPressed() {
+        finishSection()
     }
 
     private fun disableField() {
