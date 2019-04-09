@@ -390,7 +390,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     private fun showGPSDisabledAlert() {
         ConfirmationDialog.Builder()
             .with(this@DataTPSActivity)
-            .setDialogTitle("Actifkan GPS")
+            .setDialogTitle("Aktifkan GPS")
             .setAlert("Kami gagal menemukan lokasi kamu karena GPS kamu non-aktif. Mohon hidupkan GPS kamu.")
             .setOkText("Aktifkan")
             .setCancelText("Batal")
