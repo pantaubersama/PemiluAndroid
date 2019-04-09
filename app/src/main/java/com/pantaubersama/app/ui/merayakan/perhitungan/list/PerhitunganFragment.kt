@@ -84,7 +84,7 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
         notificationBuilder.setContentIntent(pendingIntent)
         val notificationManager = requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(1, notificationBuilder.build())
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             ToastUtil.show(requireContext(), "Berhasil mengunggah perhitungan")
         }
     }

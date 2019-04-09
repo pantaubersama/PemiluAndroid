@@ -196,6 +196,15 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
     override fun bindRealCount(realCount: RealCount?) {
         realCount?.let {
             no_vote_count_field.setText(realCount.invalidVote.toString())
+            if (tps?.status == "published") {
+                invalid_vote_count.text = realCount.invalidVote.toString()
+                val totalVote: MutableList<Long> = ArrayList()
+                realCount.candidates.forEach { candidate ->
+                    totalVote.add(candidate.totalVote)
+                }
+                valid_vote_count.text = totalVote.sum().toString()
+                all_vote_count.text = (totalVote.sum() + realCount.invalidVote).toString()
+            }
             adapter.setVote(it)
         }
     }
