@@ -130,7 +130,12 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
         )
         villagesAdapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
         villages_dropdown.adapter = villagesAdapter
-        villages_dropdown.isEnabled = false
+//        villages_dropdown.isEnabled = false
+        if (tps != null) {
+            if (tps?.status != "sandbox") {
+                villages_dropdown.isEnabled = false
+            }
+        }
     }
 
     private fun setupDistrictsDropdown() {
@@ -143,7 +148,12 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
         )
         districtsAdapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
         districts_dropdown.adapter = districtsAdapter
-        districts_dropdown.isEnabled = false
+//        districts_dropdown.isEnabled = false
+        if (tps != null) {
+            if (tps?.status != "sandbox") {
+                districts_dropdown.isEnabled = false
+            }
+        }
     }
 
     private fun setupRegenciesDropdown() {
@@ -156,7 +166,12 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
         )
         regenciesAdapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
         regencies_dropdown.adapter = regenciesAdapter
-        regencies_dropdown.isEnabled = false
+//        regencies_dropdown.isEnabled = false
+        if (tps != null) {
+            if (tps?.status != "sandbox") {
+                regencies_dropdown.isEnabled = false
+            }
+        }
     }
 
     private fun setupProvincesDropdown() {
@@ -169,7 +184,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
         provincesAdapter.setDropDownViewResource(R.layout.default_expanded_spinner_item)
         provinces_dropdown.adapter = provincesAdapter
         if (tps != null) {
-            provinces_dropdown.isEnabled = false
+            if (tps?.status != "sandbox") {
+                provinces_dropdown.isEnabled = false
+            }
         }
     }
 

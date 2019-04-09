@@ -33,7 +33,7 @@ import com.pantaubersama.app.ui.debat.adapter.OpponentCandidateAdapter
 import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.ui.widget.OptionDialogFragment
 import com.pantaubersama.app.ui.wordstadium.InfoDialog
-import com.pantaubersama.app.utils.*
+import com.pantaubersama.app.utils.* // ktlint-disable
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ID
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_POSITION

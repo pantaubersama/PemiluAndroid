@@ -38,7 +38,7 @@ import com.pantaubersama.app.ui.widget.OptionDialogFragment
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_ITEM
 import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import com.pantaubersama.app.data.model.debat.ChallengeConstants.Role
-import com.pantaubersama.app.utils.*
+import com.pantaubersama.app.utils.* // ktlint-disable
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
