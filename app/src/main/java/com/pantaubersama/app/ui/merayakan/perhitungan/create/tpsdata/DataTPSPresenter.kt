@@ -2,10 +2,7 @@ package com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata
 
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.TPSInteractor
-import com.pantaubersama.app.data.model.tps.District
-import com.pantaubersama.app.data.model.tps.Province
-import com.pantaubersama.app.data.model.tps.Regency
-import com.pantaubersama.app.data.model.tps.Village
+import com.pantaubersama.app.data.model.tps.* // ktlint-disable
 import javax.inject.Inject
 
 class DataTPSPresenter @Inject constructor(
@@ -118,16 +115,12 @@ class DataTPSPresenter @Inject constructor(
     }
 
     fun updateTps(
-        tpsId: String,
-        tpsNumber: Int,
-        status: String
+        tps: TPS
     ) {
         view?.showLoading()
         disposables.add(
             tpsInteractor.updateTps(
-                tpsId,
-                tpsNumber,
-                status
+                tps
             )
                 .subscribe(
                     {

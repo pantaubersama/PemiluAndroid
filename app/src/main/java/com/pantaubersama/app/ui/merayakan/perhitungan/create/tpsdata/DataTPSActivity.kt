@@ -225,6 +225,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 if (position != 0) {
                     provinces_empty_alert.visibility = View.GONE
                     selectedProvince = provinces[position - 1]
+                    if (tps != null && tps?.status == "sandbox") {
+                        tps?.province = selectedProvince
+                    }
                     presenter.getRegenciesData(provinces[position - 1].id)
                 } else {
                     regencies_dropdown.setSelection(0)
@@ -269,6 +272,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 if (position != 0) {
                     regencies_empty_alert.visibility = View.GONE
                     selectedRegency = regencies[position - 1]
+                    if (tps != null && tps?.status == "sandbox") {
+                        tps?.regency = selectedRegency
+                    }
                     presenter.getDistrictsData(regencies[position - 1].id)
                 } else {
                     districts_dropdown.setSelection(0)
@@ -316,6 +322,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 if (position != 0) {
                     districts_empty_alert.visibility = View.GONE
                     selectedDistrict = districts[position - 1]
+                    if (tps != null && tps?.status == "sandbox") {
+                        tps?.district = selectedDistrict
+                    }
                     presenter.getVillagesData(districts[position - 1].id)
                 } else {
                     villages_dropdown.setSelection(0)
@@ -358,6 +367,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 if (position != 0) {
                     selectedVillage = villages[position - 1]
+                    if (tps != null && tps?.status == "sandbox") {
+                        tps?.village = selectedVillage
+                    }
                     villages_empty_alert.visibility = View.GONE
                 }
             }
@@ -512,14 +524,8 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                             villages_empty_alert.visibility = View.VISIBLE
                         } else {
                             if (tps != null) {
-                                tps?.id?.let {
-                                    tps?.status?.let { it1 ->
-                                        presenter.updateTps(
-                                            it,
-                                            tps_number_field.text.toString().toInt(),
-                                            it1
-                                        )
-                                    }
+                                tps?.let {
+                                    presenter.updateTps(it)
                                 }
                             } else {
                                 presenter.saveDataTPS(

@@ -155,29 +155,31 @@ class TPSInteractor @Inject constructor(
     }
 
     fun updateTps(
-        tpsId: String,
-        tpsNumber: Int,
-        status: String
+        tps: TPS
     ): Completable {
-        when (status) {
+        when (tps.status) {
             "published" -> return apiWrapper.getPantauApi().updateTPS(
-                tpsId,
-                tpsNumber
+                tps.id,
+                tps.tps
             )
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
             "local" -> {
-                val tps = appDB.getTPSDAO().getTps(tpsId)
-                tps.tps = tpsNumber
+                val dbTps = appDB.getTPSDAO().getTps(tps.id)
+                dbTps.tps = tps.tps
                 return Completable.fromCallable {
-                    appDB.getTPSDAO().updateTps(tps)
+                    appDB.getTPSDAO().updateTps(dbTps)
                 }
             }
             else -> {
-                val tps = appDB.getTPSDAO().getTps(tpsId)
-                tps.tps = tpsNumber
+                val dbTps = appDB.getTPSDAO().getTps(tps.id)
+                dbTps.tps = tps.tps
+                dbTps.province = tps.province
+                dbTps.regency = tps.regency
+                dbTps.district = tps.district
+                dbTps.village = tps.village
                 return Completable.fromCallable {
-                    appDB.getTPSDAO().updateTps(tps)
+                    appDB.getTPSDAO().updateTps(dbTps)
                 }
             }
         }
