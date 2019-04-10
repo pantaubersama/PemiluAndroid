@@ -7,10 +7,17 @@ import com.pantaubersama.app.di.module.ServiceModule
 import javax.inject.Inject
 import android.content.Context
 import android.graphics.Color
+import android.media.AudioAttributes
+import android.media.RingtoneManager
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
+import com.pantaubersama.app.background.firebase.NotificationID
+import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.extensions.color
 import timber.log.Timber
 
 class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
@@ -20,7 +27,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     lateinit var notificationIntent: Intent
     lateinit var pendingIntent: PendingIntent
     lateinit var notificationBuilder: NotificationCompat.Builder
-//    lateinit var notificationManager: NotificationManager
+    lateinit var notificationManager: NotificationManager
     var progress: Int = 0
 
     lateinit var tpsId: String
@@ -36,53 +43,51 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
         notificationIntent = Intent()
         pendingIntent = PendingIntent.getActivity(
             this@UploadTpsService, 0, notificationIntent, 0)
+        notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationBuilder = NotificationCompat.Builder(this@UploadTpsService,
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                createNotificationChannel("upload", "Unggah Perhitungan")
-            } else {
-                ""
-            }
+            PantauConstants.Notification.NOTIFICATION_CHANNEL_NAME_UPLOAD
         )
-            .setSmallIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                R.drawable.ic_notification_icon
-            } else {
-                R.drawable.ic_logo_notification_transparent_in
-            })
+            .setSmallIcon(android.R.drawable.stat_sys_upload)
+            .setColor(color(R.color.colorPrimary))
             .setContentTitle(getTitle(progress))
-            .setOngoing(true)
-            .setAutoCancel(false)
+            .setContentInfo(BuildConfig.APPLICATION_ID)
+            .setContentText("Menyimpan Dokumen ...")
+            .setAutoCancel(true)
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            .setContentIntent(pendingIntent)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setDefaults(Notification.DEFAULT_ALL)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_UPLOAD,
+                PantauConstants.Notification.NOTIFICATION_CHANNEL_NAME_UPLOAD,
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            notificationChannel.description = PantauConstants.Notification.NOTIFICATION_CHANNEL_DESC_UPLOAD
+            notificationChannel.enableVibration(true)
+
+            val audioAttributes = AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .build()
+            notificationChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), audioAttributes)
+            notificationManager.createNotificationChannel(notificationChannel)
+            notificationBuilder.setChannelId(PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_UPLOAD)
+        }
 
         notificationBuilder.setContentIntent(pendingIntent)
-//        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationBuilder.setProgress(100, progress, false)
-//        notificationManager.notify(1, notificationBuilder.build())
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//
-//        }
-        startForeground(1, notificationBuilder.build())
+        notificationManager.notify(1, notificationBuilder.build())
         presenter.uploadTpsData(tpsId)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel(channelId: String, channelName: String): String {
-        val chan = NotificationChannel(channelId,
-            channelName, NotificationManager.IMPORTANCE_NONE)
-        chan.lightColor = Color.BLUE
-        chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
-        val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        service.createNotificationChannel(chan)
-        return channelId
     }
 
     override fun increaseProgress(progress: Int) {
         this.progress += progress
         notificationBuilder.setContentTitle(getTitle(this.progress))
         notificationBuilder.setProgress(100, this.progress, false)
-//        notificationManager.notify(1, notificationBuilder.build())
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//
-//        }
-        startForeground(1, notificationBuilder.build())
+        notificationManager.notify(1, notificationBuilder.build())
     }
 
     private fun getTitle(progress: Int): String {
@@ -117,7 +122,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
         val intent = Intent("upload")
         intent.putExtra("status", isSuccess)
         intent.putExtra("message", message)
-        sendBroadcast(intent)
+        createNotification(intent)
     }
 
     override fun showError(throwable: Throwable) {
@@ -130,9 +135,52 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     }
 
     override fun onDestroy() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            stopForeground(false)
-        }
         super.onDestroy()
+    }
+
+    private fun createNotification(intent: Intent) {
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, Intent(), PendingIntent.FLAG_UPDATE_CURRENT)
+        val notificationBuilder = NotificationCompat.Builder(this, PantauConstants.Notification.NOTIFICATION_CHANNEL_NAME_UPLOAD)
+            .setColor(color(R.color.colorPrimary))
+            .setContentTitle(if (intent.getBooleanExtra("status", false)) {
+                "Berhasil mengunggah perhitungan"
+            } else {
+                "Gagal mengunggah perhitungan"
+            })
+            .setContentInfo(BuildConfig.APPLICATION_ID)
+            .setContentText(if (intent.getBooleanExtra("status", false)) {
+                "Perhitungan kamu berhasil terunggah"
+            } else {
+                intent.getStringExtra("message")
+            })
+            .setAutoCancel(true)
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            .setContentIntent(pendingIntent)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setDefaults(Notification.DEFAULT_ALL)
+            .setSmallIcon(android.R.drawable.stat_sys_upload_done)
+
+        val notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_UPLOAD,
+                PantauConstants.Notification.NOTIFICATION_CHANNEL_NAME_UPLOAD,
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            notificationChannel.description = PantauConstants.Notification.NOTIFICATION_CHANNEL_DESC_UPLOAD
+            notificationChannel.enableVibration(true)
+
+            val audioAttributes = AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .build()
+            notificationChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), audioAttributes)
+            notificationManager.createNotificationChannel(notificationChannel)
+            notificationBuilder.setChannelId(PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_UPLOAD)
+        }
+        notificationManager.notify(NotificationID.id, notificationBuilder.build())
     }
 }

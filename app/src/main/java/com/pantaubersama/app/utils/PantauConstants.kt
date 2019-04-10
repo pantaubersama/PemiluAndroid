@@ -300,8 +300,11 @@ class PantauConstants {
 
     object Notification {
         const val NOTIFICATION_CHANNEL_ID_BROADCAST = "1"
+        const val NOTIFICATION_CHANNEL_ID_UPLOAD = "2"
         const val NOTIFICATION_CHANNEL_NAME_BROADCAST = "Broadcast"
+        const val NOTIFICATION_CHANNEL_NAME_UPLOAD = "Upload"
         const val NOTIFICATION_CHANNEL_DESC_BROADCAST = "Broadcast"
+        const val NOTIFICATION_CHANNEL_DESC_UPLOAD = "Upload"
 
         const val NOTIFICATION_TOPIC_BROADCAST = "android-broadcasts-activity"
         const val NOTIFICATION_TOPIC_JANPOL = "android-janji_politik-report"

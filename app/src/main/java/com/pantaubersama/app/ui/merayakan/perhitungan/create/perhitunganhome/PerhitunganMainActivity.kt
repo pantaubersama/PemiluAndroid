@@ -230,7 +230,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
             tps?.id?.let {
                 val intent = Intent(this@PerhitunganMainActivity, UploadTpsService::class.java)
                 intent.putExtra("tps_id", it)
-                ContextCompat.startForegroundService(this@PerhitunganMainActivity, intent)
+                startService(intent)
                 finishSection()
             }
         }
