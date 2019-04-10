@@ -215,7 +215,7 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
                                 startActivityForResult(intent, PantauConstants.Merayakan.CREATE_PERHITUNGAN_REQUEST_CODE)
                                 dialog.dismiss()
                             }
-                            R.id.delete_tanya_kandidat_item_action -> {
+                            R.id.delete_tps_item_action -> {
                                 ConfirmationDialog.Builder()
                                     .with(requireActivity())
                                     .setDialogTitle("Hapus Perhitungan")

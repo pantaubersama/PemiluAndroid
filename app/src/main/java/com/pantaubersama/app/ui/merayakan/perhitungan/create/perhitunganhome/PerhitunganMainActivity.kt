@@ -98,7 +98,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
                             startActivityForResult(intent, PantauConstants.Merayakan.CREATE_PERHITUNGAN_REQUEST_CODE)
                             dialog.dismiss()
                         }
-                        R.id.delete_tanya_kandidat_item_action -> {
+                        R.id.delete_tps_item_action -> {
                             ConfirmationDialog.Builder()
                                 .with(this@PerhitunganMainActivity)
                                 .setDialogTitle("Hapus Perhitungan")
