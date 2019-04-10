@@ -1,13 +1,10 @@
 package com.pantaubersama.app.background.downloadc1
 
-import android.app.IntentService
-import android.app.Notification
+import android.app.* // ktlint-disable
 import android.content.Intent
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.di.module.ServiceModule
-import android.app.NotificationManager
 import androidx.core.app.NotificationCompat
-import android.app.NotificationChannel
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -29,6 +26,8 @@ import java.net.URL
 class DownloadC1Service : IntentService("DownloadService") {
     private lateinit var notificationBuilder: NotificationCompat.Builder
     private lateinit var notificationManager: NotificationManager
+    private lateinit var notificationIntent: Intent
+    private lateinit var pendingIntent: PendingIntent
 
     override fun onCreate() {
         super.onCreate()
@@ -36,7 +35,24 @@ class DownloadC1Service : IntentService("DownloadService") {
     }
 
     override fun onHandleIntent(intent: Intent) {
+        notificationIntent = Intent()
+        pendingIntent = PendingIntent.getActivity(
+            this@DownloadC1Service, 0, notificationIntent, 0)
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        notificationBuilder = NotificationCompat.Builder(this, "id")
+            .setSmallIcon(android.R.drawable.stat_sys_download)
+            .setContentTitle("Unduh Gambar C1")
+            .setContentText("Mengunduh Gambar C1")
+            .setDefaults(0)
+            .setAutoCancel(true)
+            .setColor(color(R.color.colorPrimary))
+            .setContentInfo(BuildConfig.APPLICATION_ID)
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            .setContentIntent(pendingIntent)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setDefaults(Notification.DEFAULT_ALL)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
@@ -53,22 +69,10 @@ class DownloadC1Service : IntentService("DownloadService") {
                 .build()
             notificationChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), audioAttributes)
             notificationManager.createNotificationChannel(notificationChannel)
+            notificationBuilder.setChannelId("download")
         }
 
-        notificationBuilder = NotificationCompat.Builder(this, "id")
-            .setSmallIcon(android.R.drawable.stat_sys_download)
-            .setContentTitle("Unduh Gambar C1")
-            .setContentText("Mengunduh Gambar C1")
-            .setDefaults(0)
-            .setAutoCancel(true)
-            .setColor(color(R.color.colorPrimary))
-            .setContentInfo(BuildConfig.APPLICATION_ID)
-            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-//            .setContentIntent(pendingIntent)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setDefaults(Notification.DEFAULT_ALL)
-        notificationManager.notify(0, notificationBuilder.build())
+        notificationManager.notify(1, notificationBuilder.build())
         downloadImage(intent.getStringExtra("image_url"))
     }
 
@@ -118,7 +122,7 @@ class DownloadC1Service : IntentService("DownloadService") {
     private fun updateNotification(currentProgress: Int) {
         notificationBuilder.setProgress(100, currentProgress, false)
         notificationBuilder.setContentText("Terunduh: $currentProgress%")
-        notificationManager.notify(0, notificationBuilder.build())
+        notificationManager.notify(1, notificationBuilder.build())
     }
 
     private fun sendProgressUpdate(downloadComplete: Boolean) {
@@ -129,7 +133,7 @@ class DownloadC1Service : IntentService("DownloadService") {
 
     private fun onDownloadComplete(downloadComplete: Boolean) {
         sendProgressUpdate(downloadComplete)
-        notificationManager.cancel(0)
+        notificationManager.cancel(1)
         notificationBuilder.setProgress(0, 0, false)
         notificationBuilder.setContentText("Gambar Berhasil Diunduh")
         notificationBuilder.setSmallIcon(android.R.drawable.stat_sys_download_done)
@@ -138,7 +142,7 @@ class DownloadC1Service : IntentService("DownloadService") {
         } else {
             getBitmap(R.drawable.ic_logo_notification_transparent_in)
         })
-        notificationManager.notify(0, notificationBuilder.build())
+        notificationManager.notify(1, notificationBuilder.build())
     }
 
     private fun getBitmap(resource: Int): Bitmap {
@@ -146,6 +150,6 @@ class DownloadC1Service : IntentService("DownloadService") {
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
-        notificationManager.cancel(0)
+        notificationManager.cancel(1)
     }
 }

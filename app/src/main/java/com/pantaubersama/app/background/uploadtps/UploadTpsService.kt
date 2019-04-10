@@ -74,7 +74,6 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
             notificationBuilder.setChannelId(PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_UPLOAD)
         }
 
-        notificationBuilder.setContentIntent(pendingIntent)
         notificationBuilder.setProgress(100, progress, false)
         notificationManager.notify(1, notificationBuilder.build())
         presenter.uploadTpsData(tpsId)
