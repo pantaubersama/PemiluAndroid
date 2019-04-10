@@ -47,18 +47,14 @@ class RekapitulasiPresenter @Inject constructor(
     fun getRekapitulasiNasional() {
         disposables.add(
             rekapitulasiInteractor.getRekapitulasiNasional()
-                .doOnEvent { _, _ -> view?.dismissLoading() }
                 .subscribe(
                     {
-                        if (it == EMPTY_PERCENTAGE) {
-                            view?.showDataEmpty()
-                        } else {
-                            view?.bindRekapitulasiNasional(it)
-                        }
+                        view?.bindRekapitulasiNasional(it)
                     },
                     {
                         view?.showError(it)
                         view?.showFailedGetRekapitulasiNasionalAlert()
+                        view?.dismissLoading()
                     }
                 )
         )

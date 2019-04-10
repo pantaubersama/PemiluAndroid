@@ -17,8 +17,8 @@ class RekapitulasiInteractor @Inject constructor(
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .map { response ->
-                response.data.tps?.let {
-                    response.data.percentage
+                response.data.percentage?.let {
+                    it
                 } ?: EMPTY_PERCENTAGE
             }
     }

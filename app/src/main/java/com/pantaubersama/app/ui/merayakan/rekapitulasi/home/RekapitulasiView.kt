@@ -15,5 +15,4 @@ interface RekapitulasiView : BaseView {
     fun showFailedGetRekapitulasiNasionalAlert()
     fun bindRekapitulasiList(rekapitulasi: MutableList<Rekapitulasi>)
     fun showFailedLoadRekapitulasiList()
-    fun showDataEmpty()
 }

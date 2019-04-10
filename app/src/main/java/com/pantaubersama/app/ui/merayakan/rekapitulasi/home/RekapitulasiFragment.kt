@@ -14,7 +14,7 @@ import com.pantaubersama.app.ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerah
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
-import com.pantaubersama.app.utils.extensions.isVoteDay
+import com.pantaubersama.app.utils.extensions.isVotingDay
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
@@ -63,7 +63,7 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
     override fun showBanner(it: BannerInfo) {
         adapter.clearData()
         adapter.addBanner(it)
-        if (requireContext().isVoteDay()) {
+        if (requireContext().isVotingDay()) {
             presenter.getTotalParticipant()
         } else {
             dismissLoading()
@@ -83,12 +83,6 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
 
     override fun showFailedGetRekapitulasiNasionalAlert() {
         ToastUtil.show(requireContext(), "Gagal memuat data rekapitulasi")
-    }
-
-    override fun showDataEmpty() {
-        recycler_view.visibleIf(true)
-        adapter.addRekapitulasiHeader(EMPTY_PERCENTAGE)
-        adapter.addFooter()
     }
 
     private fun refreshItem() {
