@@ -11,7 +11,7 @@ fun Context.isVoteDay(): Boolean {
     return Calendar.getInstance().timeInMillis <= 1555434000000 // 1555434000000 == Wed Apr 17 2019 00:00:00 GMT+7
 }
 
-fun String.isDueTime(timeInMillis: Long): Boolean {
+fun Context.isDueTime(timeInMillis: Long): Boolean {
     return Calendar.getInstance().timeInMillis <= timeInMillis
 }
 
