@@ -5,6 +5,8 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.tps.realcount.Candidate
 import java.io.Serializable
 
+val EMPTY_PERCENTAGE = Percentage("EMPTY", null, null, 0, null)
+
 data class Percentage(
     @SerializedName("summary_type")
     var summaryType: String,
@@ -15,7 +17,7 @@ data class Percentage(
     @SerializedName("total_vote")
     var totalVote: Int,
     @SerializedName("region")
-    var region: Region
+    var region: Region?
 ) : ItemModel, Serializable {
     override fun getType(): Int {
         return 0

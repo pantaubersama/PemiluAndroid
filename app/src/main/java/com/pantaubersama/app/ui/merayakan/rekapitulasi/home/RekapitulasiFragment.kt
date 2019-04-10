@@ -80,6 +80,10 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
         ToastUtil.show(requireContext(), "Gagal memuat data rekapitulasi")
     }
 
+    override fun showDataEmpty() {
+        view_empty_state.enableLottie(true, lottie_empty_state)
+    }
+
     private fun refreshItem() {
         adapter.setDataEnd(false)
         presenter.getBanner()

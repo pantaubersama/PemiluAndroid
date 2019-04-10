@@ -5,11 +5,11 @@ import com.pantaubersama.app.data.model.user.Profile
 
 data class RekapitulasiData(
     @SerializedName("tps")
-    var tps: String,
+    var tps: String?,
     @SerializedName("user")
-    var user: Profile,
+    var user: Profile?,
     @SerializedName("percentage")
-    var percentage: Percentage,
+    var percentage: Percentage?,
     @SerializedName("percentages")
-    var percentages: MutableList<Rekapitulasi>
+    var percentages: MutableList<Rekapitulasi>?
 )

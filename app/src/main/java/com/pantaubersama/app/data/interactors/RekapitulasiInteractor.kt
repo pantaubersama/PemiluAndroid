@@ -1,9 +1,6 @@
 package com.pantaubersama.app.data.interactors
 
-import com.pantaubersama.app.data.model.rekapitulasi.Percentage
-import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
-import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiResponse
-import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
+import com.pantaubersama.app.data.model.rekapitulasi.*
 import com.pantaubersama.app.data.model.tps.c1.C1Form
 import com.pantaubersama.app.data.model.tps.image.Image
 import com.pantaubersama.app.data.remote.APIWrapper
@@ -19,8 +16,10 @@ class RekapitulasiInteractor @Inject constructor(
         return apiWrapper.getPantauApi().getRekapitulasiNasional()
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
-            .map {
-                it.data.percentage
+            .map { response ->
+                response.data.tps?.let {
+                    response.data.percentage
+                } ?: EMPTY_PERCENTAGE
             }
     }
 

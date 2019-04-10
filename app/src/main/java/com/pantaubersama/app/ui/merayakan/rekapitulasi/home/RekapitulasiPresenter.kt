@@ -3,6 +3,7 @@ package com.pantaubersama.app.ui.merayakan.rekapitulasi.home
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.RekapitulasiInteractor
+import com.pantaubersama.app.data.model.rekapitulasi.EMPTY_PERCENTAGE
 import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
 
@@ -37,7 +38,6 @@ class RekapitulasiPresenter @Inject constructor(
                     },
                     {
                         view?.dismissLoading()
-                        view?.showError(it)
                         view?.showFailedLoadRekapitulasiList()
                     }
                 )
@@ -47,14 +47,18 @@ class RekapitulasiPresenter @Inject constructor(
     fun getRekapitulasiNasional() {
         disposables.add(
             rekapitulasiInteractor.getRekapitulasiNasional()
+                .doOnEvent { _, _ -> view?.dismissLoading() }
                 .subscribe(
                     {
-                        view?.bindRekapitulasiNasional(it)
+                        if (it == EMPTY_PERCENTAGE) {
+                            view?.showDataEmpty()
+                        } else {
+                            view?.bindRekapitulasiNasional(it)
+                        }
                     },
                     {
                         view?.showError(it)
                         view?.showFailedGetRekapitulasiNasionalAlert()
-                        view?.dismissLoading()
                     }
                 )
         )
