@@ -1,6 +1,7 @@
 package com.pantaubersama.app.background.downloadc1
 
 import android.app.IntentService
+import android.app.Notification
 import android.content.Intent
 import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.di.module.ServiceModule
@@ -11,12 +12,16 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
-import android.graphics.Color
+import android.media.AudioAttributes
 import android.media.MediaScannerConnection
+import android.media.RingtoneManager
 import android.os.Environment
 import android.os.Handler
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
+import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.extensions.color
 import timber.log.Timber
 import java.io.* // ktlint-disable
 import java.net.URL
@@ -34,12 +39,19 @@ class DownloadC1Service : IntentService("DownloadService") {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel("download", "Unduh Gambar C1", NotificationManager.IMPORTANCE_LOW)
-            notificationChannel.description = "no sound"
-            notificationChannel.setSound(null, null)
-            notificationChannel.enableLights(false)
-            notificationChannel.lightColor = Color.RED
-            notificationChannel.enableVibration(false)
+            val notificationChannel = NotificationChannel(
+                "download",
+                "Unduh Gambar C1",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            notificationChannel.description = PantauConstants.Notification.NOTIFICATION_CHANNEL_DESC_UPLOAD
+            notificationChannel.enableVibration(true)
+
+            val audioAttributes = AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .build()
+            notificationChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), audioAttributes)
             notificationManager.createNotificationChannel(notificationChannel)
         }
 
@@ -49,6 +61,13 @@ class DownloadC1Service : IntentService("DownloadService") {
             .setContentText("Mengunduh Gambar C1")
             .setDefaults(0)
             .setAutoCancel(true)
+            .setColor(color(R.color.colorPrimary))
+            .setContentInfo(BuildConfig.APPLICATION_ID)
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+//            .setContentIntent(pendingIntent)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setDefaults(Notification.DEFAULT_ALL)
         notificationManager.notify(0, notificationBuilder.build())
         downloadImage(intent.getStringExtra("image_url"))
     }

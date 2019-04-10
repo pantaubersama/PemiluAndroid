@@ -1,20 +1,12 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.list
 
 import android.app.Activity.RESULT_OK
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.RequiresApi
-import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
@@ -49,56 +41,8 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent) {
-            createNotification(p1)
             refreshItem()
         }
-    }
-
-    private fun createNotification(intent: Intent) {
-        val notificationIntent = Intent()
-        val pendingIntent = PendingIntent.getActivity(
-            requireContext(), 0, notificationIntent, 0)
-        val notificationBuilder = NotificationCompat.Builder(requireContext(),
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                createNotificationChannel("upload", "Unggah Perhitungan")
-            } else {
-                ""
-            }
-        )
-            .setSmallIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                R.drawable.ic_notification_icon
-            } else {
-                R.drawable.ic_logo_notification_transparent_in
-            })
-            .setContentTitle(if (intent.getBooleanExtra("status", false)) {
-                "Berhasil mengunggah perhitungan"
-            } else {
-                "Gagal mengunggah perhitungan"
-            })
-            .setContentText(if (intent.getBooleanExtra("status", false)) {
-                "Perhitungan kamu berhasil terunggah"
-            } else {
-                intent.getStringExtra("message")
-            })
-
-        notificationBuilder.setContentIntent(pendingIntent)
-        val notificationManager = requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(1, notificationBuilder.build())
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ToastUtil.show(requireContext(), "Berhasil mengunggah perhitungan")
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel(channelId: String, channelName: String): String {
-        val notificationChannel = NotificationChannel(channelId,
-            channelName, NotificationManager.IMPORTANCE_NONE)
-        notificationChannel.lightColor = Color.RED
-        notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
-        notificationChannel.enableLights(true)
-        val service = requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        service.createNotificationChannel(notificationChannel)
-        return channelId
     }
 
     override fun onResume() {

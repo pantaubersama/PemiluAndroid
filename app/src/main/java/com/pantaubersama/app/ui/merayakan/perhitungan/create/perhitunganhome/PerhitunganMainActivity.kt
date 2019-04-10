@@ -25,7 +25,6 @@ import com.pantaubersama.app.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_perhitunganmain.*
 import kotlinx.android.synthetic.main.publish_confirmation_dialog.*
 import javax.inject.Inject
-import androidx.core.content.ContextCompat
 
 class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), PerhitunganMainView, View.OnClickListener {
     private var tps: TPS? = null
@@ -230,7 +229,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
             tps?.id?.let {
                 val intent = Intent(this@PerhitunganMainActivity, UploadTpsService::class.java)
                 intent.putExtra("tps_id", it)
-                ContextCompat.startForegroundService(this@PerhitunganMainActivity, intent)
+                startService(intent)
                 finishSection()
             }
         }
