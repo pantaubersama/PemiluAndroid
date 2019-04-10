@@ -105,6 +105,10 @@
             android:name=".background.uploadtps.UploadTpsService">
         </service>
 
+        <service
+            android:name=".background.downloadc1.DownloadC1Service">
+        </service>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="536361816a0d2006ea747cdd456218543609b7d7" />

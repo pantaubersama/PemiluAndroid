@@ -17,9 +17,9 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     @Inject
     lateinit var presenter: UploadTpsPresenter
 
-    lateinit var notificationIntent: Intent
-    lateinit var pendingIntent: PendingIntent
-    lateinit var notificationBuilder: NotificationCompat.Builder
+    private lateinit var notificationIntent: Intent
+    private lateinit var pendingIntent: PendingIntent
+    private lateinit var notificationBuilder: NotificationCompat.Builder
 //    lateinit var notificationManager: NotificationManager
     var progress: Int = 0
 

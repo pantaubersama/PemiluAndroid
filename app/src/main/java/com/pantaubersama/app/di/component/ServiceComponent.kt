@@ -1,5 +1,6 @@
 package com.pantaubersama.app.di.component
 
+import com.pantaubersama.app.background.downloadc1.DownloadC1Service
 import com.pantaubersama.app.background.firebase.PantauFirebaseMessagingService
 import com.pantaubersama.app.background.uploadtps.UploadTpsService
 import com.pantaubersama.app.di.module.ServiceModule
@@ -14,4 +15,5 @@ import dagger.Subcomponent
 interface ServiceComponent {
     fun inject(pantauFirebaseMessagingService: PantauFirebaseMessagingService)
     fun inject(uploadTPSService: UploadTpsService)
+    fun inject(downloadC1Service: DownloadC1Service)
 }

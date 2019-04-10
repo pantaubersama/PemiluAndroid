@@ -103,7 +103,7 @@ class DetailTPSActivity : BaseActivity<DetailTPSPresenter>(), DetailTPSView {
                 val child = layoutInflater.inflate(R.layout.rekapitulasi_images_layout, null)
                 child.c1_image.loadUrl(image.file.url, R.drawable.ic_avatar_placeholder)
                 child.c1_image.setOnClickListener {
-                    ImagePreviewDialogFragment.show(image.file.url, supportFragmentManager)
+                    ImagePreviewDialogFragment.show(image.file.url, supportFragmentManager, true)
                 }
                 presiden_images_container.addView(child)
             }
@@ -111,7 +111,7 @@ class DetailTPSActivity : BaseActivity<DetailTPSPresenter>(), DetailTPSView {
     }
 
     override fun showFailedGetC1SummaryAlert(message: String?) {
-        if (message != "Belum ada") {
+        if (message?.toLowerCase() != "Data form C1 tidak ditemukan".toLowerCase()) {
             ToastUtil.show(this@DetailTPSActivity, "Gagal memuat rekapitulasi C1")
         }
     }
