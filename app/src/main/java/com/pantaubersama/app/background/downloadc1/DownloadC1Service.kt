@@ -133,15 +133,23 @@ class DownloadC1Service : IntentService("DownloadService") {
 
     private fun onDownloadComplete(downloadComplete: Boolean) {
         sendProgressUpdate(downloadComplete)
+        val downloadedIntent = Intent()
+        downloadedIntent.action = android.content.Intent.ACTION_VIEW
+        downloadedIntent.type = "image/*"
+        downloadedIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        val downloadedPendingIntent = PendingIntent.getActivity(
+            this@DownloadC1Service, 0, downloadedIntent, 0)
         notificationManager.cancel(1)
         notificationBuilder.setProgress(0, 0, false)
-        notificationBuilder.setContentText("Gambar Berhasil Diunduh")
-        notificationBuilder.setSmallIcon(android.R.drawable.stat_sys_download_done)
-        notificationBuilder.setLargeIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            getBitmap(R.drawable.ic_notification_icon)
-        } else {
-            getBitmap(R.drawable.ic_logo_notification_transparent_in)
-        })
+            .setContentText("Gambar Berhasil Diunduh")
+            .setSmallIcon(android.R.drawable.stat_sys_download_done)
+            .setLargeIcon(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                getBitmap(R.drawable.ic_notification_icon)
+            } else {
+                getBitmap(R.drawable.ic_logo_notification_transparent_in)
+            })
+
+        notificationBuilder.setContentIntent(downloadedPendingIntent)
         notificationManager.notify(1, notificationBuilder.build())
     }
 
