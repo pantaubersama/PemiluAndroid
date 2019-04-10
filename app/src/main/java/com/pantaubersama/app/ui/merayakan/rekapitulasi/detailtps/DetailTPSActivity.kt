@@ -14,6 +14,7 @@ import com.pantaubersama.app.data.model.tps.TPS
 import com.pantaubersama.app.data.model.tps.c1.C1Form
 import com.pantaubersama.app.data.model.tps.image.Image
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.widget.imagepreview.ImagePreviewDialogFragment
 import com.pantaubersama.app.utils.PantauConstants.Merayakan.TPS_DATA
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -98,9 +99,12 @@ class DetailTPSActivity : BaseActivity<DetailTPSPresenter>(), DetailTPSView {
     override fun bindImages(images: MutableList<Image>) {
         if (images.size != 0) {
             presiden_c1_container.visibility = View.VISIBLE
-            images.forEach {
+            images.forEach { image ->
                 val child = layoutInflater.inflate(R.layout.rekapitulasi_images_layout, null)
-                child.c1_image.loadUrl(it.file.url, R.drawable.ic_avatar_placeholder)
+                child.c1_image.loadUrl(image.file.url, R.drawable.ic_avatar_placeholder)
+                child.c1_image.setOnClickListener {
+                    ImagePreviewDialogFragment.show(image.file.url, supportFragmentManager)
+                }
                 presiden_images_container.addView(child)
             }
         }
