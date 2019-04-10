@@ -1,6 +1,6 @@
 package com.pantaubersama.app.data.interactors
 
-import com.pantaubersama.app.data.model.rekapitulasi.*
+import com.pantaubersama.app.data.model.rekapitulasi.* // ktlint-disable
 import com.pantaubersama.app.data.model.tps.c1.C1Form
 import com.pantaubersama.app.data.model.tps.image.Image
 import com.pantaubersama.app.data.remote.APIWrapper

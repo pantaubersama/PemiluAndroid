@@ -16,6 +16,7 @@ import com.pantaubersama.app.ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerah
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
+import com.pantaubersama.app.utils.extensions.isDueTime
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
@@ -64,7 +65,13 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
     override fun showBanner(it: BannerInfo) {
         adapter.clearData()
         adapter.addBanner(it)
-        presenter.getTotalParticipant()
+        if (requireContext().isDueTime(1555434000000)) {
+            presenter.getTotalParticipant()
+        } else {
+            dismissLoading()
+            recycler_view.visibleIf(true)
+            adapter.showWaiting()
+        }
     }
 
     override fun showFailedGetTotalParticipantAlert() {

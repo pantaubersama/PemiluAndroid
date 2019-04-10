@@ -10,32 +10,31 @@ import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
 import com.pantaubersama.app.data.model.rekapitulasi.Percentage
 import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
+import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiWait
 import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
 import com.pantaubersama.app.ui.widget.BannerViewHolder
 import com.pantaubersama.app.utils.* // ktlint-disable
+import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.rekapitulasi_footer_layout.*
 import kotlinx.android.synthetic.main.rekapitulasi_item.*
 import kotlinx.android.synthetic.main.rekapitulasi_nasional_layout.*
 import kotlinx.android.synthetic.main.rekapitulasi_total_participants_layout.*
+import kotlinx.android.synthetic.main.rekapitulasi_wait_layout.*
 
 class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
     var listener: Listener? = null
 
     override fun getItemViewType(position: Int): Int {
-        if (data[position] is BannerInfo) {
-            return VIEW_TYPE_BANNER
-        } else if (data[position] is TotalParticipantData) {
-            return VIEW_TYPE_TOTAL_PARTICIPANT
-        } else if (data[position] is Percentage) {
-            return VIEW_TYPE_NASIONAL
-        } else if (data[position] is Rekapitulasi) {
-            return VIEW_TYPE_ITEM
-        } else if (data[position] is Footer) {
-            return VIEW_TYPE_FOOTER
-        } else {
-            return VIEW_TYPE_ITEM
+        when {
+            data[position] is BannerInfo -> return VIEW_TYPE_BANNER
+            data[position] is TotalParticipantData -> return VIEW_TYPE_TOTAL_PARTICIPANT
+            data[position] is Percentage -> return VIEW_TYPE_NASIONAL
+            data[position] is Rekapitulasi -> return VIEW_TYPE_ITEM
+            data[position] is Footer -> return VIEW_TYPE_FOOTER
+            data[position] is RekapitulasiWait -> return VIEW_TYPE_WAITING
+            else -> return VIEW_TYPE_ITEM
         }
     }
 
@@ -47,6 +46,7 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
             VIEW_TYPE_TOTAL_PARTICIPANT -> RekapitulasiTotalParticipantViewHolder(parent.inflate(R.layout.rekapitulasi_total_participants_layout))
             VIEW_TYPE_NASIONAL -> RekapitulasiNasionalViewHolder(parent.inflate(R.layout.rekapitulasi_nasional_layout))
             VIEW_TYPE_FOOTER -> RekapitulasiFooterViewHolder(parent.inflate(R.layout.rekapitulasi_footer_layout))
+            VIEW_TYPE_WAITING -> RekapitulasiWaitViewHolder(parent.inflate(R.layout.rekapitulasi_wait_layout))
             else -> RekapitulasiViewHolder(parent.inflate(R.layout.rekapitulasi_item))
         }
     }
@@ -57,6 +57,7 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
         (holder as? RekapitulasiNasionalViewHolder)?.bind(data[position] as Percentage)
         (holder as? RekapitulasiViewHolder)?.bind(data[position] as Rekapitulasi)
         (holder as? RekapitulasiFooterViewHolder)?.bind()
+        (holder as? RekapitulasiWaitViewHolder)?.bind()
     }
 
     inner class RekapitulasiNasionalViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -84,7 +85,7 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
         fun bind(item: TotalParticipantData) {
             total_participants.text = item.total.toString()
             last_update_rekapitulasi.text = item.lastUpdate?.let {
-                 "Pembaruan terakhir ${it.createdAtInWord.id}"
+                "Pembaruan terakhir ${it.createdAtInWord.id}"
             } ?: "Belum ada pembaharuan"
         }
     }
@@ -129,12 +130,24 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
         }
     }
 
+    inner class RekapitulasiWaitViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+        fun bind() {
+            val resultSummary = spannable {
+                +"Rekapitulasi pemilu serentak seluruh Indonesia akan aktif "
+                textColor(itemView.context.color(R.color.colorAccent)) { + "17 April 2019" }
+                +" nanti"
+            }.toCharSequence()
+            merayakan_hint.text = resultSummary
+        }
+    }
+
     companion object {
         var VIEW_TYPE_ITEM = 1
         var VIEW_TYPE_BANNER = 2
         var VIEW_TYPE_TOTAL_PARTICIPANT = 3
         var VIEW_TYPE_NASIONAL = 4
         var VIEW_TYPE_FOOTER = 5
+        var VIEW_TYPE_WAITING = 6
     }
 
     fun addBanner(bannerInfo: BannerInfo) {
@@ -166,6 +179,11 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
     fun clearData() {
         data.clear()
         clear()
+    }
+
+    fun showWaiting() {
+        data.add(RekapitulasiWait())
+        notifyItemInserted(data.size)
     }
 
     interface Listener {
