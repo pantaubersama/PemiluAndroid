@@ -14,21 +14,24 @@
         android:background="@drawable/bg_rounded_outline_white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="8dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_search_inactive" />
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <EditText
+            android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_search_inactive"
+            android:drawablePadding="8dp"
             android:fontFamily="@font/lato_italic"
             android:hint="Pilih bidang kajian"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
             android:lineSpacingExtra="12sp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:textColor="@color/gray_5"
             android:textColorHint="@color/gray_dark_1"
             android:textSize="12sp" />
@@ -41,11 +44,7 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/bg_rounded_outline_white">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
+        <include layout="@layout/layout_common_recyclerview" />
 
     </LinearLayout>
 

@@ -23,6 +23,7 @@ import com.pantaubersama.app.ui.notification.NotifActivity
 import com.pantaubersama.app.ui.penpol.PenPolFragment
 import com.pantaubersama.app.ui.profile.ProfileActivity
 import com.pantaubersama.app.ui.search.SearchActivity
+import com.pantaubersama.app.ui.merayakan.MerayakanFragment
 import com.pantaubersama.app.ui.note.CatatanPilihanActivityRevised
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_OPEN_TAB_TYPE
@@ -99,7 +100,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
                 R.id.navigation_menggali -> PenPolFragment.newInstance() to PenPolFragment.TAG
 //                R.id.navigation_menguji -> MengujiHomeFragment.newInstance() to MengujiHomeFragment.TAG
 //                R.id.navigation_menjaga -> MenjagaFragment.newInstance() to MenjagaFragment.TAG   // di hide dulu, production belum ada api nya @edityo 30/01/19
-//                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
+                R.id.navigation_merayakan -> MerayakanFragment.newInstance() to MerayakanFragment.TAG
                 else -> throw IllegalStateException("unknown menu")
             }
             showFragment(fragment, tag)
@@ -161,7 +162,7 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeView {
     }
 
     override fun onSuccessLoadUser(profile: Profile) {
-        iv_user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
+        iv_user_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
         if (profile != EMPTY_PROFILE) {
             iv_user_avatar.setOnClickListener {
                 val intent = Intent(this@HomeActivity, ProfileActivity::class.java)

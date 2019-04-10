@@ -96,7 +96,7 @@ class ProfileInteractor @Inject constructor(
                 .observeOn(rxSchedulers.mainThread())
                 .doOnComplete {
                     val newProfile = dataCache.loadUserProfile()
-                    newProfile.name = name!!
+                    newProfile.fullName = name!!
                     newProfile.username = username!!
                     newProfile.location = location!!
                     newProfile.about = description!!
@@ -159,20 +159,20 @@ class ProfileInteractor @Inject constructor(
                 .observeOn(rxSchedulers.mainThread())
                 .doOnComplete {
                     val newProfile = dataCache.loadUserProfile()
-                    newProfile.informant.identityNumber = idNumber
-                    newProfile.informant.pob = pob
-                    newProfile.informant.dob = dob
-                    newProfile.informant.gender = gender
-                    newProfile.informant.occupation = occupation
-                    newProfile.informant.nationality = nationality
-                    newProfile.informant.address = address
-                    newProfile.informant.phoneNumber = phoneNumber
+                    newProfile.informant?.identityNumber = idNumber
+                    newProfile.informant?.pob = pob
+                    newProfile.informant?.dob = dob
+                    newProfile.informant?.gender = gender
+                    newProfile.informant?.occupation = occupation
+                    newProfile.informant?.nationality = nationality
+                    newProfile.informant?.address = address
+                    newProfile.informant?.phoneNumber = phoneNumber
                     dataCache.saveUserProfile(newProfile)
                 }
     }
 
     fun isModerator(): Boolean {
-        return getProfile().isModerator
+        return getProfile().isModerator == true
     }
 
     fun isEligible(): Boolean {

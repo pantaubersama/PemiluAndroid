@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingStart="16dp"
+    android:paddingTop="8dp"
+    android:paddingRight="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_outline_gray"
+        android:paddingTop="1dp"
+        android:paddingLeft="1dp"
+        android:paddingStart="1dp"
+        android:paddingRight="1dp"
+        android:paddingEnd="1dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
+            android:paddingRight="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:background="@drawable/top_rounded_gray_2">
+
+            <TextView
+                android:id="@+id/province_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yogyakarta"
+                android:fontFamily="@font/bw_modelica_bold"
+                android:textSize="14sp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/next_button"/>
+
+            <ImageView
+                android:id="@+id/next_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/outline_arrow_back_24_px"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:id="@+id/presiden_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:id="@+id/paslon_1_color"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:orientation="horizontal"
+                        android:background="@drawable/circle_background_primary">
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/paslon_1_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jokowi-Ma'ruh"
+                        android:layout_marginLeft="12sp"
+                        android:layout_marginStart="12dp"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="12sp"
+                        android:textColor="@color/black_3"/>
+
+                    <TextView
+                        android:id="@+id/paslon_1_percentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/lato_bold"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="4dp">
+
+                    <LinearLayout
+                        android:id="@+id/paslon_2_color"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:orientation="horizontal"
+                        android:background="@drawable/circle_background_paslon_2">
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/paslon_2_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Prabowo-Sandi"
+                        android:layout_marginLeft="12sp"
+                        android:layout_marginStart="12dp"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="12sp"
+                        android:textColor="@color/black_3"/>
+
+                    <TextView
+                        android:id="@+id/paslon_2_percentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/lato_bold"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rata-rata Suara Tidak Sah :"
+                    android:textColor="@color/black_3"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/lato_regular"/>
+
+                <TextView
+                    android:id="@+id/no_vote_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black_3"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rata-rata Suara Masuk :"
+                    android:textColor="@color/black_3"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/lato_regular"/>
+
+                <TextView
+                    android:id="@+id/votes_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black_3"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

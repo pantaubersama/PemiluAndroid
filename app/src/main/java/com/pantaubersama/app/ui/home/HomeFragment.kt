@@ -11,11 +11,14 @@ import kotlinx.android.synthetic.main.fragment_view_pager.*
 
 abstract class HomeFragment : CommonFragment() {
 
-    private var currentTabPosition: Int = 0
+    protected var currentTabPosition: Int = 0
 
     abstract val pagerFragments: List<Pair<Fragment, String>>
 
     open val onFilterClicked: ((tabPosition: Int) -> Unit)? = null
+
+    open val viewPager: ViewPager
+        get() = view_pager
 
     override fun setLayout(): Int = R.layout.fragment_view_pager
 
@@ -30,13 +33,13 @@ abstract class HomeFragment : CommonFragment() {
     }
 
     private fun setupViewPager() {
-        view_pager.adapter = object : FragmentPagerAdapter(childFragmentManager) {
+        viewPager.adapter = object : FragmentPagerAdapter(childFragmentManager) {
             override fun getItem(position: Int): Fragment = pagerFragments[position].first
             override fun getPageTitle(position: Int): CharSequence? = pagerFragments[position].second
             override fun getCount(): Int = pagerFragments.size
         }
 
-        view_pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+        viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 currentTabPosition = position
             }
@@ -44,7 +47,7 @@ abstract class HomeFragment : CommonFragment() {
     }
 
     private fun setupTabsAndFilter() {
-        (requireActivity() as HomeActivity).setupTabsAndFilter(view_pager, onFilterClicked?.run {
+        (requireActivity() as HomeActivity).setupTabsAndFilter(viewPager, onFilterClicked?.run {
             View.OnClickListener { invoke(currentTabPosition) }
         })
     }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center"
+    android:paddingTop="40dp"
+    android:paddingBottom="40dp"
+    android:paddingLeft="32dp"
+    android:paddingStart="32dp"
+    android:paddingRight="32dp"
+    android:paddingEnd="32dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/election_day_icon"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="“ Festivity Over Apathy “"
+        android:fontFamily="@font/bw_modelica_bold"
+        android:textColor="@color/orange"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/merayakan_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rekapitulasi pemilu serentak seluruh Indonesia
+akan aktif 17 April 2019 nanti"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lato_medium"/>
+
+</LinearLayout>

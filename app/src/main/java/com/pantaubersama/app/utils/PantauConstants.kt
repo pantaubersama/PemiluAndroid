@@ -13,6 +13,14 @@ class PantauConstants {
         }
     }
 
+    object Merayakan {
+        const val CREATE_PERHITUNGAN_REQUEST_CODE = 965
+        const val C1_MODEL_TYPE = "c1_type"
+        const val REAL_COUNT_TYPE = "perhitungan_type"
+        const val DO_PERHITUNGAN_REQUEST_CODE = 967
+        const val TPS_DATA = "tps_data"
+    }
+
     companion object {
         const val LABEL_COPY = "LABEL_COPY"
 
@@ -21,6 +29,11 @@ class PantauConstants {
         const val BANNER_TANYA = "tanya"
         const val BANNER_KUIS = "kuis"
         const val BANNER_LAPOR = "lapor"
+        const val PERHITUNGAN = "perhitungan"
+        const val REKAPITULASI = "rekapitulasi"
+        const val BANNER_DEBAT = "debat"
+        const val BANNER_DEBAT_PUBLIC = "debat_public"
+        const val BANNER_DEBAT_PERSONAL = "debat_personal"
         const val URL = "url"
         val PROFILE_COMPLETION = "profile_completion"
         val FILTER_ORANG_ALL = "verified_all"
@@ -29,6 +42,8 @@ class PantauConstants {
         val CONFIRMATION_PATH = "confirmation"
         val JANPOL = "janji_politik"
         val QUIZ = "quiz"
+        const val DATABASE_VERSION = 1
+        const val DATABASE_NAME = "pantau_bersama"
     }
 
     object Lapor {
@@ -95,6 +110,12 @@ class PantauConstants {
         const val EXTRA_IMAGE_URL = "EXTRA_IMAGE_URL"
         const val EXTRA_BROADCAST_URL = "EXTRA_BROADCAST_URL"
         const val EXTRA_OPEN_TAB_TYPE = "EXTRA_OPEN_TAB_TYPE"
+        const val EXTRA_CHALLENGE_ITEM = "EXTRA_CHALLENGE_ITEM"
+        const val EXTRA_CHALLENGE_ID = "EXTRA_CHALLENGE_ID"
+        const val EXTRA_DATE_STRING = "EXTRA_DATE_STRING"
+        const val EXTRA_OEMBEDED_LINK = "EXTRA_OEMBEDED_LINK"
+        const val EXTRA_URL_ITEM = "EXTRA_URL_ITEM"
+        const val EXTRA_CHALLENGE_POSITION = "EXTRA_CHALLENGE_POSITION"
     }
 
     object RequestCode {
@@ -105,6 +126,9 @@ class PantauConstants {
         const val RC_BANNER_PILPRES = 101
         const val RC_BANNER_JANPOL = 102
         const val RC_BANNER_TANYA_KANDIDAT = 103
+        const val RC_BANNER_SEARCH_TANYA_KANDIDAT = 104
+        const val RC_BANNER_PERHITUNGAN = 222
+        const val RC_BANNER_REKAPITULASI = 223
         const val RC_BANNER_KUIS = 104
         const val RC_BANNER_LAPOR = 105
         const val RC_ASK_PERMISSIONS = 115
@@ -117,12 +141,14 @@ class PantauConstants {
         const val RC_FILTER_CLUSTER = 1013
         const val RC_SHARE = 1014
         const val RC_OPEN_CHROME_TAB = 1015
+        const val RC_OPEN_DETAIL_DEBAT = 1016
     }
 
     object ResultCode {
         const val RESULT_DELETE_ITEM_JANPOL = 111
         const val RESULT_DELETE_ITEM_QUESTION = 112
         const val RESULT_ITEM_CHANGED_QUESTION = 113
+        const val RESULT_DELETE_CHALLENGE = 114
     }
 
     object Networking {
@@ -169,13 +195,13 @@ class PantauConstants {
 
         object Title {
             const val PUBLIK_LIVE_NOW = "Live now"
-            const val PUBLIK_COMING_SOON = "Debat: Coming soon"
+            const val PUBLIK_COMING_SOON = "Debat: Coming Soon"
             const val PUBLIK_DONE = "Debat: Done"
             const val PUBLIK_CHALLENGE = "Challenge"
-            const val PERSONAL_CHALLENGE_IN_PROGRESS = "Challenge in progress"
-            const val PERSONAL_COMING_SOON = "My debat: Coming soon"
-            const val PERSONAL_DONE = "My debat: Done"
-            const val PERSONAL_CHALLENGE = "My challenge"
+            const val PERSONAL_CHALLENGE_IN_PROGRESS = "Challenge in Progress"
+            const val PERSONAL_COMING_SOON = "My Debat: Coming Soon"
+            const val PERSONAL_DONE = "My Debat: Done"
+            const val PERSONAL_CHALLENGE = "My Challenge"
         }
     }
 
@@ -198,7 +224,9 @@ class PantauConstants {
         const val TYPE_USER = 10
         const val TYPE_PARTAI = 11
         const val TYPE_HEADER = 12
-        const val TYPE_DEBAT_ITEM = 13
+        const val TYPE_CHALLENGE_ITEM = 13
+        const val TYPE_TAG_ITEM = 14
+        const val TYPE_AUDIENCE_ITEM = 15
     }
 
     object Profile {
@@ -249,6 +277,7 @@ class PantauConstants {
         const val SHARE_HASIL_KUIS_PATH = "share/hasilkuis/"
         const val SHARE_KECENDERUNGAN_PATH = "share/kecenderungan/"
         const val SHARE_BADGE_PATH = "share/badge/"
+        const val SHARE_CHALLENGE_PATH = "share/wordstadium"
     }
 
     object Onboarding {
@@ -271,8 +300,11 @@ class PantauConstants {
 
     object Notification {
         const val NOTIFICATION_CHANNEL_ID_BROADCAST = "1"
+        const val NOTIFICATION_CHANNEL_ID_UPLOAD = "2"
         const val NOTIFICATION_CHANNEL_NAME_BROADCAST = "Broadcast"
+        const val NOTIFICATION_CHANNEL_NAME_UPLOAD = "Upload"
         const val NOTIFICATION_CHANNEL_DESC_BROADCAST = "Broadcast"
+        const val NOTIFICATION_CHANNEL_DESC_UPLOAD = "Upload"
 
         const val NOTIFICATION_TOPIC_BROADCAST = "android-broadcasts-activity"
         const val NOTIFICATION_TOPIC_JANPOL = "android-janji_politik-report"
@@ -286,5 +318,14 @@ class PantauConstants {
         const val NOTIFICATION_TYPE_QUESTION = "question"
         const val NOTIFICATION_TYPE_BADGE = "badge"
         const val NOTIFICATION_TYPE_PROFILE = "profile"
+        const val NOTIFICATION_TYPE_CHALLENGE = "challenge"
+    }
+
+    object Word {
+        const val WORD_TYPE_CHALLENGER = 1
+        const val WORD_TYPE_OPPONENT = 2
+        const val WORD_INPUT_CHALLENGER = 3
+        const val WORD_INPUT_OPPONENT = 4
+        const val WORD_TYPE_AUDIENCE = 5
     }
 }

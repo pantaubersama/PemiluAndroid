@@ -2,6 +2,7 @@ package com.pantaubersama.app.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.extrainteger.symbolic.Callback
 import com.extrainteger.symbolic.Result
 import com.extrainteger.symbolic.SymbolicConfig
@@ -134,7 +135,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
                 .addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         val msg = "FCM ERROR - Failed subscribing $it – ${task.exception}"
-                        Timber.e(msg)
+                        Log.e("FCM ERROR", msg)
                     }
                 }
         }

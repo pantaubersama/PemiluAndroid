@@ -45,6 +45,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.ActionBarOverlay" parent="AppTheme">
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
     <style name="vertical_line_done">
         <item name="android:layout_width">1dp</item>
         <item name="android:layout_height">match_parent</item>

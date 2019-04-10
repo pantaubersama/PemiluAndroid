@@ -3,10 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.pantaubersama.app">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission
         android:name="android.permission.RECORD_AUDIO"
         tools:node="remove" />
@@ -24,6 +27,38 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
+        <activity android:name=".ui.merayakan.perhitungan.create.c1.C1FormActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.rekapitulasi.detailtps.DetailTPSActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.rekapitulasi.tpslist.TPSListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerahActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.dpr.PerhitunganDPRActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.debat.detail.DetailDebatActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.debat.DebatActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.ActionBarOverlay" />
+        <activity
+            android:name=".ui.wordstadium.challenge.open.OpenChallengeActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge"
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.note.CatatanPilihanActivityRevised"
             android:screenOrientation="portrait"/>
         <activity
@@ -32,13 +67,10 @@
         <activity
             android:name=".ui.notification.NotifActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.wordstadium.challenge.direct.PreviewChallengeActivity"
-            android:screenOrientation="portrait" />
         <activity android:name=".ui.wordstadium.challenge.direct.DirectChallengeActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.wordstadium.challenge.open.PromoteChallengeActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".ui.wordstadium.challenge.open.OpenChallengeAct"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.webview.ChromeTabActivity"
@@ -67,6 +99,14 @@
             <meta-data
                 android:name="com.google.firebase.messaging.default_notification_color"
                 android:resource="@color/colorPrimary" />
+        </service>
+
+        <service
+            android:name=".background.uploadtps.UploadTpsService">
+        </service>
+
+        <service
+            android:name=".background.downloadc1.DownloadC1Service">
         </service>
 
         <meta-data
@@ -289,9 +329,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.connect.ConnectActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.note.CatatanPilihanActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.profile.cluster.invite.UndangAnggotaActivity"

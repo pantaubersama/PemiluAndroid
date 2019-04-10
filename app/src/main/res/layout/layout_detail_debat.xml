@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:clipToPadding="false"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_challenge_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bw_modelica_bold"
+            android:text="@string/detil_debat"
+            android:textColor="@color/black_2"
+            android:textSize="14sp"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/tv_label_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bg_rounded_4dp_outline_yellow_light"
+            tools:text="ekonomi"
+            android:textSize="9sp"
+            android:textColor="@color/gray_dark_3"
+            android:fontFamily="@font/lato_italic"/>
+
+        <LinearLayout
+            android:id="@+id/ll_webview"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray_1"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_statement_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="https://twitter.com/ident_it/status/997050576012591104"
+                android:textColor="@color/blue_url"
+                android:textSize="10sp"
+                android:fontFamily="@font/lato_regular"/>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar_url_preview"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_title_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            tools:text="2018 pertumbuhan ekonomi Indonesia mengalami pertumbuhan mencapai 5,27%. 2 periode yuk, biar 10,54%."
+            android:fontFamily="@font/bw_modelica_bold"
+            android:textSize="12sp"
+            android:textColor="@color/black_2"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_opponent_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp">
+
+            <TextView
+                android:id="@+id/tv_label_opponent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/lawan_debat"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="14sp"
+                android:textColor="@color/black_2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_opponent_avatar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                tools:src="@drawable/ava_calon_2"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                app:riv_oval="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_label_opponent"/>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:visibility="gone"
+                android:id="@+id/iv_opponent_site_avatar"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_twitter_circle"
+                android:layout_marginTop="17dp"
+                app:riv_oval="true"
+                app:layout_constraintBottom_toBottomOf="@id/iv_opponent_avatar"
+                app:layout_constraintTop_toBottomOf="@id/iv_opponent_avatar"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:fontFamily="@font/lato_bold"
+                android:id="@+id/tv_opponent_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textSize="11sp"
+                tools:text="Adriana C. Ocampo Uria"
+                android:textColor="@color/black"
+                android:maxLength="20"
+                android:singleLine="true"
+                android:ellipsize="end"
+                app:layout_constraintTop_toTopOf="@id/iv_opponent_avatar"
+                app:layout_constraintStart_toEndOf="@id/iv_opponent_avatar"/>
+
+            <TextView
+                android:fontFamily="@font/lato_bold"
+                android:id="@+id/tv_opponent_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="8sp"
+                tools:text=" @Toranta"
+                android:textColor="@color/gray_4"
+                android:maxLength="15"
+                android:singleLine="true"
+                android:ellipsize="end"
+                app:layout_constraintTop_toBottomOf="@id/tv_opponent_name"
+                app:layout_constraintStart_toStartOf="@id/tv_opponent_name"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+            <TextView
+                android:id="@+id/tv_label_time_detail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/date_time"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="14sp"
+                android:textColor="@color/black_2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <ImageView
+                android:id="@+id/iv_date"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_date"
+                app:layout_constraintTop_toBottomOf="@id/tv_label_time_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_date_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/bw_modelica_bold"
+                android:textColor="@color/black_2"
+                android:textSize="12sp"
+                tools:text="Selasa, 24 Maret 2019"
+                app:layout_constraintTop_toTopOf="@id/iv_date"
+                app:layout_constraintBottom_toBottomOf="@id/iv_date"
+                app:layout_constraintStart_toEndOf="@id/iv_date"/>
+
+            <ImageView
+                android:id="@+id/iv_hour"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/ic_clock"
+                app:layout_constraintTop_toBottomOf="@id/iv_date"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_hour_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                tools:text="16.00"
+                android:textSize="12sp"
+                android:textColor="@color/black_2"
+                android:fontFamily="@font/bw_modelica_bold"
+                app:layout_constraintStart_toEndOf="@id/iv_hour"
+                app:layout_constraintTop_toTopOf="@id/iv_hour"
+                app:layout_constraintBottom_toBottomOf="@id/iv_hour"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:id="@+id/tv_label_saldo_waktu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/saldo_waktu"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="14sp"
+                android:textColor="@color/black_2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_label_saldo_waktu_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/saldo_waktu_desc"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="11sp"
+                android:textColor="@color/gray_4"
+                app:layout_constraintTop_toBottomOf="@id/tv_label_saldo_waktu"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <ImageView
+                android:id="@+id/iv_saldo_waktu"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_saldo_waktu"
+                app:layout_constraintTop_toBottomOf="@id/tv_label_saldo_waktu_desc"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_saldo_waktu_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                tools:text="120 menit"
+                android:textSize="12sp"
+                android:textColor="@color/black_2"
+                android:fontFamily="@font/bw_modelica_bold"
+                app:layout_constraintStart_toEndOf="@id/iv_saldo_waktu"
+                app:layout_constraintTop_toTopOf="@id/iv_saldo_waktu"
+                app:layout_constraintBottom_toBottomOf="@id/iv_saldo_waktu"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view_gray"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/gray_2"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="-32dp"
+            android:layout_marginEnd="-32dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_creator_avatar_detail"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="17dp"
+                android:scaleType="centerCrop"
+                app:riv_oval="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:src="@drawable/ava_calon_1" />
+
+            <TextView
+                android:id="@+id/tv_creator_name_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                tools:text="Raja Kampreta"
+                android:textSize="11sp"
+                android:textColor="@color/black_2"
+                android:fontFamily="@font/lato_regular"
+                app:layout_constraintTop_toBottomOf="@id/iv_creator_avatar_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <TextView
+                android:id="@+id/tv_creator_bio_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                tools:text="Usir penjajah mari bersedekah"
+                android:textSize="11sp"
+                android:textColor="@color/gray_dark_3"
+                android:fontFamily="@font/lato_regular"
+                app:layout_constraintTop_toBottomOf="@id/tv_creator_name_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <TextView
+                android:id="@+id/tv_posted_time_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                tools:text="Posted 8 minutes ago"
+                android:textSize="10sp"
+                android:textColor="@color/gray_4"
+                android:fontFamily="@font/lato_regular"
+                app:layout_constraintTop_toBottomOf="@id/tv_creator_bio_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</ScrollView>

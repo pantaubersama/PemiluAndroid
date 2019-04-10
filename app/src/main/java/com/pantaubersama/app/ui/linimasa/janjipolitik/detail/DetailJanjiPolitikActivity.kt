@@ -202,7 +202,7 @@ class DetailJanjiPolitikActivity : BaseActivity<DetailJanjiPolitikPresenter>(), 
     }
 
     private fun onClickOption() {
-        val dialog = OptionDialog(this, R.layout.layout_option_dialog_tanya_kandidat)
+        val dialog = OptionDialog(this, R.layout.layout_option_dialog_common)
         if (profile.cluster != null &&
             janpolItem?.creator?.cluster != null &&
             janpolItem?.creator?.cluster?.id?.equals(profile.cluster?.id) == true &&

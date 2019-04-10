@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/ll_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minWidth="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="wrap"
+        app:layout_constraintWidth_percent="0.7">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:paddingEnd="6dp"
+            android:fontFamily="@font/lato_regular"
+            tools:text="Mau nambahin, jumlah baliho juga melanggar ketentuan di pertigaan Ahmad Yani sudah saya lampiran bukti foto serta tambahan lokasi baliho dimana saja pemasangan baliho."
+            android:textAlignment="textStart"
+            android:textColor="@color/black_4"
+            android:textSize="12sp" />
+
+        <View
+            android:id="@+id/view_indicator"
+            android:layout_width="4dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/rounded_red_2" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_posted_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:paddingBottom="4dp"
+        android:paddingEnd="10dp"
+        android:text="40 menit yang lalu"
+        android:textSize="9sp"
+        android:textColor="@color/gray_4"
+        app:layout_constraintTop_toBottomOf="@id/ll_message"
+        app:layout_constraintEnd_toEndOf="@id/ll_message"/>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_1"
+        android:paddingEnd="8dp"
+        app:layout_constraintStart_toStartOf="@id/ll_message"
+        app:layout_constraintEnd_toEndOf="@id/tv_posted_time"
+        app:layout_constraintTop_toBottomOf="@id/tv_posted_time">
+
+        <TextView
+            android:id="@+id/tv_read_estimation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_medium"
+            android:layout_centerVertical="true"
+            android:text="Estimasi baca 5 menit"
+            android:textColor="@color/gray_4"
+            android:textSize="9sp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_btn_clap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless"
+            android:layout_alignParentEnd="true">
+
+            <TextView
+                android:id="@+id/tv_clap_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/lato_medium"
+                android:text="20"
+                android:textColor="@color/gray_4"
+                android:textSize="9sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_clap"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:paddingBottom="6dp"
+                android:scaleType="fitCenter"
+                app:lottie_fileName="lottie_clap.json"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="false"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_clap_count"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

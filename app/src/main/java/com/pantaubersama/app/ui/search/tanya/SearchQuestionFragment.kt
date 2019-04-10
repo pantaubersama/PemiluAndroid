@@ -91,7 +91,7 @@ class SearchQuestionFragment : BaseFragment<SearchQuestionPresenter>(), Updateab
         adapter.setHaveUser(profile)
         adapter.listener = object : TanyaKandidatAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), PantauConstants.Extra.EXTRA_TYPE_FEED, bannerInfo), PantauConstants.RequestCode.RC_BANNER_TANYA_KANDIDAT)
+                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), bannerInfo), PantauConstants.RequestCode.RC_BANNER_SEARCH_TANYA_KANDIDAT)
             }
 
             override fun onClickHeader() {
@@ -100,7 +100,7 @@ class SearchQuestionFragment : BaseFragment<SearchQuestionPresenter>(), Updateab
             }
 
             override fun onClickTanyaOption(item: Pertanyaan, position: Int) {
-                val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
+                val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_common)
                 if (item.user.id.equals(profile.id)) {
                     dialog.removeItem(R.id.report_tanya_kandidat_action)
                 } else {

@@ -1,53 +1,120 @@
 package com.pantaubersama.app.ui.menguji.home
 
 import com.pantaubersama.app.base.BasePresenter
-import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
-import com.pantaubersama.app.data.model.debat.DebatDetail
-import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.data.interactors.BannerInfoInteractor
+import com.pantaubersama.app.data.interactors.WordStadiumInteractor
+import com.pantaubersama.app.data.model.debat.ChallengeConstants.Progress
+import com.pantaubersama.app.utils.PantauConstants
+import com.pantaubersama.app.utils.State
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
-class MengujiPresenter @Inject constructor() : BasePresenter<MengujiView>() {
+class MengujiPresenter @Inject constructor(
+    private val bannerInfoInteractor: BannerInfoInteractor,
+    private val wordStadiumInteractor: WordStadiumInteractor
+) : BasePresenter<MengujiView>() {
 
     private val isPublik: Boolean
         get() = view?.isPublik ?: true
 
+    private val emptyChallenges = BehaviorSubject.create<Boolean>()
+
     fun getBanner() {
-        val body = if (isPublik)
-            "Chivalry over Bigotry\nExplore WordStadium. Kamu bisa cari tantangan terbuka dan debat yang akan atau sudah berlangsung."
+        view?.showLoading()
+        disposables += bannerInfoInteractor.getBannerInfo(
+            if (isPublik) PantauConstants.BANNER_DEBAT_PUBLIC else PantauConstants.BANNER_DEBAT_PERSONAL
+        )
+            .doOnEvent { _, _ -> view?.dismissLoading() }
+            .subscribe({
+                view?.showBanner(it)
+            }, {
+                view?.showError(it)
+                view?.hideBanner()
+            })
+    }
+
+    fun getChallengeCarousel() {
+        view?.showChallengeLive(State.Loading, emptyList(), false)
+
+        val request = if (isPublik)
+            wordStadiumInteractor.getPublicChallenge(Progress.LIVE_NOW, 1, MAX_CAROUSEL_ITEM)
         else
-            "Be truthful and gentle.\nUtarakan pernyataan kamu mengenai sebuah bidang kajian. Buat tantangan dan undang orang untuk berdebat denganmu!"
+            wordStadiumInteractor.getPersonalChallenge(Progress.IN_PROGRESS, 1, MAX_CAROUSEL_ITEM)
 
-        view?.showBanner(BannerInfo(title = "Menguji", body = body))
+        disposables += request
+            .subscribe({
+                val hasMore = (it.meta.pages?.total ?: 1) > 1
+                view?.showChallengeLive(State.Success, it.challenges, hasMore)
+                emptyChallenges.onNext(it.challenges.isEmpty())
+            }, {
+                view?.showChallengeLive(State.Error(it.message), emptyList(), false)
+            })
     }
 
-    fun getDebatLive() {
-        val debatList = (0..3).map {
-            DebatItem.LiveNow(DebatDetail("Ratu CebonganYK", "Raja Kampreta", "ekonomi"))
-        }
-        view?.showDebatLive(debatList)
+    fun getChallengeComingSoon() {
+        view?.showChallengeComingSoon(State.Loading, emptyList(), false)
+
+        val request = if (isPublik)
+            wordStadiumInteractor.getPublicChallenge(Progress.COMING_SOON, 1, MAX_SECTION_ITEM)
+        else
+            wordStadiumInteractor.getPersonalChallenge(Progress.COMING_SOON, 1, MAX_SECTION_ITEM)
+
+        disposables += request
+            .subscribe({
+                val hasMore = (it.meta.pages?.total ?: 1) > 1
+                view?.showChallengeComingSoon(State.Success, it.challenges, hasMore)
+                emptyChallenges.onNext(it.challenges.isEmpty())
+            }, {
+                view?.showChallengeComingSoon(State.Error(it.message), emptyList(), false)
+            })
     }
 
-    fun getDebatComingSoon() {
-        val debatList = (0..2).map {
-            DebatItem.ComingSoon(DebatDetail("Ratu CebonganYK", "Raja Kampreta", "ekonomi"),
-                "24 Maret 2019", "16:00 - 17:00")
-        }
-        view?.showDebatComingSoon(debatList)
+    fun getChallengeDone() {
+        view?.showChallengeDone(State.Loading, emptyList(), false)
+
+        val request = if (isPublik)
+            wordStadiumInteractor.getPublicChallenge(Progress.DONE, 1, MAX_SECTION_ITEM)
+        else
+            wordStadiumInteractor.getPersonalChallenge(Progress.DONE, 1, MAX_SECTION_ITEM)
+
+        disposables += request
+            .subscribe({
+                val hasMore = (it.meta.pages?.total ?: 1) > 1
+                view?.showChallengeDone(State.Success, it.challenges, hasMore)
+                emptyChallenges.onNext(it.challenges.isEmpty())
+            }, {
+                view?.showChallengeDone(State.Error(it.message), emptyList(), false)
+            })
     }
 
-    fun getDebatDone() {
-        val debatList = (0..2).map {
-            DebatItem.Done(DebatDetail("Ratu CebonganYK", "Raja Kampreta", "ekonomi"),
-                70, 70, 50)
-        }
-        view?.showDebatDone(debatList)
+    fun getChallengeOngoing() {
+        view?.showChallengeOngoing(State.Loading, emptyList(), false)
+
+        val request = if (isPublik)
+            wordStadiumInteractor.getPublicChallenge(Progress.CHALLENGE, 1, MAX_SECTION_ITEM)
+        else
+            wordStadiumInteractor.getPersonalChallenge(Progress.CHALLENGE, 1, MAX_SECTION_ITEM)
+
+        disposables += request
+            .subscribe({
+                val hasMore = (it.meta.pages?.total ?: 1) > 1
+                view?.showChallengeOngoing(State.Success, it.challenges, hasMore)
+                emptyChallenges.onNext(it.challenges.isEmpty())
+            }, {
+                view?.showChallengeOngoing(State.Error(it.message), emptyList(), false)
+            })
     }
 
-    fun getDebatOpen() {
-        val debatList = listOf(
-            DebatItem.Open(DebatDetail("Raja Kampreta", "", "ekonomi"), 0, false),
-            DebatItem.Open(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 1, true),
-            DebatItem.Open(DebatDetail("Ratu CebonganYK", "", "ekonomi"), 2, true))
-        view?.showDebatOpen(debatList)
+    fun observeEmptyChallenges() {
+        disposables += emptyChallenges.buffer(4)
+            .subscribe { emptyResults ->
+                view?.showAllChallengeEmpty(emptyResults.all { it })
+            }
+    }
+
+    companion object {
+        private const val MAX_CAROUSEL_ITEM = 5
+        private const val MAX_SECTION_ITEM = 3
     }
 }

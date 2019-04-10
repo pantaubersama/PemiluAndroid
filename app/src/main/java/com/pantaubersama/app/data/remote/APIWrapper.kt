@@ -9,7 +9,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class APIWrapper @Inject constructor(private val pantauAPI: PantauAPI, private val pantauOAuthAPI: PantauOAuthAPI, private val wordStadiumAPI: WordStadiumAPI) {
+class APIWrapper @Inject constructor(
+    private val pantauAPI: PantauAPI,
+    private val pantauOAuthAPI: PantauOAuthAPI,
+    private val wordStadiumAPI: WordStadiumAPI,
+    private val oembedAPI: OEmbedApi,
+    private val opiniumServiceAPI: OpiniumServiceAPI
+) {
 
     fun getPantauApi(): PantauAPI {
         return pantauAPI
@@ -21,6 +27,14 @@ class APIWrapper @Inject constructor(private val pantauAPI: PantauAPI, private v
 
     fun getWordStadiumApi(): WordStadiumAPI {
         return wordStadiumAPI
+    }
+
+    fun getOEmbedApi(): OEmbedApi {
+        return oembedAPI
+    }
+
+    fun getOpiniumServiceApi(): OpiniumServiceAPI {
+        return opiniumServiceAPI
     }
 
     companion object {

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cl_status_detail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/gray_1">
+    <ImageView
+        android:id="@+id/iv_status_debat"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/ic_status_wordstadium_16"
+        app:layout_constraintTop_toTopOf="@id/cl_btn_detail_debat"
+        app:layout_constraintBottom_toBottomOf="@id/cl_btn_detail_debat"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        tools:ignore="ContentDescription"/>
+
+    <TextView
+        android:id="@+id/tv_status_debat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textSize="10sp"
+        android:textColor="@color/black_2"
+        android:fontFamily="@font/lato_italic"
+        tools:text="Giliran Raja menulis argumen "
+        app:layout_constraintStart_toEndOf="@id/iv_status_debat"
+        app:layout_constraintTop_toTopOf="@id/iv_status_debat"
+        app:layout_constraintBottom_toBottomOf="@id/iv_status_debat"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_btn_detail_debat"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="?selectableItemBackground"
+        android:layout_marginEnd="8dp"
+        android:padding="8dp"
+        android:focusable="true"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/iv_detail_debat_arrow"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_expand_more_16"
+            tools:ignore="ContentDescription"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/lato_medium"
+            android:text="@string/detail_debat"
+            android:textSize="10sp"
+            android:textColor="@color/black_2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_detail_debat_arrow"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

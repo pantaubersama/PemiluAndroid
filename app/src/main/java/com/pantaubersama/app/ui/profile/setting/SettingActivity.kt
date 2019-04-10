@@ -232,13 +232,13 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
 
     override fun onSuccessGetProfile(profile: Profile) {
         setting_verifikasi.setOnClickListener {
-            if (profile.verified) {
+            if (profile.verified == true) {
                 openVerifiedDialog(profile)
             } else {
                 presenter.getStatusVerifikasi()
             }
         }
-        if (profile.cluster != null && profile.isModerator) {
+        if (profile.cluster != null && profile.isModerator == true) {
             setting_cluster_undang.setOnClickListener {
                 val intent = Intent(this@SettingActivity, ClusterUndangActivity::class.java)
                 intent.putExtra(PantauConstants.Cluster.CLUSTER_ID, profile.cluster?.id)
@@ -260,10 +260,10 @@ class SettingActivity : BaseActivity<SettingPresenter>(), SettingView {
         lp.width = WindowManager.LayoutParams.MATCH_PARENT
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT
         window?.attributes = lp
-        verifiedDialog?.iv_user_avatar?.loadUrl(profile.avatar.url, R.drawable.ic_avatar_placeholder)
-        verifiedDialog?.tv_user_name?.text = profile.name
+        verifiedDialog?.iv_user_avatar?.loadUrl(profile.avatar?.url, R.drawable.ic_avatar_placeholder)
+        verifiedDialog?.tv_user_name?.text = profile.fullName
         verifiedDialog?.user_username?.text = "@" + profile.username
-        if (profile.verified) setVerified() else setUnverified()
+        if (profile.verified == true) setVerified() else setUnverified()
         verifiedDialog?.show()
     }
 

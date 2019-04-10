@@ -26,7 +26,6 @@ import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_JA
 import com.pantaubersama.app.utils.ShareUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
 import com.pantaubersama.app.utils.extensions.visibleIf
-import kotlinx.android.synthetic.main.fragment_janji_politik.*
 import kotlinx.android.synthetic.main.fragment_search_janji_politik.*
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
@@ -90,7 +89,7 @@ class SearchJanjiPolitikFragment : BaseFragment<SearchJanjiPolitikPresenter>(), 
             }
 
             override fun onClickJanpolOption(item: JanjiPolitik, position: Int) {
-                val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_tanya_kandidat)
+                val dialog = OptionDialog(requireContext(), R.layout.layout_option_dialog_common)
                 if (myProfile.cluster != null &&
                     item.creator?.cluster != null &&
                     item.creator?.cluster?.id?.equals(myProfile.cluster?.id) == true &&

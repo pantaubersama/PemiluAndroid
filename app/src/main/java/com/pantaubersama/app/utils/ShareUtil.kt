@@ -7,6 +7,9 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentActivity
 import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
+import com.pantaubersama.app.data.model.debat.Challenge
+import com.pantaubersama.app.data.model.debat.ChallengeConstants.Status
+import com.pantaubersama.app.data.model.debat.ChallengeConstants.Type
 import com.pantaubersama.app.data.model.janjipolitik.JanjiPolitik
 import com.pantaubersama.app.data.model.kuis.KuisItem
 import com.pantaubersama.app.data.model.kuis.KuisResult
@@ -16,6 +19,7 @@ import com.pantaubersama.app.data.model.linimasa.FeedsItem
 import com.pantaubersama.app.data.model.user.AchievedBadge
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_SHARE
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_BADGE_PATH
+import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_CHALLENGE_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_FEEDS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_HASIL_KUIS_PATH
 import com.pantaubersama.app.utils.PantauConstants.Share.SHARE_JANPOL_PATH
@@ -33,17 +37,31 @@ class ShareUtil {
         fun shareItem(context: Context, item: Any?) {
             val targetedShareIntents: MutableList<Intent> = ArrayList()
             val shareIntent = Intent(Intent.ACTION_SEND)
+            val baseShareUrl = context.getString(R.string.share_url)
             shareIntent.type = "text/plain"
             val resInfo = context.packageManager?.queryIntentActivities(shareIntent, 0)
             val sharedItem: String = "" + when (item) {
-                is FeedsItem -> "\"${item.source?.text} #PantauBersama  – " + context.getString(R.string.share_url) + SHARE_FEEDS_PATH + item.id // not used
-                is Pertanyaan -> "Kamu setuju pertanyaan ini? Upvote dulu, dong ⬆️ #PantauBersama " + context.getString(R.string.share_url) + SHARE_TANYA_PATH + item.id
-                is JanjiPolitik -> "Sudah tahu Janji yang ini, belum? Siap-siap catatan, ya! ✔️ #PantauBersama " + context.getString(R.string.share_url) + SHARE_JANPOL_PATH + item.id
-                is KuisItem -> "Iseng-iseng serius main Quiz ini dulu. Kira-kira masih cocok apa ternyata malah nggak cocok, yaa \uD83D\uDE36 #PantauBersama " + context.getString(R.string.share_url) + SHARE_KUIS_PATH + item.id
-//                is KuisUserResult -> "Hmm.. Ternyata begini kecenderunganku \uD83D\uDC40 #PantauBersama %s".format(context.getString(R.string.share_url) + SHARE_KECENDERUNGAN_PATH + item.user.id)
-                is KuisUserResult -> context.getString(R.string.share_wording_kecenderungan).format(context.getString(R.string.share_url) + SHARE_KECENDERUNGAN_PATH + item.user.id)
-                is KuisResult -> "Kamu sudah ikut? Aku sudah dapat hasilnya \uD83D\uDE0E #PantauBersama %s".format(context.getString(R.string.share_url) + SHARE_HASIL_KUIS_PATH + item.quizParticipation.id)
-                is AchievedBadge -> "Yeay! I got the badge \uD83E\uDD18 #PantauBersama " + context.getString(R.string.share_url) + SHARE_BADGE_PATH + item.achievedId
+                is FeedsItem -> "\"${item.source?.text} #PantauBersama  – " + baseShareUrl + SHARE_FEEDS_PATH + item.id // not used
+                is Pertanyaan -> "Kamu setuju pertanyaan ini? Upvote dulu, dong ⬆️ #PantauBersama " + baseShareUrl + SHARE_TANYA_PATH + item.id
+                is JanjiPolitik -> "Sudah tahu Janji yang ini, belum? Siap-siap catatan, ya! ✔️ #PantauBersama " + baseShareUrl + SHARE_JANPOL_PATH + item.id
+                is KuisItem -> "Iseng-iseng serius main Quiz ini dulu. Kira-kira masih cocok apa ternyata malah nggak cocok, yaa \uD83D\uDE36 #PantauBersama " + baseShareUrl + SHARE_KUIS_PATH + item.id
+                is KuisUserResult -> context.getString(R.string.share_wording_kecenderungan).format(baseShareUrl + SHARE_KECENDERUNGAN_PATH + item.user.id)
+                is KuisResult -> "Kamu sudah ikut? Aku sudah dapat hasilnya \uD83D\uDE0E #PantauBersama %s".format(baseShareUrl + SHARE_HASIL_KUIS_PATH + item.quizParticipation.id)
+                is AchievedBadge -> "Yeay! I got the badge \uD83E\uDD18 #PantauBersama " + baseShareUrl + SHARE_BADGE_PATH + item.achievedId
+                is Challenge -> {
+                        val shareUrl = "$baseShareUrl$SHARE_CHALLENGE_PATH?challenge_id=${item.id}"
+                        when (item.status) {
+                            Status.LIVE_NOW -> "\uD83D\uDE31 BREAKING! Ada debat seru sedang berlangsung. Wajib disimak sekarang dong, Boskuu~ #PantauBersama $shareUrl"
+                            Status.COMING_SOON -> "\uD83D\uDCCC Ini nih debat yang harus kamu catat jadwalnya. Jangan lewatkan adu argumentasinya, yaa! \uD83E\uDD41 #PantauBersama $shareUrl"
+                            Status.DONE -> "Debat sudah selesai. Coba direview mana yang bagus aja dan mana yang bagus banget \uD83D\uDE0C\uD83D\uDC4F #PantauBersama $shareUrl"
+                            Status.DENIED -> "Ah.. The challenge has been denied. Storm can come up anytime, but maybe a flag just stand in the wrong place at the wrong time. Try again soon, Warrior! ✊⚡ #PantauBersama $shareUrl"
+                            Status.EXPIRED -> "So sad to announce that the challenge is expired. Do you have an Eye of Agamotto? \uD83D\uDC40 #PantauBersama $shareUrl"
+                            else -> when {
+                                item.type == Type.OPEN_CHALLENGE -> "Whoaa! Ada yang Open Challenge untuk adu argumentasi nih. Siapa siap? Tap tap and show up! \uD83D\uDCE2\uD83D\uDCA6 #PantauBersama $shareUrl"
+                                else -> "There is a podium for you, Master. Would you sharpen your (s)word? It’s a Direct Challenge! \uD83D\uDE0E✨ #PantauBersama $shareUrl"
+                            }
+                    }
+                }
                 else -> ""
             }
             if (!resInfo!!.isEmpty()) {

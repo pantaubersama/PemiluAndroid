@@ -6,6 +6,9 @@ import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.categorydialog.CategoryListDialog
 import com.pantaubersama.app.ui.clusterdetail.ClusterDetailActivity
 import com.pantaubersama.app.ui.clusterdialog.ClusterListDialog
+import com.pantaubersama.app.ui.debat.DebatActivity
+import com.pantaubersama.app.ui.debat.detail.DetailDebatActivity
+import com.pantaubersama.app.ui.debat.detail.DetailDebatDialogFragment
 import com.pantaubersama.app.ui.home.HomeActivity
 import com.pantaubersama.app.ui.linimasa.janjipolitik.JanjiPolitikFragment
 import com.pantaubersama.app.ui.linimasa.janjipolitik.create.CreateJanjiPolitikActivity
@@ -15,9 +18,22 @@ import com.pantaubersama.app.ui.linimasa.pilpres.filter.FilterPilpresActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.PilpresFragment
 import com.pantaubersama.app.ui.login.LoginActivity
 import com.pantaubersama.app.ui.menguji.home.MengujiPagerFragment
+import com.pantaubersama.app.ui.menguji.list.DebatListActivity
 import com.pantaubersama.app.ui.menjaga.filter.LaporFilterActivity
 import com.pantaubersama.app.ui.menjaga.filter.partiesdialog.PartiesDialog
 import com.pantaubersama.app.ui.menjaga.lapor.LaporFragment
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.c1.C1FormActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.perhitunganhome.PerhitunganMainActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpd.PerhitunganDPDActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.dpr.PerhitunganDPRActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.quickcount.presiden.PerhitunganPresidenActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata.DataTPSActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.create.uploaddokumen.UploadDocumentActivity
+import com.pantaubersama.app.ui.merayakan.perhitungan.list.PerhitunganFragment
+import com.pantaubersama.app.ui.merayakan.rekapitulasi.home.RekapitulasiFragment
+import com.pantaubersama.app.ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerahActivity
+import com.pantaubersama.app.ui.merayakan.rekapitulasi.detailtps.DetailTPSActivity
+import com.pantaubersama.app.ui.merayakan.rekapitulasi.tpslist.TPSListActivity
 import com.pantaubersama.app.ui.note.CatatanPilihanActivityRevised
 import com.pantaubersama.app.ui.notification.NotifActivity
 import com.pantaubersama.app.ui.onboarding.OnboardingActivity
@@ -62,6 +78,11 @@ import com.pantaubersama.app.ui.search.person.filter.FilterOrangActivity
 import com.pantaubersama.app.ui.search.tanya.SearchQuestionFragment
 import com.pantaubersama.app.ui.search.quiz.SearchQuizFragment
 import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
+import com.pantaubersama.app.ui.wordstadium.challenge.direct.DirectChallengeActivity
+import com.pantaubersama.app.ui.wordstadium.challenge.direct.PreviewChallengeActivity
+import com.pantaubersama.app.ui.bidangkajiandialog.BidangKajianDialog
+import com.pantaubersama.app.ui.wordstadium.challenge.open.OpenChallengeActivity
+import com.pantaubersama.app.ui.wordstadium.challenge.open.PromoteChallengeActivity
 import dagger.Subcomponent
 
 /**
@@ -129,5 +150,26 @@ interface ActivityComponent {
     fun inject(partiesDialog: PartiesDialog)
     fun inject(notifActivity: NotifActivity)
     fun inject(mengujiPagerFragment: MengujiPagerFragment)
+    fun inject(perhitunganFragment: PerhitunganFragment)
+    fun inject(perhitunganDPRRIActivity: PerhitunganDPRActivity)
+    fun inject(perhitunganDPDActivity: PerhitunganDPDActivity)
+    fun inject(openChallengeActivity: OpenChallengeActivity)
+    fun inject(kajianDialog: BidangKajianDialog)
+    fun inject(debatActivity: DebatActivity)
+    fun inject(rekapitulasiFragment: RekapitulasiFragment)
+    fun inject(rekapitulasiProvinsiActivity: RekapitulasiDaerahActivity)
+    fun inject(tpsListActivity: TPSListActivity)
+    fun inject(detailTPSActivity: DetailTPSActivity)
+    fun inject(uploadDocumentActivity: UploadDocumentActivity)
+    fun inject(perhitunganMainActivity: PerhitunganMainActivity)
+    fun inject(promoteChallengeActivity: PromoteChallengeActivity)
+    fun inject(debatListActivity: DebatListActivity)
+    fun inject(perhitunganPresidenActivity: PerhitunganPresidenActivity)
+    fun inject(dataTPSActivity: DataTPSActivity)
+    fun inject(detailDebatActivity: DetailDebatActivity)
+    fun inject(directChallengeActivity: DirectChallengeActivity)
+    fun inject(previewChallengeActivity: PreviewChallengeActivity)
+    fun inject(detailDebatDialogFragment: DetailDebatDialogFragment)
+    fun inject(c1FormActivity: C1FormActivity)
     fun inject(catatanPilihanActivityRevised: CatatanPilihanActivityRevised)
 }

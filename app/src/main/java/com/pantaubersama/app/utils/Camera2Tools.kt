@@ -272,7 +272,7 @@ class Camera2Tools {
         }
 
         fun takePicture(handler: ImageHandler) {
-            // Set up a callback for Image Reader
+            // Set up a callback for ImageLocalModel Reader
             mImageReader?.setOnImageAvailableListener(object : ImageReader.OnImageAvailableListener {
                 override fun onImageAvailable(reader: ImageReader) {
                     val image = reader.acquireNextImage()

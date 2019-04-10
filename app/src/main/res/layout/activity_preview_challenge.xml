@@ -20,7 +20,7 @@
         android:id="@+id/nested_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/promote_challenge_publish"
+        android:layout_above="@+id/preview_publish"
         android:layout_below="@+id/appbar">
 
         <LinearLayout
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content">
 
                     <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/open_challenge_avatar"
+                        android:id="@+id/preview_avatar"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:scaleType="centerCrop"
@@ -51,12 +51,12 @@
                         app:riv_oval="true" />
 
                     <TextView
-                        android:id="@+id/open_challenge_name"
+                        android:id="@+id/preview_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="2dp"
-                        android:layout_toRightOf="@+id/open_challenge_avatar"
+                        android:layout_toRightOf="@+id/preview_avatar"
                         android:fontFamily="@font/bw_modelica_bold"
                         android:lineSpacingExtra="2sp"
                         android:maxLines="1"
@@ -65,18 +65,18 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/open_challenge_username"
+                        android:id="@+id/preview_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/open_challenge_name"
+                        android:layout_below="@+id/preview_name"
                         android:layout_marginStart="10dp"
-                        android:layout_toRightOf="@+id/open_challenge_avatar"
+                        android:layout_toRightOf="@+id/preview_avatar"
                         android:fontFamily="@font/lato_bold"
                         android:letterSpacing="0.02"
                         android:lineSpacingExtra="15sp"
                         android:textColor="@color/white"
                         android:textSize="10sp"
-                        tools:text="\ufeff@ratu_cebonganYK" />
+                        android:text="\ufeff@ratu_cebonganYK" />
 
                 </RelativeLayout>
 
@@ -90,6 +90,7 @@
                     android:lineSpacingExtra="-2sp"
                     android:text="@string/direct_challenge"
                     android:textColor="@color/white"
+                    android:visibility="gone"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -123,7 +124,7 @@
                         android:lineSpacingExtra="4sp"
                         android:textColor="@color/black_2"
                         android:textSize="24sp"
-                        tools:text="Tantangan debat kamu," />
+                        android:text="Tantangan debat kamu," />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -132,7 +133,7 @@
                         android:lineSpacingExtra="4sp"
                         android:textColor="@color/yellow"
                         android:textSize="24sp"
-                        tools:text="sudah siap tayang!" />
+                        android:text="sudah siap tayang!" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -142,7 +143,7 @@
                         android:lineSpacingExtra="4sp"
                         android:textColor="@color/yellow"
                         android:textSize="24sp"
-                        tools:text="Hubungkan dengan
+                        android:text="Hubungkan dengan
 akun Twitter-mu." />
 
                     <LinearLayout
@@ -184,10 +185,12 @@ akun Twitter-mu." />
                                 android:textSize="12sp" />
 
                             <LinearLayout
+                                android:id="@+id/preview_ll_connect_twitter"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
                                 android:gravity="center_vertical"
+                                android:visibility="gone"
                                 android:orientation="horizontal">
 
                                 <TextView
@@ -200,6 +203,7 @@ akun Twitter-mu." />
                                     android:textSize="12sp" />
 
                                 <TextView
+                                    android:id="@+id/preview_twitter_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/lato_bold"
@@ -214,6 +218,7 @@ akun Twitter-mu." />
                         </LinearLayout>
 
                         <Switch
+                            android:id="@+id/switch_twitter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -239,6 +244,7 @@ akun Twitter-mu." />
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/preview_bid_kajian"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -254,7 +260,29 @@ akun Twitter-mu." />
                     android:textColor="@color/gray_dark_3"
                     android:textSize="8sp" />
 
+                <LinearLayout
+                    android:id="@+id/ll_webview"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_rounded_gray_3"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/link_source"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:lineSpacingExtra="6sp"
+                        tools:text="https://twitter.com/ident_it/status/997050576012591104"
+                        android:textColor="#1da1f2"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
                 <TextView
+                    android:id="@+id/preview_pernyataan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -283,7 +311,7 @@ akun Twitter-mu." />
                     android:padding="10dp">
 
                     <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/direct_challenge_ava_lawan_twitter"
+                        android:id="@+id/preview_ava_lawan_twitter"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:scaleType="centerCrop"
@@ -292,11 +320,11 @@ akun Twitter-mu." />
                         app:riv_oval="true" />
 
                     <TextView
-                        android:id="@+id/direct_challenge_name_lawan_twitter"
+                        android:id="@+id/preview_name_lawan_twitter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_toRightOf="@+id/direct_challenge_ava_lawan_twitter"
+                        android:layout_toRightOf="@+id/preview_ava_lawan_twitter"
                         android:fontFamily="@font/lato_bold"
                         android:lineSpacingExtra="5sp"
                         android:textColor="@color/black"
@@ -304,12 +332,12 @@ akun Twitter-mu." />
                         tools:text="Raja Kampreta" />
 
                     <TextView
-                        android:id="@+id/direct_challenge_username_lawan_twitter"
+                        android:id="@+id/preview_username_lawan_twitter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/direct_challenge_name_lawan_twitter"
+                        android:layout_below="@+id/preview_name_lawan_twitter"
                         android:layout_marginStart="8dp"
-                        android:layout_toRightOf="@+id/direct_challenge_ava_lawan_twitter"
+                        android:layout_toRightOf="@+id/preview_ava_lawan_twitter"
                         android:fontFamily="@font/lato_regular"
                         android:letterSpacing="0.02"
                         android:lineSpacingExtra="7sp"
@@ -344,6 +372,7 @@ akun Twitter-mu." />
                         android:src="@drawable/ic_date" />
 
                     <TextView
+                        android:id="@+id/preview_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
@@ -370,6 +399,7 @@ akun Twitter-mu." />
                         android:src="@drawable/ic_clock" />
 
                     <TextView
+                        android:id="@+id/preview_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
@@ -415,6 +445,7 @@ akun Twitter-mu." />
                         android:src="@drawable/ic_saldo_waktu" />
 
                     <TextView
+                        android:id="@+id/preview_saldo_waktu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
@@ -451,7 +482,7 @@ akun Twitter-mu." />
                 android:paddingBottom="70dp">
 
                 <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/open_challenge_avatar_2"
+                    android:id="@+id/preview_avatar_2"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:scaleType="centerCrop"
@@ -460,6 +491,7 @@ akun Twitter-mu." />
                     app:riv_oval="true" />
 
                 <TextView
+                    android:id="@+id/preview_username_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -471,6 +503,7 @@ akun Twitter-mu." />
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/preview_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_regular"
@@ -481,6 +514,7 @@ akun Twitter-mu." />
                     android:textSize="11sp" />
 
                 <TextView
+                    android:id="@+id/preview_time_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -498,7 +532,7 @@ akun Twitter-mu." />
     </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
-        android:id="@+id/promote_challenge_publish"
+        android:id="@+id/preview_publish"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"

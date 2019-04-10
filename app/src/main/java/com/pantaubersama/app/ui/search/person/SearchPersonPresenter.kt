@@ -10,7 +10,9 @@ class SearchPersonPresenter @Inject constructor(
     private val profileInteractor: ProfileInteractor
 ) : BasePresenter<SearchPersonView>() {
     fun searchPerson(keyword: String, page: Int, perPage: Int) {
-        view?.showLoading()
+        if (page == 1) {
+            view?.showLoading()
+        }
         disposables.add(
             userInteractor.searchPerson(keyword, page, perPage)
                 .subscribe(

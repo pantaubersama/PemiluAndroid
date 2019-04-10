@@ -73,11 +73,11 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
     }
 
     override fun showProfile(profile: Profile) {
-        iv_user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
-        tv_user_name.text = profile.name
+        iv_user_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+        tv_user_name.text = profile.fullName
         user_username.text = profile.username?.takeIf { it.isNotBlank() }?.let { "@%s".format(it) }
         user_bio.text = profile.about
-        if (profile.verified) setVerified() else setUnverified()
+        if (profile.verified == true) setVerified() else setUnverified()
         empty_data_alert.visibleIf(profile.occupation == null && profile.education == null && profile.location == null)
         if (profile.occupation != null) user_location.text = profile.location else location_container.visibility = View.GONE
         if (profile.education != null) user_education.text = profile.education else education_container.visibility = View.GONE
@@ -129,7 +129,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
                 R.id.navigation_menggali -> ProfileTanyaKandidatFragment.newInstance(userId) to ProfileTanyaKandidatFragment.TAG
 //                R.id.navigation_menguji -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
 //                R.id.navigation_menjaga -> WordStadiumFragment.newInstance() to WordStadiumFragment.TAG
-//                R.id.navigation_merayakan -> QuickCountFragment.newInstance() to QuickCountFragment.TAG
+//                R.id.navigation_merayakan -> MerayakanFragment.newInstance() to MerayakanFragment.TAG
                 else -> throw IllegalStateException("unknown menu")
             }
             showFragment(fragment, tag)
@@ -241,7 +241,7 @@ class ProfileActivity : BaseActivity<ProfilePresenter>(), ProfileView {
 //                        intent.putExtra(PantauConstants.Cluster.INVITE_LINK_ACTIVE, cluster.isLinkActive)
 //                        intent.putExtra(EXTRA_IS_MODERATOR, presenter.getMyProfile().isModerator)
 
-                        startActivityForResult(UndangAnggotaActivity.setIntent(this@ProfileActivity, cluster.magicLink, cluster.id, cluster.isLinkActive, presenter.getMyProfile().isModerator), PantauConstants.Cluster.REQUEST_CODE.REQUEST_CLUSTER)
+                        startActivityForResult(UndangAnggotaActivity.setIntent(this@ProfileActivity, cluster.magicLink, cluster.id, cluster.isLinkActive, presenter.getMyProfile().isModerator == true), PantauConstants.Cluster.REQUEST_CODE.REQUEST_CLUSTER)
                         dialog.dismiss()
                     }
                     R.id.leave_cluster_action -> {

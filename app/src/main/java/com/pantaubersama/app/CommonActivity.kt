@@ -50,7 +50,7 @@ abstract class CommonActivity : AppCompatActivity() {
         }
     }
 
-    protected fun initProgressDialog() {
+    private fun initProgressDialog() {
         progressDialog = ProgressDialog(this).apply {
             setMessage(getString(R.string.txt_mohon_tunggu))
             setCancelable(false)
@@ -85,7 +85,7 @@ abstract class CommonActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun showProgressDialog(message: String) {
+    fun showProgressDialog(message: String? = getString(R.string.txt_mohon_tunggu)) {
         progressDialog?.setMessage(message)
 
         if (progressDialog?.isShowing == false) {
@@ -100,7 +100,9 @@ abstract class CommonActivity : AppCompatActivity() {
     }
 
     open fun showError(throwable: Throwable) {
-        window?.decorView?.findViewById<View>(android.R.id.content)?.snackBar(throwable.message!!)
+//        if (!throwable.message?.toLowerCase()?.contains("belum ada")!!) {
+            window?.decorView?.findViewById<View>(android.R.id.content)?.snackBar(throwable.message!!)
+//        }
 //        Timber.e(throwable)
         throwable.printStackTrace()
     }

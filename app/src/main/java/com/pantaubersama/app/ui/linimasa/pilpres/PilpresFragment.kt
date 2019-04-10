@@ -15,11 +15,10 @@ import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.linimasa.pilpres.adapter.PilpresAdapter
 import com.pantaubersama.app.ui.widget.OptionDialog
-import com.pantaubersama.app.ui.widget.imagepreview.ImagePreviewFragment
+import com.pantaubersama.app.ui.widget.imagepreview.ImagePreviewDialogFragment
 import com.pantaubersama.app.utils.ChromeTabUtil
 import com.pantaubersama.app.utils.CopyUtil
 import com.pantaubersama.app.utils.PackageCheckerUtil
-import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_TYPE_FEED
 import com.pantaubersama.app.utils.PantauConstants.Networking.BASE_TWEET_URL
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_BANNER_PILPRES
 import com.pantaubersama.app.utils.ShareUtil
@@ -71,7 +70,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
         recycler_view.adapter = adapter
         adapter.listener = object : PilpresAdapter.AdapterListener {
             override fun onClickBanner(bannerInfo: BannerInfo) {
-                startActivityForResult(BannerInfoActivity.setIntent(context!!, EXTRA_TYPE_FEED, bannerInfo), RC_BANNER_PILPRES)
+                startActivityForResult(BannerInfoActivity.setIntent(requireContext(), bannerInfo), RC_BANNER_PILPRES)
             }
 
             override fun onClickTweetOption(item: FeedsItem) {
@@ -109,7 +108,7 @@ class PilpresFragment : BaseFragment<PilpresPresenter>(), PilpresView {
             }
 
             override fun onClickImage(imageUrl: String) {
-                ImagePreviewFragment.show(imageUrl, childFragmentManager)
+                ImagePreviewDialogFragment.show(imageUrl, childFragmentManager)
             }
         }
         adapter.addSupportLoadMore(recycler_view, 10) {

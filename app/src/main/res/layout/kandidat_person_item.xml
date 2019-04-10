@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/party_vote_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingRight="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:id="@+id/candidate_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1. Suryono B.A"
+            android:textSize="12sp"
+            android:fontFamily="@font/bw_modelica_bold"
+            android:textColor="@color/black_3"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/candidate_count_container"
+            android:layout_toLeftOf="@id/candidate_count_container"/>
+
+        <FrameLayout
+            android:id="@+id/candidate_count_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <EditText
+                android:id="@+id/candidate_count_field"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="24dp"
+                android:gravity="center"
+                android:background="@drawable/outline_graydark_1"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:paddingRight="12dp"
+                android:paddingEnd="12dp"
+                android:text="0"
+                android:inputType="number"
+                android:maxLength="3"
+                android:textColor="@color/colorAccent" />
+
+            <LinearLayout
+                android:id="@+id/candidate_inc_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_background_accent"
+                android:layout_gravity="end"
+                android:gravity="center"
+                android:foreground="?selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_add"/>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

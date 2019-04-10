@@ -1,5 +1,6 @@
 package com.pantaubersama.app.data.interactors
 
+import com.pantaubersama.app.data.db.AppDB
 import com.pantaubersama.app.data.local.cache.DataCache
 import com.pantaubersama.app.data.model.AppVersion
 import com.pantaubersama.app.data.model.accesstoken.Token
@@ -15,7 +16,8 @@ import javax.inject.Inject
 class LoginInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
     private val rxSchedulers: RxSchedulers,
-    private val dataCache: DataCache
+    private val dataCache: DataCache,
+    private val appDB: AppDB
 ) {
     fun exchangeToken(oAuthToken: String?): Single<TokenResponse> {
         return apiWrapper.getPantauOAuthApi().exchangeToken(oAuthToken)
@@ -98,5 +100,20 @@ class LoginInteractor @Inject constructor(
             .doOnComplete {
                 dataCache.saveFirebaseToken(firebaseToken)
             }
+    }
+
+    fun clearDatabase() {
+        appDB.getImagesDao().getImages().forEach {
+            appDB.getImagesDao().deleteImage(it)
+        }
+        appDB.getC1Dao().getC1s().forEach {
+            appDB.getC1Dao().deleteC1(it)
+        }
+        appDB.getRealCountDao().getRealCounts().forEach {
+            appDB.getRealCountDao().deleteRealCount(it)
+        }
+        appDB.getTPSDAO().loadTPS().forEach {
+            appDB.getTPSDAO().deleteTPS(it)
+        }
     }
 }

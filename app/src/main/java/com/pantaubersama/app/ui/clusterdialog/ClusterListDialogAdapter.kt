@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.base.viewholder.LoadingViewHolder
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.cluster.ClusterItem
 import com.pantaubersama.app.utils.PantauConstants.ItemModel.TYPE_CLUSTER_ITEM
@@ -34,13 +35,15 @@ class ClusterListDialogAdapter : BaseRecyclerAdapter() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_DEFAULT -> DefaultViewHolder(parent.inflate(R.layout.item_default_dropdown_filter))
-            else -> ClusterViewHolder(parent.inflate(R.layout.item_cluster))
+            TYPE_CLUSTER_ITEM -> ClusterViewHolder(parent.inflate(R.layout.item_cluster))
+            else -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as? ClusterViewHolder)?.bind(data[position] as ClusterItem)
         (holder as? DefaultViewHolder)?.bind()
+        (holder as? LoadingViewHolder)?.bind()
     }
 
     inner class ClusterViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {

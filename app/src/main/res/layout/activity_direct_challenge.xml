@@ -20,8 +20,9 @@
         android:id="@+id/nested_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/open_challenge_publish"
-        android:layout_below="@+id/appbar">
+        android:layout_above="@+id/direct_challenge_next"
+        android:layout_below="@+id/appbar"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +43,7 @@
                     android:layout_height="wrap_content">
 
                     <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/open_challenge_avatar"
+                        android:id="@+id/direct_challenge_avatar"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:scaleType="centerCrop"
@@ -51,12 +52,12 @@
                         app:riv_oval="true" />
 
                     <TextView
-                        android:id="@+id/open_challenge_name"
+                        android:id="@+id/direct_challenge_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="2dp"
-                        android:layout_toRightOf="@+id/open_challenge_avatar"
+                        android:layout_toRightOf="@+id/direct_challenge_avatar"
                         android:fontFamily="@font/bw_modelica_bold"
                         android:lineSpacingExtra="2sp"
                         android:maxLines="1"
@@ -65,12 +66,12 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/open_challenge_username"
+                        android:id="@+id/direct_challenge_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/open_challenge_name"
+                        android:layout_below="@+id/direct_challenge_name"
                         android:layout_marginStart="10dp"
-                        android:layout_toRightOf="@+id/open_challenge_avatar"
+                        android:layout_toRightOf="@+id/direct_challenge_avatar"
                         android:fontFamily="@font/lato_bold"
                         android:letterSpacing="0.02"
                         android:lineSpacingExtra="15sp"
@@ -90,11 +91,13 @@
                     android:lineSpacingExtra="-2sp"
                     android:text="@string/direct_challenge"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_bid_kajian_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -109,14 +112,18 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/check_bid_kajian"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/check_done" />
 
-                    <View style="@style/vertical_line_done" />
+                    <View
+                        android:id="@+id/line_bid_kajian"
+                        style="@style/vertical_line_done" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_bid_kajian"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -143,9 +150,12 @@
                         android:textSize="11sp" />
 
                     <TextView
+                        android:id="@+id/pilih_bid_kajian"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
                         android:fontFamily="@font/bw_modelica_bold"
                         android:lineSpacingExtra="7sp"
                         android:text="Pilih bidang kajian"
@@ -154,24 +164,26 @@
                         android:visibility="gone" />
 
                     <TextView
+                        android:id="@+id/bid_kajian"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="2dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
                         android:background="@drawable/bg_rounded_orange_outline"
                         android:fontFamily="@font/lato_italic"
                         android:gravity="center_horizontal"
                         android:lineSpacingExtra="2sp"
                         android:paddingStart="8dp"
-                        android:paddingTop="2dp"
                         android:paddingEnd="8dp"
-                        android:paddingBottom="2dp"
-                        android:text="ekonomi"
+                        tools:text="ekonomi"
                         android:textColor="@color/gray_dark_3"
-                        android:textSize="8sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/info_bidang_kajian"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/outline_hint_16_px" />
@@ -179,11 +191,13 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_pernyataan_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
-                android:paddingEnd="10dp">
+                android:paddingEnd="10dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -192,14 +206,18 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/check_pernyataan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/check_active" />
 
-                    <View style="@style/vertical_line_active" />
+                    <View
+                        android:id="@+id/line_pernyataan"
+                        style="@style/vertical_line_active" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_pernyataan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -225,7 +243,45 @@
                         android:textColor="@color/gray_4"
                         android:textSize="11sp" />
 
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:id="@+id/ll_webview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:visibility="gone"
+                        android:background="@drawable/bg_rounded_gray_3">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:clipToPadding="false">
+                            <TextView
+                                android:id="@+id/link_source"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:lineSpacingExtra="6sp"
+                                tools:text="https://twitter.com/ident_it/status/997050576012591104"
+                                android:textColor="#1da1f2"
+                                android:textSize="10sp" />
+
+                            <ImageView
+                                android:id="@+id/link_close"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="-10dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:src="@drawable/outline_delete_48_px" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
                     <EditText
+                        android:id="@+id/et_pernyataan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
@@ -233,11 +289,13 @@
                         android:fontFamily="@font/bw_modelica_bold"
                         android:hint="Tulis pernyataanmu disini..."
                         android:inputType="textMultiLine"
+                        android:maxLength="160"
                         android:textColor="@color/gray_4"
                         android:textColorHint="@color/gray_dark_1"
                         android:textSize="11sp" />
 
                     <TextView
+                        android:id="@+id/tv_max_character"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
@@ -248,10 +306,19 @@
                         android:textColor="@color/gray_4"
                         android:textSize="9sp" />
 
+                    <ProgressBar
+                        android:id="@+id/progress_bar_url_preview"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:visibility="gone"/>
+
                     <LinearLayout
+                        android:id="@+id/link_pernyataan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:clickable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -275,6 +342,7 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/info_pernyataan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/outline_hint_16_px" />
@@ -282,11 +350,13 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_lawan_debat_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
-                android:paddingEnd="10dp">
+                android:paddingEnd="10dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -295,14 +365,18 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/check_lawan_debat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/check_active" />
 
-                    <View style="@style/vertical_line_active" />
+                    <View
+                        android:id="@+id/line_lawan_debat"
+                        style="@style/vertical_line_active" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_lawan_debat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -329,23 +403,26 @@
                         android:textSize="11sp" />
 
                     <LinearLayout
-                        android:layout_marginTop="10dp"
+                        android:id="@+id/ll_lawan_debat_symbolic"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:id="@+id/radio_symbolic"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                         <LinearLayout
+                            android:id="@+id/ll_form_symbolic"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/rounded_gray_1"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:padding="10dp"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -353,6 +430,7 @@
                                 android:src="@drawable/ic_symbolic" />
 
                             <EditText
+                                android:id="@+id/et_username_symbolic"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
@@ -365,14 +443,16 @@
                         </LinearLayout>
 
                         <RelativeLayout
+                            android:id="@+id/ll_user_symbolic"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/rounded_gray_1"
                             android:gravity="center_vertical"
+                            android:visibility="gone"
                             android:padding="10dp">
 
                             <com.makeramen.roundedimageview.RoundedImageView
-                                android:id="@+id/direct_challenge_ava_lawan_symbolic"
+                                android:id="@+id/ava_lawan_symbolic"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:scaleType="centerCrop"
@@ -381,11 +461,11 @@
                                 app:riv_oval="true" />
 
                             <TextView
-                                android:id="@+id/direct_challenge_name_lawan_symbolic"
+                                android:id="@+id/name_lawan_symbolic"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
-                                android:layout_toRightOf="@+id/direct_challenge_ava_lawan_symbolic"
+                                android:layout_toRightOf="@+id/ava_lawan_symbolic"
                                 android:fontFamily="@font/lato_bold"
                                 android:lineSpacingExtra="5sp"
                                 android:textColor="@color/black"
@@ -393,12 +473,12 @@
                                 tools:text="Raja Kampreta" />
 
                             <TextView
-                                android:id="@+id/direct_challenge_username_lawan_symbolic"
+                                android:id="@+id/username_lawan_symbolic"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/direct_challenge_name_lawan_symbolic"
+                                android:layout_below="@+id/name_lawan_symbolic"
                                 android:layout_marginStart="8dp"
-                                android:layout_toRightOf="@+id/direct_challenge_ava_lawan_symbolic"
+                                android:layout_toRightOf="@+id/ava_lawan_symbolic"
                                 android:fontFamily="@font/lato_regular"
                                 android:letterSpacing="0.02"
                                 android:lineSpacingExtra="7sp"
@@ -411,23 +491,26 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_lawan_debat_twitter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:id="@+id/radio_twitter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                         <LinearLayout
+                            android:id="@+id/ll_form_twitter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/rounded_gray_1"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:padding="10dp"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -435,6 +518,7 @@
                                 android:src="@drawable/ic_twitter_blue" />
 
                             <EditText
+                                android:id="@+id/et_username_twitter"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
@@ -447,14 +531,16 @@
                         </LinearLayout>
 
                         <RelativeLayout
+                            android:id="@+id/ll_user_twitter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/rounded_gray_1"
                             android:gravity="center_vertical"
+                            android:visibility="gone"
                             android:padding="10dp">
 
                             <com.makeramen.roundedimageview.RoundedImageView
-                                android:id="@+id/direct_challenge_ava_lawan_twitter"
+                                android:id="@+id/ava_lawan_twitter"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:scaleType="centerCrop"
@@ -463,11 +549,11 @@
                                 app:riv_oval="true" />
 
                             <TextView
-                                android:id="@+id/direct_challenge_name_lawan_twitter"
+                                android:id="@+id/name_lawan_twitter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
-                                android:layout_toRightOf="@+id/direct_challenge_ava_lawan_twitter"
+                                android:layout_toRightOf="@+id/ava_lawan_twitter"
                                 android:fontFamily="@font/lato_bold"
                                 android:lineSpacingExtra="5sp"
                                 android:textColor="@color/black"
@@ -475,12 +561,12 @@
                                 tools:text="Raja Kampreta" />
 
                             <TextView
-                                android:id="@+id/direct_challenge_username_lawan_twitter"
+                                android:id="@+id/username_lawan_twitter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/direct_challenge_name_lawan_twitter"
+                                android:layout_below="@+id/name_lawan_twitter"
                                 android:layout_marginStart="8dp"
-                                android:layout_toRightOf="@+id/direct_challenge_ava_lawan_twitter"
+                                android:layout_toRightOf="@+id/ava_lawan_twitter"
                                 android:fontFamily="@font/lato_regular"
                                 android:letterSpacing="0.02"
                                 android:lineSpacingExtra="7sp"
@@ -492,10 +578,18 @@
 
                     </LinearLayout>
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_search_user"
+                        android:layout_marginStart="50dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </androidx.recyclerview.widget.RecyclerView>
 
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/info_lawan_debat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/outline_hint_16_px" />
@@ -503,11 +597,13 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_date_time_continer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
-                android:paddingEnd="10dp">
+                android:paddingEnd="10dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -516,16 +612,19 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/check_date_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/check_inactive" />
 
                     <View
+                        android:id="@+id/line_date_time"
                         style="@style/vertical_line_active"
                         android:visibility="visible" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_date_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -553,10 +652,13 @@
                         android:textSize="11sp" />
 
                     <LinearLayout
+                        android:id="@+id/ll_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/rounded_gray_1"
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="8dp">
@@ -567,22 +669,26 @@
                             android:src="@drawable/ic_date" />
 
                         <TextView
+                            android:id="@+id/tv_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/bw_modelica_bold"
+                            android:hint="Tanggal"
                             android:lineSpacingExtra="2sp"
-                            android:text="Selasa, 24 Maret 2019"
                             android:textColor="@color/black_2"
                             android:textSize="12sp" />
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/rounded_gray_1"
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="8dp">
@@ -593,12 +699,13 @@
                             android:src="@drawable/ic_clock" />
 
                         <TextView
+                            android:id="@+id/tv_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/bw_modelica_bold"
+                            android:hint="Waktu"
                             android:lineSpacingExtra="2sp"
-                            android:text="16.00"
                             android:textColor="@color/black_2"
                             android:textSize="12sp" />
 
@@ -607,8 +714,11 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/info_date_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:scaleType="centerInside"
                     android:src="@drawable/outline_hint_16_px"
                     android:visibility="visible" />
 
@@ -616,11 +726,13 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_saldo_waktu_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
-                android:paddingEnd="10dp">
+                android:paddingEnd="10dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -629,16 +741,19 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/check_saldo_waktu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/check_inactive" />
 
                     <View
+                        android:id="@+id/line_saldo_waktu"
                         style="@style/vertical_line_active"
                         android:visibility="visible" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_saldo_waktu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -666,6 +781,7 @@
                         android:textSize="11sp" />
 
                     <LinearLayout
+                        android:id="@+id/ll_pilih_saldo_waktu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -679,15 +795,19 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_saldo_waktu" />
 
-                        <TextView
+                        <EditText
+                            android:id="@+id/et_pilih_saldo_waktu"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:layout_weight="1"
+                            android:background="@null"
                             android:fontFamily="@font/bw_modelica_bold"
+                            android:hint="Pilih saldo waktu"
+                            android:inputType="number"
                             android:lineSpacingExtra="2sp"
-                            android:text="Pilih saldo waktu"
-                            android:textColor="@color/gray_dark_1"
+                            android:textColor="@color/gray_5"
+                            android:textColorHint="@color/gray_dark_1"
                             android:textSize="12sp" />
 
                         <TextView
@@ -704,8 +824,11 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/info_saldo_waktu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:scaleType="centerInside"
                     android:src="@drawable/outline_hint_16_px"
                     android:visibility="visible" />
 
@@ -715,7 +838,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
-        android:id="@+id/open_challenge_publish"
+        android:id="@+id/direct_challenge_next"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"

@@ -77,8 +77,8 @@ class CreateJanjiPolitikActivity : BaseActivity<CreateJanjiPolitikPresenter>(), 
     }
 
     override fun onSuccessGetProfile(profile: Profile) {
-        iv_user_avatar.loadUrl(profile.avatar.medium?.url, R.drawable.ic_avatar_placeholder)
-        tv_user_name.text = profile.name
+        iv_user_avatar.loadUrl(profile.avatar?.medium?.url, R.drawable.ic_avatar_placeholder)
+        tv_user_name.text = profile.fullName
     }
 
     override fun onSuccessCreateJanpol(janjiPolitik: JanjiPolitik) {

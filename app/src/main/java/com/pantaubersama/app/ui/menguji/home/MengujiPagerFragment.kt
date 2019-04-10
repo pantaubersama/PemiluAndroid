@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
-import com.pantaubersama.app.data.model.debat.DebatItem
+import com.pantaubersama.app.data.model.debat.Challenge
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.menguji.adapter.BriefDebatAdapter
 import com.pantaubersama.app.ui.menguji.list.DebatListActivity
-import com.pantaubersama.app.ui.wordstadium.challenge.CreateChallengeActivity
 import com.pantaubersama.app.utils.OffsetItemDecoration
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PERSONAL_CHALLENGE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PERSONAL_CHALLENGE_IN_PROGRESS
@@ -21,16 +21,18 @@ import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_CHALLENGE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_COMING_SOON
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_DONE
 import com.pantaubersama.app.utils.PantauConstants.Debat.Title.PUBLIK_LIVE_NOW
-import com.pantaubersama.app.utils.extensions.dip
-import com.pantaubersama.app.utils.extensions.loadUrl
-import com.pantaubersama.app.utils.extensions.unSyncLazy
-import com.pantaubersama.app.utils.extensions.visibleIf
-import io.reactivex.disposables.Disposable
+import com.pantaubersama.app.utils.PantauConstants.Extra.EXTRA_CHALLENGE_POSITION
+import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_OPEN_DETAIL_DEBAT
+import com.pantaubersama.app.utils.PantauConstants.ResultCode.RESULT_DELETE_CHALLENGE
+import com.pantaubersama.app.utils.State
+import com.pantaubersama.app.utils.extensions.* // ktlint-disable
 import kotlinx.android.synthetic.main.fragment_menguji_pager.*
 import kotlinx.android.synthetic.main.item_banner_container.*
 import kotlinx.android.synthetic.main.layout_carousel_debat.*
 import kotlinx.android.synthetic.main.layout_debat_list.*
-import kotlinx.android.synthetic.main.layout_menguji_fabs.*
+import kotlinx.android.synthetic.main.layout_empty_state_small.view.*
+import kotlinx.android.synthetic.main.layout_fail_state_small.view.*
+import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
 class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
@@ -40,13 +42,10 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
 
     override val isPublik by unSyncLazy { arguments?.getBoolean(ARG_PUBLIK_TAB) ?: true }
 
-    private val debatCarouselAdapter by unSyncLazy { BriefDebatAdapter(true) }
-    private val debatComingAdapter by unSyncLazy { BriefDebatAdapter(false) }
-    private val debatDoneAdapter by unSyncLazy { BriefDebatAdapter(false) }
-    private val debatOpenAdapter by unSyncLazy { BriefDebatAdapter(false) }
-
-    private lateinit var fabAnimationDelegate: FabAnimationDelegate
-    private var animationDisposable: Disposable? = null
+    private val debatCarouselAdapter by unSyncLazy { BriefDebatAdapter(true, childFragmentManager) }
+    private val debatComingAdapter by unSyncLazy { BriefDebatAdapter(false, childFragmentManager) }
+    private val debatDoneAdapter by unSyncLazy { BriefDebatAdapter(false, childFragmentManager) }
+    private val debatOpenAdapter by unSyncLazy { BriefDebatAdapter(false, childFragmentManager) }
 
     override fun setLayout(): Int = R.layout.fragment_menguji_pager
 
@@ -60,54 +59,25 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
             refreshList()
         }
 
-        setupFab()
         setupBanner()
         setupCarousel()
         setupTimeline()
 
         refreshList()
+        presenter.observeEmptyChallenges()
     }
 
     private fun refreshList() {
         presenter.getBanner()
-        if (isPublik) presenter.getDebatLive()
-        presenter.getDebatComingSoon()
-        presenter.getDebatDone()
-        presenter.getDebatOpen()
-    }
-
-    private fun setupFab() {
-        fabAnimationDelegate = FabAnimationDelegate(fab_container, overlay)
-        fab_create.setOnClickListener {
-            if (fabAnimationDelegate.isCollapsed) {
-                animationDisposable = fabAnimationDelegate.expand()
-            } else {
-                animationDisposable = fabAnimationDelegate.collapse()
-                startActivity(Intent(requireContext(), CreateChallengeActivity::class.java))
-            }
-        }
-        overlay.setOnClickListener { animationDisposable = fabAnimationDelegate.collapse() }
-        fab_challenge.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.collapse()
-            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_CHALLENGE else PERSONAL_CHALLENGE)
-        }
-        fab_done.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.collapse()
-            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_DONE else PERSONAL_DONE)
-        }
-        fab_coming.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.collapse()
-            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_COMING_SOON else PERSONAL_COMING_SOON)
-        }
-        fab_live.setOnClickListener {
-            animationDisposable = fabAnimationDelegate.collapse()
-            DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_LIVE_NOW else PERSONAL_CHALLENGE_IN_PROGRESS)
-        }
+        presenter.getChallengeCarousel()
+        presenter.getChallengeComingSoon()
+        presenter.getChallengeDone()
+        presenter.getChallengeOngoing()
     }
 
     private fun setupBanner() {
         banner_background.setImageResource(R.drawable.ic_background_base_yellow)
-        iv_banner_close.setOnClickListener { rl_banner_container.visibleIf(false) }
+        iv_banner_close.setOnClickListener { hideBanner() }
     }
 
     private fun setupCarousel() {
@@ -116,7 +86,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
         carousel_debat.adapter = debatCarouselAdapter
         carousel_debat.addItemDecoration(OffsetItemDecoration(dip(16), top = 0,
             orientation = RecyclerView.HORIZONTAL))
-        button_more_live.setOnClickListener {
+        button_more_carousel.setOnClickListener {
             DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_LIVE_NOW else PERSONAL_CHALLENGE_IN_PROGRESS)
         }
     }
@@ -136,7 +106,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     private fun setupDebatComingSoon() {
         label_debat_coming.text = if (isPublik) "Debat: Coming Soon" else "My Debat: Coming Soon"
         recycler_debat_coming.adapter = debatComingAdapter
-        button_more_debat_coming.setOnClickListener {
+        button_more_coming.setOnClickListener {
             DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_COMING_SOON else PERSONAL_COMING_SOON)
         }
     }
@@ -144,7 +114,7 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     private fun setupDebatDone() {
         label_debat_done.text = if (isPublik) "Debat: Done" else "My Debat: Done"
         recycler_debat_done.adapter = debatDoneAdapter
-        button_more_debat_done.setOnClickListener {
+        button_more_done.setOnClickListener {
             DebatListActivity.start(requireContext(), if (isPublik) PUBLIK_DONE else PERSONAL_DONE)
         }
     }
@@ -158,36 +128,96 @@ class MengujiPagerFragment : BaseFragment<MengujiPresenter>(), MengujiView {
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {
+        rl_banner_container.visibleIf(true)
         tv_banner_text.text = bannerInfo.body
         iv_banner_image.loadUrl(bannerInfo.headerImage?.url, R.drawable.ic_dummy_word_stadium)
+        rl_banner_container.setOnClickListener {
+            startActivity(BannerInfoActivity.setIntent(requireContext(), bannerInfo))
+        }
     }
 
-    override fun showDebatLive(list: List<DebatItem.LiveNow>) {
-        if (isPublik) debatCarouselAdapter.debatItems = list
+    override fun hideBanner() {
+        rl_banner_container.visibleIf(false)
     }
 
-    override fun showDebatComingSoon(list: List<DebatItem.ComingSoon>) {
-        debatComingAdapter.debatItems = list
+    override fun showChallengeLive(state: State, list: List<Challenge>, hasMore: Boolean) {
+        val showEmptyState = state == State.Success && list.isEmpty()
+
+        progress_carousel.enableLottie(state == State.Loading)
+        button_more_carousel.visibleIf(hasMore)
+        empty_state_carousel.run { enableLottie(showEmptyState, lottie_empty_state) }
+        fail_state_carousel.run { enableLottie(state is State.Error, lottie_fail_state) }
+        debatCarouselAdapter.challenges = list
     }
 
-    override fun showDebatDone(list: List<DebatItem.Done>) {
-        debatDoneAdapter.debatItems = list
+    override fun showChallengeComingSoon(state: State, list: List<Challenge>, hasMore: Boolean) {
+        val showEmptyState = state == State.Success && list.isEmpty()
+
+        progress_coming.enableLottie(state == State.Loading)
+        button_more_coming.visibleIf(hasMore)
+        empty_state_coming.run { enableLottie(showEmptyState, lottie_empty_state) }
+        fail_state_coming.run { enableLottie(state is State.Error, lottie_fail_state) }
+        debatComingAdapter.challenges = list
     }
 
-    override fun showDebatOpen(list: List<DebatItem.Open>) {
-        if (!isPublik) debatCarouselAdapter.debatItems = list
-        debatOpenAdapter.debatItems = list
+    override fun showChallengeDone(state: State, list: List<Challenge>, hasMore: Boolean) {
+        val showEmptyState = state == State.Success && list.isEmpty()
+
+        progress_done.enableLottie(state == State.Loading)
+        button_more_done.visibleIf(hasMore)
+        empty_state_done.run { enableLottie(showEmptyState, lottie_empty_state) }
+        fail_state_done.run { enableLottie(state is State.Error, lottie_fail_state) }
+        debatDoneAdapter.challenges = list
+    }
+
+    override fun showChallengeOngoing(state: State, list: List<Challenge>, hasMore: Boolean) {
+        val showEmptyState = state == State.Success && list.isEmpty()
+
+        progress_open.enableLottie(state == State.Loading)
+        button_more_debat_open.visibleIf(hasMore)
+        empty_state_open.run { enableLottie(showEmptyState, lottie_empty_state) }
+        fail_state_open.run { enableLottie(state is State.Error, lottie_fail_state) }
+        debatOpenAdapter.challenges = list
+    }
+
+    override fun showAllChallengeEmpty(isAllChallengeEmpty: Boolean) {
+        container_list.visibleIf(!isAllChallengeEmpty)
+        container_carousel.visibleIf(!isAllChallengeEmpty)
+        empty_state_all.run { enableLottie(isAllChallengeEmpty, lottie_empty_state) }
     }
 
     override fun showLoading() {
+        lottie_loading.enableLottie(true, lottie_loading)
+        swipe_refresh.visibleIf(false)
     }
 
     override fun dismissLoading() {
+        lottie_loading.enableLottie(false, lottie_loading)
+        swipe_refresh.visibleIf(true)
     }
 
-    override fun onDestroy() {
-        animationDisposable?.dispose()
-        super.onDestroy()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            RC_OPEN_DETAIL_DEBAT -> {
+                when (resultCode) {
+                    RESULT_DELETE_CHALLENGE -> {
+                        data?.getIntExtra(EXTRA_CHALLENGE_POSITION, -1)?.let {
+                            onDeletedChallenge(it)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun onDeletedChallenge(position: Int) {
+        debatOpenAdapter.apply {
+            if (position != -1 && position < challenges.size) {
+                challenges.toMutableList().removeAt(position)
+                notifyItemRemoved(position)
+            }
+        }
     }
 
     companion object {
