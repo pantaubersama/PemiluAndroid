@@ -14,3 +14,5 @@ data class TotalParticipantData(
         return 0
     }
 }
+
+val EMPTY_PARTICIPANT = TotalParticipantData(0, null)

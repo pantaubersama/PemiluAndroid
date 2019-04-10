@@ -8,10 +8,7 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
-import com.pantaubersama.app.data.model.rekapitulasi.Percentage
-import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
-import com.pantaubersama.app.data.model.rekapitulasi.RekapitulasiWait
-import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
+import com.pantaubersama.app.data.model.rekapitulasi.* // ktlint-disable
 import com.pantaubersama.app.ui.widget.BannerViewHolder
 import com.pantaubersama.app.utils.* // ktlint-disable
 import com.pantaubersama.app.utils.extensions.color
@@ -63,16 +60,20 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
     inner class RekapitulasiNasionalViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: Percentage) {
             // paslon 1
-            main_paslon_1_percentage.text = String.format("%.2f", item.candidates?.get(0)?.percentage)
-            paslon_1_average.text = "Rata-rata ${item.candidates?.get(0)?.totalVote} suara"
+            main_paslon_1_percentage.text = String.format("%.2f", item.candidates?.get(0)?.percentage ?: 0.0)
+            paslon_1_average.text = item.candidates?.get(0)?.totalVote?.let {
+                "Rata-rata $it suara"
+            } ?: "Belum ada suara"
             val p1 = paslon_1_strength.layoutParams as LinearLayout.LayoutParams
             item.candidates?.get(0)?.percentage?.toFloat()?.let {
                 p1.weight = it
             }
             paslon_1_strength.layoutParams = p1
             // paslon 2
-            main_paslon_2_percentage.text = String.format("%.2f", item.candidates?.get(1)?.percentage)
-            paslon_2_average.text = "Rata-rata ${item.candidates?.get(1)?.totalVote} suara"
+            main_paslon_2_percentage.text = String.format("%.2f", item.candidates?.get(1)?.percentage ?: 0.0)
+            paslon_2_average.text = item.candidates?.get(1)?.totalVote?.let {
+                "Rata-rata $it suara"
+            } ?: "Belum ada suara"
             val p2 = paslon_2_strength.layoutParams as LinearLayout.LayoutParams
             item.candidates?.get(1)?.percentage?.toFloat()?.let {
                 p2.weight = it

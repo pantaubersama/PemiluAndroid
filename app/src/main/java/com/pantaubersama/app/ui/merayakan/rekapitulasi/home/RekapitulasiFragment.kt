@@ -7,16 +7,14 @@ import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseFragment
 import com.pantaubersama.app.data.model.ItemModel
 import com.pantaubersama.app.data.model.bannerinfo.BannerInfo
-import com.pantaubersama.app.data.model.rekapitulasi.Percentage
-import com.pantaubersama.app.data.model.rekapitulasi.Rekapitulasi
-import com.pantaubersama.app.data.model.rekapitulasi.TotalParticipantData
+import com.pantaubersama.app.data.model.rekapitulasi.* // ktlint-disable
 import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.ui.bannerinfo.BannerInfoActivity
 import com.pantaubersama.app.ui.merayakan.rekapitulasi.daerah.RekapitulasiDaerahActivity
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.enableLottie
-import com.pantaubersama.app.utils.extensions.isDueTime
+import com.pantaubersama.app.utils.extensions.isVoteDay
 import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_empty_state.*
@@ -65,7 +63,7 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
     override fun showBanner(it: BannerInfo) {
         adapter.clearData()
         adapter.addBanner(it)
-        if (requireContext().isDueTime(1555434000000)) {
+        if (requireContext().isVoteDay()) {
             presenter.getTotalParticipant()
         } else {
             dismissLoading()
@@ -88,7 +86,9 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
     }
 
     override fun showDataEmpty() {
-        view_empty_state.enableLottie(true, lottie_empty_state)
+        recycler_view.visibleIf(true)
+        adapter.addRekapitulasiHeader(EMPTY_PERCENTAGE)
+        adapter.addFooter()
     }
 
     private fun refreshItem() {
