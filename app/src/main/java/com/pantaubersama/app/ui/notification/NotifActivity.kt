@@ -29,6 +29,8 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
     private lateinit var notificationAdapter: NotifAdapter
     private var allData: MutableList<NotificationWhole> = ArrayList()
     private var onlyEvent: MutableList<NotificationWhole> = ArrayList()
+    private var page: Int = 1
+    private var perPage = 5
 
     @Inject
     override lateinit var presenter: NotifPresenter
@@ -49,7 +51,7 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
         setupToolbar(true, getString(R.string.title_notification), R.color.white, 4f)
         setupTabRecyclerview()
         setupNotifications()
-        presenter.getNotifications()
+        presenter.getNotifications(page, perPage)
     }
 
     private fun setupNotifications() {
@@ -75,10 +77,15 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
             }
         }
         notifications.layoutManager = LinearLayoutManager(this@NotifActivity)
+        notificationAdapter.addSupportLoadMore(notifications, 5) {
+            notificationAdapter.setLoading()
+            presenter.getNotifications(it, perPage)
+        }
         notifications.adapter = notificationAdapter
         swipe_refresh.setOnRefreshListener {
-            presenter.getNotifications()
+            presenter.getNotifications(page, perPage)
             swipe_refresh.isRefreshing = false
+            notificationAdapter.setDataEnd(false)
         }
         tabAdapter.setSelected(0)
     }
@@ -90,6 +97,27 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
     override fun bindNotifications(notifications: MutableList<NotificationWhole>) {
         allData.addAll(notifications)
         notificationAdapter.setDatas(allData as MutableList<ItemModel>)
+        for (notif in notifications) {
+            if (notif.data.notif_type != null) {
+                if (notif.data.notif_type == "broadcasts") {
+                    onlyEvent.add(notif)
+                }
+            } else if (notif.data.payload.notif_type != null) {
+                if (notif.data.payload.notif_type == "broadcasts") {
+                    onlyEvent.add(notif)
+                }
+            }
+        }
+    }
+
+    override fun setDataEnd() {
+        notificationAdapter.setDataEnd(true)
+    }
+
+    override fun bindNextNotifications(notifications: MutableList<NotificationWhole>) {
+        notificationAdapter.setLoaded()
+        allData.addAll(notifications)
+        notificationAdapter.addData(allData as MutableList<ItemModel>)
         for (notif in notifications) {
             if (notif.data.notif_type != null) {
                 if (notif.data.notif_type == "broadcasts") {

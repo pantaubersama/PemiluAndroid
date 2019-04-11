@@ -7,4 +7,6 @@ interface NotifView : BaseView {
     fun showFailedLoadNotificationAlert()
     fun bindNotifications(notifications: MutableList<NotificationWhole>)
     fun showEmptyDataAlert()
+    fun setDataEnd()
+    fun bindNextNotifications(notifications: MutableList<NotificationWhole>)
 }

@@ -5,17 +5,34 @@ import com.pantaubersama.app.data.interactors.NotificationInteractor
 import javax.inject.Inject
 
 class NotifPresenter @Inject constructor(private val notificationInteractor: NotificationInteractor) : BasePresenter<NotifView>() {
-    fun getNotifications() {
-        view?.showLoading()
+    fun getNotifications(page: Int, perPage: Int) {
+        if (page == 1) {
+            view?.showLoading()
+        }
         disposables.add(
-            notificationInteractor.getNotifications()
+            notificationInteractor.getNotifications(page, perPage)
                 .subscribe(
                     {
-                        view?.dismissLoading()
-                        if (it.isNotEmpty()) {
-                            view?.bindNotifications(it)
+                        if (page == 1) {
+                            view?.dismissLoading()
+                            if (it.isNotEmpty()) {
+                                view?.bindNotifications(it)
+                                if (it.size < perPage) {
+                                    view?.setDataEnd()
+                                }
+                            } else {
+                                view?.setDataEnd()
+                                view?.showEmptyDataAlert()
+                            }
                         } else {
-                            view?.showEmptyDataAlert()
+                            if (it.isNotEmpty()) {
+                                view?.bindNextNotifications(it)
+                                if (it.size < perPage) {
+                                    view?.setDataEnd()
+                                }
+                            } else {
+                                view?.setDataEnd()
+                            }
                         }
                     },
                     {

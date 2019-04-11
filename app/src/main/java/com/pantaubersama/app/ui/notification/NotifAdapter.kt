@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
+import com.pantaubersama.app.base.viewholder.LoadingViewHolder
 import com.pantaubersama.app.data.model.notification.NotificationWhole
 import com.pantaubersama.app.utils.extensions.inflate
 import com.pantaubersama.app.utils.extensions.loadUrl
@@ -22,23 +23,28 @@ class NotifAdapter : BaseRecyclerAdapter() {
         const val NOTIF_TYPE_QUESTION = 1
         const val NOTIF_TYPE_QUIZ = 2
         const val NOTIF_TYPE_BADGE = 3
+        const val NOTIF_TYPE_LOADING = 4
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when {
-            (data[position] as NotificationWhole).data.notif_type != null -> when ((data[position] as NotificationWhole).data.notif_type) {
-                "quiz" -> NOTIF_TYPE_QUIZ
-                "question" -> NOTIF_TYPE_QUESTION
-                "badge" -> NOTIF_TYPE_BADGE
+        if (data[position] is NotificationWhole) {
+            return when {
+                (data[position] as NotificationWhole).data.notif_type != null -> when ((data[position] as NotificationWhole).data.notif_type) {
+                    "quiz" -> NOTIF_TYPE_QUIZ
+                    "question" -> NOTIF_TYPE_QUESTION
+                    "badge" -> NOTIF_TYPE_BADGE
+                    else -> NOTIF_TYPE_GENERAL
+                }
+                (data[position] as NotificationWhole).data.payload.notif_type != null -> when ((data[position] as NotificationWhole).data.payload.notif_type) {
+                    "quiz" -> NOTIF_TYPE_QUIZ
+                    "question" -> NOTIF_TYPE_QUESTION
+                    "badge" -> NOTIF_TYPE_BADGE
+                    else -> NOTIF_TYPE_GENERAL
+                }
                 else -> NOTIF_TYPE_GENERAL
             }
-            (data[position] as NotificationWhole).data.payload.notif_type != null -> when ((data[position] as NotificationWhole).data.payload.notif_type) {
-                "quiz" -> NOTIF_TYPE_QUIZ
-                "question" -> NOTIF_TYPE_QUESTION
-                "badge" -> NOTIF_TYPE_BADGE
-                else -> NOTIF_TYPE_GENERAL
-            }
-            else -> NOTIF_TYPE_GENERAL
+        } else {
+            return NOTIF_TYPE_LOADING
         }
     }
 
@@ -47,6 +53,7 @@ class NotifAdapter : BaseRecyclerAdapter() {
             NOTIF_TYPE_QUIZ -> QuizViewHolder(parent.inflate(R.layout.item_notif_new_quiz))
             NOTIF_TYPE_QUESTION -> QuestionVideHolder(parent.inflate(R.layout.item_notif_question))
             NOTIF_TYPE_BADGE -> BadgeViewHolder(parent.inflate(R.layout.item_notif_badge))
+            NOTIF_TYPE_LOADING -> LoadingViewHolder(parent.inflate(R.layout.item_loading))
             else -> NotificationViewHolder(parent.inflate(R.layout.item_notif_general))
         }
     }
