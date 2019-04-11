@@ -135,6 +135,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     }
 
     private fun createNotification(intent: Intent) {
+        notificationManager.cancel(1)
         val pendingIntent = PendingIntent.getActivity(
             this, 0, Intent(), PendingIntent.FLAG_UPDATE_CURRENT)
         val notificationBuilder = NotificationCompat.Builder(this, PantauConstants.Notification.NOTIFICATION_CHANNEL_NAME_UPLOAD)
