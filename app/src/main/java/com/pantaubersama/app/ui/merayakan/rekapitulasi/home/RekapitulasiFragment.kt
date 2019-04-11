@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.layout_loading_state.*
 import javax.inject.Inject
 
 class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), RekapitulasiView {
+    private var isWaitingDisabled = false
     private lateinit var adapter: RekapitulasiComplexAdapter
 
     @Inject
@@ -51,6 +52,11 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
             override fun onClickItem(item: Rekapitulasi) {
                 RekapitulasiDaerahActivity.start(requireContext(), "provinsi", item, 464)
             }
+
+            override fun onClickAktifkan() {
+                isWaitingDisabled = true
+                refreshItem()
+            }
         }
         recycler_view.layoutManager = LinearLayoutManager(requireContext())
         recycler_view.adapter = adapter
@@ -63,7 +69,7 @@ class RekapitulasiFragment : BaseFragment<RekapitulasiPresenter>(), Rekapitulasi
     override fun showBanner(it: BannerInfo) {
         adapter.clearData()
         adapter.addBanner(it)
-        if (requireContext().isVotingDay()) {
+        if (requireContext().isVotingDay() || isWaitingDisabled) {
             presenter.getTotalParticipant()
         } else {
             dismissLoading()
