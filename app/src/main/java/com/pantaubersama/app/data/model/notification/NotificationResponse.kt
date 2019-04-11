@@ -82,7 +82,8 @@ data class Quiz(
 data class Question(
     @SerializedName("id") val id: String = "",
     @SerializedName("created_at") val createdAt: String = "",
-    @SerializedName("body") val body: String = ""
+    @SerializedName("body") val body: String = "",
+    @SerializedName("upvote_by") val upvotedBy: UpvotedBy
 ) : ItemModel {
     override fun getType(): Int {
         return 2

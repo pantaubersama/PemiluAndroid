@@ -5,6 +5,6 @@ import io.reactivex.Single
 import retrofit2.http.GET
 
 interface NotificationApi {
-    @GET("v1/records/notification")
+    @GET("dashboard/v1/notifications")
     fun getNotifications(): Single<NotificationResponse>
 }
