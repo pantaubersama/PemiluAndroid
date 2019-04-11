@@ -8,7 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
+import com.pantaubersama.app.data.model.ItemModel
+import com.pantaubersama.app.data.model.notification.NotificationWhole
 import com.pantaubersama.app.di.component.ActivityComponent
+import com.pantaubersama.app.ui.penpol.kuis.detail.DetailKuisActivity
+import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
+import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
+import com.pantaubersama.app.utils.ChromeTabUtil
+import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.activity_notif.*
@@ -17,8 +24,11 @@ import javax.inject.Inject
 
 class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
 
-    private lateinit var adapter: NotifTabAdapter
+    private lateinit var tabAdapter: NotifTabAdapter
     var selectedTab: String = ""
+    private lateinit var notificationAdapter: NotifAdapter
+    private var allData: MutableList<NotificationWhole> = ArrayList()
+    private var onlyEvent: MutableList<NotificationWhole> = ArrayList()
 
     @Inject
     override lateinit var presenter: NotifPresenter
@@ -38,22 +48,78 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_notification), R.color.white, 4f)
         setupTabRecyclerview()
-        adapter.setSelected(0)
+        setupNotifications()
+        presenter.getNotifications()
+    }
+
+    private fun setupNotifications() {
+        notificationAdapter = NotifAdapter()
+        notificationAdapter.listener = object : NotifAdapter.Listener {
+            override fun onClickTanyaKandidat(id: String) {
+                val intent = DetailTanyaKandidatActivity.setIntent(this@NotifActivity, id)
+                startActivity(intent)
+            }
+
+            override fun onClickBadge(id: String) {
+                val intent = DetailBadgeActivity.setIntent(this@NotifActivity, id)
+                startActivity(intent)
+            }
+
+            override fun onClickQuiz(id: String) {
+                val intent = DetailKuisActivity.setIntent(this@NotifActivity, id)
+                startActivity(intent)
+            }
+
+            override fun onClickBroadcast(link: String) {
+                ChromeTabUtil(this@NotifActivity).forceLoadUrl(link)
+            }
+        }
+        notifications.layoutManager = LinearLayoutManager(this@NotifActivity)
+        notifications.adapter = notificationAdapter
+        swipe_refresh.setOnRefreshListener {
+            presenter.getNotifications()
+            swipe_refresh.isRefreshing = false
+        }
+        tabAdapter.setSelected(0)
+    }
+
+    override fun showFailedLoadNotificationAlert() {
+        ToastUtil.show(this@NotifActivity, "Gagal memuat notifikasi")
+    }
+
+    override fun bindNotifications(notifications: MutableList<NotificationWhole>) {
+        allData.addAll(notifications)
+        notificationAdapter.setDatas(allData as MutableList<ItemModel>)
+        for (notif in notifications) {
+            if (notif.data.notif_type != null) {
+                if (notif.data.notif_type == "broadcasts") {
+                    onlyEvent.add(notif)
+                }
+            } else if (notif.data.payload.notif_type != null) {
+                if (notif.data.payload.notif_type == "broadcasts") {
+                    onlyEvent.add(notif)
+                }
+            }
+        }
+    }
+
+    override fun showEmptyDataAlert() {
+        notif_blank.visibility = View.VISIBLE
     }
 
     override fun showLoading() {
-        // show
+        progress_bar.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
-        // dismiss
+        progress_bar.visibility = View.GONE
     }
 
     private fun setupTabRecyclerview() {
         notif_recycler_view_menu.layoutManager =
                 LinearLayoutManager(this@NotifActivity, LinearLayoutManager.HORIZONTAL, false)
-        adapter = NotifTabAdapter()
-        notif_recycler_view_menu.adapter = adapter
+        tabAdapter = NotifTabAdapter()
+        notif_recycler_view_menu.adapter = tabAdapter
     }
 
     inner class NotifTabAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -61,7 +127,7 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
 
         init {
             tabs.add("Semua Notifikasi")
-            tabs.add("Wordstadium")
+//            tabs.add("Wordstadium")
             tabs.add("Event")
         }
 
@@ -101,6 +167,10 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
     }
 
     private fun setPage(position: Int) {
-        // Filter notifikasi berdasarkan semua notif, wordstadium, dan event.
+        if (position == 0) {
+            notificationAdapter.setDatas(allData as MutableList<ItemModel>)
+        } else {
+            notificationAdapter.setDatas(onlyEvent as MutableList<ItemModel>)
+        }
     }
 }

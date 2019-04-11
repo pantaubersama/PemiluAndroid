@@ -14,7 +14,8 @@ class APIWrapper @Inject constructor(
     private val pantauOAuthAPI: PantauOAuthAPI,
     private val wordStadiumAPI: WordStadiumAPI,
     private val oembedAPI: OEmbedApi,
-    private val opiniumServiceAPI: OpiniumServiceAPI
+    private val opiniumServiceAPI: OpiniumServiceAPI,
+    private val notificationApi: NotificationApi
 ) {
 
     fun getPantauApi(): PantauAPI {
@@ -34,7 +35,10 @@ class APIWrapper @Inject constructor(
     }
 
     fun getOpiniumServiceApi(): OpiniumServiceAPI {
-        return opiniumServiceAPI
+        return opiniumServiceAPI }
+
+    fun getNotificationApi(): NotificationApi {
+        return notificationApi
     }
 
     companion object {

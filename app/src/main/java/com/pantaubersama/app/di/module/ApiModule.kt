@@ -116,4 +116,10 @@ class ApiModule {
     fun provideOpiniumServiceAPI(@Named("OpiniumService") opiniumServiceHttpClient: OkHttpClient): OpiniumServiceAPI {
         return APIWrapper.createRetrofit(BuildConfig.OPINIUM_SERVICE_BASE_URL, opiniumServiceHttpClient).create(OpiniumServiceAPI::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideNotificationApi(httpClient: OkHttpClient): NotificationApi {
+        return APIWrapper.createRetrofit(BuildConfig.NOTIFICATION_BASE_URL, httpClient).create(NotificationApi::class.java)
+    }
 }

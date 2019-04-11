@@ -3,7 +3,6 @@ package com.pantaubersama.app.ui.merayakan.rekapitulasi.home
 import com.pantaubersama.app.base.BasePresenter
 import com.pantaubersama.app.data.interactors.BannerInfoInteractor
 import com.pantaubersama.app.data.interactors.RekapitulasiInteractor
-import com.pantaubersama.app.data.model.rekapitulasi.EMPTY_PERCENTAGE
 import com.pantaubersama.app.utils.PantauConstants
 import javax.inject.Inject
 
