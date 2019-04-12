@@ -48,28 +48,19 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
             .setColor(color(R.color.colorPrimary))
             .setContentTitle(getTitle(progress))
             .setContentInfo(BuildConfig.APPLICATION_ID)
-            .setContentText("Menyimpan Dokumen ...")
             .setAutoCancel(true)
-            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setContentIntent(pendingIntent)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setDefaults(Notification.DEFAULT_ALL)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
                 PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_UPLOAD,
                 PantauConstants.Notification.NOTIFICATION_CHANNEL_NAME_UPLOAD,
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_LOW
             )
             notificationChannel.description = PantauConstants.Notification.NOTIFICATION_CHANNEL_DESC_UPLOAD
-            notificationChannel.enableVibration(true)
+            notificationChannel.enableVibration(false)
 
-            val audioAttributes = AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                .build()
-            notificationChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), audioAttributes)
             notificationManager.createNotificationChannel(notificationChannel)
             notificationBuilder.setChannelId(PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_UPLOAD)
         }
@@ -116,9 +107,11 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
 
     private fun publishResult(isSuccess: Boolean, message: String?) {
         val intent = Intent("upload")
+        sendBroadcast(intent)
         intent.putExtra("status", isSuccess)
         intent.putExtra("message", message)
         createNotification(intent)
+
     }
 
     override fun showError(throwable: Throwable) {
@@ -135,6 +128,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     }
 
     private fun createNotification(intent: Intent) {
+        notificationManager.cancel(1)
         val pendingIntent = PendingIntent.getActivity(
             this, 0, Intent(), PendingIntent.FLAG_UPDATE_CURRENT)
         val notificationBuilder = NotificationCompat.Builder(this, PantauConstants.Notification.NOTIFICATION_CHANNEL_NAME_UPLOAD)
@@ -151,11 +145,9 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
                 intent.getStringExtra("message")
             })
             .setAutoCancel(true)
-            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setContentIntent(pendingIntent)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setDefaults(Notification.DEFAULT_ALL)
             .setSmallIcon(android.R.drawable.stat_sys_upload_done)
 
         val notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -164,16 +156,10 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
             val notificationChannel = NotificationChannel(
                 PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_UPLOAD,
                 PantauConstants.Notification.NOTIFICATION_CHANNEL_NAME_UPLOAD,
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_LOW
             )
             notificationChannel.description = PantauConstants.Notification.NOTIFICATION_CHANNEL_DESC_UPLOAD
-            notificationChannel.enableVibration(true)
-
-            val audioAttributes = AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                .build()
-            notificationChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), audioAttributes)
+            notificationChannel.enableVibration(false)
             notificationManager.createNotificationChannel(notificationChannel)
             notificationBuilder.setChannelId(PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_UPLOAD)
         }

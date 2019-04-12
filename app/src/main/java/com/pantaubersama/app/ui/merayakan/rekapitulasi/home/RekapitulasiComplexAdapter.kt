@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.pantaubersama.app.BuildConfig
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseRecyclerAdapter
 import com.pantaubersama.app.data.model.ItemModel
@@ -13,6 +14,7 @@ import com.pantaubersama.app.ui.widget.BannerViewHolder
 import com.pantaubersama.app.utils.* // ktlint-disable
 import com.pantaubersama.app.utils.extensions.color
 import com.pantaubersama.app.utils.extensions.inflate
+import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.rekapitulasi_footer_layout.*
 import kotlinx.android.synthetic.main.rekapitulasi_item.*
@@ -139,6 +141,10 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
                 +" nanti"
             }.toCharSequence()
             merayakan_hint.text = resultSummary
+            if (BuildConfig.DEBUG) {
+                btn_aktifkan.visibleIf(true)
+                btn_aktifkan.setOnClickListener { listener?.onClickAktifkan() }
+            }
         }
     }
 
@@ -190,5 +196,6 @@ class RekapitulasiComplexAdapter : BaseRecyclerAdapter() {
     interface Listener {
         fun onClickBanner(bannerInfo: BannerInfo)
         fun onClickItem(item: Rekapitulasi)
+        fun onClickAktifkan()
     }
 }

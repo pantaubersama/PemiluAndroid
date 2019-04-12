@@ -16,5 +16,5 @@ fun Context.isDueTime(timeInMillis: Long): Boolean {
 }
 
 fun Context.getVotingDay(): Long {
-    return 1555434000000  // 1555434000000 == Wed Apr 17 2019 00:00:00 GMT+7
+    return 1555434000000 // 1555434000000 == Wed Apr 17 2019 00:00:00 GMT+7
 }

@@ -34,4 +34,12 @@ akan aktif 17 April 2019 nanti"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/lato_medium"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:visibility="gone"
+        android:id="@+id/btn_aktifkan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="AKTIFKAN"/>
+
 </LinearLayout>

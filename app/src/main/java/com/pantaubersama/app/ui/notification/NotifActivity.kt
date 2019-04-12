@@ -6,26 +6,18 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.di.component.ActivityComponent
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.activity_notif.*
 import kotlinx.android.synthetic.main.catatan_tab_item.*
-import javax.inject.Inject
 
-class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
-
-    private lateinit var adapter: NotifTabAdapter
-    var selectedTab: String = ""
-
-    @Inject
-    override lateinit var presenter: NotifPresenter
-
-    override fun initInjection(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
-    }
+class NotifActivity : CommonActivity() {
+    private lateinit var tabAdapter: NotifActivity.NotifTabAdapter
+    private var selectedTab: String? = null
+    private lateinit var all: NotifChildFragment
+    private lateinit var event: NotifChildFragment
 
     override fun statusBarColor(): Int? {
         return 0
@@ -36,32 +28,36 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
+        savedInstanceState?.getString("selected_tab")?.let {
+            selectedTab = it
+        }
         setupToolbar(true, getString(R.string.title_notification), R.color.white, 4f)
-        setupTabRecyclerview()
-        adapter.setSelected(0)
+        initFragment()
+//        setupTabRecyclerview()
+        //hide notifikasi event
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, all).commit()
+//        tabAdapter.setSelected(selectedTab ?: "Semua Notifikasi")
     }
 
-    override fun showLoading() {
-        // show
-    }
-
-    override fun dismissLoading() {
-        // dismiss
+    private fun initFragment() {
+        all = NotifChildFragment.newInstance("Semua Notifikasi")
+        event = NotifChildFragment.newInstance("Event")
     }
 
     private fun setupTabRecyclerview() {
         notif_recycler_view_menu.layoutManager =
                 LinearLayoutManager(this@NotifActivity, LinearLayoutManager.HORIZONTAL, false)
-        adapter = NotifTabAdapter()
-        notif_recycler_view_menu.adapter = adapter
+        tabAdapter = NotifTabAdapter()
+        notif_recycler_view_menu.adapter = tabAdapter
     }
 
     inner class NotifTabAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-        private val tabs: MutableList<String> = ArrayList()
+        val tabs: MutableList<String> = ArrayList()
 
         init {
             tabs.add("Semua Notifikasi")
-            tabs.add("Wordstadium")
+//            tabs.add("Wordstadium")
             tabs.add("Event")
         }
 
@@ -77,8 +73,9 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
             (holder as NotifTabViewHolder).bind(tabs[position], position)
         }
 
-        fun setSelected(i: Int) {
-            selectedTab = tabs[i]
+        fun setSelected(selected: String) {
+            selectedTab = selected
+            notifyDataSetChanged()
         }
 
         inner class NotifTabViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -87,6 +84,12 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
                 if (data == selectedTab) {
                     item.setBackgroundResource(R.drawable.rounded_tab_selected)
                     tab_text.setTextColor(ContextCompat.getColor(this@NotifActivity, R.color.white))
+                    when (data) {
+                        "Semua Notifikasi" -> supportFragmentManager.beginTransaction()
+                            .replace(R.id.container, all).commit()
+                        "Event" -> supportFragmentManager.beginTransaction()
+                            .replace(R.id.container, event).commit()
+                    }
                 } else {
                     item.setBackgroundResource(R.drawable.rounded_tab_notselected)
                     tab_text.setTextColor(ContextCompat.getColor(this@NotifActivity, R.color.gray_5))
@@ -94,13 +97,13 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
                 itemView.setOnClickListener {
                     selectedTab = data
                     notifyDataSetChanged()
-                    setPage(position)
                 }
             }
         }
     }
 
-    private fun setPage(position: Int) {
-        // Filter notifikasi berdasarkan semua notif, wordstadium, dan event.
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("selected_tab", selectedTab)
+        super.onSaveInstanceState(outState)
     }
 }
