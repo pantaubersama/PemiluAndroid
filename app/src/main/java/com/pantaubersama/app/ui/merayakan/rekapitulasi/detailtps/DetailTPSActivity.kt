@@ -97,6 +97,7 @@ class DetailTPSActivity : BaseActivity<DetailTPSPresenter>(), DetailTPSView {
     }
 
     override fun bindImages(images: MutableList<Image>) {
+        presiden_images_container.removeAllViews()
         if (images.size != 0) {
             presiden_c1_container.visibility = View.VISIBLE
             images.forEach { image ->
