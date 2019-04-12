@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.ItemModel
@@ -20,24 +22,14 @@ import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.activity_notif.*
 import kotlinx.android.synthetic.main.catatan_tab_item.*
+import timber.log.Timber
 import javax.inject.Inject
 
-class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
-
-    private lateinit var tabAdapter: NotifTabAdapter
-    var selectedTab: String = ""
-    private lateinit var notificationAdapter: NotifAdapter
-    private var allData: MutableList<NotificationWhole> = ArrayList()
-    private var onlyEvent: MutableList<NotificationWhole> = ArrayList()
-    private var page: Int = 1
-    private var perPage = 5
-
-    @Inject
-    override lateinit var presenter: NotifPresenter
-
-    override fun initInjection(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
-    }
+class NotifActivity : CommonActivity() {
+    private lateinit var tabAdapter: NotifActivity.NotifTabAdapter
+    private var selectedTab: String = ""
+    private var all: NotifChildFragment = NotifChildFragment.newInstance("Semua Notifikasi")
+    private var event: NotifChildFragment = NotifChildFragment.newInstance("Event")
 
     override fun statusBarColor(): Int? {
         return 0
@@ -50,97 +42,6 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_notification), R.color.white, 4f)
         setupTabRecyclerview()
-        setupNotifications()
-        presenter.getNotifications(page, perPage)
-    }
-
-    private fun setupNotifications() {
-        notificationAdapter = NotifAdapter()
-        notificationAdapter.listener = object : NotifAdapter.Listener {
-            override fun onClickTanyaKandidat(id: String) {
-                val intent = DetailTanyaKandidatActivity.setIntent(this@NotifActivity, id)
-                startActivity(intent)
-            }
-
-            override fun onClickBadge(id: String) {
-                val intent = DetailBadgeActivity.setIntent(this@NotifActivity, id)
-                startActivity(intent)
-            }
-
-            override fun onClickQuiz(id: String) {
-                val intent = DetailKuisActivity.setIntent(this@NotifActivity, id)
-                startActivity(intent)
-            }
-
-            override fun onClickBroadcast(link: String) {
-                ChromeTabUtil(this@NotifActivity).forceLoadUrl(link)
-            }
-        }
-        notifications.layoutManager = LinearLayoutManager(this@NotifActivity)
-        notificationAdapter.addSupportLoadMore(notifications, 5) {
-            notificationAdapter.setLoading()
-            presenter.getNotifications(it, perPage)
-        }
-        notifications.adapter = notificationAdapter
-        swipe_refresh.setOnRefreshListener {
-            presenter.getNotifications(page, perPage)
-            swipe_refresh.isRefreshing = false
-            notificationAdapter.setDataEnd(false)
-        }
-        tabAdapter.setSelected(0)
-    }
-
-    override fun showFailedLoadNotificationAlert() {
-        ToastUtil.show(this@NotifActivity, "Gagal memuat notifikasi")
-    }
-
-    override fun bindNotifications(notifications: MutableList<NotificationWhole>) {
-        allData.addAll(notifications)
-        notificationAdapter.setDatas(allData as MutableList<ItemModel>)
-        for (notif in notifications) {
-            if (notif.data.notif_type != null) {
-                if (notif.data.notif_type == "broadcasts") {
-                    onlyEvent.add(notif)
-                }
-            } else if (notif.data.payload.notif_type != null) {
-                if (notif.data.payload.notif_type == "broadcasts") {
-                    onlyEvent.add(notif)
-                }
-            }
-        }
-    }
-
-    override fun setDataEnd() {
-        notificationAdapter.setDataEnd(true)
-    }
-
-    override fun bindNextNotifications(notifications: MutableList<NotificationWhole>) {
-        notificationAdapter.setLoaded()
-        allData.addAll(notifications)
-        notificationAdapter.addData(allData as MutableList<ItemModel>)
-        for (notif in notifications) {
-            if (notif.data.notif_type != null) {
-                if (notif.data.notif_type == "broadcasts") {
-                    onlyEvent.add(notif)
-                }
-            } else if (notif.data.payload.notif_type != null) {
-                if (notif.data.payload.notif_type == "broadcasts") {
-                    onlyEvent.add(notif)
-                }
-            }
-        }
-    }
-
-    override fun showEmptyDataAlert() {
-        notif_blank.visibility = View.VISIBLE
-    }
-
-    override fun showLoading() {
-        progress_bar.visibility = View.VISIBLE
-    }
-
-    override fun dismissLoading() {
-        progress_bar.visibility = View.GONE
     }
 
     private fun setupTabRecyclerview() {
@@ -148,10 +49,12 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
                 LinearLayoutManager(this@NotifActivity, LinearLayoutManager.HORIZONTAL, false)
         tabAdapter = NotifTabAdapter()
         notif_recycler_view_menu.adapter = tabAdapter
+        tabAdapter.setSelected(0)
     }
 
     inner class NotifTabAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val tabs: MutableList<String> = ArrayList()
+
 
         init {
             tabs.add("Semua Notifikasi")
@@ -184,21 +87,18 @@ class NotifActivity : BaseActivity<NotifPresenter>(), NotifView {
                 } else {
                     item.setBackgroundResource(R.drawable.rounded_tab_notselected)
                     tab_text.setTextColor(ContextCompat.getColor(this@NotifActivity, R.color.gray_5))
+                    when (data) {
+                        "Semua Notifikasi" -> supportFragmentManager.beginTransaction()
+                            .replace(R.id.container, all).commit()
+                        "Event" -> supportFragmentManager.beginTransaction()
+                            .replace(R.id.container, event).commit()
+                    }
                 }
                 itemView.setOnClickListener {
                     selectedTab = data
                     notifyDataSetChanged()
-                    setPage(position)
                 }
             }
-        }
-    }
-
-    private fun setPage(position: Int) {
-        if (position == 0) {
-            notificationAdapter.setDatas(allData as MutableList<ItemModel>)
-        } else {
-            notificationAdapter.setDatas(onlyEvent as MutableList<ItemModel>)
         }
     }
 }

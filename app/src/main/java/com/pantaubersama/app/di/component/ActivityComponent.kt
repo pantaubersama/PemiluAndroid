@@ -81,6 +81,7 @@ import com.pantaubersama.app.ui.splashscreen.SplashScreenActivity
 import com.pantaubersama.app.ui.wordstadium.challenge.direct.DirectChallengeActivity
 import com.pantaubersama.app.ui.wordstadium.challenge.direct.PreviewChallengeActivity
 import com.pantaubersama.app.ui.bidangkajiandialog.BidangKajianDialog
+import com.pantaubersama.app.ui.notification.NotifChildFragment
 import com.pantaubersama.app.ui.wordstadium.challenge.open.OpenChallengeActivity
 import com.pantaubersama.app.ui.wordstadium.challenge.open.PromoteChallengeActivity
 import dagger.Subcomponent
@@ -152,6 +153,7 @@ interface ActivityComponent {
     fun inject(mengujiPagerFragment: MengujiPagerFragment)
     fun inject(perhitunganFragment: PerhitunganFragment)
     fun inject(perhitunganDPRRIActivity: PerhitunganDPRActivity)
+    fun inject(notifChildFragment: NotifChildFragment)
     fun inject(perhitunganDPDActivity: PerhitunganDPDActivity)
     fun inject(openChallengeActivity: OpenChallengeActivity)
     fun inject(kajianDialog: BidangKajianDialog)

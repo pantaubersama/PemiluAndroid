@@ -52,74 +52,12 @@
 
         </LinearLayout>
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/notif_recycler_view_notif"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/notif_menu">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
         <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/notif_menu">
+            android:layout_below="@id/notif_menu">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_refresh"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/notifications"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-            <LinearLayout
-                android:id="@+id/notif_blank"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/blank_notif" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:fontFamily="@font/lato_regular"
-                    android:lineSpacingExtra="17sp"
-                    android:text="@string/text_blank_notif"
-                    android:textColor="@color/gray_4"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/progress_bar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="@color/white"
-                android:visibility="gone">
-
-                <ProgressBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
 
         </FrameLayout>
 
