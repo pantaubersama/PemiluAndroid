@@ -5,12 +5,16 @@ import com.pantaubersama.app.data.interactors.NotificationInteractor
 import javax.inject.Inject
 
 class NotifPresenter @Inject constructor(private val notificationInteractor: NotificationInteractor) : BasePresenter<NotifView>() {
-    fun getNotifications(page: Int, perPage: Int) {
+    fun getNotifications(page: Int, perPage: Int, selectedTab: String) {
         if (page == 1) {
             view?.showLoading()
         }
         disposables.add(
-            notificationInteractor.getNotifications(page, perPage)
+            notificationInteractor.getNotifications(page, perPage, if (selectedTab == "Event") {
+                "event"
+            } else {
+                "all"
+            })
                 .subscribe(
                     {
                         if (page == 1) {

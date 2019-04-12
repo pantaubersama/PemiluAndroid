@@ -4,32 +4,20 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pantaubersama.app.CommonActivity
 import com.pantaubersama.app.R
-import com.pantaubersama.app.base.BaseActivity
-import com.pantaubersama.app.data.model.ItemModel
-import com.pantaubersama.app.data.model.notification.NotificationWhole
-import com.pantaubersama.app.di.component.ActivityComponent
-import com.pantaubersama.app.ui.penpol.kuis.detail.DetailKuisActivity
-import com.pantaubersama.app.ui.penpol.tanyakandidat.detail.DetailTanyaKandidatActivity
-import com.pantaubersama.app.ui.profile.setting.badge.detail.DetailBadgeActivity
-import com.pantaubersama.app.utils.ChromeTabUtil
-import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.activity_notif.*
 import kotlinx.android.synthetic.main.catatan_tab_item.*
-import timber.log.Timber
-import javax.inject.Inject
 
 class NotifActivity : CommonActivity() {
     private lateinit var tabAdapter: NotifActivity.NotifTabAdapter
     private var selectedTab: String = ""
-    private var all: NotifChildFragment = NotifChildFragment.newInstance("Semua Notifikasi")
-    private var event: NotifChildFragment = NotifChildFragment.newInstance("Event")
+    private lateinit var all: NotifChildFragment
+    private lateinit var event: NotifChildFragment
 
     override fun statusBarColor(): Int? {
         return 0
@@ -41,7 +29,13 @@ class NotifActivity : CommonActivity() {
 
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, getString(R.string.title_notification), R.color.white, 4f)
+        initFragment()
         setupTabRecyclerview()
+    }
+
+    private fun initFragment() {
+        all = NotifChildFragment.newInstance("Semua Notifikasi")
+        event = NotifChildFragment.newInstance("Event")
     }
 
     private fun setupTabRecyclerview() {
@@ -54,7 +48,6 @@ class NotifActivity : CommonActivity() {
 
     inner class NotifTabAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val tabs: MutableList<String> = ArrayList()
-
 
         init {
             tabs.add("Semua Notifikasi")
@@ -84,15 +77,15 @@ class NotifActivity : CommonActivity() {
                 if (data == selectedTab) {
                     item.setBackgroundResource(R.drawable.rounded_tab_selected)
                     tab_text.setTextColor(ContextCompat.getColor(this@NotifActivity, R.color.white))
-                } else {
-                    item.setBackgroundResource(R.drawable.rounded_tab_notselected)
-                    tab_text.setTextColor(ContextCompat.getColor(this@NotifActivity, R.color.gray_5))
                     when (data) {
                         "Semua Notifikasi" -> supportFragmentManager.beginTransaction()
                             .replace(R.id.container, all).commit()
                         "Event" -> supportFragmentManager.beginTransaction()
                             .replace(R.id.container, event).commit()
                     }
+                } else {
+                    item.setBackgroundResource(R.drawable.rounded_tab_notselected)
+                    tab_text.setTextColor(ContextCompat.getColor(this@NotifActivity, R.color.gray_5))
                 }
                 itemView.setOnClickListener {
                     selectedTab = data

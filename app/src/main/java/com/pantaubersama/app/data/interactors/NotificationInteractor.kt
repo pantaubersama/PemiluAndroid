@@ -10,8 +10,8 @@ class NotificationInteractor @Inject constructor(
     private val apiWrapper: APIWrapper,
     private val rxSchedulers: RxSchedulers
 ) {
-    fun getNotifications(page: Int, perPage: Int): Single<MutableList<NotificationWhole>> {
-        return apiWrapper.getNotificationApi().getNotifications(page, perPage)
+    fun getNotifications(page: Int, perPage: Int, filter: String): Single<MutableList<NotificationWhole>> {
+        return apiWrapper.getNotificationApi().getNotifications(page, perPage, filter)
             .subscribeOn(rxSchedulers.io())
             .observeOn(rxSchedulers.mainThread())
             .map { it.data.notifications }

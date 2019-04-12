@@ -1,6 +1,5 @@
 package com.pantaubersama.app.ui.notification
 
-
 import android.os.Bundle
 import android.app.Fragment
 import android.view.View
@@ -26,7 +25,7 @@ class NotifChildFragment : BaseFragment<NotifPresenter>(), NotifView {
     var selectedTab: String = ""
     private lateinit var notificationAdapter: NotifAdapter
     private var page: Int = 1
-    private var perPage = 5
+    private var perPage = 20
 
     @Inject
     override lateinit var presenter: NotifPresenter
@@ -47,7 +46,7 @@ class NotifChildFragment : BaseFragment<NotifPresenter>(), NotifView {
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         setupNotifications()
-        presenter.getNotifications(page, perPage)
+        presenter.getNotifications(page, perPage, selectedTab)
     }
 
     private fun setupNotifications() {
@@ -75,11 +74,11 @@ class NotifChildFragment : BaseFragment<NotifPresenter>(), NotifView {
         notifications.layoutManager = LinearLayoutManager(requireContext())
         notificationAdapter.addSupportLoadMore(notifications, 5) {
             notificationAdapter.setLoading()
-            presenter.getNotifications(it, perPage)
+            presenter.getNotifications(it, perPage, selectedTab)
         }
         notifications.adapter = notificationAdapter
         swipe_refresh.setOnRefreshListener {
-            presenter.getNotifications(page, perPage)
+            presenter.getNotifications(page, perPage, selectedTab)
             swipe_refresh.isRefreshing = false
             notificationAdapter.setDataEnd(false)
         }
@@ -94,10 +93,12 @@ class NotifChildFragment : BaseFragment<NotifPresenter>(), NotifView {
     }
 
     override fun bindNextNotifications(notifications: MutableList<NotificationWhole>) {
+        notificationAdapter.setLoaded()
         notificationAdapter.addData(notifications as MutableList<ItemModel>)
     }
 
     override fun showEmptyDataAlert() {
+        notificationAdapter.setLoaded()
         notif_blank.visibility = View.VISIBLE
     }
 
