@@ -524,6 +524,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                             villages_empty_alert.visibility = View.VISIBLE
                         } else {
                             if (tps != null) {
+                                tps?.tps = tps_number_field.text.toString().toInt()
+                                tps?.latitude = lat
+                                tps?.longitude = long
                                 tps?.let {
                                     presenter.updateTps(it)
                                 }
