@@ -72,17 +72,7 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
     override fun setupUI(savedInstanceState: Bundle?) {
         setupToolbar(true, "Unggah", R.color.white, 4f)
         save_button.setOnClickListener {
-            tps?.id?.let { it1 ->
-                presenter.saveImages(
-                    it1,
-                    c1PresidenAdapter.getListData() as MutableList<ImageLocalModel>,
-                    c1DprAdapter.getListData() as MutableList<ImageLocalModel>,
-                    c1DpdAdapter.getListData() as MutableList<ImageLocalModel>,
-                    c1DprdProvAdapter.getListData() as MutableList<ImageLocalModel>,
-                    c1DprdKabAdapter.getListData() as MutableList<ImageLocalModel>,
-                    suasanaTpsAdapter.getListData() as MutableList<ImageLocalModel>
-                )
-            }
+            onBackPressed()
         }
         setupC1Presiden()
         setupC1Dpr()
@@ -634,5 +624,20 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
 
     override fun dismissLoading() {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onBackPressed() {
+        tps?.id?.let { it1 ->
+            presenter.saveImages(
+                it1,
+                c1PresidenAdapter.getListData() as MutableList<ImageLocalModel>,
+                c1DprAdapter.getListData() as MutableList<ImageLocalModel>,
+                c1DpdAdapter.getListData() as MutableList<ImageLocalModel>,
+                c1DprdProvAdapter.getListData() as MutableList<ImageLocalModel>,
+                c1DprdKabAdapter.getListData() as MutableList<ImageLocalModel>,
+                suasanaTpsAdapter.getListData() as MutableList<ImageLocalModel>
+            )
+        }
+        super.onBackPressed()
     }
 }

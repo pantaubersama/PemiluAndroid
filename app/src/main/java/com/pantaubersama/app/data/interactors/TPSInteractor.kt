@@ -343,14 +343,14 @@ class TPSInteractor @Inject constructor(
     }
 
     fun getImagesWithType(dbTpsId: String, imagesUploadType: String): MutableList<ImageLocalModel>? {
-        when (imagesUploadType) {
-            "c1_presiden" -> return appDB.getImagesDao().getImage(dbTpsId)?.presiden
-            "c1_dpr_ri" -> return appDB.getImagesDao().getImage(dbTpsId)?.dpr
-            "c1_dpd" -> return appDB.getImagesDao().getImage(dbTpsId)?.dpd
-            "c1_dprd_provinsi" -> return appDB.getImagesDao().getImage(dbTpsId)?.dprdProv
-            "c1_dprd_kabupaten" -> return appDB.getImagesDao().getImage(dbTpsId)?.dprdKab
-            "suasana_tps" -> return appDB.getImagesDao().getImage(dbTpsId)?.suasanaTps
-            else -> return null
+        return when (imagesUploadType) {
+            "c1_presiden" -> appDB.getImagesDao().getImage(dbTpsId)?.presiden
+            "c1_dpr_ri" -> appDB.getImagesDao().getImage(dbTpsId)?.dpr
+            "c1_dpd" -> appDB.getImagesDao().getImage(dbTpsId)?.dpd
+            "c1_dprd_provinsi" -> appDB.getImagesDao().getImage(dbTpsId)?.dprdProv
+            "c1_dprd_kabupaten" -> appDB.getImagesDao().getImage(dbTpsId)?.dprdKab
+            "suasana_tps" -> appDB.getImagesDao().getImage(dbTpsId)?.suasanaTps
+            else -> null
         }
     }
 
