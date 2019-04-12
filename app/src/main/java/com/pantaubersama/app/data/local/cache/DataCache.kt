@@ -39,7 +39,7 @@ class DataCache(context: Context) : SharedPref(context) {
 
         const val KEY_FILTER_SEARCH_CLUSTER_CATEGORY = "KEY_FILTER_SEARCH_CLUSTER_CATEGORY"
 
-        const val IS_USER_LOGGED_IN = "is_user_logged_in"
+        const val IS_USER_LOGGED_IN = "is_user_already_logged_in"
 
         const val ACCESS_TOKEN_FIELD = "client_token"
 

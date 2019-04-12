@@ -21,7 +21,7 @@ class CustomAuthenticator(
     private var oAuthApi: PantauOAuthAPI? = null
 
     @Throws(IOException::class)
-    override fun authenticate(route: Route, response: Response): Request? {
+    override fun authenticate(route: Route?, response: Response?): Request? {
         synchronized(this) {
             val client = OkHttpClient.Builder()
                 .addNetworkInterceptor(StethoInterceptor())
@@ -47,19 +47,19 @@ class CustomAuthenticator(
             if (refreshToken?.code() == 200) {
                 dataCache.saveToken(refreshToken.body()?.accessToken!!)
                 dataCache.saveRefreshToken(refreshToken.body()?.refreshToken!!)
-                val originalRequest = response.request()
-                val originalUrl = originalRequest.url()
+                val originalRequest = response?.request()
+                val originalUrl = originalRequest?.url()
 
                 val url = originalUrl
-                    .newBuilder()
-                    .build()
+                    ?.newBuilder()
+                    ?.build()
 
                 return originalRequest
-                    .newBuilder()
-                    .removeHeader(PantauConstants.Networking.AUTHORIZATION)
-                    .addHeader(PantauConstants.Networking.AUTHORIZATION, dataCache.loadToken()!!)
-                    .url(url)
-                    .build()
+                    ?.newBuilder()
+                    ?.removeHeader(PantauConstants.Networking.AUTHORIZATION)
+                    ?.addHeader(PantauConstants.Networking.AUTHORIZATION, dataCache.loadToken()!!)
+                    ?.url(url)
+                    ?.build()
             } else {
                 Timber.d("FAILED REFRESHING TOKEN –– caused by : ${refreshToken?.message()}")
                 return null
