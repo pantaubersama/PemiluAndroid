@@ -454,7 +454,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
         }
     }
 
-    fun isLocationEnabled(context: Context): Boolean {
+    private fun isLocationEnabled(context: Context): Boolean {
         var locationMode = 0
         val locationProviders: String
         try {
