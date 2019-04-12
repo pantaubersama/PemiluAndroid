@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.catatan_tab_item.*
 
 class NotifActivity : CommonActivity() {
     private lateinit var tabAdapter: NotifActivity.NotifTabAdapter
-    private var selectedTab: String = ""
+    private var selectedTab: String? = null
     private lateinit var all: NotifChildFragment
     private lateinit var event: NotifChildFragment
 
@@ -28,9 +28,13 @@ class NotifActivity : CommonActivity() {
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
+        savedInstanceState?.getString("selected_tab")?.let {
+            selectedTab = it
+        }
         setupToolbar(true, getString(R.string.title_notification), R.color.white, 4f)
         initFragment()
         setupTabRecyclerview()
+        tabAdapter.setSelected(selectedTab ?: "Semua Notifikasi")
     }
 
     private fun initFragment() {
@@ -43,11 +47,10 @@ class NotifActivity : CommonActivity() {
                 LinearLayoutManager(this@NotifActivity, LinearLayoutManager.HORIZONTAL, false)
         tabAdapter = NotifTabAdapter()
         notif_recycler_view_menu.adapter = tabAdapter
-        tabAdapter.setSelected(0)
     }
 
     inner class NotifTabAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-        private val tabs: MutableList<String> = ArrayList()
+        val tabs: MutableList<String> = ArrayList()
 
         init {
             tabs.add("Semua Notifikasi")
@@ -67,8 +70,9 @@ class NotifActivity : CommonActivity() {
             (holder as NotifTabViewHolder).bind(tabs[position], position)
         }
 
-        fun setSelected(i: Int) {
-            selectedTab = tabs[i]
+        fun setSelected(selected: String) {
+            selectedTab = selected
+            notifyDataSetChanged()
         }
 
         inner class NotifTabViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -93,5 +97,10 @@ class NotifActivity : CommonActivity() {
                 }
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("selected_tab", selectedTab)
+        super.onSaveInstanceState(outState)
     }
 }
