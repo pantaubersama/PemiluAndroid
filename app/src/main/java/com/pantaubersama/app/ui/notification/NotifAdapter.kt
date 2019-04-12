@@ -106,7 +106,11 @@ class NotifAdapter : BaseRecyclerAdapter() {
         fun bind(notification: NotificationWhole) {
             notif_question_message.text = notification.notification.body
             notif_question_text.text = notification.data.payload.question.body
-            notif_question_avatar.loadUrl(notification.data.payload.question.upvotedBy.avatar.url, R.drawable.ic_avatar_placeholder)
+            try {
+                notif_question_avatar.loadUrl(notification.data.payload.question.upvotedBy.avatar.url, R.drawable.ic_avatar_placeholder)
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
+            }
             question_container.setOnClickListener {
                 listener?.onClickTanyaKandidat(notification.data.payload.question.id)
             }

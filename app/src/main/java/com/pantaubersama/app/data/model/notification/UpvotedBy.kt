@@ -2,7 +2,7 @@ package com.pantaubersama.app.data.model.notification
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.pantaubersama.app.data.model.wordstadium.Avatar
+import com.pantaubersama.app.data.model.image.Image
 
 data class UpvotedBy(
     @SerializedName("id")
@@ -16,5 +16,5 @@ data class UpvotedBy(
     var fullName: String,
     @SerializedName("avatar")
     @Expose
-    var avatar: Avatar
+    var avatar: Image
 )
