@@ -36,7 +36,7 @@ class PerhitunganDPRPresenter @Inject constructor(
                                     )
                             )
                         } else {
-                            view?.showGetDapilFailedAlert()
+                            view?.showEmptyData()
                         }
                     },
                     {
