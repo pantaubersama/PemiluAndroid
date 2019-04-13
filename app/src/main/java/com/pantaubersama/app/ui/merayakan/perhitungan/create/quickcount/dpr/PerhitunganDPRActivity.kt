@@ -24,10 +24,19 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.utils.MinMaxInputFilter
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.UndoRedoTools
+import com.pantaubersama.app.utils.extensions.visibleIf
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
 
 class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), PerhitunganDPRView {
+
+
+    override fun statusBarColor(): Int? = 0
+    override fun setLayout(): Int = R.layout.activity_perhitungan_dpr
+    override fun initInjection(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
+    }
+
     private lateinit var adapter: DPRPartaiAdapter
 
     @Inject
@@ -41,17 +50,14 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     private var undoType: String = ""
 
     override fun showLoading() {
-        progress_bar.visibility = View.VISIBLE
-        failed_alert.visibility = View.GONE
-        empty_alert.visibility = View.GONE
+        progress_bar.visibleIf(true)
+        failed_alert.visibleIf(false)
+        empty_alert.visibleIf(false)
+        empty_data_alert.visibleIf(false)
     }
 
     override fun dismissLoading() {
-        progress_bar.visibility = View.GONE
-    }
-
-    override fun initInjection(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
+        progress_bar.visibleIf(false)
     }
 
     override fun fetchIntentExtra() {
@@ -59,13 +65,6 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         tps = intent.getSerializableExtra(TPS_DATA) as TPS
     }
 
-    override fun statusBarColor(): Int? {
-        return 0
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.activity_perhitungan_dpr
-    }
 
     override fun setupUI(savedInstanceState: Bundle?) {
         var title = ""
@@ -233,6 +232,10 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
     override fun showEmptyRealCountList() {
         failed_alert.visibility = View.GONE
         empty_alert.visibility = View.VISIBLE
+    }
+
+    override fun showEmptyData() {
+        empty_data_alert.visibleIf(true)
     }
 
     override fun onSuccessSaveRealCount() {

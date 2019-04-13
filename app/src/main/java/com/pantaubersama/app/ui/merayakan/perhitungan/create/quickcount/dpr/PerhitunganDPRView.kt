@@ -14,4 +14,5 @@ interface PerhitunganDPRView : BaseView {
     fun bindRealCount(realCount: RealCount)
     fun onSuccessSaveRealCount()
     fun showFailedGetRealCountAlert(message: String?)
+    fun showEmptyData()
 }

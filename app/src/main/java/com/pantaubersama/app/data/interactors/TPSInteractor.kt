@@ -20,6 +20,7 @@ import javax.inject.Inject
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import timber.log.Timber
 import java.io.File
 
 class TPSInteractor @Inject constructor(
@@ -165,21 +166,13 @@ class TPSInteractor @Inject constructor(
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
             "local" -> {
-                val dbTps = appDB.getTPSDAO().getTps(tps.id)
-                dbTps.tps = tps.tps
                 return Completable.fromCallable {
-                    appDB.getTPSDAO().updateTps(dbTps)
+                    appDB.getTPSDAO().updateTps(tps)
                 }
             }
             else -> {
-                val dbTps = appDB.getTPSDAO().getTps(tps.id)
-                dbTps.tps = tps.tps
-                dbTps.province = tps.province
-                dbTps.regency = tps.regency
-                dbTps.district = tps.district
-                dbTps.village = tps.village
                 return Completable.fromCallable {
-                    appDB.getTPSDAO().updateTps(dbTps)
+                    appDB.getTPSDAO().updateTps(tps)
                 }
             }
         }

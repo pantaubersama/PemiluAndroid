@@ -282,7 +282,8 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
 
     override fun bindTps(tps: TPS) {
 //        setResult(Activity.RESULT_OK)
-        bindData(tps)
+        this.tps = tps
+        bindData(this.tps)
     }
 
     override fun showFailedDeleteTpsAlert() {
