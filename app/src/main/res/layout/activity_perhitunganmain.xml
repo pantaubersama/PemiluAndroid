@@ -73,12 +73,13 @@
 
                             <ImageView
                                 android:id="@+id/tps_options"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="30dp"
+                                android:layout_height="25dp"
                                 android:src="@drawable/ic_more_horiz"
                                 android:layout_alignParentRight="true"
                                 android:layout_alignParentEnd="true"
-                                android:tint="@color/black_3"/>
+                                android:tint="@color/black_3"
+                                android:background="?attr/selectableItemBackgroundBorderless"/>
 
                         </RelativeLayout>
 
@@ -414,6 +415,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
+                                android:background="?attr/selectableItemBackground"
                                 android:gravity="center">
 
                                 <ImageView
@@ -438,7 +440,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:background="?attr/selectableItemBackground">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -511,7 +514,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:background="?attr/selectableItemBackground">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -535,7 +539,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:background="?attr/selectableItemBackground">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -608,7 +613,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:background="?attr/selectableItemBackground">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -632,7 +638,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:background="?attr/selectableItemBackground">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -705,7 +712,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:background="?attr/selectableItemBackground">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -729,7 +737,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:background="?attr/selectableItemBackground">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -802,7 +811,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:background="?attr/selectableItemBackground">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -826,7 +836,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:background="?attr/selectableItemBackground">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -855,7 +866,8 @@
                         android:padding="24dp"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:layout_marginTop="16dp">
+                        android:layout_marginTop="16dp"
+                        android:background="?attr/selectableItemBackground">
 
                         <ImageView
                             android:layout_width="wrap_content"

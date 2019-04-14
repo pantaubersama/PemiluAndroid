@@ -55,7 +55,11 @@ class ConfirmationDialog {
                 bottomDialog.dismiss()
             }
             bottomDialog.setContentView(view)
-            bottomDialog.show()
+            try {
+                bottomDialog.show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 

@@ -627,16 +627,18 @@ class UploadDocumentActivity : BaseActivity<UploadDocumentPresenter>(), UploadDo
     }
 
     override fun onBackPressed() {
-        tps?.id?.let { it1 ->
-            presenter.saveImages(
-                it1,
-                c1PresidenAdapter.getListData() as MutableList<ImageLocalModel>,
-                c1DprAdapter.getListData() as MutableList<ImageLocalModel>,
-                c1DpdAdapter.getListData() as MutableList<ImageLocalModel>,
-                c1DprdProvAdapter.getListData() as MutableList<ImageLocalModel>,
-                c1DprdKabAdapter.getListData() as MutableList<ImageLocalModel>,
-                suasanaTpsAdapter.getListData() as MutableList<ImageLocalModel>
-            )
+        if (tps?.status != "published") {
+            tps?.id?.let { it1 ->
+                presenter.saveImages(
+                    it1,
+                    c1PresidenAdapter.getListData() as MutableList<ImageLocalModel>,
+                    c1DprAdapter.getListData() as MutableList<ImageLocalModel>,
+                    c1DpdAdapter.getListData() as MutableList<ImageLocalModel>,
+                    c1DprdProvAdapter.getListData() as MutableList<ImageLocalModel>,
+                    c1DprdKabAdapter.getListData() as MutableList<ImageLocalModel>,
+                    suasanaTpsAdapter.getListData() as MutableList<ImageLocalModel>
+                )
+            }
         }
         super.onBackPressed()
     }

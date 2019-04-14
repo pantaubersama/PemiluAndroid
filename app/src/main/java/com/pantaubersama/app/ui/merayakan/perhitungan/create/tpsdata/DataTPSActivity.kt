@@ -1,6 +1,7 @@
 package com.pantaubersama.app.ui.merayakan.perhitungan.create.tpsdata
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -12,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.pantaubersama.app.R
 import com.pantaubersama.app.base.BaseActivity
 import com.pantaubersama.app.data.model.tps.* // ktlint-disable
@@ -21,14 +23,21 @@ import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.color
+import com.pantaubersama.app.utils.hideKeyboard
 import kotlinx.android.synthetic.main.activity_data_tps.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
+import timber.log.Timber
 import java.util.Locale
 import javax.inject.Inject
 
 class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
+
+    override fun statusBarColor(): Int? = 0
+    override fun setLayout(): Int = R.layout.activity_data_tps
+
     var locationManager: LocationManager? = null
     private var permission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
     private var geocoder: Geocoder? = null
@@ -67,14 +76,6 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
         if (intent.getSerializableExtra(PantauConstants.Merayakan.TPS_DATA) != null) {
             tps = intent.getSerializableExtra(PantauConstants.Merayakan.TPS_DATA) as TPS
         }
-    }
-
-    override fun statusBarColor(): Int? {
-        return 0
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.activity_data_tps
     }
 
     override fun setupUI(savedInstanceState: Bundle?) {
@@ -188,6 +189,13 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 provinces_dropdown.isEnabled = false
             }
         }
+        provinces_dropdown.setOnTouchListener { _, _ ->
+            if (tps_number_field.isFocused) {
+                hideKeyboard(this)
+                tps_number_field.clearFocus()
+            }
+            false
+        }
     }
 
     override fun showProvincesLoading() {
@@ -221,7 +229,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+            override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 if (position != 0) {
                     provinces_empty_alert.visibility = View.GONE
                     selectedProvince = provinces[position - 1]
@@ -229,9 +237,12 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                         tps?.province = selectedProvince
                     }
                     presenter.getRegenciesData(provinces[position - 1].id)
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.black_1))
                 } else {
                     regencies_dropdown.setSelection(0)
                     regencies_dropdown.isEnabled = false
+
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
                 }
             }
         }
@@ -268,7 +279,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+            override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 if (position != 0) {
                     regencies_empty_alert.visibility = View.GONE
                     selectedRegency = regencies[position - 1]
@@ -276,9 +287,12 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                         tps?.regency = selectedRegency
                     }
                     presenter.getDistrictsData(regencies[position - 1].id)
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.black_1))
                 } else {
                     districts_dropdown.setSelection(0)
                     districts_dropdown.isEnabled = false
+
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
                 }
             }
         }
@@ -318,7 +332,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+            override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 if (position != 0) {
                     districts_empty_alert.visibility = View.GONE
                     selectedDistrict = districts[position - 1]
@@ -326,9 +340,11 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                         tps?.district = selectedDistrict
                     }
                     presenter.getVillagesData(districts[position - 1].id)
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.black_1))
                 } else {
                     villages_dropdown.setSelection(0)
                     villages_dropdown.isEnabled = false
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
                 }
             }
         }
@@ -364,14 +380,15 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+            override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 if (position != 0) {
                     selectedVillage = villages[position - 1]
                     if (tps != null && tps?.status == "sandbox") {
                         tps?.village = selectedVillage
                     }
                     villages_empty_alert.visibility = View.GONE
-                }
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.black_1))
+                } else (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
             }
         }
         if (tps == null) {
@@ -431,11 +448,13 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
             .show()
     }
 
+    @SuppressLint("MissingPermission")
     private fun getMyLocation() {
         try {
             locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
 //                    val location: Location? = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         } catch (e: Exception) {
+            requestPermission()
             e.printStackTrace()
         }
     }
@@ -575,5 +594,9 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                 finish()
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }
