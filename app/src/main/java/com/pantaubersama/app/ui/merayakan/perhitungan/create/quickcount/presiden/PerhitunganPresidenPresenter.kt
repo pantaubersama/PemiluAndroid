@@ -35,7 +35,7 @@ class PerhitunganPresidenPresenter @Inject constructor(
                             },
                             {
                                 view?.dismissLoading()
-                                view?.showFailedGetRealCountAlert(it.message)
+//                                view?.showFailedGetRealCountAlert(it.message)
                                 view?.showError(it)
                             }
                         )

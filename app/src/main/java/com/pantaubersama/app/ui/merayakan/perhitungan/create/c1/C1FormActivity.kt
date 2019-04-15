@@ -15,6 +15,7 @@ import com.pantaubersama.app.utils.MinMaxInputFilter
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.RxSchedulers
 import com.pantaubersama.app.utils.ToastUtil
+import com.pantaubersama.app.utils.extensions.snackBar
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_c1_form.*
 import java.util.concurrent.TimeUnit
@@ -139,6 +140,13 @@ class C1FormActivity : BaseActivity<C1FormPresenter>(), C1FormView {
         rejected_documents_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
         unused_documents_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
         used_documents_count.filters = arrayOf<InputFilter>(MinMaxInputFilter("0", "500"))
+    }
+
+    override fun showError(throwable: Throwable) {
+        if (throwable.message?.contains("Data form C1 tidak ditemukan") == true
+        ) {
+            window?.decorView?.findViewById<View>(android.R.id.content)?.snackBar("Data tidak diisi")
+        }
     }
 
     override fun showFailedGetC1Alert(message: String?) {

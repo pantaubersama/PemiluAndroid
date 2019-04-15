@@ -61,7 +61,7 @@ class PerhitunganDPRPresenter @Inject constructor(
                             {
                                 view?.dismissLoading()
                                 view?.showError(it)
-                                view?.showFailedGetRealCountAlert(it.message)
+//                                view?.showFailedGetRealCountAlert(it.message)
                             }
                         )
                 )

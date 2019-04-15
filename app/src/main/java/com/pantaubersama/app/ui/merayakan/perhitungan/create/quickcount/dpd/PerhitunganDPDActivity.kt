@@ -21,6 +21,7 @@ import com.pantaubersama.app.utils.PantauConstants.Merayakan.TPS_DATA
 import com.pantaubersama.app.utils.RxSchedulers
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.UndoRedoTools
+import com.pantaubersama.app.utils.extensions.snackBar
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_perhitungan_dpd.*
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
@@ -190,10 +191,14 @@ class PerhitunganDPDActivity : BaseActivity<PerhitunganDPDPresenter>(), Perhitun
         tps?.id?.let { realCountType?.let { it1 -> tps?.status?.let { it2 -> presenter.getRealCount(it, it1, it2) } } }
     }
 
-    override fun showFailedGetRealCountAlert(message: String?) {
-        if (message != "Belum ada perhitungan") {
-            ToastUtil.show(this@PerhitunganDPDActivity, "Gagal memuat perhitungan DPD")
+    override fun showError(throwable: Throwable) {
+        if (throwable.message?.contains("Data perhitungan tidak ditemukan") == true
+        ) {
+            window?.decorView?.findViewById<View>(android.R.id.content)?.snackBar("Data tidak diisi")
         }
+    }
+
+    override fun showFailedGetRealCountAlert(message: String?) {
     }
 
     override fun showLoading() {

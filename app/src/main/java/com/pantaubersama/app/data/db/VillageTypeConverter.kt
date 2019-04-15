@@ -11,12 +11,12 @@ class VillageTypeConverter {
     var gson = Gson()
 
     @TypeConverter
-    fun stringToVillage(data: String): Village {
+    fun stringToVillage(data: String?): Village? {
         return gson.fromJson(data, Village::class.java)
     }
 
     @TypeConverter
-    fun villageToString(village: Village): String {
+    fun villageToString(village: Village?): String? {
         return gson.toJson(village)
     }
 }

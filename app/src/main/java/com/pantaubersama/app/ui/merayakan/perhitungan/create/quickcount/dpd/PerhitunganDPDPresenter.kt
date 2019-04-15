@@ -28,10 +28,9 @@ class PerhitunganDPDPresenter @Inject constructor(
                                                 view?.showEmptyRealCountList()
                                             }
                                         },
-                                        {
+                                        { t ->
                                             view?.dismissLoading()
-                                            view?.showError(it)
-                                            view?.showGetRealCountListFailedAlert()
+                                            view?.showError(t)
                                         }
                                     )
                             )

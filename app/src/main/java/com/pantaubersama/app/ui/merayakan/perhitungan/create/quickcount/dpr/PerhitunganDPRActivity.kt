@@ -24,6 +24,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.pantaubersama.app.utils.MinMaxInputFilter
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.UndoRedoTools
+import com.pantaubersama.app.utils.extensions.snackBar
 import com.pantaubersama.app.utils.extensions.visibleIf
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
@@ -234,6 +235,13 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
 
     override fun showEmptyData() {
         empty_data_alert.visibleIf(true)
+    }
+
+    override fun showError(throwable: Throwable) {
+        if (throwable.message?.contains("Data perhitungan tidak ditemukan") == true
+        ) {
+            window?.decorView?.findViewById<View>(android.R.id.content)?.snackBar("Data tidak diisi")
+        }
     }
 
     override fun onSuccessSaveRealCount() {

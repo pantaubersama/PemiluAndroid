@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_perhitungan_presiden.*
 import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
 import javax.inject.Inject
 import com.pantaubersama.app.utils.* // ktlint-disable
+import com.pantaubersama.app.utils.extensions.snackBar
 
 class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>(), PerhitunganPresidenView, View.OnClickListener {
     @Inject
@@ -131,6 +132,13 @@ class PerhitunganPresidenActivity : BaseActivity<PerhitunganPresidenPresenter>()
         datas.add(Candidate(1, 0, 0, "presiden", 0.0))
         datas.add(Candidate(2, 0, 0, "presiden", 0.0))
         return datas
+    }
+
+    override fun showError(throwable: Throwable) {
+        if (throwable.message?.contains("Data perhitungan tidak ditemukan") == true
+        ) {
+            window?.decorView?.findViewById<View>(android.R.id.content)?.snackBar("Data tidak diisi")
+        }
     }
 
     override fun showFailedGetRealCountAlert(message: String?) {

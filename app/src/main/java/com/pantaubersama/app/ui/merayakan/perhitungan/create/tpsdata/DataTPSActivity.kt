@@ -62,7 +62,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     // villages
     private lateinit var villageNames: MutableList<String>
     private lateinit var villagesAdapter: ArrayAdapter<String>
-    private lateinit var selectedVillage: Village
+    private var selectedVillage: Village? = null
 
     private var tps: TPS? = null
 
@@ -424,10 +424,16 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
             if (tps == null) {
                 villages_dropdown.isEnabled = true
             }
-            if (!villages_dropdown.isVisible()) villages_dropdown.visibleIf(true)
+            if (!villages_dropdown.isVisible()) {
+                title_villages_dropdown.visibleIf(true)
+                villages_dropdown.visibleIf(true)
+            }
         } else {
-            selectedVillage = Village(0, 0, 0, "")
-            if (villages_dropdown.isVisible()) villages_dropdown.visibleIf(false)
+            selectedVillage = null
+            if (villages_dropdown.isVisible()) {
+                title_villages_dropdown.visibleIf(false)
+                villages_dropdown.visibleIf(false)
+            }
         }
     }
 

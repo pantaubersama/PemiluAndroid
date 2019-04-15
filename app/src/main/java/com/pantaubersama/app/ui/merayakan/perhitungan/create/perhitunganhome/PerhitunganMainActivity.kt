@@ -22,7 +22,6 @@ import com.pantaubersama.app.ui.widget.ConfirmationDialog
 import com.pantaubersama.app.ui.widget.OptionDialog
 import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.ToastUtil
-import com.pantaubersama.app.utils.extensions.visibleIf
 import kotlinx.android.synthetic.main.activity_perhitunganmain.*
 import kotlinx.android.synthetic.main.publish_confirmation_dialog.*
 import javax.inject.Inject
@@ -80,7 +79,7 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
         province_text.text = tps?.province?.name
         regency_text.text = tps?.regency?.name
         district_text.text = tps?.district?.name
-        village_text.text = tps?.village?.name
+        village_text.text = tps?.village?.name ?: " - "
         tps_options.setOnClickListener {
             val dialog = OptionDialog(this@PerhitunganMainActivity, R.layout.layout_option_dialog_tps)
             if (tps?.status == "published") {
@@ -127,8 +126,6 @@ class PerhitunganMainActivity : BaseActivity<PerhitunganMainPresenter>(), Perhit
             submit_button.visibility = View.VISIBLE
             submitted_button.visibility = View.GONE
         }
-
-        dprd_kabupaten_container.visibleIf(tps?.village != null)
     }
 
     override fun onClick(view: View) {

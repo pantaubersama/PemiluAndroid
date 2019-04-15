@@ -54,7 +54,7 @@ class C1FormPresenter @Inject constructor(private val c1Interactor: C1Interactor
                         },
                         {
                             view?.showError(it)
-                            view?.showFailedGetC1Alert(it.message)
+//                            view?.showFailedGetC1Alert(it.message)
                             view?.dismissLoading()
                         }
                     )
