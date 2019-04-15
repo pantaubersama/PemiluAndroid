@@ -105,4 +105,9 @@ class PerhitunganPresenter @Inject constructor(
             view?.onSuccessCreateSandboxTps()
         }
     }
+
+    fun getOnlySandboxTps() {
+        view?.bindTPSes(tpsInteractor.getLocalTpses())
+        view?.dismissLoading()
+    }
 }

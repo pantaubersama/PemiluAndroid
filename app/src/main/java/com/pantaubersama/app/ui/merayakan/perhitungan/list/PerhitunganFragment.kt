@@ -68,8 +68,8 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         presenter.getProfile()
-        presenter.createSandboxTps()
         setupTPSData()
+        presenter.createSandboxTps()
     }
 
     override fun onSuccessCreateSandboxTps() {
@@ -93,9 +93,13 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
     }
 
     private fun refreshItem() {
-        page = 1
-        adapter.setDataEnd(false)
-        presenter.getPerhitunganData(page, perPage)
+        if (profile != EMPTY_PROFILE) {
+            page = 1
+            adapter.setDataEnd(false)
+            presenter.getPerhitunganData(page, perPage)
+        } else {
+            presenter.getOnlySandboxTps()
+        }
     }
 
     override fun showBanner(bannerInfo: BannerInfo) {
@@ -131,7 +135,7 @@ class PerhitunganFragment : BaseFragment<PerhitunganPresenter>(), PerhitunganVie
 
     override fun dismissLoading() {
         lottie_loading.enableLottie(false, lottie_loading)
-        recycler_view.visibleIf(false)
+//        recycler_view.visibleIf(false)
         fab_add.show()
     }
 

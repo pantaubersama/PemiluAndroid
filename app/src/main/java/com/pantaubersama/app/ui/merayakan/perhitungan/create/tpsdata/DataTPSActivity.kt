@@ -429,7 +429,6 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
             selectedVillage = Village(0, 0, 0, "")
             if (villages_dropdown.isVisible()) villages_dropdown.visibleIf(false)
         }
-
     }
 
     override fun showFailedGetVillagesAlert() {
