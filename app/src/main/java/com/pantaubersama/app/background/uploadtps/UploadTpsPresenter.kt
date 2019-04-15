@@ -270,6 +270,26 @@ class UploadTpsPresenter @Inject constructor(
                     view?.showFailed(errorMessage)
                 }
             }
+        } ?: apply {
+            if (successUpload == tpsInteractor.getRealCountsSize(dbTpsId) +
+                tpsInteractor.getC1sSize(dbTpsId) +
+                tpsInteractor.getImageDocsSize(dbTpsId) - 1) {
+                view?.increaseProgress(1, "Menyelesaikan Unggahan")
+                disposables.add(
+                    tpsInteractor.publishRealCount(apiTpsId, dbTpsId)
+                        .subscribe(
+                            {
+                                view?.onSuccessPublishTps()
+                            },
+                            {
+                                view?.showError(it)
+                                errorMessage = it.message.toString()
+                            }
+                        )
+                )
+            } else {
+                view?.showFailed(errorMessage)
+            }
         }
     }
 
