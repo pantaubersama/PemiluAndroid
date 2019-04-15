@@ -238,11 +238,24 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                     }
                     presenter.getRegenciesData(provinces[position - 1].id)
                     (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.black_1))
+
+                    if (tps == null || tps?.status == "sandbox") {
+                        if (regencies_dropdown.selectedItemPosition != 0) regencies_dropdown.setSelection(0)
+                        regencies_dropdown.isEnabled = true
+                        if (districts_dropdown.selectedItemPosition != 0) districts_dropdown.setSelection(0)
+                        districts_dropdown.isEnabled = false
+                        if (villages_dropdown.selectedItemPosition != 0) villages_dropdown.setSelection(0)
+                        villages_dropdown.isEnabled = false
+                    }
                 } else {
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
+
                     regencies_dropdown.setSelection(0)
                     regencies_dropdown.isEnabled = false
-
-                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
+                    districts_dropdown.setSelection(0)
+                    districts_dropdown.isEnabled = false
+                    villages_dropdown.setSelection(0)
+                    villages_dropdown.isEnabled = false
                 }
             }
         }
@@ -288,11 +301,21 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                     }
                     presenter.getDistrictsData(regencies[position - 1].id)
                     (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.black_1))
+
+                    if (tps == null || tps?.status == "sandbox") {
+                        if (districts_dropdown.selectedItemPosition != 0) districts_dropdown.setSelection(0)
+                        districts_dropdown.isEnabled = true
+                        if (villages_dropdown.selectedItemPosition != 0) villages_dropdown.setSelection(0)
+                        villages_dropdown.isEnabled = false
+                    }
+
                 } else {
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
+
                     districts_dropdown.setSelection(0)
                     districts_dropdown.isEnabled = false
-
-                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
+                    villages_dropdown.setSelection(0)
+                    villages_dropdown.isEnabled = false
                 }
             }
         }
@@ -341,10 +364,17 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                     }
                     presenter.getVillagesData(districts[position - 1].id)
                     (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.black_1))
+
+                    if (tps == null || tps?.status == "sandbox") {
+                        if (villages_dropdown.selectedItemPosition != 0) villages_dropdown.setSelection(0)
+                        villages_dropdown.isEnabled = true
+                    }
+
                 } else {
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
+
                     villages_dropdown.setSelection(0)
                     villages_dropdown.isEnabled = false
-                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
                 }
             }
         }
