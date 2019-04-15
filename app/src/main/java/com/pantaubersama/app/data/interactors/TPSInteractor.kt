@@ -80,7 +80,7 @@ class TPSInteractor @Inject constructor(
         selectedProvince: Province,
         selectedRegency: Regency,
         selectedDistrict: District,
-        selectedVillage: Village,
+        selectedVillage: Village? = null,
         lat: Double,
         long: Double
     ): Single<TPS> {
@@ -296,7 +296,7 @@ class TPSInteractor @Inject constructor(
             tps.province.code,
             tps.regency.code,
             tps.district.code,
-            tps.village.code,
+            tps.village?.code,
             tps.latitude,
             tps.longitude
         )

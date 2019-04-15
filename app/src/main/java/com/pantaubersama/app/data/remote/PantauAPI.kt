@@ -261,6 +261,7 @@ interface PantauAPI {
         @Query("province_code") provinceCode: Int,
         @Query("regency_code") regencyCode: Int,
         @Query("district_code") districtCode: Int,
+        @Query("village_code") villageCode: Long? = null,
         @Query("tingkat") tingkat: String
     ): Single<DapilResponse>
 
@@ -277,7 +278,7 @@ interface PantauAPI {
         @Field("province_code") provinceCode: Int,
         @Field("regency_code") regencyCode: Int,
         @Field("district_code") districtCode: Int,
-        @Field("village_code") villageCode: Long,
+        @Field("village_code") villageCode: Long? = null,
         @Field("latitude") latitude: Double,
         @Field("longitude") longitude: Double
     ): Single<TpsResponse>

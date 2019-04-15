@@ -29,7 +29,7 @@ data class TPS(
     var district: District,
     @SerializedName("village")
     @Expose
-    var village: Village,
+    var village: Village? = null,
     @SerializedName("latitude")
     @Expose
     var latitude: Double,

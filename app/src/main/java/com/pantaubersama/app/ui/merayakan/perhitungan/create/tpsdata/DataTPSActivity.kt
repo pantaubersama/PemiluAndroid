@@ -24,6 +24,8 @@ import com.pantaubersama.app.utils.PantauConstants
 import com.pantaubersama.app.utils.PantauConstants.RequestCode.RC_ASK_PERMISSIONS
 import com.pantaubersama.app.utils.ToastUtil
 import com.pantaubersama.app.utils.extensions.color
+import com.pantaubersama.app.utils.extensions.isVisible
+import com.pantaubersama.app.utils.extensions.visibleIf
 import com.pantaubersama.app.utils.hideKeyboard
 import kotlinx.android.synthetic.main.activity_data_tps.*
 import pub.devrel.easypermissions.AfterPermissionGranted
@@ -389,38 +391,45 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
     }
 
     override fun bindVillagesToSpinner(villages: MutableList<Village>) {
-        villageNames.clear()
-        villageNames.add(0, "Pilih Kelurahan/Desa: ")
-        villages.forEach {
-            villageNames.add(it.name)
-        }
-        villagesAdapter.notifyDataSetChanged()
-        if (tps != null) {
-            villages.forEachIndexed { index, village ->
-                if (village == tps?.village) {
-                    villages_dropdown.setSelection(index + 1)
+        if (villages.isNotEmpty()) {
+            villageNames.clear()
+            villageNames.add(0, "Pilih Kelurahan/Desa: ")
+            villages.forEach {
+                villageNames.add(it.name)
+            }
+            villagesAdapter.notifyDataSetChanged()
+            if (tps != null) {
+                villages.forEachIndexed { index, village ->
+                    if (village == tps?.village) {
+                        villages_dropdown.setSelection(index + 1)
+                    }
                 }
             }
-        }
-        villages_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
+            villages_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(p0: AdapterView<*>?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+                }
 
-            override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                if (position != 0) {
-                    selectedVillage = villages[position - 1]
-                    if (tps != null && tps?.status == "sandbox") {
-                        tps?.village = selectedVillage
-                    }
-                    villages_empty_alert.visibility = View.GONE
-                    (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.black_1))
-                } else (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
+                override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                    if (position != 0) {
+                        selectedVillage = villages[position - 1]
+                        if (tps != null && tps?.status == "sandbox") {
+                            tps?.village = selectedVillage
+                        }
+                        villages_empty_alert.visibility = View.GONE
+                        (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.black_1))
+                    } else (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
+                }
             }
+            if (tps == null) {
+                villages_dropdown.isEnabled = true
+            }
+            if (!villages_dropdown.isVisible()) villages_dropdown.visibleIf(true)
+        } else {
+            selectedVillage = Village(0, 0, 0, "")
+            if (villages_dropdown.isVisible()) villages_dropdown.visibleIf(false)
         }
-        if (tps == null) {
-            villages_dropdown.isEnabled = true
-        }
+
     }
 
     override fun showFailedGetVillagesAlert() {
@@ -566,7 +575,7 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                     if (districts_dropdown.selectedItemPosition == 0) {
                         districts_empty_alert.visibility = View.VISIBLE
                     } else {
-                        if (villages_dropdown.selectedItemPosition == 0) {
+                        if (villages_dropdown.selectedItemPosition == 0 && villages_dropdown.isVisible()) {
                             villages_empty_alert.visibility = View.VISIBLE
                         } else {
                             if (tps != null) {

@@ -28,6 +28,7 @@ abstract class AppDB : RoomDatabase() {
             return Room
                 .databaseBuilder(context, AppDB::class.java, PantauConstants.DATABASE_NAME)
                 .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
                 .build()
         }
     }

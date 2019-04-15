@@ -28,7 +28,7 @@ class TPSAdapter : BaseRecyclerAdapter() {
             user_name.text = item.user.fullName
             user_cluster.text = item.user.cluster?.name
             tps_number.text = "TPS ${item.tps}"
-            tps_address.text = "${item.province.name}, ${item.regency.name}, ${item.district.name}, ${item.village.name}"
+            tps_address.text = "${item.province.name}, ${item.regency.name}, ${item.district.name}${item.village?.name?.let { ", $it" }}"
             itemView.setOnClickListener {
                 listener?.onClickItem(item)
             }

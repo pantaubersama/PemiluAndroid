@@ -60,7 +60,7 @@ class DetailTPSActivity : BaseActivity<DetailTPSPresenter>(), DetailTPSView {
             user_name.text = it.user.fullName
             user_cluster.text = it.user.cluster?.name
             tps_number.text = "TPS ${it.tps}"
-            tps_address.text = "${it.province.name}, ${it.regency.name}, ${it.district.name}, ${it.village.name}"
+            tps_address.text = "${it.province.name}, ${it.regency.name}, ${it.district.name}${it.village?.name?.let { ", $it" }}"
         }
     }
 

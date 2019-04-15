@@ -68,7 +68,7 @@ class UploadTpsPresenter @Inject constructor(
                             successUpload++
                         },
                         {
-                            errorMessage = errorMessage + it.message + "\n"
+                            errorMessage = it.message.toString()
                             view?.showError(it)
                         }
                     )
@@ -104,7 +104,7 @@ class UploadTpsPresenter @Inject constructor(
                         },
                         {
                             view?.showError(it)
-                            errorMessage = errorMessage + it.message + "\n"
+                            errorMessage = it.message.toString()
                         }
                     )
             )
@@ -134,7 +134,7 @@ class UploadTpsPresenter @Inject constructor(
                             },
                             {
                                 view?.showError(it)
-                                errorMessage = errorMessage + it.message + "\n"
+                                errorMessage = it.message.toString()
                             }
                         )
                 )
@@ -156,7 +156,7 @@ class UploadTpsPresenter @Inject constructor(
                             },
                             {
                                 view?.showError(it)
-                                errorMessage = errorMessage + it.message + "\n"
+                                errorMessage = it.message.toString()
                             }
                         )
                 )
@@ -178,7 +178,7 @@ class UploadTpsPresenter @Inject constructor(
                             },
                             {
                                 view?.showError(it)
-                                errorMessage = errorMessage + it.message + "\n"
+                                errorMessage = it.message.toString()
                             }
                         )
                 )
@@ -200,7 +200,7 @@ class UploadTpsPresenter @Inject constructor(
                             },
                             {
                                 view?.showError(it)
-                                errorMessage = errorMessage + it.message + "\n"
+                                errorMessage = it.message.toString()
                             }
                         )
                 )
@@ -222,7 +222,7 @@ class UploadTpsPresenter @Inject constructor(
                             },
                             {
                                 view?.showError(it)
-                                errorMessage = errorMessage + it.message + "\n"
+                                errorMessage = it.message.toString()
                             }
                         )
                 )
@@ -244,7 +244,7 @@ class UploadTpsPresenter @Inject constructor(
                             },
                             {
                                 view?.showError(it)
-                                errorMessage = errorMessage + it.message + "\n"
+                                errorMessage = it.message.toString()
                             }
                         )
                 )
@@ -262,7 +262,7 @@ class UploadTpsPresenter @Inject constructor(
                                 },
                                 {
                                     view?.showError(it)
-                                    errorMessage = errorMessage + it.message + "\n"
+                                    errorMessage = it.message.toString()
                                 }
                             )
                     )

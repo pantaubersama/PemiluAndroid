@@ -60,6 +60,7 @@ class RealCountInteractor @Inject constructor(
             tps.province.code,
             tps.regency.code,
             tps.district.code,
+            tps.village?.code,
             realCountType
         )
             .subscribeOn(rxSchedulers.io())

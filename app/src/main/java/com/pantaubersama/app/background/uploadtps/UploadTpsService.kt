@@ -109,7 +109,6 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     }
 
     private fun publishResult(isSuccess: Boolean, message: String?) {
-        Timber.d("notif_error" + message)
         val intent = Intent("upload")
         sendBroadcast(intent)
         intent.putExtra("status", isSuccess)

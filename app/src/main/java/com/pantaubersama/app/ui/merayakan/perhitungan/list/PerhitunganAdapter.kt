@@ -43,7 +43,7 @@ class PerhitunganAdapter : BaseRecyclerAdapter() {
             province_text.text = item.province.name
             regency_text.text = item.regency.name
             district_text.text = item.district.name
-            village_text.text = item.village.name
+            village_text.text = item.village?.name ?: " - "
             when (item.status) {
                 "sandbox" -> {
                     quick_count_status.text = "Uji Coba"
