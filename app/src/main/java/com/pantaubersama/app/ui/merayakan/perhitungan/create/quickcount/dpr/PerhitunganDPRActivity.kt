@@ -30,7 +30,6 @@ import kotlinx.android.synthetic.main.data_sah_tidak_sah_layout.*
 
 class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), PerhitunganDPRView {
 
-
     override fun statusBarColor(): Int? = 0
     override fun setLayout(): Int = R.layout.activity_perhitungan_dpr
     override fun initInjection(activityComponent: ActivityComponent) {
@@ -64,7 +63,6 @@ class PerhitunganDPRActivity : BaseActivity<PerhitunganDPRPresenter>(), Perhitun
         realCountType = intent.getStringExtra(REAL_COUNT_TYPE)
         tps = intent.getSerializableExtra(TPS_DATA) as TPS
     }
-
 
     override fun setupUI(savedInstanceState: Bundle?) {
         var title = ""

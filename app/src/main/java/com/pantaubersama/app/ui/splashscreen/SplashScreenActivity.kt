@@ -97,6 +97,7 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 intent.putExtra(PantauConstants.URL, urlData)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
             urlPath?.contains(INVITATION_PATH)!! -> {
@@ -104,6 +105,7 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 intent.putExtra(PantauConstants.URL, urlData)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
             urlPath?.contains(SHARE_JANPOL_PATH)!! && !urlPath?.substringAfter(SHARE_JANPOL_PATH).isNullOrEmpty() -> {
@@ -118,6 +120,7 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 val intent = DetailTanyaKandidatActivity.setIntent(this, questionId!!)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
             urlPath?.contains(SHARE_KECENDERUNGAN_PATH)!! && !urlPath?.substringAfter(SHARE_KECENDERUNGAN_PATH).isNullOrEmpty() -> {
@@ -125,6 +128,7 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 val intent = KuisUserResultActivity.setIntent(this, userId!!)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
             urlPath?.contains(SHARE_HASIL_KUIS_PATH)!! && !urlPath?.substringAfter(SHARE_HASIL_KUIS_PATH).isNullOrEmpty() -> {
@@ -132,6 +136,7 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 val intent = KuisResultActivity.setIntent(this, quizParticipationId!!)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
             urlPath?.contains(SHARE_KUIS_PATH)!! && !urlPath?.substringAfter(SHARE_KUIS_PATH).isNullOrEmpty() -> {
@@ -146,6 +151,7 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
                 val intent = DetailBadgeActivity.setIntent(this, achievedId!!)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
             else -> {
@@ -163,6 +169,7 @@ class SplashScreenActivity : BaseActivity<SplashScreenPresenter>(), SplashScreen
         urlData?.let { if (it.contains(INVITATION_PATH) || it.contains(CONFIRMATION_PATH)) intent.putExtra(PantauConstants.URL, it) }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         finish()
     }
 

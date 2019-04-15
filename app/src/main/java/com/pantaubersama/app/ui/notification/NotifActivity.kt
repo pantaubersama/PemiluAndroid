@@ -34,7 +34,7 @@ class NotifActivity : CommonActivity() {
         setupToolbar(true, getString(R.string.title_notification), R.color.white, 4f)
         initFragment()
 //        setupTabRecyclerview()
-        //hide notifikasi event
+        // hide notifikasi event
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, all).commit()
 //        tabAdapter.setSelected(selectedTab ?: "Semua Notifikasi")

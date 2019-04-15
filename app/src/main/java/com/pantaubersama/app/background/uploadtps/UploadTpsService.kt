@@ -6,8 +6,6 @@ import com.pantaubersama.app.base.BaseApp
 import com.pantaubersama.app.di.module.ServiceModule
 import javax.inject.Inject
 import android.content.Context
-import android.media.AudioAttributes
-import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.pantaubersama.app.BuildConfig
@@ -26,6 +24,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     private lateinit var notificationBuilder: NotificationCompat.Builder
     lateinit var notificationManager: NotificationManager
     var progress: Int = 0
+    private var maxProgress = 0
 
     lateinit var tpsId: String
 
@@ -46,7 +45,7 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
         )
             .setSmallIcon(android.R.drawable.stat_sys_upload)
             .setColor(color(R.color.colorPrimary))
-            .setContentTitle(getTitle(progress))
+            .setContentTitle("Mengunggah Perhitungan TPS")
             .setContentInfo(BuildConfig.APPLICATION_ID)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
@@ -64,41 +63,45 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
             notificationManager.createNotificationChannel(notificationChannel)
             notificationBuilder.setChannelId(PantauConstants.Notification.NOTIFICATION_CHANNEL_ID_UPLOAD)
         }
-
-        notificationBuilder.setProgress(100, progress, false)
         notificationManager.notify(1, notificationBuilder.build())
         presenter.uploadTpsData(tpsId)
     }
 
-    override fun increaseProgress(progress: Int) {
+    override fun setMaxProgress(availableFormCount: Int) {
+        notificationBuilder.setProgress(availableFormCount, progress, false)
+        notificationManager.notify(1, notificationBuilder.build())
+        this.maxProgress = availableFormCount
+    }
+
+    override fun increaseProgress(progress: Int, title: String) {
         this.progress += progress
-        notificationBuilder.setContentTitle(getTitle(this.progress))
-        notificationBuilder.setProgress(100, this.progress, false)
+        notificationBuilder.setContentTitle(title)
+        notificationBuilder.setProgress(this.maxProgress, this.progress, false)
         notificationManager.notify(1, notificationBuilder.build())
     }
 
-    private fun getTitle(progress: Int): String {
-        return when {
-            progress < 5 -> "Mengunggah Perhitungan TPS"
-            progress < 10 -> "Mengunggah Perhitungan - Presiden"
-            progress < 15 -> "Mengunggah Perhitungan - DPR RI"
-            progress < 20 -> "Mengunggah Perhitungan - DPD"
-            progress < 25 -> "Mengunggah Perhitungan - DPRD Tingkat Provinsi"
-            progress < 30 -> "Mengunggah Perhitungan - DPRD Tingkat Kabupaten"
-            progress < 35 -> "Mengunggah Form C1 - Presiden"
-            progress < 40 -> "Mengunggah Form C1 - DPR RI"
-            progress < 45 -> "Mengunggah Form C1 - DPD"
-            progress < 50 -> "Mengunggah Form C1 - DPRD Tingkat Provinsi"
-            progress < 55 -> "Mengunggah Form C1 - DPRD Tingkat Kabupaten"
-            progress < 60 -> "Mengunggah Gambar C1 - Presiden"
-            progress < 65 -> "Mengunggah Gambar C1 - DPR RI"
-            progress < 75 -> "Mengunggah Gambar C1 - DPD"
-            progress < 80 -> "Mengunggah Gambar C1 - DPRD Tingkat Provinsi"
-            progress < 85 -> "Mengunggah Gambar C1 - DPRD Tingkat Kabupaten"
-            progress < 90 -> "Mengunggah Gambar Suasana TPS"
-            else -> "Menyelesaikan Unggahan"
-        }
-    }
+//    private fun getTitle(progress: Int, title: String): String {
+//        return when {
+//            progress < 1 -> "Mengunggah Perhitungan TPS"
+//            progress < 10 -> "Mengunggah Perhitungan - Presiden"
+//            progress < 15 -> "Mengunggah Perhitungan - DPR RI"
+//            progress < 20 -> "Mengunggah Perhitungan - DPD"
+//            progress < 25 -> "Mengunggah Perhitungan - DPRD Tingkat Provinsi"
+//            progress < 30 -> "Mengunggah Perhitungan - DPRD Tingkat Kabupaten"
+//            progress < 35 -> "Mengunggah Form C1 - Presiden"
+//            progress < 40 -> "Mengunggah Form C1 - DPR RI"
+//            progress < 45 -> "Mengunggah Form C1 - DPD"
+//            progress < 50 -> "Mengunggah Form C1 - DPRD Tingkat Provinsi"
+//            progress < 55 -> "Mengunggah Form C1 - DPRD Tingkat Kabupaten"
+//            progress < 60 -> "Mengunggah Gambar C1 - Presiden"
+//            progress < 65 -> "Mengunggah Gambar C1 - DPR RI"
+//            progress < 75 -> "Mengunggah Gambar C1 - DPD"
+//            progress < 80 -> "Mengunggah Gambar C1 - DPRD Tingkat Provinsi"
+//            progress < 85 -> "Mengunggah Gambar C1 - DPRD Tingkat Kabupaten"
+//            progress < 90 -> "Mengunggah Gambar Suasana TPS"
+//            else -> "Menyelesaikan Unggahan"
+//        }
+//    }
 
     override fun onSuccessPublishTps() {
         presenter.detach()
@@ -106,12 +109,12 @@ class UploadTpsService : IntentService("UploadTpsService"), UploadTpsView {
     }
 
     private fun publishResult(isSuccess: Boolean, message: String?) {
+        Timber.d("notif_error" + message)
         val intent = Intent("upload")
         sendBroadcast(intent)
         intent.putExtra("status", isSuccess)
         intent.putExtra("message", message)
         createNotification(intent)
-
     }
 
     override fun showError(throwable: Throwable) {

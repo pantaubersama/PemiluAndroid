@@ -29,7 +29,6 @@ import kotlinx.android.synthetic.main.activity_data_tps.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
-import timber.log.Timber
 import java.util.Locale
 import javax.inject.Inject
 
@@ -308,7 +307,6 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                         if (villages_dropdown.selectedItemPosition != 0) villages_dropdown.setSelection(0)
                         villages_dropdown.isEnabled = false
                     }
-
                 } else {
                     (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
 
@@ -369,7 +367,6 @@ class DataTPSActivity : BaseActivity<DataTPSPresenter>(), DataTPSView {
                         if (villages_dropdown.selectedItemPosition != 0) villages_dropdown.setSelection(0)
                         villages_dropdown.isEnabled = true
                     }
-
                 } else {
                     (parent?.getChildAt(0) as? TextView)?.setTextColor(color(R.color.gray_dark_1))
 
