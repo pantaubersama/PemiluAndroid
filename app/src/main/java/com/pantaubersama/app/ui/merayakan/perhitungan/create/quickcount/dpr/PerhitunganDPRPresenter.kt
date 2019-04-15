@@ -21,11 +21,11 @@ class PerhitunganDPRPresenter @Inject constructor(
                                 realCountInteractor.getRealCountList(it.data.id, realCountType)
                                     .subscribe(
                                         {
-                                            if (it.size != 0) {
+                                            if (it.size != 0 ) {
                                                 view?.dismissLoading()
                                                 view?.bindCandidates(it)
                                             } else {
-                                                view?.showEmptyRealCountList()
+                                                view?.showEmptyData()
                                             }
                                         },
                                         {
