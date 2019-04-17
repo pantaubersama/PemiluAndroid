@@ -166,7 +166,7 @@
                                     android:id="@+id/paslon_1_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Jokowi-Ma'ruh"
+                                    android:text="Jokowi-Ma'ruf"
                                     android:layout_marginLeft="12sp"
                                     android:layout_marginStart="12dp"
                                     android:fontFamily="@font/lato_regular"
