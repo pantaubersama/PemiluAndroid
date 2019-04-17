@@ -1,7 +1,7 @@
 ext {
     majorVersion = 1
     minorVersion = 1
-    patchVersion = 4
+    patchVersion = 5
     preRelease = null
 
     appApplicationId = "com.pantaubersama"
